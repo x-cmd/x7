@@ -1,0 +1,28 @@
+
+name: python
+
+provider:
+  default: gemini
+
+  ollama:
+    seed: 101
+
+  moonshot:
+
+  mistral:
+
+  gemini:
+
+
+  openai: # special parameters for openai
+    seed:
+    temperature:
+
+prompt:
+  system:
+
+  context:
+  example:
+  content: '%{BODY}%'
+
+history:

@@ -1,0 +1,35 @@
+copy_main(){(
+    local dst="${1:-"$HOME/.x-cmd.root/v/.repo/x-cmd/x-cmd"}"
+    [ -d "$dst" ] || {
+        x:error "Exepct to be a folder with x-cmd worktree: $dst"
+        return 1
+    }
+
+    # test before
+    # (
+    #     x z ../.tmp.tgz mod . >/dev/null || x rmrf ../.tmp.tgz
+    # )
+
+    x rmrf "$dst/dist/all.tgz"
+    # x mv .tmp.tgz "$dst/dist/all.tgz"
+    (
+        x git meta id
+        x git meta branch
+        printf "%s\n" "x-cmd/x7"
+    ) >"$dst/reference.txt"
+
+    printf "___X_CMD_VERSION_SUM=%s\n" "$(x sha512 mod.sha512.txt)" >"$dst/version_sum"
+
+    x rmrf "$dst/mod"
+    x cp -r "mod" "$dst/mod"
+    for i in mod.index.txt mod.sha512.txt; do
+        x rmrf "$dst/$i"
+        x cp "$i" "$dst/$i"
+    done
+
+    cd "$dst"
+    # x z dist/all.tgz mod mod.index.txt mod.sha512.txt reference.txt version_sum X LICENSE license_of_components
+)}
+
+copy_main "$@"
+

@@ -1,0 +1,604 @@
+{
+"#name"
+:
+{
+"path"
+:
+null
+,
+"en"
+:
+"Command line handle PATH"
+,
+"cn"
+:
+"处理 PATH 变量"
+}
+,
+"dev"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看或修改 X 的相关 PATH 变量"
+,
+"en"
+:
+"View or modify X's associated PATH variable"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x path dev"
+,
+"cn"
+:
+"交互展示当前环境中 PATH 内的二进制搜索目录"
+,
+"en"
+:
+"display of binary search directories within PATH in the current environment"
+}
+]
+}
+,
+"ls"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"列出当前环境的 PATH 变量"
+,
+"en"
+:
+"List PATH variables for the current environment"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x path"
+,
+"cn"
+:
+"交互展示当前环境中 PATH 内的二进制搜索目录"
+,
+"en"
+:
+"Interactive display of binary search directories within PATH in the current environment"
+}
+]
+}
+,
+"uniq"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Delete duplicate PATH"
+,
+"cn"
+:
+"删除重复的 PATH"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x path uniq"
+,
+"cn"
+:
+"删除 PATH 中重复的目录"
+,
+"en"
+:
+"Delete duplicate directories in PATH"
+}
+]
+}
+,
+"unshift"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Add PATH at the front"
+,
+"cn"
+:
+"在最前面添加 PATH"
+}
+,
+"#1"
+:
+{
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x path unshift /usr/bin"
+,
+"cn"
+:
+"在 PATH 的最前面添加新的目录"
+,
+"en"
+:
+"Add a new directory at the beginning of PATH"
+}
+]
+}
+,
+"push"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Add PATH at the end"
+,
+"cn"
+:
+"在最后面添加 PATH"
+}
+,
+"#1"
+:
+{
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x path push /usr/bin"
+,
+"cn"
+:
+"在 PATH 的最后面添加新的目录"
+,
+"en"
+:
+"Add a new directory on the last side of PATH"
+}
+]
+}
+,
+"pop"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"删除最后一个 PATH"
+,
+"en"
+:
+"Delete the first PATH"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x path pop"
+,
+"cn"
+:
+"删除 PATH 中最后面的目录"
+,
+"en"
+:
+"Delete the last directory in PATH"
+}
+]
+}
+,
+"rm"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Delete the given PATH"
+,
+"cn"
+:
+"删除给定的 PATH"
+}
+,
+"#1"
+:
+{
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x path rm /bin"
+,
+"cn"
+:
+"删除 PATH 中的指定目录"
+,
+"en"
+:
+"Delete the specified directory in PATH"
+}
+]
+}
+,
+"rm_by_prefix"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Delete the given prefix PATH"
+,
+"cn"
+:
+"删除给定的前缀 PATH"
+}
+,
+"#1"
+:
+null
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x path rm_by_prefix /usr"
+,
+"cn"
+:
+"删除 PATH 中含有给定前缀的目录"
+,
+"en"
+:
+"Delete directory with given prefix in PATH"
+}
+]
+}
+,
+"rm_by_suffix"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Delete the given suffix PATH"
+,
+"cn"
+:
+"删除给定的后缀 PATH"
+}
+,
+"#1"
+:
+null
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x path rm_by_suffix r/bin"
+,
+"cn"
+:
+"删除 PATH 中含有给定后缀的目录"
+,
+"en"
+:
+"Delete the directory containing the given suffix in PATH"
+}
+]
+}
+,
+"up_or_unshift"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Add PATH at the front"
+,
+"cn"
+:
+"在最前面添加 PATH"
+}
+,
+"#1"
+:
+{
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x path up_or_unshift /bin"
+,
+"cn"
+:
+"在 PATH 的最前面添加目录 (如果目录已存在 PATH 中，则将其移动到到 PATH 的最前面)"
+,
+"en"
+:
+"Add a directory at the beginning of PATH (if the directory already exists in PATH, move it to the beginning of PATH)"
+}
+]
+}
+,
+"down_or_push"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Add PATH at the end"
+,
+"cn"
+:
+"在最后面添加 PATH"
+}
+,
+"#1"
+:
+{
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x path down_or_push /bin"
+,
+"cn"
+:
+"在 PATH 的最后面添加目录 (如果目录已存在 PATH 中，则将其移动到到 PATH 的最后面)"
+,
+"en"
+:
+"Add a directory to the end of PATH (if the directory already exists in PATH, move it to the end of PATH)"
+}
+]
+}
+,
+"add_existed_folder"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Add PATH (Deduplicate and check if the directory exists)"
+,
+"cn"
+:
+"添加 PATH (去重并检查目录是否存在)"
+}
+,
+"#1"
+:
+{
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"mkdir aaa; x path add_existed_folder aaa"
+,
+"cn"
+:
+"添加 PATH (去重并检查目录是否存在)"
+,
+"en"
+:
+"Add PATH(Deduplicate and check if the directory exists)"
+}
+]
+}
+,
+"add_folder"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Add PATH (Deduplication does not check for the existence of a directory)"
+,
+"cn"
+:
+"添加 PATH (去重并不检查目录是否存在)"
+}
+,
+"#1"
+:
+{
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x path add_existed_folder aaa"
+,
+"cn"
+:
+"添加 PATH (去重并不检查目录是否存在)"
+,
+"en"
+:
+"Add PATH (removing duplicates does not check if the directory exists)"
+}
+]
+}
+,
+"#other"
+:
+{
+"en"
+:
+{
+"Please visit our homepage for more information:"
+:
+"https://x-cmd.com"
+}
+,
+"cn"
+:
+{
+"请访问我们的主页以获取更多信息："
+:
+"https://x-cmd.com"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x path"
+,
+"cn"
+:
+"交互展示当前环境中 PATH 内的二进制搜索目录"
+,
+"en"
+:
+"Interactive display of binary search directories within PATH in the current environment"
+}
+,
+{
+"cmd"
+:
+"x path uniq"
+,
+"cn"
+:
+"删除 PATH 中重复的目录"
+,
+"en"
+:
+"Delete duplicate directories in PATH"
+}
+,
+{
+"cmd"
+:
+"mkdir aaa; x path add_existed_folder aaa"
+,
+"cn"
+:
+"添加 PATH (去重并检查目录是否存在)"
+,
+"en"
+:
+"Add PATH(Deduplicate and check if the directory exists)"
+}
+,
+{
+"cmd"
+:
+"x path rm /bin"
+,
+"cn"
+:
+"删除 PATH 中的指定目录"
+,
+"en"
+:
+"Delete the specified directory in PATH"
+}
+]
+}
+

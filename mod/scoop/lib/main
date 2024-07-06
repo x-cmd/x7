@@ -1,0 +1,89 @@
+# shellcheck shell=dash disable=SC2034,2153
+
+
+___x_cmd_scoop___main(){
+    local X_help_cmd=; X_help_cmd='x help -m scoop' help:arg:parse
+    ___x_cmd_scoop___env_available || N=scoop M='scoop is only available on Windows' log:ret:1
+    x hascmd scoop || ___x_cmd_scoop_path_add___scoop || return
+
+    [ "$#" -gt 0 ] ||   set -- install
+    local op="$1";
+    shift ;
+    case "$op" in
+        # official command
+        alias|bucket|cache|cat|checkup|cleanup| \
+        create|depends|download|export|hold|home|import| \
+        info|list|prefix|reset|shim|status | \
+        unhold|uninstall|update|virustotal|which|help)
+            ___x_cmd_scoop___bin "$op"                      "$@"   ;;
+        mirror|--xmirror)   ___x_cmd_scoop___xmirror        "$@"   ;;
+        proxy|--xproxy)     ___x_cmd_scoop___xproxy         "$@"   ;;
+        search)             ___x_cmd_scoop_search           "$@"   ;;
+        aria2)              ___x_cmd_scoop_aria2            "$@"   ;;
+        config)             ___x_cmd_scoop_config           "$@"   ;;
+        install)            ___x_cmd_scoop_install          "$@"   ;;
+        ls)                 ___x_cmd_scoop_ls               "$@"   ;;
+        la)                 ___x_cmd_scoop_la               "$@"   ;;
+
+        :|ddgo)     ___x_cmd_scoop_ddgo                      "$@"  ;;
+        ::|ddgoai)  ___x_cmd_scoop_ddgoai                    "$@"  ;;
+
+        *)       N=scoop M="Unsupported subcmd => $op" log:ret:64  ;;
+    esac
+}
+
+___x_cmd_scoop___bin(){
+    ___x_cmd_cmds scoop "$@"
+}
+
+
+___x_cmd_scoop_config(){
+    # https://zs.fyi/archives/scoop-guidebook.html
+    local op="${1}"
+    [ -n "$op" ] || {
+        scoop:error "Please choose aria2 or provide scoop proxy config"
+        return 1
+    }
+    shift;
+    case "$op" in
+        # how to clear proxy
+        proxy)
+
+            ___x_cmd_scoop_config_proxy "$@" || return
+            ;;
+        *)
+
+            ___x_cmd_scoop___bin config "$op" "$@"
+            ;;
+    esac
+}
+
+___x_cmd_scoop_aria2(){
+    local X_help_cmd='___x_cmd_scoop_help aria2';   help:arg-null:parse
+    [ -n "$1" ] || {
+        scoop:error Please choose open or close
+        return 1
+    }
+    local op="${1}" ; shift
+
+    case "$op" in
+        enable)             scoop config aria2-enabled true                   ;;
+        disable)            scoop config aria2-enabled false                  ;;
+        *)                  N=scoop M="Unsupported subcmd => $1" log:ret:64   ;;
+    esac
+}
+
+___x_cmd_scoop_help(){
+    x help -m scoop "$@"  >&2
+    return 1
+}
+
+
+___x_cmd_scoop_config_proxy(){
+    if [ "$1" = --unset ]; then
+        ___x_cmd_scoop___bin config proxy ""
+    else
+        ___x_cmd_scoop___bin config proxy "$@"
+    fi
+}
+

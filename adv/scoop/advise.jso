@@ -1,0 +1,656 @@
+{
+"#name"
+:
+{
+"scoop"
+:
+null
+,
+"en"
+:
+"Windows Package Management Tool"
+,
+"cn"
+:
+"windows 的软件包管理工具"
+}
+,
+"#n"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"extends `scoop` subcmd or options"
+,
+"cn"
+:
+"继承 `scoop` 子命令或参数选项"
+}
+,
+"#exec"
+:
+"___x_cmd_advise__comp_from_xcmd \"$((offset-1))\""
+}
+,
+"install"
+:
+{
+"#synopsis"
+:
+[
+{
+"x scoop install <app>"
+:
+null
+}
+]
+,
+"#desc"
+:
+{
+"en"
+:
+"Install the specified application"
+,
+"cn"
+:
+"安装指定的应用程序"
+}
+,
+"$ref"
+:
+"x-advise://scoop/data/install.jso"
+}
+,
+"search"
+:
+{
+"#synopsis"
+:
+[
+{
+"x scoop search <app>"
+:
+null
+}
+]
+,
+"#desc"
+:
+{
+"en"
+:
+"Search for available applications"
+,
+"cn"
+:
+"搜索可用的应用程序"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"The name of the app"
+,
+"cn"
+:
+"app 的名称"
+}
+}
+}
+,
+"aria2"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Enable/disable aria2"
+,
+"cn"
+:
+"启用/禁用 aria2"
+,
+"$ref"
+:
+"x-advise://scoop/data/aria2.jso"
+}
+}
+,
+"config"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Get or set configuration values"
+,
+"cn"
+:
+"获取或设置配置值"
+}
+,
+"proxy"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Configure network proxy with native commands"
+,
+"cn"
+:
+"使用原生命令配置网络代理 proxy"
+}
+}
+}
+,
+"proxy"
+:
+{
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x scoop proxy use use http://127.0.0.1:8234"
+,
+"en"
+:
+"Set the proxy used for Scoop"
+,
+"cn"
+:
+"设置 Scoop 使用的代理"
+}
+,
+{
+"cmd"
+:
+"x scoop proxy try http://127.0.0.1:8234"
+,
+"cn"
+:
+"设置临时的仅对当前 shell 有效的代理（优先级比 use 高）"
+,
+"en"
+:
+"Set a temporary proxy that is only valid for the current Shell"
+}
+]
+,
+"#desc"
+:
+{
+"en"
+:
+"Using a proxy with the x-cmd proxy module"
+,
+"cn"
+:
+"通过 x-cmd proxy 模块使用代理"
+}
+,
+"$ref"
+:
+"x-advise://scoop/data/proxy.jso"
+}
+,
+"mirror"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Display or change the current mirror used for Scoop"
+,
+"cn"
+:
+"显示或更改 Scoop 当前使用的镜像"
+}
+,
+"$ref"
+:
+"x-advise://scoop/data/mirror.jso"
+}
+,
+"help"
+:
+{
+"#synopsis"
+:
+[
+{
+"x scoop help <command>"
+:
+null
+}
+]
+,
+"#desc"
+:
+{
+"en"
+:
+"Get help with the Scoop command"
+,
+"cn"
+:
+"获取 scoop 命令的帮助"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"The subcommand to be queried"
+,
+"cn"
+:
+"要查询的子命令"
+}
+}
+}
+,
+"ls"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"List installed software"
+,
+"cn"
+:
+"列出已安装软件"
+}
+,
+"-i|--installed"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"List installed software"
+,
+"cn"
+:
+"列出已安装的软件"
+}
+}
+,
+"-a|--all"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Listed installable software"
+,
+"cn"
+:
+"列出可安装的软件"
+}
+}
+,
+"-l|--local"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"View locally installed software (interactive interface enabled by default)"
+,
+"cn"
+:
+"查看本地已经安装的软件（默认启用交互界面）"
+}
+}
+,
+"-A|--available"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"View installable software (interactive interface enabled by default)"
+,
+"cn"
+:
+"查看可安装的软件（默认启用交互界面）"
+}
+}
+,
+"--app"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"View software using interactive apps (View installable software in interactive mode, view locally installed software in non-interactive mode)"
+,
+"cn"
+:
+"使用交互式 app 查看软件（交互模式下查看可安装的软件，非交互模式下查看本地已经安装的软件）"
+}
+}
+}
+,
+"la"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Listed installable software"
+,
+"cn"
+:
+"列出可安装的软件"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x scoop config proxy 127.0.0.0:8888"
+,
+"cn"
+:
+"使用原生代理命令"
+,
+"en"
+:
+"Using native proxy  commands"
+}
+,
+{
+"cmd"
+:
+"x scoop proxy use 127.0.0.0:8888"
+,
+"cn"
+:
+"通过 x-cmd proxy 模块使用代理"
+,
+"en"
+:
+"Using a proxy with the x-cmd proxy module"
+}
+,
+{
+"cmd"
+:
+"x scoop mirror set gitee"
+,
+"en"
+:
+"Set up buckets with a mirror suitable for users in mainland China"
+,
+"cn"
+:
+"设置适合中国大陆用户使用的 buckets 镜像"
+}
+,
+{
+"cmd"
+:
+"x scoop aria2 enable"
+,
+"cn"
+:
+"启用 aria2，使用多线程下载 scoop 包"
+,
+"en"
+:
+"Enable aria2 and use multithreading to download Scoop packages"
+}
+,
+{
+"cmd"
+:
+"x scoop info telegram --verbose"
+,
+"cn"
+:
+"查看telegram的详细信息"
+,
+"en"
+:
+"View detailed information about Telegram"
+}
+,
+{
+"cmd"
+:
+"x scoop install telegram  --no-cache"
+,
+"cn"
+:
+"不使用本地缓存,从远程源重新下载最新的 telegram"
+,
+"en"
+:
+"Do not use local cache, and re-download the latest Telegram from the remote source"
+}
+,
+{
+"cmd"
+:
+"x scoop bucket list"
+,
+"cn"
+:
+"查看当前使可用的 bucket"
+,
+"en"
+:
+"View the currently available buckets"
+}
+,
+{
+"cmd"
+:
+"x scoop bucket add <bucket>"
+,
+"cn"
+:
+"添加已知 bucket"
+,
+"en"
+:
+"Add known bucket"
+}
+,
+{
+"cmd"
+:
+"x scoop bucket add <name> <repo>"
+,
+"cn"
+:
+"添加第三方 bucket"
+,
+"en"
+:
+"Add a bucket from other"
+}
+,
+{
+"cmd"
+:
+"x scoop install <bucket name>/<app_name>"
+,
+"cn"
+:
+"使用三方 bucket 下载"
+,
+"en"
+:
+"Download from third-party buckets"
+}
+]
+,
+"ddgo|:"
+:
+{
+"#name"
+:
+{
+"x scoop :|ddgo <keyword>"
+:
+null
+,
+"en"
+:
+"Search software related information fron offical github repo by using DuckDuckGo"
+,
+"cn"
+:
+"使用 DuckDuckGo 搜索 scoop github 仓库的软件相关的信息"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x scoop : 7zip"
+,
+"en"
+:
+"Search scoop package for generating 7zip"
+,
+"cn"
+:
+"使用 DuckDuckGo 搜索 7zip 的软件包相关内容"
+}
+]
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Search keyword"
+,
+"cn"
+:
+"搜索词"
+}
+}
+}
+,
+"ddgoai|::"
+:
+{
+"#name"
+:
+{
+"x scoop ::|ddgoai <keyword>"
+:
+null
+,
+"en"
+:
+"Summarize content list about scoop software using DuckDuckGo and AI module"
+,
+"cn"
+:
+"使用 DuckDuckGo 和 AI 模块总结筛选 scoop 软件的相关内容列表"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x scoop :: 7zip"
+,
+"en"
+:
+"Summarize content list about 7zip by ai modules"
+,
+"cn"
+:
+"使用 ddgo 与 ai 模块总结关于 scoop 的 7zip 工具内容列表"
+}
+]
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Target keyword"
+,
+"cn"
+:
+"目标关键词"
+}
+}
+}
+,
+"#subcmd:Enhance"
+:
+[
+"mirror"
+,
+"proxy"
+,
+"ls"
+,
+"la"
+,
+"ddgo|:"
+,
+"ddgoai|::"
+]
+}
+

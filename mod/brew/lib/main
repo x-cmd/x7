@@ -1,0 +1,33 @@
+# shellcheck shell=dash
+
+# IMPORTANT: show people in advise how to shutdown the analytics
+
+___x_cmd log init brew
+xrc mirror
+xrc:mod:lib     brew        ls util __xmirror/_index __xproxy analytics/_index nv __repo install
+
+___x_cmd_brew___main(){
+    [ $# -gt 0 ]    ||  set - nv
+
+    ___x_cmd hascmd brew   ||  {
+        brew:warn "brew is not installed."
+        return 1
+    }
+
+    local op="$1";      shift
+    case "$op" in
+        i|install)          ___x_cmd_brew___exec install    "$@" ;;
+        ls|la)              ___x_cmd_brew_"$op"             "$@" ;;
+
+        mirror|--xmirror)   ___x_cmd_brew___xmirror         "$@" ;;
+        proxy|--xproxy)     ___x_cmd_brew___xproxy          "$@" ;;
+        a|analytics)        ___x_cmd_brew_analytics         "$@" ;;
+        nv)                 ___x_cmd_brew___nv              "$@" ;;
+        -h|--help)          ___x_cmd help -m brew           "$@" ;;
+        *)                  ___x_cmd_brew___exec    "$op"   "$@" ;;
+    esac
+}
+
+___x_cmd_brew___exec(){
+    ___x_cmd_brew___xproxy run ___x_cmd_cmds brew "$@"
+}

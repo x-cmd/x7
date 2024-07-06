@@ -1,0 +1,44 @@
+{
+"#name"
+:
+null
+,
+"#synopsis"
+:
+null
+,
+"#desc"
+:
+{
+"cn"
+:
+"x 系列的增强版 golang 运行时"
+,
+"en"
+:
+"The enhanced runtime of golang"
+}
+,
+"#tip:note"
+:
+[
+{
+"en"
+:
+"Extends 'go' options.\nSee https://go.dev/doc/ official website.\nSee `x go help` for more information.\n"
+,
+"cn"
+:
+"继承 'go' 参数选项与指令\n可查看 https://go.dev/doc/ 官网\n可通过 `x go help` 命令查看更多信息\n"
+}
+]
+,
+"#n"
+:
+{
+"#exec"
+:
+"___x_cmd_advise__comp_from_xcmd $((offset-1))"
+}
+}
+

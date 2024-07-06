@@ -1,0 +1,55 @@
+# shellcheck shell=dash disable=SC2034,SC2016
+x log init yum
+
+xrc:mod:lib  yum   __xmirror/_index  __repo __xproxy install nv
+
+___x_cmd_yum___main(){
+    [ "$#" -gt 0 ] ||   set -- nv
+    local op="$1"; shift
+    case "$op" in
+        -h|--help)
+            x help -m yum "$@"; return   ;;
+    esac
+
+    x hascmd yum || {
+        yum:warn "yum command not found."
+        return 1
+    }
+
+    case "$op" in
+        install)            ___x_cmd_yum_install            "$@" ;;
+        nv)                 ___x_cmd_yum___nv               "$@" ;;
+
+        proxy|--xproxy)     ___x_cmd_yum___xproxy           "$@" ;;
+        mirror|--xmirror)   ___x_cmd_yum___xmirror          "$@" ;;
+
+
+        # proxy)            ___x_cmd_yum___proxy    "$@"         ;;
+        *)                  ___x_cmd_cmds yum "$op" "$@"         ;;
+    esac
+}
+
+___x_cmd_yum___exec(){
+    yum:info "running command  →  x sudo yum $*"
+    ___x_cmd_yum___xproxy run x sudo yum "$@"
+}
+
+___x_cmd_yum___lsraw(){
+    local x_=; ___x_cmd_yum___lsraw_ || return 1
+    ___x_cmd_cmds_cat "$x_"
+}
+
+___x_cmd_yum___lsraw_(){
+    local cachefp=; cachefp="$___X_CMD_ROOT_DATA/yum/cache/lsname"
+    x ensurefp "$cachefp"
+    local l=;
+    <"$cachefp" read -r l
+
+    [ -n "$l" ] || {
+        x rmrf "$cachefp"
+        yum:error "list software fail, please try again."
+        return 1
+    }
+    x_="$cachefp"
+}
+

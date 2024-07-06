@@ -1,0 +1,98 @@
+{
+"#name"
+:
+{
+"zshpulgin"
+:
+null
+}
+,
+"#synopsis"
+:
+null
+,
+"#desc"
+:
+{
+"en"
+:
+"zsh plugin"
+,
+"cn"
+:
+"zsh 插件"
+}
+,
+"info"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Show plugins supported by zshplugin"
+,
+"cn"
+:
+"查看 zshplugin 支持的插件"
+}
+}
+,
+"load"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"zsh plugin load"
+,
+"cn"
+:
+"加载 zsh 插件"
+}
+}
+,
+"hasload"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Verify whether the specified zsh plugin is loaded"
+,
+"cn"
+:
+"验证指定 zsh 插件是否加载"
+}
+}
+,
+"#subcmd_help_tip"
+:
+true
+,
+"#other"
+:
+{
+"en"
+:
+{
+"Please visit our homepage for more information:"
+:
+"https://x-cmd.com"
+}
+,
+"cn"
+:
+{
+"请访问我们的主页以获取更多信息："
+:
+"https://x-cmd.com"
+}
+}
+}
+

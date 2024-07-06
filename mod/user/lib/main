@@ -1,0 +1,37 @@
+# shellcheck shell=dash
+
+x log init user
+xrc:mod:lib     user        add ls current passwd
+
+___x_cmd_user___main(){
+    [ "$#" -gt 0 ] || {
+        ___x_cmd_user_name
+        return
+    }
+
+    local op="$1"; shift
+    case "$op" in
+        add|ls|rm|name|passwd|isroot|id|in)
+            ___x_cmd_user_"$op" "$@" ;;
+        -h|--help)
+            x help -m user ;;
+    esac
+}
+
+# TODO: in --one-of
+___x_cmd_user_in(){
+    local a; a=" $(___x_cmd_cmds id -Gn) " || {
+        user:error "fail to judge current user is sudo user" --user "$USER" --cmd "id -Gn"
+        return 2
+    }
+
+    [ $# -gt 0 ]    ||  M="expect more than 1 argument" N=user log:ret:64
+
+    while [ $# -gt 0 ]; do
+        # work only in linux. in macos, the sudo group name is admin. This can also be redefined.
+        case " $a " in
+            *" $1 "*)     shift; continue      ;;
+            *)            return 1      ;;
+        esac
+    done
+}

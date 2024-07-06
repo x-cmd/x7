@@ -1,0 +1,43 @@
+# shellcheck shell=dash
+___x_cmd log init fish
+
+xrc:mod:lib     fish        __setup ddgo __sysco
+
+___x_cmd_fish___main(){
+    [ "$#" -gt 0 ] || {
+        ( ___x_cmd_fish___cmd )
+        return
+    }
+
+    local op="$1"; shift
+    case "$op" in
+        -h|--help)      ___x_cmd help -m fish   "$@" ;;
+        setup|--setup)  ___x_cmd_fish___setup   "$@" ;;
+        :|ddgo)         ___x_cmd_fish_ddgo      "$@" ;;
+
+        --sysco)        ___x_cmd_fish___sysco   "$@" ;;
+        --syscoco)      ___x_cmd_fish___syscoco "$@" ;;
+        *)              ___x_cmd_fish___cmd     "$@" ;;
+    esac
+}
+
+
+___x_cmd_fish___cmd(){
+    # TODO: prepare the fish package
+    ___x_cmd_hasbin fish || {
+        fish:info "Not found fish shell in this environment"
+        fish:info "Download command => x install fish"
+        if ! ___x_cmd_is_interactive; then
+            return 1
+        else
+            x ui yesno "Do you want to install fish ?" || return
+            ___x_cmd install fish || return
+        fi
+    }
+
+    ___x_cmd_fish___cmd(){
+        ___x_cmd_cmds fish "$@"
+    }
+
+    ___x_cmd_fish___cmd "$@"
+}

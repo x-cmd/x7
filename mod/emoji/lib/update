@@ -1,0 +1,24 @@
+# shellcheck shell=dash
+# cache
+___x_cmd_emoji_update(){
+    # TODO: using x-cmd url
+    x ensurefp "${___X_CMD_EMOJI_ART}"
+
+    local url
+
+    if [ "$___X_CMD_WEBSRC_REGION" = "cn" ]; then
+        url="https://gitcode.net/x-cmd/emoji/-/raw/main/emoji-test.txt?inline=false"
+    else
+        url="https://unicode.org/Public/emoji/15.0/emoji-test.txt"
+    fi
+    x rmrf "${___X_CMD_EMOJI_ART}" && x rmrf "$___X_CMD_ROOT_CACHE/emoji"
+    emoji:debug "URL: $url "
+    x httpget "$url" "${___X_CMD_EMOJI_ART}" || {
+        x rmrf "${___X_CMD_EMOJI_ART}" && x rmrf "$___X_CMD_ROOT_CACHE/emoji"
+        emoji:error "Download failed; Please try again"
+        return 1
+    }
+    emoji:info "Update emoji source successfully"
+}
+
+

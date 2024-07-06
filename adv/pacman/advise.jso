@@ -1,0 +1,464 @@
+{
+"#name"
+:
+{
+"pacman"
+:
+null
+,
+"en"
+:
+"pacman command enhancements"
+,
+"cn"
+:
+"pacman 命令增强"
+}
+,
+"#subcmd_help_tip"
+:
+true
+,
+"#subcmd:Enhance"
+:
+[
+"install"
+,
+"browse"
+,
+"mirror|--xmirror"
+,
+"proxy|--xproxy"
+,
+"ls"
+,
+"la"
+,
+"nv"
+]
+,
+"install"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"通过交互式 UI 来安装软件"
+,
+"en"
+:
+"Install software through interactive UI"
+}
+}
+,
+"browse"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"用浏览器打开 pacman 的 Wiki"
+,
+"en"
+:
+"Open the pacman Wiki in a browser"
+}
+}
+,
+"nv"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Use the interactive UI to select which apps to install"
+,
+"cn"
+:
+"使用交互式 UI 来选择需要安装的应用"
+}
+}
+,
+"ls"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"List installed software"
+,
+"cn"
+:
+"列出已安装软件"
+}
+,
+"-i|--installed"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"List installed software"
+,
+"cn"
+:
+"列出已安装的软件"
+}
+}
+,
+"-a|--all"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Listed installable software"
+,
+"cn"
+:
+"列出可安装的软件"
+}
+}
+,
+"-l|--local"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"View locally installed software (interactive interface enabled by default)"
+,
+"cn"
+:
+"查看本地已经安装的软件（默认启用交互界面）"
+}
+}
+,
+"-A|--available"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"View installable software (interactive interface enabled by default)"
+,
+"cn"
+:
+"查看可安装的软件（默认启用交互界面）"
+}
+}
+,
+"--app"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"View software using interactive apps (View installable software in interactive mode, view locally installed software in non-interactive mode)"
+,
+"cn"
+:
+"使用交互式 app 查看软件（交互模式下查看可安装的软件，非交互模式下查看本地已经安装的软件）"
+}
+}
+}
+,
+"la"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Listed installable software"
+,
+"cn"
+:
+"列出可安装的软件"
+}
+}
+,
+"proxy|--xproxy"
+:
+{
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x pacman proxy use --httpx 127.0.0.1:8234"
+,
+"en"
+:
+"Set the proxy used for pacman"
+,
+"cn"
+:
+"设置 pacman 使用的代理"
+}
+,
+{
+"cmd"
+:
+"x pacman proxy try --httpx 127.0.0.1:8234"
+,
+"cn"
+:
+"设置临时的仅对当前 shell 有效的代理（优先级比 use 高）"
+,
+"en"
+:
+"Set a temporary proxy that is only valid for the current Shell"
+}
+]
+,
+"#desc"
+:
+{
+"en"
+:
+"Display or change the current proxy used for pacman"
+,
+"cn"
+:
+"显示或更改 pacman 当前使用的代理"
+}
+,
+"use"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Set the proxy used for pacman"
+,
+"cn"
+:
+"设置 pacman 使用的代理"
+}
+}
+,
+"unuse"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Unset the proxy used for pacman"
+,
+"cn"
+:
+"取消设置 pacman 使用的代理"
+}
+}
+,
+"try"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"设置仅对当前 Shell 有效的代理"
+,
+"en"
+:
+"Set a proxy that is only valid for the current Shell"
+}
+}
+,
+"untry"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"取消设置仅对当前 Shell 有效的代理"
+,
+"en"
+:
+"Unset a proxy that is only valid for the current Shell"
+}
+}
+,
+"run"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"运行代理的代码"
+,
+"en"
+:
+"Run the code of the proxy"
+}
+}
+}
+,
+"mirror|--xmirror"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Display or change the current mirror used for pacman"
+,
+"cn"
+:
+"显示或更改 pacman 当前使用的镜像"
+}
+,
+"set"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Set the mirror used for pacman"
+,
+"cn"
+:
+"设置 pacman 使用的镜像"
+}
+,
+"#1"
+:
+{
+"#cand"
+:
+[
+"ali"
+,
+"tuna"
+,
+"ustc"
+,
+"bfsu"
+]
+}
+}
+,
+"ls"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"List all available mirrors for pacman"
+,
+"cn"
+:
+"列出 pacman 的所有可用镜像"
+}
+}
+,
+"current"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Display the current mirror used for pacman"
+,
+"cn"
+:
+"显示 pacman 当前使用的镜像"
+}
+}
+,
+"unset"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Roll back to the original source"
+,
+"cn"
+:
+"回滚到最初的源"
+}
+}
+}
+,
+"#n"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"extends `pacman` subcmd or options"
+,
+"cn"
+:
+"继承 `pacman` 子命令或参数选项"
+}
+,
+"#exec"
+:
+"___x_cmd_advise__comp_from_xcmd $((offset-1))"
+}
+,
+"#other"
+:
+{
+"en"
+:
+{
+"Please visit our homepage for more information:"
+:
+"https://x-cmd.com"
+}
+,
+"cn"
+:
+{
+"请访问我们的主页以获取更多信息："
+:
+"https://x-cmd.com"
+}
+}
+}
+

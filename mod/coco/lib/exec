@@ -1,0 +1,17 @@
+# shellcheck shell=dash
+# generate shell command
+
+___x_cmd_coco_exec(){
+    case "$1" in
+        -h|--help) ___x_cmd help -m coco --exec; return 0 ;;
+    esac
+
+    local LOCALSHELL=
+    local OS=
+
+    local x_=""
+    x os name_
+
+    LOCALSHELL="$___X_CMD_SHELL" OS="$x_" x chat --send --type coco,shell --minion "$___X_CMD_ROOT_MOD/coco/lib/minion/exec.yml" "$@"
+}
+

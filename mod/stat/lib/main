@@ -1,0 +1,18 @@
+# shellcheck shell=dash
+
+xrc:mod:lib     stat    execraw   exec
+
+___x_cmd_stat___main(){
+    [ "$#" -gt 0 ] ||   set --      --exec
+
+    local op="$1";      shift
+    case "$op" in
+        -h|--help)      ___x_cmd help -m stat;  return ;;
+        # --mod)          ___x_cmd_stat___mod "$@" ;;
+        --exec)         ___x_cmd_stat___exec "$@" ;;
+        *)              ___x_cmd_stat___exec "$op" "$@" ;;
+    esac
+}
+
+
+

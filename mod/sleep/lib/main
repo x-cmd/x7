@@ -1,0 +1,9 @@
+# shellcheck shell=dash
+
+___x_cmd_sleep___main(){
+    local x_
+    if  x humantime tosec_ "$@"; then
+        x:debug "Sleep in seconds: $x_"
+        ___x_cmd_cmds_sleep "$x_"
+    fi
+}

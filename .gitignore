@@ -1,0 +1,6 @@
+/repo/
+.tmp*
+/forest/
+/x*/
+!.vscode/
+!.x-cmd/

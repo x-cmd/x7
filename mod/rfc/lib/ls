@@ -1,0 +1,34 @@
+# shellcheck shell=dash
+
+___x_cmd_rfc_ls(){
+    [ "$#" -gt 0 ] ||   set - --app
+
+    local op="$1"; shift
+    case "$op" in
+        --app)          ___x_cmd_rfc_ls___app      "$@" ;;
+        --csv)          ___x_cmd_rfc_ls___csv      "$@" ;;
+
+        *)              ___x_cmd_rfc_ls___raw      "$@" ;;
+    esac
+}
+
+
+___x_cmd_rfc_ls___app(){
+    if [ -t 1 ] && ___x_cmd_is_interactive ; then
+        ___x_cmd_rfc_ls___csv | ___x_cmd csv app \
+            --hide_index                            \
+            --width "5,60%,-,-,-,-,-,-,-,-,-,-"     \
+            --table-width 60%                       \
+            --preview author,date,format,status,doi,obsoletes,obsoleted_by,updates,updated_by,also
+    else
+        ___x_cmd_rfc_ls___csv
+    fi
+}
+
+___x_cmd_rfc_ls___csv(){
+    ___x_cmd_rfc_ls___raw | ___x_cmd_cmds_awk -f "$___X_CMD_ROOT_MOD/rfc/lib/awk/ls.awk"
+}
+
+___x_cmd_rfc_ls___raw(){
+    ___x_cmd ccmd 1d -- ___x_cmd curl https://www.rfc-editor.org/rfc/rfc-index.txt
+}

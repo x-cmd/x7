@@ -1,0 +1,154 @@
+
+# This will only invoked when xonsh is activate on interactive mode ...
+import re
+import os
+import random
+import shutil
+
+def ___x_cmd___rcxonsh_addp(arg_path):
+    if arg_path not in __xonsh__.env['PATH']:
+        __xonsh__.env['PATH'].insert(0, arg_path)
+
+def ___x_cmd___rcxonsh_addpifh(cmd_name, arg_path):
+    if shutil.which(cmd_name):
+        ___x_cmd___rcxonsh_addp(arg_path)
+
+def ___x_cmd___rcxonsh_addpifd(arg_path):
+    if os.path.isdir(arg_path):
+        ___x_cmd___rcxonsh_addp(arg_path)
+
+
+if os.path.isfile("$HOME/.x-cmd.root/ctrl/pixi"):
+    __xonsh__.env['PATH'].insert(-1, "$HOME/.pixi/bin")
+
+___x_cmd___rcxonsh_addp("$HOME/.x-cmd.root/bin")
+___x_cmd___rcxonsh_addp("$HOME/.x-cmd.root/local/data/bin/l/j/h/bin")
+
+___x_cmd___rcxonsh_addpifd("$HOME/.cargo/bin")
+___x_cmd___rcxonsh_addpifh("go","$HOME/go/bin")
+
+___x_cmd___rcxonsh_addpifh("python","$HOME/.local/bin")
+
+___x_cmd___rcxonsh_addpifh("deno","$HOME/.deno/bin")
+___x_cmd___rcxonsh_addpifh("bun","$HOME/.bun/bin")
+___x_cmd___rcxonsh_addpifh("npm","$HOME/.npm/bin")
+
+
+
+# xonsh defaults all variables exported
+$___X_CMD_IS_INTERACTIVE_FORCE = 1
+$___X_CMD_THEME_RELOAD_DISABLE = 1
+
+$___X_CMD_CD_RELM_0 = $PWD
+
+xbinexp = "$HOME/.x-cmd.root/bin/xbinexp"
+
+def ___x_cmd_xonsh_x(args):
+    $___X_CMD_XBINEXP_FP = $HOME + "/.x-cmd.root/local/data/xbinexp/onsh/"  + str(os.getpid()) + "_" + str(random.randint(0,32767))
+    # mkdir -p $___X_CMD_XBINEXP_FP
+
+    $___X_CMD_XBINEXP_EVAL = ""
+    $___X_CMD_XBINEXP_INITENV_OLDPWD = $OLDPWD
+
+    # xbinexp @(args)
+    if r := ![ xbinexp @(args) ] :
+        ___exit_code = r.returncode
+    else:
+        ___exit_code = 1
+
+    if not os.path.isdir( $___X_CMD_XBINEXP_FP ):
+        return ___exit_code
+
+    for posixfp in gp`$___X_CMD_XBINEXP_FP/*_*`:
+        value = open(posixfp).read()
+        name = re.sub(r"^[^_]*_", "", posixfp.name)
+        if name == "PWD":
+            cd @(value)
+        else:
+            ${...}[name] = value
+
+    if "onsh" in $___X_CMD_XBINEXP_FP:
+        # dangerous
+        rm -rf "$___X_CMD_XBINEXP_FP"
+
+    if "___X_CMD_XBINEXP_EVAL" in ${...} and $___X_CMD_XBINEXP_EVAL != "":
+        evalx_cmd = $___X_CMD_XBINEXP_EVAL
+        del ${...}["___X_CMD_XBINEXP_EVAL"]
+        evalx( evalx_cmd )
+
+    return ___exit_code
+
+aliases['xbin'] = ___x_cmd_xonsh_x
+
+aliases['___x_cmd'] = "$HOME/.x-cmd.root/bin/xbinexp"
+aliases['x'] = "$HOME/.x-cmd.root/bin/xbinexp" # ___x_cmd_xonsh_x
+
+def ___x_cmd_xonsh_c(args):
+    len_of_args = len(args)
+    if len_of_args == 0:
+        xbin cd
+        return
+
+    if len_of_args == 1:
+        arg1 = args[0]
+        if arg1 == "-":
+            cd $OLDPWD
+            return
+        if arg1 == "~":
+            cd ~
+            return
+
+        if os.path.isdir(arg1):
+            cd @(arg1)
+            return
+
+    xbin cd @(args)
+
+
+def ___x_cmd_xonsh_chat_agent_func( args ):
+    $___X_CMD_CHAT_NORMAL_ALIAS = args[0]
+    x chat "--send" @(args[1:])
+
+def ___x_cmd_xonsh_writer_agent_func( args ):
+    $___X_CMD_DEFAULT_LANGUAGE = args[0]
+    x writer @(args[1:])
+
+aliases['___x_cmd_xonsh_agent_chat']    = ___x_cmd_xonsh_chat_agent_func
+aliases['___x_cmd_xonsh_agent_writer']  = ___x_cmd_xonsh_writer_agent_func
+
+
+aliases['c']            = ___x_cmd_xonsh_c
+
+aliases["xw"]           = [ "___x_cmd", "ws" ]
+aliases["xx"]           = [ "___x_cmd", "xx" ]
+
+aliases["xd"]           = [ "___x_cmd", "docker" ]
+aliases["xg"]           = [ "___x_cmd", "git" ]
+aliases["xp"]           = [ "___x_cmd", "pwsh" ]
+
+
+aliases[',']            = [ "xbin", "onsh", "--sysco" ]
+aliases['，']           = [ "xbin", "onsh", "--sysco" ]
+
+aliases[',,']           = [ "xbin", "onsh", "--syscoco" ]
+aliases['，，']         = [ "xbin", "onsh", "--syscoco" ]
+
+
+# x chat
+aliases['@']            = [ "___x_cmd_xonsh_agent_chat", "" ]
+aliases['@l']           = [ "___x_cmd_xonsh_agent_chat", "l" ]
+aliases['@lms']         = [ "___x_cmd_xonsh_agent_chat", "lms" ]
+aliases['@o']           = [ "___x_cmd_xonsh_agent_chat", "o" ]
+
+aliases['@gpt']         = [ "___x_cmd_xonsh_agent_chat", "gpt" ]
+aliases['@gpt3']        = [ "___x_cmd_xonsh_agent_chat", "gpt3" ]
+aliases['@gpt4']        = [ "___x_cmd_xonsh_agent_chat", "gpt4" ]
+aliases['@gpt4t']       = [ "___x_cmd_xonsh_agent_chat", "gpt4t" ]
+aliases['@gemini']      = [ "___x_cmd_xonsh_agent_chat", "gemini" ]
+aliases['@mistral']     = [ "___x_cmd_xonsh_agent_chat", "mistral" ]
+aliases['@kimi']        = [ "___x_cmd_xonsh_agent_chat", "kimi" ]
+
+# x writer
+aliases['@zh']          = [ "___x_cmd_xonsh_agent_writer", "zh" ]
+aliases['@en']          = [ "___x_cmd_xonsh_agent_writer", "en" ]
+

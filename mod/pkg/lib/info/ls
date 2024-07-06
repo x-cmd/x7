@@ -1,0 +1,134 @@
+# shellcheck shell=sh disable=SC2039,SC1090,SC3043,SC2263,2012    # xrc
+
+# ls app, default app
+___x_cmd_pkg_ls(){
+    case "$1" in
+        -d|--downloaded)   shift;  ___x_cmd_pkg_ls___downloaded  "$@" ;;
+        -i|--installed)    shift;  ___x_cmd_pkg_ls___installed   "$@" ;;
+        -a|--all)          shift;  ___x_cmd_pkg_ls___all         "$@" ;;
+        --xbin)            shift;  ___x_cmd_pkg_ls___xbin        "$@" ;;
+        -h|--help)         ___x_cmd help -m pkg ls ;;
+        *)                 ___x_cmd_pkg_ls___installed "$@" ;;
+    esac
+}
+
+___x_cmd_pkg_ls___downloaded(){
+    local X_help_cmd='x help -m pkg ls --downloaded';  help:arg:parse
+    [ -d "$___X_CMD_PKG_DOWNLOAD_PATH" ] || return 0
+    if [ "$#" -gt 0 ]; then
+        [ -d "$___X_CMD_PKG_DOWNLOAD_PATH/$1" ] || {
+            pkg:error "Not found $1 in your download path"
+            return 1
+        }
+        ___x_cmd fsiter "$___X_CMD_PKG_DOWNLOAD_PATH/$1"
+    else
+        ___x_cmd fsiter "$___X_CMD_PKG_DOWNLOAD_PATH"
+    fi
+}
+
+
+___x_cmd_pkg_ls___xbin(){
+    local X_help_cmd='x help -m pkg ls --xbin';   help:arg:parse
+
+    # TODO: Need to be removed in the future
+    ___x_cmd_pkg_update___check || return
+    ___x_cmd_pkg_ls___xbin_inner
+}
+
+___x_cmd_pkg_ls___xbin_inner(){
+    local fp="$___X_CMD_PKG_METADATA_PATH/binmod.txt"
+    [ -f "$fp" ] || return
+    <"$fp" ___x_cmd_cmds_awk -v FS=":" '{ if($2 != ""){ print $2 }}'
+}
+
+# Invoked pkg ls installed
+# TODO: efficiency defect
+___x_cmd_pkg_ls___installed(){
+    if ! ___x_cmd_is_interactive || [ ! -t 1 ]; then
+        ___x_cmd_pkg_ls___installed_inner
+    else
+        ___x_cmd_pkg_ls___installed_inner | ___x_cmd_pkg_ls___show_info "/"
+    fi
+}
+
+___x_cmd_pkg_ls___show_info(){
+    local _FS="${1:-"/"}"
+    ___x_cmd_pkg_osarch_
+    local locate_list=; locate_list="$(___x_cmd_pkg_ll_inner)"
+    IS_ERREXIT=0 \
+    LC_ALL="$___X_CMD_AWK_LANGUAGE_UTF8" \
+    LOCAL_LIST="${locate_list}" \
+    ___x_cmd_cmds_awk -v FS="$_FS" \
+        -v OSARCH="$___X_CMD_PKG_OSARCH" \
+        -v PKG_RAWPATH="$___X_CMD_PKG_METADATA_PATH" \
+        -v TH_THEME_COLOR="\\033[${___X_CMD_THEME_COLOR_CODE}m" \
+        -f "$___X_CMD_ROOT_MOD/awk/lib/core.awk" \
+        -f "$___X_CMD_ROOT_MOD/awk/lib/j/json.awk"  \
+        -f "$___X_CMD_ROOT_MOD/awk/lib/j/jqparse.awk" \
+        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/util.awk" \
+        -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.ls.awk"
+}
+
+___x_cmd_pkg_ls___installed_inner(){
+    (
+        ___x_cmd_cmds_cd "${___X_CMD_PKG_ROOT_SPHERE}" || return 1
+        local i; for i in */*/*/*; do
+            { [ "$i" != "${i#*"/tree."}" ] && [ -d "$i" ]; } || continue
+            printf "%s\n" "${i#*/*/}"
+        done 2>/dev/null
+    )
+}
+
+___x_cmd_pkg_ls___all(){
+    local X_help_cmd='x help -m pkg ls --all';    help:arg:parse
+
+    # TODO: Need to be removed in the future
+    ___x_cmd_pkg_update___check || return
+
+    local pkg_name="${1}"; [ -n "$pkg_name" ] || {
+        ___x_cmd_pkg_ll
+        return
+    }
+
+    ___x_cmd_pkg_osarch_ || return 1
+    local osarch="${___X_CMD_PKG_OSARCH}"
+
+    # TODO: avoid to use find and subshell
+    local json_path
+    if ! json_path="$(___x_cmd_cmds find "$___X_CMD_PKG_METADATA_PATH"/*/"$pkg_name/version.tt.json")" 2>/dev/null; then
+        pkg:error "Not found version.tt.json of [pkg=$pkg_name]"
+        return 1
+    fi
+    ___x_cmd_pkg_ls___all_version "$json_path" "$osarch"
+}
+
+___x_cmd_pkg_ls___all_version(){
+    local jsonfp="$1"
+    local osarch="$2"
+    [ -f "$jsonfp" ] || return
+    [ -n "$osarch" ] || { ___x_cmd_pkg_osarch_ || return 1; osarch="$___X_CMD_PKG_OSARCH"; } || N=pkg M="Not found osarch" log:ret:1
+    osarch="$osarch" ___x_cmd ja -f "$___X_CMD_ROOT_MOD/pkg/lib/awk/pkg.ls_all_version.awk" < "$jsonfp"
+}
+
+___x_cmd_pkg_ls___all_candidate()(
+    # TODO: Need to be removed in the future
+    local op="$1"
+    local suffix="$2"
+    ___x_cmd_pkg_update___check || return
+
+    ___x_cmd_cmds_cd "$___X_CMD_PKG_METADATA_PATH" 2>/dev/null || {
+        pkg:error Can not found dir: "$___X_CMD_PKG_METADATA_PATH"
+        return 1
+    }
+    for dir in *; do
+        dir="$___X_CMD_PKG_METADATA_PATH/$dir"
+        [ -d "$dir" ] || continue
+        ___x_cmd_cmds_cd "$dir" 2>/dev/null || continue
+        for candidate in *; do
+            case "$candidate" in
+                bash-preexec)   continue ;;
+                "$op"*)        printf "%s\n" "${candidate}${suffix}" ;;
+            esac
+        done
+    done 2>/dev/null
+)

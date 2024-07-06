@@ -1,0 +1,35 @@
+# shellcheck shell=dash disable=SC2034,SC2016
+
+___x_cmd_apk___repo_ls(){
+    ___x_cmd_cmds apk list
+}
+
+___x_cmd_apk___repo_lsname(){
+    apk:info "running command  →  apk list"
+    ___x_cmd_cmds apk list "$@" | ___x_cmd_cmds awk '{
+        l = $1
+        sub("\-[^-]*$", "", l)
+        sub("\-[^-]*$", "", l)
+
+        if (arr[l] != 1) print l
+        arr[l] = 1
+    }' | ___x_cmd_cmds sort -u
+}
+
+# ls to csv
+___x_cmd_apk___repo_ls_csv(){
+    ___x_cmd_cmds apk list -a
+}
+
+___x_cmd_apk___repo_browse(){
+    [ $# -gt 0 ] || {
+        x browse https://pkgs.alpinelinux.org/packages
+        return
+    }
+
+    x browse "https://pkgs.alpinelinux.org/packages?name=*$1*"
+}
+
+___x_cmd_apk___repo_search(){
+    ___x_cmd_cmds apk search "$1"
+}

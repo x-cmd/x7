@@ -1,0 +1,30 @@
+# shellcheck shell=sh disable=SC3043,SC2120 # xrc
+
+x log init boot
+
+___X_CMD_BOOT_DATA="$___X_CMD_ROOT_DATA/boot"
+
+xrc:mod:lib boot    mod rc chrun ch alterdefault initrootbin
+
+___x_cmd_boot(){
+    if [ ! -d "$___X_CMD_BOOT_DATA" ] && ! x mkdirp "$___X_CMD_BOOT_DATA"; then
+        printf "boot abort for mkdir fails: %s\n" "$___X_CMD_BOOT_DATA" >&2
+        return 1
+    fi
+
+    case "$1" in
+        alterdefault)   shift; ___x_cmd_boot_alterdefault "$@"  ;;
+        init)           xrc:mod boot/lib/init                   ;;
+        clear)          xrc:mod boot/lib/clear                  ;;
+
+        ch)             shift; ___x_cmd_boot_ch "$@"            ;;
+        chrun)          shift; ___x_cmd_boot_chrun "$@"         ;;
+        # setup)          xrc:mod boot/lib/setup ;; # alread move to history
+        rc)             shift; ___x_cmd_boot_rc "$@"            ;;
+
+        mod)            shift; ___x_cmd_boot_mod "$@"           ;;
+        *)              x help -m boot                          ;;
+    esac
+}
+
+xrc setmain ___x_cmd_boot

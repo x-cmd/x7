@@ -1,0 +1,10 @@
+# shellcheck shell=dash
+
+# x coco convert java python,c,cpp
+
+___x_cmd_coco___comment(){
+    local file_path="$1"
+    [ -f "$file_path" ] ||  N=coco M="Please provide a valid [filepath=$file_path]" log:ret:64
+    ___x_cmd_cmds_cat "$file_path" |  x chat --request --type bug,coco --pipe --minion "$___X_CMD_ROOT_MOD/coco/lib/minion/comment.yml"
+}
+

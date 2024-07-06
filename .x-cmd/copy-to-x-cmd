@@ -1,0 +1,27 @@
+# TODO: move to yanfa
+
+copy_main(){(
+    local dst="${1:-"$HOME/.x-cmd.root/v/.repo/x-cmd/x-cmd"}"
+    [ -d "$dst" ] || {
+        x:error "Exepct to be a folder with x-cmd worktree: $dst"
+        return 1
+    }
+
+    local metadatadir=".x-cmd/metadata"
+
+    mkdir -p "$dst/$metadatadir"
+
+    (
+        printf "%s\n" "x7"
+        x git meta id
+        x git meta branch
+    ) >"$metadatadir/xx.info.txt"
+
+    local tgt; for tgt in X mod adv $metadatadir/version_sum $metadatadir/mod.index.txt $metadatadir/yy.info.txt $metadatadir/xx.info.txt; do
+        x rmrf "$dst/$tgt"
+        command cp -r "$tgt" "$dst/$tgt"
+    done
+)}
+
+copy_main "$@"
+

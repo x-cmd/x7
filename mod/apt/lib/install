@@ -1,0 +1,61 @@
+# shellcheck shell=dash
+
+___x_cmd_apt_install(){
+    case "$1" in
+        -h|--help) ___x_cmd help -m apt install ; return 0 ;;
+    esac
+
+    if [ $# -eq 0 ]; then
+        ___x_cmd_apt_install___app
+    else
+        ___x_cmd_apt___exec install "$@"
+    fi
+}
+
+___x_cmd_apt_install___app(){
+    [ -f "/var/lib/apt/lists/lock" ] || {
+        apt:info "The first use of apt is detected and the local software repository list is ready to be updated."
+        ___x_cmd apt update
+        ___x_cmd_apt___repo_lsname > "$___X_CMD_APT_CACHE_PATH/lsname"
+    }
+
+    { [ -t 1 ] && ___x_cmd_is_interactive; } \
+        || {
+            ___x_cmd_apt___lsraw
+            return 0
+        }
+
+    apt:info "Use 'x apt -h' for help."
+    apt:info "Select a package to install, or view information."
+
+    local x_=""
+    ___x_cmd_apt___lsraw_ || return
+    local datafile="$x_"
+    x_=; ___x_cmd_storeread_ ___x_cmd pick --width 40 --col 10 --datafile "$datafile"
+    local software="$x_"
+
+    [ -n "$software" ] || {
+            apt:info "Exit because no software is selected."
+            return 0
+        }
+
+    local id=
+    # TODO: Maybe view the source code, or open install information
+    ___x_cmd ui select id "What to do NEXT"    \
+        "x apt install   $software"     \
+        "x apt reinstall $software"     \
+        "x apt show      $software"     \
+        "browse repo of  $software"     \
+        "apt --help"                    \
+        "EXIT"     || return
+    case "$id" in
+        1)      ___x_cmd apt install   "$software" ;;
+        2)      ___x_cmd apt reinstall "$software" ;;
+        3)      ___x_cmd apt show      "$software" ;;
+        # 4)      ___x_cmd install       "$software" ;;
+        4)      ___x_cmd_apt___repo_browse "$software" ;;
+        5)      ___x_cmd help -m apt ;;
+        6)      return 0 ;;
+    esac
+}
+

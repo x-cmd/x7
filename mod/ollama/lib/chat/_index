@@ -1,0 +1,114 @@
+# shellcheck shell=dash
+xrc chat
+xrc:mod:lib     ollama      chat/send
+
+___x_cmd_ollama_chat(){
+    local X_help_cmd='x help -m ollama chat'; help:arg:parse
+    local op="$1";
+    case "$op" in
+        request|exec)
+            shift; ___x_cmd_ollama_chat_"$op" "$@" ;;
+        *)  N=ollama M="Not support such option '$op'" log:ret:64
+    esac
+}
+
+___x_cmd_ollama_chat_request(){
+    local X_help_cmd='x help -m ollama chat request'; help:arg:parse
+
+    ___x_cmd_ollama_is_installed || return
+    ___x_cmd chat --exec --provider ollama "$@"
+}
+
+___x_cmd_ollama_chat_exec(){
+
+    [ -n "$model" ] || {
+        local model=
+        [ -n "$model" ] || model="$(___x_cmd_ollama_current_model 2>/dev/null )"
+        [ -n "$model" ] || model="llama3"
+    }
+
+    local endpoint_tmp=
+    ___x_cmd_ollama_cur endpoint_tmp:=endpoint 2>/dev/null
+
+    if [ -z "$endpoint_tmp" ]; then
+        ___x_cmd_ollama_model_has_model "$model" || N=ollama M="[MODLE ==> $model] not found, try pulling it first" log:ret:64
+    fi
+
+    local cfg_temperature=; local cfg_ctx=
+
+    # TODO: add cfg_numctx, cfg_temperature
+    ___x_cmd_ollama_cfg --var cfg_temperature=temperature  cfg_ctx=ctx  2>/dev/null
+    ollama:debug  --model "$model" "chat exec"
+
+    [ -n "$cfg_ctx" ]         || cfg_ctx=8000
+    [ -n "$cfg_temperature" ] || cfg_temperature=0.3
+
+    {
+        userlang="${cfg_userlang:-$LANG}" \
+        BODY="$question" \
+        ___x_cmd cawk  -E ___X_CMD_CHAT_SESSION_DIR,session,history_num,minion,model,chatid,minion_json_cache,system,type,filelist_attach   \
+                -E cfg_history_num,cfg_session,cfg_minion,cfg_maxtoken,cfg_seed,cfg_temperature,cfg_ctx \
+                -m j/json,j/jiter,j/jcp \
+                -f "$___X_CMD_ROOT_MOD/chat/lib/awk/history.awk"        \
+                -f "$___X_CMD_ROOT_MOD/chat/lib/awk/util.awk"           \
+                -f "$___X_CMD_ROOT_MOD/chat/lib/awk/minion.awk"         \
+                -f "$___X_CMD_ROOT_MOD/chat/lib/awk/creq.awk"           \
+                -f "$___X_CMD_ROOT_MOD/chat/lib/awk/cres.awk"           \
+                -f "$___X_CMD_ROOT_MOD/ollama/lib/awk/ollama.awk"       \
+                -f "$___X_CMD_ROOT_MOD/ollama/lib/awk/handle_request.awk"
+    } | ( ___x_cmd_ollama_chat_request___launch )
+}
+
+___x_cmd_ollama_chat_request___launch(){
+    local content_dir
+    read -r content_dir
+
+    ___x_cmd_ollama_chat_request___trapexit(){
+        ___x_cmd rmrf "$content_dir/chat.running"
+    }
+
+    printf "%s\n" $$ >"$content_dir/chat.running"
+    trap '___x_cmd_ollama_chat_request___trapexit' EXIT
+
+    {
+        read -r model
+
+        local requestbody
+        read -r requestbody
+
+        ___x_cmd retry --max 2 --interval 3 ___x_cmd_ollama_chat_request___try
+    } || {
+        ___x_cmd_ollama_chat_request___trapexit
+        return 1
+    }
+}
+
+___x_cmd_ollama_chat_request___try(){
+    [ -z "$confirm_before_send" ] || {
+        printf "%s\n" "$requestbody" | ___x_cmd j2y | ___x_cmd bat -l yml --wrap never >/dev/tty
+        ___x_cmd ui yesno "Do your want to send this message?" || {
+            ___X_CMD_RETRY_ABORT=1
+            return 1
+        }
+        confirm_before_send=
+    }
+
+    {
+        ___x_cmd ccmd "$cache_time" -- \
+            ___x_cmd_ollama_api_chat "$requestbody" "$model"
+    } | {
+        local interative=
+        if ___x_cmd_is_interactive; then interative=1; fi
+
+        local errcode=0
+        ___x_cmd cawk  -E content_dir,interative         \
+                -m j/json,j/jiter,j/jcp                                     \
+                -f "$___X_CMD_ROOT_MOD/chat/lib/awk/util.awk"               \
+                -f "$___X_CMD_ROOT_MOD/chat/lib/awk/minion.awk"             \
+                -f "$___X_CMD_ROOT_MOD/chat/lib/awk/cres.awk"               \
+                -f "$___X_CMD_ROOT_MOD/ollama/lib/awk/ollama.awk"           \
+                -f "$___X_CMD_ROOT_MOD/ollama/lib/awk/ollama_stream_output_util.awk"    \
+                -f "$___X_CMD_ROOT_MOD/ollama/lib/awk/handle_response.awk"
+    }
+}
+

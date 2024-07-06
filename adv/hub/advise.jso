@@ -1,0 +1,134 @@
+{
+"#desc"
+:
+{
+"cn"
+:
+"使用 x hub 快速上传/分享代码。"
+,
+"en"
+:
+"Use x hub to quickly put/share your code."
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x hub file eput <local_path> <remote_path>"
+,
+"cn"
+:
+"加密上传本地文件到云端"
+,
+"en"
+:
+"Encrypt and upload local files to the cloud"
+}
+,
+{
+"cmd"
+:
+"x hub file put --public example.txt"
+,
+"cn"
+:
+"上传本地文件 example.txt 到云端 me:example.txt, 并设置为公开文件"
+,
+"en"
+:
+"Upload local file example.txt to cloud me:example.txt, and set it as a public file"
+}
+]
+,
+"#subcmd:main"
+:
+[
+"file"
+,
+"ai"
+,
+"access"
+,
+"account"
+]
+,
+"#subcmd:shortcut"
+:
+[
+"login"
+,
+"logout"
+]
+,
+"#subcmd:inner"
+:
+[
+"org"
+,
+"keypair"
+,
+"token"
+,
+"_advise"
+]
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"运行 `x hub login` 进行登陆，登陆后会自动保存 token 到本地文件。若第一次登陆，会自动创建账户。\n"
+,
+"en"
+:
+"Run `x hub login` to log in, and the token will be automatically saved to the local file after login. If you log in for the first time, an account will be automatically created.\n"
+}
+]
+,
+"$ref"
+:
+"x-advise://hub/data/main.jso"
+,
+":"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"使用指定的 profile"
+,
+"en"
+:
+"Use the specified profile"
+}
+,
+"#tag"
+:
+[
+"inner"
+]
+,
+"#nospace"
+:
+true
+,
+"#option"
+:
+true
+,
+"#1"
+:
+{
+"#exec"
+:
+"candidate_exec_arr=( $(x cfgy advise profile hub) )"
+}
+}
+}
+

@@ -1,0 +1,79 @@
+# shellcheck shell=dash
+
+___x_cmd_pkg_sphere_use(){
+    local op="$1"
+    case "$op" in
+        run|cancel|ls|get_version_)
+                shift; ___x_cmd_pkg_sphere_use_"${op}" "$@" ;;
+        *)      N=pkg M="sphere use no such option '$op'" log:ret:1 ;;
+    esac
+}
+
+___x_cmd_pkg_sphere_use_run(){
+    pkg:sphere:parse:args
+
+    log:sub:init -i use pkg "pkg[$name] version[$version]"
+    pkg:info "Step 1/2, Installing $name $version"
+    ___x_cmd_pkg_sphere add --prebuild --protection use \
+        --reason "use"  \
+        --sphere "$sphere_name" --sphereroot "$___X_CMD_PKG_ROOT_SPHERE"    \
+        --osarch "$osarch" "$name" "$version" || {
+        pkg:error "Cannot install package - '$name $version'"
+        return 1
+    }
+
+    pkg:info "Step 2/2, Linking $name $version"
+    ___x_cmd_pkg_sphere link add    \
+        --sphere "$sphere_name" --sphereroot "$___X_CMD_PKG_ROOT_SPHERE"    \
+        --osarch "$osarch" "$name" "$version" || {
+        pkg:error "Cannot link pkg - '$name $version'"
+        return 1
+    }
+
+    pkg:info "Successfully use [pkg=$name] [version=$version] in the current environment"
+    log:sub:fini
+}
+
+___x_cmd_pkg_sphere_use_cancel(){
+    pkg:sphere:parse:args
+
+    log:sub:init -i unuse pkg "Canceling use [pkg=$name] [version=$version]"
+    ___x_cmd_pkg_sphere link rm     \
+        --sphere "$sphere_name" --sphereroot "$___X_CMD_PKG_ROOT_SPHERE"    \
+        --osarch "$osarch" "$name" "$version" || return
+    pkg:info "Success to unuse [pkg=$name] [version=$version] in this session"
+
+    log:sub:fini
+}
+
+___x_cmd_pkg_sphere_use_ls(){
+    pkg:sphere:parse:option
+    sphere_name="${sphere_name:-X}"
+    local l=; local n=
+    ___x_cmd_pkg_sphere link ls     \
+        --sphere "$sphere_name" --sphereroot "$___X_CMD_PKG_ROOT_SPHERE" |  \
+    while read -r l; do
+        [ -n "$l" ] || continue
+        l="${l##*/}"
+        n="${l%%_v*}"
+        [ "$n" != "$l" ] || continue
+        printf "%s\n" "${n}=${l#"${n}_"}"
+    done
+}
+
+___x_cmd_pkg_sphere_use_get_version_(){
+    pkg:sphere:parse:option
+    sphere_name="${sphere_name:-X}"
+    local name="$1";    [ -n "$name" ] || N=pkg M="Provide a package name" log:ret:1
+    local l=; local n=; x_=
+    while read -r l; do
+        [ -n "$l" ] || continue
+        l="${l##*/}"
+        n="${l%%_v*}"
+        [ "$n" = "$name" ] || continue
+        x_="${l#"${n}_"}"
+    done <<A
+$( ___x_cmd_pkg_sphere link ls --sphere "$sphere_name" --sphereroot "$___X_CMD_PKG_ROOT_SPHERE"  )
+A
+}
+

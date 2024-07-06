@@ -1,0 +1,550 @@
+{
+"#name"
+:
+{
+"docker"
+:
+null
+,
+"cn"
+:
+"增强型 docker 命令"
+,
+"en"
+:
+"Enhanced docker command"
+}
+,
+"#tip:note"
+:
+[
+{
+"en"
+:
+"Extends 'docker' options.\nSee https://docker.pypa.io/en/stable/ official website.\nSee `docker --help` for more information.\n"
+,
+"cn"
+:
+"继承 'docker' 参数选项与指令\n可查看 https://docker.pypa.io/en/stable/ 官网\n可通过 `docker --help` 命令查看更多信息\n"
+}
+]
+,
+"#subcmd:Enhance"
+:
+[
+"setup"
+,
+"run"
+,
+"exec"
+,
+"ps"
+,
+"images"
+,
+"image|img|im"
+,
+"container"
+,
+"network"
+,
+"info"
+]
+,
+"image|img|im"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Manage images"
+,
+"cn"
+:
+"管理镜像"
+}
+,
+"app"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Managing Docker Images with Interactive Tables"
+,
+"cn"
+:
+"使用交互表格管理 Docker 镜像"
+}
+}
+}
+,
+"images"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"List images"
+,
+"cn"
+:
+"列出镜像"
+}
+,
+"app"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"List Docker images using an interactive table"
+,
+"cn"
+:
+"使用交互表格列出 Docker 镜像"
+}
+}
+,
+"--csv"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Output in CSV format"
+,
+"cn"
+:
+"以 CSV 格式输出"
+}
+}
+,
+"--json"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Output in JSON format"
+,
+"cn"
+:
+"以 JSON 格式输出"
+}
+}
+}
+,
+"network"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Manage networks"
+,
+"cn"
+:
+"管理网络"
+}
+,
+"app"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Managing network with Interactive Tables"
+,
+"cn"
+:
+"使用交互表格管理网络"
+}
+}
+}
+,
+"container"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Manage containers"
+,
+"cn"
+:
+"管理容器"
+}
+,
+"app"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Managing Docker Containers with Interactive Tables"
+,
+"cn"
+:
+"使用交互表格管理 Docker 容器"
+}
+}
+}
+,
+"ps"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"List containers"
+,
+"cn"
+:
+"列出容器"
+}
+,
+"app"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"List Docker containers using an interactive table"
+,
+"cn"
+:
+"使用交互表格列出 Docker 容器"
+}
+}
+,
+"--csv"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Output in CSV format"
+,
+"cn"
+:
+"以 CSV 格式输出"
+}
+}
+,
+"--json"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Output in JSON format"
+,
+"cn"
+:
+"以 JSON 格式输出"
+}
+}
+}
+,
+"setup"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Inject x-cmd into docker container"
+,
+"cn"
+:
+"向 docker 容器中注入 x-cmd"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Container name"
+,
+"cn"
+:
+"容器名"
+}
+,
+"#exec:stdout"
+:
+"xrc docker && ___x_cmd_docker____advise_conatiner_name_ls"
+}
+}
+,
+"run"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Create and run a new container from an image"
+,
+"cn"
+:
+"从镜像创建并运行一个新容器"
+}
+,
+"-x"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Install x-cmd in a new container"
+,
+"cn"
+:
+"在容器里面安装 x-cmd"
+}
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"image"
+,
+"cn"
+:
+"镜像"
+}
+,
+"#exec:stdout"
+:
+"xrc docker && ___x_cmd_advise_exec___docker_ls_images_name"
+}
+}
+,
+"exec"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Execute a command in a running container"
+,
+"cn"
+:
+"在运行中的容器中执行命令"
+}
+,
+"-x"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Install x-cmd in a running container"
+,
+"cn"
+:
+"在正在运行的容器中安装 x-cmd"
+}
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Container name"
+,
+"cn"
+:
+"容器名"
+}
+,
+"#exec:stdout"
+:
+"xrc docker && ___x_cmd_docker____advise_conatiner_name_ls"
+}
+,
+"#2"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"command"
+,
+"cn"
+:
+"命令"
+}
+}
+}
+,
+"info"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Display system-wide information"
+,
+"cn"
+:
+"显示系统范围的信息"
+}
+}
+,
+"#n"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"extends `docker` subcmd or options"
+,
+"cn"
+:
+"继承 `docker` 子命令或参数选项"
+}
+,
+"#exec"
+:
+"___x_cmd_advise__comp_from_xcmd $((offset-1))"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"`xd` == `x docker`"
+,
+"en"
+:
+"xd is the alias of x docker"
+,
+"cn"
+:
+"xd 是 x docker 的 alias"
+}
+,
+{
+"cmd"
+:
+"xd run -x [OPTIONS] <IMAGE>"
+,
+"en"
+:
+"Start a new container and install x-cmd, but will not change the rc file, x-cmd is not started by default, you need to manually execute `eval \"$(x init)\"`"
+,
+"cn"
+:
+"启动一个新的容器并安装 x-cmd，但不会更改 rc 文件，默认不启动 x-cmd，需要手动执行 `eval \"$(x init)\"`"
+}
+,
+{
+"cmd"
+:
+"xd exec -x [OPTIONS] <CONTAINER> <COMMAND>"
+,
+"en"
+:
+"Install x-cmd in a running container, and execute the command, it will try to change the rc file"
+,
+"cn"
+:
+"在正在运行的容器中安装 x-cmd，并执行命令，会尝试更改rc文件"
+}
+,
+{
+"cmd"
+:
+"xd setup <CONTAINER>"
+,
+"en"
+:
+"Install x-cmd in a running container, it will try to change the rc file"
+,
+"cn"
+:
+"在正在运行的容器中安装 x-cmd，会尝试更改rc文件"
+}
+]
+,
+"#other"
+:
+{
+"en"
+:
+{
+"Please visit our homepage for more information:"
+:
+"https://x-cmd.com"
+}
+,
+"cn"
+:
+{
+"请访问我们的主页以获取更多信息："
+:
+"https://x-cmd.com"
+}
+}
+}
+

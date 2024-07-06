@@ -1,0 +1,72 @@
+# shellcheck shell=dash
+
+xrc ui
+
+x log init hub
+xrc:mod:lib     hub                 \
+                util/index          \
+                token cfg           \
+                file/_index         \
+                access/_index       \
+                account/index       \
+                keypair/index       \
+                org/index           \
+                ai/index
+
+if ___x_cmd_is_suitable_advise_env; then
+    xrc:mod:lib hub     _advise
+fi
+
+___X_CMD_HUB_TMP="$___X_CMD_ROOT_TMP/hub"
+___X_CMD_HUB_DATA="$___X_CMD_ROOT_DATA/hub"
+x mkdirp "${___X_CMD_HUB_DATA}" "${___X_CMD_HUB_TMP}"
+
+___x_cmd_hub___main(){
+    local X_help_cmd='___x_cmd_hub___help'
+    help:arg-null:parse
+
+    local ___X_CMD_HUB_LOCAL_CONFIG="${___X_CMD_HUB_LOCAL_CONFIG}"
+    local ___X_CMD_HUB_LOCAL_PROFILE="${___X_CMD_HUB_LOCAL_PROFILE}"
+    local ___X_CMD_HUB_KEYPAIR_NAME="default"
+
+    local op=
+    while [ $# -gt 0 ]; do
+        op="$1"; shift
+        case "$op" in
+            :*:*)
+                        ___X_CMD_HUB_LOCAL_CONFIG="${op#:}"
+                        ___X_CMD_HUB_LOCAL_CONFIG="${___X_CMD_HUB_LOCAL_CONFIG%%:*}"
+                        ___X_CMD_HUB_LOCAL_PROFILE="${op#:"$___X_CMD_HUB_LOCAL_CONFIG":}"
+                        ;;
+            :*)         ___X_CMD_HUB_LOCAL_PROFILE="${op#:}"         ;;
+            --profile)  ___X_CMD_HUB_LOCAL_PROFILE="$1";       shift ;;
+            --config)   ___X_CMD_HUB_LOCAL_CONFIG="$1";        shift ;;
+            --keypair)  ___X_CMD_HUB_KEYPAIR_NAME="$1";        shift ;;
+
+            # x hub token=your token
+            *=*)        ___x_cmd_hub_cur "$op" "$@"
+                        return ;;
+            *)          break ;;
+        esac
+    done
+
+    endpoint="$(___x_cmd_hub_cfg current --get endpoint)"
+    local ___X_CMD_HUB_SERVICE_URL="${endpoint:-"https://cn.hub.x-cmd.com"}"
+
+    case $op in
+        --cfg|--cur)
+            subcmd="${op#--}"
+            "___x_cmd_hub_${subcmd}" "$@"
+            return ;;
+
+        login)      ___x_cmd_hub_account_login   "$@";      return ;;
+        logout)     ___x_cmd_hub_account_logout  "$@";      return ;;
+
+        file|access|account|org|token|keypair|ai|_advise)
+                    "___x_cmd_hub_$op" "$@"
+                    return ;;
+
+        *)          ___x_cmd_hub_u_subcmd_invalid "" "$@"
+                    return ;;
+    esac
+}

@@ -1,0 +1,19 @@
+# shellcheck shell=dash
+
+x log init gemini
+xrc:mod:lib     gemini      cfg model/_index request/_index \
+                            chat/_index count/_index request/count 
+___x_cmd_gemini___main(){
+    [ "$#" -gt 0 ] ||       set - --help
+
+    local op="$1"; shift
+    case "$op" in
+        --cfg|--cur|--init|init)
+                            ___x_cmd_gemini_"${op#--}" "$@"         ;;
+        --request)          ___x_cmd_gemini_request "$@"            ;;
+        chat)               ___x_cmd_gemini_chat "$@"               ;;
+        model)              ___x_cmd_gemini_model      "$@"         ;;
+        -h|--help)          x help -m gemini "$@"                   ;;
+        *)                  N=gemini M="Unknown subcmd ==> $op" log:ret:64 ;;
+    esac
+}

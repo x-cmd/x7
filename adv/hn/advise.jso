@@ -1,0 +1,524 @@
+{
+"#name"
+:
+{
+"hn"
+:
+null
+,
+"cn"
+:
+"在命令行交互表格界面浏览 Hacker News. 可以通过 o 和 u 打开 HN 和 文章链接"
+,
+"en"
+:
+"Browse Hacker News in the Command-line, default show top posts. You can open HN and article links with o and u"
+}
+,
+"#synopsis"
+:
+null
+,
+"#desc"
+:
+{
+"en"
+:
+"Browse Hacker News in the Command-line, default show top posts"
+,
+"cn"
+:
+"在命令行界面浏览 Hacker News，默认显示 top 帖子"
+}
+,
+"new"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Display HN new posts"
+,
+"cn"
+:
+"显示 HN new 帖子"
+}
+,
+"$ref"
+:
+"x-advise://hn/data/live.jso"
+}
+,
+"top"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Display HN top posts"
+,
+"cn"
+:
+"显示 HN top 帖子"
+}
+,
+"$ref"
+:
+"x-advise://hn/data/live.jso"
+}
+,
+"best"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Display HN best posts"
+,
+"cn"
+:
+"显示 HN best 帖子"
+}
+,
+"$ref"
+:
+"x-advise://hn/data/live.jso"
+}
+,
+"ask"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Display HN ask posts"
+,
+"cn"
+:
+"显示 HN ask 帖子"
+}
+,
+"$ref"
+:
+"x-advise://hn/data/live.jso"
+}
+,
+"show"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Display HN show posts"
+,
+"cn"
+:
+"显示 HN show 帖子"
+}
+,
+"$ref"
+:
+"x-advise://hn/data/live.jso"
+}
+,
+"job"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Display HN job posts"
+,
+"cn"
+:
+"显示 HN job 帖子"
+}
+,
+"$ref"
+:
+"x-advise://hn/data/live.jso"
+}
+,
+"item"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"View the contents of the specified post"
+,
+"cn"
+:
+"查看指定帖子的内容"
+}
+,
+"--browse"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Open the HN article's comment page"
+,
+"cn"
+:
+"打开 HN 文中的评论页"
+}
+}
+,
+"--link"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Open HN article link page, if exists"
+,
+"cn"
+:
+"打开 HN 文章的 link 页面，如果有的话"
+}
+}
+,
+"--reader"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"通过 jina reader 获取 HN 文章的 link 网页信息"
+,
+"en"
+:
+"Use jina reader to get HN article link page info"
+}
+}
+,
+"--preview"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Use preview style display"
+,
+"cn"
+:
+"使用预览样式显示"
+}
+}
+,
+"--csv"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Use CSV style display"
+,
+"cn"
+:
+"使用 CSV 样式显示"
+}
+}
+,
+"--json"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Use JSON style display"
+,
+"cn"
+:
+"使用 JSON 样式显示"
+}
+}
+,
+"#n"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"item id"
+,
+"cn"
+:
+"item id"
+}
+}
+}
+,
+"user"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"View user data information"
+,
+"cn"
+:
+"查看用户数据信息"
+}
+,
+"--app"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Use human readable style display, default"
+,
+"cn"
+:
+"使用人类可读的样式显示，默认"
+}
+}
+,
+"--csv"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Use CSV style display"
+,
+"cn"
+:
+"使用 CSV 样式显示"
+}
+}
+,
+"--json"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Use JSON style display"
+,
+"cn"
+:
+"使用 JSON 样式显示"
+}
+}
+,
+"#n"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"User id"
+,
+"cn"
+:
+"用户 id"
+}
+}
+}
+,
+"hi|hidx"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Computing user's h-index"
+,
+"cn"
+:
+"计算用户 hn-index"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"User id"
+,
+"cn"
+:
+"用户 id"
+}
+}
+}
+,
+"ddgo|:"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"使用 DuckDuckGo 在 Hacker News 网站搜索相关信息"
+,
+"en"
+:
+"Search for information on the Hacker News website using DuckDuckGo"
+}
+}
+,
+"ddgoai|::"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"使用 DuckDuckGo 和 AI，在 Hacker News 中搜索相关的信息"
+,
+"en"
+:
+"Search for information on the Hacker News website using DuckDuckGo and AI"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x hn top"
+,
+"en"
+:
+"View HN top posts"
+,
+"cn"
+:
+"查看 HN top 帖子"
+}
+,
+{
+"cmd"
+:
+"x hn best --preview | @zh"
+,
+"en"
+:
+"Translate the content of HN best preview style"
+,
+"cn"
+:
+"翻译 HN best preview 样式的内容"
+}
+,
+{
+"cmd"
+:
+"x hn top --json 11,20"
+,
+"cn"
+:
+"查看 HN top 第11到20条的帖子，以 JSON 形式输出"
+,
+"en"
+:
+"View HN top posts from 11 to 20, output in JSON style"
+}
+,
+{
+"cmd"
+:
+"x hn : x-cmd"
+,
+"cn"
+:
+"在 Hacker News 网站搜索有关 x-cmd 的信息"
+,
+"en"
+:
+"Search for information about x-cmd on the Hacker News website"
+}
+,
+{
+"cmd"
+:
+"x hn :: llama3"
+,
+"cn"
+:
+"在 Hacker News 中搜索 llama3 相关的信息，并使用 AI 对结果进行辅助"
+,
+"en"
+:
+"Search for information about llama3 on the Hacker News website and use AI to assist"
+}
+]
+,
+"#subcmd_help_tip"
+:
+true
+,
+"#other"
+:
+{
+"en"
+:
+{
+"Please visit our homepage for more information:"
+:
+"https://x-cmd.com"
+}
+,
+"cn"
+:
+{
+"请访问我们的主页以获取更多信息："
+:
+"https://x-cmd.com"
+}
+}
+}
+

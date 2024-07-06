@@ -1,0 +1,1060 @@
+{
+"#name"
+:
+{
+"advise"
+:
+null
+,
+"en"
+:
+"Generate command completion based on advise jso"
+,
+"cn"
+:
+"基于 advise jso 生成命令补全"
+}
+,
+"#synopsis"
+:
+[
+{
+"x advise <subcmd>"
+:
+null
+}
+]
+,
+"#desc"
+:
+{
+"en"
+:
+"Through the advise jso, provide the current command suggestions (completion, help ...)"
+,
+"cn"
+:
+"通过 advise jso，提供当前命令的建议（completion、help ...）"
+}
+,
+"#tip"
+:
+[
+{
+"en"
+:
+"In interactive terminal (zsh or bash), Can use Tab to get completion information"
+,
+"cn"
+:
+"在交互式终端（zsh 或 bash）中，可以使用 Tab 获取补全信息"
+}
+,
+{
+"en"
+:
+"The variable `___X_CMD_ADVISE_WITHOUT_DESC` is set to 1 to control not displaying the description information during autocompletion\nThe variable `___X_CMD_HELP_LANGUAGE` can control the language displayed in autocompletion (zh or en)\n"
+,
+"cn"
+:
+"`___X_CMD_ADVISE_WITHOUT_DESC` 变量为 1 可以控制补全时不显示描述信息\n`___X_CMD_HELP_LANGUAGE` 变量可以控制补全显示的语言（zh 或 en）\n"
+}
+]
+,
+"ls"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Show all available advise jso file"
+,
+"cn"
+:
+"显示所有已加载的 advise jso 文件"
+}
+}
+,
+"rm"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Delete the specified advised jso file that has been loaded, empty will delete all by default"
+,
+"cn"
+:
+"删除指定已加载的 advise jso 文件，空默认删除全部"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"The specified advised jso file that has been loaded"
+,
+"cn"
+:
+"已加载的 advise jso 文件"
+}
+,
+"#exec"
+:
+"___x_cmd_advise__ls $___X_CMD_ADVISE_TMPDIR"
+}
+}
+,
+"which"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Returns the path corresponding to the loaded advise jso file"
+,
+"cn"
+:
+"返回对应已加载的 advise jso 文件路径"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"The specified advised jso file that has been loaded"
+,
+"cn"
+:
+"已加载的 advise jso 文件"
+}
+,
+"#exec"
+:
+"___x_cmd_advise__ls $___X_CMD_ADVISE_TMPDIR"
+}
+}
+,
+"cat"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Displays the specified advise jso file."
+,
+"cn"
+:
+"显示指定的 advise jso 文件"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"The specified advised jso file that has been loaded"
+,
+"cn"
+:
+"已加载的 advise jso 文件"
+}
+,
+"#exec:stdout"
+:
+"___x_cmd_cmds_ls \"$___X_CMD_ADVISE_TMPDIR\""
+}
+}
+,
+"init"
+:
+{
+"#synopsis"
+:
+[
+{
+"x advise init <command> <file>"
+:
+null
+,
+"en"
+:
+"Two parameters, the command and the completed advise jso file"
+,
+"cn"
+:
+"两个参数，命令和补全的 advise jso 文件"
+}
+]
+,
+"#desc"
+:
+{
+"en"
+:
+"Use the advise jso file to load command completion"
+,
+"cn"
+:
+"使用 advise jso 文件加载命令的补全"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Complete command"
+,
+"cn"
+:
+"补全命令"
+}
+}
+,
+"#2"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"The path of the advise jso"
+,
+"cn"
+:
+"advise jso 文件的路径"
+}
+,
+"#exec"
+:
+"___x_cmd_advise__file"
+}
+}
+,
+"gen_advise"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Generate the advise jso of the specified module"
+,
+"cn"
+:
+"生成指定模块的 advise jso，内部功能"
+}
+,
+"#tag"
+:
+[
+"inner"
+]
+}
+,
+"dev"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"advise developer mode switch, off or on"
+,
+"cn"
+:
+"advise 开发者模式开关，关闭或开启"
+}
+,
+"#cand"
+:
+[
+"on"
+,
+"off"
+]
+,
+"#tag"
+:
+[
+"inner"
+]
+}
+,
+"simple"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"输出精简版 advise yml"
+,
+"en"
+:
+"Output s simple version of advise yml"
+}
+,
+"--dfs"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"深度优先遍历，默认 false"
+,
+"en"
+:
+"Depth-first traversal, default false"
+}
+}
+,
+"--failfast"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"快速失败，默认 false"
+,
+"en"
+:
+"Fail fast, default false"
+}
+}
+,
+"--field"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"保留的字段，默认 \"desc|tldr|cand|subcmd|option\""
+,
+"en"
+:
+"Reserved fields, default \"desc|tldr|cand|subcmd|option\""
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"字段"
+,
+"en"
+:
+"field"
+}
+}
+}
+,
+"#tag"
+:
+[
+"inner"
+]
+}
+,
+"man"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Manage x-cmd/advise and bash/zsh-completion advise jso files"
+,
+"cn"
+:
+"管理 x-cmd/advise 和 bash/zsh-completion advise jso 文件"
+}
+,
+"ls"
+:
+{
+"#tip:warn"
+:
+[
+{
+"en"
+:
+"If BASH_VERSION is less than 4.2, bash-completion cannot be used"
+,
+"cn"
+:
+"如果 BASH_VERSION 小于 4.2, 则不能使用 bash-completion"
+}
+]
+,
+"#desc"
+:
+{
+"en"
+:
+"Show the list of completion commands supported by the current x-cmd/advise and completion"
+,
+"cn"
+:
+"展示当前 x-cmd/advise 和 completion 所支持的补全命令列表"
+}
+,
+"#1"
+:
+{
+"#cand"
+:
+[
+{
+"x-cmd"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Show the list of completion commands supported by x-cmd/advise"
+,
+"cn"
+:
+"展示 x-cmd/advise 所支持的补全命令列表"
+}
+}
+}
+,
+{
+"npx"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Show the list of completion subcommands supported by npx command in x-cmd/advise"
+,
+"cn"
+:
+"展示 x-cmd/advise 中 npx 命令所支持的补全子命令列表"
+}
+}
+}
+,
+{
+"pipx"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Show the list of completion subcommands supported by pipx command in x-cmd/advise"
+,
+"cn"
+:
+"展示 x-cmd/advise 中 pipx 命令所支持的补全子命令列表"
+}
+}
+}
+,
+{
+"completion"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Show the list of completion commands supported by bash/zsh-completion"
+,
+"cn"
+:
+"展示 bash/zsh-completion 所支持的补全命令列表"
+}
+}
+}
+]
+}
+}
+,
+"update"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Check for updates for x-cmd/advise and completion package"
+,
+"cn"
+:
+"检查更新 x-cmd/advise 和 completion 下载包"
+}
+,
+"x.advise.jso"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Force update generates x advise jso file, internal functionality"
+,
+"cn"
+:
+"强制更新生成 x advise jso 文件，内部功能"
+}
+,
+"#tag"
+:
+[
+"inner"
+]
+}
+,
+"x-cmd"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Force update downloading x-cmd/advise package"
+,
+"cn"
+:
+"强制更新下载 x-cmd/advise 包"
+}
+}
+,
+"completion"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Force update downloading bash/zsh-completion package"
+,
+"cn"
+:
+"强制更新下载 bash/zsh-completion 包"
+}
+}
+,
+"all"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Force update downloading x-cmd/advise and bash/zsh-completion package"
+,
+"cn"
+:
+"强制更新下载 x-cmd/advise 和 bash/zsh-completion 包"
+}
+}
+}
+,
+"rm"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Remove completion files specified in x-cmd/advise or bash/zsh-completion"
+,
+"cn"
+:
+"删除 x-cmd/advise 或 bash/zsh-completion 中指定的补全文件"
+}
+,
+"x-cmd"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Remove the completion file specified in x-cmd/advise"
+,
+"cn"
+:
+"删除 x-cmd/advise 中指定的补全文件"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"x-cmd/advise completion file"
+,
+"cn"
+:
+"x-cmd/advise 补全文件"
+}
+,
+"#exec"
+:
+"___x_cmd_advise_man__list x-cmd"
+}
+}
+,
+"completion"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Remove the completion file specified in bash/zsh-completion"
+,
+"cn"
+:
+"删除 bash/zsh-completion 中指定的补全文件"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"bash/zsh-completion completion file"
+,
+"cn"
+:
+"bash/zsh-completion 补全文件"
+}
+,
+"#exec"
+:
+"___x_cmd_advise_man__list completion"
+}
+}
+}
+,
+"which"
+:
+{
+"#tip:warn"
+:
+[
+{
+"en"
+:
+"If BASH_VERSION is less than 4.2, bash-completion cannot be used"
+,
+"cn"
+:
+"如果 BASH_VERSION 小于 4.2, 则不能使用 bash-completion"
+}
+]
+,
+"#desc"
+:
+{
+"en"
+:
+"Return the completion file path specified in x-cmd/advise or bash/zsh-completion"
+,
+"cn"
+:
+"返回 x-cmd/advise 或 bash/zsh-completion 中指定的补全文件路径"
+}
+,
+"x-cmd"
+:
+{
+"#tip"
+:
+[
+{
+"en"
+:
+null
+,
+"cn"
+:
+"使用 `x advise man ls x-cmd` 可以查看有哪些 x-cmd/advise 命令补全"
+}
+]
+,
+"#desc"
+:
+{
+"en"
+:
+"Return the completion file path specified in x-cmd/advise"
+,
+"cn"
+:
+"返回 x-cmd/advise 中指定的补全文件路径"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"x-cmd/advise completion file"
+,
+"cn"
+:
+"x-cmd/advise 补全文件"
+}
+,
+"#exec"
+:
+"___x_cmd_advise_man__list x-cmd"
+}
+}
+,
+"completion"
+:
+{
+"#tip"
+:
+[
+{
+"cn"
+:
+"使用 `x advise man ls completion` 可以查看有哪些 bash/zsh-completion 命令补全"
+,
+"en"
+:
+"Use `x advise man ls completion` to view which bash/zsh-completion commands have completion"
+}
+]
+,
+"#desc"
+:
+{
+"en"
+:
+"Return the completion file path specified in bash/zsh-completion"
+,
+"cn"
+:
+"返回 bash/zsh-completion 中指定的补全文件路径"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"bash/zsh-completion completion file"
+,
+"cn"
+:
+"bash/zsh-completion 补全文件"
+}
+,
+"#exec"
+:
+"___x_cmd_advise_man__list completion"
+}
+}
+}
+,
+"load"
+:
+{
+"#tip:warn"
+:
+[
+{
+"en"
+:
+"If BASH_VERSION is less than 4.2, bash-completion cannot be used"
+,
+"cn"
+:
+"如果 BASH_VERSION 小于 4.2, 则不能使用 bash-completion"
+}
+]
+,
+"#desc"
+:
+{
+"en"
+:
+"Load command completion using x-cmd/advise or bash/zsh-completion"
+,
+"cn"
+:
+"加载使用 x-cmd/advise 或 bash/zsh-completion 的命令补全"
+}
+,
+"x-cmd"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Load command completion using x-cmd/advise"
+,
+"cn"
+:
+"加载使用 x-cmd/advise 的命令补全"
+}
+,
+"#n"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"x-cmd/advise completion file"
+,
+"cn"
+:
+"x-cmd/advise 补全文件"
+}
+,
+"#exec"
+:
+"___x_cmd_advise_man__list x-cmd"
+}
+}
+,
+"completion"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Load command completion using bash/zsh-completion"
+,
+"cn"
+:
+"加载使用 bash/zsh-completion 的命令补全"
+}
+}
+,
+"all"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Load command completion using x-cmd/advise and bash/zsh-completion"
+,
+"cn"
+:
+"加载使用 x-cmd/advise 和 bash/zsh-completion 的命令补全"
+}
+}
+}
+,
+"#subcmd_help_tip"
+:
+true
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x advise man update all"
+,
+"cn"
+:
+"更新 x-cmd/advise 和 bash/zsh-completion 资源包"
+,
+"en"
+:
+"pdate x-cmd/advise and bash/zsh-completion resource packages"
+}
+,
+{
+"cmd"
+:
+"x advise man which x-cmd 7za"
+,
+"cn"
+:
+"展示 x-cmd/advise 7za 的 advise jso 文件路径"
+,
+"en"
+:
+"Show the path of x-cmd/advise 7za jso file path"
+}
+]
+}
+,
+"maxitem"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"The maximum number of completion candidates, default is 99"
+,
+"cn"
+:
+"补全候补项的最大个数，默认 99"
+}
+,
+"#tag"
+:
+[
+"inner"
+]
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"num"
+,
+"cn"
+:
+"num"
+}
+}
+}
+,
+"#subcmd_help_tip"
+:
+true
+,
+"#other"
+:
+{
+"en"
+:
+{
+"Please visit our homepage for more information:"
+:
+"https://x-cmd.com"
+}
+,
+"cn"
+:
+{
+"请访问我们的主页以获取更多信息："
+:
+"https://x-cmd.com"
+}
+}
+,
+"#demo"
+:
+[
+"advise/.demo/init.speg"
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x advise ls"
+,
+"cn"
+:
+"展示已加载的 advise 列表"
+,
+"en"
+:
+"Display the loaded advise list"
+}
+,
+{
+"cmd"
+:
+"x advise init tldr tldr/advise.jso"
+,
+"cn"
+:
+"加载命令 tldr 的补全"
+,
+"en"
+:
+"Completion for command tldr"
+}
+]
+}
+

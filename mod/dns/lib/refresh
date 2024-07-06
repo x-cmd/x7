@@ -1,0 +1,32 @@
+# shellcheck shell=dash
+
+___x_cmd_dns_refresh(){
+    local x_=;
+    ___x_cmd os name_
+    case "$x_" in
+        darwin)
+            dns:info "run command -> x sudo killall -HUP mDNSResponder"
+            ___x_cmd sudo killall -HUP mDNSResponder
+            dns:info "Command executed"
+            ;;
+        linux)
+            if ___x_cmd hascmd systemd-resolve; then
+                dns:info "run command -> systemd-resolve --flush-caches"
+                ___x_cmd_cmds systemd-resolve --flush-caches || N="dns" M="DNS refresh failed"  log:ret:1
+            elif ___x_cmd hascmd resolvectl; then
+                dns:info "run command -> resolvectl flush-caches"
+                ___x_cmd_cmds resolvectl flush-caches || N="dns" M="DNS refresh failed"  log:ret:1
+            else
+                dns:warn "systemd-resolve command not fount"
+                return
+            fi
+            ;;
+        win)
+            xrc pwsh; ___x_cmd_pwsh___exec txt ipconfig /flushdns
+            ;;
+        *)
+            dns:error "Unsupported os ==> $x_"
+            return 1
+            ;;
+    esac
+}

@@ -1,0 +1,92 @@
+# shellcheck shell=dash
+
+___x_cmd_chat_jqu(){
+    local IFS=" "
+
+    # The code jqu should be enhanced
+    printf "%s" "$*" | ___x_cmd_cmds_awk '
+{
+    text = (text == "") ? $0 : (text "\n" $0)
+}
+END{
+    gsub(/\\/, "&\\", text)
+    gsub("\n", "\\n", text)
+    gsub("[\r]", "\\r", text)
+    gsub("[\t]", "\\t", text)
+    gsub("[\v]", "\\v", text)
+    gsub(/"/, "\\\"", text)
+    printf("\"%s\"", text)
+}
+'
+
+}
+
+___x_cmd_chat_normal(){
+    local cur_provider=""
+
+    if [ -n "$___X_CMD_CHAT_NORMAL_ALIAS" ]; then
+        case "$___X_CMD_CHAT_NORMAL_ALIAS" in
+            o)      cur_provider=ollama ;;
+            l)      cur_provider=llmf   ;;
+            gemini|mistral|lms)
+                    cur_provider="$___X_CMD_CHAT_NORMAL_ALIAS"  ;;
+            gpt)    cur_provider=openai ;;
+            gpt3)   cur_provider=openai; set -- --model gpt-3.5-turbo "$@"  ;;
+            gpt4)   cur_provider=openai; set -- --model gpt-4o "$@"         ;;
+            gpt4t)  cur_provider=openai; set -- --model gpt-4-turbo "$@"          ;;
+            kimi)   cur_provider=moonshot ;;
+            *)  return 1 ;;
+        esac
+    fi
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --provider)     cur_provider="$2";  shift 2 ;;
+            *)              break ;;
+        esac
+    done
+
+    [ -n "$cur_provider" ] || {
+        local x_=; ___x_cmd_chat_provider get_ || return
+        cur_provider="$x_"
+    }
+
+    chat:debug --provider "$cur_provider" "request api"
+    ___x_cmd "$cur_provider" chat request "$@"
+}
+
+___x_cmd_chat_json(){
+    [ "$#" -gt 0 ] || set -- "$(___x_cmd_cmds_cat)"
+    local IFS=" "
+    local msg; msg='
+        {
+            role: user,
+            content: '$(___x_cmd_chat_jqu "Your response only contains answer in json format without extra description.
+$*")'
+        }'
+    ___x_cmd_chat_request json "" "$msg"
+}
+
+___x_cmd_chat_yml(){
+    [ "$#" -gt 0 ] || set -- "$(___x_cmd_cmds_cat)"
+    local IFS=" "
+    local msg; msg='
+        {
+            role: user,
+            content: '$(___x_cmd_chat_jqu "Your response only contains answer in yml format without extra description.
+$*")'
+        }'
+    ___x_cmd_chat_request yml "" "$msg"
+}
+
+___x_cmd_chat_csv(){
+    [ "$#" -gt 0 ] || set -- "$(___x_cmd_cmds_cat)"
+    local IFS=" "
+    local msg; msg='
+        {
+            role: user,
+            content: '$(___x_cmd_chat_jqu "Your response only contains answer in csv format without extra description.
+$*")'
+        }'
+    ___x_cmd_chat_request csv "" "$msg"
+}

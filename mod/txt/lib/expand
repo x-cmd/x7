@@ -1,0 +1,7 @@
+# shellcheck shell=dash
+
+___x_cmd_txt_expand(){
+    x chat --request --type expand,txt --minion "$___X_CMD_ROOT_MOD/txt/lib/minion/expand.yml" "$@"
+}
+
+

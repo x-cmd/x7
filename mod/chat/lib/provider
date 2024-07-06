@@ -1,0 +1,67 @@
+# shellcheck shell=dash
+
+___x_cmd_chat_provider(){
+    local op="$1"
+    case "$op" in
+        pick_|get_|get|ls)  shift; ___x_cmd_chat_provider_"$op" "$@" ;;
+        *)      N=chat M="Not support such [subcmd=$op]" log:ret:64 ;;
+    esac
+}
+
+___x_cmd_chat_provider_pick_(){
+    x_=
+    local apikey=
+    while [ $# -gt 0 ]; do
+        ___x_cmd_chat_provider___validate "$1" || return
+
+        ! ___x_cmd_chat_provider___validate_local "$1" || {
+            x_="$1"
+            return 0
+        }
+
+        # if not empty, then use it
+        ___x_cmd "$1" --cfg --current apikey:= 2>/dev/null
+
+        if [ -n "$apikey" ]; then
+            x_="$1"
+            return 0
+        fi
+        shift
+    done
+    return 1
+}
+
+___x_cmd_chat_provider_get(){
+    local x_=; ___x_cmd_chat_provider_get_ "$@" || return
+    printf "%s\n" "$x_"
+}
+
+___x_cmd_chat_provider_get_(){
+    x_=""
+    local cur_provider="$1"
+    ___x_cmd_chat_cur cur_provider:=provider 2>/dev/null
+    cur_provider="${cur_provider:-gemini}"
+    ___x_cmd_chat_provider_pick_ "$cur_provider" gemini openai moonshot mistral ollama llmf lms || x_="$cur_provider"
+}
+
+___x_cmd_chat_provider_ls(){
+    printf "%s\n" openai gemini mistral moonshot ollama llmf lms
+}
+
+___x_cmd_chat_provider___validate(){
+    local provider="$1"
+    case "$provider" in
+        openai|gemini|mistral|moonshot|ollama|llmf|lms) ;;
+        *)
+            N=chat M="Provider must be [openai|gemini|mistral|moonshot|ollama|llmf|lms]" log:ret:64
+            ;;
+    esac
+}
+
+___x_cmd_chat_provider___validate_local(){
+    local provider="$1"
+    case "$provider" in
+        ollama|llmf|lms)    return 0  ;;
+        *)                  return 1  ;;
+    esac
+}

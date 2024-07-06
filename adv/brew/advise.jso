@@ -1,0 +1,792 @@
+{
+"#name"
+:
+{
+"brew"
+:
+null
+,
+"en"
+:
+"brew command enhancements"
+,
+"cn"
+:
+"brew 命令增强"
+}
+,
+"#subcmd:Enhance"
+:
+[
+"install|i"
+,
+"mirror"
+,
+"proxy"
+,
+"analytics|a"
+,
+"nv"
+,
+"ls"
+,
+"la"
+]
+,
+"install|i"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Install a formula or cask"
+,
+"cn"
+:
+"安装一个软件包或者应用"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"软件包或者应用"
+,
+"en"
+:
+"formula or cask"
+}
+}
+}
+,
+"ls"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"List installed software"
+,
+"cn"
+:
+"列出已安装软件"
+}
+,
+"-i|--installed"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"List installed software"
+,
+"cn"
+:
+"列出已安装的软件"
+}
+}
+,
+"-a|--all"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Listed installable software"
+,
+"cn"
+:
+"列出可安装的软件"
+}
+}
+,
+"-l|--local"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"View locally installed software (interactive interface enabled by default)"
+,
+"cn"
+:
+"查看本地已经安装的软件（默认启用交互界面）"
+}
+}
+,
+"-A|--available"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"View installable software (interactive interface enabled by default)"
+,
+"cn"
+:
+"查看可安装的软件（默认启用交互界面）"
+}
+}
+,
+"--app"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"View software using interactive apps (View installable software in interactive mode, view locally installed software in non-interactive mode)"
+,
+"cn"
+:
+"使用交互式 app 查看软件（交互模式下查看可安装的软件，非交互模式下查看本地已经安装的软件）"
+}
+}
+}
+,
+"la"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Listed installable software"
+,
+"cn"
+:
+"列出可安装的软件"
+}
+}
+,
+"mirror"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Display or change the current mirror used for Homebrew"
+,
+"cn"
+:
+"显示或更改 Homebrew 当前使用的镜像"
+}
+,
+"set"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Set the mirror used for Homebrew"
+,
+"cn"
+:
+"设置 Homebrew 使用的镜像"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"The mirror source name"
+,
+"cn"
+:
+"镜像源的名称"
+}
+,
+"#exec:stdout"
+:
+"xrc brew  && ___x_cmd_brew___mirror_advise_ls"
+}
+}
+,
+"ls"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"List all available mirrors for Homebrew"
+,
+"cn"
+:
+"列出 Homebrew 的所有可用镜像"
+}
+}
+,
+"current"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Display the current mirror used for Homebrew"
+,
+"cn"
+:
+"显示 Homebrew 当前使用的镜像"
+}
+}
+,
+"unset"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Unset the mirror used for Homebrew"
+,
+"cn"
+:
+"取消设置 Homebrew 使用的镜像"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x brew mirror set tuna"
+,
+"en"
+:
+"Set up Tsinghua Source for Homebrew"
+,
+"cn"
+:
+"设置 Homebrew 使用的清华源"
+}
+]
+}
+,
+"nv"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"使用交互式 UI 来选择需要安装的应用"
+,
+"en"
+:
+"Use an interactive UI to select the application to be installed"
+}
+}
+,
+"proxy"
+:
+{
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x brew proxy use http://127.0.0.1:8234"
+,
+"en"
+:
+"Set the proxy used for Homebrew"
+,
+"cn"
+:
+"设置 Homebrew 使用的代理"
+}
+,
+{
+"cmd"
+:
+"x brew proxy try http://127.0.0.1:8234"
+,
+"cn"
+:
+"设置临时的仅对当前 shell 有效的代理（优先级比 use 高）"
+,
+"en"
+:
+"Set a temporary proxy that is only valid for the current Shell"
+}
+]
+,
+"#desc"
+:
+{
+"en"
+:
+"Display or change the current proxy used for Homebrew"
+,
+"cn"
+:
+"显示或更改 Homebrew 当前使用的代理"
+}
+,
+"use"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Set the proxy used for Homebrew"
+,
+"cn"
+:
+"设置 Homebrew 使用的代理"
+}
+}
+,
+"unuse"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Unset the proxy used for Homebrew"
+,
+"cn"
+:
+"取消设置 Homebrew 使用的代理"
+}
+}
+,
+"try"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"设置仅对当前 Shell 有效的代理"
+,
+"en"
+:
+"Set a proxy that is only valid for the current Shell"
+}
+}
+,
+"untry"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"取消设置仅对当前 Shell 有效的代理"
+,
+"en"
+:
+"Unset a proxy that is only valid for the current Shell"
+}
+}
+,
+"run"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"运行代理的代码"
+,
+"en"
+:
+"Run the code of the proxy"
+}
+}
+}
+,
+"analytics|a"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"Homebrew 中软件使用数据的管理和查看"
+,
+"en"
+:
+"Management and viewing of software usage data in Homebrew"
+}
+,
+"browse"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"用浏览器 brew 的打开统计网站"
+,
+"en"
+:
+"Open the analytics website for brew in a browser"
+}
+}
+,
+"on"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Turn Homebrew's analytics on"
+,
+"cn"
+:
+"打开 Homebrew 统计数据的功能"
+}
+}
+,
+"off"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Turn Homebrew's analytics off"
+,
+"cn"
+:
+"关闭 Homebrew 统计数据的功能"
+}
+}
+,
+"state"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Display the current state of Homebrew's analytics."
+,
+"cn"
+:
+"显示 Homebrew 统计数据功能的当前状态"
+}
+}
+,
+"data"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看 brew 的统计数据"
+,
+"en"
+:
+"View brew's analytics statistics"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x brew analytics data install-homebrew-core --30"
+,
+"en"
+:
+"View the download count of core packages used for installing Homebrew within the last 30 days."
+,
+"cn"
+:
+"查看 30 天内用于安装 Homebrew 的核心程序包的下载量"
+}
+,
+{
+"cmd"
+:
+"x brew analytics data install-on-request-homebrew-core --365 --yml"
+,
+"en"
+:
+"View the download count of core packages used for on-request installation in Homebrew in YAML format for the past 365 days"
+,
+"cn"
+:
+"用 yml 格式查看 365 天内用于按需安装的 Homebrew 的核心程序包的下载量"
+}
+,
+{
+"cmd"
+:
+"x brew analytics data cask --365 --json"
+,
+"en"
+:
+"View the download count of cask packages in Homebrew in JSON format for the past 365 days"
+,
+"cn"
+:
+"用 json 格式查看 365 天内 Homebrew 的 cask 的下载量"
+}
+,
+{
+"cmd"
+:
+"x brew analytics data error --365 --csv"
+,
+"cn"
+:
+"用 csv 格式查看 365 内 Homebrew 的安装错误的数量"
+,
+"en"
+:
+"View the download count of error packages in Homebrew in CSV format for the past 365 days"
+}
+]
+,
+"install-homebrew-core"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看用于安装 Homebrew 的核心程序包的下载量"
+,
+"en"
+:
+"View the download count of core packages used for installing Homebrew"
+}
+,
+"$ref"
+:
+"x-advise://brew/data/curl.jso"
+}
+,
+"install-on-request-homebrew-core"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看用于按需安装的 Homebrew 的核心程序包的下载量"
+,
+"en"
+:
+"View the download count of core packages used for on-request installation in Homebrew"
+}
+,
+"$ref"
+:
+"x-advise://brew/data/curl.jso"
+}
+,
+"cask|cask-install"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看 Homebrew 的 cask 的下载量"
+,
+"en"
+:
+"View the download count of cask packages in Homebrew"
+}
+,
+"$ref"
+:
+"x-advise://brew/data/curl.jso"
+}
+,
+"error|build-error"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看 Homebrew 的安装错误的数量"
+,
+"en"
+:
+"View the download count of error packages in Homebrew"
+}
+,
+"$ref"
+:
+"x-advise://brew/data/curl.jso"
+}
+}
+}
+,
+"#n"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"extends `brew` subcmd or options"
+,
+"cn"
+:
+"继承 `brew` 子命令或参数选项"
+}
+,
+"#exec"
+:
+"___x_cmd_advise__comp_from_xcmd $((offset-1))"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x brew"
+,
+"en"
+:
+"Use the interactive UI to select which apps to install"
+,
+"cn"
+:
+"使用交互式 UI 来选择需要安装的应用"
+}
+,
+{
+"cmd"
+:
+"x brew i curl"
+,
+"en"
+:
+"Install curl using brew"
+,
+"cn"
+:
+"使用 brew 安装 curl"
+}
+,
+{
+"cmd"
+:
+"x brew a off"
+,
+"en"
+:
+"Disable brew analytics to minimize potential privacy risks"
+,
+"cn"
+:
+"禁用 brew 分析，以减少潜在的隐私风险"
+}
+,
+{
+"cmd"
+:
+"x brew a data"
+,
+"en"
+:
+"View the download count of core packages used for installing Homebrew within the last 30 days."
+,
+"cn"
+:
+"查看 30 内用于安装 Homebrew 的核心程序包的下载量"
+}
+,
+{
+"cmd"
+:
+"x brew a browse"
+,
+"en"
+:
+"Open the analytics website for brew in a browser"
+,
+"cn"
+:
+"用浏览器 brew 的打开统计网站"
+}
+]
+,
+"#other"
+:
+{
+"en"
+:
+{
+"Please visit our homepage for more information:"
+:
+"https://x-cmd.com"
+}
+,
+"cn"
+:
+{
+"请访问我们的主页以获取更多信息："
+:
+"https://x-cmd.com"
+}
+}
+}
+

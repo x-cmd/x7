@@ -1,0 +1,91 @@
+# shellcheck shell=dash disable=SC2120,SC2016
+___x_cmd_pwsh_path(){
+    ___x_cmd os is win || ___x_cmd os is wsl || N=pwsh M='pwsh path is only available on Windows' log:ret:1
+    [ $# -gt 0 ] || set -- ls
+
+    local op="$1";      shift
+    case "$op" in
+        add_pwsh|win_to_linux|win_to_linux_|linux_to_win|linux_to_win_)
+            ___x_cmd_pwsh_path___"$op" "$@"
+            ;;
+        import|import2wsl)
+            ___x_cmd_pwsh_path_import2wsl
+            ;;
+        ls)
+            ___x_cmd_pwsh_path_"$op" "$@"
+            ;;
+        *)
+            N=pwsh M="Unsupport subcmd ==> $op" log:ret:64
+            ;;
+    esac
+}
+
+___x_cmd_pwsh_path_import2wsl(){
+    local IFS=;
+    local e; while read -r e; do
+        PATH="$PATH:$e"
+    done <<A
+$(___x_cmd_pwsh_path_ls)
+A
+
+    ___x_cmd path uniq
+}
+
+___x_cmd_pwsh_path_ls(){
+    local pre=; [ ! -d /mnt ] || pre="/mnt"
+    ___x_cmd_pwsh_path_cmd | ___x_cmd_cmds_awk -F : -v pre="$pre" '
+(state==1){
+    if ($0~"^----------") exit ;
+    printf("%s/%s", pre, $1)
+    printf("%s\n", $2)
+
+    next
+}
+
+($0~"^----------"){
+    state=1
+}
+'
+}
+
+___x_cmd_pwsh_path_cmd(){
+    ___x_cmd pwsh "echo '----------'; \$env:Path -split ';' | ForEach-Object { \$_ -replace '\\\\', '/' }; echo '----------';" | sed 's/^\(.\)/\L\1/'
+}
+
+___x_cmd_pwsh_path___add_pwsh(){
+    local x_=;
+    ___x_cmd_pwsh_path___win_to_linux_ "$( ___x_cmd pwsh -Command 'Write-Output $PSHome' )" || return
+    ___x_cmd path add_existed_folder "$x_"
+}
+
+
+___x_cmd_pwsh_path___win_to_linux_(){
+    x_="$( ___x_cmd_pwsh_path___win_to_linux "$1" )"
+}
+
+___x_cmd_pwsh_path___win_to_linux(){
+    if ___x_cmd hascmd wslpath; then
+        command wslpath -u "$1"
+    else
+        local win_path=
+        win_path="$(printf "%s" "$1" | command sed 's/\\/\\\\/g' )"
+        [ -n "$win_path" ] || return 1
+        local x_; ___x_cmd_shq1_ "$win_path"
+        if [ -d /mnt ]; then
+            ___x_cmd pwsh -Command "wsl wslpath -u $x_"
+        else
+            ___x_cmd pwsh -Command "wsl wslpath -u $x_" | command sed 's/^\/mnt//'
+        fi
+    fi
+}
+
+___x_cmd_pwsh_path___linux_to_win_(){
+    x_="$( ___x_cmd_pwsh_path___linux_to_win "$1" )"
+}
+
+___x_cmd_pwsh_path___linux_to_win(){
+    local linux_path="$1"
+    [ -n "$linux_path" ] || N=pwsh M="provide a linux style path" log:ret:64
+    ___x_cmd_pwsh_path___linux_to_win_awk "$linux_path"
+}
+

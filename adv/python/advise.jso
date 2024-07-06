@@ -1,0 +1,72 @@
+{
+"#desc"
+:
+{
+"cn"
+:
+"增强型 python 命令"
+,
+"en"
+:
+"Enhanced python command"
+}
+,
+"#tip:note"
+:
+[
+{
+"en"
+:
+"Extends 'python' options.\nSee https://docs.python.org/ website for more information.\nSee `x python --help` for more information.\n"
+,
+"cn"
+:
+"继承 'python' 参数选项与指令\n可查看 https://docs.python.org/ 官网\n可通过 `x python --help` 命令查看更多信息\n"
+}
+]
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"python script"
+,
+"cn"
+:
+"python script"
+}
+,
+"#exec"
+:
+"___x_cmd_advise__file; ___x_cmd_advise__comp_from_xcmd $((offset-1))"
+,
+"#exec:stdout:nospace"
+:
+"x hub _advise lsfile --with-prefix"
+}
+,
+"#n"
+:
+{
+"#exec"
+:
+"___x_cmd_advise__comp_from_xcmd $((offset-1))"
+,
+"#exec:stdout:nospace"
+:
+"x hub _advise lsfile --with-prefix"
+}
+,
+"#other"
+:
+{
+"Please visit our homepage for more information:"
+:
+"https://x-cmd.com"
+}
+}
+

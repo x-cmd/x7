@@ -1,0 +1,59 @@
+# shellcheck shell=dash
+
+xrc pkg
+xrc:mod:lib     version     ls verify
+
+___x_cmd_version___main(){
+    [ $# -gt 0 ] || {
+        ___x_cmd_version_current
+        return
+    }
+    local op="$1"; shift
+    case "$op" in
+        ls|current|sum|verify|calsum)
+            "___x_cmd_version_$op" "$@"
+            ;;
+        --help|-h) ___x_cmd help -m version     ; return   ;;
+        *)         ___x_cmd help -m version >&2 ; return 1 ;;
+    esac
+}
+
+___x_cmd_version_current(){
+    local x_=; ___x_cmd_version___get_info_file_ || return
+    printf "%s\n" "$___X_CMD_VERSION"
+    ___x_cmd_version_sum_ || return
+    ___X_CMD_VERSION_SUM="$___X_CMD_VERSION_SUM" \
+    ___x_cmd cawk -m j/json,j/jiter -f "$___X_CMD_ROOT_MOD/version/lib/awk/version_info.awk" < "$x_"
+}
+
+___x_cmd_version_sum_(){
+    [ -z "${___X_CMD_VERSION_SUM}" ] || return 0
+    [ -f "${___X_CMD_ROOT_METADATA}/version_sum" ] || {
+        local code; code="$(___x_cmd_version_calsum "$___X_CMD_ROOT_CODE")" || return 1
+        printf "___X_CMD_VERSION_SUM=%s\n" "${code}" >"${___X_CMD_ROOT_METADATA}/version_sum"
+    }
+
+    read -r ___X_CMD_VERSION_SUM<"${___X_CMD_ROOT_METADATA}/version_sum"
+    ___X_CMD_VERSION_SUM="${___X_CMD_VERSION_SUM#___X_CMD_VERSION_SUM=}"
+}
+
+___x_cmd_version_sum(){
+    ___x_cmd_version_sum_ || return
+    printf "%s\n" "${___X_CMD_VERSION_SUM}"
+}
+
+___x_cmd_version_calsum(){
+    local dir="${1:-$___X_CMD_ROOT_CODE}"
+    x:debug --dir "$dir" "version calsum"
+
+    if [ -d "$dir/adv" ]; then
+        {
+            ___x_cmd sha512 "$dir/X"
+            ___x_cmd hashdir --sha512 "$dir/mod"
+            ___x_cmd hashdir --sha512 "$dir/adv"
+        } | ___x_cmd sha512
+    else
+        x:error "this is not a valid release version because it does not contain adv directory generated."
+        return 1
+    fi
+}

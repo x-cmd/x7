@@ -1,0 +1,288 @@
+{
+"#name"
+:
+{
+"mod"
+:
+null
+,
+"cn"
+:
+"ddgo 模块是互联网搜索引擎 DuckDuckGo 的 Cli 工具"
+,
+"en"
+:
+"The ddgo module is a CLI tool for the internet search engine DuckDuckGo"
+}
+,
+"--cfg|cfg"
+:
+{
+"#subcmd"
+:
+true
+,
+"#desc"
+:
+{
+"cn"
+:
+"配置 proxy 代理"
+,
+"en"
+:
+"Manage proxy"
+}
+}
+,
+"init"
+:
+{
+"#subcmd"
+:
+true
+,
+"#desc"
+:
+{
+"en"
+:
+"Initialize the proy configuration using interactive mode"
+,
+"cn"
+:
+"使用交互模式初始化代理配置"
+}
+}
+,
+"open"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"用默认浏览器打开搜索的内容"
+,
+"en"
+:
+"Open the search content with the default browser"
+}
+}
+,
+"top"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"搜索并查看前十条搜索内容"
+,
+"en"
+:
+"Search and view the top ten search results"
+}
+}
+,
+"hop"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"搜索并查看前一条搜索内容"
+,
+"en"
+:
+"Search and view the first search results"
+}
+}
+,
+"dump"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"搜索并查看内容"
+,
+"en"
+:
+"search and View results"
+}
+,
+"--top"
+:
+{
+"#subcmd"
+:
+true
+,
+"#desc"
+:
+{
+"cn"
+:
+"列出搜索内容的条数"
+,
+"en"
+:
+"List the number of search results"
+}
+}
+,
+"--json"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"输出 json 格式"
+,
+"en"
+:
+"Output json format"
+}
+}
+}
+,
+"--ai"
+:
+{
+"#subcmd"
+:
+true
+,
+"#desc"
+:
+{
+"cn"
+:
+"使用 AI 选出最相关的答案， 并总结对应的内容"
+,
+"en"
+:
+"Use AI to rate  the most relevant answers and summarize the corresponding content"
+}
+,
+"--csv"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"CSV 格式输出内容"
+,
+"en"
+:
+"Output data with csv format"
+}
+}
+,
+"--app"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"Interactive UI show data"
+,
+"en"
+:
+"交互式表格展示数据"
+}
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x ddgo bash"
+,
+"cn"
+:
+"搜索 bash 相关的信息"
+,
+"en"
+:
+"search information about bash"
+}
+,
+{
+"cmd"
+:
+"x ddgo --top 10 bash"
+,
+"cn"
+:
+"获取前 10条 bash 相关的信息"
+,
+"en"
+:
+"Get 10 message of bash"
+}
+,
+{
+"cmd"
+:
+"x ddgo --ai bash"
+,
+"cn"
+:
+"搜索 bash 相关的信息， 并使用 AI 选出最相关的答案， 并总结对应的内容"
+,
+"en"
+:
+"search information about bash and use AI to rate  the most relevant answers and summarize the corresponding content"
+}
+,
+{
+"cmd"
+:
+"x ddgo dump --json \"site:x-cmd.com jq\""
+,
+"cn"
+:
+"搜索 x-cmd.com 网站中关于 jq 的内容, 并以 json 的方式输出结果"
+,
+"en"
+:
+"Search x-cmd.com sites for JQ content and output the results as json"
+}
+]
+,
+"#subcmd:main"
+:
+[
+"dump"
+,
+"top"
+,
+"open"
+,
+"--cfg|cfg"
+,
+"init"
+,
+"hop"
+,
+"--ai"
+]
+}
+
