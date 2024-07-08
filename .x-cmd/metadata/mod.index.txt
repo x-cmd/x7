@@ -10,7 +10,7 @@ aeae128cc47129fbaf9f9c0e45fb63d9eed90573 ascii main NULL
 7eea8cf35214b50ffb9293bd8b26a2698a608660 asdf main NULL
 f037550d1da0800993138c7c3654960aeb2c629e assert main NULL
 e2c319cb900849c016550b89ac9bd08eefd17293 awk main NULL
-04bdfd6c8e22356d1714a33b2d7435e5a071b897 boot main NULL
+4aa647028ab13ec2c1ccf6e7dcbaf4efd5e8800f boot main NULL
 0887c2806696eae6b83d8a6eb75db52f8ac244ac brew main NULL
 ba8e65983eec61e5011fe529a548b5f27e50d2f3 browse main NULL
 f2d1b360e71f4a260b0f182ecfe8070aeabf7519 build main NULL
@@ -54,7 +54,7 @@ dea55e3013280a6b3752d272ff2bd82f9233ff02 dingtalk main NULL
 787a0ca2f7aa3c507f32556e911e3143caaa43a1 dns main NULL
 f61adbf71af32d342fa18889ac0190fc2090b1c9 docker main NULL
 46e8a8c97c9a1288673f1cc5ae33558c304f1a1a dregistry main NULL
-6bdb298de2b561c0da7fd2bfc9e4d341b48d1991 elv main NULL
+37a32f0a39d8fbf941f0f96ea66886895c4a847b elv main NULL
 1fa7b89e35e5514d48fbc80dace66549011d0d09 emacs main NULL
 79a3fe17d2a6badab0fd49c00fb2806fd37c8efa emoji main NULL
 b49c9db5c6af479553f8f004b4fdf1b917e36eb2 env main NULL
@@ -62,7 +62,7 @@ ab1256c5a8bda9c2c7b29258ab13f3b9d9d052fd envy main NULL
 9ab38c4889236fd012c971747048ecf509a908fc feishu main NULL
 a1391f6712eaf7addda4cb3a6c4f30debc23793e fifo main NULL
 bc7ce33fc5ed0904e257d23f38b227de28b16f38 fileage main NULL
-057e3144a062acd551f1e266d3226cc98e90ac3b fish main NULL
+a2b912b263dfd400b86bdf7688cddf8feee29adc fish main NULL
 04a97606fafe7bffca8f0244a6a59c25f8b11abb fjo main NULL
 b37a4bf8703199da1630c900fbe473d10ce5ffeb fsiter main NULL
 a07939b65fb22d6840aa11f7c4ad3c7ab8b9d22c fslock main NULL
@@ -75,7 +75,7 @@ ca7b449ddd70795652aa0ca4069289f5ac1e0e60 gh main NULL
 013bbd8e0928361f62d29d02018f274fb06da776 gitconfig main NULL
 a78a6a81677aecbcda0dcdab116b23a049b5c0c4 githook main NULL
 f87b5cb83038d31d6c4fc0acc49b00c98fbbfb5f gl main NULL
-c09380e9b0b523efeed563f360d066a2ff9e4249 go main NULL
+78d510823c9c7012f47eabde88610a2896e46fcd go main NULL
 afc2dbc2771e60552486d936f22bdd872fb521bc groovy main NULL
 f977e42ebd6b2e8c442354f27a228a61cfaa637d gt main NULL
 3367a80bc926a49a05f7eafaaee5c711740e1763 gtb main NULL
@@ -159,7 +159,7 @@ f22e02a97ef9e9d0ff51328d0c7060ace8b154c7 pick main NULL
 47569964212b60350b72cb4a9f09161cfcab3fc1 pidid main NULL
 36f60c8c5a0f62d9c1414a825ac675ab024e166e pip main NULL
 460577fe4c50c9f75f2e1cf6cf0670f00323f929 pipx main NULL
-543ba912ab06ee43ebde1a70e42b34476e93d219 pixi main NULL
+661115012c039c6298e585f269efb89d133c6829 pixi main NULL
 3eff4a05220fac1841e7110abef0698040b8b58e pkg main NULL
 fc3475fd1dd5db763958c3c36c1c96dc75e81e46 proxy main NULL
 c5f476844a5cd828b1fb04d0f07d18455a210221 ps main NULL
@@ -223,7 +223,7 @@ e9ebd468f3c937f3c89bbe594d7319447d3b6bc6 wkp main NULL
 db4d72894adc94e3a7c2e7ebf728360f84418bcf wttr main NULL
 b4875b9a33c1d4356bef7b4c551ad7c5f46b1cc7 wx main NULL
 6842e96be1bb77b6f3fb144cbc7dadcc917afcbe x-cmd main NULL
-f807dc2abbc2dfdd6e382976c9f98d0c96d1ea39 xrc main NULL
+4650027846e6c4593c6b8958b13e55fb68983651 xrc main NULL
 e1bf1c170f63ff29c6cf390014acc63a5b444347 xx main NULL
 3516822d427da2fd61eedabf9440ff998ce461e0 yml main NULL
 ea10c2556f87161b883d0e2f7993bda705299345 yo main NULL

@@ -37,6 +37,8 @@ null
 :
 [
 "star"
+,
+"get"
 ]
 ,
 "#subcmd:Common"
@@ -61,8 +63,6 @@ null
 "fmt"
 ,
 "generate"
-,
-"get"
 ,
 "install"
 ,
