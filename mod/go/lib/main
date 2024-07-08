@@ -1,7 +1,7 @@
 # shellcheck shell=dash
 
 x log init go
-xrc:mod:lib   go        proxy   ddgo    star/_index
+xrc:mod:lib   go        proxy   ddgo    star/_index get
 ___x_cmd_go___main(){
     [ "$#" -gt 0 ] ||   set -- --help
 
@@ -10,6 +10,7 @@ ___x_cmd_go___main(){
         -h|--help)      ___x_cmd help -m go  "$@" ; return   ;;
         # i|install)      ___x_cmd_go___cmd install  "$@" ;;
         proxy)          ___x_cmd_go_proxy           "$@" ;;
+        get)            ___x_cmd_go_get             "$@" ;;
         star)           ___x_cmd_go_star            "$@" ;;
         :|ddgo)         ___x_cmd_go_ddgo            "$@" ;;
         *)              ___x_cmd_go___cmd "$op"    "$@" ;;

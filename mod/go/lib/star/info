@@ -30,6 +30,6 @@ ___x_cmd_go_star_info___json(){
 
 ___x_cmd_go_star_info___raw(){
     local name="$1"
-    ___x_cmd_go_star_la___raw | x jo env '.*' all=. _name=.name -- '[ "$name" != "$_name" ] || printf "%s\n" "$all"'
+    ___x_cmd_go_star_la___raw | ___x_cmd jo env '.*' all=. _name=.name -- '[ "$name" != "$_name" ] || printf "%s\n" "$all"'
 }
 

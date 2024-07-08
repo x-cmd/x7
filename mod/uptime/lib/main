@@ -51,9 +51,9 @@ ___x_cmd_uptime___cmd_yml(){
         un = substr(st, RSTART+2)
         st = substr(st, 1, RSTART-1)
 
-        la = match(rs, "load average: ")
+        la = match(rs, "load average(s)?: ")
         la = substr(rs, RSTART+RLENGTH)
-        split(la, la_arr, ", ")
+        split(la, la_arr, "(, | )")
 
 
         printf("%10s\t: %s\n",  UI_KEY "Current time"       UI_END, UI_VAL ct UI_END)
