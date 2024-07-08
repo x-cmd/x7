@@ -7,7 +7,7 @@ ___x_cmd_df___darwin(){
     while [ $# -gt 0 ]; do
         case "$1" in
             -n|--numeric)   numeric=1;  shift ;;
-            --csv)          fmt=csv;    shift ;;
+            -c|--csv)       fmt=csv;    shift ;;
             --app)          fmt=app;    shift ;;
             *)              break
         esac
@@ -53,6 +53,6 @@ ___x_cmd_df___darwin___raw(){
 
 ___x_cmd_df___darwin___app(){
     ___x_cmd_df___darwin___csv | \
-        ___x_cmd csv --app
+        ___x_cmd csv --app --clear
 }
 

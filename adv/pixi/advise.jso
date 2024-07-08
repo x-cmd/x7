@@ -247,6 +247,20 @@ true
 :
 "相当于 'pixi -h' 命令"
 }
+,
+{
+"cmd"
+:
+"x pixi global install yq"
+,
+"cn"
+:
+"使用 pixi 在全局安装 yq 命令"
+,
+"en"
+:
+"Install the yq command globally using pixi"
+}
 ]
 ,
 "#other"

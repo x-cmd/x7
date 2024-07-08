@@ -6,7 +6,7 @@ ___x_cmd_df___linux(){
     while [ $# -gt 0 ]; do
         case "$1" in
             -n|--numeric)   numeric=1;  shift ;;
-            --csv)          fmt=csv;    shift ;;
+            -c|--csv)       fmt=csv;    shift ;;
             --app)          fmt=app;    shift ;;
             *)              break
         esac
@@ -27,7 +27,7 @@ ___x_cmd_df___linux___auto(){
 
 ___x_cmd_df___linux___csv(){
     ___x_cmd_df___linux___raw | \
-        ___x_cmd csv convert --col -n 10
+        ___x_cmd csv convert --col -n 7
 }
 
 # TODO: Unified with mount results ....
@@ -41,6 +41,6 @@ ___x_cmd_df___linux___raw(){
 
 ___x_cmd_df___linux___app(){
     ___x_cmd_df___linux___csv | \
-        ___x_cmd csv --app
+        ___x_cmd csv --app --clear
 }
 
