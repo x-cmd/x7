@@ -1,0 +1,11 @@
+
+___x_cmd_go_star(){
+    [ $# -gt 0 ]    ||  set -- ls
+
+    local op="$1";      shift
+    case "$op" in
+        ls|info)
+            "___x_cmd_go_star_$op" "$@"
+    esac
+
+}

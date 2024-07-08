@@ -1,12 +1,39 @@
 # shellcheck shell=dash
-___x_cmd_go___main(){
-    [ "$#" -gt 0 ] || {
 
-        return
-    }
+xrc:mod:lib   go        proxy   ddgo    star/_index
+
+___x_cmd_go___main(){
+    [ "$#" -gt 0 ] ||   set -- --help
 
     local op="$1"; shift
     case "$op" in
-
+        # i|install)      ____x_cmd_go___cmd install  "$@" ;;
+        proxy)          ___x_cmd_go_proxy           "$@" ;;
+        :|ddgo)         ___x_cmd_go_ddgo            "$@" ;;
+        *)              ____x_cmd_go___cmd "$op"    "$@" ;;
     esac
 }
+
+____x_cmd_go___cmd(){
+    ____x_cmd_go___ensure || return
+
+    ___x_cmd_cmds go "$@"
+}
+
+____x_cmd_go___ensure(){
+    ___x_cmd_hascmd go || {
+        if [ -t 1 ] && ___x_cmd_is_interactive; then
+            local id=
+            local cmd=
+            x ui select id,cmd "go command not found, Next"   \
+                "x env use go"         \
+                "x env try go"         \
+                "return 1"             \
+            || return
+            eval "$cmd"
+        else
+            N=zig M="go command not found. Install it by 'x env use go'" log:ret:1
+        fi
+    }
+}
+

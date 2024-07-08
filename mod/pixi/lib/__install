@@ -17,6 +17,7 @@ ___x_cmd_pixi___uninstall(){
     if [ -t 1 ] && ___x_cmd_is_interactive; then
         ___x_cmd ui yesno "Delete $pixi_home directory?"  || return 1
     fi
+    ___x_cmd_pixi___deactivate || return
     ___x_cmd rmrf "$pixi_home" || return
 
     pixi:info "Deleted $pixi_home directory, pixi uninstall successfully!"

@@ -1,0 +1,13 @@
+# shellcheck shell=dash
+
+xrc:mod:lib     df      __darwin    __linux
+
+___x_cmd_df___main(){
+    local x_
+    ___x_cmd os name_
+    case "$x_" in
+        darwin)     ___x_cmd_df___darwin    "$@" ;;
+        *)          ___x_cmd_df___linux     "$@" ;;
+    esac
+}
+

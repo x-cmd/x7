@@ -1,0 +1,21 @@
+# shellcheck shell=dash disable=SC2016
+
+___x_cmd_uname___main(){
+    ___x_cmd_uname___raw
+}
+
+___x_cmd_uname___raw(){
+    ___x_cmd_cmds uname -a | ___x_cmd_cmds awk '{
+        printf("%10s\t: %s\n", "hostname", $2)
+        printf("%10s\t: %s\n", "osname", $1)
+        printf("%10s\t: %s\n", "kernel", $3)
+        printf("%10s\t: %s\n", "machine", $NF)
+
+        $1 = ""
+        $2 = ""
+        $3 = ""
+        $NF = ""
+        gsub("(^[ ]+)|([ ]+$)", "", $0)
+        printf("%10s\t: %s\n", "version", $0)
+    }'
+}
