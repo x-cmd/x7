@@ -12,16 +12,16 @@ ___x_cmd_go_proxy(){
 }
 
 ___x_cmd_go_proxy_status(){
-    ____x_cmd_go___cmd env GOPROXY
+    ___x_cmd_go___cmd env GOPROXY
 }
 
 ___x_cmd_go_proxy_set(){
     local url="https://goproxy.cn"
-    ____x_cmd_go___cmd env -w "GOPROXY=$url,direct"
+    ___x_cmd_go___cmd env -w "GOPROXY=$url,direct"
 }
 
 ___x_cmd_go_proxy_unset(){
-    ____x_cmd_go___cmd env -u GOPROXY
+    ___x_cmd_go___cmd env -u GOPROXY
 }
 
 

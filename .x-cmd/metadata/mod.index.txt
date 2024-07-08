@@ -75,7 +75,7 @@ ca7b449ddd70795652aa0ca4069289f5ac1e0e60 gh main NULL
 013bbd8e0928361f62d29d02018f274fb06da776 gitconfig main NULL
 a78a6a81677aecbcda0dcdab116b23a049b5c0c4 githook main NULL
 f87b5cb83038d31d6c4fc0acc49b00c98fbbfb5f gl main NULL
-4bd7d6c50b3f7e17068023acb2a5f9b9cbcf49f6 go main NULL
+1ed1702cdfab468af48f1909abca364df00e9d8d go main NULL
 afc2dbc2771e60552486d936f22bdd872fb521bc groovy main NULL
 f977e42ebd6b2e8c442354f27a228a61cfaa637d gt main NULL
 3367a80bc926a49a05f7eafaaee5c711740e1763 gtb main NULL
@@ -203,11 +203,11 @@ a7f6cc98a53b9aa453dab84ccf003f0752ea69f6 theme main NULL
 4cce086b2a514277d5545174c973e8220dfd7fca tmp main NULL
 f13331c6019dfca5fe97de4817ecdcf9ea81c1dd tmpl main NULL
 077873dd253c36d1672c8e6344d588f4a5d55bb9 tty main NULL
-26e484bc3e6c722e50e9f06f6546da69f7bdcca3 tui main NULL
+73decda4056589fc969188e7f676080e7782dd3b tui main NULL
 9f8fe991b9429464fa71904c271c5e8e614b6edd txt main NULL
 a97417e662f429920a75ecbaa1c13d218e4d7a64 ui main NULL
 81e2a2ec5880241fd06fd808e7330bf5cd9d7e87 uname main NULL
-fec2af98514ff237c172439de7f553cca25a8c7c uptime main NULL
+30c4956089a05595ec45fc4de9d71715baab8729 uptime main NULL
 c6fa8695b16c2bdd76fe79b5658739ccfba7eb54 url main NULL
 75dd5344b8573f25e4b67a88f170b9f916c12ef7 user main NULL
 bfc7121f9eee8a04dbec1c83593987a6a57980b2 version main NULL
@@ -222,7 +222,7 @@ e9ebd468f3c937f3c89bbe594d7319447d3b6bc6 wkp main NULL
 5e933527ac825cc928c240975d525168a1bb6191 wsl main NULL
 db4d72894adc94e3a7c2e7ebf728360f84418bcf wttr main NULL
 b4875b9a33c1d4356bef7b4c551ad7c5f46b1cc7 wx main NULL
-2ce2b4773d00ef1144d35d0ba7fc12d7e357a7e6 x-cmd main NULL
+6842e96be1bb77b6f3fb144cbc7dadcc917afcbe x-cmd main NULL
 f807dc2abbc2dfdd6e382976c9f98d0c96d1ea39 xrc main NULL
 e1bf1c170f63ff29c6cf390014acc63a5b444347 xx main NULL
 3516822d427da2fd61eedabf9440ff998ce461e0 yml main NULL
@@ -231,6 +231,6 @@ ea10c2556f87161b883d0e2f7993bda705299345 yo main NULL
 c6ff60f6b1c627187488de74262cd2576a831e4d yum main NULL
 9972cdad5407f9bc811028e2fdf4a1605d430b7f zef main NULL
 d09f2f66d19ab836b93c5b00d105ff0344435f39 zhipu main NULL
-2cc00de18a741c78dc8a3513742e8b866f57e0fe zig main NULL
+53000b522d0118ab30ad1076aba7105116327415 zig main NULL
 dbc3d604c69c149de064087f78dcaea27084d680 zshplugin main NULL
 ff7066b3e5298d56b2438ce306e3e668dfd236c4 zuz main NULL

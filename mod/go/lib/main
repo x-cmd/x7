@@ -1,26 +1,28 @@
 # shellcheck shell=dash
 
+x log init go
 xrc:mod:lib   go        proxy   ddgo    star/_index
-
 ___x_cmd_go___main(){
     [ "$#" -gt 0 ] ||   set -- --help
 
     local op="$1"; shift
     case "$op" in
-        # i|install)      ____x_cmd_go___cmd install  "$@" ;;
+        -h|--help)      ___x_cmd help -m go  "$@" ; return   ;;
+        # i|install)      ___x_cmd_go___cmd install  "$@" ;;
         proxy)          ___x_cmd_go_proxy           "$@" ;;
+        star)           ___x_cmd_go_star            "$@" ;;
         :|ddgo)         ___x_cmd_go_ddgo            "$@" ;;
-        *)              ____x_cmd_go___cmd "$op"    "$@" ;;
+        *)              ___x_cmd_go___cmd "$op"    "$@" ;;
     esac
 }
 
-____x_cmd_go___cmd(){
-    ____x_cmd_go___ensure || return
+___x_cmd_go___cmd(){
+    ___x_cmd_go___ensure || return
 
     ___x_cmd_cmds go "$@"
 }
 
-____x_cmd_go___ensure(){
+___x_cmd_go___ensure(){
     ___x_cmd_hascmd go || {
         if [ -t 1 ] && ___x_cmd_is_interactive; then
             local id=
