@@ -2,7 +2,7 @@
 "#name"
 :
 {
-"df"
+"kill"
 :
 null
 }
@@ -12,14 +12,14 @@ null
 {
 "en"
 :
-"df command enhancement"
+"kill command enhancement"
 ,
 "cn"
 :
-"df 命令增强"
+"kill 命令增强"
 }
 ,
-"--numeric|-n"
+"--ls|-l"
 :
 {
 "#desc"
@@ -27,15 +27,30 @@ null
 {
 "en"
 :
-"Display disk space size in pure numeric form"
+"List available signal"
 ,
 "cn"
 :
-"以纯数字形式显示磁盘空间大小"
+"列出可用的信号"
+}
+,
+"-j|--json"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Output in JSON format"
+,
+"cn"
+:
+"以 JSON 格式输出"
 }
 }
 ,
-"--csv|-c"
+"-c|--csv"
 :
 {
 "#desc"
@@ -66,6 +81,7 @@ null
 "使用交互式 UI 查看"
 }
 }
+}
 ,
 "#tldr"
 :
@@ -73,15 +89,15 @@ null
 {
 "cmd"
 :
-"x df"
+"x kill -l"
 ,
 "en"
 :
-"View file system and disk space usage in an TUI"
+"View all available signals in the current system using an TUI"
 ,
 "cn"
 :
-"以 TUI 方式查看文件系统和磁盘空间使用情况"
+"以 TUI 方式查看当前系统所有可用的信号"
 }
 ]
 ,

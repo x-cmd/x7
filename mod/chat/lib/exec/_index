@@ -207,7 +207,7 @@ ___x_cmd_chat___exec_inner_(){
     (
         [ -z "$is_silent" ] || ___x_cmd log "$provider"/warn 2>/dev/null
         if [ -t 1 ] && ___x_cmd_is_interactive; then
-            ___x_cmd "$provider" chat exec | ___x_cmd md llm
+            ___x_cmd "$provider" chat exec | ___x_cmd md llm --rotate
         else
             ___x_cmd "$provider" chat exec
         fi

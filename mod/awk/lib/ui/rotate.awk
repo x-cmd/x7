@@ -10,24 +10,25 @@ function ui_rotate1( screensize, fp,     line,     d, i ){
     i = IFS
     IFS = "\n"
 
-    printf("%s", UI_LINEWRAP_DISABLE)  # This must be  the default ...
-    printf("\033[?7l")
+    printf("%s", UI_LINEWRAP_DISABLE) > "/dev/stderr"  # This must be  the default ...
+    printf("\033[?7l") > "/dev/stderr"
 
     while (getline line <fp ) {
-        printf("\r%s")
+        printf("\r%s") > "/dev/stderr"
     }
 
     IFS = i
 }
 
-function ui_rotate_fromstdin( n, prefix, exitclear, prompt_run, prompt_end,    i, o, _line, l, arr, _c ){
+function ui_rotate_fromstdin( n, prefix, exitclear, prompt_run, prompt_end, output_raw,    i, o, _line, l, arr, _c, OUTPUT_ARR, OUTPUT_ARRL ){
     prompt_run = ( prompt_run != "") ? prompt_run : "Running ..."
     prompt_end = ( prompt_end != "") ? prompt_end : "Done"
-    for (i=1; i<=n; ++i)    printf("%s", "\r\n")
+    for (i=1; i<=n; ++i)    printf("%s", "\r\n") > "/dev/stderr"
     printf("%s", "\033["int(n+1)"A" UI_CURSOR_SAVE UI_LINEWRAP_DISABLE) > "/dev/stderr"
 
     ring_init( o, n )
     while (getline _line) {
+        if ( output_raw == 1 ) OUTPUT_ARR[ ++OUTPUT_ARRL ] = _line
         l = split(_line, arr, "\n|\r")
         for (i=1; i<=l; ++i){
             _line = arr[i]
@@ -51,6 +52,7 @@ function ui_rotate_fromstdin( n, prefix, exitclear, prompt_run, prompt_end,    i
     ui_rotate_render_prompt( o, prefix, prompt_end )
     printf ("%s", UI_LINEWRAP_ENABLE) > "/dev/stderr"
     if (exitclear == 1) ui_rotate_render_clear()
+    for (i=1; i<=OUTPUT_ARRL; ++i) print OUTPUT_ARR[i]
     return _c
 }
 

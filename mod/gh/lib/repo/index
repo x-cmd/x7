@@ -14,6 +14,7 @@ xrc:mod:lib gh \
     repo/label/index \
     repo/topic/index \
     repo/file/index \
+    repo/fs/_index \
     repo/main/download
 
 ___x_cmd_gh_repo(){
@@ -33,6 +34,7 @@ ___x_cmd_gh_repo(){
         team                "List repository teams"                 \
         apply               "Manage repo by declare configure"      \
         "collaborator|c"    "Manage repo collaborator"              \
+        fs                  "download repo file"                    \
         file                "Manage repo file"                      \
         pr                  "Manage repo pr"                        \
         hook                "Manage repo webhook"                   \
