@@ -95,7 +95,7 @@ if status is-interactive
     set -g ___X_CMD_IS_INTERACTIVE_FORCE 1
     # setenv ___X_CMD_CO_EXEC_SHELL=fish
 
-    [ -f "$HOME/.x-cmd.root/boot/c.disable"     ]   ||  begin
+    [ -f "$HOME/.x-cmd.root/boot/alias/c.disable"     ]   ||  begin
         function c
             if [ "$argv[1]" = "-" ]
                 cd -

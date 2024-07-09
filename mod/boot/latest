@@ -1,6 +1,6 @@
 # shellcheck shell=sh disable=SC3043,SC2120 # xrc
 
-x log init boot
+___x_cmd log init boot
 
 ___X_CMD_BOOT_DATA="$___X_CMD_ROOT_DATA/boot"
 
@@ -14,8 +14,16 @@ ___x_cmd_boot(){
 
     case "$1" in
         alterdefault)   shift; ___x_cmd_boot_alterdefault   "$@" ;;
-        init)           xrc:mod boot/lib/init                    ;;
-        clear)          xrc:mod boot/lib/clear                   ;;
+        init)
+                        case "$2" in
+                            -h|--help)  ___x_cmd help -m boot init  ;    return ;;
+                        esac
+                        xrc:mod boot/lib/init                    ;;
+        clear)
+                        case "$2" in
+                            -h|--help)  ___x_cmd help -m boot clear ;    return ;;
+                        esac
+                        xrc:mod boot/lib/clear                   ;;
 
         alias)          shift; ___x_cmd_boot_alias          "$@" ;;
         ch)             shift; ___x_cmd_boot_ch             "$@" ;;
@@ -24,7 +32,9 @@ ___x_cmd_boot(){
         rc)             shift; ___x_cmd_boot_rc             "$@" ;;
 
         mod)            shift; ___x_cmd_boot_mod            "$@" ;;
-        *)              x help -m boot                           ;;
+        -h|--help)      ___x_cmd help -m boot                    ;;
+        *)              ___x_cmd help -m boot >&2; return 64     ;;
+
     esac
 }
 
