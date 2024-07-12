@@ -35,6 +35,7 @@ ___x_cmd_gh_repo(){
         apply               "Manage repo by declare configure"      \
         "collaborator|c"    "Manage repo collaborator"              \
         fs                  "download repo file"                    \
+        fsp                 "download public repo file"             \
         file                "Manage repo file"                      \
         pr                  "Manage repo pr"                        \
         hook                "Manage repo webhook"                   \
@@ -252,8 +253,8 @@ option:
 
     local gen_gh_json=""
     gen_gh_json="$(param:option2json -repo -access +security "${private:+"+private"}" "${visibility:+"+visibility"}" \
-        has_issues=^no_issues                   has_wiki=^no_wiki                       has_projects=^no_projects \
-        allow_rebase_merge=^no_rebase_merge     allow_squash_merge=^no_squash_merge     allow_merge_commit=^no_merge_commit)"
+        'has_issues=^no_issues'                   'allow_merge_commit=^no_merge_commit'     'has_projects=^no_projects'   \
+        'allow_rebase_merge=^no_rebase_merge'     'allow_squash_merge=^no_squash_merge'     'has_wiki=^no_wiki')"
     gh:debug "$gen_gh_json"
 
     printf "%s" "${gen_gh_json}"  | ___x_cmd_gh_curl patch "/repos/${owner_repo}" "@-" | ___x_cmd_gh_repo____ui_handler Edit

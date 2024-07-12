@@ -23,14 +23,14 @@ ___x_cmd_param_flag_to_bool(){
 
         ___value="${___name#*=}"
         case "$___value" in
-            ^^*)
+            \^\^*)
                 if eval [ -n \"\$"${___value#^^}"\" ]; then
                     eval "$___key=$true"
                 else
                     eval "$___key=$false"
                 fi
                 ;;
-            ^*)
+            \^*)
                 if eval [ -z \"\$"${___value#^}"\" ]; then
                     eval "$___key=$true"
                 else
@@ -56,7 +56,7 @@ ___x_cmd_param_option_to_json()(
 
     for ___name in "$@"; do
         case "$___name" in
-            *=^^*)      ___key="${___name%%=*}"
+            *=\^\^*)      ___key="${___name%%=*}"
                         if eval [ -n \"\$"${___name#*=^^}"\" ]; then
                             eval "$___key=true"
                         else
@@ -64,7 +64,7 @@ ___x_cmd_param_option_to_json()(
                         fi
                         ___code="$___code ${___key}"
                         ;;
-            *=^*)       ___key="${___name%%=*}"
+            *=\^*)       ___key="${___name%%=*}"
                         if eval [ -z \"\$"${___name#*=^}"\" ]; then
                             eval "$___key=true"
                         else

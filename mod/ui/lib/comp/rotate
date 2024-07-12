@@ -22,7 +22,7 @@ ___x_cmd_ui_rotate(){
         esac
     done
 
-    x:info "SIZE[$___X_CMD_UI_ROTATE_SIZE]"
+    x:debug "SIZE[$___X_CMD_UI_ROTATE_SIZE]"
     if [ $# -eq 0 ]; then
         ___x_cmd_ui_rotate___run
     else

@@ -22,6 +22,10 @@ null
 "--ls|-l"
 :
 {
+"#subcmd"
+:
+true
+,
 "#desc"
 :
 {
