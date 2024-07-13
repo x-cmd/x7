@@ -21,7 +21,7 @@ ___x_cmd_scorecard_update(){
         -m "Download scorecard projects.csv, thanks to the courtesy of ${url%/"${url#*//*/}"}" \
         --url "$url" --ball "$___X_CMD_SCORECARD_INDEX_FP"
     # ___x_cmd ccmd 10d --
-    ___x_cmd curl --progress-bar --location --retry-max-time 10 --retry 0 "$url" > "$___X_CMD_SCORECARD_INDEX_FP.tmp" || {
+    ___x_cmd curl --location --retry-max-time 10 --retry 0 "$url" > "$___X_CMD_SCORECARD_INDEX_FP.tmp" || {
         ___x_cmd rmrf "$___X_CMD_SCORECARD_INDEX_FP.tmp"
         scorecard:error "Download failed."
         return 1
