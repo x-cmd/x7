@@ -26,9 +26,11 @@ ___x_cmd_scorecard_update(){
         scorecard:error "Download failed."
         return 1
     }
-    ___x_cmd rmrf   "$___X_CMD_SCORECARD_INDEX_FP.last"
-    ___x_cmd mv     "$___X_CMD_SCORECARD_INDEX_FP"      "$___X_CMD_SCORECARD_INDEX_FP.last"
-    ___x_cmd mv     "$___X_CMD_SCORECARD_INDEX_FP.tmp"  "$___X_CMD_SCORECARD_INDEX_FP"
+    ___x_cmd rmrf "$___X_CMD_SCORECARD_INDEX_FP.last"
+    if [ -f "$___X_CMD_SCORECARD_INDEX_FP" ];then
+        ___x_cmd mv "$___X_CMD_SCORECARD_INDEX_FP" "$___X_CMD_SCORECARD_INDEX_FP.last"
+    fi
+    ___x_cmd mv "$___X_CMD_SCORECARD_INDEX_FP.tmp" "$___X_CMD_SCORECARD_INDEX_FP"
     scorecard:info "scorecard projects.csv updated successfully."
 
     scorecard:info "Colorizing scorecard index. It might take 10 seconds."

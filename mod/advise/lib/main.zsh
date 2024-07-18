@@ -28,8 +28,12 @@ ___x_cmd_advise_run(){
     ___x_cmd_advise_run___ltrim_maxitem
     ___x_cmd_advise_run___fix_mac_zsh
 
-    [ -z "${candidate_arr[*]}" ]            || LC_ALL="$_UTF8" LANG="$_UTF8" ___x_cmd_advise_run___describe 'commands' candidate_arr || return
-    [ -z "${candidate_nospace_arr[*]}" ]    || LC_ALL="$_UTF8" LANG="$_UTF8" ___X_CMD_ADVISE_RUN_SET_NOSPACE=1 ___x_cmd_advise_run___describe 'commands' candidate_nospace_arr
+    if [ -n "${candidate_arr[*]}" ]; then
+        candidate_arr+=( "${candidate_nospace_arr[@]}" )
+        LC_ALL="$_UTF8" LANG="$_UTF8" ___x_cmd_advise_run___describe 'commands' candidate_arr
+    elif [ -n "${candidate_nospace_arr[*]}" ]; then
+        LC_ALL="$_UTF8" LANG="$_UTF8" ___X_CMD_ADVISE_RUN_SET_NOSPACE=1 ___x_cmd_advise_run___describe 'commands' candidate_nospace_arr
+    fi
 }
 
 ___x_cmd_advise_run___describe(){

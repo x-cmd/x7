@@ -37,11 +37,11 @@ null
 {
 "cn"
 :
-"主要为优化中国地区访问 Bitbucket、Codeberg、GitHub、GitLab 而设 -- 包括配置短名和设定代理"
+"主要为优化中国地区访问 Bitbucket、Codeberg、GitHub、GitLab 而设, 包括配置短名和设定代理"
 ,
 "en"
 :
-"Mainly for optimizing access to Bitbucket, Codeberg, GitHub, and GitLab in China -- including setting up short names and configuring proxies"
+"Mainly for optimizing access to Bitbucket, Codeberg, GitHub, and GitLab in China, including setting up short names and configuring proxies"
 }
 ,
 "setup"

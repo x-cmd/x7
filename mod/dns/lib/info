@@ -1,0 +1,24 @@
+
+___x_cmd_dns_info(){
+    :
+}
+
+___x_cmd_dns_info___yml(){
+    :
+}
+
+# x shodan dns 223.5.5.5
+# x shodan ping 223.5.5.5
+
+___x_cmd_dns_info___app(){
+
+    local id
+    local ip
+
+    case "$id" in
+        1)      ___x_cmd shodan dns     "$ip"   ;;
+        2)      ___x_cmd shodan ping    "$ip"   ;;
+        *)      ;;
+    esac
+}
+
