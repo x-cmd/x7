@@ -1,12 +1,5 @@
 # shellcheck shell=bash disable=SC2098,2097,2012,1090 #xrc
 
-___x_cmd log init advise
-___x_cmd_advise_dev(){
-    case "$1" in
-        on)         ___X_CMD_ADVISE_DEV_MOD=1 ;;
-        off|*)      ___X_CMD_ADVISE_DEV_MOD="" ;;
-    esac
-}
 
 ___x_cmd_advise___get_mod_advise_jso_(){
     local mod="$1"
@@ -37,6 +30,7 @@ ___x_cmd_advise___load_xcmd_advise_util_file(){
 
 # EndSection
 
+___x_cmd log init advise
 ## Section: gen x advise.jso
 ___X_CMD_ADVISE_MAN_CACHE_X_ADVISE_JSO="$___X_CMD_ROOT_DATA/advise/cache/x/$___X_CMD_VERSION.jso"
 ___x_cmd_advise_man_gen_x_advise(){

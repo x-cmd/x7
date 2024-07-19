@@ -1,9 +1,11 @@
 BEGIN{
     mount_data = ENVIRON[ "mount_data" ]
-    l = split(mount_data, arr, "\n")
+    l = split(mount_data, mount, "\n")
     for (i = 1; i <= l; i++) {
-        split(arr[i], _arr, " ")
-        mount_attr[ _arr[3] ] = _arr[6]
+        split(mount[i], arr, " on ")
+        split(arr[2], _arr, " \(")
+        gsub("\)$", "", _arr[2])
+        mount_attr[ _arr[1] ] =  _arr[2]
     }
 }
 
@@ -16,7 +18,7 @@ NR==1{
 
 {
     first = substr($0, 1, t-1)
-    gsub("(^[ ]+)|[[ ]+$]", "", first)
+    gsub("(^[ ]+)|([ ]+$)", "", first)
     $0 = substr($0, t)
 
     attr = mount_attr[ $9 ]

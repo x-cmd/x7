@@ -18,7 +18,7 @@ END{
         rtts     = get_geoping_value(O, keypath, i)
 
         printf("%s,%s,%s/%s,%s/%s/%s,%s,%s\n", \
-                ip, alive, city, country , min, avg, max, rtts, "\""latlon"\"" )
+                ip, alive, city, country , min, avg, max, "\""rtts"\"", "\""latlon"\"" )
     }
 
     if (ip == "") panic("Not found data [hostname or ip="hostname"]")

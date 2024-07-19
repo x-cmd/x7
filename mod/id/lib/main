@@ -53,11 +53,11 @@ function split_bracket( str, _arr ){
 {
     split_eq( $1 )
     split_bracket( b )
-    printf( UI_KEY "uid: " UI_END UI_NUM_VAR "%7s" UI_END UI_STR_VAR "\t%s" UI_END "\n", a , b )
+    printf( UI_KEY "uid:    " UI_END UI_NUM_VAR "%s" UI_END UI_STR_VAR "\t%s" UI_END "\n", a , b )
 
     split_eq( $2 )
     split_bracket( b )
-    printf( UI_KEY "gid: " UI_END UI_NUM_VAR "%7s" UI_END UI_STR_VAR "\t%s" UI_END "\n", a , b )
+    printf( UI_KEY "gid:    " UI_END UI_NUM_VAR "%s" UI_END UI_STR_VAR "\t%s" UI_END "\n", a , b )
 
     split_eq( $3 )
     l = split( b, arr, ",")
