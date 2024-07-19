@@ -3,8 +3,8 @@ BEGIN{
     l = split(mount_data, mount, "\n")
     for (i = 1; i <= l; i++) {
         split(mount[i], arr, " on ")
-        split(arr[2], _arr, " \(")
-        gsub("\)$", "", _arr[2])
+        split(arr[2], _arr, " \\(")
+        gsub("\\)$", "", _arr[2])
         mount_attr[ _arr[1] ] =  _arr[2]
     }
 }

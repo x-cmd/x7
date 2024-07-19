@@ -58,6 +58,10 @@ ___x_cmd_pixi___cmd(){
 }
 
 ___x_cmd_pixi___pkginfo(){
+    ___x_cmd ccmd 1d -- ___x_cmd_pixi___pkginfo__ "$@"
+}
+
+___x_cmd_pixi___pkginfo__(){
     local pkgname="${1%% *}"
     pkgname="${pkgname##* }"
 

@@ -52,17 +52,17 @@ ___x_cmd_dns_ls_app_(){
 
     local id=
     ___x_cmd ui select id "Next:"                       \
-        "use shodan get dns"                            \
         "use shodan measure the latency to an IP"       \
+        "use shodan get dns"                            \
         "display the dns information"                   \
         "EXIT"     || return
 
     case "$id" in
-        1)      dns:info "run command => x shodan dns $ip"
-                ___x_cmd shodan dns "$ip"
-                ;;
-        2)      dns:info "run command => x shodan ping $ip"
+        1)      dns:info "run command => x shodan ping $ip"
                ___x_cmd shodan ping "$ip"
+                ;;
+        2)      dns:info "run command => x shodan dns $ip"
+                ___x_cmd shodan dns "$ip"
                 ;;
         3)      ___x_cmd_dns_info --yml  "$ip"
                 ;;

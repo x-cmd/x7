@@ -29,6 +29,6 @@ ___x_cmd_dns_info___json(){
 }
 
 ___x_cmd_dns_info___raw(){
-    ___x_cmd_dns_ls_json | ___x_cmd jo env '.*' all=. _ip=.ipv4 -- 'if( printf "%s\n" "$_ip" | grep "$ip" >/dev/null ); then printf "%s\n" "$all"; fi'
+    ___x_cmd_dns_ls_json | ___x_cmd jo env '.*' all=. _ip=.ipv4 -- 'if ( printf "%s\n" "$_ip" | grep "$ip" >/dev/null ); then printf "%s\n" "$all"; fi'
 }
 
