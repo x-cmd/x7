@@ -18,6 +18,9 @@ ___x_cmd_gtb___main(){
         s|search)   ___x_cmd_gtb_search         "$@" ;;
         hop)        ___x_cmd_gtb_hop            "$@" ;;
 
+        fzf|--fzfinfo)
+                    ___x_cmd_gtb_"${op#--}"     "$@" ;;
+
         meta|txt|ls)
                     ___x_cmd_gtb_"$op"          "$@" ;;
 

@@ -1,0 +1,18 @@
+
+___x_cmd_gtb_fzf(){
+    local data
+    data="$( ___x_cmd_gtb_fzf___ls | {
+        read -r line; ___x_cmd fzf --ansi --height 90% --layout=reverse --preview='x gtb --fzfinfo {1} 2>/dev/null'
+    } )" || return
+
+    # Using ui select ...
+}
+
+___x_cmd_gtb_fzf___ls(){
+    ___x_cmd gtb ls
+}
+
+___x_cmd_gtb_fzfinfo(){
+    local i="${1%%,**}"
+    ___x_cmd gtb info "$i"
+}

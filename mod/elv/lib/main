@@ -23,6 +23,9 @@ ___x_cmd_elv___main(){
         setup|--setup)
                     ___x_cmd_elv___setup                "$@" ;;
 
+        --setup-module)
+                    ___x_cmd_elv___setup_module         "$@" ;;
+
         # <inner function>
         --binexec)  ___x_cmd_elv___binexec              "$@" ;;
         --exec)     ___x_cmd_elv___binexec elvish       "$@" ;;
