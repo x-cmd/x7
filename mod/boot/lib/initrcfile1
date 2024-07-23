@@ -10,7 +10,7 @@ ___x_cmd_boot_initrcfile1(){
         return
     }
 
-    if ___x_cmd_boot_ensurerccode "$rccode" "$rcfile"; then
+    if ___x_cmd_boot_ensurerccodewithoutextra "$rccode" "$rcfile"; then
         x:info "Already Installed in $rcfile"
     else
         local data

@@ -62,11 +62,11 @@ true
 {
 "cn"
 :
-"(默认) 一键引入 x-cmd 工具集到 elvish 环境 -- lib 目录下引入 a.elv 和 x.elv 两个文件，并修改 $HOME/.config/elvish/rc.elv 文件以引入 x-cmd 工具集"
+"(默认) 一键引入 x-cmd 工具集到 elvish 环境（lib 目录下引入 a.elv 和 x.elv 两个文件），并修改 $HOME/.config/elvish/rc.elv 文件以引入 x-cmd 工具集"
 ,
 "en"
 :
-"(Default) Introduce the x-cmd toolset into the elvish environment with one click -- introduce the a.elv and x.elv files in the lib directory and modify the $HOME/.config/elvish/rc.elv file to introduce the x-cmd toolset."
+"(Default) Introduce the x-cmd toolset into the elvish environment with one click (introduce the a.elv and x.elv files in the lib directory) and modify the $HOME/.config/elvish/rc.elv file to introduce the x-cmd toolset."
 }
 }
 ,

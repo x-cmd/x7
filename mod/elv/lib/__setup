@@ -21,7 +21,7 @@ ___x_cmd_elv_rcpath_(){
 
 ___x_cmd_elv___setup(){
     case "$1" in
-        --help|-h)      ___x_cmd help -m elv --setup;   return 0;
+        --help|-h)      ___x_cmd help -m elv --setup;   return 0;;
     esac
 
     local mode="${1:-all}"

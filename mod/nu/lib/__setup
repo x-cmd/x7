@@ -9,6 +9,12 @@ ___x_cmd_nu___setup(){
     local x_
     ___x_cmd_nu___boot_init_rcfile_ || return
     ___x_cmd ensurefp "$x_"
+
+    if [ ! -f "$x_" ]; then
+        ___x_cmd_nu___boot_init_defaultinit
+        [ -f "$x_" ] || N=nu M="Fail to init an rc file -> $x_" log:ret:1
+    fi
+
     ___x_cmd boot initrcfile1  "$___X_CMD_NU_SETUP_RCCODE"     "$x_"
 }
 
@@ -45,4 +51,8 @@ ___x_cmd_nu___setup_is_required(){
                                 "$___X_CMD_NU_SETUP_RCCODE"             "$rcfile"          && \
             ___x_cmd_cmds cmp   "$___X_CMD_ROOT_MOD/nu/lib/rc/rc.nu"    "$HOME/.x-cmd.root/local/data/nu/rc.nu"
     } 1>/dev/null 2>/dev/null
+}
+
+___x_cmd_nu___boot_init_defaultinit(){
+    printf "Y\n" | ___x_cmd_nu___binexec nu 1>/dev/null 2>/dev/null
 }
