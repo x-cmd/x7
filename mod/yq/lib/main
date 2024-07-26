@@ -13,6 +13,7 @@ ___x_cmd_yq___main(){
     case "$op" in
         # -h|--help)  ___x_cmd help -m yq         "$@" ;;
         --cmd)      ___x_cmd_yq___cmd           "$@" ;;
+        repl)       ___x_cmd_yq_repl            "$@" ;;
         *)          ___x_cmd_yq___cmd "$op"     "$@" ;;
     esac
 }
@@ -36,4 +37,9 @@ ___x_cmd_yq___cmd(){
         "$___X_CMD_YQ_SHIMAPP_PATH/yq" "$@"
     }
     ___x_cmd_yq___cmd "$@"
+}
+
+
+___x_cmd_yq_repl(){
+    ___X_CMD_JQ_REPL_CMD=yq ___x_cmd jq repl "$@"
 }
