@@ -66,6 +66,7 @@ a1391f6712eaf7addda4cb3a6c4f30debc23793e fifo main NULL
 58325d9de954a3a50e3efb7e8d73c2f0758d71f3 fjo main NULL
 b37a4bf8703199da1630c900fbe473d10ce5ffeb fsiter main NULL
 a07939b65fb22d6840aa11f7c4ad3c7ab8b9d22c fslock main NULL
+9bba9b427d0d23c0ced886d0e0d2a9e206f9dc38 fzf main NULL
 e1a6aa49cbaaec03a09205e077c773a4a67bb875 gcode main NULL
 05f1a4ccfed410884d8bad8bc8db53daf7e8a7b3 gddy main NULL
 4cb9b0488d894f4b1f5ec216147a25a62ce597ce gemini main NULL
@@ -103,7 +104,7 @@ f91dcb4d6c2d387a1a4f4d99b018599faef8cff6 ja main NULL
 84547e750dc7684d8c1ca8643908a6a1ffb708ac jina main NULL
 8ba68d3abe03707ced3fff91ab2ee64baea6043e jo main NULL
 98921567e8ed001ef0bd85d809dd70fe64402de5 job main NULL
-2c4bd6f71bda457d6dbfe0465c1429fd31b70405 jq main NULL
+653bab12500da596faa0c8a23c8fa301e889a745 jq main NULL
 5f67d217062de51fd83ac9b908af2d8bca814f7e jsch main NULL
 3e27e6c34c70b05f5fe07946c2077e6d664bfe1d kev main NULL
 124d6ee788d058d12607a37fb620e97386d65f3e kill main NULL
@@ -162,7 +163,7 @@ c523f62c27ef9f88eac0a68a3291e818514e0df9 perl main NULL
 36f60c8c5a0f62d9c1414a825ac675ab024e166e pip main NULL
 460577fe4c50c9f75f2e1cf6cf0670f00323f929 pipx main NULL
 c9e5cd2ac5f0e9f2f85c835d916dcb6c50eb22a2 pixi main NULL
-0668afacde662f6d5850171a8ba50dc30daa06ac pkg main NULL
+2b61caa06f826c0af5bb33ec77582dee3805ba75 pkg main NULL
 949a0d8603e454aa927e0f9ea642a2a4b4a55d08 pkgx main NULL
 fc3475fd1dd5db763958c3c36c1c96dc75e81e46 proxy main NULL
 cbef742da22bad2d923d6eb02a3bd7c96de514f4 ps main NULL
@@ -191,6 +192,7 @@ b66a59ed4e8bfbf3bdf962036749c3e0b2464d35 slack main NULL
 cba8599016119514a3900bb8de0edfd2aa158311 slidev main NULL
 7cc89764ed7f56eee2e3fdeacff7e6a21be0b812 smart main NULL
 6eb1769534d210e738c576f4cfd741508b04b188 solo main NULL
+ba34181ab354d33ff0509544bcbf9c265c1cafa1 ssh main NULL
 21dfe3db51092a686ad78a765c6d58a7625779aa stat main NULL
 0a89b39295a0c1aaced906aa94240e6ef2272f3f str main NULL
 fd96aa80332c3b747a6edfb555381b52ff839d52 sudo main NULL
@@ -232,7 +234,7 @@ fc55b18605ce08982150493c806f0fd65820fef0 xrc main NULL
 e1bf1c170f63ff29c6cf390014acc63a5b444347 xx main NULL
 3516822d427da2fd61eedabf9440ff998ce461e0 yml main NULL
 ea10c2556f87161b883d0e2f7993bda705299345 yo main NULL
-e61a14421cdc7c78dda99bfea85263971221327d yq main NULL
+8037c07b635b31f3a281290834d5b2a460abd92a yq main NULL
 c6ff60f6b1c627187488de74262cd2576a831e4d yum main NULL
 9972cdad5407f9bc811028e2fdf4a1605d430b7f zef main NULL
 d09f2f66d19ab836b93c5b00d105ff0344435f39 zhipu main NULL

@@ -12,6 +12,9 @@ ___x_cmd_jq_repl(){
 ___x_cmd_jq_repl_app(){
     local fp="$1"
 
+    ___x_cmd jq --preparecmd
+    ___x_cmd yq --preparecmd
+
     (
         trap 'command rm -rf "${fp}.repl.${___X_CMD_JQ_REPL_CMD:-jq}.x-cmd.d"' EXIT
 
