@@ -53,13 +53,14 @@ ___x_cmd_jq_repl___actual(){
     local fp="$1"
     local filter="${2:-.}"
 
-    fp="$fp" fpfolder="$fp.repl.${___X_CMD_JQ_REPL_CMD:-jq}.x-cmd.d"    \
+    local _x_fp=; local fpfolder=
+    _x_fp="$fp" fpfolder="$fp.repl.${___X_CMD_JQ_REPL_CMD:-jq}.x-cmd.d"    \
     ___x_cmd fzf                                                        \
         --header="<Please type ${___X_CMD_JQ_REPL_CMD:-jq} filter>"     \
         --reverse --no-info --height='80%'                              \
         --query="$filter" --print-query                                 \
         --bind='change:transform-header(cat "$fpfolder/$(cat "$fpfolder/header").header" )'     \
-        --preview-window='down,99%' --preview 'x jq repl --preview "$fp" {q} 2>/dev/null' <<A
+        --preview-window='down,99%' --preview 'x jq repl --preview "$_x_fp" {q} 2>/dev/null' <<A
 A
 
 }
