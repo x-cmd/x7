@@ -34,7 +34,7 @@ ___x_cmd_jq_repl_app(){
             ___x_cmd ui select id "Next for $filter"            \
                 "Copy this filter to pastboard"                 \
                 "Copy this part of the data to pastboard"       \
-                "Renter"                                        \
+                "Modify the filter"                             \
                 "Exit"
             case "$id" in
                 1)      printf "%s" "$filter" | ___x_cmd pb
