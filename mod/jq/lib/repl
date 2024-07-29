@@ -2,8 +2,10 @@
 
 ___x_cmd_jq_repl(){
     case "$1" in
-        --preview)      shift;  ___x_cmd_jq_repl___preview  "$@" ; return ;;
-        --header)       shift;  ___x_cmd_jq_repl___header   "$@" ; return ;;
+        -h|--help)      ___x_cmd help -m "${___X_CMD_JQ_REPL_CMD:-jq}" repl
+                                                                    return ;;
+        --preview)      shift;  ___x_cmd_jq_repl___preview  "$@" ;  return ;;
+        --header)       shift;  ___x_cmd_jq_repl___header   "$@" ;  return ;;
     esac
 
     ___x_cmd_jq_repl_app "$@"
@@ -30,6 +32,7 @@ ___x_cmd_jq_repl_app(){
         while true; do
             filter="$(___x_cmd_jq_repl___actual "$fp" ".")"
 
+            [ -n "$filter" ] || return
             local id=
             ___x_cmd ui select id "Next for $filter"            \
                 "Copy this filter to pastboard"                 \

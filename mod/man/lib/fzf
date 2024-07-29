@@ -29,15 +29,15 @@ ___x_cmd_man___fzf___app(){
     [ -n "$cmd" ] || return
 
     local id
-    ___x_cmd ui select id   "Next:"             \
-        "x man      $i    '$cmd'   # open man"   \
-        "x mankier       '$cmd'   # open man"   \
-        "x tldr          '$cmd'   # open tldr"  \
+    ___x_cmd ui select id   "Next:"                                  \
+        "x man      $i    '$cmd'   # open man page"                  \
+        "x mankier       '$cmd'   # use mankier search man page"     \
+        "x tldr          '$cmd'   # open tldr"                       \
         "return 0" || return
 
     case "$id" in
         1)  man:info "run command => x man $i $cmd"
-            ___x_cmd_cmds man "$i"  "$cmd"
+            ___x_cmd man "$i"  "$cmd"
             ;;
         2)  man:info "mankier     => $cmd"
             ___x_cmd mankier        "$cmd"
