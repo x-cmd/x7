@@ -7,6 +7,10 @@ BEGIN{
     }
 }
 
+END{
+    ui_rotate_render_restore()
+}
+
 function ui_rotate1( screensize, fp,     line,     d, i ){
     i = IFS
     IFS = "\n"
@@ -55,7 +59,7 @@ function ui_rotate_fromstdin( n, prefix, exitclear, prompt_run, prompt_end, outp
     if ( _has_content == 1 ) {
         ui_rotate_render_prompt( o, prefix, prompt_end )
         if ( exitclear == 1 )       ui_rotate_render_clear()
-        printf ("%s", UI_LINEWRAP_ENABLE UI_CURSOR_NORMAL UI_CURSOR_SHOW ) > "/dev/stderr"
+        ui_rotate_render_restore()
     }
     for (i=1; i<=OUTPUT_ARRL; ++i) print OUTPUT_ARR[i]
     return _c
@@ -81,6 +85,10 @@ function ui_rotate_render_clear(){
     printf( "%s", UI_CURSOR_RESTORE \
         UI_SCREEN_CLEAR_BOTTOM UI_LINE_CLEAR \
         "\r" UI_CURSOR_RESTORE UI_CURSOR_SAVE ) > "/dev/stderr"
+}
+
+function ui_rotate_render_restore(){
+    printf ("%s", UI_LINEWRAP_ENABLE UI_CURSOR_NORMAL UI_CURSOR_SHOW ) > "/dev/stderr"
 }
 
 function ui_rotate_render_prompt( o, prefix, prompt,    n ){

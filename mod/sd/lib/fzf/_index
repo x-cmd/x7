@@ -1,5 +1,4 @@
-
-
+# shellcheck shell=dash
 
 ___x_cmd_sd___fzf(){
     ___x_cmd_sd___fzfapp "$@"
@@ -26,29 +25,70 @@ ___x_cmd_sd___fzfapp(){
 
     (
     trap '___x_cmd rmrf "$___X_CMD_SD_FZF_APP_DIR";' EXIT
+    while true; do
+        local expression
+        expression="$( ___x_cmd_sd___fzfapprun "$expression")"
 
+        [ -n "$expression" ] || return
+        local id=
+        ___x_cmd ui select id "Next for $expression"            \
+            "Copy this expression to pastboard"                 \
+            "Print expression"                                  \
+            "Modify the file content using this expression"     \
+            "Modify the expression"                             \
+            "Exit"
+        case "$id" in
+            1)      sd:info "run command =>  x pb -c '$expression'"
+                    ___x_cmd pb -c "$expression"
+                    return 0 ;;
+            2)      printf "%s\n" "$expression"
+                    return 0 ;;
+            3)      sd:info "run command =>  x sd $expression  $fp"
+                    [ -f "$fp" ] || N=sd M="file not exist."  log:ret:1
+                    ___x_cmd_sd___cmd "$expression"  "$fp"
+                    return 0 ;;
+            4)      continue ;;
+            *)      break
+                    return 0 ;;
+        esac
+    done
+    )
+}
+
+
+___x_cmd_sd___fzfapprun(){
+    local expression="$1"
     fpfolder="$___X_CMD_SD_FZF_APP_DIR"        \
     ___x_cmd fzf                                \
         --header="<Please type sd arguments>"  \
         --reverse --no-info --height='80%'      \
-        --query="" --print-query               \
+        --query="$expression" --print-query                \
         --preview-window='down,99%'             \
         --preview='x sd --fzfapppreview "$fpfolder" {q} 2>/dev/null' <<A
 A
-    )
-
 }
 
 ___x_cmd_sd___fzfapppreview(){
     local fp="$1";  shift
+    local modified_content
     {
-        eval ___x_cmd_cmds sd "$1" <"$fp/source" || {
-
-            printf "\n\n\033[34m[ERR=%d]\033[0m\n=== %s ===\n\n" \
-                "$?"    "Content of file : $fp/source"
-
-            ___x_cmd_cmds cat "$fp/source"
-        }
+        case "$1" in
+            "")
+                ___x_cmd_sd___fzfapppreview___error  "$fp"
+                ;;
+            *)
+                if ! modified_content="$( eval ___x_cmd_sd___cmd "$1" <"$fp/source" )"; then
+                    ___x_cmd_sd___fzfapppreview___error "$fp"
+                else
+                    printf "%s\n" "$modified_content" | ___x_cmd_cmds diff -u --color=always "$fp/source" -
+                fi
+                ;;
+        esac
     } 2>&1 | ___x_cmd_cmds head -n 2000
 }
 
+___x_cmd_sd___fzfapppreview___error(){
+    local fp="$1"
+    printf "\n=== %s ===\n\n" "Content of file : $fp/source"
+    ___x_cmd_cmds cat "$fp/source"
+}

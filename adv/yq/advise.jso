@@ -31,6 +31,8 @@ null
 :
 [
 "repl|r"
+,
+"--cmd"
 ]
 ,
 "repl|r"
@@ -69,24 +71,60 @@ null
 }
 }
 ,
-"$ref"
-:
-"x-cmd-advise://yq/advise.t.jso"
-,
-"#n"
+"--cmd"
 :
 {
+"#subcmd"
+:
+true
+,
 "#desc"
 :
 {
 "en"
 :
-"extends `yq` subcmd or options"
+"Run the yq command directly"
 ,
 "cn"
 :
-"继承 `yq` 子命令或参数选项"
+"直接运行 yq 命令"
 }
 }
+,
+"$ref"
+:
+"x-cmd-advise://yq/advise.t.jso"
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x ascii --yml | x yq r"
+,
+"cn"
+:
+"启用交互模式处理 `x ascii --yml` 命令的结果"
+,
+"en"
+:
+"Enable interactive mode to process the results of the `x ascii --yml` command."
+}
+,
+{
+"cmd"
+:
+"x yq r test.yml"
+,
+"cn"
+:
+"启用交互模式处理 test.yml"
+,
+"en"
+:
+"Enable interactive mode to process test.yml"
+}
+]
 }
 

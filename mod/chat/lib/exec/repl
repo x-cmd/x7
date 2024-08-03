@@ -136,7 +136,7 @@ ___x_cmd_chat___exec_repl___ted_(){
     case "$style" in
         gum)    ___x_cmd_chat___exec_repl___gum_    "$@" ;;
         fzf)    ___x_cmd_chat___exec_repl___fzf_    "$@" ;;
-        *)      ___x_cmzd_chat___exec_repl___read_  "$@" ;;
+        *)      ___x_cmd_chat___exec_repl___read_   "$@" ;;
     esac
 }
 
