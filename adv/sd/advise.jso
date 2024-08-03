@@ -20,11 +20,11 @@ null
 {
 "cn"
 :
-"sd（search & displace）是一种查找和替换文本工具，使用常见的正则表达式语法，类似于 sed，但专注于替换操作，从而使用起来更直观、更易读。\n该模块主要通过 fzf 以交互方式预览结果，并展示上下文中的差异，同时增加了免安装直接使用的功能。\n"
+"sd（search & displace）是一种查找和替换文本工具，使用常见的正则表达式语法，类似于 sed，但专注于替换操作，从而使用起来更直观、更易读。\n该模块主要通过 fzf 以交互方式预览文本内容的更改，使用户能够动态查看表达式变更的效果，并展示文本内容中的上下文差异，同时增加了免安装直接使用的功能。\n"
 ,
 "en"
 :
-"sd (search & displace) is a text search and replace tool that uses common regular expression syntax, similar to sed, but focuses on replacement operations, making it more intuitive and readable.\nThis module mainly uses fzf to interactively preview results and show differences in context, while adding the ability to use it directly without installation.\n"
+"sd (search & displace) is a text search and replace tool that uses common regular expression syntax, similar to sed, but focuses on replacement operations, making it more intuitive and readable.\nThis module primarily utilizes fzf to interactively preview changes in text content, enabling users to dynamically view the effects of expression changes and display contextual differences in the text content. It also adds the functionality of direct use without installation.\n"
 }
 ,
 "#tldr"
@@ -33,15 +33,29 @@ null
 {
 "cmd"
 :
-"cat test | x sd"
+"cat test.txt | x sd"
 ,
 "cn"
 :
-"使用 fzf 为 sd 提供交互式 APP 查找和替换文本"
+"交互式查看表达式查找和替换文本的效果"
 ,
 "en"
 :
-"Use fzf to provide an interactive app for finding and replacing text in sd."
+"Interactively view the effects of expression search and replace text"
+}
+,
+{
+"cmd"
+:
+"x sd --fzfapp test.txt"
+,
+"cn"
+:
+"结合 fzf 预览对 test.txt 文件内容进行的修改"
+,
+"en"
+:
+"Preview the changes made to the test.txt file using fzf."
 }
 ]
 ,

@@ -15,21 +15,47 @@ null
 "Enhanced modules for sed"
 }
 ,
+"#desc"
+:
+{
+"cn"
+:
+"sed（Stream Editor）是一个强大的文本处理工具，支持以流的方式处理大量文本，适用于文件内容的搜索、替换、插入和删除等操作。\n该模块主要通过 fzf 以交互方式预览文本内容的更改，使用户能够动态查看表达式变更的效果，并展示文本内容中的上下文差异。\n"
+,
+"en"
+:
+"sed (Stream Editor) is a powerful text processing tool that supports processing large amounts of text in a streaming manner. It is suitable for operations such as searching, replacing, inserting, and deleting file content.\nThis module primarily utilizes fzf to interactively preview changes in text content, enabling users to dynamically view the effects of expression changes and display contextual differences in the text content.\n"
+}
+,
 "#tldr"
 :
 [
 {
 "cmd"
 :
-"cat test | x sed"
+"cat test.txt | x sed"
 ,
 "cn"
 :
-"使用 fzf 为 sed 提供交互式 APP 查找和替换文本"
+"交互式查看表达式查找和替换文本的效果"
 ,
 "en"
 :
-"Use fzf to provide an interactive app for finding and replacing text in sed."
+"Interactively view the effects of expression search and replace text"
+}
+,
+{
+"cmd"
+:
+"x sed --fzfapp test.txt"
+,
+"cn"
+:
+"结合 fzf 预览对 test.txt 文件内容进行的修改"
+,
+"en"
+:
+"Preview the changes made to the test.txt file using fzf."
 }
 ]
 ,
