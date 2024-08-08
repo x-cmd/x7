@@ -11,12 +11,14 @@ ___x_cmd_chat___exec_repl_history(){
 
 ___x_cmd_chat___exec_repl_history_app(){
     local cmd
-    ___x_cmd ui select ,cmd "Next"                  \
-        "init   # Initialize repl history record"   \
-        "clear  # Clear all repl history record" || return
+    ___x_cmd ui select ,cmd "Next"          \
+        "Initialize repl history record"    \
+        "Clear all repl history record"     \
+        "Continue the loop"    || return
+
     case "$cmd" in
-        clear*) ___x_cmd_chat___exec_repl_history_clear ;;
-        init*)  ___x_cmd_chat___exec_repl_history_init  ;;
+        Clear*) ___x_cmd_chat___exec_repl_history_clear ;;
+        Init*)  ___x_cmd_chat___exec_repl_history_init  ;;
         *)      return ;;
     esac
 }
@@ -44,7 +46,11 @@ ___x_cmd_chat___exec_repl_history_add(){
 
 ___x_cmd_chat___exec_repl_history_init(){
     local dir="$___X_CMD_CHAT_SESSION_DIR"
-    [ -d "$dir" ] || return
+    local fp="$___X_CMD_CHAT_SESSION_DIR/.history.repl"
+    ___x_cmd ensurefp "$fp"
+    printf "\001\002\003 %s\n" /h /help /history /exit > "$fp"
+
+    [ -d "$dir" ] || return 0
     local fplist; fplist="$(
         ___x_cmd_cmds find "$dir" -type f -name 'chat.response.yml' 2>/dev/null | while read -r l; do
             [ "$l" = "${l#"$dir/X/"}" ] || continue
@@ -54,10 +60,7 @@ ___x_cmd_chat___exec_repl_history_init(){
             printf "%s %s\n" "${d##*/}" "$l"
         done | ___x_cmd_cmds sort -r
     )"
-
-    [ -n "$fplist" ] || return
-    local fp="$___X_CMD_CHAT_SESSION_DIR/.history.repl"
-    ___x_cmd ensurefp "$fp"
+    [ -n "$fplist" ] || return 0
     ___x_cmd cawk -m j/json,j/jiter '
     {
         fp = $2
@@ -71,7 +74,7 @@ ___x_cmd_chat___exec_repl_history_init(){
         }
         delete o
     }
-    ' > "$fp" <<A
+    ' >> "$fp" <<A
 ${fplist}
 A
 }

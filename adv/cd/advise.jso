@@ -19,13 +19,7 @@ null
 :
 [
 {
-"x cd [option] <folder|keyword>"
-:
-null
-}
-,
-{
-"c [option] <folder|keyword>"
+"x cd [option] <folder|keyword> [command]"
 :
 null
 }
@@ -36,12 +30,26 @@ null
 {
 "cn"
 :
-"该模块是使用 Posix shell、awk 和 find 实现的增强版 cd 命令，别名为 `c` 命令"
+"该模块是使用 Posix shell、awk 和 find 实现的增强版 cd 命令"
 ,
 "en"
 :
-"This module is an enhanced version of the `cd` command implemented using the Posix shell, awk, and find, aliased as the `c` command."
+"This module is an enhanced version of the `cd` command implemented using the Posix shell, awk, and find."
 }
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"交互式环境默认设置了一个别名 `alias c='x cd'`"
+,
+"en"
+:
+"The interactive environment has a default alias set as `alias c='x cd'`"
+}
+]
 ,
 "-b"
 :
