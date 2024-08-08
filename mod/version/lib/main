@@ -1,7 +1,7 @@
 # shellcheck shell=dash
 
 xrc pkg
-xrc:mod:lib     version     ls verify __release
+xrc:mod:lib     version     ls verify __release/_index
 
 ___x_cmd_version___main(){
     [ $# -gt 0 ] || {

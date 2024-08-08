@@ -57,6 +57,7 @@ ___x_cmd_chat___exec_repl_loop(){
 
     x_=; ___x_cmd_chat___exec_repl___session_runid_ "$session"
     local run_id="$x_";
+    local chatid=;
 
     while true; do
         question=
@@ -81,15 +82,19 @@ ___x_cmd_chat___exec_repl_loop(){
                     # store the session data ...
                     ___x_cmd_chat_init
                     ;;
+            /history)
+                    ___x_cmd_chat___exec_repl_history app ;;
             "")
                     ___x_cmd ui select id   "Next"      \
                         "/h         | show help"        \
                         "/exit      | exit the loop"    \
+                        "/history   | manage repl history records" \
                         "...        | continue the loop"
 
                     case "$id" in
                         1)      ___x_cmd_chat___exec_repl___printhelp ;;
                         2)      break ;;
+                        3)      ___x_cmd_chat___exec_repl_history app ;;
                     esac
                     ;;
 
@@ -124,6 +129,7 @@ ___x_cmd_chat___exec_repl___printhelp(){
     ___x_cmd ui style info "Commands:
     /h          | show help
     /exit       | exit the loop
+    /history    | manage repl history records
     = <command> | execute the shell command
 
 Other inputs continue the loop, use \ to start multi-line input content

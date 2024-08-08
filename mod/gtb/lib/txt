@@ -53,3 +53,9 @@ ___x_cmd_gtb_txt_which_(){
         return 1
     fi
 }
+
+___x_cmd_gtb_txt_ccat(){
+    :
+
+    # awk ...
+}
