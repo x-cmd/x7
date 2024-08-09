@@ -36,7 +36,7 @@ ___x_cmd_gtb_fzfinfo(){
     local i="${1%%"${___X_CMD_UNSEENCHAR_011}"*}"
     i="${i%%" "*}"
 
-    ___x_cmd gtb show "$i"
+    ___x_cmd_gtb_txt_ccat "$i"
 }
 
 ___x_cmd_gtb___fzf(){

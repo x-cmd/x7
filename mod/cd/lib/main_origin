@@ -114,7 +114,7 @@ ___x_cmd_cd_origin___mcd_or_pick(){
 
     local id
     ___x_cmd ui select id "Next for $p"     \
-        "mkdir  and cd into ${p}"           \
+        "mkdir and cd into ${p}"           \
         "search and pick from ${rootp} -> ${iterp}"  \
         "return"    || return
 
