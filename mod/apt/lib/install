@@ -69,8 +69,9 @@ ___x_cmd_apt_install___fzf_app(){
     ___x_cmd yq --preparecmd
     ___x_cmd_apt___lsraw \
         | ___x_cmd_apt_install___fzf \
-            --preview='x apt show {1} 2>/dev/null | x yq --colors' \
+            --preview='x apt show {1} 2>/dev/null | x yml fmt | x yq --colors' \
             --preview-window=right:70%:wrap
+    # --preview='x apt show {1} 2>/dev/null | x yq --colors --exit-status 2>/dev/null || x apt show {1} 2>/dev/null'
 }
 
 ___x_cmd_apt_install___fzf(){
