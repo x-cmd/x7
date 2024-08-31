@@ -6136,18 +6136,6 @@ null
 :
 "create a draft release"
 }
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-""
-}
-}
 }
 ,
 "--prerelease"
@@ -6159,18 +6147,6 @@ null
 "en"
 :
 "create a prerelease version"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-""
-}
 }
 }
 ,
