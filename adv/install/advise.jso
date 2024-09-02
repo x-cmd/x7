@@ -273,7 +273,7 @@ true
 }
 }
 ,
-"--fzf"
+"--fzf|--fz"
 :
 {
 "#subcmd"
