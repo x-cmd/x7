@@ -1,0 +1,31 @@
+# shellcheck shell=dash
+
+___x_cmd log init ohmyposh
+xrc:mod:lib     ohmyposh    unit load common  ls
+
+if ___x_cmd_is_suitable_advise_env; then
+    xrc:mod:lib ohmyposh    advise
+fi
+
+___x_cmd_ohmyposh___main(){
+    [ "$#" -gt 0 ]  ||   set -- fz
+
+    local op="$1";  shift
+    case "$op" in
+        ls|fz|use|unuse|try|untry|load|which)
+                        ___x_cmd_ohmyposh_"$op" "$@"    ;;
+        raw)            ___x_cmd_ohmyposh_run "$@"      ;;
+        --help|-h)      ___x_cmd help -m ohmyposh       ;;
+        --rc-load)      ___x_cmd_ohmyposh_rc_load       ;;
+        --fzfinfo)      ___x_cmd_ohmyposh_fz_info "$@"  ;;
+        --advise-ls)    ___x_cmd_ohmyposh_advise_ls     ;;
+        *)      N=ohmyposh M="Unuse subcmd -> $op" log:ret:64 ;;
+    esac
+}
+
+___x_cmd_ohmyposh_rc_load(){
+    [ -z "$___X_CMD_ADVISE_RUN" ] || return 0
+    [ -f "$___X_CMD_OHMYPOSH_CONFIG_USE_FP" ] || return 0
+    ___x_cmd_ohmyposh_load
+}
+

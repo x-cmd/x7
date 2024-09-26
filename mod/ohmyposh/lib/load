@@ -1,0 +1,32 @@
+# shellcheck shell=bash
+
+___x_cmd_ohmyposh_load(){
+    local shellname="${1:-$___X_CMD_SHELL}"
+    case "$shellname" in
+        fish|powershell|pwsh|cmd|nu|tcsh|elvish|xonsh)
+            ohmyposh:warn "Todo"
+            ___x_cmd_ohmyposh_run init "$shellname"
+            ;;
+        bash|zsh)
+            if [ -n "$___X_CMD_OHMYPOSH_CONFIG_TRY_TAKEOVER" ]; then
+                ___x_cmd_ohmyposh___applyfile0
+            fi
+
+            ___x_cmd_ohmyposh_load___inner "$shellname" || return
+            ___x_cmd_ohmyposh___check_use
+            ;;
+        *) N=ohmyposh M="Unsupported shell -> $shellname" log:ret:1 ;;
+    esac
+}
+
+___x_cmd_ohmyposh_load___inner(){
+    local shellname="${1:-$___X_CMD_SHELL}"
+    case "$shellname" in
+        bash)
+            [ "${BASH_VERSINFO[0]}" -ge 4 ] || {
+                ohmyposh:info "There may be syntax issues with the current version of bash. It's recommended to update bash for better compatibility."
+            }
+            ;;
+    esac
+    eval "$( ___x_cmd_ohmyposh_run init "$shellname" || printf "%s\n" "false" )"
+}
