@@ -23,10 +23,10 @@ ___x_cmd_docker_daemon_proxy_set(){
     local daemon_file="/etc/docker/daemon.json"
     if ( ___x_cmd_cmds grep "{" "$daemon_file" >/dev/null 2>&1); then
         daemon_json="$(
-            < "$daemon_file" ___x_cmd jq '. + { "proxies": { "http-proxy": "'"http://${proxy}"'", "https-proxy": "'"https://${proxy}"'" } }'
+            < "$daemon_file" ___x_cmd jq '. + { "proxies": { "http-proxy": "'"http://${proxy}"'", "https-proxy": "'"http://${proxy}"'" } }'
         )"
     else
-        daemon_json="$(printf "%s\n" '{ "proxies": { "http-proxy": "'"http://${proxy}"'", "https-proxy": "'"https://${proxy}"'" }' | ___x_cmd jo fmt )"
+        daemon_json="$(printf "%s\n" '{ "proxies": { "http-proxy": "'"http://${proxy}"'", "https-proxy": "'"http://${proxy}"'" } }' | ___x_cmd jo fmt )"
     fi
 
     if [ "$(___x_cmd_cmds id -u)" -ne 0 ]; then

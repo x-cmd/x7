@@ -159,7 +159,7 @@ null
 {
 "en"
 :
-"Manage Docker mirror and proxy configuration"
+"Manage docker mirror and proxy configuration"
 ,
 "cn"
 :
@@ -172,11 +172,11 @@ null
 {
 "en"
 :
-"This command modifies the /etc/docker/daemon.json file to configure the Docker daemon, so it uses the sudo module to run.\n"
+"This command modifies the /etc/docker/daemon.json file to configure the docker daemon, so it uses the sudo module to run.\n"
 ,
 "cn"
 :
-"该命令修改 /etc/docker/daemon.json 文件来配置 Docker daemo，因此使用了 sudo 模块来运行命令。\n"
+"该命令修改 /etc/docker/daemon.json 文件来配置 docker daemo，因此使用了 sudo 模块来运行命令。\n"
 }
 ]
 ,
@@ -190,11 +190,11 @@ null
 ,
 "en"
 :
-"Set the Docker mirror to \"https://docker.m.daocloud.io\""
+"Set the docker mirror to \"https://docker.m.daocloud.io\""
 ,
 "cn"
 :
-"设置 Docker 镜像源为 \"https://docker.m.daocloud.io\""
+"设置 docker 镜像源为 \"https://docker.m.daocloud.io\""
 }
 ,
 {
@@ -265,11 +265,11 @@ null
 ,
 "en"
 :
-"Set the Docker mirror to \"https://docker.m.daocloud.io\""
+"Set the docker mirror to \"https://docker.m.daocloud.io\""
 ,
 "cn"
 :
-"设置 Docker 镜像源为 \"https://docker.m.daocloud.io\""
+"设置 docker 镜像源为 \"https://docker.m.daocloud.io\""
 }
 ,
 {
@@ -312,11 +312,11 @@ null
 ,
 "en"
 :
-"Set the Docker mirror to \"https://docker.m.daocloud.io\""
+"Set the docker mirror to \"https://docker.m.daocloud.io\""
 ,
 "cn"
 :
-"设置 Docker 镜像源为 \"https://docker.m.daocloud.io\""
+"设置 docker 镜像源为 \"https://docker.m.daocloud.io\""
 }
 ]
 ,
@@ -508,7 +508,7 @@ null
 {
 "en"
 :
-"Restart Docker and the daemon"
+"Restart docker and the daemon"
 ,
 "cn"
 :
@@ -1081,11 +1081,11 @@ null
 ,
 "en"
 :
-"Set the Docker mirror to \"https://docker.m.daocloud.io\""
+"Set the docker mirror to \"https://docker.m.daocloud.io\""
 ,
 "cn"
 :
-"设置 Docker 镜像源为 \"https://docker.m.daocloud.io\""
+"设置 docker 镜像源为 \"https://docker.m.daocloud.io\""
 }
 ,
 {
