@@ -41,8 +41,9 @@ function msysbash(){
     }
 }
 
+# Using gitbash
+# We cannot use WSL here.
 function x(){
-    # Using gitbash
     msysbash $HOME/.x-cmd.root/.bin/xbin.sh $args
 }
 

@@ -81,7 +81,7 @@ ___x_cmd_docker_images___csv(){
     ___x_cmd_docker_images___json | \
     ___x_cmd jo .\* | \
     ___x_cmd ja jl2c  .Repository .Tag .ID .UniqueSize .VirtualSize .CreatedAt .CreatedSince |\
-        ___x_cmd csv header --add  Repository Tag ID Image UniqueSize VirtualSize CreatedAt CreatedSince
+        ___x_cmd csv header --add  Repository Tag ID UniqueSize VirtualSize CreatedAt CreatedSince
 
     # ___x_cmd cmdstr IMAGE_OPTS --format 'table {{.Repository}},{{.Tag}},{{.ID}},{{.CreatedSince}},{{.Size}},{{.Containers}},{{.CreatedAt}},{{.Digest}},{{.SharedSize}},{{.UniqueSize}}'
 

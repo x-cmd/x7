@@ -93,18 +93,42 @@ ___x_cmd_ohmyposh_fz___check_preview(){
 }
 
 # EndSection
+___x_cmd_ohmyposh___check_valid_name(){
+    local name="$1"
+    ___x_cmd_ohmyposh___check_config || return
+    local fp="$___X_CMD_OHMYPOSH_CONFIG_DIR/${name}.omp.json"
+    [ -f "$fp" ] || fp="$___X_CMD_OHMYPOSH_CONFIG_DIR/${name}.omp.yaml"
+    [ -f "$fp" ]
+}
+
+___x_cmd_ohmyposh___get_valid_name_(){
+    local name="$1"
+    if ___x_cmd_ohmyposh___check_valid_name "$name"; then
+        x_="$name"
+    elif [ -f "$name" ]; then
+        ___x_cmd abspath_ "$name" || return
+        ohmyposh:debug "Custom config file -> $x_"
+    else
+        ohmyposh:error "Invaild value for prompt theme [name=$name]"
+        return 1
+    fi
+}
 
 ___x_cmd_ohmyposh_which_(){
     local name="$1"
     ___x_cmd_ohmyposh___check_config || return
     local fp="$___X_CMD_OHMYPOSH_CONFIG_DIR/${name}.omp.json"
     [ -f "$fp" ] || fp="$___X_CMD_OHMYPOSH_CONFIG_DIR/${name}.omp.yaml"
-    [ -f "$fp" ] || fp="$name"
-    [ -f "$fp" ] || {
-        ohmyposh:error "Not found such config file -> $name"
+
+    if [ -f "$fp" ]; then
+        x_="$fp"
+    elif [ -f "$name" ]; then
+        ___x_cmd abspath_ "$name" || return
+        ohmyposh:debug "Custom config file -> $x_"
+    else
+        ohmyposh:error "Invaild value for prompt theme [name=$name]"
         return 1
-    }
-    x_="$fp"
+    fi
 }
 
 ___x_cmd_ohmyposh_which(){

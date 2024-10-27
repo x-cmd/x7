@@ -231,6 +231,7 @@ ___x_cmd_advise_man_load___xcmd_all(){
     advise:debug "Load x-cmd/advise from $___X_CMD_ADVISE_MAN_XCMD_FOLDER"
     eval "$(
         i=0; ___x_cmd_advise_man_ls x-cmd | { while read -r l; do
+                ! ___x_cmd_advise___is_completion_loaded "$l" || continue
                 i=$((i+1));     code="$code $l"
                 [ $(( i % 50 )) = 0 ] || continue
                 printf "___x_cmd_advise_man_load___xcmd_one %s\n" "$code"; code=
@@ -279,8 +280,8 @@ ___x_cmd_advise_man_load___x(){
 }
 
 ___x_cmd_advise_man_load___all(){
-    ___x_cmd_advise_man_load___xcmd
     ___x_cmd_advise_man_load___completion
+    ___x_cmd_advise_man_load___xcmd
     ___x_cmd_advise_man_load___x
 }
 

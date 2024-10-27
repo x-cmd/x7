@@ -46,15 +46,24 @@ ___x_cmd_docker_ps_main(){
     fi
 
     case "$datamode" in
-        app)                X_KASM_PREFIX="$X_KASM_PREFIX" eval ___x_cmd_docker_ps_app_ "$IMAGE_OPTS" ;;
+        app)                ___x_cmd_docker_ps___app ;;
         csv|json)           X_KASM_PREFIX="$X_KASM_PREFIX" ___x_cmd_docker_ps___"$datamode" ;;
     esac
+}
+
+___x_cmd_docker_ps___app(){
+    if ___x_cmd_is_interactive && [ -t 1 ]; then
+        X_KASM_PREFIX="$X_KASM_PREFIX" eval ___x_cmd_docker_ps_app_ "$IMAGE_OPTS"
+    else
+        X_KASM_PREFIX="$X_KASM_PREFIX" ___x_cmd_docker_ps___csv
+    fi
 }
 
 ___x_cmd_docker_ps_app_(){
     local container_id=
 
     # TODO: X_KASM_PREFIX should be exported ...
+    # TODO: --clear -- ctrl-d clear, ctrl-c don't clear
     ___X_CMD_CSV_APP_SHBIN_CODE="xrc docker; " \
     X_KASM_PREFIX="$X_KASM_PREFIX" \
         ___x_cmd csv app --return var ___x_cmd_docker_ps_main "$@" --csv || return 1
@@ -66,26 +75,38 @@ ___x_cmd_docker_ps_app_(){
         ___x_cmd_docker_ps_app_next(){
             local container_id="$1"
             local name="$2"
+            local s="$3"
+
+                    set --          "x docker container stats   $container_id"
+                    set --  "$@"    "x docker container restart $container_id"
+
+            case "$s" in
+                paused)
+                    set --  "$@"    "x docker container unpause $container_id"
+                    set --  "$@"    "x docker container stop    $container_id"
+                    ;;
+                exited)
+                    set --  "$@"    "x docker container start   $container_id"
+                    set --  "$@"    "x docker container rm      $container_id"
+                    ;;
+                running)
+                    set --  "$@"    "x docker container pause   $container_id"
+                    set --  "$@"    "x docker container stop    $container_id"
+                    ;;
+            esac
+                    set --  "$@"    "x docker container rm -f   $container_id"
+                    set --  "$@"    "x docker container inspect $container_id"
 
             local id=
             local cmd=
             ___x_cmd ui select id,cmd \
-                "Next for container: $name"     \
-                "x docker container stats   $container_id"                  \
-                "x docker container start   $container_id"                  \
-                "x docker container restart $container_id"                  \
-                "x docker container pause   $container_id"                  \
-                "x docker container stop    $container_id"                  \
-                "x docker container rm      $container_id"                  \
-                "x docker container rm -f   $container_id"                  \
-                "x docker container inspect $container_id"                  \
-                "return 1"                                              || return 1
+                "Next for container: $name" "$@" "return 1"     || return 1
             docker:debug "run command -> $cmd"
             eval "$cmd"
         }
     fi
 
-    ___x_cmd_docker_ps_app_next "$container_id" "$___X_CMD_CSV_APP_DATA_Name"
+    ___x_cmd_docker_ps_app_next "$container_id" "$___X_CMD_CSV_APP_DATA_Name" "$___X_CMD_CSV_APP_DATA_State"
 }
 
 ___x_cmd_docker_ps___json(){
@@ -106,8 +127,10 @@ ___x_cmd_docker_ps___json(){
 # prefix, using attribute filter
 ___x_cmd_docker_ps___parse_json2csv(){
     ___x_cmd jo .\* | \
-    ___x_cmd ja jl2c  .ID .Names .Ports .Image .Command .CreatedAt .Labels .LocalVolumes .Mounts .Networks .RunningFor .Size .State .Status |\
-        ___x_cmd csv header --add  ID Name Port Image Command CreatedAt Label LocalVolume Mount Network RunningFor Size State Status
+    ___x_cmd ja jl2c  \
+            .ID .Names  .Status .Image  .Command    .Ports  .Networks   .CreatedAt      .RunningFor .Size   .State  .Labels .LocalVolumes   .Mounts |\
+        ___x_cmd csv header --add  \
+            ID  Name    Status  Image   Command     Port    Network     CreatedAt       RunningFor  Size    State   Label   LocalVolume     Mount
 }
 
 # TODO:
@@ -129,6 +152,10 @@ ___x_cmd_docker_ps___csv(){
 
     # ___x_cmd_docker_ps_prefix
     ___x_cmd_docker_ps___json | ___x_cmd_docker_ps___parse_json2csv
+}
+
+___x_cmd_docker_ps___tsv(){
+    ___x_cmd_docker_ps___csv | ___x_cmd csv totsv
 }
 
 # ___x_cmd_docker_ps___tsv(){

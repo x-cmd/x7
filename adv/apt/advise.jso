@@ -146,11 +146,11 @@ true
 {
 "en"
 :
-"Reset the source to the original official"
+"Restoring the mirror configuration"
 ,
 "cn"
 :
-"将下载源设置为默认的源。"
+"复原镜像配置"
 }
 }
 }

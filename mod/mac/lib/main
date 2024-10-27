@@ -14,6 +14,11 @@ xrc:mod:lib     mac             \
 ___x_cmd_mac___main(){
     [ "$#" -gt 0 ] || set -- --help
 
+    ___x_cmd os name darwin: || {
+        mac:error "This module is only supported in macOS environments."
+        return 1
+    }
+
     local op="$1"; shift
     case "$op" in
         b|battery)                      ___x_cmd_mac_battery                   "$@" ;;
