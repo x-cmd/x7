@@ -773,6 +773,40 @@ null
 ]
 }
 ,
+"tojsonl"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Convert CSV format data to jlist format"
+,
+"cn"
+:
+"将 csv 格式数据转成 jlist 格式"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"< data.csv x csv tojsonl"
+,
+"cn"
+:
+"将 data.csv 数据转成 jlist 格式"
+,
+"en"
+:
+"Convert data.csv data to jlist format"
+}
+]
+}
+,
 "#tag"
 :
 [

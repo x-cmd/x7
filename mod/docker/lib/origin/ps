@@ -74,13 +74,12 @@ ___x_cmd_docker_ps_app_(){
     if [ -z "$___x_cmd_docker_ps_app_next" ]; then
         ___x_cmd_docker_ps_app_next(){
             local container_id="$1"
-            local name="$2"
-            local s="$3"
+            local container_name="$2"
+            local state="$3"
 
-                    set --          "x docker container stats   $container_id"
-                    set --  "$@"    "x docker container restart $container_id"
+                    set --          "x docker container restart $container_id"
 
-            case "$s" in
+            case "$state" in
                 paused)
                     set --  "$@"    "x docker container unpause $container_id"
                     set --  "$@"    "x docker container stop    $container_id"
@@ -94,13 +93,14 @@ ___x_cmd_docker_ps_app_(){
                     set --  "$@"    "x docker container stop    $container_id"
                     ;;
             esac
+
                     set --  "$@"    "x docker container rm -f   $container_id"
                     set --  "$@"    "x docker container inspect $container_id"
 
             local id=
             local cmd=
             ___x_cmd ui select id,cmd \
-                "Next for container: $name" "$@" "return 1"     || return 1
+                "Next for container: $container_name" "$@" "return 1"     || return 1
             docker:debug "run command -> $cmd"
             eval "$cmd"
         }

@@ -88,6 +88,7 @@ fn xw   { |@a| x ws             $@a ; }
 fn xd   { |@a| x docker         $@a ; }
 fn xg   { |@a| x git            $@a ; }
 fn xp   { |@a| x pwsh           $@a ; }
+fn xwt  { |@a| x webtop         $@a ; }
 
 fn co   { |@a| x elv --sysco    $@a ; }
 fn coco { |@a| x elv --syscoco  $@a ; }
@@ -161,6 +162,9 @@ fn init {
     }
     if (not (os:is-regular  $E:HOME/.x-cmd.root/boot/alias/xp.disable   )) {
         edit:add-var        xp~     $xp~
+    }
+    if (not (os:is-regular  $E:HOME/.x-cmd.root/boot/alias/xwt.disable   )) {
+        edit:add-var        xwt~    $xwt~
     }
 
 

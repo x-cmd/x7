@@ -109,6 +109,7 @@ if status is-interactive
     [ -f "$HOME/.x-cmd.root/boot/alias/xd.disable"      ]  ||  alias xd='___x_cmd docker'
     [ -f "$HOME/.x-cmd.root/boot/alias/xg.disable"      ]  ||  alias xg='___x_cmd git'
     [ -f "$HOME/.x-cmd.root/boot/alias/xp.disable"      ]  ||  alias xp="___x_cmd pwsh"
+    [ -f "$HOME/.x-cmd.root/boot/alias/xwt.disable"     ]  ||  alias xwt="___x_cmd webtop"
 
     [ -f "$HOME/.x-cmd.root/boot/alias/co.disable"      ]  ||  begin
         alias ,="___x_cmd fish --sysco"

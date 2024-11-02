@@ -47,29 +47,43 @@ null
 {
 "cmd"
 :
-"x tping x-cmd.com"
+"x tping bing.com"
 ,
 "en"
 :
-"Output the results of tping using the default mode (normal mode, port 80)"
+"Output the results of ping using the default mode (normal mode, port 80)"
 ,
 "cn"
 :
-"使用默认模式（详细模式、80 端口）输出 tping 的结果"
+"使用默认模式（详细模式、80 端口）输出 ping 的结果"
 }
 ,
 {
 "cmd"
 :
-"x tping -m bing.com:443"
+"x tping -m x-cmd.com"
 ,
 "en"
 :
-"Show the tping results as a heatmap"
+"Show the ping results as a heatmap"
 ,
 "cn"
 :
-"以热图形式显示 tping 的结果"
+"以热图形式显示 ping 的结果"
+}
+,
+{
+"cmd"
+:
+"x tping -b x-cmd.com:80"
+,
+"en"
+:
+"Show the ping results as a bar graph"
+,
+"cn"
+:
+"以条形图模式显示 ping 的结果"
 }
 ]
 ,

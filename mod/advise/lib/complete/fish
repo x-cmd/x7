@@ -68,7 +68,7 @@ end
         printf "%s\n" "x"
 
         local i=; local x_=
-        for i in c xw xx xd xg xp; do
+        for i in c xw xx xd xg xp xwt; do
             [ -f "$___X_CMD_ROOT_BOOT/alias/${i}.disable" ] || ! ___x_cmd_advise_which_ "$i" || printf "%s\n" "$i"
         done
 

@@ -74,7 +74,9 @@ else
                     if ___x_cmd_advise_autoload___ifothercompletionloaded; then
                         ___x_cmd_advise_man_load x
                     else
-                        ___x_cmd_advise_man_load all
+                        ___x_cmd_advise_man_load completion
+                        ___x_cmd_advise_man_load x-cmd
+                        ___x_cmd_advise_man_load x
                     fi
                     ;;
                 all)

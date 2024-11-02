@@ -51,7 +51,11 @@ x:info "Running x boot init"
         x:info  --cmd '                  x elv  --setup'    \
                 --cmd '~/.x-cmd.root/bin/x elv  --setup'    "$ERROR_STR elvish"
 
-    # TODO: powershell, tclsh, etc.
+    ! ___x_cmd_hascmd powershell.exe || ! ___x_cmd pwsh --setup-is-required || \
+        x:info  --cmd '                  x pwsh  --setup'    \
+                --cmd '~/.x-cmd.root/bin/x pwsh  --setup'   "$ERROR_STR powershell"
+
+    # TODO: tclsh, etc.
 
     x:info  --cmd 'x pkg update' \
             --tips 'If it fails, or is interrupted, you can run it manually later.' \

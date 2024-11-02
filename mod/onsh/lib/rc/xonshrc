@@ -181,6 +181,8 @@ if __xonsh__.env.get('XONSH_INTERACTIVE'):
         aliases["xg"]           = [ "___x_cmd", "git" ]
     if not os.path.isfile("$HOME/.x-cmd.root/boot/alias/xp.disable"):
         aliases["xp"]           = [ "___x_cmd", "pwsh" ]
+    if not os.path.isfile("$HOME/.x-cmd.root/boot/alias/xwt.disable"):
+        aliases["xwt"]          = [ "___x_cmd", "webtop" ]
 
     if not os.path.isfile("$HOME/.x-cmd.root/boot/alias/co.disable"):
         aliases[',']            = [ "xbin", "onsh", "--sysco" ]

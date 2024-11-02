@@ -72,7 +72,7 @@ else
 fi
 ___X_CMD_CUR_SHELL="${___X_CMD_SHELL:-sh}"      # TODO: will remove
 
-[ -n "$TMPDIR" ] || TMPDIR="$(dirname "$(mktemp -u)")/"     # It is posix standard. BUT NOT set in some cases.
+[ -n "$TMPDIR" ] || TMPDIR="${TEMP:-"$(dirname "$(mktemp -u)")"}/"      # It is posix standard. BUT NOT set in some cases.
 # EndSection
 
 
