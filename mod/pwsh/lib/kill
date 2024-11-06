@@ -3,6 +3,7 @@ ___x_cmd_pwsh_kill(){
     local op="$1"; shift
         case "$op" in
             ps|process) ___x_cmd_pwsh_kill_process "$@" ;;
+            -h|--help)  ___x_cmd help -m pwsh kill ;;
             *)          N=pwsh M="Unsupported subcmd => $1" log:ret:64  ;;
         esac
 }

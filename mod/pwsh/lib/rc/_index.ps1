@@ -32,6 +32,45 @@ function touch(){
     }
 }
 
+function ___x_cmd____rcpwsh_get_msysbash(){
+    if ($env:___X_CMD_RCPWSH_MSYSBASH_PATH) {
+        return $env:___X_CMD_RCPWSH_MSYSBASH_PATH
+    } else {
+        $xcmdbash_path = "$HOME\.x-cmd.root\data\git-for-windows\bin\bash.exe"
+        $msysbash_paths = @(
+            $xcmdbash_path,
+            "C:\Program Files\Git\bin\bash.exe",
+            "C:\Program Files (x86)\Git\bin\bash.exe",
+            "$HOME\scoop\apps\git\current\bin\bash.exe"
+        )
+
+        $msysbash_found = $false
+        foreach ($msysbash_path in $msysbash_paths) {
+            if (Test-Path $msysbash_path -PathType Leaf) {
+                $msysbash_found = $true
+                break
+            }
+        }
+
+        if (-not $msysbash_found) {
+            $xbatfile = "$HOME\x.bat"
+            if (-not (Test-Path $xbatfile -PathType Leaf)) {
+                Write-Host "- I|x: Download the x-cmd x.bat script file from -> https://get.x-cmd.com/x.bat"
+                Invoke-WebRequest -Uri "https://get.x-cmd.com/x.bat" -OutFile $xbatfile
+            }
+            & $xbatfile *>&1 | ForEach-Object { Write-Host $_ }
+
+            $msysbash_path = ""
+            if (Test-Path $xcmdbash_path -PathType Leaf) {
+                $msysbash_path = $xcmdbash_path
+            }
+        }
+
+        $env:___X_CMD_RCPWSH_MSYSBASH_PATH = $msysbash_path
+        return $msysbash_path
+    }
+}
+
 function msysbash(){
     param(
         [Parameter(Mandatory=$true)]
@@ -39,24 +78,35 @@ function msysbash(){
         [Parameter(Mandatory=$false)]
         [string[]]$args
     )
-    $msysbash_paths = @(
-        "$HOME\.x-cmd.root\data\git-for-windows\bin\bash.exe"
-        "C:\Program Files\Git\bin\bash.exe"
-        "$HOME\scoop\apps\git\current\bin\bash.exe"
+
+    $msysbash_path = ___x_cmd____rcpwsh_get_msysbash
+    if (-not (Test-Path $msysbash_path)) {
+        Write-Error "msysbash not found"
+    } else {
+        & $msysbash_path "$command" @args
+    }
+}
+
+function ___x_cmd___rcpwsh_time {
+    param (
+        [Parameter(Mandatory=$true)]
+        [string]$command,
+        [Parameter(Mandatory=$false)]
+        [int]$num = 10
     )
 
-    $msysbash_found = $false
-    foreach ($msysbash_path in $msysbash_paths) {
-        if (Test-Path $msysbash_path) {
-            $msysbash_found = $true
-            & $msysbash_path "$command" @args
-            break
+    $times = @()
+    Write-Host "- I|x: Executing command -> '$command'"
+    for ($i = 1; $i -le $num; $i++) {
+        $executionTime = Measure-Command {
+            Invoke-Expression $command | Out-Null
         }
+        Write-Host "- I|x: Run $i - $executionTime"
+        $times += $executionTime.TotalMilliseconds
     }
 
-    if (-not $msysbash_found) {
-        Write-Error "msysbash not found"
-    }
+    $averageTime = ($times | Measure-Object -Average).Average
+    Write-Output "- I|x: Average execution time over $num runs - $averageTime ms"
 }
 
 function ___x_cmd___rcpwsh_path_win_to_linux(){
@@ -214,12 +264,34 @@ if (-not (Test-Path "$HOME\.x-cmd.root\boot\alias\xwt.disable" -PathType Leaf)) 
         ___x_cmd webtop @args
     }
 }
+if (-not (Test-Path "$HOME\.x-cmd.root\boot\alias\co.disable" -PathType Leaf)) {
+    function co(){
+        ___x_cmd co --exec @args
+    }
+}
+if (-not (Test-Path "$HOME\.x-cmd.root\boot\alias\coco.disable" -PathType Leaf)) {
+    function coco(){
+        ___x_cmd coco --exec @args
+    }
+}
 if (-not (Test-Path "$HOME\.x-cmd.root\boot\alias\chat.disable" -PathType Leaf)) {
-    ___x_cmd chat --aliasinit --pwshcode | Out-String | Invoke-Expression
+    try {
+        if (-not (Test-Path "$HOME\.x-cmd.root\local\data\pwsh\alias\chat.ps1" -PathType Leaf)) {
+            ___x_cmd pwsh --setup-rcshortcut-file
+        }
+        . "$HOME\.x-cmd.root\local\data\pwsh\alias\chat.ps1"
+    } catch {
+        Write-Host "- E|x: Failed to load command functions related to the chat module alias init"
+    }
 }
-
 if (-not (Test-Path "$HOME\.x-cmd.root\boot\alias\writer.disable" -PathType Leaf)) {
-    ___x_cmd writer --aliasinit --pwshcode | Out-String | Invoke-Expression
+    try {
+        if (-not (Test-Path "$HOME\.x-cmd.root\local\data\pwsh\alias\writer.ps1" -PathType Leaf)) {
+            ___x_cmd pwsh --setup-rcshortcut-file
+        }
+        . "$HOME\.x-cmd.root\local\data\pwsh\alias\writer.ps1"
+    } catch {
+        Write-Host "- E|x: Failed to load command functions related to the writer module alias init"
+    }
 }
 
-# TODO: co coco

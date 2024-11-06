@@ -8,11 +8,11 @@ null
 ,
 "cn"
 :
-"发送 TCP 连接"
+"Ping TCP 端口"
 ,
 "en"
 :
-"Send a TCP connection"
+"Ping TCP port"
 }
 ,
 "#desc"
@@ -20,11 +20,11 @@ null
 {
 "cn"
 :
-"该模块基于 Telnet 协议，使用 curl 实现本地计算机到目标主机和端口的简单明文 TCP 连接。"
+"该模块基于 TCP 协议，使用 curl 实现本地计算机到目标主机和端口的简单明文 TCP 连接。"
 ,
 "en"
 :
-"This module leverages the Telnet protocol and utilizes curl to establish a straightforward, plain-text TCP connection from your local machine to the target host and port."
+"This module leverages the TCP protocol and utilizes curl to establish a straightforward, plain-text TCP connection from your local machine to the target host and port."
 }
 ,
 "#tip"

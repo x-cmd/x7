@@ -94,9 +94,9 @@ ___x_cmd_writer___aliasinit_pwshcode_(){
     x_=""
     local name; for name in "$@"; do
         x_="${x_}
-    function a${name:+"\`:${name}"}(){
-        ___x_cmd writer --sendalias '${name}' @args
-    }
+function a${name:+"\`:${name}"}(){
+    ___x_cmd writer --sendalias '${name}' @args
+}
 "
     done
 }

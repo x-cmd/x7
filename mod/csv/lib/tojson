@@ -1,8 +1,6 @@
 # shellcheck shell=dash disable=SC2034
 
 ___x_cmd_csv_tojson(){
-    [ $# -gt 0 ] || set - --help
-
     local op="$1"
     case "$op" in
         -h|--help)  ___x_cmd help -m csv tojson; return ;;
@@ -18,14 +16,12 @@ ___x_cmd_csv_tojson(){
 }
 
 ___x_cmd_csv_tojsonl(){
-    [ $# -gt 0 ] || set - --help
-
     local op="$1"
     case "$op" in
         -h|--help)  ___x_cmd help -m csv tojsonl; return ;;
         *)
                     [ ! -t 0 ] || {
-                        ___x_cmd help -m csv tojson >&2
+                        ___x_cmd help -m csv tojsonl >&2
                         return 1
                     }
                     ;;

@@ -492,11 +492,27 @@ null
 {
 "en"
 :
-"Clear the screen when exiting the app"
+"Clear the screen on normal app exit"
 ,
 "cn"
 :
-"退出 app 时清屏"
+"正常退出 app 时清屏"
+}
+}
+,
+"--ctrl-c-clear"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"使用 Ctrl-C 退出 app 时清屏"
+,
+"en"
+:
+"Clear the screen when exiting the app with Ctrl-C"
 }
 }
 ,

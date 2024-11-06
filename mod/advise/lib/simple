@@ -6,6 +6,7 @@ ___x_cmd_advise_simple(){
     local is_failfast=
     local is_dfs=
     local reserved_filed="desc|tldr|cand|subcmd|option"
+    local format=yml
     while [ "$#" -gt 0 ]; do
         case "$1" in
             --dfs)          is_dfs=1; shift ;;
@@ -14,6 +15,8 @@ ___x_cmd_advise_simple(){
                             [ "$#" -ge 2 ] || return
                             shift 2
                             ;;
+            --json)         format=json ;   shift ;;
+            --yml)          format=yml ;    shift ;;
             *)              break ;;
         esac
     done
@@ -55,5 +58,8 @@ ___x_cmd_advise_simple(){
             -f "$___X_CMD_ROOT_MOD/advise/lib/awk/advise.share.awk"         \
             -f "$___X_CMD_ROOT_MOD/advise/lib/awk/ai/simple.awk" )"
     [ -n "$data" ] || return
-    printf "%s\n" "$data" | ___x_cmd j2y
+    case "$format" in
+        json)   printf "%s\n" "$data" ;;
+        yml)    printf "%s\n" "$data" | ___x_cmd j2y ;;
+    esac
 }

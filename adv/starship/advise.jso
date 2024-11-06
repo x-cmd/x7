@@ -24,7 +24,7 @@ null
 {
 "en"
 :
-"Starship is a minimal, blazing-fast, and infinitely customizable prompt for any shell!\nFor a detailed guide on getting started, have a look at the docs at https://starship.rsxwzq\n\nThe starship module is an enhanced module designed for Starship, allowing users to easily switch themes with a single command.\nThis module also includes a theme preview feature that lets users preview different themes directly in the command line, streamlining the process of selecting and changing themes.\n"
+"Starship is a minimal, blazing-fast, and infinitely customizable prompt for any shell!\nFor a detailed guide on getting started, have a look at the docs at https://starship.rs\n\nThe starship module is an enhanced module designed for Starship, allowing users to easily switch themes with a single command.\nThis module also includes a theme preview feature that lets users preview different themes directly in the command line, streamlining the process of selecting and changing themes.\n"
 ,
 "cn"
 :

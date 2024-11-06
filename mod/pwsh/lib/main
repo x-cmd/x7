@@ -26,6 +26,8 @@ ___x_cmd_pwsh___main(){
             ___x_cmd_pwsh___setup "$@"  ;;
         --setup-is-required)
             ___x_cmd_pwsh___setup_is_required "$@" ;;
+        --setup-rcshortcut-file)
+            ___x_cmd_pwsh___setup_rcshortcut_file "$@" ;;
         -h|--help)
             ___x_cmd help -m pwsh "$@" ;;
         *)

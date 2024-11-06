@@ -20,6 +20,7 @@ ___x_cmd_docker_ps_main(){
         case "$1" in
             -j|--json)      datamode=json;  shift   ;;
             --csv)          datamode=csv;   shift   ;;
+            --tsv)          datamode=tsv;   shift   ;;
             --app)          datamode=app;   shift   ;;
 
             -p|--prefix)    X_KASM_PREFIX="$2";    shift 2 ;;
@@ -47,7 +48,7 @@ ___x_cmd_docker_ps_main(){
 
     case "$datamode" in
         app)                ___x_cmd_docker_ps___app ;;
-        csv|json)           X_KASM_PREFIX="$X_KASM_PREFIX" ___x_cmd_docker_ps___"$datamode" ;;
+        csv|json|tsv)       X_KASM_PREFIX="$X_KASM_PREFIX" ___x_cmd_docker_ps___"$datamode" ;;
     esac
 }
 
@@ -155,7 +156,7 @@ ___x_cmd_docker_ps___csv(){
 }
 
 ___x_cmd_docker_ps___tsv(){
-    ___x_cmd_docker_ps___csv | ___x_cmd csv totsv
+    ___x_cmd_docker_ps___csv "$@" | ___x_cmd csv totsv
 }
 
 # ___x_cmd_docker_ps___tsv(){

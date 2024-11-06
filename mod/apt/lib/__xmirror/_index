@@ -33,8 +33,8 @@ ___x_cmd_apt___xmirror___ensure(){
             ___X_CMD_APT_mirror_sources="/etc/apt/sources.list"
             ;;
         *debian*)
-            # TODO: test
             case "$(uname -a)" in
+                # TODO: test raspberrypi
                 *raspberrypi*)
                     ___X_CMD_OS_RELEASE="raspberrypi"
                     ___X_CMD_APT_mirror_sources="/etc/apt/sources.list.d/raspi.list"
@@ -49,6 +49,7 @@ ___x_cmd_apt___xmirror___ensure(){
             N=apt M="Unsupported system: $___X_CMD_OS_RELEASE" log:ret:1
             ;;
     esac
+    [ -f "$___X_CMD_APT_mirror_sources" ] || ___X_CMD_APT_mirror_sources="/etc/apt/sources.list"
 }
 
 ___x_cmd_apt___xmirror___app(){
@@ -130,12 +131,12 @@ ___x_cmd_apt___xmirror_replace() {
     if [ "$(id -u)" -ne 0 ]; then
         apt:warn "using sudo"
         printf "%s" "$tmp" | \
-            ___x_cmd_cmds awk '!/^#/ && !/security/ { gsub(/:\/\/[^\/]*\/[^\/]*/, "://'"$url"'/'"$repo_arch"'"); } { print }' \
+            ___x_cmd_cmds awk '!/^#/ && !/security/ { gsub(/(:\/\/[^ ]*)/, "://'"$url"'/'"$repo_arch"'"); } { print }' \
         | sudo tee "$___X_CMD_APT_mirror_sources" > /dev/null
         sudo apt update
     else
         printf "%s" "$tmp" | \
-            ___x_cmd_cmds awk '!/^#/ && !/security/ { gsub(/:\/\/[^\/]*\/[^\/]*/, "://'"$url"'/'"$repo_arch"'"); } { print }' \
+            ___x_cmd_cmds awk '!/^#/ && !/security/ { gsub(/(:\/\/[^ ]*)/, "://'"$url"'/'"$repo_arch"'"); } { print }' \
         > "$___X_CMD_APT_mirror_sources"
         command apt update
     fi
