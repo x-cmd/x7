@@ -21,6 +21,7 @@ ___x_cmd_pwsh___setup_rcfile_(){
     local rcfile; rcfile="$( ___x_cmd pwsh -ExecutionPolicy RemoteSigned -NoProfile -Command Write-Host \$PROFILE )" 2>/dev/null
     [ -n "$rcfile" ] || N=pwsh M="Not found current user's PowerShell configuration file" log:ret:1
     ___x_cmd_pwsh_path win_to_linux_ "$rcfile"
+    [ -n "$x_" ]
 }
 
 ___x_cmd_pwsh___setup_is_required(){

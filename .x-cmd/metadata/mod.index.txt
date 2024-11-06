@@ -10,7 +10,7 @@ a52cb87cc26fc722baf4d6409d2e8ecb08e4eb57 ascii main NULL
 8fe2c7cfccba6435271c31b5fb8c821922e6f461 asdf main NULL
 f037550d1da0800993138c7c3654960aeb2c629e assert main NULL
 3433cecefea9df4a762e485262850082ae73cbc2 awk main NULL
-8ac5deba6e21e15c554455d4c48d56ee389e4a8d boot main NULL
+fa7b41a1386310fe9411f441e37d470003995d8e boot main NULL
 8d821ea51f9b9ea05b7716a2e975304b4c7ff69b brew main NULL
 ba8e65983eec61e5011fe529a548b5f27e50d2f3 browse main NULL
 7dcfa4bcd09ce3213699bb16855c15806bb3a7fd btop main NULL
@@ -184,7 +184,7 @@ be33dc108faa50d337ee02ce6bc30bbf139080b0 pixi main NULL
 6515a94bd6b257d70acbbab35d8505a538d661d5 proxy main NULL
 cbef742da22bad2d923d6eb02a3bd7c96de514f4 ps main NULL
 080de51d7696d55edb7bb82ca8b5466e8bff59d6 pwd main NULL
-72e701ad47478caaad928a506efab2944d14f6f2 pwsh main NULL
+829b344611e268b6635604a4a60b69a5de478666 pwsh main NULL
 165facafd926b9ab7f2713db197b02c491113934 python main NULL
 c79824292c3880a97daf02b7adc3a91bf4036e62 qr main NULL
 3d0850bb1f39c8775afcd362a34a3d9751200dae qywx main NULL

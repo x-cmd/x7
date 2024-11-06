@@ -41,7 +41,8 @@ function ___x_cmd____rcpwsh_get_msysbash(){
             $xcmdbash_path,
             "C:\Program Files\Git\bin\bash.exe",
             "C:\Program Files (x86)\Git\bin\bash.exe",
-            "$HOME\scoop\apps\git\current\bin\bash.exe"
+            "$HOME\scoop\apps\git\current\bin\bash.exe",
+            "$HOME\AppData\Local\Programs\Git\bin\bash.exe"
         )
 
         $msysbash_found = $false
