@@ -80,15 +80,25 @@ ___x_cmd_pwsh_path___win_to_linux_inner(){
     if ___x_cmd hascmd wslpath; then
         ___x_cmd_cmds wslpath -u "$1" 2>/dev/null | ___x_cmd_cmds sed 's/\r$//g'
     else
-        local fp=
-        fp="$(printf "%s" "$1" | ___x_cmd_cmds sed 's/\\/\\\\/g;s/\r$//g' )"
+        local fp="$1"
         [ -n "$fp" ] || return 1
-        local x_; ___x_cmd_shq1_ "$fp"
-        if [ -d /mnt ]; then
-            ___x_cmd pwsh -ExecutionPolicy RemoteSigned -NoProfile -Command "wsl wslpath -u $x_" 2>/dev/null
-        else
-            ___x_cmd pwsh -ExecutionPolicy RemoteSigned -NoProfile -Command "wsl wslpath -u $x_" 2>/dev/null | command sed 's/^\/mnt//'
-        fi
+        local prefix=
+        ! ___x_cmd os is wsl || prefix="/mnt"
+        ___x_cmd_cmds awk -v prefix="$prefix" '
+{
+    fp = $0
+    gsub("\\\\", "/", fp)
+    if (fp ~ "^[A-Za-z]:") {
+        fp = prefix "/" tolower( substr(fp, 0, 1) ) substr(fp, 3)
+    }
+    else if (match(fp, "^//wsl.localhost/[^/]+")) {
+        fp = substr(fp, RLENGTH+1)
+    }
+    print fp
+}
+'  <<A
+$fp
+A
     fi
 }
 
