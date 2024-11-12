@@ -64,24 +64,16 @@ ___x_cmd_pwsh_path___add_pwsh(){
 
 
 ___x_cmd_pwsh_path___win_to_linux_(){
-    x_=""
-    local fp="$1"
-    [ -n "$fp" ] || N=pwsh M="Please provide a windows style path" log:ret:64
-    x_="$( ___x_cmd_pwsh_path___win_to_linux_inner "$fp" )"
-    [ -n "$x_" ] || x_="$fp"
+    x_="$( ___x_cmd_pwsh_path___win_to_linux "$@" )" || return
+    [ -n "$x_" ]
 }
 
 ___x_cmd_pwsh_path___win_to_linux(){
-    local x_=; ___x_cmd_pwsh_path___win_to_linux_ "$@" || return
-    printf "%s\n" "$x_"
-}
-
-___x_cmd_pwsh_path___win_to_linux_inner(){
+    local fp="$1"
+    [ -n "$fp" ] || N=pwsh M="Please provide a windows style path" log:ret:64
     if ___x_cmd hascmd wslpath; then
-        ___x_cmd_cmds wslpath -u "$1" 2>/dev/null | ___x_cmd_cmds sed 's/\r$//g'
+        ___x_cmd_cmds wslpath -u "$fp" 2>/dev/null | ___x_cmd_cmds sed 's/\r$//g'
     else
-        local fp="$1"
-        [ -n "$fp" ] || return 1
         local prefix=
         ! ___x_cmd os is wsl || prefix="/mnt"
         ___x_cmd_cmds awk -v prefix="$prefix" '

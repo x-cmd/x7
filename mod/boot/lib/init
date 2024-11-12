@@ -57,6 +57,14 @@ x:info "Running x boot init"
 
     # TODO: tclsh, etc.
 
+    # In some system, like nixos, doesn't include awk by default. So we provide an awk using cosmo
+    ___x_cmd hascmd awk || {
+        x:info "awk is not available in the current environment. Using cosmo awk instead."
+        x:info "If you install awk mannually later and want to deactivate this cosmo version awk -> x cosmo unuse awk"
+        # Notice: In the future, we might consider using busybox awk.
+        ___x_cmd cosmo use awk
+    }
+
     x:info  --cmd 'x pkg update' \
             --tips 'If it fails, or is interrupted, you can run it manually later.' \
             'Updating the resource package indexes ...'

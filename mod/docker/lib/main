@@ -9,6 +9,7 @@ xrc:mod:lib docker      ximg/_index     origin/_index   ext/_index   mirror/_ind
     app setup advise id
 
 ___x_cmd_docker___main(){
+    [ "$#" -gt 0 ] || set - --help
     local ___X_CMD_DOCKER_MAIN_OPTS=''; while true; do
         case "$1" in
             --version)

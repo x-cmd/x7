@@ -38,7 +38,7 @@ ___x_cmd_starship_fz(){
 ___x_cmd_starship_fz_data(){
     ___x_cmd fsiter "$___X_CMD_STARSHIP_PREVIEW_DIR" | ___x_cmd fzf --ansi --reverse --cycle --exit-0 \
         --height 50% --preview-window right:70% \
-        --preview="x starship --fzfinfo '{1}'"
+        --preview='___x_cmdexe starship --fzfinfo {1}'
 }
 
 ___x_cmd_starship_fz_(){

@@ -24,18 +24,18 @@ ___x_cmd_apt___xmirror___ensure(){
 
     ___X_CMD_OS_RELEASE="$(___x_cmd os release)"
     case "$___X_CMD_OS_RELEASE" in
-        *ubuntu*)
+        *Ubuntu*|*ubuntu*)
             ___X_CMD_OS_RELEASE="ubuntu"
             ___X_CMD_APT_mirror_sources="/etc/apt/sources.list"
             ;;
-        *kali*)
+        *Kali*|*kali*)
             ___X_CMD_OS_RELEASE="kali"
             ___X_CMD_APT_mirror_sources="/etc/apt/sources.list"
             ;;
-        *debian*)
+        *Debian*|*debian*)
             case "$(uname -a)" in
                 # TODO: test raspberrypi
-                *raspberrypi*)
+                *Raspberrypi*|*raspberrypi*)
                     ___X_CMD_OS_RELEASE="raspberrypi"
                     ___X_CMD_APT_mirror_sources="/etc/apt/sources.list.d/raspi.list"
                     ;;

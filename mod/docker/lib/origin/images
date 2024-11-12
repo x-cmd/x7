@@ -44,6 +44,8 @@ ___x_cmd_docker_images___app(){
     fi
 
     local image_id=
+    local ___X_CMD_CSV_APP_SHBIN_CODE=
+    local ___X_CMD_CSV_APP_DATA_IMAGE_ID=
     ___X_CMD_CSV_APP_SHBIN_CODE="xrc docker; " \
         ___x_cmd csv app --return var ___x_cmd_docker_images_main --csv || return 1
     image_id="$___X_CMD_CSV_APP_DATA_IMAGE_ID"

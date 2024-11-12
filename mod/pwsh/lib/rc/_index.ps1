@@ -56,8 +56,9 @@ function ___x_cmd____rcpwsh_get_msysbash(){
         if (-not $msysbash_found) {
             $xbatfile = "$HOME\x.bat"
             if (-not (Test-Path $xbatfile -PathType Leaf)) {
-                Write-Host "- I|x: Download the x-cmd x.bat script file from -> https://get.x-cmd.com/x.bat"
-                Invoke-WebRequest -Uri "https://get.x-cmd.com/x.bat" -OutFile $xbatfile
+                $xbaturl = "https://get.x-cmd.com/x.bat"
+                Write-Host "- I|x: Download the x-cmd x.bat script file from '$xbaturl' to '$xbatfile'"
+                Invoke-WebRequest -Uri "$xbaturl" -OutFile "$xbatfile"
             }
             & $xbatfile *>&1 | ForEach-Object { Write-Host $_ }
 
@@ -122,7 +123,7 @@ function ___x_cmd___rcpwsh_path_win_to_linux(){
         $env:___X_CMD_RCPWSH_WSL_DISTRO_PATH = $matches[1]
         $ls_fp = $matches[2] -replace '\\', '/'
     } else {
-        $ls_fp = $ps_fp
+        $ls_fp = $ps_fp -replace '\\', '/'
     }
 
     return $ls_fp
@@ -135,10 +136,14 @@ function ___x_cmd___rcpwsh_path_linux_to_win(){
 
     if ($env:___X_CMD_RCPWSH_WSL_DISTRO_PATH) {
         $ps_fp = $ls_fp -replace '/', '\'
-        $ps_fp = $env:___X_CMD_RCPWSH_WSL_DISTRO_PATH + $ps_fp
+        if (-not ($ps_fp -match '(\\\\wsl\.localhost\\[^\\]*)(\\.*)')) {
+            $ps_fp = $env:___X_CMD_RCPWSH_WSL_DISTRO_PATH + $ps_fp
+        }
     } elseif ($ls_fp -match '^/([A-Za-z])/(.*)$') {
         $ps_fp = $matches[2] -replace '/', '\'
         $ps_fp = $matches[1].ToLower() + ":\" + $ps_fp
+    } else {
+        $ps_fp = $ls_fp -replace '/', '\'
     }
 
     return $ps_fp

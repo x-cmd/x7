@@ -1,12 +1,12 @@
 # shellcheck shell=dash
 
 ___x_cmd_docker_container(){
-    [ $# -gt 0 ] || set -- app
+    [ $# -gt 0 ] || set -- --app
 
     local op="$1"; shift
     case "$op" in
         -h|--help)     ___x_cmd help -m docker container              ;;
-        app|"")        ___x_cmd_docker_ps app                         ;;
+        --app|"")        ___x_cmd_docker_ps --app                     ;;
         ls|exist)
                         ___x_cmd_docker_container_"$op"           "$@" ;;
 

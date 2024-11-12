@@ -69,6 +69,7 @@ ___x_cmd_advise___is_completion_loaded(){
 }
 
 ___x_cmd_advise_load_complete(){
+    [ -z "$___X_CMD_ADVISE_PREPARE_FAILED" ] || return
     local comp_func="$1"; shift
     advise:debug --comp_func "$comp_func" --comp_name "$*" "load complete"
     if [ -n "$ZSH_VERSION" ]; then                      compdef "$comp_func" "$@"

@@ -239,11 +239,27 @@ null
 {
 "cn"
 :
-"在终端中渲染 Mermaid 图表。"
+"在终端中渲染 Mermaid 图表"
 ,
 "en"
 :
 "Render Mermaid graphs inside your terminal"
+}
+}
+,
+"firework"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"下载并运行 firework-rs 来模拟 ASCII 艺术烟花（按 esc 退出程序）"
+,
+"en"
+:
+"Download and run firework-rs to simulate ASCII art fireworks (Press esc to exit the program)"
 }
 }
 ,
@@ -254,6 +270,20 @@ null
 "#tldr"
 :
 [
+{
+"cmd"
+:
+"x ascii"
+,
+"cn"
+:
+"查看 ASCII 码列表"
+,
+"en"
+:
+"View the list of ASCII codes"
+}
+,
 {
 "cmd"
 :
@@ -299,15 +329,29 @@ null
 {
 "cmd"
 :
-"x ascii cfont --help"
+"x ascii firework -d 1"
 ,
 "cn"
 :
-"查看 ASCII 艺术字更多使用方式"
+"使用 demo 1 来显示 ASCII 艺术烟花"
 ,
 "en"
 :
-"View more usage options for ASCII art."
+"Use demo 1 to display ASCII art fireworks"
+}
+,
+{
+"cmd"
+:
+"seq 1 10 | x ascii graph"
+,
+"cn"
+:
+"绘制 ASCII 折线图"
+,
+"en"
+:
+"Drawing an ASCII Line Graph"
 }
 ]
 ,

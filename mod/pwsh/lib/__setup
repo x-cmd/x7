@@ -6,6 +6,7 @@ ___x_cmd_pwsh___setup(){
     local rcdir="$___X_CMD_ROOT_DATA/pwsh"
     ___x_cmd mkdirp "$rcdir"
     ___x_cmd cp -f "$___X_CMD_ROOT_MOD/pwsh/lib/rc/_index.ps1"     "$rcdir/_index.ps1"
+    [ ! -d "$___X_CMD_ROOT_DATA/pwsh/alias" ] || ___x_cmd rmrf "$___X_CMD_ROOT_DATA/pwsh/alias"
 
     local x_=; ___x_cmd_pwsh___setup_rcfile_ || return
     local rcfile="$x_"
