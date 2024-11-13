@@ -57,7 +57,6 @@ def ___x_cmd___rxonsh_addpython():
     ___x_cmd___rcxonsh_addpifh("python", "$HOME/.local/bin")
 
     ___x_cmd___rxonsh_addpython___pkg("python")
-    ___x_cmd___rxonsh_addpython___pkg("miniconda")
     ___x_cmd___rxonsh_addpython___pkg("pypy")
 
 ___x_cmd___rxonsh_addpython()
