@@ -30,6 +30,9 @@ export-env {
 
     ___x_cmd_nu_nurc_addpifh go         $"($env.HOME)/go/bin"
     ___x_cmd_nu_nurc_addpifh python     $"($env.HOME)/.local/bin"
+    # TODO: add python path bin
+    # ___x_cmd_nu_nurc_addpifh python     $"($env.HOME)/.local/bin"
+
     ___x_cmd_nu_nurc_addpifh done       $"($env.HOME)/.done/bin"
     ___x_cmd_nu_nurc_addpifh bun        $"($env.HOME)/.bun/bin"
     ___x_cmd_nu_nurc_addpifh npm        $"($env.HOME)/.npm/bin"

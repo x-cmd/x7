@@ -1,4 +1,5 @@
 var ___X_CMD_ELV_RC_XBINEXP = $E:HOME/.x-cmd.root/bin/xbinexp
+var ___X_CMD_ELV_RC_XBIN    = $E:HOME/.x-cmd.root/bin/xbin
 
 use re
 use os
@@ -93,9 +94,25 @@ fn xwt  { |@a| x webtop         $@a ; }
 fn co   { |@a| x elv --sysco    $@a ; }
 fn coco { |@a| x elv --syscoco  $@a ; }
 
-fn addp {       |p|         if ( not (has-value $paths $p) )    {   set paths = [ $p $@paths ] } }
-fn addpifh {    |bin p|     if ( has-external $bin )            {   addp $p     } }
-fn addpifd {    |p|         if ( os:is-dir $p )                 {   addp $p     } }
+fn ___x_cmd___rcelv_addp {      |p|         if ( not (has-value $paths $p) )    {   set paths = [ $p $@paths ]  } }
+fn ___x_cmd___rcelv_addpifh {   |bin p|     if ( has-external $bin )            {   ___x_cmd___rcelv_addp $p    } }
+fn ___x_cmd___rcelv_addpifd {   |p|         if ( os:is-dir $p )                 {   ___x_cmd___rcelv_addp $p    } }
+fn ___x_cmd___rcelv_addpython___pkg {   |name num|
+    var fp = ( bash $___X_CMD_ELV_RC_XBIN pkg sphere populate get_link_source_dir $name )
+    if ( os:is-dir $fp ) {
+        if ( eq $num "-1" ) {
+            set paths = [ $@paths $fp ]
+        } else {
+            ___x_cmd___rcelv_addp $fp
+        }
+    }
+}
+fn ___x_cmd___rcelv_addpython {
+    ___x_cmd___rcelv_addpifh            python      $E:HOME/.local/bin
+    ___x_cmd___rcelv_addpython___pkg    python      0
+    ___x_cmd___rcelv_addpython___pkg    miniconda   0
+    ___x_cmd___rcelv_addpython___pkg    pypy        -1
+}
 
 # defintion of @<xxx> is in module a
 
@@ -115,18 +132,16 @@ fn init {
         set paths = [ $@paths $E:HOME/.pixi/bin ]
     }
 
-    addp                $E:HOME/.x-cmd.root/bin
-    addp                $E:HOME/.x-cmd.root/local/data/pkg/sphere/X/l/j/h/bin
+    ___x_cmd___rcelv_addp               $E:HOME/.x-cmd.root/bin
+    ___x_cmd___rcelv_addp               $E:HOME/.x-cmd.root/local/data/pkg/sphere/X/l/j/h/bin
 
     # TODO: foreach pkg/path pkg/env, then add path and env
-    addpifd             $E:HOME/.cargo/bin
-    addpifh  go         $E:HOME/go/bin
-
-    addpifh  python     $E:HOME/.local/bin
-
-    addpifh  deno       $E:HOME/.deno/bin
-    addpifh  bun        $E:HOME/.bun/bin
-    addpifh  npm        $E:HOME/.npm/bin
+    ___x_cmd___rcelv_addpifd            $E:HOME/.cargo/bin
+    ___x_cmd___rcelv_addpifh  go        $E:HOME/go/bin
+    ___x_cmd___rcelv_addpifh  deno      $E:HOME/.deno/bin
+    ___x_cmd___rcelv_addpifh  bun       $E:HOME/.bun/bin
+    ___x_cmd___rcelv_addpifh  npm       $E:HOME/.npm/bin
+    ___x_cmd___rcelv_addpython
 
     if ( os:is-regular $E:HOME/.config/elvish/lib/a.elv ) {
         use a

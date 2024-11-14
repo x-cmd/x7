@@ -9,10 +9,6 @@ def ___x_cmd___rcxonsh_addp(arg_path):
     if arg_path not in __xonsh__.env['PATH']:
         __xonsh__.env['PATH'].insert(0, arg_path)
 
-def ___x_cmd___rcxonsh_addp_end(arg_path):
-    if arg_path not in __xonsh__.env['PATH']:
-        __xonsh__.env['PATH'].insert(-1, arg_path)
-
 def ___x_cmd___rcxonsh_addpifh(cmd_name, arg_path):
     if shutil.which(cmd_name):
         ___x_cmd___rcxonsh_addp(arg_path)
@@ -38,26 +34,20 @@ ___x_cmd___rcxonsh_addpifh("npm","$HOME/.npm/bin")
 
 
 
-def ___x_cmd___rxonsh_addpython___pkg(package_name):
-    command = 'x pkg sphere link ls'
+def ___x_cmd___rxonsh_addpython___pkg(i, package_name):
+    command = f'xbin pkg sphere populate get_link_source_dir {package_name}'
     with os.popen(command) as process:
         result = process.read()
-
-    match = re.search(fr'{package_name}_v([^\s]+)', result)
-    if match:
-        version = match.group(1)
-        command = f'x pkg sphere populate get_exist_dir {package_name} v{version}'
-        with os.popen(command) as process:
-            result = process.read()
+    if result:
         binpath = result.strip() + '/bin'
-        if shutil.which('python'):
-            ___x_cmd___rcxonsh_addp_end(binpath)
+        __xonsh__.env['PATH'].insert(i, binpath)
 
 def ___x_cmd___rxonsh_addpython():
     ___x_cmd___rcxonsh_addpifh("python", "$HOME/.local/bin")
 
-    ___x_cmd___rxonsh_addpython___pkg("python")
-    ___x_cmd___rxonsh_addpython___pkg("pypy")
+    ___x_cmd___rxonsh_addpython___pkg(0, "python")
+    ___x_cmd___rxonsh_addpython___pkg(0, "miniconda")
+    ___x_cmd___rxonsh_addpython___pkg(-1, "pypy")
 
 ___x_cmd___rxonsh_addpython()
 

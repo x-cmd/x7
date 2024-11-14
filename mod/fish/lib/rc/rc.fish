@@ -16,6 +16,26 @@ function ___x_cmd___rcfish_addpifd
     end
 end
 
+function ___x_cmd___rcfish_addpython___pkg
+    set -l fp ( bash "$HOME/.x-cmd.root/bin/xbin" pkg sphere populate get_link_source_dir "$argv[1]" )
+
+    if [ -d "$fp" ]
+        if [ "$argv[2]" = -1 ]
+            set -g PATH     "$PATH" "$fp"
+        else
+            ___x_cmd___rcfish_addp  "$fp"
+        end
+    end
+end
+
+function ___x_cmd___rcfish_addpython
+    ___x_cmd___rcfish_addpifh   python   "$HOME/.local/bin"
+    ___x_cmd___rcfish_addpython___pkg   python      0
+    ___x_cmd___rcfish_addpython___pkg   miniconda   0
+    ___x_cmd___rcfish_addpython___pkg   pypy        -1
+end
+
+
 if [ -f "$HOME/.x-cmd.root/boot/pixi" ]
     set -g PATH "$PATH"             "$HOME/.pixi/bin"
 end
@@ -25,12 +45,10 @@ ___x_cmd___rcfish_addp              "$HOME/.x-cmd.root/local/data/pkg/sphere/X/l
 
 ___x_cmd___rcfish_addpifd           "$HOME/.cargo/bin"
 ___x_cmd___rcfish_addpifh  go       "$HOME/go/bin"
-
-___x_cmd___rcfish_addpifh  python   "$HOME/.local/bin"
-
 ___x_cmd___rcfish_addpifh  deno     "$HOME/.deno/bin"
 ___x_cmd___rcfish_addpifh  bun      "$HOME/.bun/bin"
 ___x_cmd___rcfish_addpifh  npm      "$HOME/.npm/bin"
+___x_cmd___rcfish_addpython
 
 
 set -g ___X_CMD_CD_RELM_0 $PWD
