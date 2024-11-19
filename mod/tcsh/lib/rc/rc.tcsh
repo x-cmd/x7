@@ -1,7 +1,7 @@
 # add path to .x-cmd.root/bin and .x-cmd.root/global/data/bin/l/j/h
 
 if ( -f "$HOME/.x-cmd.root/boot/pixi" ) then
-    if ( "$PATH" !~ *$HOME/.pixi/bin* )  setenv PATH $HOME/.pixi/bin:"$PATH"
+    if ( "$PATH" !~ *$HOME/.pixi/bin* )  setenv PATH "$PATH":$HOME/.pixi/bin
 endif
 
 # TODO: improve this ...
@@ -13,25 +13,28 @@ if ( -d "$HOME/.cargo/bin" ) then
     if ( "$PATH" !~ *$HOME/.cargo/bin* )  setenv PATH $HOME/.cargo/bin:"$PATH"
 endif
 
-if ( "$PATH" !~ *$HOME/go/bin* ) then
-    setenv PATH $HOME/go/bin:"$PATH"
-endif
-
-if ( "$PATH" !~ *$HOME/.local/bin* ) then
-    setenv PATH $HOME/.local/bin:"$PATH"
-endif
-
-if ( "$PATH" !~ *$HOME/.deno/bin* ) then
-    setenv PATH $HOME/.deno/bin:"$PATH"
-endif
-
-if ( "$PATH" !~ *$HOME/.bun/bin* ) then
-    setenv PATH $HOME/.bun/bin:"$PATH"
-endif
-
-if ( "$PATH" !~ *$HOME/.npm/bin* ) then
-    setenv PATH $HOME/.npm/bin:"$PATH"
-endif
+foreach prog ( go deno bun npm python )
+    which $prog > /dev/null
+    if ( $? == 0 ) then
+        switch ($prog)
+            case go:
+                if ( "$PATH" !~ *$HOME/go/bin* )        setenv PATH $HOME/go/bin:"$PATH"
+                breaksw
+           case deno:
+                if ( "$PATH" !~ *$HOME/.deno/bin* )     setenv PATH $HOME/.deno/bin:"$PATH"
+                breaksw
+           case bun:
+                if ( "$PATH" !~ *$HOME/.bun/bin* )      setenv PATH $HOME/.bun/bin:"$PATH"
+                breaksw
+           case npm:
+                if ( "$PATH" !~ *$HOME/.npm/bin* )      setenv PATH $HOME/.npm/bin:"$PATH"
+                breaksw
+           case python:
+                if ( "$PATH" !~ *$HOME/.local/bin* )    setenv PATH $HOME/.local/bin:"$PATH"
+                breaksw
+        endsw
+    endif
+end
 
 setenv  ___X_CMD_CD_RELM_0      "$PWD"
 

@@ -1,6 +1,6 @@
 # shellcheck shell=dash
 
-xrc:mod:lib     gpg     uid     key/_index
+xrc:mod:lib     gpg     uid     key/_index  agent
 
 ___x_cmd_gpg___main(){
     [ "$#" -gt 0 ] ||   set -- --help

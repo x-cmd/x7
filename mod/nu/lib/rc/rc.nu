@@ -1,42 +1,64 @@
 
 
-export def --env ___x_cmd_nu_nurc_addpath [ element ] {
+export def --env ___x_cmd___rcnu_addp_prepend [ element ] {
     if not ( $element in $env.PATH ) {
-        # $env.PATH = ( $env.PATH | prepend args )
         $env.PATH = ( $env.PATH | split row (char esep) | prepend $element )
     }
 }
 
-export def --env ___x_cmd_nu_nurc_addpifd [ element ] {
-    if ( $element | path exists ) {
-        ___x_cmd_nu_nurc_addpath $element
+export def --env ___x_cmd___rcnu_addp_append [ element ] {
+    if not ( $element in $env.PATH ) {
+        # $env.PATH = ( $env.PATH | prepend args )
+        $env.PATH = ( $env.PATH | split row (char esep) | append $element )
     }
 }
 
-export def --env ___x_cmd_nu_nurc_addpifh [ cmd, element ] {
-    if not ( which $cmd | is-empty ) {
-        ___x_cmd_nu_nurc_addpath $element
+export def --env ___x_cmd___rcnu_addpifd [ element ] {
+    if not ( $element | path exists ) {
+        ___x_cmd___rcnu_addp_prepend $element
     }
 }
+
+export def --env ___x_cmd___rcnu_addpifh [ cmd, element ] {
+    if not ( which $cmd | is-empty ) {
+        ___x_cmd___rcnu_addp_prepend $element
+    }
+}
+
+
+export def --env ___x_cmd___rcnu_addpython___pkg [ packge_name, num ] {
+    let fp = ( bash $"($env.HOME)/.x-cmd.root/bin/xbin" pkg sphere populate get_link_source_dir $packge_name )
+    if ( $fp | path exists ) {
+        if ( $num == "-1" ) {
+            ___x_cmd___rcnu_addp_append $fp
+        } else {
+            ___x_cmd___rcnu_addp_prepend $fp
+        }
+    }
+}
+
+export def --env ___x_cmd___rcnu_addpython [ ...args ] {
+    ___x_cmd___rcnu_addpifh python     $"($env.HOME)/.local/bin"
+    ___x_cmd___rcnu_addpython___pkg   python      "0"
+    ___x_cmd___rcnu_addpython___pkg   miniconda   "0"
+    ___x_cmd___rcnu_addpython___pkg   pypy        "-1"
+}
+
 
 export-env {
     if ( $"($env.HOME)/.x-cmd.root/boot/pixi" | path exists ) {
-        ___x_cmd_nu_nurc_addpath $"($env.HOME)/.pixi/bin"
+        ___x_cmd___rcnu_addp_append $"($env.HOME)/.pixi/bin"
     }
 
-    ___x_cmd_nu_nurc_addpath            $"($env.HOME)/.x-cmd.root/bin"
-    ___x_cmd_nu_nurc_addpath            $"($env.HOME)/.x-cmd.root/local/data/pkg/sphere/X/l/j/h/bin"
-    ___x_cmd_nu_nurc_addpifd            $"($env.HOME)/.cargo/bin"
+    ___x_cmd___rcnu_addp_prepend       $"($env.HOME)/.x-cmd.root/bin"
+    ___x_cmd___rcnu_addp_prepend       $"($env.HOME)/.x-cmd.root/local/data/pkg/sphere/X/l/j/h/bin"
 
-    ___x_cmd_nu_nurc_addpifh go         $"($env.HOME)/go/bin"
-    ___x_cmd_nu_nurc_addpifh python     $"($env.HOME)/.local/bin"
-    # TODO: add python path bin
-    # ___x_cmd_nu_nurc_addpifh python     $"($env.HOME)/.local/bin"
-
-    ___x_cmd_nu_nurc_addpifh done       $"($env.HOME)/.done/bin"
-    ___x_cmd_nu_nurc_addpifh bun        $"($env.HOME)/.bun/bin"
-    ___x_cmd_nu_nurc_addpifh npm        $"($env.HOME)/.npm/bin"
-
+    ___x_cmd___rcnu_addpifd            $"($env.HOME)/.cargo/bin"
+    ___x_cmd___rcnu_addpifh go         $"($env.HOME)/go/bin"
+    ___x_cmd___rcnu_addpifh done       $"($env.HOME)/.done/bin"
+    ___x_cmd___rcnu_addpifh bun        $"($env.HOME)/.bun/bin"
+    ___x_cmd___rcnu_addpifh npm        $"($env.HOME)/.npm/bin"
+    ___x_cmd___rcnu_addpython
 
     $env.___X_CMD_CO_NOEVAL = 1
     $env.___X_CMD_IS_INTERACTIVE_FORCE = 1

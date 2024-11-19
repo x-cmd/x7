@@ -1,55 +1,3 @@
-function ___x_cmd___rcfish_addp
-    if ! contains -- "$argv[1]" "$PATH"
-        set -g PATH "$argv[1]" "$PATH"
-    end
-end
-
-function ___x_cmd___rcfish_addpifh
-    if command -v "$argv[1]" >/dev/null 2>&1
-        ___x_cmd___rcfish_addp "$argv[2]"
-    end
-end
-
-function ___x_cmd___rcfish_addpifd
-    if [ -d "$argv[1]" ]
-        ___x_cmd___rcfish_addp "$argv[1]"
-    end
-end
-
-function ___x_cmd___rcfish_addpython___pkg
-    set -l fp ( bash "$HOME/.x-cmd.root/bin/xbin" pkg sphere populate get_link_source_dir "$argv[1]" )
-
-    if [ -d "$fp" ]
-        if [ "$argv[2]" = -1 ]
-            set -g PATH     "$PATH" "$fp"
-        else
-            ___x_cmd___rcfish_addp  "$fp"
-        end
-    end
-end
-
-function ___x_cmd___rcfish_addpython
-    ___x_cmd___rcfish_addpifh   python   "$HOME/.local/bin"
-    ___x_cmd___rcfish_addpython___pkg   python      0
-    ___x_cmd___rcfish_addpython___pkg   miniconda   0
-    ___x_cmd___rcfish_addpython___pkg   pypy        -1
-end
-
-
-if [ -f "$HOME/.x-cmd.root/boot/pixi" ]
-    set -g PATH "$PATH"             "$HOME/.pixi/bin"
-end
-
-___x_cmd___rcfish_addp              "$HOME/.x-cmd.root/bin"
-___x_cmd___rcfish_addp              "$HOME/.x-cmd.root/local/data/pkg/sphere/X/l/j/h/bin"
-
-___x_cmd___rcfish_addpifd           "$HOME/.cargo/bin"
-___x_cmd___rcfish_addpifh  go       "$HOME/go/bin"
-___x_cmd___rcfish_addpifh  deno     "$HOME/.deno/bin"
-___x_cmd___rcfish_addpifh  bun      "$HOME/.bun/bin"
-___x_cmd___rcfish_addpifh  npm      "$HOME/.npm/bin"
-___x_cmd___rcfish_addpython
-
 
 set -g ___X_CMD_CD_RELM_0 $PWD
 
@@ -139,12 +87,81 @@ if status is-interactive
         alias "，，"="___x_cmd fish --syscoco"
     end
 
-    [ -f "$HOME/.x-cmd.root/boot/alias/chat.disable"    ]  ||  eval ("$HOME/.x-cmd.root/bin/xbin" chat --aliasinit --code)
-    [ -f "$HOME/.x-cmd.root/boot/alias/writer.disable"  ]  ||  eval ("$HOME/.x-cmd.root/bin/xbin" writer --aliasinit --fishcode)
+    [ -f "$HOME/.x-cmd.root/boot/alias/chat.disable"    ]  ||  begin
+        if [ ! -f "$HOME/.x-cmd.root/local/cache/chat/bootcode.fish" ]
+            mkdir -p "$HOME/.x-cmd.root/local/cache/chat"
+            ___x_cmd chat --aliasinit --code > "$HOME/.x-cmd.root/local/cache/chat/bootcode.fish"
+        end
+        source "$HOME/.x-cmd.root/local/cache/chat/bootcode.fish"
+    end
 
+    [ -f "$HOME/.x-cmd.root/boot/alias/writer.disable"  ]  ||  begin
+        if [ ! -f "$HOME/.x-cmd.root/local/cache/writer/bootcode.fish" ]
+            mkdir -p "$HOME/.x-cmd.root/local/cache/writer"
+            ___x_cmd writer --aliasinit --fishcode > "$HOME/.x-cmd.root/local/cache/writer/bootcode.fish"
+        end
+        source "$HOME/.x-cmd.root/local/cache/writer/bootcode.fish"
+    end
 
-    # advise
     if [ "$___X_CMD_ADVISE_ACTIVATION_ON_NON_POSIX_SHELL" = '1' ]
-        ___x_cmd advise complete fish code | source
+        if [ ! -f "$HOME/.x-cmd.root/local/cache/advise/bootcode/v0.0.0.fish" ]
+            mkdir -p "$HOME/.x-cmd.root/local/cache/advise/bootcode"
+            ___x_cmd advise complete fish code > "$HOME/.x-cmd.root/local/cache/advise/bootcode/v0.0.0.fish"
+        end
+        source "$HOME/.x-cmd.root/local/cache/advise/bootcode/v0.0.0.fish"
     end
 end
+
+function ___x_cmd___rcfish_addp_prepend
+    if ! contains -- "$argv[1]" $PATH
+        set -g PATH "$argv[1]" "$PATH"
+    end
+end
+
+function ___x_cmd___rcfish_addp_append
+    if ! contains -- "$argv[1]" $PATH
+        set -g PATH "$PATH" "$argv[1]"
+    end
+end
+
+function ___x_cmd___rcfish_addpifh
+    if command -v "$argv[1]" >/dev/null 2>&1
+        ___x_cmd___rcfish_addp_prepend "$argv[2]"
+    end
+end
+
+function ___x_cmd___rcfish_addpifd
+    if [ -d "$argv[1]" ]
+        ___x_cmd___rcfish_addp_prepend "$argv[1]"
+    end
+end
+
+function ___x_cmd___rcfish_addpython
+    ___x_cmd___rcfish_addpifh python "$HOME/.local/bin"
+
+    set singleton_fp "$HOME/.x-cmd.root/local/data/pkg/sphere/X/.x-cmd/singleton/python"
+    if [ -f "$singleton_fp" ]
+        set tgtdir "$HOME/.x-cmd.root/local/data/pkg/sphere/X/"(cat $singleton_fp)
+        if [ "$OS" = "Windows_NT" ]
+            set binpath "$tgtdir/Scripts"
+        else
+            set binpath "$tgtdir/bin"
+        end
+        ___x_cmd___rcfish_addpifd "$binpath"
+    end
+end
+
+
+if [ -f "$HOME/.x-cmd.root/boot/pixi" ]
+    ___x_cmd___rcfish_addp_append   "$HOME/.pixi/bin"
+end
+
+___x_cmd___rcfish_addp_prepend      "$HOME/.x-cmd.root/bin"
+___x_cmd___rcfish_addp_prepend      "$HOME/.x-cmd.root/local/data/pkg/sphere/X/l/j/h/bin"
+
+___x_cmd___rcfish_addpifd           "$HOME/.cargo/bin"
+___x_cmd___rcfish_addpifh  go       "$HOME/go/bin"
+___x_cmd___rcfish_addpifh  deno     "$HOME/.deno/bin"
+___x_cmd___rcfish_addpifh  bun      "$HOME/.bun/bin"
+___x_cmd___rcfish_addpifh  npm      "$HOME/.npm/bin"
+___x_cmd___rcfish_addpython

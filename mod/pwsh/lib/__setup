@@ -36,9 +36,12 @@ ___x_cmd_pwsh___setup_is_required(){
 }
 
 ___x_cmd_pwsh___setup_rcshortcut_file(){
-    local dir="$___X_CMD_ROOT_DATA/pwsh/alias"
-    [ -d "$dir" ] || ___x_cmd mkdirp "$dir"
+    local fp
+    fp="$___X_CMD_ROOT_CACHE/chat/bootcode.ps1"
+    ___x_cmd ensurefp "$fp"
+    ___x_cmd chat --aliasinit --pwshcode > "$fp"
 
-    ___x_cmd chat --aliasinit --pwshcode > "$dir/chat.ps1"
-    ___x_cmd writer --aliasinit --pwshcode > "$dir/writer.ps1"
+    fp="$___X_CMD_ROOT_CACHE/writer/bootcode.ps1"
+    ___x_cmd ensurefp "$fp"
+    ___x_cmd writer --aliasinit --pwshcode > "$fp"
 }

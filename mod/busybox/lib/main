@@ -4,6 +4,7 @@ ___x_cmd log init busybox
 xrc:mod:lib     busybox     util
 
 ___x_cmd_busybox___main(){
+    [ "$#" -gt 0 ]  || set -- --help
     local op="$1"; shift
     case "$op" in
         isimpl)     ___x_cmd_busybox_isimpl         "$@" ;;
@@ -39,7 +40,7 @@ ___x_cmd_busybox___exec(){
     else
         local x_; ___x_cmd_busybox___which_ || return 1
         local busyboxpath="$x_"
-        [ -f "$busyboxpath" ] || N="busybox" M="not found [binary=$binary]" log:ret:1
+        [ -f "$busyboxpath" ] || N="busybox" M="not found [file=$busyboxpath]" log:ret:1
         "$busyboxpath" "$@"
     fi
 }

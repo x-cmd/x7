@@ -17,6 +17,24 @@ def ___x_cmd___rcxonsh_addpifd(arg_path):
     if os.path.isdir(arg_path):
         ___x_cmd___rcxonsh_addp(arg_path)
 
+def ___x_cmd___rxonsh_addpython():
+    ___x_cmd___rcxonsh_addpifh("python", "$HOME/.local/bin")
+
+    xcmd_sphere = os.path.expanduser("$HOME/.x-cmd.root/local/data/pkg/sphere/X")
+    singleton_file= xcmd_sphere + '/.x-cmd/singleton/python'
+
+    if os.path.exists(singleton_file):
+        with open(singleton_file, 'r') as f:
+            content = f.read().strip()
+        if os.name == 'nt':
+            binpath= xcmd_sphere + '/' + content + '/Scripts'
+        else:
+            binpath= xcmd_sphere + '/' + content + '/bin'
+
+        if binpath in __xonsh__.env['PATH']:
+            __xonsh__.env['PATH'].remove(binpath)
+        __xonsh__.env['PATH'].insert(0, binpath)
+
 
 if os.path.isfile("$HOME/.x-cmd.root/ctrl/pixi"):
     __xonsh__.env['PATH'].insert(-1, "$HOME/.pixi/bin")
@@ -26,31 +44,10 @@ ___x_cmd___rcxonsh_addp("$HOME/.x-cmd.root/local/data/pkg/sphere/X/l/j/h/bin")
 
 ___x_cmd___rcxonsh_addpifd("$HOME/.cargo/bin")
 ___x_cmd___rcxonsh_addpifh("go","$HOME/go/bin")
-
-
 ___x_cmd___rcxonsh_addpifh("deno","$HOME/.deno/bin")
 ___x_cmd___rcxonsh_addpifh("bun","$HOME/.bun/bin")
 ___x_cmd___rcxonsh_addpifh("npm","$HOME/.npm/bin")
-
-
-
-def ___x_cmd___rxonsh_addpython___pkg(i, package_name):
-    command = f'xbin pkg sphere populate get_link_source_dir {package_name}'
-    with os.popen(command) as process:
-        result = process.read()
-    if result:
-        binpath = result.strip() + '/bin'
-        __xonsh__.env['PATH'].insert(i, binpath)
-
-def ___x_cmd___rxonsh_addpython():
-    ___x_cmd___rcxonsh_addpifh("python", "$HOME/.local/bin")
-
-    ___x_cmd___rxonsh_addpython___pkg(0, "python")
-    ___x_cmd___rxonsh_addpython___pkg(0, "miniconda")
-    ___x_cmd___rxonsh_addpython___pkg(-1, "pypy")
-
 ___x_cmd___rxonsh_addpython()
-
 
 
 # xonsh defaults all variables exported
@@ -190,13 +187,19 @@ if __xonsh__.env.get('___X_CMD_ADVISE_ACTIVATION_ON_NON_POSIX_SHELL') == '1':
         from json import loads
         from xonsh.completers.tools import sub_proc_get_output, RichCompletion
 
-        output, _ = sub_proc_get_output(
-            'bash', "x", 'advise', 'complete', 'onsh', *[a.value for a in context.args], context.prefix.translate(str.maketrans('', '', '\'"'))
-        )
+        advise_bootcode = "$HOME/.x-cmd.root/local/cache/advise/bootcode/v0.0.0.onsh"
+        if not os.path.exists(advise_bootcode):
+            output, _ = sub_proc_get_output(
+                'bash', "x", 'advise', 'complete', 'onsh', *[a.value for a in context.args], context.prefix.translate(str.maketrans('', '', '\'"'))
+            )
+            if not output:
+                return
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            with open(file_path, 'w') as f:
+                f.write(output)
 
-        if not output:
-            return
-
+        with open(singleton_file, 'r') as f:
+            output = f.read().strip()
         for c in loads(output):
             yield RichCompletion(
                 c["Value"],

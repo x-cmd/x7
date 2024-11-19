@@ -149,24 +149,43 @@ function ___x_cmd___rcpwsh_path_linux_to_win(){
     return $ps_fp
 }
 
-function ___x_cmd___rcpwsh_addp(){
-    $env:Path += ";" + $args[0]
+function ___x_cmd___rcpwsh_addp_prepend(){
+    $env:Path = $args[0] + ";$env:Path"
+}
+
+function ___x_cmd___rcpwsh_addp_append(){
+    $env:Path = "$env:Path;" + $args[0]
 }
 
 function ___x_cmd___rcpwsh_addpifd(){
     if (Test-Path $args[0] -PathType Container){
-        ___x_cmd___rcpwsh_addp $args[0]
+        ___x_cmd___rcpwsh_addp_prepend $args[1]
     }
 }
 
 function ___x_cmd___rcpwsh_addpifh(){
     if (Get-Command $args[0] -ErrorAction SilentlyContinue){
-        ___x_cmd___rcpwsh_addp $args[0]
+        ___x_cmd___rcpwsh_addp_prepend $args[1]
     }
 }
 
-___x_cmd___rcpwsh_addp              "$HOME\.x-cmd.root\bin"
-___x_cmd___rcpwsh_addp              "$HOME\.x-cmd.root\local\data\pkg\sphere\X\l\j\h\bin"
+function ___x_cmd___rcpwsh_addpython___pkg(){
+    $fp = "$( msysbash -command "$HOME\.x-cmd.root\bin\xbinexp" pkg sphere populate get_link_source_dir $args[0] )"
+    if (Test-Path $fp -PathType Container){
+        if ($args[1] -eq "-1"){
+            ___x_cmd___rcpwsh_addp_append $fp
+        } else {
+            ___x_cmd___rcpwsh_addp_prepend $fp
+        }
+    }
+}
+
+if (Test-Path "$HOME\.x-cmd.root\boot\pixi" -PathType Leaf){
+    ___x_cmd___rcpwsh_addp_append   "$HOME\.pixi\bin"
+}
+
+___x_cmd___rcpwsh_addp_prepend      "$HOME\.x-cmd.root\bin"
+___x_cmd___rcpwsh_addp_prepend      "$HOME\.x-cmd.root\local\data\pkg\sphere\X\l\j\h\bin"
 
 ___x_cmd___rcpwsh_addpifd           "$HOME\.cargo\bin"
 ___x_cmd___rcpwsh_addpifh  go       "$HOME\go\bin"
@@ -282,20 +301,20 @@ if (-not (Test-Path "$HOME\.x-cmd.root\boot\alias\coco.disable" -PathType Leaf))
 }
 if (-not (Test-Path "$HOME\.x-cmd.root\boot\alias\chat.disable" -PathType Leaf)) {
     try {
-        if (-not (Test-Path "$HOME\.x-cmd.root\local\data\pwsh\alias\chat.ps1" -PathType Leaf)) {
+        if (-not (Test-Path "$HOME\.x-cmd.root\local\cache\chat\bootcode.ps1" -PathType Leaf)) {
             ___x_cmd pwsh --setup-rcshortcut-file
         }
-        . "$HOME\.x-cmd.root\local\data\pwsh\alias\chat.ps1"
+        . "$HOME\.x-cmd.root\local\cache\chat\bootcode.ps1"
     } catch {
         Write-Host "- E|x: Failed to load command functions related to the chat module alias init"
     }
 }
 if (-not (Test-Path "$HOME\.x-cmd.root\boot\alias\writer.disable" -PathType Leaf)) {
     try {
-        if (-not (Test-Path "$HOME\.x-cmd.root\local\data\pwsh\alias\writer.ps1" -PathType Leaf)) {
+        if (-not (Test-Path "$HOME\.x-cmd.root\local\cache\writer\bootcode.ps1" -PathType Leaf)) {
             ___x_cmd pwsh --setup-rcshortcut-file
         }
-        . "$HOME\.x-cmd.root\local\data\pwsh\alias\writer.ps1"
+        . "$HOME\.x-cmd.root\local\cache\writer\bootcode.ps1"
     } catch {
         Write-Host "- E|x: Failed to load command functions related to the writer module alias init"
     }

@@ -6,7 +6,7 @@ ___x_cmd_pkg_sphere_populate(){
     local op="$1";
     case "$op" in
         done|run)   shift; ___x_cmd_pkg_sphere_populate_"$op" "$@" ;;
-        get_exist_dir_|get_exist_dir|get_link_source_dir_|get_link_source_dir)
+        get_exist_dir_|get_exist_dir|get_link_source_dir_|get_link_source_dir|list_link_source_dir)
                     shift; ___x_cmd_pkg_sphere_populate___"$op" "$@" ;;
         *)          N=pkg M="sphere gc not such option '$op'" log:ret:64
     esac
@@ -200,4 +200,15 @@ ___x_cmd_pkg_sphere_populate___get_link_source_dir(){
     local x_=""
     ___x_cmd_pkg_sphere_populate___get_link_source_dir_ "$@" || return
     printf "%s\n" "$x_"
+}
+
+___x_cmd_pkg_sphere_populate___list_link_source_dir(){
+    pkg:sphere:parse:option
+    sphere_name="${sphere_name:-X}"
+    local name=; local x_=
+    while [ "$#" -gt 0 ]; do
+        name="$1"; shift
+        x_=; ___x_cmd_pkg_sphere_populate___get_link_source_dir_ "$name" || continue
+        printf "%s,%s\n" "$name" "$x_"
+    done
 }
