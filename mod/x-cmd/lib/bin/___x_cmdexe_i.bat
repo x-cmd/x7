@@ -23,4 +23,4 @@ if NOT EXIST "%USERPROFILE%\.x-cmd.root\bin\___x_cmdexe" (
     exit 1
 )
 
-"%gitbash%" -i "%USERPROFILE%\.x-cmd.root\bin\___x_cmdexe" %*
+"%gitbash%" -i "%USERPROFILE%\.x-cmd.root\bin\___x_cmdexe" %* && exit 0 || exit 1
