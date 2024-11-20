@@ -805,20 +805,6 @@ true
 {
 "cmd"
 :
-"x webtop init"
-,
-"cn"
-:
-"使用交互式 UI 初始化配置"
-,
-"en"
-:
-"Initializing configuration using an interactive UI"
-}
-,
-{
-"cmd"
-:
 "x webtop run ubuntu-kde"
 ,
 "cn"
@@ -851,17 +837,17 @@ true
 ,
 "cn"
 :
-"使用别名调用 webtop 模块"
+"使用别名调用 webtop 模块的 ps 子命令"
 ,
 "en"
 :
-"Calling the webtop module using an alias"
+"Calling ps subcommand in the webtop module using an alias"
 }
 ,
 {
 "cmd"
 :
-"xwt o x-webtop-40000"
+"x webtop open x-webtop-40000"
 ,
 "cn"
 :
@@ -875,7 +861,7 @@ true
 {
 "cmd"
 :
-"xwt bash x-webtop-40000"
+"x webtop bash x-webtop-40000"
 ,
 "cn"
 :
@@ -889,7 +875,7 @@ true
 {
 "cmd"
 :
-"xwt stop x-webtop-40000"
+"x webtop stop x-webtop-40000"
 ,
 "cn"
 :
@@ -903,7 +889,7 @@ true
 {
 "cmd"
 :
-"xwt home rm x-webtop-40000"
+"x webtop home rm x-webtop-40000"
 ,
 "cn"
 :
@@ -917,7 +903,7 @@ true
 {
 "cmd"
 :
-"xwt c rmfa"
+"x webtop container rmfa"
 ,
 "en"
 :
@@ -926,6 +912,20 @@ true
 "cn"
 :
 "强制删除所有 webtop 容器"
+}
+,
+{
+"cmd"
+:
+"x webtop init"
+,
+"cn"
+:
+"使用交互式 UI 设置默认配置"
+,
+"en"
+:
+"Default configuration using an interactive UI"
 }
 ]
 ,

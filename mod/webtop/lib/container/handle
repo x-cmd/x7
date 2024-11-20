@@ -55,6 +55,7 @@ ___x_cmd_webtop_container_handle_inside(){
             set --  "$@"    "x webtop rm           --id $container_id"
             ;;
         running)
+            set --          "x webtop bash              $container_name"    "$@"
             set --          "x webtop open              $container_name"    "$@"
             set --  "$@"    "x webtop pause        --id $container_id"
             set --  "$@"    "x webtop stop         --id $container_id"

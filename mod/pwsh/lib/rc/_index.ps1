@@ -54,13 +54,13 @@ function ___x_cmd____rcpwsh_get_msysbash(){
         }
 
         if (-not $msysbash_found) {
-            $xbatfile = "$HOME\x.bat"
+            $xbatfile = "$HOME\x-cmd.bat"
             if (-not (Test-Path $xbatfile -PathType Leaf)) {
-                $xbaturl = "https://get.x-cmd.com/x.bat"
-                Write-Host "- I|x: Download the x-cmd x.bat script file from '$xbaturl' to '$xbatfile'"
+                $xbaturl = "https://get.x-cmd.com/x-cmd.bat"
+                Write-Host "- I|x: Download the x-cmd.bat script file from '$xbaturl' to '$xbatfile'"
                 Invoke-WebRequest -Uri "$xbaturl" -OutFile "$xbatfile"
             }
-            & $xbatfile *>&1 | ForEach-Object { Write-Host $_ }
+            & $xbatfile "$HOME\.x-cmd.root\bin\x" pwsh --setup *>&1 | ForEach-Object { Write-Host $_ }
 
             $msysbash_path = ""
             if (Test-Path $xcmdbash_path -PathType Leaf) {
@@ -169,14 +169,18 @@ function ___x_cmd___rcpwsh_addpifh(){
     }
 }
 
-function ___x_cmd___rcpwsh_addpython___pkg(){
-    $fp = "$( msysbash -command "$HOME\.x-cmd.root\bin\xbinexp" pkg sphere populate get_link_source_dir $args[0] )"
-    if (Test-Path $fp -PathType Container){
-        if ($args[1] -eq "-1"){
-            ___x_cmd___rcpwsh_addp_append $fp
+function ___x_cmd___rcpwsh_addpython(){
+    ___x_cmd___rcpwsh_addpifh  python   "$HOME\.local\bin"
+
+    $singleton_fp = "$HOME\.x-cmd.root\local\data\pkg\sphere\X\.x-cmd\singleton\python"
+    if (Test-Path $singleton_fp -PathType Leaf){
+        $tgtdir = "$HOME\.x-cmd.root\local\data\pkg\sphere\X\$((Get-Content -Path $singleton_fp))"
+        if ($env:OS -eq "Windows_NT") {
+            $binpath = "$tgtdir\Scripts"
         } else {
-            ___x_cmd___rcpwsh_addp_prepend $fp
+            $binpath = "$tgtdir\bin"
         }
+        ___x_cmd___rcpwsh_addpifd   $binpath
     }
 }
 
@@ -189,12 +193,10 @@ ___x_cmd___rcpwsh_addp_prepend      "$HOME\.x-cmd.root\local\data\pkg\sphere\X\l
 
 ___x_cmd___rcpwsh_addpifd           "$HOME\.cargo\bin"
 ___x_cmd___rcpwsh_addpifh  go       "$HOME\go\bin"
-
-___x_cmd___rcpwsh_addpifh  python   "$HOME\.local\bin"
-
 ___x_cmd___rcpwsh_addpifh  deno     "$HOME\.deno\bin"
 ___x_cmd___rcpwsh_addpifh  bun      "$HOME\.bun\bin"
 ___x_cmd___rcpwsh_addpifh  npm      "$HOME\.npm\bin"
+___x_cmd___rcpwsh_addpython
 
 
 $env:___X_CMD_CD_RELM_0 = ___x_cmd___rcpwsh_path_win_to_linux $(Get-Location).Path
@@ -212,7 +214,7 @@ function ___x_cmd(){
     }
 
     $Global:___X_CMD_XBINEXP_EVAL = ""
-    msysbash -command "$HOME\.x-cmd.root\bin\xbinexp" $args
+    msysbash -command "$HOME\.x-cmd.root\bin\___x_cmdexe_exp" $args
 
 
     if (Test-Path $env:___X_CMD_XBINEXP_FP -PathType Container) {
@@ -252,6 +254,9 @@ function c(){
         if ($env:OLDPWD){
             Set-Location $env:OLDPWD
         }
+        return
+    } elseif (-not [string]::IsNullOrWhiteSpace($Path) -and (Test-Path $args[0] -PathType Container)){
+        Set-Location $args[0]
         return
     }
 

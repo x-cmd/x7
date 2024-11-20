@@ -20,21 +20,35 @@ foreach prog ( go deno bun npm python )
             case go:
                 if ( "$PATH" !~ *$HOME/go/bin* )        setenv PATH $HOME/go/bin:"$PATH"
                 breaksw
-           case deno:
+            case deno:
                 if ( "$PATH" !~ *$HOME/.deno/bin* )     setenv PATH $HOME/.deno/bin:"$PATH"
                 breaksw
-           case bun:
+            case bun:
                 if ( "$PATH" !~ *$HOME/.bun/bin* )      setenv PATH $HOME/.bun/bin:"$PATH"
                 breaksw
-           case npm:
+            case npm:
                 if ( "$PATH" !~ *$HOME/.npm/bin* )      setenv PATH $HOME/.npm/bin:"$PATH"
                 breaksw
-           case python:
+            case python:
                 if ( "$PATH" !~ *$HOME/.local/bin* )    setenv PATH $HOME/.local/bin:"$PATH"
                 breaksw
         endsw
     endif
 end
+
+set ___X_CMD_TCSH_RC_python_singleton_fp = "$HOME/.x-cmd.root/local/data/pkg/sphere/X/.x-cmd/singleton/python"
+if ( -f "$___X_CMD_TCSH_RC_python_singleton_fp" ) then
+    set ___X_CMD_TCSH_RC_python_tgtdir = "$HOME/.x-cmd.root/local/data/pkg/sphere/X/`cat $___X_CMD_TCSH_RC_python_singleton_fp`"
+    set ___X_CMD_TCSH_RC_os = `uname`
+    if ( $___X_CMD_TCSH_RC_os =~ *MINGW* || $___X_CMD_TCSH_RC_os =~ *CYGWIN* || $___X_CMD_TCSH_RC_os =~ *MSYS* ) then
+        set ___X_CMD_TCSH_RC_python_binpath = "$___X_CMD_TCSH_RC_python_tgtdir/Scripts"
+    else
+        set ___X_CMD_TCSH_RC_python_binpath = "$___X_CMD_TCSH_RC_python_tgtdir/bin"
+    endif
+    if ( -d "$___X_CMD_TCSH_RC_python_binpath" ) then
+        if ( "$PATH" !~ *$___X_CMD_TCSH_RC_python_binpath* )  setenv PATH "$___X_CMD_TCSH_RC_python_binpath":"$PATH"
+    endif
+endif
 
 setenv  ___X_CMD_CD_RELM_0      "$PWD"
 

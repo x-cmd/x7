@@ -1,5 +1,3 @@
-var ___X_CMD_ELV_RC_XBINEXP = $E:HOME/.x-cmd.root/bin/xbinexp
-var ___X_CMD_ELV_RC_XBIN    = $E:HOME/.x-cmd.root/bin/xbin
 
 use re
 use os
@@ -28,7 +26,11 @@ fn x {  |@a|
     unset-env ___X_CMD_XBINEXP_EVAL
 
     try {
-        bash $___X_CMD_ELV_RC_XBINEXP    $@a
+        if (not-eq $platform:os "windows") {
+            bash $E:HOME/.x-cmd.root/bin/___x_cmdexe_exp $@a
+        } else {
+            $E:HOME/.x-cmd.root/bin/___x_cmdexe_exp.bat $@a
+        }
     } finally {
         if ( not (os:is-dir $E:___X_CMD_XBINEXP_FP) ) { return }
 

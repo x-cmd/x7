@@ -70,7 +70,16 @@ ___x_cmd_webtop_container_bash(){
         esac
     done
 
-    [ -n "$x_" ] || ___x_cmd_webtop_container_id_ "$1" || N=webtop M="Not found any container" log:ret:1
+    [ -n "$x_" ] || {
+        if [ -n "$1" ]; then
+            ___x_cmd_webtop_container_id_ "$1" || N=webtop M="Not found any container" log:ret:1
+        else
+            # TODO: consider using default container ?
+            webtop:error "Abort because no container id or keyword is provided."
+            # ___x_cmd_webtop ps
+            return 1
+        fi
+    }
 
     ___x_cmd docker exec -it "$x_" bash
 }

@@ -17,7 +17,7 @@ ___x_cmd_ip___main(){
 }
 
 ___x_cmd_ip_echo(){
-    printf "%s\n" "$(___x_cmd curl -s ifconfig.me)"
+    printf "%s\n" "$(___x_cmd curl -s https://ipecho.net/plain)"
 }
 
 ___x_cmd_ip_geolite(){

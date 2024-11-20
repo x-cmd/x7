@@ -2,7 +2,7 @@
 
 export def --env ___x_cmd___rcnu_addp_prepend [ element ] {
     if not ( $element in $env.PATH ) {
-        $env.PATH = ( $env.PATH | split row (char esep) | prepend $element )
+        $env.PATH = ( $element | append $env.PATH | str join (char esep) )
     }
 }
 
@@ -14,7 +14,7 @@ export def --env ___x_cmd___rcnu_addp_append [ element ] {
 }
 
 export def --env ___x_cmd___rcnu_addpifd [ element ] {
-    if not ( $element | path exists ) {
+    if ( $element | path exists ) {
         ___x_cmd___rcnu_addp_prepend $element
     }
 }
@@ -25,23 +25,19 @@ export def --env ___x_cmd___rcnu_addpifh [ cmd, element ] {
     }
 }
 
-
-export def --env ___x_cmd___rcnu_addpython___pkg [ packge_name, num ] {
-    let fp = ( bash $"($env.HOME)/.x-cmd.root/bin/xbin" pkg sphere populate get_link_source_dir $packge_name )
-    if ( $fp | path exists ) {
-        if ( $num == "-1" ) {
-            ___x_cmd___rcnu_addp_append $fp
-        } else {
-            ___x_cmd___rcnu_addp_prepend $fp
-        }
-    }
-}
-
 export def --env ___x_cmd___rcnu_addpython [ ...args ] {
     ___x_cmd___rcnu_addpifh python     $"($env.HOME)/.local/bin"
-    ___x_cmd___rcnu_addpython___pkg   python      "0"
-    ___x_cmd___rcnu_addpython___pkg   miniconda   "0"
-    ___x_cmd___rcnu_addpython___pkg   pypy        "-1"
+    let singleton_fp = $"($env.HOME)/.x-cmd.root/local/data/pkg/sphere/X/.x-cmd/singleton/python"
+    if ( $singleton_fp | path exists ) {
+        let tgtdir = $"($env.HOME)/.x-cmd.root/local/data/pkg/sphere/X/(cat $singleton_fp)"
+        if ( $nu.os-info.name == "windows" ) {
+            let binpath = ( $tgtdir | path join Scripts)
+            ___x_cmd___rcnu_addpifd $binpath
+            } else {
+            let binpath = ( $tgtdir | path join bin)
+            ___x_cmd___rcnu_addpifd $binpath
+        }
+    }
 }
 
 
@@ -98,6 +94,20 @@ export def --env --wrapped ___x_cmd_nu_rc_xbinexp [ ...args ] {
         }
     }
 
+    let data = ls $env.___X_CMD_XBINEXP_FP | each { |i|
+        if ( $nu.os-info.name == "windows" ) {
+            {
+                key: ( $i.name | str replace --regex "^.+\\\\" "" | str replace --regex "^.*?_" ""),
+                value: ( ( open $i.name --raw | path split | get 0 ) + :\ + ( open $i.name --raw | path split | skip 1 | path join ) )
+            }
+        } else {
+            {
+                key:($i.name | str replace --regex "^.+/" "" | str replace --regex "^.*?_" ""),
+                value: ( open $i.name --raw )
+            }
+        }
+    }
+
     # TODO: load-env on ...
     for $i in $data {
         if ( $i.key == "PWD" ) {
@@ -128,11 +138,19 @@ export def --env --wrapped ___x_cmd_nu_rc_xbinexp [ ...args ] {
 # export alias x          = bash $"($env.HOME)/.x-cmd.root/bin/xbinexp"
 
 export def --env --wrapped ___x_cmd [ ...args ] {
-    bash $"($env.HOME)/.x-cmd.root/bin/xbinexp" ...$args
+    if ( $nu.os-info.name == "windows" ) {
+        ~/.x-cmd.root/bin/___x_cmdexe_exp.bat ...$args
+    } else {
+        bash $"($env.HOME)/.x-cmd.root/bin/xbinexp" ...$args
+    }
 }
 
 export def --env --wrapped x [ ...args ] {
-    bash $"($env.HOME)/.x-cmd.root/bin/xbinexp" ...$args
+    if ( $nu.os-info.name == "windows" ) {
+        ~/.x-cmd.root/bin/___x_cmdexe_exp.bat ...$args
+    } else {
+        bash $"($env.HOME)/.x-cmd.root/bin/xbinexp" ...$args
+    }
 }
 
 export def --env --wrapped c [ ...args ] {
@@ -158,6 +176,7 @@ export alias xw         = ___x_cmd ws
 export alias xd         = ___x_cmd docker
 export alias xg         = ___x_cmd git
 export alias xp         = ___x_cmd pwsh
+export alias xwt        = ___x_cmd webtop
 
 
 export alias ","        = ___x_cmd nu "--sysco"

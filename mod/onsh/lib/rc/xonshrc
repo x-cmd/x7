@@ -20,7 +20,7 @@ def ___x_cmd___rcxonsh_addpifd(arg_path):
 def ___x_cmd___rxonsh_addpython():
     ___x_cmd___rcxonsh_addpifh("python", "$HOME/.local/bin")
 
-    xcmd_sphere = os.path.expanduser("$HOME/.x-cmd.root/local/data/pkg/sphere/X")
+    xcmd_sphere = os.path.expanduser("~/.x-cmd.root/local/data/pkg/sphere/X")
     singleton_file= xcmd_sphere + '/.x-cmd/singleton/python'
 
     if os.path.exists(singleton_file):
@@ -56,7 +56,10 @@ $___X_CMD_THEME_RELOAD_DISABLE = 1
 
 $___X_CMD_CD_RELM_0 = $PWD
 
-xbinexp = "$HOME/.x-cmd.root/bin/xbinexp"
+___x_cmd_xonsh___bin_suffix = ''
+if os.name == 'nt':
+    ___x_cmd_xonsh___bin_suffix = '.bat'
+xbinexp = f"$HOME/.x-cmd.root/bin/___x_cmdexe_exp{___x_cmd_xonsh___bin_suffix}"
 
 def ___x_cmd_xonsh_x(args):
     $___X_CMD_XBINEXP_FP = $HOME + "/.x-cmd.root/local/data/xbinexp/onsh/"  + str(os.getpid()) + "_" + str(random.randint(0,32767))
@@ -78,6 +81,10 @@ def ___x_cmd_xonsh_x(args):
         value = open(posixfp).read()
         name = re.sub(r"^[^_]*_", "", posixfp.name)
         if name == "PWD":
+            if os.name == 'nt':
+                win_path = re.sub(r'^/([a-zA-Z])/', r'\1:\\', value).replace('/', '\\')
+                if win_path:
+                    value = win_path
             cd @(value)
         else:
             ${...}[name] = value
@@ -95,8 +102,8 @@ def ___x_cmd_xonsh_x(args):
 
 aliases['xbin'] = ___x_cmd_xonsh_x
 
-aliases['___x_cmd'] = "$HOME/.x-cmd.root/bin/xbinexp"
-aliases['x'] = "$HOME/.x-cmd.root/bin/xbinexp" # ___x_cmd_xonsh_x
+aliases['___x_cmd'] = f"$HOME/.x-cmd.root/bin/___x_cmdexe_exp{___x_cmd_xonsh___bin_suffix}"
+aliases['x'] = f"$HOME/.x-cmd.root/bin/___x_cmdexe_exp{___x_cmd_xonsh___bin_suffix}"        # ___x_cmd_xonsh_x
 
 def ___x_cmd_xonsh_c(args):
     len_of_args = len(args)

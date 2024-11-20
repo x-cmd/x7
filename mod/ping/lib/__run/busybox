@@ -17,7 +17,7 @@ ___x_cmd_ping___run___busybox_raw(){
             LC_ALL=C ___x_cmd_cmds ping -n -O "$@" -W "${wait}" "$host"
         fi
     else
-        ___x_cmd ui yesno "ping command not found, use the busybox's ping command?" || return
+        ping:info "ping command not found, use the busybox's ping command"
         ___x_cmd_ping___run___busybox_raw_warn
         LC_ALL=C ___x_cmd busybox ping "$@" -W "${wait}" "$host"
     fi
