@@ -20,11 +20,11 @@ null
 {
 "cn"
 :
-"Mosh 是交互式 SSH 的替代品，支持漫游、间歇性连接、智能回显和行编辑等功能。\n本模块优先使用本地 mosh 命令，若无，将通过 pixi 下载并运行，无需安装，不影响环境和系统依赖（windowns 暂不支持）。\n关于 pixi，请访问 https://prefix.dev/ 或者 'x pixi --help'。\n"
+"Mosh (https://mosh.org/) 是交互式 SSH 的替代品，支持漫游、间歇性连接、智能回显和行编辑等功能。\n本模块优先使用本地 mosh 命令，若无，将通过 pixi 下载并运行，无需安装，不影响环境和系统依赖（windowns 暂不支持）。\n关于 pixi，请访问 https://prefix.dev/ 或者 'x pixi --help'。\n"
 ,
 "en"
 :
-"Mosh is an interactive SSH alternative that supports roaming, intermittent connections, intelligent local echo and line editing.\nThis module prioritizes using the local mosh command. If it's not available, it will download and run via pixi, requiring no installation and impacting neither your environment nor system dependencies (Windows is not yet supported).\nFor more information about pixi, please visit https://prefix.dev/ or run `pixi --help`.\n"
+"Mosh (https://mosh.org/) is an interactive SSH alternative that supports roaming, intermittent connections, intelligent local echo and line editing.\nThis module prioritizes using the local mosh command. If it's not available, it will download and run via pixi, requiring no installation and impacting neither your environment nor system dependencies (Windows is not yet supported).\nFor more information about pixi, please visit https://prefix.dev/ or run `pixi --help`.\n"
 }
 ,
 "#tldr"

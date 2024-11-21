@@ -1,9 +1,9 @@
 # shellcheck shell=dash
 
 ___x_cmd_tz_fz(){
-    ___x_cmd_tz_ls___tsv |      \
-        ___x_cmd fzf            \
-            --preview='___x_cmdexe tz --fzhandle {1} {2} {3}'  \
+    ___x_cmd_tz_ls___tsv_colored |      \
+        ___x_cmd fzf                    \
+            --ansi --preview='___x_cmdexe tz --fzhandle {1} {2} {3}'  \
             --reverse --height='80%' --preview-window="right:50%,wrap"
 }
 

@@ -20,12 +20,22 @@ null
 {
 "cn"
 :
-"ascii 模块是为处理 ASCII 相关任务（如查询 ASCII 码表、以 ASCII 艺术画显示字符或图片）而设计的模块\n除了 table 子命令采用 shell/awk 实现外，其余的命令都采用托管在 npm 上的模块，采用 deno 以最小权限方式按需下载运行。\n"
+"ascii 模块是为处理 ASCII 相关任务（如查询 ASCII 码表、以 ASCII 艺术画显示字符、图片和艺术烟花等）而设计的模块。\n除了 table 子命令采用 shell/awk 实现外，其余的命令都采用 pkg 或 npm 来按需下载运行，例如 cfont 和 map 采用托管在 npm 上的模块，并通过 deno 以最小权限方式按需下载运行。\n"
 ,
 "en"
 :
-"The ascii module is designed to handle tasks related to ASCII, such as looking up the ASCII code table, displaying characters or images as ASCII art\nExcept for the `table` subcommand, which is implemented using shell/awk, all other commands utilize modules hosted on npm. These modules are downloaded and executed on-demand using Deno with minimal required permissions.\n"
+"The ascii module is designed to handle tasks related to ASCII, such as looking up the ASCII code table, displaying characters, pictures, and artistic fireworks in ASCII artwork.\nExcept for the table subcommand implemented in shell/awk, the rest of the commands use pkg or npm to download and run on demand, for example, cfont and map use modules hosted on npm and download and run on demand with least privilege through deno.\n"
 }
+,
+"#subcmd:Table"
+:
+[
+"0x|0??|1??"
+,
+"^?"
+,
+"?"
+]
 ,
 "table"
 :
@@ -261,6 +271,10 @@ null
 :
 "Download and run firework-rs to simulate ASCII art fireworks (Press esc to exit the program)"
 }
+,
+"$ref"
+:
+"x-cmd-advise://firework/advise.t.jso"
 }
 ,
 "$ref"

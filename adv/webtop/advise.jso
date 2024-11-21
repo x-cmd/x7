@@ -20,11 +20,11 @@ null
 {
 "en"
 :
-"The webtop module is a wrapper built on Docker commands that provides advanced management features for the linuxserver/webtop image. It aims to simplify how users interact with and manage the linuxserver/webtop image.\nlinuxserver/webtop is a series of Docker images based on Linux systems that enable users to seamlessly access containerized desktop environments through a web browser.\nThese images are built and maintained by the linuxserver.io community and support the installation of common desktop applications (like VSCode, WPS, Google Chrome, etc.) using proot-apps. They're perfect for users who want to run a graphical desktop environment inside a Docker container.\n"
+"The webtop module is a wrapper built on Docker commands that provides advanced management features for the linuxserver/webtop image. It aims to simplify how users interact with and manage the linuxserver/webtop image.\nlinuxserver/webtop is a series of Linux-based Docker images built and maintained by the linuxserver.io community, enabling users to seamlessly access the container's desktop environment through a browser.\n"
 ,
 "cn"
 :
-"webtop 模块是基于 docker 命令为 linuxserver/webtop 镜像提供高级管理功能的封装模块，旨在简化用户使用和管理 linuxserver/webtop。\nlinuxserver/webtop 是一系列基于 linux 系统的 docker 镜像，能让用户通过浏览器流畅地使用容器的桌面环境。\n这些镜像由 linuxserver.io 社区构建和维护，支持使用 proot-apps 安装常用的桌面应用程序 (如 VSCode、WPS、谷歌浏览器等)，适合希望在 Docker 容器中使用图形桌面的用户。\n"
+"webtop 模块是基于 docker 命令为 linuxserver/webtop 镜像提供高级管理功能的封装模块，旨在简化用户使用和管理 linuxserver/webtop。\nlinuxserver/webtop 是一系列基于 linux 系统的 docker 镜像，由 linuxserver.io 社区构建和维护，能让用户通过浏览器流畅地使用容器的桌面环境。\n"
 }
 ,
 "#tip"
@@ -43,12 +43,62 @@ null
 {
 "cn"
 :
-"webtop 容器内的管理员用户名为 abc，使用 sudo 权限默认不需要输入密码\n容器桌面默认只允许来自 localhost 的用户访问，别的主机无法直接通过 `http://<IP>:<PORT>` 访问\n"
+"webtop 容器内的管理员用户名为 abc，使用 sudo 权限默认不需要输入密码\n容器桌面默认只允许来自 localhost 的用户访问，别的主机无法直接通过 `http://<IP>:<PORT>` 访问\nlinuxserver.io/webtop 参考文档：https://docs.linuxserver.io/images/docker-webtop/\n"
 ,
 "en"
 :
-"The administrator username inside the webtop container is \"abc,\" and by default, using sudo privileges does not require a password.\nBy default, the container desktop only allows access from users on the local host. Other machines cannot access it directly through `http://<IP>:<PORT>`.\n"
+"The administrator username inside the webtop container is \"abc,\" and by default, using sudo privileges does not require a password.\nBy default, the container desktop only allows access from users on the local host. Other machines cannot access it directly through `http://<IP>:<PORT>`\nlinuxServer.io/webtop documentation: https://docs.linuxserver.io/images/docker-webtop/\n"
 }
+]
+,
+"#subcmd:Config"
+:
+[
+"--init|init"
+,
+"--cfg|cfg"
+,
+"--cur|cur"
+]
+,
+"#subcmd:Image"
+:
+[
+"ls|la"
+,
+"image|img"
+]
+,
+"#subcmd:Container"
+:
+[
+"run"
+,
+"open|o"
+,
+"container|c"
+,
+"home"
+,
+"ps"
+,
+"id"
+,
+"start"
+,
+"restart"
+,
+"stop"
+,
+"pause"
+,
+"unpause"
+,
+"bash"
+,
+"rm"
+,
+"all"
 ]
 ,
 "--init|init"
@@ -324,7 +374,7 @@ true
 {
 "cmd"
 :
-"x webtop o"
+"x webtop open"
 ,
 "cn"
 :
@@ -338,7 +388,7 @@ true
 {
 "cmd"
 :
-"x webtop o x-webtop-40000"
+"x webtop open x-webtop-40000"
 ,
 "cn"
 :
@@ -352,7 +402,7 @@ true
 {
 "cmd"
 :
-"x webtop o github"
+"x webtop open github"
 ,
 "cn"
 :
@@ -366,7 +416,7 @@ true
 {
 "cmd"
 :
-"x webtop o default"
+"x webtop open default"
 ,
 "cn"
 :
@@ -712,7 +762,7 @@ true
 {
 "cmd"
 :
-"x webtop c run ubuntu-kde"
+"x webtop container run ubuntu-kde"
 ,
 "cn"
 :
@@ -726,7 +776,7 @@ true
 {
 "cmd"
 :
-"x webtop c ps"
+"x webtop container ps"
 ,
 "cn"
 :
@@ -740,7 +790,7 @@ true
 {
 "cmd"
 :
-"x webtop c run -p 40001 --cjk yes ubuntu"
+"x webtop container run -p 40001 --cjk yes ubuntu"
 ,
 "en"
 :
@@ -754,7 +804,7 @@ true
 {
 "cmd"
 :
-"x webtop c bash x-webtop-40000"
+"x webtop container bash x-webtop-40000"
 ,
 "cn"
 :
@@ -768,7 +818,7 @@ true
 {
 "cmd"
 :
-"x webtop c stop x-webtop-40000"
+"x webtop container stop x-webtop-40000"
 ,
 "cn"
 :
@@ -782,7 +832,7 @@ true
 {
 "cmd"
 :
-"x webtop c rmfa"
+"x webtop container rmfa"
 ,
 "en"
 :
@@ -819,6 +869,20 @@ true
 {
 "cmd"
 :
+"x webtop run alpine-xfce"
+,
+"cn"
+:
+"从 webtop 镜像中创建一个 alpine-xfce 桌面系统容器"
+,
+"en"
+:
+"Create an alpine-xfce desktop system container from a webtop image"
+}
+,
+{
+"cmd"
+:
 "x webtop ps"
 ,
 "cn"
@@ -833,29 +897,15 @@ true
 {
 "cmd"
 :
-"xwt ps"
+"x webtop open"
 ,
 "cn"
 :
-"使用别名调用 webtop 模块的 ps 子命令"
+"用浏览器打开 webtop 容器的桌面环境"
 ,
 "en"
 :
-"Calling ps subcommand in the webtop module using an alias"
-}
-,
-{
-"cmd"
-:
-"x webtop open x-webtop-40000"
-,
-"cn"
-:
-"用浏览器打开 x-webtop-40000 容器的桌面"
-,
-"en"
-:
-"Open the desktop of the x-webtop-40000 container using your browser"
+"Open the desktop environment of the webtop container in your browser"
 }
 ,
 {
@@ -921,11 +971,11 @@ true
 ,
 "cn"
 :
-"使用交互式 UI 设置默认配置"
+"初始化 webtop 模块默认配置"
 ,
 "en"
 :
-"Default configuration using an interactive UI"
+"Initialize the webtop module configuration."
 }
 ]
 ,
