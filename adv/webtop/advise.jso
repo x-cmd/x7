@@ -20,11 +20,11 @@ null
 {
 "en"
 :
-"The webtop module is a wrapper built on Docker commands that provides advanced management features for the linuxserver/webtop image. It aims to simplify how users interact with and manage the linuxserver/webtop image.\nlinuxserver/webtop is a series of Docker images based on Linux systems that enable users to seamlessly access containerized desktop environments through a web browser.\nThese images are built and maintained by the linuxserver.io community and support the installation of common desktop applications (like VSCode, Telegram, WPS, Google Chrome, etc.) using proot-apps. They're perfect for users who want to run a graphical desktop environment inside a Docker container.\n"
+"The webtop module is a wrapper built on Docker commands that provides advanced management features for the linuxserver/webtop image. It aims to simplify how users interact with and manage the linuxserver/webtop image.\nlinuxserver/webtop is a series of Docker images based on Linux systems that enable users to seamlessly access containerized desktop environments through a web browser.\nThese images are built and maintained by the linuxserver.io community and support the installation of common desktop applications (like VSCode, WPS, Google Chrome, etc.) using proot-apps. They're perfect for users who want to run a graphical desktop environment inside a Docker container.\n"
 ,
 "cn"
 :
-"webtop 模块是基于 docker 命令为 linuxserver/webtop 镜像提供高级管理功能的封装模块，旨在简化用户使用和管理 linuxserver/webtop。\nlinuxserver/webtop 是一系列基于 linux 系统的 docker 镜像，能让用户通过浏览器流畅地使用容器的桌面环境。\n这些镜像由 linuxserver.io 社区构建和维护，支持使用 proot-apps 安装常用的桌面应用程序 (如 VSCode、Telegram、WPS、谷歌浏览器等)，适合希望在 Docker 容器中使用图形桌面的用户。\n"
+"webtop 模块是基于 docker 命令为 linuxserver/webtop 镜像提供高级管理功能的封装模块，旨在简化用户使用和管理 linuxserver/webtop。\nlinuxserver/webtop 是一系列基于 linux 系统的 docker 镜像，能让用户通过浏览器流畅地使用容器的桌面环境。\n这些镜像由 linuxserver.io 社区构建和维护，支持使用 proot-apps 安装常用的桌面应用程序 (如 VSCode、WPS、谷歌浏览器等)，适合希望在 Docker 容器中使用图形桌面的用户。\n"
 }
 ,
 "#tip"
