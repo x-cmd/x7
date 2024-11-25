@@ -42,8 +42,8 @@ ___x_cmd_mirror_npm___app(){
 ___x_cmd_mirror_npm_ls(){
 
     printf "%s\n" \
-        "Code          Url                                  Name"                 \
-        "npmmirror     https://registry.npmmirror.com/      npmmirror (阿里云赞助)" \
+        "Code          Url                                  Name"                   \
+        "npmmirror     https://registry.npmmirror.com/      npmmirror (阿里云镜像源)" \
         "official      https://registry.npmjs.org/          official (官方源)"
         # "zju           https://mirrors.zju.edu.cn/npm       浙江大学开源软件镜像站"   \ # the mirror is not available
 }

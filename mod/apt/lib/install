@@ -69,7 +69,7 @@ ___x_cmd_apt_install___fzf_app(){
     ___x_cmd yq --preparecmd
     ___x_cmd_apt___lsraw \
         | ___x_cmd_apt_install___fzf            \
-            --preview='x apt --fzfpreview {1}'  \
+            --preview='___x_cmdexe apt --fzfpreview {1}'  \
             --preview-window=right:70%:wrap
 }
 
