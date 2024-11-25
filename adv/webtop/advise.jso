@@ -64,25 +64,19 @@ null
 "#subcmd:Image"
 :
 [
-"ls|la"
-,
 "image|img"
 ]
 ,
 "#subcmd:Container"
 :
 [
-"run"
-,
-"open|o"
-,
 "container|c"
 ,
-"home"
+"run"
 ,
 "ps"
 ,
-"id"
+"bash"
 ,
 "start"
 ,
@@ -94,9 +88,17 @@ null
 ,
 "unpause"
 ,
-"bash"
-,
 "rm"
+]
+,
+"#subcmd:Expansion"
+:
+[
+"ls|la"
+,
+"open|o"
+,
+"home"
 ,
 "all"
 ]
@@ -295,11 +297,11 @@ true
 {
 "cn"
 :
-"列出 webtop 支持的镜像"
+"列出 webtop 可用的镜像"
 ,
 "en"
 :
-"List images supported by webtop"
+"List the images available in webtop"
 }
 ,
 "#tldr"
@@ -312,11 +314,11 @@ true
 ,
 "cn"
 :
-"列出 webtop 支持的镜像"
+"列出 webtop 可用的镜像"
 ,
 "en"
 :
-"List images supported by webtop"
+"List the images available in webtop"
 }
 ]
 }
