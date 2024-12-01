@@ -186,6 +186,42 @@ null
 :
 "x-advise://pkg/data/use.jso"
 ,
+"--upgrade"
+:
+{
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x pkg use --upgrade --all"
+,
+"cn"
+:
+"将全局环境中设置的所有包升级到 default 版本"
+,
+"en"
+:
+"Upgrade all packages used in the global environment to the default version"
+}
+,
+{
+"cmd"
+:
+"x pkg use --upgrade jq yq fzf"
+,
+"cn"
+:
+"将全局环境中设置的 jq、yq 和 fzf 软件包升级到 default 版本"
+,
+"en"
+:
+"Upgrade the jq, yq, and fzf packages used in the global environment to the default version"
+}
+]
+}
+,
 "#tldr"
 :
 [
