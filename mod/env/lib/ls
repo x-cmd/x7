@@ -65,11 +65,12 @@ ___x_cmd_env_ls___pickapp(){
         env:info "Selected pkg [name=$name]${version:+" [version=$version]"}"
         local _cmd=
         ___x_cmd ui select ,_cmd "Choose the code you want to execute:" \
-            "x env use ${name}${version:+"=${version}"}"      \
-            "x env try ${name}${version:+"=${version}"}"      \
-            "x env unuse ${name}${version:+"=${version}"}"    \
-            "x env untry ${name}${version:+"=${version}"}"    \
-            "x env gc ${name}${version:+"=${version}"}"       \
+            "x env use ${name}${version:+"=${version}"}"    \
+            "x env try ${name}${version:+"=${version}"}"    \
+            "x env unuse ${name}${version:+"=${version}"}"  \
+            "x env untry ${name}${version:+"=${version}"}"  \
+            "x env gc ${name}${version:+"=${version}"}"     \
+            "x env upgrade ${name}"                         \
             "return"    || return
         [ -n "$_cmd" ] || return
         eval "$_cmd"

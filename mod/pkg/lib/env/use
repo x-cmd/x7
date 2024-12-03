@@ -7,8 +7,15 @@ ___x_cmd_pkg_env_use(){
     pkg:sphere:parse:option
     sphere_name="${sphere_name:-X}"
     case "$1" in
-        --upgrade) shift; ___x_cmd_pkg_env_use___upgrade \
-            --sphere "$sphere_name" --sphereroot "$___X_CMD_PKG_ROOT_SPHERE" --osarch "$osarch" "$@"; return ;;
+        --upgrade) shift;
+            X_help_cmd="${X_help_cmd} --upgrade" \
+            ___x_cmd_pkg_env_upgrade___inner \
+                --sphere "$sphere_name" --sphereroot "$___X_CMD_PKG_ROOT_SPHERE" --osarch "$osarch" "$@"
+            return
+            ;;
+        "")
+            eval "$X_help_cmd" >&2; return 64
+            ;;
     esac
 
     local name=
@@ -112,49 +119,5 @@ ___x_cmd_pkg_env_unuse(){
         ___x_cmd_pkg_sphere_use cancel  \
             --sphere "$sphere_name" --sphereroot "$___X_CMD_PKG_ROOT_SPHERE" \
             --osarch "$osarch" "$name" "$version" || return
-    done
-}
-
-
-___x_cmd_pkg_env_use___upgrade_option(){
-    while [ "$#" -gt 0 ]; do
-        case "$1" in
-            --all)              upgrade_all=1 ;;
-            --latest|--default) upgrade_target="${1#--}" ;;
-        esac
-        shift
-    done
-}
-
-___x_cmd_pkg_env_use___upgrade(){
-    local ___X_CMD_PKG_ENV_LOG_MOD="${___X_CMD_PKG_ENV_LOG_MOD:-"pkg"}"
-    local X_help_cmd="___x_cmd help -m ${___X_CMD_PKG_ENV_LOG_MOD} use --upgrade"
-    pkg:sphere:parse:option
-    sphere_name="${sphere_name:-X}"
-    [ "$#" -gt 0 ] || {
-        ___x_cmd help -m "$___X_CMD_PKG_ENV_LOG_MOD" use --upgrade >&2; return 64
-    }
-
-    local name=; local version=; local x_=
-    local upgrade_all=
-    local upgrade_target="default"
-    ___x_cmd_pkg_env_use___upgrade_option "$@"
-    if [ -n "$upgrade_all" ]; then
-        pkg:info "Upgrading all used pkg to the ${upgrade_target} version"
-        ___x_cmd_pkg_sphere_use upgrade_all "$upgrade_target"
-        return
-    fi
-
-    while [ "$#" -gt 0 ]; do
-        case "$1" in
-            --all|--latest|--default)
-                    shift; continue
-                    ;;
-            *=*)    name="${1%=*}"; version="${1#*=}" ;;
-            *)      name="$1";      version=""
-                    ;;
-        esac
-        ___x_cmd_pkg_sphere_use upgrade_pkg "$name" "$version" "$upgrade_target" || return
-        shift
     done
 }

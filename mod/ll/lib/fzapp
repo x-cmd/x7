@@ -2,7 +2,7 @@
 
 # It fails if it is zsh ... Ensure it runs on bash or shell ...
 ___x_cmd_ll___fzfapp(){
-    local PWD
+    local PWD="$PWD"
     ___x_cmd_antizshintbin ___x_cmd ll --fzfapp_
 }
 
@@ -26,7 +26,7 @@ ___x_cmd_ll___fzfapp_(){
 ___x_cmd_ll_fz_data(){
     local pos=""
     if [ -z "$filter" ]; then
-        filter="$( ___x_cmd dict get :___x_cmd_ll_fzfapp "$PWD" )"
+        ___x_cmd dict is_empty :___x_cmd_ll_fzfapp "$PWD" || filter="$( ___x_cmd dict get :___x_cmd_ll_fzfapp "$PWD" )"
     fi
 
     if [ -n "$filter" ]; then

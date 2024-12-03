@@ -1,5 +1,10 @@
 # shellcheck shell=dash
 
+___x_cmd_env_upgrade(){
+    local X_help_cmd='x help -m env upgrade';   help:arg-null:parse
+    ___x_cmd_pkg_env upgrade "$@"
+}
+
 ___x_cmd_env_use(){
     local X_help_cmd='x help -m env use';   help:arg-null:parse
     local ___X_CMD_PKG_ENV_LOG_MOD="env"

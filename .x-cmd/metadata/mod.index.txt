@@ -1,4 +1,4 @@
-81b2464d46142a592b5cb4e7919bd5eee110d77c advise main NULL
+8adb4fd4cef0e4538ce2ae249408d9c09d2c7b52 advise main NULL
 3cf6c07424fcb4c7adeedda94b9d83867906d598 agent main NULL
 8f7a527559d60c5c7dc99f9159e11484dba61b7b alias main NULL
 6333db4d5aead1e8e93f21e409b9deec40fe2248 api main NULL
@@ -61,7 +61,7 @@ dea55e3013280a6b3752d272ff2bd82f9233ff02 dingtalk main NULL
 1fa7b89e35e5514d48fbc80dace66549011d0d09 emacs main NULL
 79a3fe17d2a6badab0fd49c00fb2806fd37c8efa emoji main NULL
 79ba4dcc89c88c49b706a4ae5007a8033aec1f78 endlessh main NULL
-cc458dc9c3dedc5d89c69d631d67a003276e2411 env main NULL
+23af606af8f15149035606c52c4510af175aeff2 env main NULL
 ab1256c5a8bda9c2c7b29258ab13f3b9d9d052fd envy main NULL
 9ab38c4889236fd012c971747048ecf509a908fc feishu main NULL
 661e180c99610910a43f5bb087ed1cf9d589e7f7 ff main NULL
@@ -78,7 +78,7 @@ b37a4bf8703199da1630c900fbe473d10ce5ffeb fsiter main NULL
 a07939b65fb22d6840aa11f7c4ad3c7ab8b9d22c fslock main NULL
 534c7fd9b40743fd364ab0f38b5234100b920982 fzf main NULL
 e1a6aa49cbaaec03a09205e077c773a4a67bb875 gcode main NULL
-05f1a4ccfed410884d8bad8bc8db53daf7e8a7b3 gddy main NULL
+92441d52220b6e609513a37ac89b9a4b8571504c gddy main NULL
 89b3df3686f8e634165e0fdad539ffe2d81ae94f gemini main NULL
 225971b92d1c9c1c408c901e4fabab0b0de71799 gh main NULL
 39f5c14ba2ec431880a42b4e98504a2dc55e10b2 git main NULL
@@ -131,7 +131,7 @@ fd3d29346960173a5393c1a67703f1ac5b2874ca lenv main NULL
 f41393cfff5afaa450740d6e758ba9a5dbb5754e link main NULL
 82673cc8d8210b75ef64767e39e6d22abbb73647 links main NULL
 53f9ef30ca6fef4cc2525deb0d571ae7e5bb8ed1 list main NULL
-5db5691b642ec60cfbdb05d2c379ce23b029e0ac ll main NULL
+b95571b3e41e441da5b53c0b9073bd88756a1c64 ll main NULL
 130ee76d0507f6873634b067ffe4381646f23415 llist main NULL
 bb36774fa493a277c3d032b6c8113a1d047211e0 llmf main NULL
 ae23c200053035bff0bc4520f7e63644663b3729 lms main NULL
@@ -144,7 +144,7 @@ a57f9b8653c0a4ee657cc757c40889d9b96b1f12 lua main NULL
 63cea4916e8f9fc1776c3b2fef098104d80b3f1a luarocks main NULL
 ea32e53600e3bb878780f9a071c41c2ca2c4a986 lynis main NULL
 304a5c51673eac55158ba221db6f21a393ace668 mac main NULL
-6e83b9ebbac0c33ecccd0785176f4ebc4b6e7c14 man main NULL
+74dff6c84291b799a3d1949d892f8983359da3ee man main NULL
 f1259bbdca725c4e97fe2f3934728d3a3ada3eb1 mankier main NULL
 e6c6b76292b1598f6e4ea78aec19649adeeba7cf mawk main NULL
 2e4dee753d4739fac224ab2affcff258be8b3060 md main NULL
@@ -177,7 +177,7 @@ cafda788978e316bf597a7669bd6cb82549969fa outerr main NULL
 814e16508fda2654db1041da9a0689e1051d6cbd pandoc main NULL
 aa790ed52a28583495e2db094a6b6d74e0fd3210 param main NULL
 bcdcc2f14d04987f7c4b4c7ded84fd924708def8 path main NULL
-2bee77d39491a51f82ac3d1d44cfae3933bc3169 pb main NULL
+e600705f7de2a6766f84e861507fca2afb1ddd57 pb main NULL
 c523f62c27ef9f88eac0a68a3291e818514e0df9 perl main NULL
 750e5ca0940a06ee3671bf20e4b8d1edfcd18522 pick main NULL
 47569964212b60350b72cb4a9f09161cfcab3fc1 pidid main NULL
@@ -185,7 +185,7 @@ c523f62c27ef9f88eac0a68a3291e818514e0df9 perl main NULL
 4674e572070674cabac1f6fa8c66abd64b2eb4bb pip main NULL
 460577fe4c50c9f75f2e1cf6cf0670f00323f929 pipx main NULL
 eac3e3aa8b90284a057aaf0c85f0b7a32acb0b98 pixi main NULL
-27adbb0e932d02d08b553a52b950eabfab40f607 pkg main NULL
+30c8f6f7513bcf332a9d0a6a64ab6a80c546d5f1 pkg main NULL
 949a0d8603e454aa927e0f9ea642a2a4b4a55d08 pkgx main NULL
 6515a94bd6b257d70acbbab35d8505a538d661d5 proxy main NULL
 260be0536a907483daf49354e3607d86db446443 prta main NULL
@@ -242,7 +242,7 @@ ad75f8aa63635d5f76123985c863c1e9c09ff13c tping main NULL
 36927178d4e490a21fd8f41a49741b5a3819e48a trex main NULL
 4ccdbc46fd9fcd0ed1dab66c187bdfca6334dcab tsv main NULL
 25fc475231541d976b4a6e1ed0f5a8b2e1ec46db tty main NULL
-e331a9bf05b12afd47eb7a0b577fff54e61ecea3 tui main NULL
+3c743bddad63d6dae03b9d6c1dc75ffc5c34e7eb tui main NULL
 9f8fe991b9429464fa71904c271c5e8e614b6edd txt main NULL
 def4be9367f8c740f3d8d55106878b22a5f328eb tz main NULL
 1e33f89a175cf45f984c94b01b63322c87757c6c ui main NULL
