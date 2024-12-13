@@ -10,16 +10,17 @@ xrc:mod:lib ping    vis rec  __run/_index
 # using ping to monitor multiple servers ...
 
 ___x_cmd_ping___main(){
+    [ $# -gt 0 ]        ||  set -- --help
 
-    [ $# -gt 0 ]    || set -- --help
-
-    local op="$1";  shift
+    local op="$1";      shift
     case "$op" in
-        --help|-h)  ___x_cmd help -m ping            ;;
-        vis|rec)    ___x_cmd_ping_"$op"         "$@" ;;
-        --run)      ___x_cmd_ping___run         "$@" ;;
-        --|exec)    ___x_cmd_ping___exec        "$@" ;;
-        *)          ___x_cmd_ping___run "$op"   "$@" ;;
+        --help|-h)      ___x_cmd help -m ping            ;;
+        vis|rec|test)   ___x_cmd_ping_"$op"         "$@" ;;
+        --run)          ___x_cmd_ping___run         "$@" ;;
+        --|exec)        ___x_cmd_ping___exec        "$@" ;;
+
+        isbusybox)      ___x_cmd_ping___is_busybox       ;;
+        *)              ___x_cmd_ping___run "$op"   "$@" ;;
     esac
 }
 
@@ -33,6 +34,18 @@ ___x_cmd_ping___is_busybox(){
 }
 
 ___x_cmd_ping___exec(){
-    # TODO: if not, download
-    LC_ALL=C command ping "$@"
+    if ___x_cmd_hascmd ping; then
+        LC_ALL=C command ping "$@"
+    else
+        ping:info "ping command not found, use the busybox's ping command"
+        LC_ALL=C ___x_cmd busybox ping "$@"
+    fi
+}
+
+___x_cmd_ping_test(){
+    if ___x_cmd os is win; then
+        ___x_cmd_ping___exec -i 1 -n 1 "$1" 1>/dev/null 2>/dev/null
+    else
+        ___x_cmd_ping___exec -t 1 -c 1 "$1" 1>/dev/null 2>/dev/null
+    fi
 }

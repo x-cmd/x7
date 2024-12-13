@@ -7,7 +7,7 @@
 {
 "en"
 :
-"Setting the proxy server parameters"
+"Set the proxy server parameters"
 ,
 "cn"
 :
@@ -15,7 +15,7 @@
 }
 }
 ,
-"cat"
+"get"
 :
 {
 "#desc"
@@ -23,15 +23,15 @@
 {
 "en"
 :
-"View proxy server information"
+"Get proxy server information"
 ,
 "cn"
 :
-"查看代理服务器的信息"
+"获取代理服务器的信息"
 }
 }
 ,
-"rm"
+"unset"
 :
 {
 "#desc"
@@ -39,11 +39,11 @@
 {
 "en"
 :
-"Remove proxy server parameters"
+"Unset proxy server parameters"
 ,
 "cn"
 :
-"移除代理服务器的参数"
+"取消设置代理服务器的参数"
 }
 }
 }

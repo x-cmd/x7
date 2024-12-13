@@ -4,7 +4,7 @@
 
 ___x_cmd_pkg_sphere_xbin(){
     x:trace pkg/xbin
-    local X_help_cmd='x help -m pkg xbin';   help:arg-null:parse
+    local X_help_cmd='___x_cmd help -m pkg xbin';   help:arg-null:parse
 
     # TODO: Need to be removed in the future
     ___x_cmd_pkg_update___check || return
