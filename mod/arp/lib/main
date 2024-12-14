@@ -1,5 +1,6 @@
 # shellcheck shell=dash
 
+___x_cmd log init arp
 xrc:mod:lib     arp     ls/_index
 
 ___x_cmd_arp___main(){

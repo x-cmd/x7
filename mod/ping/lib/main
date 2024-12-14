@@ -43,9 +43,13 @@ ___x_cmd_ping___exec(){
 }
 
 ___x_cmd_ping_test(){
-    if ___x_cmd os is win; then
-        ___x_cmd_ping___exec -i 1 -n 1 "$1" 1>/dev/null 2>/dev/null
-    else
-        ___x_cmd_ping___exec -t 1 -c 1 "$1" 1>/dev/null 2>/dev/null
-    fi
+    local x_=;
+    ___x_cmd os name_
+    case "$x_" in
+        linux)      set -- -W 1 -c 1 "$1"    ;;
+        darwin)     set -- -t 1 -c 1 "$1"    ;;
+        win)        set -- -w 1000 -n 1 "$1" ;;
+    esac
+
+    ___x_cmd_ping___exec "$@"    1>/dev/null 2>/dev/null
 }

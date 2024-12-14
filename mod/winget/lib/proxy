@@ -1,76 +1,15 @@
 
 # shellcheck shell=dash
-xrc cfgy
-# ___x_cmd_winget_cfg(){
-#     local op="$1";  shift
-#     case "$op" in
-#         init)           ___x_cmd_winget_cfg_init "$@" ;;
-#     esac
-# }
-
-___X_CMD_WINGET_CFG="$___X_CMD_ROOT_CFG/winget/cfg"
-___X_CMD_WINGET_CFG_VARLIST="proxy"
-___x_cmd_winget_cfg___invoke(){
-    ___x_cmd_cfgy_obj                                                  \
-        --prefix            ___X_CMD_WINGET_CFG_DATA                   \
-        --default-config    "${___X_CMD_ROOT_CFG}/winget/X.cfg.yml"    \
-        --current-config    "${___X_CMD_WINGET_LOCAL_CONFIG}"          \
-        --current-profile   "${___X_CMD_WINGET_LOCAL_PROFILE}"         \
-        --varlist           "$___X_CMD_WINGET_CFG_VARLIST"             \
-        "$@"
-}
-
-# x winget cfg init <id> <secret>
-# ___x_cmd_winget_cfg_init(){
-#     ___x_cmd_winget_cfg___invoke   set  proxy="$1"
-# }
-
 ___x_cmd_winget___proxy(){
-    local op="$1";
+    [ $# -gt 0 ]    ||  set - ls
+    local op="$1";      shift
+
+    local O=winget
     case "$op" in
-        set)            shift; ___x_cmd_winget___proxy_set "$@"     ;;
-        unset)          shift; ___x_cmd_winget___proxy_unset        ;;
-        get)            shift; ___x_cmd_winget___proxy_get          ;;
-
-        -h|--help)      ___x_cmd help -m winget proxy               ;;
-        "")             ___x_cmd help -m winget proxy >&2; return 64    ;;
-        *)              N=winget M="Unsupported subcmd => $op" log:ret:64  ;;
+        ls|use|unuse|try|untry|run)
+            ___x_cmd proxy wrap "$op"        "$@" ;;
+        -h|--help)
+            ___x_cmd help -m winget proxy ;;
+        *)  ___x_cmd help -m winget proxy >&2; return 64 ;;
     esac
-}
-
-___x_cmd_winget___proxy_set(){
-    local ip=; local interface=
-    [ -n "$1" ] ||{
-        winget:error "Please provide a correct format of proxy setting; e.g. ---> 127.0.0.1:7070"
-        return 1
-    }
-
-    interface=${1#*:}; ip=${1%:*}
-
-    if ! ___x_cmd is int "$interface"; then
-        winget:error "Please provide a correct format of proxy setting; e.g. ---> 127.0.0.1:7070"
-        return 1
-    fi
-
-    if ! ___x_cmd is ip "$ip"; then
-        winget:error "Please provide a correct format of proxy setting; e.g. ---> 127.0.0.1:7070"
-        return 1
-    fi
-    ___x_cmd_winget_cfg___invoke   set  proxy="${ip}:${interface}"
-}
-
-___x_cmd_winget___proxy_get(){
-    ___x_cmd_winget_cfg___invoke get proxy 2>/dev/null
-}
-
-___x_cmd_winget___proxy___use(){
-    [ -f "$___X_CMD_WINGET_CFG" ] || return 0
-    local proxy=; proxy="$(___x_cmd_winget___proxy_get)"
-    [ -n "$proxy" ] ||return 0
-
-    https_proxy=http://"$proxy"; http_proxy=http://"$proxy"; all_proxy=socks5://"$proxy"
-}
-
-___x_cmd_winget___proxy_unset(){
-    ___x_cmd_winget_cfg___invoke   clear
 }

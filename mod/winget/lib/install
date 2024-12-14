@@ -16,6 +16,5 @@ ___x_cmd_winget_install(){
         fi
     fi
 
-    ___x_cmd_winget___proxy___use || return
-    ___x_cmd_winget___bin "install" "$@"
+    ___x_cmd_winget___proxy run ___x_cmd_winget___bin "install" "$@"
 }

@@ -1,5 +1,6 @@
 # shellcheck shell=dash
 
+___x_cmd log init route
 xrc:mod:lib     route     ls/_index
 
 ___x_cmd_route___main(){

@@ -63,7 +63,7 @@ null
 {
 "cmd"
 :
-"x winget proxy set 127.0.0.1:8080"
+"x winget proxy use 127.0.0.1:8080"
 ,
 "en"
 :
@@ -194,16 +194,48 @@ null
 "proxy"
 :
 {
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x brew proxy use http://127.0.0.1:8234"
+,
+"en"
+:
+"Set the proxy used for winget"
+,
+"cn"
+:
+"设置 winget 使用的代理"
+}
+,
+{
+"cmd"
+:
+"x brew proxy try http://127.0.0.1:8234"
+,
+"cn"
+:
+"设置临时的仅对当前 shell 有效的代理（优先级比 use 高）"
+,
+"en"
+:
+"Set a temporary proxy that is only valid for the current Shell"
+}
+]
+,
 "#desc"
 :
 {
 "en"
 :
-"Configure proxy services"
+"Display or change the current proxy used for winget"
 ,
 "cn"
 :
-"配置代理服务"
+"显示或更改 winget 当前使用的代理"
 }
 ,
 "$ref"
