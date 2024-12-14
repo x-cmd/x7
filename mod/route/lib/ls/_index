@@ -10,6 +10,7 @@ ___x_cmd_route_ls(){
 
     while [ $# -gt 0 ]; do
         case "$1" in
+            -h|--help)     ___x_cmd help -m arp ls ; return 0 ;;
             -c|--csv)      format=csv; shift ;;
             -t|--tsv)      format=tsv; shift ;;
             -r|--raw)      format=raw; shift ;;
@@ -60,6 +61,14 @@ ___x_cmd_route_ls_tsv(){
 }
 
 ___x_cmd_route_ls_app(){
+    if [ -t 1 ] && ___x_cmd_is_interactive; then
+        ___x_cmd_route_ls_app___
+    else
+        ___x_cmd_route_ls_csv
+    fi
+}
+
+___x_cmd_route_ls_app___(){
     ___x_cmd_route_ls_csv | ___x_cmd csv app
 }
 

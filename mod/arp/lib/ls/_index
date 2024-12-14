@@ -9,6 +9,7 @@ ___x_cmd_arp_ls(){
 
     while [ $# -gt 0 ]; do
         case "$1" in
+            -h|--help)  ___x_cmd help -m arp ls ; return 0 ;;
             -c|--csv)   format=csv;     shift ;;
             -t|--tsv)   format=tsv;     shift ;;
             -r|--raw)   format=raw;     shift ;;
@@ -69,10 +70,18 @@ ___x_cmd_arp_ls_app___sort(){
 }
 
 ___x_cmd_arp_ls_app(){
+    if [ -t 1 ] && ___x_cmd_is_interactive; then
+        ___x_cmd_arp_ls_app___
+    else
+        ___x_cmd_arp_ls_csv
+    fi
+}
+
+___x_cmd_arp_ls_app___(){
     # ___x_cmd_arp_ls_csv | ___x_cmd csv app
     local ___X_CMD_CSV_APP_SHBIN_CODE=
     ___X_CMD_CSV_APP_SHBIN_CODE="xrc arp; " \
-        ___x_cmd csv app ___x_cmd arp ls --csv || return 1
+        ___x_cmd csv app ___x_cmd arp ls --csv  || return 1
 }
 
 ___x_cmd_arp_ls_app___colorize(){
