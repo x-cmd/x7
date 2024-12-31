@@ -1,9 +1,14 @@
 # shellcheck shell=dash disable=SC2016
 
 ___x_cmd_pixi_advise__ls_pkg(){
+    local tmp
     {
         if [ -f "$___X_CMD_PIXI_LA_FP" ]; then
-            ___x_cmd_cmds cat "$___X_CMD_PIXI_LA_FP"
+            read -r tmp < "$___X_CMD_PIXI_LA_FP"
+            case "$tmp" in
+                "")         ___x_cmd_pixi_la___txt ;;
+                *)          ___x_cmd_cmds cat "$___X_CMD_PIXI_LA_FP" ;;
+            esac
         else
             ___x_cmd_pixi_la___txt
         fi

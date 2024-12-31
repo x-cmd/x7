@@ -107,7 +107,7 @@ ___x_cmd_interactive(){
 
 # Deprecated: this funtion ... Always return true ...x
 ___x_cmd_is_interactive(){
-    x:warn "Deprecated. It always returns true. "
+    # x:warn "Deprecated. It always returns true. "
     return 0
 
     # [ -z "$___X_CMD_IS_INTERACTIVE_FORCE" ] || return 0
