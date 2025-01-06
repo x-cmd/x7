@@ -54,6 +54,7 @@ ___x_cmd_arp_ls_tsv(){
 }
 
 ___x_cmd_arp_ls_xsv(){
+    local x_=""
     ___x_cmd_arp_ls_raw | {
         ___x_cmd os name_
         local parsefp
@@ -62,7 +63,11 @@ ___x_cmd_arp_ls_xsv(){
             darwin)     parsefp="$___X_CMD_ROOT_MOD/arp/lib/ls/parse_darwin_xsv.awk" ;;
             win)        parsefp="$___X_CMD_ROOT_MOD/arp/lib/ls/parse_win_xsv.awk" ;;
         esac
-        ___x_cmd_cmds awk -v OFS="$1" -v all="$all" -f "$parsefp"
+
+        ___x_cmd_cmds awk   \
+            -v OFS="$1"     -v all="$all"   \
+            -f "$___X_CMD_ROOT_MOD/arp/lib/ls/parse___share.awk"    \
+            -f "$parsefp"
     }
 }
 

@@ -1,0 +1,14 @@
+{
+  "lang": "go",
+  "homepage": "https://digger.dev/",
+  "desc": {
+    "en": "Digger is an open-source IaC automation and collaboration software for Terraform and OpenTofu",
+    "cn": "Digger 是用于 Terraform 和 OpenTofu 的开源 IaC 自动化和协作软件"
+  },
+  "rule": {
+    "/": {
+      "cmd": "",
+      "reference": "https://github.com/diggerhq/digger"
+    }
+  }
+}

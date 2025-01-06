@@ -3,6 +3,8 @@
 xrc:mod cama/latest # cosmo/latest    # Preload module
 xrc:mod:lib x-cmd inner/_index
 xrc:mod:lib x-cmd engine/_index
+xrc:mod:lib x-cmd deprecated
+
 xrc alias
 
 # xrc:mod lightweightmod/latest

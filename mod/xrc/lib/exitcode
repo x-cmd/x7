@@ -101,7 +101,15 @@ ___x_cmd_ex_err_msg(){
     [ -z "$M" ] ||  ___x_cmd_log_pr :"$___X_CMD_EX_EXIT_LOGGER" "[EXIT=$___X_CMD_EX_EXIT_CODE] ${M}"
 }
 
+___x_cmd_ex_if_int(){
+    [ "$___X_CMD_EX_EXIT_CODE" -ne 130 ] || { ___x_cmd_ex_err_int; return 130; }
+}
+
+___x_cmd_ex_if_err(){
+    [ "$___X_CMD_EX_EXIT_CODE" -eq 0 ]   || { ___x_cmd_ex_err_msg; return "$___X_CMD_EX_EXIT_CODE"; }
+}
+
 alias ex:init='local ___X_CMD_EX_EXIT_CODE; local ___X_CMD_EX_EXIT_LOGGER; ___x_cmd_ex_init'
 alias ex:save='___X_CMD_EX_EXIT_CODE=$?'
-alias ex:ret:if-int='[ "$___X_CMD_EX_EXIT_CODE "-ne 130 ] || { ___x_cmd_ex_err_int; return 130; }'
-alias ex:ret:if-err='[ "$___X_CMD_EX_EXIT_CODE" -ne 0 ]   || { ___x_cmd_ex_err_msg; return "$___X_CMD_EX_EXIT_CODE"; }'
+alias ex:ret:if-int='___x_cmd_ex_if_int || return 130'
+alias ex:ret:if-err='___x_cmd_ex_if_err || return $?'

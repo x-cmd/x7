@@ -1,0 +1,14 @@
+{
+  "lang": "Rust",
+  "homepage": "https://github.com/chaaz/versio",
+  "desc": {
+    "cn": "Versio 是一个管理项目版本演变的工具",
+    "en": "Versio is a tool that manages your project's version evolution"
+  },
+  "rule": {
+    "/cargo": {
+      "cmd": "cargo install versio",
+      "reference": "https://github.com/chaaz/versio/blob/main/docs/installing.md#versio-itself"
+    }
+  }
+}

@@ -254,7 +254,19 @@ ___x_cmd_advise_man_load___xcmd(){
 
 ___x_cmd_advise_man_load___completion(){
     ___x_cmd_is_suitable_advise_completion_env || return $?
-    ___x_cmd_advise_man___folder_exist_completion || ___x_cmd_advise_man___pkg_unzip_completion || return $?
+    ___x_cmd_advise_man___folder_exist_completion || {
+        [ -n "$___X_CMD_ADVISE_MAN_FORCED_LOAD" ] || {
+            if ! ___x_cmd_runmode_allow_chatty; then
+                advise:error "Not found completion folder"
+                return 1
+            else
+                ___x_cmd ui yesno "Not found completion folder, do you want to download it?" || return $?
+            fi
+        }
+
+        ___x_cmd_advise_man___pkg_unzip_completion || return $?
+    }
+
     if [ "$#" -ge 1 ]; then ___x_cmd_advise_man_load___completion_one "$@"
     else ___x_cmd_advise_man_load___completion_all
     fi
@@ -294,9 +306,9 @@ ___x_cmd_advise_man_load(){
     help:arg:parse
     case "$1" in
         x-cmd)          shift; ___x_cmd_advise_man_load___xcmd "$@" ;;
-        completion)     ___x_cmd_advise_man_load___completion "$@" ;;
-        all)            ___x_cmd_advise_man_load___all ;;
-        x)              ___x_cmd_advise_man_load___x ;;
+        completion)     shift; ___x_cmd_advise_man_load___completion "$@" ;;
+        all)            shift; ___x_cmd_advise_man_load___all ;;
+        x)              shift; ___x_cmd_advise_man_load___x ;;
         *)              advise:error "Not such [option=$1]"
                         help:show:ret:64 ;;
     esac
@@ -321,7 +333,7 @@ ___x_cmd_advise_man_rm(){
         completion)
             shift; X_help_cmd='___x_cmd help -m advise man rm completion' help:arg:parse
             if ___x_cmd_advise_man___folder_exist_completion; then
-                if [ "$#" -eq 0 ]; then x_="$___X_CMD_ADVISE_MAN_COMPLETIONS_FOLDER_SRC"
+                if [ "$#" -eq 0 ]; then x_="$___X_CMD_ADVISE_MAN_COMPLETIONS_FOLDER"
                 else ___x_cmd_advise_man_which___completion_getfile_ "$1"
                 fi
                 [ -e "$x_" ] || return $?

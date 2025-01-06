@@ -1,0 +1,14 @@
+{
+  "lang": "rust",
+  "homepage": "https://github.com/rustls/rustls-ffi",
+  "desc": {
+    "en": "Rustls is a modern TLS library written in Rust, meaning it is less likely to have memory safety vulnerabilities than equivalent TLS libraries written in memory unsafe languages",
+    "cn": "Rustls 是用 Rust 编写的现代 TLS 库，这意味着它比用内存不安全语言编写的同等 TLS 库具有更少的内存安全漏洞"
+  },
+  "rule": {
+    "/": {
+      "cmd": "",
+      "reference": "https://github.com/rustls/rustls-ffi"
+    }
+  }
+}

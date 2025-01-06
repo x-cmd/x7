@@ -548,7 +548,7 @@ null
 ,
 "en"
 :
-null
+"Display the classful and CIDR information for the 192.168.1.0/24 network."
 ,
 "cn"
 :
@@ -562,7 +562,7 @@ null
 ,
 "en"
 :
-null
+"Display the classful and CIDR information for the 192.168.1.0/24 network."
 ,
 "cn"
 :
@@ -579,11 +579,11 @@ null
 {
 "en"
 :
-"Display all IP in the subnet"
+"Iterate all IP in the subnet"
 ,
 "cn"
 :
-"显示子网中所有的 IP"
+"遍历打印子网中所有的 IP"
 }
 ,
 "#tldr"
@@ -596,11 +596,101 @@ null
 ,
 "en"
 :
-"List all IP addresses of this machine"
+"List all IP addresses of the subnet 192.168.1.0/24"
 ,
 "cn"
 :
-"列出本机所有的 IP 地址"
+"列出子网 192.168.1.0/24 下所有的 IP 地址"
+}
+]
+}
+,
+"map"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Discover ip address using ICMP ping and tcping (default for port 22, 80)"
+,
+"cn"
+:
+"从指定网段中找出活跃的主机IP"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x ip map   192.168.1.{1..255}"
+,
+"en"
+:
+"Scan 192.168.1.1-255 for active hosts using ICMP."
+,
+"cn"
+:
+"从网段 192.168.1.1 到 192.168.1.255 找出活跃的主机IP"
+}
+,
+{
+"cmd"
+:
+"x ip map   192.168.{0..255}.1"
+,
+"en"
+:
+"Scan 192.168.1-255.1 for active hosts using ICMP"
+,
+"cn"
+:
+"从网段 192.168.1.1 到 192.168.1.255 找出活跃的主机IP"
+}
+,
+{
+"cmd"
+:
+"x ip map -s icmp,80 192.168.1.{1..255}"
+,
+"en"
+:
+"Scan 192.168.1.1-255 for active hosts using ICMP and TCP port 80."
+,
+"cn"
+:
+"依次尝试发送 ICMP报文 和 往80端口发送tcp报文, 从网段 192.168.1.1 到 192.168.1.255 找出活跃的主机IP."
+}
+,
+{
+"cmd"
+:
+"x ip map   192.168.1.0/24"
+,
+"en"
+:
+"Scan 192.168.1.0/24 for active hosts using ICMP"
+,
+"cn"
+:
+"从网段 192.168.1.0/24  找出活跃的主机IP"
+}
+,
+{
+"cmd"
+:
+"x ip iter  192.168.1.0/24 | x ip map -"
+,
+"en"
+:
+"Scan 192.168.1.0/24 for active hosts using ICMP"
+,
+"cn"
+:
+"从网段 192.168.1.0/24  找出活跃的主机IP"
 }
 ]
 }

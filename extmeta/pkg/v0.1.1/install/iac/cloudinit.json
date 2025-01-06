@@ -1,0 +1,14 @@
+{
+  "lang": "Python",
+  "homepage": "https://cloudinit.readthedocs.io/",
+  "desc": {
+    "cn": "Cloud-init 是用于跨平台云实例初始化的行业标准多分配方法",
+    "en": "Cloud-init is the industry standard multi-distribution method for cross-platform cloud instance initialization"
+  },
+  "rule": {
+    "/": {
+      "cmd": "",
+      "reference": "https://github.com/canonical/cloud-init"
+    }
+  }
+}

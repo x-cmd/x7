@@ -1,0 +1,22 @@
+{
+  "lang": "python",
+  "homepage": "https://github.com/pypa/flit",
+  "desc": {
+    "en": "Fastlane is a tool for iOS and Android developers to automate tedious tasks like generating screenshots, dealing with provisioning profiles, and releasing your application",
+    "cn": "Fastlane 是 iOS 和 Android 开发人员的一个工具，可以自动完成诸如生成屏幕截图、处理配置文件和发布应用程序等乏味的任务"
+  },
+  "rule": {
+    "/pip": {
+      "cmd": "python3 -m pip install flit",
+      "reference": "https://flit.pypa.io/en/stable/#install"
+    },
+    "darwin/brew": {
+      "cmd": "brew install flit",
+      "reference": "https://formulae.brew.sh/formula/flit#default"
+    },
+    "fedora/dnf": {
+      "cmd": "sudo dnf install python3-flit",
+      "reference": "https://command-not-found.com/flit"
+    }
+  }
+}

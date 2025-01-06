@@ -67,11 +67,11 @@ boot:info "Running x boot init"
         ___x_cmd cosmo use awk
     }
 
-    boot:info  --cmd 'x pkg update' \
+    boot:info  --cmd 'x pkg bootupdate' \
             --tips 'If it fails, or is interrupted, you can run it manually later.' \
             'Updating the resource package indexes ...'
 
-    ___x_cmd pkg update
+    ___x_cmd pkg bootupdate
 
     # if ___x_cmd_is_interactive; then
     #     ! ___x_cmd ui yesno "Confirm update package ?" || ___x_cmd pkg update

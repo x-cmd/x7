@@ -118,7 +118,8 @@ ___x_cmd_ui_region_run_(){
 
 ___x_cmd_ui_region_run(){
     ___x_cmd_compat_syncfs "$___X_CMD_DEVTTY_FP"
-    eval "$(___x_cmd_ui_region_run_ "$@")"
+    local x_=; ___x_cmd_storerat_ ___x_cmd_ui_region_run_ "$@" || return $?
+    eval "$x_"
 }
 
 # ___x_cmd_ui___datastore_(){

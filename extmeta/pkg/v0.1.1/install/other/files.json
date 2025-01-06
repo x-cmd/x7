@@ -1,0 +1,14 @@
+{
+  "lang": "c#",
+  "homepage": "https://files.community/",
+  "desc": {
+    "cn": "Files 是一个现代化的文件管理器，可以帮助用户组织他们的文件和文件夹",
+    "en": "Files is a modern file manager that helps users organize their files and folders"
+  },
+  "rule": {
+    "/": {
+      "cmd": "",
+      "reference": "https://github.com/files-community/Files"
+    }
+  }
+}

@@ -14,6 +14,7 @@ xrc:mod:lib git             \
 
 
 if ___x_cmd_is_suitable_advise_env; then
+    xrc advise
     ___x_cmd_advise___load_xcmd_advise_util_file git
 fi
 

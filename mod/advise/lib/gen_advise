@@ -68,9 +68,10 @@ ___x_cmd_advise_gen_advise__parse_adv_data(){
                         advise:warn "Not supported in normal mode ==> $datafile"
                         continue
                     }
-                    ___x_cmd ensurefp "$res_data/$tagfile"
-                    advise:info "Copy $datafile"
-                    ___x_cmd_cmds_cp "$datafile" "$res_data/$tagfile"
+                    tagfile="$___X_CMD_ROOT_CODE/cookbook/mod/$mod_name/$tagfile"
+                    ___x_cmd ensurefp "$tagfile"
+                    advise:info "Copy $datafile -> $tagfile"
+                    ___x_cmd cp "$datafile" "$tagfile"
                     ;;
         esac
     done
@@ -111,6 +112,7 @@ ___x_cmd_advise_gen_advise(){
 
     local resource;             resource="$___X_CMD_ROOT_ADV/$mod_name";
     ___x_cmd rmrf "$resource";  ___x_cmd mkdirp "$resource"
+    ___x_cmd rmrf "$___X_CMD_ROOT_CODE/cookbook/mod/$mod_name"
 
     # parse adv/data dir
     ___x_cmd_advise_gen_advise__parse_adv_data ${build_dev:+"--dev"} "$mod_name" "$mod_path" || return $?

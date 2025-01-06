@@ -1,0 +1,14 @@
+{
+  "lang": "rust",
+  "homepage": "https://github.com/elichai/kaspa-miner",
+  "desc": {
+    "en": "A Rust binary for file encryption to multiple participants",
+    "cn": "Rust 的二进制文件，用于向多个参与者进行文件加密"
+  },
+  "rule": {
+    "/cargo": {
+      "cmd": "cargo install kaspa-miner",
+      "reference": "https://github.com/elichai/kaspa-miner?tab=readme-ov-file#from-sources"
+    }
+  }
+}

@@ -24,6 +24,7 @@ ___x_cmd_root_set(){
 
     ___X_CMD_ROOT_MOD="${___X_CMD_ROOT_CODE}/mod"
     ___X_CMD_ROOT_ADV="${___X_CMD_ROOT_CODE}/adv"
+    ___X_CMD_ROOT_EXTMETA="${___X_CMD_ROOT_CODE}/extmeta"
 
     # ___X_CMD_ROOT_MOD="${___X_CMD_ROOT_MOD:-${___X_CMD_ROOT_V_VERSION}/mod}"
 
@@ -62,6 +63,7 @@ ___x_cmd_root_ls(){
 CODE:       $___X_CMD_ROOT_CODE
 ADV:        $___X_CMD_ROOT_ADV
 MOD:        $___X_CMD_ROOT_MOD
+METADATA:   $___X_CMD_ROOT_METADATA
 GDATA:      $___X_CMD_ROOT_GDATA
 DATA:       $___X_CMD_ROOT_DATA
 USR:        $___X_CMD_ROOT_USR

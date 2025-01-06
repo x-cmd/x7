@@ -85,7 +85,9 @@ else
                     if ___x_cmd_advise_autoload___ifothercompletionloaded; then
                         ___x_cmd_advise_man_load x
                     else
-                        ___x_cmd_advise_man_load completion
+                        if ___x_cmd_is_suitable_advise_completion_env && ___x_cmd_advise_man___folder_exist_completion; then
+                            ___x_cmd_advise_man_load completion
+                        fi
                         ___x_cmd_advise_man_load x-cmd
                         ___x_cmd_advise_man_load x
                     fi

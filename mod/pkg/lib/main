@@ -4,7 +4,7 @@ ___x_cmd log init pkg
 
 xrc:mod:lib     pkg \
     util                sphere/_index\
-    info/ls             info/ll
+    info/ls             info/ll         bootupdate
 
 ___x_cmd_lazysrc    "$___X_CMD_ROOT_MOD/pkg/lib/inner/_ls_urls"     ___x_cmd_pkg__ls_urls   ___x_cmd_pkg__head_test_urls
 ___x_cmd_lazysrc    "$___X_CMD_ROOT_MOD/pkg/lib/info/which"         ___x_cmd_pkg_which      ___x_cmd_pkg_which_
@@ -58,6 +58,7 @@ ___x_cmd_pkg___main(){
 
         websrc)                 ___x_cmd_pkg_websrc                 "$@" ;;
         update)                 ___x_cmd_pkg_update                 "$@" ;;
+        bootupdate)             ___x_cmd_pkg_bootupdate             "$@" ;;
 
         _smoke)                 ___x_cmd_pkg__smoke                 "$@" ;;
         _ls_urls)               ___x_cmd_pkg__ls_urls               "$@" ;;

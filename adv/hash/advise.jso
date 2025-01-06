@@ -2,9 +2,17 @@
 "#name"
 :
 {
-"x"
+"hash"
 :
-"Compute MD5, SHA1, SHA256, SHA384, and SHA512 checksums for files or piped input."
+null
+,
+"cn"
+:
+"为文件或管道输入计算 MD5、SHA1、SHA256、SHA384 和 SHA512 校验和"
+,
+"en"
+:
+"Compute MD5, SHA1, SHA256, SHA384, and SHA512 checksums for files or piped input"
 }
 ,
 "#synopsis"

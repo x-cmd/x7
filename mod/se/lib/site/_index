@@ -25,7 +25,10 @@ ___x_cmd_se_site___init(){
     local name
     local domain
     local datafp="$___X_CMD_PKG_ROOT_PATH/metadata/$___X_CMD_PKG_VERSION/se/data.csv"
-    [ -f "$datafp" ] || ___x_cmd pkg update
+    [ -f "$datafp" ] || {
+        ___x_cmd pkg update
+        datafp="$___X_CMD_PKG_ROOT_PATH/metadata/$___X_CMD_PKG_VERSION/se/data.csv"
+    }
 
     {
         read -r line && while read -r line; do

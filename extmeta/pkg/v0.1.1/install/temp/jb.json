@@ -1,0 +1,14 @@
+{
+  "lang": "Zig",
+  "homepage": "https://github.com/txthinking/jb",
+  "desc": {
+    "cn": "以比 bash 更简单的方式编写脚本",
+    "en": "write script in an easier way than bash"
+  },
+  "rule": {
+    "/nami": {
+      "cmd": "nami install jb",
+      "reference": "https://github.com/txthinking/jb?tab=readme-ov-file#install"
+    }
+  }
+}

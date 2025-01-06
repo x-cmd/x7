@@ -30,7 +30,7 @@ ___x_cmd_os_uname_(){
 }
 
 ___x_cmd_os_uname() {
-    local x_=; ___x_cmd_os_uname_ || return
+    local x_=; ___x_cmd_os_uname_ || return $?
     if [ "$#" -eq 0 ]; then
         printf "%s\n" "$___X_CMD_OS_UNAME_"
     else
@@ -52,10 +52,21 @@ aix
 win"
 }
 
+___X_CMD_OS_NAME_FP="$___X_CMD_ROOT_DATA/os/name"
+
 ___x_cmd_os_name_(){
+    x_=""
+
     if [ -n "$___X_CMD_OS_NAME_" ]; then
         x_="$___X_CMD_OS_NAME_"
-    else
+        return
+    fi
+
+    if [ -f "$___X_CMD_OS_NAME_FP" ]; then
+        read -r x_<"$___X_CMD_OS_NAME_FP"
+    fi
+
+    if [ -z "$x_" ]; then
         case "$(command uname -a)" in
             Linux\ *)                   x_=linux ;;
             Darwin\ *)                  x_=darwin ;;
@@ -65,15 +76,14 @@ ___x_cmd_os_name_(){
             AIX\ *)                     x_=aix ;;
             CYGWIN* | MSYS* | MINGW*|Windows*)
                                         x_=win ;;
+            *)                          return 1
         esac
-        # Deprecated in the future
-        ___X_CMD_OS_NAME_="$x_"
+
+        ___x_cmd_fprintf    "$___X_CMD_OS_NAME_FP"   "%s\n" "$x_"
     fi
 
-
-    # x case "$___X_CMD_OS_NAME_" "$@"
-
-    # x_:fini <val>
+    ___X_CMD_OS_NAME_="$x_"
+    # ___x_cmd case "$___X_CMD_OS_NAME_" "$@"
 }
 
 ___x_cmd_os_is(){
@@ -100,11 +110,11 @@ ___x_cmd_os_name() {
     # ret=a,b,c x os name
     # x_=cde x os name
 
-    local x_=; ___x_cmd_os_name_ || return
+    local x_=""; ___x_cmd_os_name_ || return $?
     if [ "$#" -eq 0 ]; then
-        printf "%s\n" "$___X_CMD_OS_NAME_"
+        printf "%s\n" "$x_"
     else
-        x case "$___X_CMD_OS_NAME_" "$@"
+        ___x_cmd case "$x_" "$@"
     fi
 }
 
@@ -120,10 +130,23 @@ arm64
 armv7l"
 }
 
+
+___X_CMD_OS_ARCH_FP="$___X_CMD_ROOT_DATA/os/arch"
+
 ___x_cmd_os_arch_() {
     x_=""
+
+    if [ -n "$___X_CMD_OS_ARCH_" ]; then
+        x_="$___X_CMD_OS_ARCH_"
+        return 0
+    fi
+
+    if [ -f "$___X_CMD_OS_ARCH_FP" ]; then
+        read -r ___X_CMD_OS_ARCH_<"$___X_CMD_OS_ARCH_FP"
+    fi
+
     if [ -z "$___X_CMD_OS_ARCH_" ]; then
-        local HOST_ARCH
+        local HOST_ARCH=""
 
         ___x_cmd_os_name_
 
@@ -156,18 +179,20 @@ ___x_cmd_os_arch_() {
                 ___X_CMD_OS_ARCH_=armv7l
             fi
         fi
+
+        ___x_cmd_fprintf    "$___X_CMD_OS_ARCH_FP"   "%s\n" "$___X_CMD_OS_ARCH_"
     fi
 
     x_="$___X_CMD_OS_ARCH_"
 }
 
 ___x_cmd_os_arch(){
-    local x_=; ___x_cmd_os_arch_ "$@" || return
+    local x_=""; ___x_cmd_os_arch_ "$@" || return $?
 
     if [ "$#" -eq 0 ]; then
         printf "%s\n" "$___X_CMD_OS_ARCH_"
     else
-        x case "$___X_CMD_OS_ARCH_" "$@"
+        ___x_cmd case "$___X_CMD_OS_ARCH_" "$@"
     fi
 
 }

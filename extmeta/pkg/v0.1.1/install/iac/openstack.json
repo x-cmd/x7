@@ -1,0 +1,14 @@
+{
+  "lang": "Python",
+  "homepage": "https://www.openstack.org/",
+  "desc": {
+    "cn": "用于构建私有云和公共云的开源软件",
+    "en": "OpenStack is a cloud operating system that controls large pools of compute, storage, and networking resources throughout a datacenter"
+  },
+  "rule": {
+    "/": {
+      "cmd": "",
+      "reference": "https://docs.openstack.org/install-guide/index.html"
+    }
+  }
+}

@@ -16,7 +16,7 @@ ___x_cmd_scotty_info(){
     # what is the system you are using
     local x_=
 
-    _v_x_cmd="$( ___x_cmd_scotty_info_xcmd )"
+    _v_x_cmd="$( ___x_cmd_scotty_info_xcmd | ___x_cmd_scotty_info_mask)"
     _v_shell="$___X_CMD_SHELL"
 
     x_=; ___x_cmd awk version_
@@ -52,4 +52,11 @@ ___x_cmd_scotty_info_xcmd(){
 
     printf "\n==== boot rc ====\n"
     ___x_cmd boot rc ls
+}
+
+___x_cmd_scotty_info_mask(){
+    ___x_cmd_cmds awk -v home="$HOME" '{
+        gsub(home, "<<HOME-STRING>>", $0)
+        print
+    }'
 }

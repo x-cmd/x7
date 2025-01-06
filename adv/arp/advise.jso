@@ -20,11 +20,11 @@ null
 {
 "en"
 :
-"This module is used to display the local system's ARP cache table, supporting three output formats: CSV, TSV, and TUI application.\nThe header information for TSV/CSV is: suspicious, ip, mac, if\nOn Windows and macOS systems, two additional headers, type and scope, are included respectively.\n"
+"This module is used to display the local system's ARP cache table, supporting three output formats: CSV, TSV, and TUI application.\nThe header information for TSV/CSV is: ip, mac, if, suspicious, scope, type\n"
 ,
 "cn"
 :
-"该模块用于显示本地系统的 ARP 缓存表，支持 CSV、TSV 和 TUI 应用三种输出格式。\nTSV/CSV 的表头信息为: suspicious, ip, mac, if\nWindows 和 macOS 系统则在此基础上，分别增加 type 和 scope 两个表头。\n"
+"该模块用于显示本地系统的 ARP 缓存表，支持 CSV、TSV 和 TUI 应用三种输出格式。\nTSV/CSV 的表头信息为: ip, mac, if, suspicious, scope, type\n"
 }
 ,
 "#tip"
@@ -51,11 +51,11 @@ null
 ,
 "en"
 :
-"If the standard output is connected to a terminal (tty), it starts in interactive mode (`--app`); otherwise, it outputs in TSV format (`--tsv`). This is the default behavior for `x arp`"
+"This is equivalent to 'x arp --auto'.  In this mode, interactive mode is started if standard output is connected to a terminal (tty); otherwise, output is in TSV format."
 ,
 "cn"
 :
-"如果标准输出连接到终端 (tty)，则以交互模式 (`--app`) 启动；否则以 TSV 格式 (`--tsv`) 输出。这是 `x arp` 的默认模式"
+"等同于 'x arp --auto', 在该模式下: 若标准输出连接到终端，则以交互模式启动；否则以 TSV 格式输出。"
 }
 ,
 {
