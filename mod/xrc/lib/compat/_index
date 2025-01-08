@@ -7,7 +7,7 @@
 #         } && ___x_cmd_compat_syncfs "$@"
 #     }
 # }
-
+# gitbash: -f
 ___x_cmd_compat_syncfs(){
     if ___x_cmd_cmds sync -f "$___X_CMD_ROOT/X" 2>/dev/null; then
         ___x_cmd_compat_syncfs(){

@@ -72,10 +72,6 @@ boot:info "Running x boot init"
             'Updating the resource package indexes ...'
 
     ___x_cmd pkg bootupdate
-
-    # if ___x_cmd_is_interactive; then
-    #     ! ___x_cmd ui yesno "Confirm update package ?" || ___x_cmd pkg update
-    # fi
 )
 
 boot:info "Initialization SUCCESS";

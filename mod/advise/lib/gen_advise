@@ -12,7 +12,7 @@ ___x_cmd_advise_gen_advise__useparam()(
     xrc:mod "$mod_name/latest" || return 1
     local main_func; main_func="$___X_CMD_XRC_SET_MAIN"
     [ "$main_func" != "${main_func%"$mod_name"}" ] || main_func="___x_cmd_$mod_name"
-    command -v "$main_func" >/dev/null || {
+    ___x_cmd hascmd "$main_func" || {
         advise:error "Not found set main function of $mod_name"
         return 1
     }
@@ -51,10 +51,11 @@ ___x_cmd_advise_gen_advise__parse_adv_data(){
     [ -d "$mod_path" ] || M="Unexisted directory of path. [path=$mod_path]" arg:ret:64
     local adv_data="$mod_path/adv/data"
     local res_data="$___X_CMD_ROOT_ADV/$mod_name/data"
+    local res_cookbook="$___X_CMD_ROOT_CODE/cookbook/mod/$mod_name"
     [ -d "$adv_data" ] || return 0
-    ___x_cmd rmrf "$res_data"
+    ___x_cmd rmrf "$res_data" "$res_cookbook"
 
-    command find "$adv_data" | while read -r datafile; do
+    ___x_cmd_cmds find "$adv_data" -type f | while read -r datafile; do
         tagfile="${datafile#*"$adv_data/"}"
         [ "$tagfile" != "$datafile" ] || continue
         [ -f "$datafile" ] || continue
@@ -65,10 +66,10 @@ ___x_cmd_advise_gen_advise__parse_adv_data(){
                     < "$datafile" ___x_cmd scotty yml y2j | ___x_cmd_advise_gen_advise__merge_awk "$build_dev" > "$res_data/${tagfile%.yml*}.jso"
                     ;;
             *)      [ -n "$build_dev" ] || {
-                        advise:warn "Not supported in normal mode ==> $datafile"
+                        advise:debug "Not supported in normal mode ==> $datafile"
                         continue
                     }
-                    tagfile="$___X_CMD_ROOT_CODE/cookbook/mod/$mod_name/$tagfile"
+                    tagfile="$res_cookbook/$tagfile"
                     ___x_cmd ensurefp "$tagfile"
                     advise:info "Copy $datafile -> $tagfile"
                     ___x_cmd cp "$datafile" "$tagfile"
@@ -112,7 +113,6 @@ ___x_cmd_advise_gen_advise(){
 
     local resource;             resource="$___X_CMD_ROOT_ADV/$mod_name";
     ___x_cmd rmrf "$resource";  ___x_cmd mkdirp "$resource"
-    ___x_cmd rmrf "$___X_CMD_ROOT_CODE/cookbook/mod/$mod_name"
 
     # parse adv/data dir
     ___x_cmd_advise_gen_advise__parse_adv_data ${build_dev:+"--dev"} "$mod_name" "$mod_path" || return $?
@@ -174,7 +174,7 @@ ___x_cmd_advise___install_xcmd_dir_()(
     ____x_cmd_advise___install_y2j advise.yml > "$folder/advise.t.jso" || return $?
     [ ! -f advise.util ] || ___x_cmd_cmds_cp advise.util "$folder"
 
-    command find _ lib data -type f -name '*advise.yml' 2>/dev/null | while read -r line; do
+    ___x_cmd_cmds find _ lib data -type f -name '*advise.yml' 2>/dev/null | while read -r line; do
         dst="$folder/${line%.yml}.t.jso"
         ___x_cmd ensurefp "$dst"
         advise:debug "Install $line => $dst"

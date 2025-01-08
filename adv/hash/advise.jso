@@ -250,15 +250,15 @@ null
 {
 "cmd"
 :
-"x hash verify <file> <长度为32的md5十六进制字符串>"
+"x hash assert <file> <长度为32的md5十六进制字符串>"
 ,
 "en"
 :
-"Check if the hash of <file> matched the given MD5 string."
+"Check if the hash of <file> matched the given MD5 string. Return 0/true if matched, 1/false if unmatched."
 ,
 "cn"
 :
-"检测 <file> 的哈希值是否与给定的 md5 字符串匹配"
+"检测 <file> 的哈希值是否与给定的 md5 字符串匹配. 如果匹配返回 0( 即为 true), 如果不匹配则返回 1 ~"
 }
 ]
 }

@@ -32,7 +32,7 @@ ___x_cmd_cosmo___which_(){
 
 ___x_cmd_cosmo___which(){
     local x_
-    ___x_cmd_cosmo___which_ "$@" || return
+    ___x_cmd_cosmo___which_ "$@" || return $?
     printf "%s\n" "$x_"
 }
 

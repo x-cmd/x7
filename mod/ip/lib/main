@@ -2,14 +2,15 @@
 
 ___x_cmd log init ip
 
-xrc:mod:lib     ip  local   query  scan mask util cidr/_index map int iter
+xrc:mod:lib     ip  local   query  scan mask util cidr/_index map int iter macvendor/_index
 
 ___x_cmd_ip___main(){
     [ "$#" -gt 0 ]  ||      set -- ls
 
     local op="$1";  shift
     case "$op" in
-        ls|echo|geolite|mac|query|scan|\
+        ls|echo|geolite|query|scan|\
+        mac|macvendor|\
         mask2no|no2mask|maskaddr|\
         class|class_|type|type_|info|cidr|validate|fill0|fill0_|map|\
         parse|parse_|\

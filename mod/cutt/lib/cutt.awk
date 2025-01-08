@@ -38,13 +38,21 @@ BEGIN{
     }
 }
 
+function is_empty_string(s ){
+    return s ~ /^[ \t\r\n]+$/
+}
+
 BEGIN {
     if ( COL ~ "^-?$" ){
         coll = 0
         tab_set_sep( col, coll )
     } else {
+        gsub( "^[, \t]+", "", COL )
+        gsub( "[, \t]+$", "", COL )
         coll = split(COL, col, ",")
-        for (i=1; i<=coll; ++i)     handle( col[i], col, i )
+        for (i=1; i<=coll; ++i) {
+            handle( col[i], col, i )
+        }
     }
 
 }
@@ -56,7 +64,9 @@ function handle_column_by_rule(linedata,        i, j, _first, _start, _end, _sep
         _start   = col[ i "S" ]
         _end     = col[ i "E" ]
         _sep     = col[ i "P" ]
-        if (_end < 0 ) _end = NF + _end + 1
+
+        if (_start < 0) _start  = NF + _start + 1
+        if (_end < 0 )  _end    = NF + _end + 1
 
         # TODO:
         # if ((_sep < 0) && (_start > _end))
@@ -110,7 +120,10 @@ BEGIN {
 END{
     if (STREAM_MODE == 1) exit(0)
 
-    for (i=1; i<=rowl; ++i)     if ( (row_end = row[ i "E" ]) < 0 )    row[ i "E" ] = row_end + NR + 1
+    for (i=1; i<=rowl; ++i)  {
+        if ( (row_start = row[ i "S" ]) < 0 )    row[ i "S" ] = row_start   + NR + 1
+        if ( (row_end   = row[ i "E" ]) < 0 )    row[ i "E" ] = row_end     + NR + 1
+    }
 
     # TODO:
     # if ((_sep < 0) && (_start > _end))

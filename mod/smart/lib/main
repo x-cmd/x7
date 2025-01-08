@@ -25,7 +25,7 @@ ___x_cmd_smart___exec(){
 }
 
 ___x_cmd_smart___app(){
-    if ! ___x_cmd_is_interactive; then
+    if ! ___x_cmd_is_stdout2tty; then
         ___x_cmd smart -h
         return 64
     else
