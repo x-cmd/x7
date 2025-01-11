@@ -1,8 +1,8 @@
 {
   "lang": "Go",
-  "homepage": null,
+  "homepage": "https://github.com/tulir/gomuks",
   "desc": {
-    "cn": "https://maunium.net/go/gomuks/",
+    "cn": "用 Go 编写的 Matrix 客户端",
     "en": "A Matrix client written in Go."
   },
   "rule": {

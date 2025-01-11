@@ -63,13 +63,15 @@ ___x_cmd_arp_ls_tsv(){
     # local maclist;  maclist="$(___x_cmd_pipevar data ___x_cmd cutt 2: 2 | ___x_cmd ip macvendor --pipe)"
     # ___x_cmd tsv merge "$data" "$maclist"
 
+
     {
         local data;     data="$(___x_cmd_arp_ls_xsv "\t")"
         printf "%s\n" "$data"
 
         printf "%s\n" "===ADD-COL==="
+        # TODO: add region and vendor
         printf "%s\n" "vendor"
-        ___x_cmd_pipevar data ___x_cmd cutt 2: 2 | ___x_cmd ip macvendor --pipe
+        ___x_cmd_pipevar data ___x_cmd cutt 2: 1 | ___x_cmd ma --pipe
     } | ___x_cmd tsv addcol
 
 }

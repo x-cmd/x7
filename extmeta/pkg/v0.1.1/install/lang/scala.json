@@ -2,8 +2,8 @@
   "lang": "Scala",
   "homepage": "https://www.scala-lang.org/",
   "desc": {
-    "cn": "与您一起扩展的编程语言: 从小型脚本到大型多平台应用程序",
-    "en": "A programming language that scales with you: from small scripts to large multiplatform applications"
+    "cn": "一种强大的静态类型高级通用编程语言，支持面向对象编程和函数式编程。",
+    "en": "a strong statically typed high-level general-purpose programming language that supports both object-oriented programming and functional programming."
   },
   "rule": {
     "/asdf": {

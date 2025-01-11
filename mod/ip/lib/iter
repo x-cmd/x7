@@ -15,7 +15,7 @@ ___x_cmd_ip_iter(){
 
     case "$cidr" in
         */*)        ip="${cidr%/*}"; mask=${cidr##*/} ;;
-        *)          N=ip M="Unsuuported -> $cidr" log:ret:64
+        *)          N=ip M="Unsuported -> $cidr" log:ret:64
     esac
 
     local x_
@@ -45,6 +45,12 @@ ___x_cmd_ip_iter___run(){
     done
 }
 
+___x_cmd_ip_count(){
+    local x_
+    ___x_cmd_ip_count_ "$@" || return
+    printf "%s\n" "$x_"
+}
+
 ___x_cmd_ip_count_(){
     local count="$1"
 
@@ -53,10 +59,4 @@ ___x_cmd_ip_count_(){
     esac
 
     x_=$(( 1 << ( 32 - count ) ))
-}
-
-___x_cmd_ip_count(){
-    local x_
-    ___x_cmd_ip_count_ "$@" || return
-    printf "%s\n" "$x_"
 }

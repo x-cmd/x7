@@ -19,19 +19,19 @@ ___x_cmd_npm___main(){
 
 ___x_cmd_npm___cmd(){
     ___x_cmd_hasbin "$1" || {
-        ___x_cmd_is_interactive || {
+        if ___x_cmd_is_stdout2tty && ___x_cmd_runmode_allow_manual; then
+            npm:warn "npm command not found."
+            local cmd=
+            x ui select ,cmd  "What's next:"    \
+                "x env use node"                \
+                "x env try node"                \
+                "x install node"                \
+                "return 1"                      || return 1
+            eval "$cmd"                         || return
+        else
             npm:error --tip1 'x env use node' --tip2 'x env try node' "Npm not found."
             return 1
-        }
-
-        npm:warn "npm command not found."
-        local cmd=
-        x ui select ,cmd  "What's next:"    \
-            "x env use node"                \
-            "x env try node"                \
-            "x install node"                \
-            "return 1"                      || return 1
-        eval "$cmd"                         || return
+        fi
     }
 
     "$@"

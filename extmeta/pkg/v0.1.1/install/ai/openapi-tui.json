@@ -9,6 +9,14 @@
     "/cargo": {
       "cmd": "cargo install openapi-tui",
       "reference": "https://github.com/zaghaghi/openapi-tui?tab=readme-ov-file#installation"
+    },
+    "arch/pacman": {
+      "cmd": "sudo pacman -S openapi-tui",
+      "reference": "https://github.com/zaghaghi/openapi-tui?tab=readme-ov-file#arch-linux"
+    },
+    "nix/": {
+      "cmd": "nix profile install github:zaghaghi/openapi-tui",
+      "reference": "https://github.com/zaghaghi/openapi-tui?tab=readme-ov-file#nixos"
     }
   }
 }

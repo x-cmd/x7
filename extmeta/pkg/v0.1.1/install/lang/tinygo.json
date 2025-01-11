@@ -2,8 +2,8 @@
   "lang": "Go",
   "homepage": "https://tinygo.org/",
   "desc": {
-    "cn": "Tinygo 是现有编程语言的新编译器，即 GO 编程语言",
-    "en": "TinyGo is a new compiler for an existing programming language, the Go programming language"
+    "cn": "适用于小型场景的 Go 编译器",
+    "en": "Go compiler for small places"
   },
   "rule": {
     "debian/wget": {

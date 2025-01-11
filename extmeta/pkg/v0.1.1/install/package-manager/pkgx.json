@@ -1,5 +1,5 @@
 {
-  "lang": "ruby",
+  "lang": "TypeScript",
   "homepage": "https://pkgx.sh/",
   "desc": {
     "cn": "Pkgx 是一个快速、独立、跨平台的二进制程序，可以运行任何程序",

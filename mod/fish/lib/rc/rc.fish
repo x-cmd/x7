@@ -60,11 +60,10 @@ end
 # TODO: in the future, adding the advise
 
 # "$HOME/.x-cmd.root/bin/xbin" prepare alias
+set -g ___X_CMD_THEME_RELOAD_DISABLE 1
 set -g ___X_CMD_RUNMODE 0
-
 if status is-interactive
-    set -g ___X_CMD_THEME_RELOAD_DISABLE 1
-    set -g ___X_CMD_RUNMODE              9
+    set -g ___X_CMD_RUNMODE 9
     # setenv ___X_CMD_CO_EXEC_SHELL=fish
 
     [ -f "$HOME/.x-cmd.root/boot/alias/c.disable"     ]   ||  begin

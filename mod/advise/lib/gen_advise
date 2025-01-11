@@ -65,6 +65,15 @@ ___x_cmd_advise_gen_advise__parse_adv_data(){
                     advise:debug "Generate $mod_name data/${tagfile%.yml*}.jso from adv/data/$tagfile"
                     < "$datafile" ___x_cmd scotty yml y2j | ___x_cmd_advise_gen_advise__merge_awk "$build_dev" > "$res_data/${tagfile%.yml*}.jso"
                     ;;
+            */desc.*md)
+                    [ -n "$build_dev" ] || {
+                        advise:debug "Not supported in normal mode ==> $datafile"
+                        continue
+                    }
+                    ___x_cmd ensurefp "$res_data/$tagfile"
+                    advise:info "Copy $datafile -> $res_data/$tagfile"
+                    ___x_cmd_cmds_cp "$datafile" "$res_data/$tagfile"
+                    ;;
             *)      [ -n "$build_dev" ] || {
                         advise:debug "Not supported in normal mode ==> $datafile"
                         continue

@@ -1,10 +1,10 @@
 {
+  "lang": "zig",
   "homepage": "https://ziglang.org/",
   "desc": {
     "cn": "Zig是一个通用的编程语言和工具链，用于维护稳健、高效和可重用的软件",
     "en": "Zig is a general-purpose programming language and toolchain for maintaining robust, optimal and reusable software"
   },
-  "lang": "zig",
   "rule": {
     "/asdf": {
       "cmd": "x asdf use zig",

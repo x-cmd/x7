@@ -75,6 +75,20 @@ null
 {
 "cmd"
 :
+"x arp --vendor"
+,
+"cn"
+:
+"显示 mac 地址对应的制造商或组织信息"
+,
+"en"
+:
+"Display the manufacturer or organization information associated with a MAC address"
+}
+,
+{
+"cmd"
+:
 "x arp --csv"
 ,
 "en"
@@ -128,6 +142,22 @@ null
 "en"
 :
 "Display all ARP cache tables, including entries in an incomplete state"
+}
+}
+,
+"-v|--vendor"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示 mac 地址对应的制造商或组织信息"
+,
+"en"
+:
+"Display the manufacturer or organization information associated with a MAC address"
 }
 }
 ,
@@ -239,6 +269,22 @@ null
 "en"
 :
 "Display all ARP cache tables, including entries in an incomplete state"
+}
+}
+,
+"-v|--vendor"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示 mac 地址对应的制造商或组织信息"
+,
+"en"
+:
+"Display the manufacturer or organization information associated with a MAC address"
 }
 }
 ,

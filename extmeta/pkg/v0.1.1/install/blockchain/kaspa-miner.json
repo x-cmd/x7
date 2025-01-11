@@ -2,8 +2,8 @@
   "lang": "rust",
   "homepage": "https://github.com/elichai/kaspa-miner",
   "desc": {
-    "en": "A Rust binary for file encryption to multiple participants",
-    "cn": "Rust 的二进制文件，用于向多个参与者进行文件加密"
+    "en": "A fast CPU miner for Kaspa",
+    "cn": "Kaspa 的快速 CPU 矿工"
   },
   "rule": {
     "/cargo": {

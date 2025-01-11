@@ -547,6 +547,7 @@ elfutils
 elixir-tools.nvim
 elprofiler
 elscheduler
+elua
 embedders.sile
 emdcriterion
 emitter
@@ -983,6 +984,7 @@ kikgit
 kiwi
 klib
 kong
+kong-adi-sanction-lists
 kong-advanced-router
 kong-aggregator
 kong-aliyun-http-filter
@@ -1173,6 +1175,7 @@ kong-plugin-kafka-log
 kong-plugin-key-auth-referer
 kong-plugin-key-secret
 kong-plugin-keycloak-auth-request
+kong-plugin-kong-authz-openfga
 kong-plugin-kong-plugin-auth
 kong-plugin-kong-rhsso
 kong-plugin-kubernetes-sidecar-injector
@@ -1419,6 +1422,7 @@ libssh2
 libtls
 libzmanim
 lice-lua
+licensegen
 lift
 lifter_puller
 light
@@ -4178,6 +4182,7 @@ xindicators
 xls-read
 xlsxwriter
 xlua
+xmake
 xml
 xml-json
 xml2lua

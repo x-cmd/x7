@@ -11,6 +11,6 @@
 
     ifname = $NF
 
-    printf( FMT,    ip, mac, cal_suspicious( ip, mac ),    ifname, scope, "" )
+    printf( FMT,    mac, ip, cal_suspicious( ip, mac ),    ifname, scope, "" )
 }
 

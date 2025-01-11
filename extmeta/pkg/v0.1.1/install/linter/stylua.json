@@ -2,7 +2,7 @@
   "lang": "Rust",
   "homepage": "https://github.com/JohnnyMorganz/StyLua",
   "desc": {
-    "cn": null,
+    "cn": "Lua 5.1、5.2、5.3、5.4、LuaJIT 和Luau的确定性代码格式化程序，使用full-moon构建",
     "en": "An opinionated code formatter for Lua 5.1, 5.2, 5.3, 5.4 and Luau, built using full-moon"
   },
   "rule": {

@@ -1,6 +1,6 @@
 
 BEGIN{
-    printf( "%s" OFS "%s" OFS "%s" OFS "%s" OFS "%s" OFS "%s" "\n", "ip", "mac", "suspicious", "if", "scope", "type" )
+    printf( "%s" OFS "%s" OFS "%s" OFS "%s" OFS "%s" OFS "%s" "\n", "mac", "ip", "suspicious", "if", "scope", "type" )
     all = (all == "yes") ? 1 : ""
 
     FMT =   "%s" OFS "%s" OFS "%s" OFS "%s" OFS "%s" OFS "%s" "\n"

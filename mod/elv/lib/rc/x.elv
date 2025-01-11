@@ -8,7 +8,7 @@ use runtime
 # if repl but less chatty set-env ___X_CMD_RUNMODE 5 # manual
 # if script ___X_CMD_RUNMODE 0
 
-if (eq $runtime:effective-rc-path $nil) {
+if (not-eq $runtime:effective-rc-path $nil) {
     set-env ___X_CMD_RUNMODE    9
 } else {
     set-env ___X_CMD_RUNMODE    0

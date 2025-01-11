@@ -1,6 +1,6 @@
 {
   "lang": "c",
-  "homepage": "git config pull.rebase false",
+  "homepage": "https://github.com/onetrueawk/awk",
   "desc": {
     "en": "The original awk described in \"The AWK Programming Language\"",
     "cn": "“AWK 编程语言” 中描述的最初 AWK"

@@ -15,6 +15,6 @@
 
     # TODO: Need to handle permanant -> type ? or scope ?
 
-    printf( FMT,    ip, mac, cal_suspicious( ip, mac ),    ifname, scope, type )
+    printf( FMT,    mac, ip, cal_suspicious( ip, mac ),    ifname, scope, type )
 }
 

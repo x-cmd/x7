@@ -24,7 +24,7 @@ ___x_cmd_advise___rm_bootcode(){
 
 if ! ___x_cmd_is_suitable_advise_env; then
     ___x_cmd_advise___entrance(){
-        advise:warn "advise completion is only available in interactive 'bash' or 'zsh'"
+        advise:warn "advise completion is not supported in the current environment"
     }
 else
     xrc:mod:lib advise  util  helper complete/_index

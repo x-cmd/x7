@@ -12,5 +12,5 @@
     mac = $2
     type = $3
 
-    printf( FMT,    ip, mac, cal_suspicious( ip, mac ),    ifname, "", type )
+    printf( FMT,    mac, ip, cal_suspicious( ip, mac ),    ifname, "", type )
 }
