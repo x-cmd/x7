@@ -155,9 +155,21 @@ ___x_cmd_pkg_sphere_fastboot___init(){
     local custom_sociality="$sociality"; local x_=
 
     ___x_cmd ensurefp "$file"
-    ___x_cmd_pkg_sphere link ls    \
-        --sphere "$sphere_name" --sphereroot "$___X_CMD_PKG_ROOT_SPHERE"    \
-        --osarch "$osarch" | while read -r l; do
+
+    local listdate; listdate="$(
+        ___x_cmd_pkg_sphere link ls    \
+            --sphere "$sphere_name" --sphereroot "$___X_CMD_PKG_ROOT_SPHERE"    \
+            --osarch "$osarch"
+    )" || return $?
+
+    [ -n "$listdate" ] || {
+        local cahcerc="$___X_CMD_PKG_ROOT_SPHERE/$sphere_name/.x-cmd/link/env.rc"
+        printf "%s\n" "" > "$file"
+        printf "%s\n" "" > "$cahcerc"
+        return 0
+    }
+
+    printf "%s\n" "$listdate" | while read -r l; do
             l="${l##*/}"
             name="${l%%_*}"
             version="${l#*_}"

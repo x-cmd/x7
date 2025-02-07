@@ -64,7 +64,10 @@ boot:info "Running x boot init"
         boot:info "Awk is not available in the current environment. Using cosmo awk instead."
         boot:info "If you install awk mannually later and want to deactivate this cosmo version awk -> x cosmo unuse awk"
         # Notice: In the future, we might consider using busybox awk.
-        ___x_cmd cosmo use awk
+        ___x_cmd cosmo use awk || {
+            boot:error "Failed to use cosmo version awk"
+            return 1
+        }
     }
 
     boot:info  --cmd 'x pkg bootupdate' \

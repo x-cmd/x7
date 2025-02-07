@@ -21,7 +21,7 @@ ___x_cmd_cosmo___install(){
     local tgt="$___X_CMD_COSMO_ASSIMILATE_PATH/$cosmobin"
 
     cosmo:info "Assimilate the cosmobin -> $cosmobin to $tgt"
-    [ -f "$tgt" ] ||  ___x_cmd_cosmo___assimilate "$cosmobin" "$tgt"
+    [ -f "$tgt" ] ||  ___x_cmd_cosmo___assimilate "$cosmobin" "$tgt" || N=cosmo M="Failed to assimilate cosmobin -> $cosmobin" log:ret:1
 
     cosmo:info "Moving $tgt to $bin_dir_path"
     if [ ! -w "$bin_dir_path" ]; then
