@@ -1,7 +1,7 @@
 # shellcheck shell=dash
 
 ___x_cmd log init pip
-xrc pkg
+xrc:mod:lib pkg     envvar
 xrc:mod:lib pip     nv  audit/_index
 
 ___x_cmd_pip___main(){

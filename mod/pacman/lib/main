@@ -28,7 +28,7 @@ ___x_cmd_pacman___nv(){
     local x_=""
     ___x_cmd_pacman___lsraw_ || return
     local datafile="$x_"
-    x_=; ___x_cmd_storeread_ x pick --width 40 --col 10  --datafile "$datafile" \
+    x_=; ___x_cmd storeread_ x pick --width 40 --col 10  --datafile "$datafile" \
         || {
             pacman:info "Exit because no software is selected."
             return 0

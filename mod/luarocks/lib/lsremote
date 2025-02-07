@@ -38,7 +38,7 @@ ___x_cmd_luarocks_lsremote_nv___app(){
     # TODO: ___X_CMD_LUAROCKS_MANIFEST_LIST_FP need pkg-mod
     local x_="";
     ___X_CMD_PICK_SHBIN_CODE="xrc pkg luarocks;" \
-        ___x_cmd_storeread_  x pick --width 40 --col 10 ___x_cmd_luarocks_lsremote_nv___ls
+        ___x_cmd storeread_  x pick --width 40 --col 10 ___x_cmd_luarocks_lsremote_nv___ls
     local software="$x_"
     [ -n "$software" ] || return 1
 

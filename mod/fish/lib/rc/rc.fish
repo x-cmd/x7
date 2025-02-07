@@ -66,6 +66,10 @@ if status is-interactive
     set -g ___X_CMD_RUNMODE 9
     # setenv ___X_CMD_CO_EXEC_SHELL=fish
 
+    [ -n "$___X_CMD_ADVISE_ACTIVATION_ON_NON_POSIX_SHELL" ] || begin
+        set -g ___X_CMD_ADVISE_ACTIVATION_ON_NON_POSIX_SHELL 1
+    end
+
     [ -f "$HOME/.x-cmd.root/boot/alias/c.disable"     ]   ||  begin
         function c
             if [ "$argv[1]" = "-" ]

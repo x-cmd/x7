@@ -33,7 +33,7 @@ ___x_cmd_pacman_ls___local(){
         pacman:info "Find installed software"
         local x=""
         ___X_CMD_PICK_SHBIN_CODE="xrc pacman" \
-        ___x_cmd_storeread_ x pick --width 40 --col 10  ___x_cmd_pacman_ls___install
+        ___x_cmd storeread_ x pick --width 40 --col 10  ___x_cmd_pacman_ls___install
     else
         ___x_cmd_pacman_ls___install
     fi
@@ -45,7 +45,7 @@ ___x_cmd_pacman_ls___available(){
         pacman:info "Find installable software"
         local x=""
         ___X_CMD_PICK_SHBIN_CODE="xrc pacman" \
-            ___x_cmd_storeread_ x pick --width 40 --col 10 ___x_cmd_pacman_ls___all
+            ___x_cmd storeread_ x pick --width 40 --col 10 ___x_cmd_pacman_ls___all
     else
         ___x_cmd_pacman_ls___all
     fi

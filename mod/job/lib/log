@@ -76,7 +76,7 @@ ___x_cmd_job_log_app_(){
     ___X_CMD_SHBIN_CODE='
         xrc job ;
         "$@"
-    ' ___x_cmd_antizshbin ___x_cmd_job_log_app___
+    ' ___x_cmd antizshbin ___x_cmd_job_log_app___
 }
 
 ___x_cmd_job_log_app___(){

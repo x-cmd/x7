@@ -5,13 +5,14 @@
 ___x_cmd_arp_ls(){
     local format=auto
     local all=no
-    local vendor=""
+    local vendor=1
 
     while [ $# -gt 0 ]; do
         case "$1" in
             -h|--help)        ___x_cmd help -m arp ls ; return 0 ;;
 
-            -v|--vendor)      vendor=1;            shift ;;
+            -n|--no-vendor)
+                              vendor="";           shift ;;
 
             -c|--csv)         format=csv;          shift ;;
             -t|--tsv)         format=tsv;          shift ;;
@@ -59,6 +60,8 @@ ___x_cmd_arp_ls_tsv(){
         return
     fi
 
+    # TODO: A better way to implement no-vendor is, use the cache only and no request.
+
     # local data;     data="$(___x_cmd_arp_ls_xsv "\t")"
     # local maclist;  maclist="$(___x_cmd_pipevar data ___x_cmd cutt 2: 2 | ___x_cmd ip macvendor --pipe)"
     # ___x_cmd tsv merge "$data" "$maclist"
@@ -98,7 +101,7 @@ ___x_cmd_arp_ls_xsv(){
 ___x_cmd_arp_ls_app(){
     # ___x_cmd_arp_ls_csv | ___x_cmd csv app
     local ___X_CMD_CSV_APP_SHBIN_CODE=
-    ___X_CMD_CSV_APP_SHBIN_CODE="xrc arp; local vendor=$vendor" \
+    ___X_CMD_CSV_APP_SHBIN_CODE="xrc arp; local vendor=$vendor; local all=$all" \
         ___x_cmd csv app ___x_cmd_arp_ls_csv  || return 1
 }
 

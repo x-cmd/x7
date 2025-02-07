@@ -84,7 +84,7 @@ ___x_cmd_ascii_table_app_(){
     ___X_CMD_SHBIN_CODE='
         xrc ascii ;
         "$@"
-    ' ___x_cmd_antizshbin ___x_cmd_ascii_table_app___ "$@"
+    ' ___x_cmd antizshbin ___x_cmd_ascii_table_app___ "$@"
 }
 
 ___x_cmd_ascii_table_app___(){

@@ -30,7 +30,7 @@ ___x_cmd_ma_info___yml(){
 
 ___x_cmd_ma_info___json(){
     # TODO: json to tsv
-    ___x_cmd_ma_info___tsv "$@"
+    ___x_cmd_ma_info___tsv "$@" | ___x_cmd tsv tocsv | ___x_cmd csv tojson
 }
 
 ___x_cmd_ma_info___raw(){

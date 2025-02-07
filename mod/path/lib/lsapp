@@ -15,7 +15,7 @@ ___x_cmd_path_lsapp(){
     [ -n "$___X_CMD_LS_APP_BASEDATA" ] || N=path M="PATH variable is empty" log:ret:64
 
     xrc:mod:lib ls  app/lsapp
-    local x_=; ___x_cmd_storerat_ ___x_cmd_ls_app_ "$@"     || return $?
+    local x_=; ___x_cmd storerat_ ___x_cmd_ls_app_ "$@"     || return $?
     [ -n "$x_" ] || return
     eval "$x_"
 

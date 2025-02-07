@@ -11,7 +11,7 @@ ___x_cmd_cosmo___install(){
         if ___x_cmd_is_stdout2tty; then
             xrc path
             cosmo:info "Select the target dir path where you want to install cosmo binary -> $cosmobin"
-            bin_dir_path="$(___x_cmd_path_lsapp)" || true
+            bin_dir_path="$(___x_cmd path lsapp)" || true
             [ -d "$bin_dir_path" ] || bin_dir_path="${bin_dir_path%/*}"
         fi
     }

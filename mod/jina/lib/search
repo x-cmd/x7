@@ -35,7 +35,7 @@ ___x_cmd_jina_search___app(){
         ___X_CMD_SHBIN_CODE='
             xrc jina ;
             "$@"
-        ' ___x_cmd_antizshbin ___x_cmd_jina_search___app_ "$@"
+        ' ___x_cmd antizshbin ___x_cmd_jina_search___app_ "$@"
     else
         ___x_cmd_jina_search___raw "$@"
     fi

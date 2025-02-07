@@ -1,6 +1,6 @@
 # shellcheck    shell=dash
 
-xrc param/latest
+xrc param
 
 ___x_cmd log init scotty
 

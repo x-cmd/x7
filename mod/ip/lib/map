@@ -30,7 +30,17 @@ A
 
     [ $# -gt 0 ] || N=ip M="Require argument" log:ret:64
 
-    printf "%s\n" "$@" | ___x_cmd_ip_map___pipe
+    {
+        while [ $# -gt 0 ]; do
+            case "$1" in
+                */*)        ___x_cmd_ip iter "$1" ;;
+                *)          printf "%s\n"   "$1" ;;
+            esac
+            shift
+        done
+    } | {
+        ___x_cmd_ip_map___pipe
+    }
 }
 
 ___x_cmd_ip_map___pipe(){

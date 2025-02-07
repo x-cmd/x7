@@ -3,7 +3,7 @@
 
 ___x_cmd_pkg___npm_populate()(
 
-    local ___X_CMD_PKG_RUNTIME_NODE_VERSION="v20.11.1"
+    local ___X_CMD_PKG_RUNTIME_NODE_VERSION="v22.11.0"
     case "$1" in
         --node_version)
             ___X_CMD_PKG_RUNTIME_NODE_VERSION="$2"; shift 2;;

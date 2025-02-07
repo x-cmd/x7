@@ -14,7 +14,11 @@ ___x_cmd_os___main(){
         is)                     ___x_cmd_os_is              "$@"    ;;
         uname_)                 ___x_cmd_os_uname_          "$@"    ;;
         name_)                  ___x_cmd_os_name_           "$@"    ;;
+        getname_)               ___x_cmd_os_getname_        "$@"    ;;
+
         arch_)                  ___x_cmd_os_arch_           "$@"    ;;
+        getarch_)               ___x_cmd_os_getarch_        "$@"    ;;
+
         uptime_)                ___x_cmd_os_uptime_         "$@"    ;;
 
         uname)                  ___x_cmd_os_uname           "$@"    ;;
@@ -28,7 +32,7 @@ ___x_cmd_os___main(){
         release)                ___x_cmd_os_release         "$@"    ;;
         rname)                  ___x_cmd_os_release_name    "$@"    ;;
 
-        path)                   ___x_cmd_path               "$@"    ;;
+        path)                   ___x_cmd path               "$@"    ;;
 
         # Detect cc environment
         # Detect cc

@@ -107,7 +107,7 @@ ___x_cmd_csv_app(){
     [ "$___X_CMD_CSV_APP_RET_STYLE" != "print" ] || local ___X_CMD_CSV_APP_DATA_CURROW=
     local x_=;
     if [ -z "$___X_CMD_CSV_APP_LOOP_PROCESSOR" ]; then
-        ___x_cmd_storerat_ ___x_cmd_csv_app_ "$@" || return $?
+        ___x_cmd storerat_ ___x_cmd_csv_app_ "$@" || return $?
         eval "$x_" || return $?
     else
         local ___X_CMD_CSV_APP_IS_LOOP=
@@ -116,7 +116,7 @@ ___x_cmd_csv_app(){
             ___X_CMD_CSV_APP_IS_LOOP=
             ___X_CMD_CSV_APP_LOOP_PROCESSOR_ARG=
             ___X_CMD_CSV_APP_DATA_CURROW=
-            x_=; ___x_cmd_storerat_ ___x_cmd_csv_app_ "$@" || return $?
+            x_=; ___x_cmd storerat_ ___x_cmd_csv_app_ "$@" || return $?
             eval "$x_" || return $?
             [ -n "$___X_CMD_CSV_APP_IS_LOOP" ] || break
             "$___X_CMD_CSV_APP_LOOP_PROCESSOR" "$___X_CMD_CSV_APP_LOOP_PROCESSOR_ARG" || return $?
@@ -151,7 +151,7 @@ ___x_cmd_csv_app_(){
         xrc csv ;
         '"$___X_CMD_CSV_APP_SHBIN_CODE"'
         "$@"
-    ' ___x_cmd_antizshbin ___x_cmd_csv_app___run "$@"
+    ' ___x_cmd antizshbin ___x_cmd_csv_app___run "$@"
 }
 
 ___x_cmd_csv_app___run(){

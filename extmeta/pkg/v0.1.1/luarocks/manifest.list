@@ -106,12 +106,14 @@ auto-hlsearch.nvim
 auto-session
 autoblock
 autosave.nvim
+avante.nvim
 away
 away-dataqueue
 away-luv
 awesome-audiowheel
 awesome-autostart
 awesome-battery_widget
+awesome-config
 awesome-dovetail
 awesome-ez
 awesome-freedesktop
@@ -263,6 +265,7 @@ chance
 chandra-toml
 charm
 chars
+chatml.nvim
 chatter
 chdir
 checks
@@ -466,9 +469,11 @@ dogma-core
 dogmac
 domotest
 donut.nvim
+donutlify.nvim
 doris.nvim
 dorm.lua
 down.lua
+down.nvim
 dprint
 dr.msgpuck
 dr.tap
@@ -625,7 +630,6 @@ fennel-ls
 fennel_rblx
 fenster
 ff
-ff-lua
 fffonion-busted
 fffonion-lua-resty-kafka
 ffi-bzlib
@@ -1480,6 +1484,7 @@ loadchunk
 loadconf
 loader
 loadkit
+lobby-server-sdk
 lobject
 localexec
 lockbox
@@ -1707,6 +1712,7 @@ lua-gmod-lib
 lua-gnuplot
 lua-h3
 lua-hangul
+lua-hash
 lua-hashings-and-nums
 lua-help
 lua-hiredis
@@ -1814,6 +1820,7 @@ lua-periphery
 lua-pg-dmo
 lua-pie
 lua-promise
+lua-promql-parser
 lua-protobuf
 lua-protobuf-etcd
 lua-quickcheck
@@ -2949,6 +2956,7 @@ oauth2
 oauth2-acl
 oauth2c
 oauth_light
+obazel.nvim
 obey
 obj
 objc.lua
@@ -3118,7 +3126,6 @@ pilosa
 pimp
 pipe
 pixcrypt
-pixie
 pkg
 pkgrock
 plain
@@ -3458,6 +3465,7 @@ smartquotes.sile
 smaz
 smbus
 smithsnmp
+smiti18n
 snacks.nvim
 snaphelpers
 sncl
@@ -3632,6 +3640,7 @@ testingunit
 testy
 tethys
 textsubsuper.sile
+tformat
 tgbot
 tgen
 tglua
@@ -3676,6 +3685,7 @@ torch-dir-loader
 torch-graph-criterion
 torch-hdf5-logger
 torch-word-emb
+tostring
 toto
 tpatterns
 tpdu
@@ -3805,6 +3815,7 @@ tree-sitter-http
 tree-sitter-hurl
 tree-sitter-hyprlang
 tree-sitter-idl
+tree-sitter-idris
 tree-sitter-ini
 tree-sitter-inko
 tree-sitter-ipkg
@@ -3924,6 +3935,7 @@ tree-sitter-scheme
 tree-sitter-scss
 tree-sitter-sflog
 tree-sitter-slang
+tree-sitter-slim
 tree-sitter-slint
 tree-sitter-smali
 tree-sitter-smithy
@@ -4204,6 +4216,7 @@ yamlstar
 yanky.nvim
 yazi.nvim
 ydauth-test
+ydblua
 yoke
 yoke-file
 yoke-imdb

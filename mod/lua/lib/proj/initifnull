@@ -1,7 +1,7 @@
 # shellcheck shell=dash
 
 ___x_cmd_lua_proj___initifnull_(){
-    ! ___x_cmd_locatefolder_ . lua_modules || return 0
+    ! ___x_cmd locatefolder_ . lua_modules || return 0
 
     ___x_cmd_runmode_allow_manual || N=lua M="Abort because No lua_modules found" log:ret:1
 
@@ -9,7 +9,7 @@ ___x_cmd_lua_proj___initifnull_(){
 
     lua:info "No lua_modules found in current directory and parent directories"
 
-    ! ___x_cmd_locatefolder_ . .x-cmd || {
+    ! ___x_cmd locatefolder_ . .x-cmd || {
         lua:info "We found .x-cmd directory in $x_"
 
         ___x_cmd ui select id  "What's next:" \

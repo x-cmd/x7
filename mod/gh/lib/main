@@ -2,8 +2,10 @@
 
 x log init gh
 xrc api arg param ui
-xrc gx/lib/share
-xrc:inner:lib gh          util cfg avatar       repo/index               org/index                  \
+xrc:mod gx/lib/share
+
+xrc:mod:lib gh              \
+    util cfg avatar       repo/index            org/index                                           \
     user/index            user/repo             user/ssh                 user/gpg                   \
     package/index         package/tag           team/index               team/repo                  \
     action/index          action/workflow       action/run               action/artifact            \

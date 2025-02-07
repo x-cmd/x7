@@ -24,22 +24,8 @@ null
 ,
 "cn"
 :
-"该模块用于显示本地系统的 ARP 缓存表，支持 CSV、TSV 和 TUI 应用三种输出格式。\nTSV/CSV 的表头信息为: ip, mac, if, suspicious, scope, type\n"
+"该模块用于显示本地系统的 ARP 缓存表，支持 CSV、TSV 和 TUI 应用三种输出格式。\nTSV/CSV 的表头信息为: mac, ip, suspicious, if, scope, type, vendor\n"
 }
-,
-"#tip"
-:
-[
-{
-"cn"
-:
-"目前该项目处于实验阶段"
-,
-"en"
-:
-"The project is currently in its experimental phase"
-}
-]
 ,
 "#tldr"
 :
@@ -75,15 +61,15 @@ null
 {
 "cmd"
 :
-"x arp --vendor"
+"x arp --no-vendor"
 ,
 "cn"
 :
-"显示 mac 地址对应的制造商或组织信息"
+"不显示 mac 地址对应的制造商或组织信息"
 ,
 "en"
 :
-"Display the manufacturer or organization information associated with a MAC address"
+"Do not display the manufacturer or organization information associated with the MAC address"
 }
 ,
 {
@@ -145,7 +131,7 @@ null
 }
 }
 ,
-"-v|--vendor"
+"-n|--no-vendor"
 :
 {
 "#desc"
@@ -153,11 +139,11 @@ null
 {
 "cn"
 :
-"显示 mac 地址对应的制造商或组织信息"
+"不显示 mac 地址对应的制造商或组织信息"
 ,
 "en"
 :
-"Display the manufacturer or organization information associated with a MAC address"
+"Do not display the manufacturer or organization information associated with the MAC address"
 }
 }
 ,
@@ -272,7 +258,7 @@ null
 }
 }
 ,
-"-v|--vendor"
+"-n|--no-vendor"
 :
 {
 "#desc"
@@ -280,11 +266,11 @@ null
 {
 "cn"
 :
-"显示 mac 地址对应的制造商或组织信息"
+"不显示 mac 地址对应的制造商或组织信息"
 ,
 "en"
 :
-"Display the manufacturer or organization information associated with a MAC address"
+"Do not display the manufacturer or organization information associated with the MAC address"
 }
 }
 ,

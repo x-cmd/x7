@@ -34,7 +34,7 @@ ___x_cmd_cosmo___ape_register(){
         ___x_cmd_cosmo___add "$x_" || return $?
     }
 
-    x_="$(___x_cmd_q1 "$apebinpath")"
+    ___x_cmd_shq1_ "$apebinpath"
     cosmo:warn "using sudo update [file=/proc/sys/fs/binfmt_misc/register]"
     ___x_cmd sudo sh -c '
         cp '"$x_"' /usr/bin/ape && {

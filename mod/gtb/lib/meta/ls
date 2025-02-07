@@ -19,7 +19,7 @@ ___x_cmd_gtb_meta_ls___app(){
         ___X_CMD_SHBIN_CODE='
             xrc gtb ;
             "$@"
-        ' ___x_cmd_antizshbin ___x_cmd_gtb_meta_ls___app___ "$@"
+        ' ___x_cmd antizshbin ___x_cmd_gtb_meta_ls___app___ "$@"
     else
         ___x_cmd_gtb_meta_ls___csv "$@"
     fi

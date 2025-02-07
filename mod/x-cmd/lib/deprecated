@@ -1,5 +1,0 @@
-
-___x_cmd_tab(){
-    x:warn "tab module is renamed to cutt"
-    ___x_cmd cutt "$@"
-}

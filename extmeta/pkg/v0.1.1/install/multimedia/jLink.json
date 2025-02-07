@@ -2,7 +2,7 @@
   "lang": "Shell",
   "homepage": "https://github.com/Watchdog0x/jLink",
   "desc": {
-    "cn": "jLink 是在 Linux 上管理 Jabra 头戴耳机和加密狗的终极解决方案。",
+    "cn": "jLink 是在 Linux 上管理 Jabra 耳机和适配器的终极解决方案。",
     "en": "jLink is the ultimate solution for managing Jabra headsets and dongles on Linux."
   },
   "rule": {
