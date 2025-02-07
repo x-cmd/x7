@@ -20,7 +20,7 @@ ___x_cmd_cmdshim___init_autogen_(){
         if   [ -x "/bin/$i" ];                              then binp="/bin/$i"
         elif [ -x "/usr/bin/$i" ];                          then binp="/usr/bin/$i"
         elif [ -x "/usr/local/bin/$i" ];                    then binp="/usr/local/bin/$i"
-        elif [ -x '/nix/var/nix/profiles/default/bin' ];    then binp="/nix/var/nix/profiles/default/bin/$i"
+        elif [ -x "/nix/var/nix/profiles/default/bin/$i" ];    then binp="/nix/var/nix/profiles/default/bin/$i"
         else
             cmdstr="$cmdstr
 ___x_cmd_cmds_$i(){
