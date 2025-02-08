@@ -18,24 +18,24 @@ ___x_cmd_telegram_bot(){
 ___x_cmd_telegram_bot_send() {
     param:subcmd ___x_cmd_telegram_bot_send    \
         --text            "send text"            \
+        --file            "send file"            \
         --poll            "send Poll"            \
+        --contact         "send Contact"         \
         --dice            "send Dice"            \
         --venue           "send Venue"           \
-        --contact         "send Contact"         \
+        --location        "send Location"        \
         --raw             "send raw json"        \
         --stop_poll       "send stopPoll"        \
-        --location        "send Location"        \
         --image           "send image"           \
         --video           "send Video"           \
-        --file            "send file"            \
         --video_note      "send VideoNote"       \
         --audio           "send Audio"           \
         --voice           "send Voice"           \
         --animation       "send Animation"       \
-        --chat_action     "send ChatAction"
 
     param:subcmd:try
     param:run
+        # --chat_action     "send ChatAction"
 
     if [ "$#" -eq 0 ]; then
         ___x_cmd_telegram bot send --help
@@ -300,21 +300,21 @@ A
 A
 }
 
-___x_cmd_telegram_bot_send_chat_action() {
-    param:scope     telegram
-    param:dsl <<A
-option:
-    --chat_id        "Provide chat_id"                                   <>:
-    --action         "Type of action to broadcast,:[typing, upload_photo, upload_video, upload_voice, upload_document, choose_sticker, find_location,upload_video_note]"
-                                                                         <action>:text
-    --webhook       "webhook"           <>=""
-A
-    param:run
-    local msg_type=sendChatAction
-    ___x_cmd_telegram_bot___send_json <<A
-{
-    "chat_id": "$chat_id",
-    "action":"$action"
-}
-A
-}
+# ___x_cmd_telegram_bot_send_chat_action() {
+#     param:scope     telegram
+#     param:dsl <<A
+# option:
+#     --chat_id        "Provide chat_id"                                   <>:
+#     --action         "Type of action to broadcast,:[typing, upload_photo, upload_video, upload_voice, upload_document, choose_sticker, find_location,upload_video_note]"
+#                                                                          <action>:text
+#     --webhook       "webhook"           <>=""
+# A
+#     param:run
+#     local msg_type=sendChatAction
+#     ___x_cmd_telegram_bot___send_json <<A
+# {
+#     "chat_id": "$chat_id",
+#     "action":"$action"
+# }
+# A
+# }

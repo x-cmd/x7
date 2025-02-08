@@ -32,6 +32,8 @@ ___x_cmd_telegram_bot___send_file() {
     local proxy
     ___x_cmd_telegram_cur proxy:= 2>/dev/null
 
+    [ -f "$file_path" ] || N=telegram M="File not found ==> $file_path" log:ret:1
+
     telegram:debug "$webhook/$msg_type"
     ___x_cmd curl -X POST ${proxy:+-x} ${proxy:+"$proxy"}   \
                     -H 'Content-Type:multipart/form-data'   \

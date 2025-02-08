@@ -245,7 +245,7 @@ true
 ,
 "cn"
 :
-"发送文本类型的消息"
+"发送文本消息"
 }
 ,
 "--mentioned_list"
@@ -405,7 +405,7 @@ true
 ,
 "cn"
 :
-"发送 markdown 类型的消息"
+"发送 markdown 消息"
 }
 ,
 "--webhook"
@@ -486,7 +486,7 @@ true
 ,
 "cn"
 :
-"发送 markdown 类型的消息到企业微信群"
+"发送 markdown 消息到企业微信群"
 ,
 "en"
 :
@@ -519,7 +519,7 @@ true
 ,
 "cn"
 :
-"发送图片类型的消息"
+"发送图片消息"
 }
 ,
 "--webhook"
@@ -621,11 +621,11 @@ true
 {
 "en"
 :
-"Send text type messages"
+"send raw json"
 ,
 "cn"
 :
-"发送企业微信机器人支持的 JSON 消息格式"
+"发送原始的 JSON 数据"
 }
 ,
 "--webhook"
@@ -698,7 +698,7 @@ true
 ,
 "cn"
 :
-"发送 markdown 类型的消息到企业微信群"
+"发送 markdown 消息到企业微信群"
 ,
 "en"
 :
@@ -745,7 +745,7 @@ true
 ,
 "cn"
 :
-"发送富文本类型的消息，由文字，图片，超链接组成"
+"发送富文本消息，由文字，图片，超链接组成"
 }
 ,
 "--url"
@@ -976,11 +976,11 @@ true
 {
 "en"
 :
-"Get WXwork webhook url:  https://developer.work.weixin.qq.com/document/path/91770\n"
+"Instructions for get WXwork webhook url:  https://developer.work.weixin.qq.com/document/path/91770\n"
 ,
 "cn"
 :
-"企业微信 webhook url 获取: https://developer.work.weixin.qq.com/document/path/91770\n"
+"企业微信 webhook url 获取指引: https://developer.work.weixin.qq.com/document/path/91770\n"
 }
 ]
 ,
@@ -1396,7 +1396,7 @@ true
 ,
 "cn"
 :
-"发送文本类型的消息"
+"发送文本消息"
 }
 ,
 "--mentioned_list"
@@ -1556,7 +1556,7 @@ true
 ,
 "cn"
 :
-"发送 markdown 类型的消息"
+"发送 markdown 消息"
 }
 ,
 "--webhook"
@@ -1637,7 +1637,7 @@ true
 ,
 "cn"
 :
-"发送 markdown 类型的消息到企业微信群"
+"发送 markdown 消息到企业微信群"
 ,
 "en"
 :
@@ -1670,7 +1670,7 @@ true
 ,
 "cn"
 :
-"发送图片类型的消息"
+"发送图片消息"
 }
 ,
 "--webhook"
@@ -1772,11 +1772,11 @@ true
 {
 "en"
 :
-"Send text type messages"
+"send raw json"
 ,
 "cn"
 :
-"发送企业微信机器人支持的 JSON 消息格式"
+"发送原始的 JSON 数据"
 }
 ,
 "--webhook"
@@ -1849,7 +1849,7 @@ true
 ,
 "cn"
 :
-"发送 markdown 类型的消息到企业微信群"
+"发送 markdown 消息到企业微信群"
 ,
 "en"
 :
@@ -1896,7 +1896,7 @@ true
 ,
 "cn"
 :
-"发送富文本类型的消息，由文字，图片，超链接组成"
+"发送富文本消息，由文字，图片，超链接组成"
 }
 ,
 "--url"
@@ -2096,7 +2096,7 @@ true
 ,
 "cn"
 :
-"发送 markdown 类型的消息到企业微信群"
+"发送 markdown 消息到企业微信群"
 ,
 "en"
 :
@@ -2143,11 +2143,11 @@ true
 {
 "en"
 :
-"Get the webhook url for WXwork group bot:  https://developer.work.weixin.qq.com/document/path/91770\n- Interactive env use `x qywx init` to initialize configuration. The configure will be saved locally.\n- Run command `x qywx --cfg webhook=<webhook_url>` to add webhook url.\n"
+"Instructions for get the webhook url for WXwork group bot:  https://developer.work.weixin.qq.com/document/path/91770\n- Interactive env use `x qywx init` to initialize configuration. The configure will be saved locally.\n- Run command `x qywx --cfg webhook=<webhook_url>` to add webhook url.\n"
 ,
 "cn"
 :
-"企业微信群机器人 webhook url 获取: https://developer.work.weixin.qq.com/document/path/91770\n- 交互环境中可使用 `x qywx init` 进行初始化配置，配置信息将存放于本地保存\n- 亦可运行命令 `x qywx --cfg webhook=<webhook_url>` 添加 webhook url\n"
+"企业微信群机器人 webhook url 获取指引: https://developer.work.weixin.qq.com/document/path/91770\n- 交互环境中可使用 `x qywx init` 进行初始化配置，配置信息将存放于本地保存\n- 亦可运行命令 `x qywx --cfg webhook=<webhook_url>` 添加 webhook url\n"
 }
 ]
 ,
@@ -2189,7 +2189,7 @@ true
 ,
 "cn"
 :
-"发送 markdown 类型的消息到企业微信群"
+"发送 markdown 消息到企业微信群"
 ,
 "en"
 :

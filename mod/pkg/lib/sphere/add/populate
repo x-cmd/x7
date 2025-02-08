@@ -79,9 +79,11 @@ ___x_cmd_pkg_sphere_populate_run(){
 
     ___x_cmd_pkg_sphere_populate___chmod "$name" "$version" "$osarch" "$tgt" || return $?
 
-    ___x_cmd_pkg_sphere snap gen_execfp \
-        --sphere "$sphere_name" --sphereroot "$___X_CMD_PKG_ROOT_SPHERE" \
-        --osarch "$osarch" "$name" "$version" || return $?
+    if ___x_cmd_pkg___is_support_use "$name"; then
+        ___x_cmd_pkg_sphere snap gen_execfp \
+            --sphere "$sphere_name" --sphereroot "$___X_CMD_PKG_ROOT_SPHERE" \
+            --osarch "$osarch" "$name" "$version" || return $?
+    fi
 
     pkg:debug "Add $name $version populate done file"
     ___x_cmd touch "$done_file"
