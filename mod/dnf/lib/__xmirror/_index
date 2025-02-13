@@ -8,7 +8,7 @@ ___x_cmd_dnf___xmirror(){
         # TODO: maybe just use 'x yum --xmirror "$@"'
 
         ls|set|current|unset)      ___x_cmd_mirror_dnf        "$op" "$@" ;;
-        -h|--help)                 x help -m dnf mirror             "$@" ;;
+        -h|--help)                 ___x_cmd help -m dnf mirror             "$@" ;;
     esac
 }
 
@@ -24,11 +24,11 @@ ___x_cmd_mirror_dnf(){
     local op="$1"; shift
     case "$op" in
         -h|--help)
-            x help -m mirror dnf "$@"
+            ___x_cmd help -m mirror dnf "$@"
             return   ;;
     esac
-    local ___X_CMD_OS_RELEASE="$(x os rname)"
-    x hascmd dnf || N=mirror M="[command=dnf] not found." log:ret:1
+    local ___X_CMD_OS_RELEASE="$(___x_cmd os rname)"
+    ___x_cmd hascmd dnf || N=mirror M="[command=dnf] not found." log:ret:1
     case "$op" in
         ls|replace|current|unset)
                 ___x_cmd_mirror_dnf_"${op}"               "$@" ;;
@@ -68,7 +68,7 @@ ___x_cmd_mirror_dnf_replace(){
     [ "$#" -gt 0 ] ||   set -- ali
     case "$1" in
         -h|--help)
-            x help -m mirror dnf replace "$@"
+            ___x_cmd help -m mirror dnf replace "$@"
             return   ;;
     esac
 
@@ -128,7 +128,7 @@ ___x_cmd_mirror_dnf_replace(){
     mirror:info "Restarting dnf"
     dnf clean all
     if [ "$(id -u)" -ne 0 ]; then
-        x sudo dnf makecache
+        ___x_cmd sudo dnf makecache
     else
         dnf makecache
     fi
@@ -160,7 +160,7 @@ ___x_cmd_mirror_dnf_unset(){
 
 
     if [ "$(id -u)" -ne 0 ]; then
-        x sudo dnf makecache
+        ___x_cmd sudo dnf makecache
     else
                dnf makecache
     fi

@@ -1,0 +1,114 @@
+{
+"--title"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"消息的标题"
+,
+"en"
+:
+"The title of the message"
+}
+}
+,
+"--linktitle"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"按钮的标题"
+,
+"en"
+:
+"The title of the button"
+}
+}
+,
+"--linkurl"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"点击按钮跳转的 URL 地址"
+,
+"en"
+:
+"The URL the button redirects to"
+}
+}
+,
+"--json|-j"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"以 JSON 格式输出"
+,
+"en"
+:
+"Output in Json format"
+}
+}
+,
+"-H|--btn_horizontal"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"按钮采用横向排列"
+,
+"en"
+:
+"The buttons are arranged horizontally"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"The content of the message"
+,
+"cn"
+:
+"消息的内容"
+}
+}
+}
+

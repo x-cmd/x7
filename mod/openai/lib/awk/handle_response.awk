@@ -16,7 +16,7 @@ END{
         log_error(PROVIDER_NAME, log_mul_msg(msg_str))
         print msg_str                               > (OPENAI_CONTENT_DIR "/chat.error.yml")
 
-        if ( PROVIDER_NAME == "openai" ){
+        if (( PROVIDER_NAME == "openai" ) && ( PROVIDER_NAME == "deepseek" )){
             type = juq(o_error[ SUBSEP "\"1\"" SUBSEP "\"error\"" SUBSEP "\"type\"" ])
             if (type ~ "^(insufficient_quota|invalid_request_error)$") exit(2)
             exit(1)

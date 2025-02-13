@@ -1,12 +1,12 @@
 # shellcheck shell=dash disable=SC2034,SC2016
-xrc proxy
-x log init dnf
-xrc:mod:lib dnf     __xmirror/_index __xproxy __repo install nv
+
+___x_cmd log init dnf
+xrc:mod:lib dnf     __xmirror/_inde___x_cmd __xproxy __repo install nv
 
 ___x_cmd_dnf___main(){
     [ "$#" -gt 0 ] ||   set -- nv
 
-    x hascmd dnf || {
+    ___x_cmd hascmd dnf || {
         dnf:warn "dnf command not found."
         return 1
     }
@@ -26,14 +26,14 @@ ___x_cmd_dnf___main(){
         |upgrade-minimal)
                             ___x_cmd_dnf___exec     "$op"   "$@" ;;
 
-        --help|-h)          x help -m dnf;          return       ;;
+        --help|-h)          ___x_cmd help -m dnf;          return       ;;
         *)                  ___x_cmd_cmds dnf       "$op"   "$@" ;;
     esac
 }
 
 ___x_cmd_dnf___exec(){
-    dnf:info "running command  →  x sudo dnf $*"
-    ___x_cmd_dnf___xproxy run x sudo dnf "$@"
+    dnf:info "running command  →  ___x_cmd sudo dnf $*"
+    ___x_cmd_dnf___xproxy run ___x_cmd sudo dnf "$@"
 }
 
 
@@ -46,14 +46,14 @@ ___x_cmd_dnf___lsraw(){
 ___x_cmd_dnf___lsraw_(){
     local dnffp=;   dnffp="/var/cache/dnf/updates.solv"
     local cachefp=; cachefp="$___X_CMD_ROOT_DATA/dnf/cache/lsname"
-    x ensurefp "$cachefp"
+    ___x_cmd ensurefp "$cachefp"
 
     [ "$cachefp" -nt "$dnffp" ] || ___x_cmd_dnf___repo_lsname > "$cachefp"
     local l=;
     <"$cachefp" read -r l
 
     [ -n "$l" ] || {
-        x rmrf "$cachefp"
+        ___x_cmd rmrf "$cachefp"
         dnf:error "list software fail, please try again."
         return 1
     }

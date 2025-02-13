@@ -2,32 +2,6 @@
 
 # Reference: https://discord.com/developers/docs/resources/webhook#execute-webhook
 
-# Section(inner): curl send_json, send_file
-
-___x_cmd_discord_bot___send_json() {
-    local req_json ; req_json="$(___x_cmd_cmds_cat)"
-    discord:debug "$(printf "%s" "$req_json" | ___x_cmd jo fmt)"
-
-    local webhook
-    ___x_cmd_discord_cur webhook:= 2>/dev/null
-    [ -n "$webhook" ] || N=discord M="Please setting up your webhook first ==> 'x discord --cfg webhook=<your webhook url>'" log:ret:1
-
-    local res ; res="$(___x_cmd_http post json "$webhook?wait=true" "$req_json")"
-    printf "%s" "$res"
-}
-
-___x_cmd_discord_bot___send_file() {
-    local webhook
-    ___x_cmd_discord_cur webhook:= 2>/dev/null
-    [ -n "$webhook" ] || N=discord M="Please setting up your webhook first ==> 'x discord --cfg webhook=<your webhook url>'" log:ret:1
-
-    local cmd="___x_cmd_discord___curl -X POST '$webhook' -H 'Content-Type:multipart/form-data' -F file=@${1}"
-    # TODO: when http return error code, curl will not return error code
-    local res ; res="$(eval "$cmd")"
-    printf "%s" "$res"
-}
-
-# EndSection
 
 ___x_cmd_discord_bot(){
     param:subcmd ___x_cmd_discord_bot    \
@@ -40,11 +14,11 @@ ___x_cmd_discord_bot(){
 }
 
 ___x_cmd_discord_bot_send() {
-    param:subcmd ___x_cmd_discord_bot_send       \
-        text             "send text"             \
-        file             "send file"             \
-        raw              "send raw json"         \
-        card            "send card"
+    param:subcmd ___x_cmd_discord_bot_send        \
+        --text            "send text"             \
+        --file            "send file"             \
+        --raw             "send raw json"         \
+        --card            "send card"
 
     param:subcmd:try
     param:run
@@ -75,8 +49,8 @@ ___x_cmd_discord_bot_send_file() {
     param:scope             discord
     param:dsl <<A
 option:
+    #1              "provide file_path"             <>
     --json          "output origin json data"
-    #1              "provide file_path"         <file_path>:file_path
 A
     param:run
     local res ; res="$(___x_cmd_discord_bot___send_file "$1" )"|| return 1

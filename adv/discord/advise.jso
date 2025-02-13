@@ -221,7 +221,7 @@ true
 }
 }
 ,
-"text"
+"--text"
 :
 {
 "#name"
@@ -232,16 +232,16 @@ true
 null
 }
 ,
+"#subcmd"
+:
+true
+,
 "#desc"
 :
 {
 "en"
 :
-"Send text type messages"
-,
-"cn"
-:
-"发送文本类型的消息"
+"send text"
 }
 ,
 "--json|-j"
@@ -275,27 +275,9 @@ null
 ""
 }
 }
-,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x discord bot send text <content>"
-,
-"cn"
-:
-"发送文本类型的消息到你的 discord"
-,
-"en"
-:
-"Send text type messages to your discord"
-}
-]
 }
 ,
-"file"
+"--file"
 :
 {
 "#name"
@@ -306,16 +288,16 @@ null
 null
 }
 ,
+"#subcmd"
+:
+true
+,
 "#desc"
 :
 {
 "en"
 :
-"Upload local file"
-,
-"cn"
-:
-"上传本地文件"
+"send file"
 }
 ,
 "--json"
@@ -340,36 +322,10 @@ null
 :
 "provide file_path"
 }
-,
-"#regex"
-:
-{
-"^\/.+"
-:
-""
 }
 }
 ,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x discord bot send file <file_path>"
-,
-"cn"
-:
-"上传本地文件到你的 discord"
-,
-"en"
-:
-"Upload local file to your discord"
-}
-]
-}
-,
-"raw"
+"--raw"
 :
 {
 "#name"
@@ -379,6 +335,10 @@ null
 :
 null
 }
+,
+"#subcmd"
+:
+true
 ,
 "#desc"
 :
@@ -411,37 +371,9 @@ null
 "Provide raw json"
 }
 }
-,
-"#synopsis"
-:
-[
-{
-"cmd"
-:
-"x discord bot send raw - <<A\njson format data\nA"
-}
-]
-,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x discord bot send raw - <<A\n{\n  \"content\":\"<content>\"\n}\nA"
-,
-"cn"
-:
-"发送文本类型的消息到你的 discord"
-,
-"en"
-:
-"Send text type messages to your discord"
-}
-]
 }
 ,
-"card"
+"--card"
 :
 {
 "#name"
@@ -452,16 +384,16 @@ null
 null
 }
 ,
+"#subcmd"
+:
+true
+,
 "#desc"
 :
 {
 "en"
 :
-"Send card type messages"
-,
-"cn"
-:
-"发送卡片类型的消息"
+"send card"
 }
 ,
 "--username"
@@ -1039,24 +971,6 @@ true
 "output origin json data"
 }
 }
-,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x discord bot send card\n  --username \"Webhook\"\n  --avatar_url \"https://i.imgur.com/4M34hi2.png\"\n  --content \"Text message.\"\n  --author_name \"Birdie\"\n  --author_url \"https://www.reddit.com/r/cats/\"\n  --author_icon_url \"https://i.imgur.com/R66g1Pe.jpg\"\n  --title \"HI\"\n  --title_url \"https://google.com/\"\n  --color 15258703\n  --description \"Text message. You can use Markdown here.\"\n  --fields \"webhook\" \"this is bot\"\n  --image_url \"https://media.discordapp.net/attachments/1012546701527101463/1012641876014288906/test.jpeg\"\n  --thumbnail_url \"https://media.discordapp.net/attachments/1012546701527101463/1012641876014288906/test.jpeg\"\n  --footer_text \"Woah! So cool! :smirk:\"\n  --footer_icon_url \"https://i.imgur.com/fKL31aD.jpg\""
-,
-"cn"
-:
-"发送以下请求参数的嵌入类型消息到你的 discord"
-,
-"en"
-:
-"Send a card type message for the following request parameters to your discord"
-}
-]
 }
 ,
 "#synopsis"
@@ -1108,6 +1022,140 @@ true
 "Upload local file to your discord"
 }
 ]
+,
+"raw"
+:
+{
+"#synopsis"
+:
+[
+{
+"cmd"
+:
+"x discord bot send raw - <<A\njson format data\nA"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x discord bot send raw - <<A\n{\n  \"content\":\"<content>\"\n}\nA"
+,
+"cn"
+:
+"发送文本类型的消息到你的 discord"
+,
+"en"
+:
+"Send text type messages to your discord"
+}
+]
+}
+,
+"text"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"发送文本类型的消息"
+,
+"en"
+:
+"Send text type messages"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x discord bot send text <content>"
+,
+"cn"
+:
+"发送文本类型的消息到你的 discord"
+,
+"en"
+:
+"Send text type messages to your discord"
+}
+]
+}
+,
+"file"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"上传本地文件"
+,
+"en"
+:
+"Upload local file"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x discord bot send file <file_path>"
+,
+"cn"
+:
+"上传本地文件到你的 discord"
+,
+"en"
+:
+"Upload local file to your discord"
+}
+]
+}
+,
+"card"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"发送卡片类型的消息"
+,
+"en"
+:
+"Send card type messages"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x discord bot send card\n  --username \"Webhook\"\n  --avatar_url \"https://i.imgur.com/4M34hi2.png\"\n  --content \"Text message.\"\n  --author_name \"Birdie\"\n  --author_url \"https://www.reddit.com/r/cats/\"\n  --author_icon_url \"https://i.imgur.com/R66g1Pe.jpg\"\n  --title \"HI\"\n  --title_url \"https://google.com/\"\n  --color 15258703\n  --description \"Text message. You can use Markdown here.\"\n  --fields \"webhook\" \"this is bot\"\n  --image_url \"https://media.discordapp.net/attachments/1012546701527101463/1012641876014288906/test.jpeg\"\n  --thumbnail_url \"https://media.discordapp.net/attachments/1012546701527101463/1012641876014288906/test.jpeg\"\n  --footer_text \"Woah! So cool! :smirk:\"\n  --footer_icon_url \"https://i.imgur.com/fKL31aD.jpg\""
+,
+"cn"
+:
+"发送以下请求参数的嵌入类型消息到你的 discord"
+,
+"en"
+:
+"Send a card type message for the following request parameters to your discord"
+}
+]
+}
 }
 }
 ,
@@ -1544,7 +1592,7 @@ true
 }
 }
 ,
-"text"
+"--text"
 :
 {
 "#name"
@@ -1555,16 +1603,16 @@ true
 null
 }
 ,
+"#subcmd"
+:
+true
+,
 "#desc"
 :
 {
 "en"
 :
-"Send text type messages"
-,
-"cn"
-:
-"发送文本类型的消息"
+"send text"
 }
 ,
 "--json|-j"
@@ -1598,27 +1646,9 @@ null
 ""
 }
 }
-,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x discord send text <content>"
-,
-"cn"
-:
-"发送文本类型的消息到你的 discord"
-,
-"en"
-:
-"Send text type messages to your discord"
-}
-]
 }
 ,
-"file"
+"--file"
 :
 {
 "#name"
@@ -1629,16 +1659,16 @@ null
 null
 }
 ,
+"#subcmd"
+:
+true
+,
 "#desc"
 :
 {
 "en"
 :
-"Upload local file"
-,
-"cn"
-:
-"上传本地文件"
+"send file"
 }
 ,
 "--json"
@@ -1663,36 +1693,10 @@ null
 :
 "provide file_path"
 }
-,
-"#regex"
-:
-{
-"^\/.+"
-:
-""
 }
 }
 ,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x discord send file <file_path>"
-,
-"cn"
-:
-"上传本地文件到你的 discord"
-,
-"en"
-:
-"Upload local file to your discord"
-}
-]
-}
-,
-"raw"
+"--raw"
 :
 {
 "#name"
@@ -1702,6 +1706,10 @@ null
 :
 null
 }
+,
+"#subcmd"
+:
+true
 ,
 "#desc"
 :
@@ -1734,37 +1742,9 @@ null
 "Provide raw json"
 }
 }
-,
-"#synopsis"
-:
-[
-{
-"cmd"
-:
-"x discord send raw - <<A\n  json format data\n  A"
-}
-]
-,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x discord send raw - <<A\n{\n  \"content\":\"<content>\"\n}\nA"
-,
-"cn"
-:
-"发送文本类型的消息到你的 discord"
-,
-"en"
-:
-"Send text type messages to your discord"
-}
-]
 }
 ,
-"card"
+"--card"
 :
 {
 "#name"
@@ -1775,16 +1755,16 @@ null
 null
 }
 ,
+"#subcmd"
+:
+true
+,
 "#desc"
 :
 {
 "en"
 :
-"Send card type messages"
-,
-"cn"
-:
-"发送卡片类型的消息"
+"send card"
 }
 ,
 "--username"
@@ -2362,24 +2342,6 @@ true
 "output origin json data"
 }
 }
-,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x discord send card\n  --username \"Webhook\"\n  --avatar_url \"https://i.imgur.com/4M34hi2.png\"\n  --content \"Text message.\"\n  --author_name \"Birdie\"\n  --author_url \"https://www.reddit.com/r/cats/\"\n  --author_icon_url \"https://i.imgur.com/R66g1Pe.jpg\"\n  --title \"HI\"\n  --title_url \"https://google.com/\"\n  --color 15258703\n  --description \"Text message. You can use Markdown here.\"\n  --fields \"webhook\" \"this is bot\"\n  --image_url \"https://media.discordapp.net/attachments/1012546701527101463/1012641876014288906/test.jpeg\"\n  --thumbnail_url \"https://media.discordapp.net/attachments/1012546701527101463/1012641876014288906/test.jpeg\"\n  --footer_text \"Woah! So cool! :smirk:\"\n  --footer_icon_url \"https://i.imgur.com/fKL31aD.jpg\""
-,
-"cn"
-:
-"发送以下请求参数的嵌入类型消息到你的 discord"
-,
-"en"
-:
-"Send a card type message for the following request parameters to your discord"
-}
-]
 }
 ,
 "#synopsis"
@@ -2431,6 +2393,140 @@ true
 "Upload local file to your discord"
 }
 ]
+,
+"raw"
+:
+{
+"#synopsis"
+:
+[
+{
+"cmd"
+:
+"x discord send raw - <<A\n  json format data\n  A"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x discord send raw - <<A\n{\n  \"content\":\"<content>\"\n}\nA"
+,
+"cn"
+:
+"发送文本类型的消息到你的 discord"
+,
+"en"
+:
+"Send text type messages to your discord"
+}
+]
+}
+,
+"text"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"发送文本类型的消息"
+,
+"en"
+:
+"Send text type messages"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x discord send text <content>"
+,
+"cn"
+:
+"发送文本类型的消息到你的 discord"
+,
+"en"
+:
+"Send text type messages to your discord"
+}
+]
+}
+,
+"file"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"上传本地文件"
+,
+"en"
+:
+"Upload local file"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x discord send file <file_path>"
+,
+"cn"
+:
+"上传本地文件到你的 discord"
+,
+"en"
+:
+"Upload local file to your discord"
+}
+]
+}
+,
+"card"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"发送卡片类型的消息"
+,
+"en"
+:
+"Send card type messages"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x discord send card\n  --username \"Webhook\"\n  --avatar_url \"https://i.imgur.com/4M34hi2.png\"\n  --content \"Text message.\"\n  --author_name \"Birdie\"\n  --author_url \"https://www.reddit.com/r/cats/\"\n  --author_icon_url \"https://i.imgur.com/R66g1Pe.jpg\"\n  --title \"HI\"\n  --title_url \"https://google.com/\"\n  --color 15258703\n  --description \"Text message. You can use Markdown here.\"\n  --fields \"webhook\" \"this is bot\"\n  --image_url \"https://media.discordapp.net/attachments/1012546701527101463/1012641876014288906/test.jpeg\"\n  --thumbnail_url \"https://media.discordapp.net/attachments/1012546701527101463/1012641876014288906/test.jpeg\"\n  --footer_text \"Woah! So cool! :smirk:\"\n  --footer_icon_url \"https://i.imgur.com/fKL31aD.jpg\""
+,
+"cn"
+:
+"发送以下请求参数的嵌入类型消息到你的 discord"
+,
+"en"
+:
+"Send a card type message for the following request parameters to your discord"
+}
+]
+}
 }
 ,
 "#useparam"

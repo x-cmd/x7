@@ -12,7 +12,7 @@ ___x_cmd_dnf_install___app(){
     local dnffp=;   dnffp="/var/cache/dnf/updates.solv"
     [ -f "$dnffp" ] || {
         dnf:info "Update the software in the repository."
-        x dnf upgrade -y || N="dnf" M="dnf update fail" log:ret:1
+        ___x_cmd dnf upgrade -y || N="dnf" M="dnf update fail" log:ret:1
     }
 
     ___x_cmd_is_stdout2tty || {
@@ -26,7 +26,7 @@ ___x_cmd_dnf_install___app(){
     local x_=""
     ___x_cmd_dnf___lsraw_ || return $?
     local datafile="$x_"
-    x_=; ___X_CMD_PICK_SHBIN_CODE="xrc dnf" ___x_cmd storeread_ x pick --width 40 --col 10 --datafile "$datafile"
+    x_=; ___X_CMD_PICK_SHBIN_CODE="xrc dnf" ___x_cmd storeread_ ___x_cmd pick --width 40 --col 10 --datafile "$datafile"
     local software="$x_"
 
     [ -n "$software" ] || {
@@ -35,7 +35,7 @@ ___x_cmd_dnf_install___app(){
     }
 
     local id
-    x ui select id "What to do NEXT"    \
+    ___x_cmd ui select id "What to do NEXT"    \
         "x dnf install   $software"     \
         "x dnf reinstall $software"     \
         "x dnf info      $software"     \
@@ -43,11 +43,11 @@ ___x_cmd_dnf_install___app(){
         "dnf --help"                    \
         "EXIT"     || return $?
     case "$id" in
-        1)      x dnf install   "$software" ;;
-        2)      x dnf reinstall "$software" ;;
-        3)      x dnf info      "$software" ;;
+        1)      ___x_cmd dnf install   "$software" ;;
+        2)      ___x_cmd dnf reinstall "$software" ;;
+        3)      ___x_cmd dnf info      "$software" ;;
         4)      ___x_cmd_dnf___repo_browse "$software" ;;
-        5)      x help -m dnf ;;
+        5)      ___x_cmd help -m dnf ;;
         6)      return 0 ;;
     esac
 }

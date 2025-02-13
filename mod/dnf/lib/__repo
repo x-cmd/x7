@@ -20,11 +20,11 @@ ___x_cmd_dnf___repo_lsname(){
 
 ___x_cmd_dnf___repo_browse(){
     [ $# -gt 0 ] || {
-        x browse "https://packages.fedoraproject.org/"
+        ___x_cmd browse "https://packages.fedoraproject.org/"
         return
     }
 
-    x browse "https://packages.fedoraproject.org/search?query=${1%.*}"
+    ___x_cmd browse "https://packages.fedoraproject.org/search?query=${1%.*}"
 }
 
 ___x_cmd_dnf___repo_search(){

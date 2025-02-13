@@ -2,45 +2,39 @@
 
 # Reference: https://open.feishu.cn/document/ukTMukTMukTM/ucTM5YjL3ETO24yNxkjN#8b0f2a1b
 
-# Section(inner): endpoint, send_json
-
-___x_cmd_feishu_bot___send_json() {
-    local req_json; req_json="$(___x_cmd_cmds_cat)"
-    feishu:debug "$(printf "%s" "$req_json" | x jo fmt)"
-
-    local webhook
-    ___x_cmd_feishu_cur webhook:= 2>/dev/null
-    [ -n "$webhook" ] || N=feishu M="Please setting up your webhook first ==> 'x feishu --cfg webhook=<your webhook url>'" log:ret:1
-
-    local res ; res="$(___x_cmd_http post json "$webhook?wait=true" "$req_json")"
-    printf "%s" "$res"
-}
-
-# EndSection
-
 ___x_cmd_feishu_bot(){
     param:subcmd ___x_cmd_feishu_bot    \
         send   "send msg"
 
     param:subcmd:try
     param:run
-    feishu:error "Subcommand required"
-    ___x_cmd_feishu help
+
+    if [ "$#" -eq 0 ]; then
+        ___x_cmd_feishu bot --help
+    else
+        ___x_cmd_feishu bot send "$@"
+    fi
+    return
 }
 
 ___x_cmd_feishu_bot_send() {
-    param:subcmd ___x_cmd_feishu_bot_send       \
-        text             "send text"            \
-        richtext         "send rich text msg"   \
-        share_chat       "send group card"      \
-        raw              "send raw json"        \
-        image            "send image"
+    param:subcmd ___x_cmd_feishu_bot_send         \
+        --text             "send text"            \
+        --richtext         "send rich text msg"   \
+        --share_chat       "send group card"      \
+        --raw              "send raw json"        \
+        --image            "send image"
         # card             "send card"
 
     param:subcmd:try
     param:run
 
-    ___x_cmd_feishu_bot_send_text "$@"
+    if [ "$#" -eq 0 ]; then
+        ___x_cmd_feishu bot send --help
+    else
+        ___x_cmd_feishu_bot_send_text "$@"
+    fi
+    return
 }
 
 ___x_cmd_feishu_bot_send_text() {
@@ -48,8 +42,8 @@ ___x_cmd_feishu_bot_send_text() {
     param:dsl <<A
 option:
     #1              "Provide text"              <content>:text
+    --webhook       "webhook"                   <>=""
     --json|-j       "output origin json data"
-
 A
     param:run
     local text="$1"
@@ -70,6 +64,7 @@ ___x_cmd_feishu_bot_send_raw() {
     param:dsl <<A
 option:
     #1              "Provide raw json"          <raw>:json
+    --webhook       "webhook"                   <>=""
     --json|-j       "output origin json data"
 
 A
@@ -100,6 +95,7 @@ option:
     --img|m             "Provide the key you obtained from the upload image interface [ <image_key> ]"
             <image_key>:image_key
 
+    --webhook           "webhook"                   <>=""
     --json|-j           "output origin json data"
 
 A
@@ -161,9 +157,9 @@ ___x_cmd_feishu_bot_send_share_chat() {
     param:scope     feishu
     param:dsl <<A
 option:
-    --share_chat_id    "Provide share chat id"    <share_chat_id>:share_chat_id
+    --share_chat_id     "Provide share chat id"    <share_chat_id>:share_chat_id
+    --webhook           "webhook"                   <>=""
     --json|-j           "output origin json data"
-
 A
     param:run
 
@@ -184,6 +180,7 @@ ___x_cmd_feishu_bot_send_image() {
     param:dsl <<A
 option:
     --image_key     "Provide the key you obtained from the upload image interface"    <image_key>:image_key
+    --webhook       "webhook"                                                         <>=""
     --json|-j       "output origin json data"
 
 A
