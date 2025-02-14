@@ -94,21 +94,5 @@
 "The webhook used by the specified group of bots to send messages"
 }
 }
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"The content of the message"
-,
-"cn"
-:
-"消息的内容"
-}
-}
 }
 

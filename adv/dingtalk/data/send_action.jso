@@ -7,15 +7,30 @@
 {
 "cn"
 :
-"消息的标题"
+"首屏会话透出的展示内容"
 ,
 "en"
 :
-"The title of the message"
+"Content displayed in the initial conversation view/screen"
 }
 }
 ,
-"--linktitle"
+"--btn"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"按钮的标题和跳转的 URL"
+,
+"en"
+:
+"button titles and action links"
+}
+,
+"#1"
 :
 {
 "#desc"
@@ -27,11 +42,11 @@
 ,
 "en"
 :
-"The title of the button"
+"button titles"
 }
 }
 ,
-"--linkurl"
+"#2"
 :
 {
 "#desc"
@@ -39,11 +54,12 @@
 {
 "cn"
 :
-"点击按钮跳转的 URL 地址"
+"点击按钮触发的URL"
 ,
 "en"
 :
-"The URL the button redirects to"
+"The URL that springs to life with a click of a button"
+}
 }
 }
 ,
@@ -63,7 +79,7 @@
 }
 }
 ,
-"-H|--btn_horizontal"
+"--btn_horizontal"
 :
 {
 "#desc"
@@ -95,7 +111,7 @@
 }
 }
 ,
-"#1"
+"--text"
 :
 {
 "#desc"
@@ -103,11 +119,11 @@
 {
 "en"
 :
-"The content of the message"
+"Message content in Markdown format"
 ,
 "cn"
 :
-"消息的内容"
+"markdown 格式的消息内容"
 }
 }
 }

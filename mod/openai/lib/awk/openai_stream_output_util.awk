@@ -2,6 +2,14 @@ function openai_dsiplay_response_text_stream(s,       o, item, response_item, fi
     if (s ~ "^ *\\[DONE\\]$") exit(0)
     if (s !~ "^ *\\{") return
     jiparse_after_tokenize(o, s)
+
+    if ( JITER_LEVEL != 0 ){
+        OPENAI_RESPONESE_IS_ERROR_CONTENT = 1
+        OPENAI_RESPONESE_ERROR_CONTENT = s
+        OPENAI_RESPONESE_ERROR_MSG = "The response output format is incorrect"
+        exit(1)
+    }
+
     JITER_LEVEL = JITER_CURLEN = 0
 
     item = o[ KP_CONTENT ]
@@ -50,24 +58,26 @@ BEGIN{
     OPENAI_RESPONSE_HAS_REASONING = 0
     OPENAI_HAS_RESPONSE_CONTENT = 0
 }
-# debug( $0 )
-( NR==1 ){
-    OPENAI_HAS_RESPONSE_CONTENT = 1
-    if ($0 ~ "^{"){
-        OPENAI_RESPONESE_IS_ERROR_CONTENT=1
-        jiparse_after_tokenize( o_error, $0 )
-        JITER_LEVEL = JITER_CURLEN = 0
-    } else {
-        $1 = ""
-        openai_dsiplay_response_text_stream( $0 )
-        JITER_LEVEL = JITER_CURLEN = 0
-    }
-}
-( NR>1 && $0 != "" ){
-    OPENAI_HAS_RESPONSE_CONTENT = 1;
-    if (OPENAI_RESPONESE_IS_ERROR_CONTENT==1) jiparse_after_tokenize( o_error, $0 )
-    else {
-        $1 = ""
-        openai_dsiplay_response_text_stream( $0 )
+
+{
+    if (($0 != "") && ($0 !~ "^:")){
+        if ( OPENAI_HAS_RESPONSE_CONTENT != 0 ) {
+            if (OPENAI_RESPONESE_IS_ERROR_CONTENT==1) jiparse_after_tokenize( o_error, $0 )
+            else {
+                $1 = ""
+                openai_dsiplay_response_text_stream( $0 )
+            }
+        } else {
+            if ($0 ~ "^{"){
+                OPENAI_RESPONESE_IS_ERROR_CONTENT=1
+                jiparse_after_tokenize( o_error, $0 )
+                JITER_LEVEL = JITER_CURLEN = 0
+            } else {
+                $1 = ""
+                openai_dsiplay_response_text_stream( $0 )
+                JITER_LEVEL = JITER_CURLEN = 0
+            }
+        }
+        OPENAI_HAS_RESPONSE_CONTENT = 1
     }
 }

@@ -152,6 +152,7 @@ bbcode
 bcrypt
 bcrypt-ffi
 beamer
+bear
 beemovie
 behaviour_tree
 benchmark-ips
@@ -923,6 +924,7 @@ io-close
 io-fileno
 io-fopen
 io-isfile
+io-pread
 io-reader
 io-readn
 io-tofile
@@ -1338,6 +1340,7 @@ kong-splunk-log
 kong-splunk-log-customized
 kong-startbid-oidc-acl
 kong-timechecking
+kong-to-waf
 kong-traffic-shadowing
 kong-tx-debugger
 kong-uma-rs
@@ -2095,6 +2098,7 @@ lua-sort
 lua-spore
 lua-sqlite3
 lua-ssllabs
+lua-stateful
 lua-status
 lua-step
 lua-stormlib
@@ -2696,6 +2700,7 @@ miniblooms
 minicurses
 miniflac
 minifs
+minuet-ai.nvim
 mirrorfs
 missinglink-sdk
 mixlua
@@ -2842,6 +2847,7 @@ mygateway
 mymodule
 myplugin
 mysin
+mytestpkg
 nacl
 nacl-cli
 nana
@@ -2937,6 +2943,7 @@ notifycenter
 nozzle
 np-traffic-splitter
 npackages.nvim
+npg
 npssdk
 npy4th
 nsenter
@@ -3683,6 +3690,7 @@ testcase
 testingunit
 testy
 tethys
+texinfo
 texlua
 texrocks
 textsubsuper.sile
@@ -3800,6 +3808,7 @@ tree-sitter-elm
 tree-sitter-elsa
 tree-sitter-elvish
 tree-sitter-embedded_template
+tree-sitter-enforce
 tree-sitter-erlang
 tree-sitter-facility
 tree-sitter-faust
@@ -3869,6 +3878,8 @@ tree-sitter-ispc
 tree-sitter-janet_simple
 tree-sitter-java
 tree-sitter-javascript
+tree-sitter-jinja
+tree-sitter-jinja_inline
 tree-sitter-jq
 tree-sitter-jsdoc
 tree-sitter-json

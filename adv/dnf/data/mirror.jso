@@ -63,7 +63,7 @@
 ,
 "#exec:stdout"
 :
-"xrc apk && ___x_cmd_apk___xmirror_advise_ls"
+"xrc dnf && ___x_cmd_dnf___xmirror_advise_ls"
 }
 }
 ,
@@ -79,7 +79,7 @@
 ,
 "cn"
 :
-"将下载源设置为默认的源"
+"将下载源设置为默认的源。"
 }
 }
 }

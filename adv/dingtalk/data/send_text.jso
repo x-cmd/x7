@@ -7,7 +7,7 @@
 {
 "cn"
 :
-"被@人的手机号"
+"被@用户的手机号"
 ,
 "en"
 :
@@ -39,7 +39,7 @@
 {
 "cn"
 :
-"被@人的用户 id"
+"被@用户的 id"
 ,
 "en"
 :
@@ -119,7 +119,7 @@
 {
 "en"
 :
-"Message content in Markdown text"
+"The content of the message"
 ,
 "cn"
 :

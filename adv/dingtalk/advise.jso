@@ -24,7 +24,7 @@ null
 {
 "en"
 :
-"Use x dingtalk send messages to your Dingtalk. The first use requires configuring webhook url."
+"Use x dingtalk send messages to your Dingtalk group. The first use requires configuring webhook url."
 ,
 "cn"
 :
@@ -95,11 +95,11 @@ null
 {
 "en"
 :
-"Dingtalk bot"
+"Send messages using a Dingtalk group bot"
 ,
 "cn"
 :
-"钉钉机器人"
+"使用钉钉群机器人发送消息"
 }
 ,
 "#subcmd_help_tip"
@@ -166,11 +166,11 @@ null
 {
 "en"
 :
-"Send messages to your dingtalk"
+"Send messages using a Dingtalk group bot"
 ,
 "cn"
 :
-"发送消息到你的钉钉"
+"使用钉钉群机器人发送消息"
 }
 ,
 "#subcmd_help_tip"
@@ -388,11 +388,11 @@ true
 ,
 "cn"
 :
-"发送文本消息到企业微信群，并提醒手机号对应的群成员和所有人查看"
+"发送文本消息到钉钉群，并提醒手机号对应的群成员和所有人查看"
 ,
 "en"
 :
-"Send a text message to the WXwork group, and remind the group member associated with the phone number and everyone to check it"
+"Send a text message to the Dingtalk group, and remind the group member associated with the phone number and everyone to check it"
 }
 ]
 ,
@@ -425,7 +425,39 @@ true
 ,
 "cn"
 :
-"发送链接类型的消息"
+"发送链接消息"
+}
+,
+"--text"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Provide text"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+""
+}
+,
+"#regex"
+:
+{
+".+"
+:
+""
+}
+}
 }
 ,
 "--title"
@@ -536,43 +568,27 @@ true
 }
 }
 ,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Provide text"
-}
-,
-"#regex"
-:
-{
-".+"
-:
-""
-}
-}
-,
 "#tldr"
 :
 [
 {
 "cmd"
 :
-"x dingtalk bot send link --title <title> --text <content> --picurl <image_url> --msgurl <url>"
+"x dingtalk bot send --link  \\\n  --title \"Demo of Dingtalk\"    \\\n  --url \"https://x-cmd.com/mod/dingtalk\" \\\n  --picurl 'https://www.x-cmd.com/data-image/mod/ps.webp' \\\n  --text \"Welcome to x-cmd's website for details.\"\n"
 ,
 "cn"
 :
-"发送以下请求参数的链接类型消息到你的钉钉"
+"发送一个标题为 \"Demo of Dingtalk\"，链接到 \"https://x-cmd.com/mod/dingtalk\" 的消息"
 ,
 "en"
 :
-"Send a link type message for the following request parameters to your dingtalk"
+"A message with the title \"Demo of Dingtalk\" will be sent, linking to \"https://x-cmd.com/mod/dingtalk\""
 }
 ]
+,
+"$ref"
+:
+"x-advise://dingtalk/data/send_link.jso"
 }
 ,
 "--markdown"
@@ -610,7 +626,7 @@ true
 {
 "en"
 :
-"Prominent conversation content on the first screen"
+"Content displayed in the initial conversation view/screen"
 ,
 "cn"
 :
@@ -744,7 +760,7 @@ true
 {
 "cmd"
 :
-"x dingtalk bot send --markdown \"## x-cmd 新版本发布成功\\n v1.0.0\""
+"x dingtalk bot send --markdown --title \"A Test\" \"## x-cmd 新版本发布成功\\n v1.0.0\""
 ,
 "cn"
 :
@@ -781,11 +797,11 @@ true
 {
 "en"
 :
-"Send richtext type messages"
+"Send rich text type messages"
 ,
 "cn"
 :
-"发送富文本类型的消息"
+"发送富文本消息"
 }
 ,
 "--card"
@@ -796,12 +812,12 @@ true
 {
 "en"
 :
-"Provide multiple action card in following format. [ <title> <message-url> <picture-url> ] ..."
+"Provide multiple action card in following format. [ <title> <url> <picurl> ] ..."
 }
 ,
 "#synopsis"
 :
-"<title> <message-url> <picture-url>"
+"<title> <url> <picurl>"
 ,
 "#multiple"
 :
@@ -910,17 +926,21 @@ true
 {
 "cmd"
 :
-"x dingtalk bot send richtext --card <title> <url> <image_url>"
+"x dingtalk bot send --richtext --card \"Demo of Dingtalk\" \"https://x-cmd.com/mod/dingtalk\" 'https://www.x-cmd.com/data-image/mod/ps.webp'\n"
 ,
 "cn"
 :
-"发送富文本类型的消息"
+"发送一个标题为 \"Demo of Dingtalk\"，链接到 \"https://x-cmd.com/mod/dingtalk\" 的富文本消息"
 ,
 "en"
 :
-"Send richtext type messages"
+"A message with the title \"Demo of Dingtalk\" will be sent, linking to \"https://x-cmd.com/mod/dingtalk\""
 }
 ]
+,
+"$ref"
+:
+"x-advise://dingtalk/data/send_richtext.jso"
 }
 ,
 "--raw"
@@ -944,6 +964,10 @@ true
 "en"
 :
 "send raw json"
+,
+"cn"
+:
+"发送原始的 JSON 数据"
 }
 ,
 "--webhook"
@@ -954,7 +978,11 @@ true
 {
 "en"
 :
-"webhook"
+"The webhook used by the specified group of bots to send messages"
+,
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
 }
 ,
 "#1"
@@ -978,7 +1006,11 @@ true
 {
 "en"
 :
-"output origin json data"
+"Output in Json format"
+,
+"cn"
+:
+"以 JSON 格式输出"
 }
 }
 ,
@@ -990,19 +1022,13 @@ true
 {
 "en"
 :
-"Provide raw json"
-}
-}
+"The original JSON message content that was sent. You can read JSON data from standard input using \"-\""
 ,
-"#synopsis"
+"cn"
 :
-[
-{
-"cmd"
-:
-"x dingtalk bot send --raw - <<A\n  json format data\n  A"
+"发送的原始 JSON 消息内容，可以使用 \"-\" 从标准输入读取 JSON 数据"
 }
-]
+}
 ,
 "#tldr"
 :
@@ -1014,11 +1040,25 @@ true
 ,
 "cn"
 :
-"发送文本类型的消息到你的钉钉"
+"发送文本消息到钉钉群"
 ,
 "en"
 :
-"Send text type messages to your dingtalk"
+"Send text type messages to Dingtalk group"
+}
+,
+{
+"cmd"
+:
+"cat markdown.json | x dingtalk bot send --raw -"
+,
+"cn"
+:
+"从文件中读取 JSON 数据并发送消息"
+,
+"en"
+:
+"Reading JSON data from a file and sending a message"
 }
 ]
 }
@@ -1043,134 +1083,14 @@ true
 {
 "en"
 :
-"Send separate jump ActionCard type message"
+"Send overall jump ActionCard message"
 ,
 "cn"
 :
-"发送整体跳转 ActionCard 类型的消息"
+"发送整体跳转 ActionCard 消息"
 }
 ,
-"--title"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Provide title"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-""
-}
-}
-}
-,
-"--linktitle"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Link title"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-""
-}
-}
-}
-,
-"--linkurl"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"link url"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-""
-}
-}
-}
-,
-"--webhook"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"webhook"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-""
-}
-}
-}
-,
-"-H|--btn_horizontal"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"The buttons are arranged horizontally"
-}
-}
-,
-"--json|-j"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"output origin json data"
-}
-}
-,
-"#1"
+"--text"
 :
 {
 "#desc"
@@ -1180,52 +1100,26 @@ true
 :
 "Provide text"
 }
-}
 ,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x dingtalk bot send actioncards --title <title> --text <content> --btn <title> <url> --btnOrientation <0|1>"
-,
-"cn"
-:
-"发送以下请求参数的整体跳转 ActionCard 类型消息到你的钉钉"
-,
-"en"
-:
-"Send a Overall jump ActionCard type message with the following request parameters to your dingtalk"
-}
-]
-}
-,
-"--multi_action"
+"#1"
 :
 {
-"#name"
-:
-{
-"dingtalk"
-:
-null
-}
-,
-"#subcmd"
-:
-true
-,
 "#desc"
 :
 {
 "en"
 :
-"Send separate jump ActionCard type message"
+""
+}
 ,
-"cn"
+"#regex"
 :
-"发送独立跳转 ActionCard 类型的消息"
+{
+".+"
+:
+""
+}
+}
 }
 ,
 "--title"
@@ -1260,12 +1154,12 @@ true
 {
 "en"
 :
-"Provide button titles and action links . [ <title> <action-url> ] "
+"Provide button titles and action links . [ <title> <url> ] "
 }
 ,
 "#synopsis"
 :
-"<title> <action-url>"
+"<title> <url>"
 ,
 "#multiple"
 :
@@ -1336,7 +1230,7 @@ true
 }
 }
 ,
-"-H|--btn_horizontal"
+"--btn_horizontal"
 :
 {
 "#desc"
@@ -1360,7 +1254,57 @@ true
 }
 }
 ,
-"#1"
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x dingtalk bot send --sing_action \\\n  --title \"A Test\" \\\n  --text \"x-cmd 发布新版本\" \\\n  --btn \"阅读全文\" \"https://x-cmd.com/mod/dingtalk\"\n"
+,
+"cn"
+:
+"发送链接到 \"https://x-cmd.com/mod/dingtalk\" 的 ActionCard 消息"
+,
+"en"
+:
+"Send an ActionCard message with a link to \"https://x-cmd.com/mod/dingtalk\""
+}
+]
+,
+"$ref"
+:
+"x-advise://dingtalk/data/send_action.jso"
+}
+,
+"--multi_action"
+:
+{
+"#name"
+:
+{
+"dingtalk"
+:
+null
+}
+,
+"#subcmd"
+:
+true
+,
+"#desc"
+:
+{
+"en"
+:
+"Send an independently jump ActionCard message"
+,
+"cn"
+:
+"发送独立跳转 ActionCard 消息"
+}
+,
+"--text"
 :
 {
 "#desc"
@@ -1370,44 +1314,159 @@ true
 :
 "Provide text"
 }
-}
 ,
-"#tldr"
+"#1"
 :
-[
 {
-"cmd"
+"#desc"
 :
-"x dingtalk bot send action --title <title> --text <content> --linktitle <title> --linkurl <url>"
-,
-"cn"
-:
-"发送以下请求参数的独立跳转 ActionCard 类型消息到你的钉钉"
-,
+{
 "en"
 :
-"Send a separate jump ActionCard type message with the following request parameters to your dingtalk"
+""
 }
-]
+,
+"#regex"
+:
+{
+".+"
+:
+""
+}
+}
+}
+,
+"--title"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Provide title"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+""
+}
+}
+}
+,
+"--btn"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Provide button titles and action links . [ <title> <url> ] "
 }
 ,
 "#synopsis"
 :
-[
+"<title> <url>"
+,
+"#multiple"
+:
+true
+,
+"#1"
+:
 {
-"cmd"
+"#desc"
 :
-"x dingtalk bot send <msg type>"
-,
-"cn"
-:
-"发送消息的类型"
-,
+{
 "en"
 :
-"The type of message to send"
+""
 }
-]
+,
+"#regex"
+:
+{
+".+"
+:
+""
+}
+}
+,
+"#2"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+""
+}
+,
+"#regex"
+:
+{
+"https?://.+"
+:
+""
+}
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"webhook"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+""
+}
+}
+}
+,
+"--btn_horizontal"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"The buttons are arranged horizontally"
+}
+}
+,
+"--json|-j"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"output origin json data"
+}
+}
 ,
 "#tldr"
 :
@@ -1415,29 +1474,66 @@ true
 {
 "cmd"
 :
-"x dingtalk bot send <content>"
+"x dingtalk bot send --multi_action \\\n  --title \"A Test\" \\\n  --text \"x-cmd 发布新版本\" \\\n  --btn \"github\"  \"https://x-cmd.com/mod/dingtalk\"\n  --btn \"website\" \"https://x-cmd.com/mod/dingtalk\" \\\n"
 ,
 "cn"
 :
-"发送文本类型的消息到你的钉钉"
+"发送多个跳转按钮的 ActionCard 消息"
 ,
 "en"
 :
-"Send text type messages to your dingtalk"
+"Send an ActionCard message with multiple jump buttons"
+}
+]
+,
+"$ref"
+:
+"x-advise://dingtalk/data/send_action.jso"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x dingtalk bot send --text \"x-cmd 新版本发布成功\""
+,
+"cn"
+:
+"发送文本消息到钉钉群"
+,
+"en"
+:
+"Send text type messages to Dingtalk group"
 }
 ,
 {
 "cmd"
 :
-"x dingtalk bot send link --title <title> --text <content> --picurl <image_url> --msgurl <url>"
+"x dingtalk bot send --markdown --title \"A Test\" \"## x-cmd 新版本发布成功\\n v1.0.0\""
 ,
 "cn"
 :
-"发送以下请求参数的链接类型消息到你的钉钉"
+"发送 markdown 消息到钉钉群"
 ,
 "en"
 :
-"Send a link type message for the following request parameters to your dingtalk"
+"Send markdown type messages to your Dingtalk group"
+}
+,
+{
+"cmd"
+:
+"x dingtalk bot send --richtext --card \"Demo of Dingtalk\" \"https://x-cmd.com/mod/dingtalk\" 'https://www.x-cmd.com/data-image/mod/ps.webp'\n"
+,
+"cn"
+:
+"发送一个标题为 \"Demo of Dingtalk\"，链接到 \"https://x-cmd.com/mod/dingtalk\" 的富文本消息"
+,
+"en"
+:
+"A message with the title \"Demo of Dingtalk\" will be sent, linking to \"https://x-cmd.com/mod/dingtalk\""
 }
 ]
 }
@@ -1809,11 +1905,11 @@ null
 {
 "en"
 :
-"Send messages using a Dingtalk group bot"
+"Send messages using a Dingtalk group bot (equivalent to `x dingtalk bot send`)"
 ,
 "cn"
 :
-"使用钉钉群机器人发送消息"
+"使用钉钉群机器人发送消息（等同于 x dingtalk bot send）"
 }
 ,
 "#subcmd_help_tip"
@@ -2031,11 +2127,11 @@ true
 ,
 "cn"
 :
-"发送文本消息到企业微信群，并提醒手机号对应的群成员和所有人查看"
+"发送文本消息到钉钉群，并提醒手机号对应的群成员和所有人查看"
 ,
 "en"
 :
-"Send a text message to the WXwork group, and remind the group member associated with the phone number and everyone to check it"
+"Send a text message to the Dingtalk group, and remind the group member associated with the phone number and everyone to check it"
 }
 ]
 ,
@@ -2068,7 +2164,39 @@ true
 ,
 "cn"
 :
-"发送链接类型的消息"
+"发送链接消息"
+}
+,
+"--text"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Provide text"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+""
+}
+,
+"#regex"
+:
+{
+".+"
+:
+""
+}
+}
 }
 ,
 "--title"
@@ -2179,37 +2307,17 @@ true
 }
 }
 ,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Provide text"
-}
-,
-"#regex"
-:
-{
-".+"
-:
-""
-}
-}
-,
 "#tldr"
 :
 [
 {
 "cmd"
 :
-"x dingtalk send --link  \\\n  --title \"Demo of Dingtalk\"    \\\n  --url \"https://x-cmd.com/mod/dingtalk\" \\\n  --picurl 'https://www.x-cmd.com/data-image/mod/ps.webp' \\\n  \"Welcome to x-cmd's website for details.\"\n"
+"x dingtalk send --link  \\\n  --title \"Demo of Dingtalk\"    \\\n  --url \"https://x-cmd.com/mod/dingtalk\" \\\n  --picurl 'https://www.x-cmd.com/data-image/mod/ps.webp' \\\n  --text \"Welcome to x-cmd's website for details.\"\n"
 ,
 "cn"
 :
-"发送一个标题为 \"Demo of Dingtalk\"，链接到 \"https://x-cmd.com/mod/dingtalk\" 的链接消息"
+"发送一个标题为 \"Demo of Dingtalk\"，链接到 \"https://x-cmd.com/mod/dingtalk\" 的消息"
 ,
 "en"
 :
@@ -2257,11 +2365,11 @@ true
 {
 "en"
 :
-"The title of the message"
+"Content displayed in the initial conversation view/screen"
 ,
 "cn"
 :
-"消息的标题"
+"首屏会话透出的展示内容"
 }
 ,
 "#1"
@@ -2391,7 +2499,7 @@ true
 {
 "cmd"
 :
-"x dingtalk send --markdown \"## x-cmd 新版本发布成功\\n v1.0.0\""
+"x dingtalk send --markdown --title \"A Test\" \"## x-cmd 新版本发布成功\\n v1.0.0\""
 ,
 "cn"
 :
@@ -2428,11 +2536,11 @@ true
 {
 "en"
 :
-"Send richtext type messages"
+"Send rich text type messages"
 ,
 "cn"
 :
-"发送富文本类型的消息"
+"发送富文本消息"
 }
 ,
 "--card"
@@ -2443,12 +2551,12 @@ true
 {
 "en"
 :
-"Provide multiple action card in following format. [ <title> <message-url> <picture-url> ] ..."
+"Provide multiple action card in following format. [ <title> <url> <picurl> ] ..."
 }
 ,
 "#synopsis"
 :
-"<title> <message-url> <picture-url>"
+"<title> <url> <picurl>"
 ,
 "#multiple"
 :
@@ -2557,15 +2665,15 @@ true
 {
 "cmd"
 :
-"x dingtalk send richtext --card <title> <url> <image_url>"
+"x dingtalk send --richtext --card \"Demo of Dingtalk\" \"https://x-cmd.com/mod/dingtalk\" 'https://www.x-cmd.com/data-image/mod/ps.webp'\n"
 ,
 "cn"
 :
-"发送富文本类型的消息"
+"发送一个标题为 \"Demo of Dingtalk\"，链接到 \"https://x-cmd.com/mod/dingtalk\" 的富文本消息"
 ,
 "en"
 :
-"Send richtext type messages"
+"A message with the title \"Demo of Dingtalk\" will be sent, linking to \"https://x-cmd.com/mod/dingtalk\""
 }
 ]
 ,
@@ -2595,6 +2703,10 @@ true
 "en"
 :
 "send raw json"
+,
+"cn"
+:
+"发送原始的 JSON 数据"
 }
 ,
 "--webhook"
@@ -2605,7 +2717,11 @@ true
 {
 "en"
 :
-"webhook"
+"The webhook used by the specified group of bots to send messages"
+,
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
 }
 ,
 "#1"
@@ -2629,7 +2745,11 @@ true
 {
 "en"
 :
-"output origin json data"
+"Output in Json format"
+,
+"cn"
+:
+"以 JSON 格式输出"
 }
 }
 ,
@@ -2641,19 +2761,13 @@ true
 {
 "en"
 :
-"Provide raw json"
-}
-}
+"The original JSON message content that was sent. You can read JSON data from standard input using \"-\""
 ,
-"#synopsis"
+"cn"
 :
-[
-{
-"cmd"
-:
-"x dingtalk send --raw - <<A\n  json format data\n  A"
+"发送的原始 JSON 消息内容，可以使用 \"-\" 从标准输入读取 JSON 数据"
 }
-]
+}
 ,
 "#tldr"
 :
@@ -2665,11 +2779,25 @@ true
 ,
 "cn"
 :
-"发送文本类型的消息到你的钉钉"
+"发送文本消息到钉钉群"
 ,
 "en"
 :
-"Send text type messages to your dingtalk"
+"Send text type messages to Dingtalk group"
+}
+,
+{
+"cmd"
+:
+"cat markdown.json | x dingtalk send --raw -"
+,
+"cn"
+:
+"从文件中读取 JSON 数据并发送消息"
+,
+"en"
+:
+"Reading JSON data from a file and sending a message"
 }
 ]
 }
@@ -2694,134 +2822,14 @@ true
 {
 "en"
 :
-"Send separate jump ActionCard type message"
+"Send overall jump ActionCard message"
 ,
 "cn"
 :
-"发送整体跳转 ActionCard 类型的消息"
+"发送整体跳转 ActionCard 消息"
 }
 ,
-"--title"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Provide title"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-""
-}
-}
-}
-,
-"--linktitle"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Link title"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-""
-}
-}
-}
-,
-"--linkurl"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"link url"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-""
-}
-}
-}
-,
-"--webhook"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"webhook"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-""
-}
-}
-}
-,
-"-H|--btn_horizontal"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"The buttons are arranged horizontally"
-}
-}
-,
-"--json|-j"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"output origin json data"
-}
-}
-,
-"#1"
+"--text"
 :
 {
 "#desc"
@@ -2831,56 +2839,26 @@ true
 :
 "Provide text"
 }
-}
 ,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x dingtalk send --sing_action --title <title> --btn <title> <url> --btnOrientation <0|1>"
-,
-"cn"
-:
-"发送以下请求参数的整体跳转 ActionCard 类型消息到你的钉钉"
-,
-"en"
-:
-"Send a Overall jump ActionCard type message with the following request parameters to your dingtalk"
-}
-]
-,
-"$ref"
-:
-"x-advise://dingtalk/data/send_singa.jso"
-}
-,
-"--multi_action"
+"#1"
 :
 {
-"#name"
-:
-{
-"dingtalk"
-:
-null
-}
-,
-"#subcmd"
-:
-true
-,
 "#desc"
 :
 {
 "en"
 :
-"Send separate jump ActionCard type message"
+""
+}
 ,
-"cn"
+"#regex"
 :
-"发送独立跳转 ActionCard 类型的消息"
+{
+".+"
+:
+""
+}
+}
 }
 ,
 "--title"
@@ -2915,12 +2893,12 @@ true
 {
 "en"
 :
-"Provide button titles and action links . [ <title> <action-url> ] "
+"Provide button titles and action links . [ <title> <url> ] "
 }
 ,
 "#synopsis"
 :
-"<title> <action-url>"
+"<title> <url>"
 ,
 "#multiple"
 :
@@ -2991,7 +2969,7 @@ true
 }
 }
 ,
-"-H|--btn_horizontal"
+"--btn_horizontal"
 :
 {
 "#desc"
@@ -3015,7 +2993,57 @@ true
 }
 }
 ,
-"#1"
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x dingtalk send --sing_action \\\n  --title \"A Test\" \\\n  --text \"x-cmd 发布新版本\" \\\n  --btn \"阅读全文\" \"https://x-cmd.com/mod/dingtalk\"\n"
+,
+"cn"
+:
+"发送链接到 \"https://x-cmd.com/mod/dingtalk\" 的 ActionCard 消息"
+,
+"en"
+:
+"Send an ActionCard message with a link to \"https://x-cmd.com/mod/dingtalk\""
+}
+]
+,
+"$ref"
+:
+"x-advise://dingtalk/data/send_action.jso"
+}
+,
+"--multi_action"
+:
+{
+"#name"
+:
+{
+"dingtalk"
+:
+null
+}
+,
+"#subcmd"
+:
+true
+,
+"#desc"
+:
+{
+"en"
+:
+"Send an independently jump ActionCard message"
+,
+"cn"
+:
+"发送独立跳转 ActionCard 消息"
+}
+,
+"--text"
 :
 {
 "#desc"
@@ -3025,6 +3053,158 @@ true
 :
 "Provide text"
 }
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+""
+}
+,
+"#regex"
+:
+{
+".+"
+:
+""
+}
+}
+}
+,
+"--title"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Provide title"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+""
+}
+}
+}
+,
+"--btn"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Provide button titles and action links . [ <title> <url> ] "
+}
+,
+"#synopsis"
+:
+"<title> <url>"
+,
+"#multiple"
+:
+true
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+""
+}
+,
+"#regex"
+:
+{
+".+"
+:
+""
+}
+}
+,
+"#2"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+""
+}
+,
+"#regex"
+:
+{
+"https?://.+"
+:
+""
+}
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"webhook"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+""
+}
+}
+}
+,
+"--btn_horizontal"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"The buttons are arranged horizontally"
+}
+}
+,
+"--json|-j"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"output origin json data"
+}
 }
 ,
 "#tldr"
@@ -3033,21 +3213,21 @@ true
 {
 "cmd"
 :
-"x dingtalk send --multi_action --title <title> --text <content> --linktitle <title> --linkurl <url>"
+"x dingtalk send --multi_action \\\n  --title \"A Test\" \\\n  --text \"x-cmd 发布新版本\" \\\n  --btn \"github\"  \"https://x-cmd.com/mod/dingtalk\"\n  --btn \"website\" \"https://x-cmd.com/mod/dingtalk\" \\\n"
 ,
 "cn"
 :
-"发送以下请求参数的独立跳转 ActionCard 类型消息到你的钉钉"
+"发送多个跳转按钮的 ActionCard 消息"
 ,
 "en"
 :
-"Send a separate jump ActionCard type message with the following request parameters to your dingtalk"
+"Send an ActionCard message with multiple jump buttons"
 }
 ]
 ,
 "$ref"
 :
-"x-advise://dingtalk/data/send_multia.jso"
+"x-advise://dingtalk/data/send_action.jso"
 }
 ,
 "#tldr"
@@ -3056,29 +3236,43 @@ true
 {
 "cmd"
 :
-"x dingtalk send <content>"
+"x dingtalk send --text \"x-cmd 新版本发布成功\""
 ,
 "cn"
 :
-"发送文本类型的消息到你的钉钉"
+"发送文本消息到钉钉群"
 ,
 "en"
 :
-"Send text type messages to your dingtalk"
+"Send text type messages to Dingtalk group"
 }
 ,
 {
 "cmd"
 :
-"x dingtalk send link --title <title> --text <content> --picurl <image_url> --msgurl <url>"
+"x dingtalk send --markdown --title \"A Test\" \"## x-cmd 新版本发布成功\\n v1.0.0\""
 ,
 "cn"
 :
-"发送以下请求参数的链接类型消息到你的钉钉"
+"发送 markdown 消息到钉钉群"
 ,
 "en"
 :
-"Send a link type message for the following request parameters to your dingtalk"
+"Send markdown type messages to your Dingtalk group"
+}
+,
+{
+"cmd"
+:
+"x dingtalk send --richtext --card \"Demo of Dingtalk\" \"https://x-cmd.com/mod/dingtalk\" 'https://www.x-cmd.com/data-image/mod/ps.webp'\n"
+,
+"cn"
+:
+"发送一个标题为 \"Demo of Dingtalk\"，链接到 \"https://x-cmd.com/mod/dingtalk\" 的富文本消息"
+,
+"en"
+:
+"A message with the title \"Demo of Dingtalk\" will be sent, linking to \"https://x-cmd.com/mod/dingtalk\""
 }
 ]
 }
@@ -3107,15 +3301,57 @@ true
 {
 "cmd"
 :
-"x dingtalk send <content>"
+"x dingtalk --cfg webhook=<webhook>"
 ,
 "cn"
 :
-"发送文本类型的消息到你的钉钉"
+"设置 webhook url"
 ,
 "en"
 :
-"Send text type messages to your Dingtalk"
+"set webhook url"
+}
+,
+{
+"cmd"
+:
+"x dingtalk send --text \"x-cmd 新版本发布成功\""
+,
+"cn"
+:
+"发送文本消息到钉钉群"
+,
+"en"
+:
+"Send text type messages to Dingtalk group"
+}
+,
+{
+"cmd"
+:
+"x dingtalk send --markdown --title \"A Test\" \"## x-cmd 新版本发布成功\\n v1.0.0\""
+,
+"cn"
+:
+"发送 markdown 消息到钉钉群"
+,
+"en"
+:
+"Send markdown type messages to your Dingtalk group"
+}
+,
+{
+"cmd"
+:
+"x dingtalk send --richtext --card \"Demo of Dingtalk\" \"https://x-cmd.com/mod/dingtalk\" 'https://www.x-cmd.com/data-image/mod/ps.webp'\n"
+,
+"cn"
+:
+"发送一个标题为 \"Demo of Dingtalk\"，链接到 \"https://x-cmd.com/mod/dingtalk\" 的富文本消息"
+,
+"en"
+:
+"A message with the title \"Demo of Dingtalk\" will be sent, linking to \"https://x-cmd.com/mod/dingtalk\""
 }
 ]
 ,

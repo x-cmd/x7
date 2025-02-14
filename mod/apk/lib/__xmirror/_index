@@ -96,11 +96,11 @@ ___x_cmd_apk___xmirror_replace() {
 }
 
 ___x_cmd_apk___xmirror_save(){
-    ___x_cmd_mirror___util_save "/etc/apk/repositories" "apk"
+    ___x_cmd_mirror___util_save "$___X_CMD_APK_MIRROR_SOURCES" "apk"
 }
 
 ___x_cmd_apk___xmirror_unset(){
-    ___x_cmd_mirror___util_rollback_original "/etc/apk/repositories" "apk" || return $?
+    ___x_cmd_mirror___util_rollback_original "$___X_CMD_APK_MIRROR_SOURCES" "apk" || return $?
     ___x_cmd rmrf "$___X_CMD_ROOT_DATA/mirror/apk"
 
     if [ "$(id -u)" -ne 0 ]; then

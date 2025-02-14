@@ -95,7 +95,7 @@ ___x_cmd_dingtalk_bot_send_link() {
     param:scope     dingtalk
     param:dsl <<A
 option:
-    #1              "Provide text"                  <>:text
+    --text          "Provide text"                  <>:text
     --title         "Provide title"                 <>
     --url           "Provide url"                   <>
     --picurl        "Provide picurl"                <>=""
@@ -104,7 +104,6 @@ option:
 A
     param:run
 
-    local text="$1"
     local res ; res="$(___x_cmd_dingtalk_bot___send_json <<A
 {
     "msgtype": "link",
@@ -161,19 +160,26 @@ ___x_cmd_dingtalk_bot_send_sing_action() {
     param:scope     dingtalk
     param:dsl <<A
 option:
-    #1                      "Provide text"                                  <>
+    --text                  "Provide text"                                  <>:text
     --title                 "Provide title"                                 <>
-    --linktitle             "Link title"                                    <>
-    --linkurl               "link url"                                      <>
+    --btn|m                 "Provide button titles and action links . [ <title> <url> ] "
+        <title>:title
+        <url>:url
     --webhook               "webhook"                                       <>=""
-    -H|--btn_horizontal     "The buttons are arranged horizontally"
+    --btn_horizontal        "The buttons are arranged horizontally"
     --json|-j               "output origin json data"
 A
     param:run
 
-    local text="$1"
+
     local btnOrientation=0
     [ -z "$btn_horizontal" ] || btnOrientation=1
+
+    local linktitle; local linkurl
+    for i in $(param_marg btn); do
+        linktitle="$(param_marg btn "$i" 1)"
+        linkurl="$(param_marg btn "$i" 2)"
+    done
 
     local res ; res="$(___x_cmd_dingtalk_bot___send_json <<A
 {
@@ -195,19 +201,17 @@ ___x_cmd_dingtalk_bot_send_multi_action() {
     param:scope     dingtalk
     param:dsl <<A
 option:
-    #1                      "Provide text"                                  <>
+    --text                  "Provide text"                                  <>:text
     --title                 "Provide title"                                 <>
-    --btn|m                 "Provide button titles and action links . [ <title> <action-url> ] "
+    --btn|m                 "Provide button titles and action links . [ <title> <url> ] "
         <title>:title
-        <action-url>:url
+        <url>:url
     --webhook               "webhook"                                       <>=""
-    -H|--btn_horizontal     "The buttons are arranged horizontally"
+    --btn_horizontal        "The buttons are arranged horizontally"
     --json|-j               "output origin json data"
-
 A
     param:run
 
-    local text="$1"
     local btnOrientation=0
     [ -z "$btn_horizontal" ] || btnOrientation=1
     local IFS="
@@ -240,10 +244,10 @@ ___x_cmd_dingtalk_bot_send_richtext() {
     param:scope     dingtalk
     param:dsl <<A
 option:
-    --card|m            "Provide multiple action card in following format. [ <title> <message-url> <picture-url> ] ..."
+    --card|m            "Provide multiple action card in following format. [ <title> <url> <picurl> ] ..."
         <title>:text
-        <message-url>:url
-        <picture-url>:url
+        <url>:url
+        <picurl>:url
     --webhook           "webhook"                   <>=""
     --json|-j           "output origin json data"
 
