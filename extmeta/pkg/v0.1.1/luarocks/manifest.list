@@ -2142,6 +2142,7 @@ lua-vcard
 lua-vips
 lua-vosk
 lua-websockets
+lua-websockets-bit32
 lua-webview
 lua-wolfram
 lua-xlib
@@ -4273,6 +4274,7 @@ yaml
 yamlscript
 yamlstar
 yanky.nvim
+yarepl.nvim
 yazi.nvim
 ydauth-test
 ydblua
