@@ -195,6 +195,22 @@ null
 }
 }
 ,
+"tomd"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"将 HTML 内容格式化为 markdown 格式"
+,
+"en"
+:
+"Format HTML content into markdown format."
+}
+}
+,
 "trafi"
 :
 {

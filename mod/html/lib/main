@@ -9,7 +9,7 @@ ___x_cmd_html___main(){
     case "$op" in
         -h|--help)      ___x_cmd help -m html "$@";    return 0 ;;
 
-        fmt|clean|tojson|toyml|trafi|plwr|links|rdbl)
+        fmt|clean|tojson|toyml|tomd|trafi|plwr|links|rdbl)
                         ___x_cmd_html_"$op"     "$@"  ;;
 
         *)              N=html M="Unknown op -> $op" log:ret:64 ;;
@@ -42,4 +42,8 @@ ___x_cmd_html_plwr(){
 
 ___x_cmd_html_links(){
     ___x_cmd links source       "$@"
+}
+
+___x_cmd_html_tomd(){
+    ___x_cmd pandoc -f html -t markdown
 }
