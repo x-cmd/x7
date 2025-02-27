@@ -1,34 +1,14 @@
 {
-"#name"
-:
-{
-"html"
-:
-null
-,
-"en"
-:
-"HTML 文档内容处理"
-,
-"cn"
-:
-null
-}
-,
-"#synopsis"
-:
-null
-,
 "#desc"
 :
 {
-"en"
-:
-null
-,
 "cn"
 :
-null
+"HTML 文档内容处理"
+,
+"en"
+:
+"HTML Document Content Processing"
 }
 ,
 "clean"

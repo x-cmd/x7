@@ -21,7 +21,10 @@ ___x_cmd_hn___story_needupdate(){
     local datafile="$1"
     [ -f "$datafile" ] || return 0
 
-    if ___x_cmd fileage --in 600 "$datafile"; then
+    local cur_story_timeout=""
+    ___x_cmd_shodan_cur    cur_story_timeout:=story_timeout  2>/dev/null
+
+    if ___x_cmd fileage --in "$cur_story_timeout" "$datafile"; then
         return 1 # In ten minutes, skip the update
     fi
 
@@ -84,7 +87,9 @@ ___x_cmd_hn___story_raw(){
     set -- "$@" -m 5 -L -sS -w "$___X_CMD_OURL_WRITEOUT" --output "${datadir}/#1.tmp"
     hn:debug "x curl $* 2>&1"
 
-    ___x_cmd curl "$@" 2>&1
+    local proxy=""
+    ___x_cmd_hn_cur    proxy:=     2>/dev/null
+    ___x_cmd proxy runifset "$proxy"    ___x_cmd curl "$@" 2>&1
 }
 
 ___x_cmd_hn___story_parse_resp2jsonfp(){

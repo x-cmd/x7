@@ -1,0 +1,20 @@
+
+___x_cmd_gpg_key_ls(){
+    ___x_cmd_gpg_key_ls___tsv
+}
+
+___x_cmd_gpg_key_ls___tsv(){
+    ___x_cmd_gpg_key_ls___raw |  \
+        ___x_cmd_cmds awk       \
+            -f "$___X_CMD_ROOT_MOD/gpg/lib/awk/key.parse.awk"
+}
+
+___x_cmd_gpg_key_ls___raw(){
+    LANG=en ___x_cmd_gpg___exec     \
+        --list-keys                 \
+        --keyid-format LONG
+}
+
+___x_cmd_gpg_key_ls___app(){
+    :
+}

@@ -1,0 +1,5 @@
+
+___x_cmd_nihao(){
+    ___x_cmd md show <"$___X_CMD_ROOT_MOD/x-cmd/lib/lwmod/nihao.md"
+}
+

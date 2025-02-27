@@ -1,9 +1,11 @@
 # shellcheck shell=dash
 
-xrc:mod:lib     gpg     uid     key/_index  agent
+xrc:mod:lib     gpg     uid     key/_index  sk/_index   agent
 
 ___x_cmd_gpg___main(){
     [ "$#" -gt 0 ] ||   set -- --help
+
+    ___x_cmd_gpg_stty
 
     local op="$1"; shift
     case "$op" in
@@ -12,16 +14,29 @@ ___x_cmd_gpg___main(){
 
         uid)                        ___x_cmd_gpg_"$op"          "$@" ;;
 
-        k|key)                      ___x_cmd_gpt_key            "$@" ;;
+        k|key)                      ___x_cmd_gpg_key            "$@" ;;
 
-        K|secretkey)                ___x_cmd_gpt_secretkey      "$@" ;;
+        sk|secretkey)               ___x_cmd_gpg_sk             "$@" ;;
+
+        stty)                       ___x_cmd_gpg_stty ;;
 
         --|--exec)                  ___x_cmd_gpg___exec         "$@" ;;
         *)                          ___x_cmd_gpg___exec "$op"   "$@" ;;
     esac
 }
 
+___x_cmd_gpg_stty(){
+    [ -n "$GPG_TTY" ] || export GPG_TTY="$(tty)"
+}
+
+___x_cmd_gpg_sa(){
+    :
+}
+
 ___x_cmd_gpg___exec(){
+    # TODO: It still cannot works find ...
+    [ -n "$GPG_TTY" ] || export GPG_TTY="$(tty)"
+
     if ___x_cmd_hascmd gpg; then
         ___x_cmd_cmds               gpg "$@"
     else
