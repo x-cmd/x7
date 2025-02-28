@@ -22,7 +22,7 @@ ___x_cmd_hn___topic_data(){
 }
 
 ___x_cmd_hn___topic_data___worker(){
-    ___x_cmd ccmd "$cur_index_timeout" -- \
+    ___x_cmd ccmd "${cur_index_timeout:-"$___X_CMD_HN_DEFAULT_INDEX_TIMEOUT"}" -- \
         ___x_cmd curl -m 5 -L -sS "https://hacker-news.firebaseio.com/v0/${1}stories.json?print=pretty"
 }
 

@@ -1,0 +1,8 @@
+
+___x_cmd_facl_set(){
+    ___x_cmd_cmds setfacl   "$@"
+}
+
+___x_cmd_facl_ch(){
+    ___x_cmd_cmds chacl     "$@"
+}

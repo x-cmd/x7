@@ -24,16 +24,15 @@ ___x_cmd_hn_init(){
     fi
 
     ___x_cmd_hn_cfg___invoke --init \
-        story_timeout       "Set up timeout for story"           "${story_timeout:-60m}"        --  \
-        index_timeout       "Set up timeout for index"           "${cur_index_timeout:-30m}"    --  \
-        datadir             "set up datadir"                     "${cur_datadir}"               --  \
+        story_timeout       "Set up timeout for story"           "${cur_story_timeout:-"$___X_CMD_HN_DEFAULT_STORY_TIMEOUT"}"   --  \
+        index_timeout       "Set up timeout for index"           "${cur_index_timeout:-"$___X_CMD_HN_DEFAULT_INDEX_TIMEOUT"}"   --  \
+        datadir             "set up datadir"                     "${cur_datadir:-"$___X_CMD_HN_CACHE_STORE"}"                   --  \
         proxy               "Set up the network proxy for API requests"     "${cur_proxy}"      '=~'    "^([a-z0-9]+://)?[A-Za-z0-9.:]*$" -- || return $?
 }
 
 
 ___X_CMD_HN_CFG_VARLIST="story_timeout,index_timeout,datadir,proxy"
 ___x_cmd_hn_cfg___invoke(){
-
     # shellcheck disable=2154
     ___x_cmd_cfgy_obj   \
         --prefix            ___X_CMD_HN_CFG_DATA                \

@@ -1,7 +1,5 @@
 # shellcheck shell=dash
 
-___X_CMD_HN_CACHE_STORE="${___X_CMD_HN_CACHE_STORE:-$___X_CMD_ROOT_CACHE/hn/story}"
-
 xrc:mod:lib     hn      story/ls    story/story
 
 ___x_cmd_hn_story(){

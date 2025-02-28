@@ -4,8 +4,12 @@ xrc ourl
 
 ___x_cmd log init hn
 
-xrc:mod:lib     hn      util item cfg user/_index topic story/_index app browse ddgo
+___X_CMD_HN_DEFAULT_STORY_TIMEOUT=60m
+___X_CMD_HN_DEFAULT_INDEX_TIMEOUT=30m
+___X_CMD_HN_CACHE_STORE="${___X_CMD_HN_CACHE_STORE:-$___X_CMD_ROOT_CACHE/hn/story}"
 
+
+xrc:mod:lib     hn      util item cfg user/_index topic story/_index app browse ddgo
 ___x_cmd_hn___main(){
     [ "$#" -gt 0 ] ||   set -- top
 

@@ -1,0 +1,26 @@
+{
+"#name"
+:
+{
+"facl"
+:
+null
+,
+"cn"
+:
+"获取文件访问控制列表"
+,
+"en"
+:
+"Get file access control lists"
+}
+,
+"#n"
+:
+{
+"#exec"
+:
+"___x_cmd_advise__file"
+}
+}
+

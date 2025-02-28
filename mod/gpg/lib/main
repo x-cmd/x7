@@ -1,5 +1,7 @@
 # shellcheck shell=dash
 
+___x_cmd log init gpg
+
 xrc:mod:lib     gpg     uid     key/_index  sk/_index   agent
 
 ___x_cmd_gpg___main(){
@@ -20,6 +22,7 @@ ___x_cmd_gpg___main(){
 
         stty)                       ___x_cmd_gpg_stty ;;
 
+        -h|--help)                  ___x_cmd help -m gpg        "$@" ;;
         --|--exec)                  ___x_cmd_gpg___exec         "$@" ;;
         *)                          ___x_cmd_gpg___exec "$op"   "$@" ;;
     esac
