@@ -2,7 +2,7 @@
 
 ___x_cmd log init gpg
 
-xrc:mod:lib     gpg     uid     key/_index  sk/_index   agent
+xrc:mod:lib     gpg     uid     key/_index  sk/_index   agent  git
 
 ___x_cmd_gpg___main(){
     [ "$#" -gt 0 ] ||   set -- --help
@@ -14,7 +14,7 @@ ___x_cmd_gpg___main(){
         encrypt|e|-e|--encrypt)     ___x_cmd_gpg___exec -e      "$@" ;;
         decrypt|d|-d|--decrypt)     ___x_cmd_gpg___exec -d      "$@" ;;
 
-        uid)                        ___x_cmd_gpg_"$op"          "$@" ;;
+        uid|git)                    ___x_cmd_gpg_"$op"          "$@" ;;
 
         k|key)                      ___x_cmd_gpg_key            "$@" ;;
 

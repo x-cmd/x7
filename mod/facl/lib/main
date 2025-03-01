@@ -1,5 +1,5 @@
 # shellcheck shell=dash
-
+___x_cmd log init facl
 xrc:mod:lib     facl     get/_index  set
 
 ___x_cmd_facl___main(){

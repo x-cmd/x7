@@ -1,7 +1,5 @@
 
 ___x_cmd_facl_get___darwin(){
-    [ $# -gt 0 ]    ||      set -- --help
-
     local mode=foreach
     local skip=1
     while [ $# -gt 0 ]; do
