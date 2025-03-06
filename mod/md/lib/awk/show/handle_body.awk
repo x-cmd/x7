@@ -1,5 +1,6 @@
 
 function md_handle_body( line, output_arr ){
+    line = md_body_transform_quote(line)
     line = md_body_transform_italic(line)
     line = md_body_transform_bold(line)
     line = md_body_transform_bold_italic(line)
@@ -10,7 +11,6 @@ function md_handle_body( line, output_arr ){
     line = md_body_transform_abstract(line)
     line = md_body_transform_task_list_done(line)
     line = md_body_transform_task_list_undone(line)
-    line = md_body_transform_quote(line)
 
     return md_output( md_body_transpose(line), output_arr )
 }
@@ -44,9 +44,8 @@ function md_body_transpose( line ){
 
 # 倾斜字体
 function md_body_transform_italic( text,     s1, s2, r, _regex1, _regex2 ){
-    _regex1 = "\\*([^ *][^*]*[^ *]|[^ *])\\*"
-    _regex2 = "(^| )_([^ ].*[^ ]|[^ ])_( |$)"
-    while (match(text, "("_regex1 "|" _regex2 ")")) {
+    _regex = "(\\*[^ *]\\*[^*]+|_[^_]+_[^_]+)"
+    while (match(text, _regex)) {
         s1 = substr(text, 1, RSTART-1)
         s2 = substr(text, RSTART, RLENGTH)
         gsub(STR_TERMINAL_ESCAPE033_LIST, "", s2)
@@ -58,9 +57,10 @@ function md_body_transform_italic( text,     s1, s2, r, _regex1, _regex2 ){
 
 # 加粗字体
 function md_body_transform_bold( text,     s1, s2, r, _regex1, _regex2 ){
+    _regex = "(\\*\\*[^*]+\\*\\*|__[^_]+__[^_]+)"
     _regex1 = "\\*("STR_TERMINAL_ESCAPE033_LIST")?\\*([^ *][^*]*[^ *]|[^ *])\\*("STR_TERMINAL_ESCAPE033_LIST")?\\*"
     _regex2 = "(^| )_("STR_TERMINAL_ESCAPE033_LIST")?_([^ ].*[^ ]|[^ ])_("STR_TERMINAL_ESCAPE033_LIST")?_( |$)"
-    while (match(text, "("_regex1 "|" _regex2 ")")) {
+    while (match(text, _regex)) {
         s1 = substr(text, 1, RSTART-1)
         s2 = substr(text, RSTART, RLENGTH)
         gsub(STR_TERMINAL_ESCAPE033_LIST, "", s2)
@@ -101,7 +101,7 @@ function md_body_transform_quote( text,     s1, s2){
         s1 = substr(text, 1, RSTART-1)
         s2 = substr(text, RSTART+1, RLENGTH-2)
         gsub(STR_TERMINAL_ESCAPE033_LIST, "", s2)
-        text = s1 HD_STYLE_CODE " " s2 " "  HD_STYLE_END substr(text, RSTART+RLENGTH)
+        text = s1 HD_STYLE_CODE s2  HD_STYLE_END substr(text, RSTART+RLENGTH)
     }
     return text
 }

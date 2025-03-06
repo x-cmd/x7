@@ -33,7 +33,6 @@ function md_handle_header( line, output_arr,        a, b, c ){
     if (c == 1) line = HD_STYLE_HEADER1 b " " HD_STYLE_END
     else line = HD_STYLE_HEADER2 a " " b HD_STYLE_END
 
-    if ( match(line, "`[^`]+`") )   line = md_body_transform_quote(line)
     md_output( line, output_arr )
     return 1
 }
