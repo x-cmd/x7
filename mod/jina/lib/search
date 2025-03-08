@@ -70,6 +70,7 @@ ___x_cmd_jina_search___curl(){
     local proxy=
 
     ___x_cmd_jina_cur     apikey:=     proxy:=     2>/dev/null
+    [ -n "$apikey" ] || N=jina M="Please setting up your api key ==> 'x jina --cfg apikey=<your api key>'" log:ret:1
 
     local search="$1"
     local url="https://s.jina.ai/$search"

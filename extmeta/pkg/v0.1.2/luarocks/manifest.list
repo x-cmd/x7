@@ -2409,6 +2409,7 @@ luarocks-build-treesitter-parser
 luarocks-build-treesitter-parser-cpp
 luarocks-build-xmake
 luarocks-fetch-gitrec
+luarocks-loader
 luarocks-tag-release
 luarocks_helloworld
 luarray
