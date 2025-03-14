@@ -279,7 +279,7 @@ c786215b6ee64ffe674412efcf2a4319a97ca160 tz main NULL
 1946dafb4cd78f25b7763bc69f9e27cebca037c1 ui main NULL
 d8ee558013bd1de499aa1ef6bb8e196791f369cf uname main NULL
 6bb584903d437493e2bbd50f2604453d8b1a72bc uninstall main NULL
-c54bf9dd54b571043bf424ead6afea9ae7028f4c upgrade main NULL
+46fbba30a98f45254375b96ce2c73e120c0723a8 upgrade main NULL
 9d0e286079a87bf8f8ac1b816b24dbcd921ffbb6 uptime main NULL
 befef8ac37b15ba229fc5559b1dba4996562b309 url main NULL
 c1411881ec270267ed0156334b17e67b10b0f6d4 user main NULL
