@@ -27,8 +27,10 @@ ___x_cmd_mac___main(){
         info|mem|vol|net|wifi|disk|\
         lock|screensave|sleep|logout|\
         restart|shutdown|trash|dock|\
-        launchpad|wallpaper)
+        launchpad|wallpaper|sshd|appid|tidsudo)
                                         ___x_cmd_mac_"$op"                     "$@" ;;
+
+        ss|systemsetup)                 ___x_cmd_mac_ss                         "$@" ;;
 
         --help|-h)                      ___x_cmd help -m mac                        ;;
         exp)                            ___x_cmd_mac___exp                     "$@" ;;
@@ -42,12 +44,8 @@ ___x_cmd_mac___exp(){
     local op="$1"; shift
     case "$op" in
         -h|--help)                      ___x_cmd help -m mac exp     ;;
-        hidden|smc|sshd|flightmode|\
-        dss|finder)
+        hidden|smc|flightmode|dss|finder)
                                         ___x_cmd_mac_"$op"      "$@" ;;
-
-        ss|screensave|screensaver)      ___x_cmd_mac_screensave "$@" ;;
-
         # common shortcuts
         eject)                          ___x_cmd_mac_disk eject "$@" ;;
         *)                              N=mac M="Unknown subcmd -> $op" log:ret:64 ;;

@@ -13,12 +13,12 @@ ___x_cmd_mac_vpn(){
 }
 
 ___x_cmd_mac_vpn_status(){
-    scutil --nc status "$@"
+    ___x_cmd_cmds scutil --nc status "$@"
 }
 
 
 ___x_cmd_mac_vpn_stop(){
-    scutil --nc stop "$@"
+    ___x_cmd_cmds scutil --nc stop "$@"
 }
 
 

@@ -14,7 +14,11 @@ ___x_cmd_theme_boot___configfile_set(){
         case "$vendor" in
             ohmyposh|starship)
                 local suffix="$envshell"
-                [ "$envshell" != "powershell" ] || suffix="ps1"
+                case "$envshell" in
+                    powershell) suffix="ps1" ;;
+                    xonsh)      suffix="xsh" ;;
+                    elvish)     suffix="elv" ;;
+                esac
                 local codefile="$configdir/$terminal.$suffix"
                 ___x_cmd ensurefp "$codefile"
                 ___x_cmd "$vendor" --shellconfig "$envshell" "$name" > "$codefile";;

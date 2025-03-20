@@ -201,6 +201,7 @@ ___x_cmd___rcpwsh_addpython
 
 $env:___X_CMD_CD_RELM_0 = ___x_cmd___rcpwsh_path_win_to_linux $(Get-Location).Path
 $env:___X_CMD_THEME_CURRENT_SHELL = "powershell"
+$env:OLDPWD = $env:___X_CMD_CD_RELM_0
 # Using gitbash
 # We cannot use WSL here.
 function ___x_cmd(){
@@ -244,7 +245,64 @@ function ___x_cmd(){
     }
 }
 
+function ___x_cmd_cd {
+    $original_dir = $(Get-Location).Path
+    if ($args.Count -le 1) {
+        if ( $args[0] -eq "-" ){
+            ___x_cmd cd $( ___x_cmd___rcpwsh_path_win_to_linux $env:OLDPWD )
+        } elseif (-not [string]::IsNullOrWhiteSpace($args[0]) -and (Test-Path $args[0] -PathType Container)){
+            $env:OLDPWD = $original_dir
+            Set-Location $args[0]
+            ___x_cmd cd --history top $( ___x_cmd___rcpwsh_path_win_to_linux $original_dir )
+            ___x_cmd cd --history top $( ___x_cmd___rcpwsh_path_win_to_linux $(Get-Location).Path )
+        } else {
+            ___x_cmd cd @args
+        }
+        return
+    }
+    if ( $args[0] -eq "-" ){
+        ___x_cmd cd $( ___x_cmd___rcpwsh_path_win_to_linux $env:OLDPWD )
+        $args = $args[1..($args.Count - 1)]
+    } else {
+        switch -Regex ($args[0]) {
+            "^-b$|^-f$" {
+                ___x_cmd cd $args[0] $args[1]
+                if (-not $?) { return $LASTEXITCODE }
+                $args = $args[2..($args.Count - 1)]
+            }
+            "^-.*" {
+                ___x_cmd cd @args
+                return $LASTEXITCODE
+            }
+            default {
+                ___x_cmd cd $args[0]
+                if (-not $?) { return $LASTEXITCODE }
+                $args = $args[1..($args.Count - 1)]
+            }
+        }
+    }
+
+    if ($args.Count -gt 0) {
+        if ($args[0] -eq "-" -or $args[0] -eq "--") {
+            $args = $args[1..($args.Count - 1)]
+        }
+        if ($args.Count -eq 0) { return 0 }
+
+        Invoke-Expression ($args -join ' ')
+        Set-Location -Path $original_dir
+    }
+}
+
 function x(){
+    if ($args[0] -eq "cd"){
+        if ($args.Count -gt 1) {
+            $args = $args[1..($args.Count - 1)]
+        } else {
+            $args = @()
+        }
+        ___x_cmd_cd @args
+        return
+    }
     ___x_cmd @args
 }
 
@@ -266,21 +324,7 @@ if ($Host.Name -ne "ConsoleHost") {
     $env:___X_CMD_THEME_RELOAD_DISABLE = ""
 
     function c(){
-        if ( $args[0] -eq "-" ){
-            if ($env:OLDPWD){
-                ___x_cmd cd $( ___x_cmd___rcpwsh_path_win_to_linux $env:OLDPWD )
-            }
-            return
-        } elseif (-not [string]::IsNullOrWhiteSpace($args[0]) -and (Test-Path $args[0] -PathType Container)){
-            $currentpath = $(Get-Location).Path
-            $env:OLDPWD = $currentpath
-            Set-Location $args[0]
-            ___x_cmd cd --history top $( ___x_cmd___rcpwsh_path_win_to_linux $currentpath )
-            ___x_cmd cd --history top $( ___x_cmd___rcpwsh_path_win_to_linux $(Get-Location).Path )
-            return
-        }
-
-        ___x_cmd cd @args
+        ___x_cmd_cd @args
     }
 
     if (-not (Test-Path "$HOME\.x-cmd.root\boot\alias\xx.disable" -PathType Leaf)) {
@@ -351,5 +395,3 @@ if ($Host.Name -ne "ConsoleHost") {
         }
     }
 }
-
-
