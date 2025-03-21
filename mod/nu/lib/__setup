@@ -35,6 +35,11 @@ ___x_cmd_nu___setup(){
     fi
 
     ___x_cmd boot initrcfile1  "$___X_CMD_NU_SETUP_RCCODE"     "$x_"
+    local themefp="${___X_CMD_ROOT_LOCAL}/cfg/theme/use/nu/default.nu"
+    [ -f "$themefp" ] || {
+        ___x_cmd ensurefp "$themefp"
+        printf "" > "$themefp"
+    }
 }
 
 ___x_cmd_nu___boot_init_rcfile_home_(){

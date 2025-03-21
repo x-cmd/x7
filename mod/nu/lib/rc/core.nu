@@ -205,7 +205,7 @@ export def --env --wrapped ___x_cmd_cd [ ...args ] {
 
     mut exit_code = ""
     if ($param | length) > 0 {
-        run-external ...$param
+        run-external ( $param | get 0 ) ...( $param | skip 1 )
         $exit_code = $env.LAST_EXIT_CODE
     } else {
         return 0
