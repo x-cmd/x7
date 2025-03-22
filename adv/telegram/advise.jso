@@ -248,7 +248,7 @@ true
 "发送文本消息"
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -256,11 +256,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -276,7 +272,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -284,11 +280,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -301,6 +293,18 @@ true
 :
 ""
 }
+}
+}
+,
+"--pipe|-p"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"pipe"
 }
 }
 ,
@@ -351,6 +355,38 @@ true
 "Send text type messages to Telegram channel"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--file"
@@ -420,7 +456,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -428,11 +464,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -448,7 +480,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -456,11 +488,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -493,6 +521,38 @@ true
 "Send a.txt file to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--poll"
@@ -520,34 +580,6 @@ true
 "cn"
 :
 "发送投票消息"
-}
-,
-"--chat_id"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-""
-}
-}
 }
 ,
 "--question"
@@ -630,7 +662,7 @@ true
 }
 }
 ,
-"--webhook"
+"--chat"
 :
 {
 "#desc"
@@ -638,11 +670,31 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
+"Provide chat id"
+}
 ,
-"cn"
+"#1"
 :
-"指定群机器人发送消息所用的 webhook"
+{
+"#desc"
+:
+{
+"en"
+:
+""
+}
+}
+}
+,
+"--token"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"token"
 }
 ,
 "#1"
@@ -675,6 +727,38 @@ true
 "Send a poll to a Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--contact"
@@ -702,34 +786,6 @@ true
 "cn"
 :
 "发送电话联系人"
-}
-,
-"--chat_id"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-""
-}
-}
 }
 ,
 "--phone_number"
@@ -812,7 +868,7 @@ true
 }
 }
 ,
-"--webhook"
+"--chat"
 :
 {
 "#desc"
@@ -820,11 +876,31 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
+"Provide chat id"
+}
 ,
-"cn"
+"#1"
 :
-"指定群机器人发送消息所用的 webhook"
+{
+"#desc"
+:
+{
+"en"
+:
+""
+}
+}
+}
+,
+"--token"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"token"
 }
 ,
 "#1"
@@ -857,6 +933,38 @@ true
 "Send phone contact to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--dice"
@@ -886,7 +994,7 @@ true
 "发送一个显示随机值的动态表情"
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -894,11 +1002,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -914,7 +1018,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -922,11 +1026,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -959,6 +1059,38 @@ true
 "Send an animated emoji that displays random values"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--venue"
@@ -1148,7 +1280,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -1156,11 +1288,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -1176,7 +1304,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -1184,11 +1312,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -1221,6 +1345,38 @@ true
 "Send location with place description to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--location"
@@ -1330,7 +1486,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -1338,11 +1494,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -1358,7 +1510,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -1366,11 +1518,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -1403,6 +1551,38 @@ true
 "Send a map location with latitude 52 and longitude 53 to the Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--raw"
@@ -1464,7 +1644,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -1472,11 +1652,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -1525,6 +1701,22 @@ true
 "Send text type messages to Telegram group"
 }
 ]
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--stop_poll"
@@ -1552,34 +1744,6 @@ true
 "cn"
 :
 "停止已发起的投票"
-}
-,
-"--chat_id"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-""
-}
-}
 }
 ,
 "--message_id"
@@ -1622,7 +1786,7 @@ true
 }
 }
 ,
-"--webhook"
+"--chat"
 :
 {
 "#desc"
@@ -1630,11 +1794,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"Provide chat id"
 }
 ,
 "#1"
@@ -1647,6 +1807,62 @@ true
 :
 ""
 }
+}
+}
+,
+"--token"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"token"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+""
+}
+}
+}
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
 }
 }
 }
@@ -1718,7 +1934,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -1726,11 +1942,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -1746,7 +1958,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -1754,11 +1966,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -1791,6 +1999,38 @@ true
 "Send a.png images to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--video"
@@ -1860,7 +2100,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -1868,11 +2108,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -1888,7 +2124,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -1896,11 +2132,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -1933,6 +2165,38 @@ true
 "Send a.mp4 video to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--video_note"
@@ -2002,7 +2266,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -2010,11 +2274,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -2030,7 +2290,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -2038,11 +2298,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -2075,6 +2331,38 @@ true
 "Send a.mp4 video note to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--audio"
@@ -2144,7 +2432,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -2152,11 +2440,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -2172,7 +2456,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -2180,11 +2464,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -2217,6 +2497,38 @@ true
 "Send a.mp4 audio to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--voice"
@@ -2286,7 +2598,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -2294,11 +2606,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -2314,7 +2622,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -2322,11 +2630,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -2359,6 +2663,38 @@ true
 "Send a.mp4 voice to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--animation"
@@ -2428,7 +2764,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -2436,11 +2772,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -2456,7 +2788,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -2464,11 +2796,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -2501,6 +2829,38 @@ true
 "Send a.gif animation file to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "#subcmd:Location"
@@ -3089,7 +3449,7 @@ true
 "发送文本消息"
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -3097,11 +3457,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -3117,7 +3473,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -3125,11 +3481,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -3142,6 +3494,18 @@ true
 :
 ""
 }
+}
+}
+,
+"--pipe|-p"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"pipe"
 }
 }
 ,
@@ -3192,6 +3556,38 @@ true
 "Send text type messages to Telegram channel"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--file"
@@ -3261,7 +3657,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -3269,11 +3665,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -3289,7 +3681,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -3297,11 +3689,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -3334,6 +3722,38 @@ true
 "Send a.txt file to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--poll"
@@ -3361,34 +3781,6 @@ true
 "cn"
 :
 "发送投票消息"
-}
-,
-"--chat_id"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-""
-}
-}
 }
 ,
 "--question"
@@ -3471,7 +3863,7 @@ true
 }
 }
 ,
-"--webhook"
+"--chat"
 :
 {
 "#desc"
@@ -3479,11 +3871,31 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
+"Provide chat id"
+}
 ,
-"cn"
+"#1"
 :
-"指定群机器人发送消息所用的 webhook"
+{
+"#desc"
+:
+{
+"en"
+:
+""
+}
+}
+}
+,
+"--token"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"token"
 }
 ,
 "#1"
@@ -3516,6 +3928,38 @@ true
 "Send a poll to a Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--contact"
@@ -3543,34 +3987,6 @@ true
 "cn"
 :
 "发送电话联系人"
-}
-,
-"--chat_id"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-""
-}
-}
 }
 ,
 "--phone_number"
@@ -3653,7 +4069,7 @@ true
 }
 }
 ,
-"--webhook"
+"--chat"
 :
 {
 "#desc"
@@ -3661,11 +4077,31 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
+"Provide chat id"
+}
 ,
-"cn"
+"#1"
 :
-"指定群机器人发送消息所用的 webhook"
+{
+"#desc"
+:
+{
+"en"
+:
+""
+}
+}
+}
+,
+"--token"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"token"
 }
 ,
 "#1"
@@ -3698,6 +4134,38 @@ true
 "Send phone contact to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--dice"
@@ -3727,7 +4195,7 @@ true
 "发送一个显示随机值的动态表情"
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -3735,11 +4203,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -3755,7 +4219,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -3763,11 +4227,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -3800,6 +4260,38 @@ true
 "Send an animated emoji that displays random values"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--venue"
@@ -3989,7 +4481,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -3997,11 +4489,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -4017,7 +4505,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -4025,11 +4513,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -4062,6 +4546,38 @@ true
 "Send location with place description to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--location"
@@ -4171,7 +4687,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -4179,11 +4695,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -4199,7 +4711,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -4207,11 +4719,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -4244,6 +4752,38 @@ true
 "Send a map location with latitude 52 and longitude 53 to the Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--raw"
@@ -4305,7 +4845,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -4313,11 +4853,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -4366,6 +4902,22 @@ true
 "Send text type messages to Telegram group"
 }
 ]
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--stop_poll"
@@ -4393,34 +4945,6 @@ true
 "cn"
 :
 "停止已发起的投票"
-}
-,
-"--chat_id"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-""
-}
-}
 }
 ,
 "--message_id"
@@ -4463,7 +4987,7 @@ true
 }
 }
 ,
-"--webhook"
+"--chat"
 :
 {
 "#desc"
@@ -4471,11 +4995,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"Provide chat id"
 }
 ,
 "#1"
@@ -4488,6 +5008,62 @@ true
 :
 ""
 }
+}
+}
+,
+"--token"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"token"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+""
+}
+}
+}
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
 }
 }
 }
@@ -4559,7 +5135,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -4567,11 +5143,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -4587,7 +5159,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -4595,11 +5167,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -4632,6 +5200,38 @@ true
 "Send a.png images to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--video"
@@ -4701,7 +5301,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -4709,11 +5309,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -4729,7 +5325,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -4737,11 +5333,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -4774,6 +5366,38 @@ true
 "Send a.mp4 video to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--video_note"
@@ -4843,7 +5467,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -4851,11 +5475,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -4871,7 +5491,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -4879,11 +5499,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -4916,6 +5532,38 @@ true
 "Send a.mp4 video note to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--audio"
@@ -4985,7 +5633,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -4993,11 +5641,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -5013,7 +5657,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -5021,11 +5665,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -5058,6 +5698,38 @@ true
 "Send a.mp4 audio to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--voice"
@@ -5127,7 +5799,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -5135,11 +5807,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -5155,7 +5823,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -5163,11 +5831,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -5200,6 +5864,38 @@ true
 "Send a.mp4 voice to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "--animation"
@@ -5269,7 +5965,7 @@ true
 }
 }
 ,
-"--chat_id"
+"--chat"
 :
 {
 "#desc"
@@ -5277,11 +5973,7 @@ true
 {
 "en"
 :
-"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
-,
-"cn"
-:
-"群 ID 或频道用户名（格式为 @频道用户名）"
+"Provide chat id"
 }
 ,
 "#1"
@@ -5297,7 +5989,7 @@ true
 }
 }
 ,
-"--webhook"
+"--token"
 :
 {
 "#desc"
@@ -5305,11 +5997,7 @@ true
 {
 "en"
 :
-"The webhook used by the specified group of bots to send messages"
-,
-"cn"
-:
-"指定群机器人发送消息所用的 webhook"
+"token"
 }
 ,
 "#1"
@@ -5342,6 +6030,38 @@ true
 "Send a.gif animation file to Telegram group"
 }
 ]
+,
+"--chat_id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 ID 或频道用户名（格式为 @频道用户名）"
+,
+"en"
+:
+"Unique identifier for the target chat or username of the target channel (in the format @channelusername)"
+}
+}
+,
+"--webhook"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定群机器人发送消息所用的 webhook"
+,
+"en"
+:
+"The webhook used by the specified group of bots to send messages"
+}
+}
 }
 ,
 "#subcmd:Location"
