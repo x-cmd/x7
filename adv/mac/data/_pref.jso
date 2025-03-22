@@ -30,7 +30,7 @@
 }
 }
 ,
-"enabled"
+"enable"
 :
 {
 "#desc"
@@ -68,7 +68,7 @@
 {
 "cmd"
 :
-"x mac tidsudo enabled"
+"x mac tidsudo enable"
 ,
 "cn"
 :
