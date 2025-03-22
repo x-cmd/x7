@@ -108,7 +108,7 @@ function ___x_cmd_cd
                 set argv $argv[2..-1]
         end
         test (count $argv) -gt 0 || return 0
-        # printf "%s\n" "- I|cd: Change the directory [$PWD] to execute" >&2
+        printf "%s\n" "- I|cd: Change the directory [$PWD] to execute -> '$argv'" >&2
         $argv
         set -l exit_status $status
         ___x_cmd cd $original_dir

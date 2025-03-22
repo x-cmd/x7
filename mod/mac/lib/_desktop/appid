@@ -43,6 +43,10 @@ ___x_cmd_mac_appid_ls___csv(){
 }
 
 ___x_cmd_mac_appid_ls___tsv(){
+    ___x_cmd ccmd 10s -- ___x_cmd_mac_appid_ls___tsv_raw
+}
+
+___x_cmd_mac_appid_ls___tsv_raw(){
     (
         local IFS=" "
         ___x_cmd_cd0 /Applications

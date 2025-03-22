@@ -82,6 +82,7 @@ fn ___x_cmd { |@a|
 
 fn ___x_cmd_cd { |@a|
 
+    var original_oldpwd = $E:OLDPWD
     var original_dir = $pwd
     var args
     if ( == (count $a) 0 ) {
@@ -112,8 +113,10 @@ fn ___x_cmd_cd { |@a|
             return
         }
 
+        echo "I|cd: Change the directory to [$pwd] to execute -> '" (str:join " " [(each {|a| put $a} $args)]) "'"
         eval (str:join " " [(each {|a| put $a} $args)])
         ___x_cmd cd $original_dir
+        set-env OLDPWD $original_oldpwd
     }
 }
 

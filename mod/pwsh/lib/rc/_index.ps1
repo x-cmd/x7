@@ -200,11 +200,11 @@ ___x_cmd___rcpwsh_addpython
 
 
 $env:___X_CMD_CD_RELM_0 = ___x_cmd___rcpwsh_path_win_to_linux $(Get-Location).Path
-$env:___X_CMD_THEME_CURRENT_SHELL = "powershell"
 $env:OLDPWD = $env:___X_CMD_CD_RELM_0
 # Using gitbash
 # We cannot use WSL here.
 function ___x_cmd(){
+    $env:___X_CMD_THEME_CURRENT_SHELL = $Global:___X_CMD_THEME_CURRENT_SHELL
     $env:___X_CMD_XBINEXP_FP = "$HOME\.x-cmd.root\local\data\xbinexp\pwsh\$($PID)_$((Get-Random ))"
 
     if (-not $env:OLDPWD) {
@@ -243,9 +243,14 @@ function ___x_cmd(){
         Invoke-Expression $data
         Write-Host "==================="
     }
+    Remove-Item env:___X_CMD_XBINEXP_FP
+    $tmpval = $env:___X_CMD_THEME_CURRENT_SHELL
+    Remove-Item env:___X_CMD_THEME_CURRENT_SHELL
+    $Global:___X_CMD_THEME_CURRENT_SHELL = $tmpval
 }
 
 function ___x_cmd_cd {
+    $original_oldpwd = $env:OLDPWD
     $original_dir = $(Get-Location).Path
     if ($args.Count -le 1) {
         if ( $args[0] -eq "-" ){
@@ -288,8 +293,10 @@ function ___x_cmd_cd {
         }
         if ($args.Count -eq 0) { return 0 }
 
+        Write-Host "- I|cd: Change the directory [$(Get-Location).Path] to execute -> '" ($args -join ' ') "'"
         Invoke-Expression ($args -join ' ')
         Set-Location -Path $original_dir
+        $env:OLDPWD = $original_oldpwd
     }
 }
 
@@ -322,6 +329,7 @@ if ($Host.Name -ne "ConsoleHost") {
     # interactive
     $env:___X_CMD_RUNMODE = 9
     $env:___X_CMD_THEME_RELOAD_DISABLE = ""
+    $Global:___X_CMD_THEME_CURRENT_SHELL = "powershell"
 
     function c(){
         ___x_cmd_cd @args

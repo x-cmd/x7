@@ -181,6 +181,48 @@ null
 {
 "cmd"
 :
+"x mac tidsudo"
+,
+"cn"
+:
+"使用指纹( touchid ) 进行 sudo 验证, 失败时将重启密码验证"
+,
+"en"
+:
+"Use fingerprint (touchid) for sudo verification, and restart password verification when failed"
+}
+,
+{
+"cmd"
+:
+"x mac alias enable mcli"
+,
+"cn"
+:
+"启用别名功能, 设为 mcli, 以后可以使用 mcli 代替 x mac"
+,
+"en"
+:
+"Enable the alias feature, set it to mcli, and use mcli instead of x mac in the future"
+}
+,
+{
+"cmd"
+:
+"x mac alias enable"
+,
+"cn"
+:
+"启用别名功能, 不提供参数, 则默认为 m, 以后可以使用 m 代替 x mac"
+,
+"en"
+:
+"Enable the alias feature, if no parameter is provided, it defaults to m, and you can use m instead of x mac in the future"
+}
+,
+{
+"cmd"
+:
 "x mac info"
 ,
 "cn"

@@ -10,6 +10,7 @@ ___x_cmd_nu_rcpath_(){
 
     ___x_cmd os name_
     case "$x_" in
+        darwin) ___X_CMD_NU_RCPATH="$HOME/Library/Application Support/nushell/env.nu" ;;
         win)    ___X_CMD_NU_RCPATH="$HOME/AppData/Roaming/nushell/env.nu" ;;
         *)      ___X_CMD_NU_RCPATH="$HOME/.config/nushell/env.nu" ;;
     esac

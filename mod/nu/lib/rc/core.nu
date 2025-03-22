@@ -175,6 +175,9 @@ export def --env --wrapped ___x_cmd_cd [ ...args ] {
     }
 
     let original_dir = $env.PWD
+    mut oldpwd_dir = $env.PWD
+    if OLDPWD in $env { $oldpwd_dir = $env.OLDPWD }
+
     let arg1 = ($args | get 0)
     mut param = ( $args | skip 1 )
 
@@ -190,13 +193,13 @@ export def --env --wrapped ___x_cmd_cd [ ...args ] {
         }
     } else if $arg1 =~ "[-|--][a-zA-Z]+$" {
         ___x_cmd_nu_rc_xbinexp cd ...$param
-        return $env.LAST_EXIT_CODE
+        return
     } else {
         ___x_cmd_nu_rc_xbinexp cd $arg1
     }
 
     if ($param | length) == 0 {
-        return 0
+        return
     }
 
     if ( $param | get 0 ) in ["-", "--"] {
@@ -208,9 +211,10 @@ export def --env --wrapped ___x_cmd_cd [ ...args ] {
         run-external ( $param | get 0 ) ...( $param | skip 1 )
         $exit_code = $env.LAST_EXIT_CODE
     } else {
-        return 0
+        return
     }
 
     ___x_cmd_nu_rc_xbinexp cd $original_dir
-    return $exit_code
+    $env.OLDPWD = $oldpwd_dir
+    return
 }

@@ -24,8 +24,15 @@ ___x_cmd_mac_vpn_stop(){
 
 ___x_cmd_mac_vpn_start(){
     :
+    # scutil --nc start "${_VPN}" ${_USER} ${_PASSWORD} ${_SECRET}
 }
 
+# TODO
+___x_cmd_mac_vpn_ls___tsv(){
+    ___x_cmd_mac_vpn_ls___raw
+}
 
-
+___x_cmd_mac_vpn_ls___raw(){
+    ___x_cmd_cmds scutil --nc list
+}
 
