@@ -167,7 +167,7 @@ a8f640001ba06d8ea9cfae9fd2a758c68a765575 lua main NULL
 0d30f3c5df1aaf15a7bc243e7e07502301ca15c5 luarocks main NULL
 018e8a8cfb9dbd47bb8db36353d8e87b2e995cb8 lynis main NULL
 9f039bfb5027f0fa2a2683f20c17568292a5665f ma main NULL
-06014fa809a483d0e6cce52eb5c7abdba6c1a71a mac main NULL
+2215d608d8eee50005b5f836bc871035229b8282 mac main NULL
 ee22cbf1fd39b62e77f5ce63ffc7d86079395d43 man main NULL
 a6af2996b4683eca0d392bb7fe1a2a6160e8737d mankier main NULL
 b92d1e66d21b18dab1dab1f2645d286b480318d4 mawk main NULL
