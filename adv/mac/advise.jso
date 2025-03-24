@@ -89,6 +89,8 @@ null
 "tidsudo"
 ,
 "systemsetup|ss"
+,
+"alias"
 ]
 ,
 "info"
@@ -136,6 +138,86 @@ null
 "cn"
 :
 "获取电池信息"
+}
+}
+,
+"alias"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"设置 `x mac` 命令的别名"
+,
+"en"
+:
+"Set an alias for the `x mac` command"
+}
+,
+"status"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看当前 `x mac` 命令的别名状态"
+,
+"en"
+:
+"Check the current alias status of the `x mac` command"
+}
+}
+,
+"enable"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"为 `x mac` 命令设置别名并启用设置的别名"
+,
+"en"
+:
+"Set and enable an alias for the `x mac` command"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"别名"
+,
+"en"
+:
+"alias"
+}
+}
+}
+,
+"disable"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"禁用设置的别名"
+,
+"en"
+:
+"Disable the set alias"
+}
 }
 }
 ,

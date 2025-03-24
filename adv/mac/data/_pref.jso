@@ -7,11 +7,11 @@
 {
 "cn"
 :
-"设置使用触控 ID 认证 sudo"
+"设置使用触控 ID 认证 sudo 权限"
 ,
 "en"
 :
-"Set up Touch ID to authorize sudo commands"
+"Set up TouchID authentication for sudo access"
 }
 ,
 "status"
@@ -22,11 +22,11 @@
 {
 "cn"
 :
-"查看是否设置使用触控 ID 认证 sudo"
+"查看触控 ID 认证 sudo 权限的当前状态"
 ,
 "en"
 :
-"Check if Touch ID authentication is enabled for sudo"
+"Check the current status of TouchID authentication for sudo access"
 }
 }
 ,
@@ -38,11 +38,11 @@
 {
 "cn"
 :
-"启用触控 ID 认证 sudo"
+"启用触控 ID 认证 sudo 权限"
 ,
 "en"
 :
-"Enable Touch ID authentication for sudo commands"
+"Enable TouchID authentication for sudo access"
 }
 }
 ,
@@ -54,11 +54,11 @@
 {
 "cn"
 :
-"禁用触控 ID 认证 sudo"
+"禁用触控 ID 认证 sudo 权限"
 ,
 "en"
 :
-"Disabling Touch ID authentication for sudo commands"
+"Disable TouchID authentication for sudo access"
 }
 }
 ,
@@ -72,11 +72,11 @@
 ,
 "cn"
 :
-"启用触控 ID 认证 sudo"
+"启用触控 ID 认证 sudo 权限"
 ,
 "en"
 :
-"Enable Touch ID authentication for sudo commands"
+"Enable TouchID authentication for sudo access"
 }
 ,
 {
@@ -86,11 +86,25 @@
 ,
 "cn"
 :
-"查看是否设置使用触控 ID 认证 sudo"
+"查看触控 ID 认证 sudo 权限的当前状态"
 ,
 "en"
 :
-"Check if Touch ID authentication is enabled for sudo"
+"Check the current status of TouchID authentication for sudo access"
+}
+,
+{
+"cmd"
+:
+"x mac tidsudo disable"
+,
+"cn"
+:
+"禁用触控 ID 认证 sudo 权限"
+,
+"en"
+:
+"Disable TouchID authentication for sudo access"
 }
 ]
 }
