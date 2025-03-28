@@ -201,10 +201,13 @@ ___x_cmd_advise__comp_from_origin(){
         fi
     else
         ___x_cmd_advise_man_which___completion_getfile_ "$module"
-        [ -f "$x_" ] || return $?
-        . "$x_" 2>/dev/null 1>&2
-        command -v "_$module" >/dev/null || return 1
-        eval "_$module"
+        if [ -f "$x_" ]; then
+            . "$x_" 2>/dev/null 1>&2
+            command -v "_${module}" >/dev/null || return 1
+            "_${module}" 2>/dev/null 1>&2
+        elif ___x_cmd_advise___get_completion_function_ "$module"; then
+            "$x_" 2>/dev/null 1>&2
+        fi
     fi
 }
 

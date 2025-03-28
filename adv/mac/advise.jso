@@ -76,6 +76,14 @@ null
 ,
 "wifi"
 ,
+"fw"
+,
+"vpn"
+,
+"ntp"
+,
+"airdrop"
+,
 "sshd"
 ]
 ,
@@ -91,6 +99,10 @@ null
 "systemsetup|ss"
 ,
 "alias"
+,
+"name"
+,
+"lang"
 ]
 ,
 "info"
@@ -219,6 +231,38 @@ null
 "Disable the set alias"
 }
 }
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x mac alias enable mcli"
+,
+"cn"
+:
+"启用别名功能, 设为 mcli, 以后可以使用 mcli 代替 x mac"
+,
+"en"
+:
+"Enable the alias feature, set it to mcli, and use mcli instead of x mac in the future"
+}
+,
+{
+"cmd"
+:
+"x mac alias enable"
+,
+"cn"
+:
+"启用别名功能, 不提供参数, 则默认为 m, 以后可以使用 m 代替 x mac"
+,
+"en"
+:
+"Enable the alias feature, if no parameter is provided, it defaults to m, and you can use m instead of x mac in the future"
+}
+]
 }
 ,
 "$ref"
@@ -263,7 +307,7 @@ null
 {
 "cmd"
 :
-"x mac tidsudo"
+"x mac tidsudo enable"
 ,
 "cn"
 :
