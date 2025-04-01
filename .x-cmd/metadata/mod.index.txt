@@ -4,7 +4,7 @@
 c3a2ee48e35e37bc9b5885c2eecaed4effa25dd6 alpine main NULL
 56525f31030f01f70af00812dd5092d89a1d6e7d api main NULL
 4cc512a2af2ae3964f5d918ae52d4a827d543d0c apk main NULL
-ace27160b06b9319871cade55f63d0d621fb331b apt main NULL
+cbf7f97a131088912773ec181cd8c1921bf844db apt main NULL
 963ebbd6fe9c5039066982fe27c7a7eafc163b6b arg main NULL
 eae3392df329f7012eeb31081cd1e0d35bdb7d3f arp main NULL
 0723a17151ed484e615dd1787b65c263c9923d5a ascii main NULL
@@ -72,7 +72,7 @@ a20e6b51f0909d928013c7843cb5e87e2259f7fe emacs main NULL
 baee378a297bf24b93949dedeb97acc8ed0b2307 emoji main NULL
 1a0474f11693df9fec0555b7073ea555d91e5a2e endlessh main NULL
 c173924ab1bdff724a0ed58bb863a1d1a3190e9d env main NULL
-189536abff7f7f6b2c21675eb0c40df7c4760ad6 envy main NULL
+7bc22d6dd76dcf5e58633a8c849345ca6bbfe014 envy main NULL
 7360d917f17dbeb590e8060251723826469fab9d facl main NULL
 b0280d20d10e78c01dd9593da90b69cdeecac2fc feishu main NULL
 14f6b50ed7ae48738047f730d509c79922da9704 ff main NULL
@@ -194,7 +194,7 @@ e8043ead976363bef3e41b45d8f5a079c80148a4 ohmyposh main NULL
 573fdecc67c78a9a7bd19804a436502f9ccd1be7 onsh main NULL
 22bb3cb41b592381474747d4c4ae1b6670d2077d open main NULL
 e01ca44b0ba58b3d810fddfebb3aa6a6728d93fa openai main NULL
-83ff4230a995b0b1f6607f0fd6a75d18125615b1 os main NULL
+19eae9c5d8fd40491acea0e0387bfb1ed3a24cf0 os main NULL
 2dd922820daabd642561b82c556a4b18cad632e4 osv main NULL
 5a9572f2256b37f843bc247882c92c78c96ebb32 ourl main NULL
 78eba98282cb280c58e77c9d75a07ef13d941f6b outerr main NULL
@@ -210,9 +210,9 @@ f0d94e7e509b107d6324357888a5e2a56cebcb1e pick main NULL
 4b0e8450bce22dcbd96441385433da87f4011727 ping main NULL
 6f7a9b990059f73732198f0436272a30c312b99e pip main NULL
 e88c35132ffd4554e3f749d85f7a82b60e07ca0d pipx main NULL
-b75d2e3dfbd6e06d09f60cfa0cc7f3d327a874eb pixi main NULL
+42abe45cdef3a523ea3d8da0d5b8956b09b19388 pixi main NULL
 6005bce77c3797c8021a2279042ec354dd27225c pkg main NULL
-97eb5accc9312c75042df629ba21609f11f6cadd pkgx main NULL
+81a29c70f4fd9c364e5b6dcdcf9e9e21f7183846 pkgx main NULL
 f01c9c1644cfb433e566e86eba28696f069ea1e8 plwr main NULL
 daa38097f0706109b057fbfe23ac2d65abcefd7a proxy main NULL
 b8cc2607a873e512a609318aacfc16ba534f8d5a prta main NULL
@@ -279,7 +279,7 @@ c786215b6ee64ffe674412efcf2a4319a97ca160 tz main NULL
 7bd5a1082d4f1e4e7287dc7a2bc47e292ad8f785 uhb main NULL
 1946dafb4cd78f25b7763bc69f9e27cebca037c1 ui main NULL
 d8ee558013bd1de499aa1ef6bb8e196791f369cf uname main NULL
-6bb584903d437493e2bbd50f2604453d8b1a72bc uninstall main NULL
+2a8a3c46220a657b6d99c14ec7dad31919f8dedb uninstall main NULL
 46fbba30a98f45254375b96ce2c73e120c0723a8 upgrade main NULL
 9d0e286079a87bf8f8ac1b816b24dbcd921ffbb6 uptime main NULL
 befef8ac37b15ba229fc5559b1dba4996562b309 url main NULL

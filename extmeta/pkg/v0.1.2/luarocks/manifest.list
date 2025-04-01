@@ -643,6 +643,7 @@ fennel
 fennel-ls
 fennel_rblx
 fenster
+fensteraudio
 ff
 fffonion-busted
 fffonion-lua-resty-kafka
@@ -788,6 +789,7 @@ gonapps-url-query-parser
 gonapps-url-router
 goto-preview
 gpoll
+grail
 grapheme
 graphics-def
 graphql
@@ -2383,6 +2385,7 @@ luapgsql
 luaphonenumber
 luapicohttpparser
 luaplot
+luaplus-loader
 luapod
 luaposix
 luaprecomp
@@ -3610,6 +3613,7 @@ string-capitalize
 string-contains
 string-format
 string-format-all
+string-natcmp
 string-random
 string-replace
 string-split

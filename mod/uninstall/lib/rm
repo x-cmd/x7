@@ -1,0 +1,23 @@
+
+___x_cmd_uninstall_rm(){
+    local type="$1"
+    local software="$2"
+
+    local uninstall=
+    case "$type" in
+        brew|apt)
+            uninstall="uninstall"   ;;
+        dnf)
+            uninstall="remove"      ;;
+        apk)
+            uninstall="del"         ;;
+        pacman)
+            uninstall="--remove"    ;;
+        pixi)
+            uninstall="unuse"       ;;
+        *)  return 1                ;;
+    esac
+
+    uninstall:info "Running -> x ${type} ${uninstall} ${software}"
+    ___x_cmd "$type" "$uninstall" "$software"
+}
