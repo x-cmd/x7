@@ -27,6 +27,20 @@ null
 "Quickly query installed software on different operating systems and uninstall them."
 }
 ,
+"#tip"
+:
+[
+{
+"cn"
+:
+"目前仅支持以下包管理器：brew, scoop, apt, dnf, apk, pacman, pixi, xpkg"
+,
+"en"
+:
+"Currently, only the following package managers are supported: brew, scoop, apt, dnf, apk, pacman, pixi, xpkg."
+}
+]
+,
 "ls"
 :
 {
@@ -39,7 +53,7 @@ null
 ,
 "en"
 :
-"List software installed via system and third-party package managers."
+"List software installed via system and third-party package managers"
 }
 }
 ,
@@ -51,11 +65,11 @@ null
 {
 "cn"
 :
-"卸载系统包管理器以及第三方包管理器安装的软件"
+"卸载指定包管理器安装的软件"
 ,
 "en"
 :
-"Uninstall software installed via system and third-party package managers."
+"Uninstall the software installed by the specified package manager"
 }
 ,
 "#1"
@@ -86,7 +100,11 @@ null
 ,
 "pacman"
 ,
+"scoop"
+,
 "pixi"
+,
+"xpkg"
 ]
 }
 ,
@@ -107,6 +125,22 @@ null
 }
 }
 ,
+"self|x"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"卸载 x-cmd"
+,
+"en"
+:
+"Uninstall x-cmd"
+}
+}
+,
 "#tldr"
 :
 [
@@ -122,6 +156,34 @@ null
 "en"
 :
 "Use the interactive app to list installed software and perform uninstallation"
+}
+,
+{
+"cmd"
+:
+"x uninstall rm brew bat"
+,
+"cn"
+:
+"卸载 brew 安装的 bat"
+,
+"en"
+:
+"Uninstall the bat installed by brew"
+}
+,
+{
+"cmd"
+:
+"x uninstall self"
+,
+"cn"
+:
+"卸载 x-cmd"
+,
+"en"
+:
+"Uninstall x-cmd"
 }
 ]
 ,

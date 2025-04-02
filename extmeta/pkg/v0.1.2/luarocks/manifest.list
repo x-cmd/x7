@@ -729,6 +729,7 @@ gbk
 gcfn
 gear
 geezifylua
+geminilua
 genesi-password
 genny
 gentags.nvim
@@ -3606,6 +3607,7 @@ stormpath-nginx
 stp
 str
 strbuffer
+stream
 streamcsv
 strease
 strictness
@@ -3619,6 +3621,7 @@ string-replace
 string-split
 string-token
 string-trim
+string_lambda
 stringdistance
 stringex
 stringifylua

@@ -1,0 +1,30 @@
+
+___x_cmd_ip_config(){
+    if ___x_cmd os is win; then
+        ___x_cmd_ip_config___main "$@"
+    elif ___x_cmd_hascmd ifconfig; then
+        ___x_cmd ifconfig "$@"
+    else
+        ___x_cmd ip addr "$@"
+    fi
+}
+
+___x_cmd_ip_config___main(){
+    :
+}
+
+___x_cmd_ip_config_colr(){
+    ___x_cmd_cmds awk -f "$___X_CMD_ROOT_MOD/ip/lib/config/awk/ipconfig.colr.awk"
+}
+
+___x_cmd_ip_config___tsv(){
+    :
+}
+
+___x_cmd_ip_config___csv(){
+    :
+}
+
+___x_cmd_ip_config___app(){
+    :
+}

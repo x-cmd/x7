@@ -24,7 +24,7 @@ true
 [
 "osv"
 ,
-"i|install"
+"install|i"
 ,
 "mirror"
 ,
@@ -285,7 +285,7 @@ true
 }
 }
 ,
-"i|install"
+"install|i"
 :
 {
 "#desc"

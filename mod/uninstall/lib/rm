@@ -1,23 +1,25 @@
 
 ___x_cmd_uninstall_rm(){
-    local type="$1"
-    local software="$2"
+    [ "$#" -gt 0 ] || set -- --help
 
-    local uninstall=
+    local type="$1"; shift
+
+    local subcommand=
     case "$type" in
-        brew|apt)
-            uninstall="uninstall"   ;;
-        dnf)
-            uninstall="remove"      ;;
-        apk)
-            uninstall="del"         ;;
-        pacman)
-            uninstall="--remove"    ;;
-        pixi)
-            uninstall="unuse"       ;;
-        *)  return 1                ;;
+        brew|scoop)
+                    subcommand="uninstall"                  ;;
+        apt|dnf)    subcommand="remove"                     ;;
+        apk)        subcommand="del"                        ;;
+        pacman)     subcommand="--remove"                   ;;
+        pixi)       subcommand="unuse"                      ;;
+        xpkg)
+                    type="env"
+                    subcommand="gc"                         ;;
+
+        -h|--help)  ___x_cmd help -m uninstall rm; return 0 ;;
+        *)          N=uninstall M="Not supported by package manager -> $type" log:ret:1 ;;
     esac
 
-    uninstall:info "Running -> x ${type} ${uninstall} ${software}"
-    ___x_cmd "$type" "$uninstall" "$software"
+    uninstall:info "Running -> x ${type} ${subcommand} $*"
+    ___x_cmd "$type" "$subcommand" "$@"
 }
