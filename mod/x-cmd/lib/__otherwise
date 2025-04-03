@@ -21,7 +21,6 @@ ___x_cmd_main___otherwise(){
         usr)                                ___x_cmd_main   user                    "$@" ;;
 
         run)                                ___x_cmd solo   --exec                  "$@" ;;
-        ifc|ifconfig|ipconfig)              ___x_cmd ifconfig                       "$@" ;;
 
         unix2dos|unix2mac|mac2unix|mac2dos|dos2mac)
                                             ___x_cmd dos2unix --"$op"               "$@" ;;

@@ -30,15 +30,15 @@ ___x_cmd_ip_echo(){
 }
 
 ___x_cmd_ip_echo___nocache(){
-    ___x_cmd ccmd 15s -- ___x_cmd curl --fail --max-time 10 -s https://ipecho.net/plain 2>/dev/null
+    ___x_cmd ccmd 5s -- ___x_cmd curl --fail --max-time 10 -s https://ipecho.net/plain 2>/dev/null
 }
 
 ___x_cmd_ip_geolite(){
     {
         if [ $# -eq 0 ]; then
-            ___x_cmd ccmd 30s -- ___x_cmd_ip_geolite___request ""
+            ___x_cmd ccmd 5s -- ___x_cmd_ip_geolite___request ""
         else
-            ___x_cmd ccmd 30d -- ___x_cmd_ip_geolite___request "$1"
+            ___x_cmd ccmd 30m -- ___x_cmd_ip_geolite___request "$1"
         fi
     } | ___x_cmd jo env . City=.city Region=.region Country=.country -- \
     'printf "%s\n%s\n" "IP LOCATION :" "  $City, $Region (${Country})"'

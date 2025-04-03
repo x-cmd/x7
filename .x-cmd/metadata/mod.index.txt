@@ -122,7 +122,7 @@ fc94adee33de2bfc9fb222cbc1829867604d79a8 html main NULL
 8d59b9602ecee6da50bff38e9c08e40990425bf5 http main NULL
 3d92a9f96288bc6e3a15d3c20873625e13bf2ebc httpget main NULL
 f9b5e7a873ec0124c18651f77d4db36381edfa42 hua main NULL
-4b95828d59afcdbc122abfb0d126165469702003 hub main NULL
+a692c05eaa331924a83f210c3c8e214182bc8fc3 hub main NULL
 1aabcce64d874ea553fb78792a5ea46d762cab04 huggingface main NULL
 6a1029a3e9a2ff1950a22c1e93a6c48bd0c99301 humantime main NULL
 a7db5970850cc5f0ad6186d97e65af0c97339a52 icmd main NULL
@@ -131,7 +131,7 @@ bfff022a0cda02c33d84cc920c309ef9225b991c iconv main NULL
 2dec1c482d17f55eac13cf498f20675bc0b0ddda ifconfig main NULL
 7a8e07bcfc827c7f6518456ce125efef54240a08 install main NULL
 afdee276c5b66ce74e7aa07a75d5404f0396bf36 instance main NULL
-6c77ad5e4b891ac158ae1ce2da6e972689b9c9d8 ip main NULL
+f0c7f74aa739d1c64981e61563e6c0d29c46b83a ip main NULL
 bb2d9592389187e065d78a7f54a8b88ca9ea58bd is main NULL
 8de1c742cf631ad576a8bc12ab298d347579b0da ja main NULL
 aab6708671cbbd17416e3fac73530ec26965fd94 jar main NULL
@@ -164,6 +164,7 @@ fdcd8945ae17bfee37d3a8601d7f6b1ccfa397a0 log main NULL
 d309af0b3aa435176298c8225c295492a66bb85c logvis main NULL
 16535ef4e7c79bfa5b5727c5e75773679082d2ac ls main NULL
 ccfdeff819d2e2e78c260567209776b791a3f9f6 lsio main NULL
+e459c11343b87048e382797a1ba7f005b107d4ff lsof main NULL
 a8f640001ba06d8ea9cfae9fd2a758c68a765575 lua main NULL
 0d30f3c5df1aaf15a7bc243e7e07502301ca15c5 luarocks main NULL
 018e8a8cfb9dbd47bb8db36353d8e87b2e995cb8 lynis main NULL
@@ -299,7 +300,7 @@ b8255740083c7ed52ab6d6752db0a51327106a2f winget main NULL
 315788d9a43c3b03eaf1e673bb516993c5c1303d wsl main NULL
 1f2ddf3a5e143c23f7c3ec1f1961056951297293 wttr main NULL
 a209e0f67c87f56d1a77922f95c206b5db639f29 wx main NULL
-360c49cd31f360f36e1a23175a25831fd929a9c4 x-cmd main NULL
+bac6fe2d52790167c53b6e29f8b0ea37e27fcb23 x-cmd main NULL
 d3be37edf456887b18d236a19e1103fc1f2dbf85 xq main NULL
 9dc27bbbe6821a2b33cb94673c450b1f1fa53357 xrc main NULL
 3a4fac99556c2fcadd374fb1c9cfa62f850fc569 xx main NULL
