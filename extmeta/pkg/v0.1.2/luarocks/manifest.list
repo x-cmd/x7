@@ -477,6 +477,7 @@ docopt
 docroc
 dogma-core
 dogmac
+doma
 domotest
 donut.nvim
 donutlify.nvim
@@ -670,6 +671,7 @@ flatbuffers-lib
 flatfile
 flatten.nvim
 flirt
+flock
 flomesh-kong-plugin-session
 flomesh-lua-resty-healthcheck
 flomesh-lua-resty-kafka
@@ -726,9 +728,11 @@ game-tools
 gamecake
 gauge
 gbk
+gc_metatable
 gcfn
 gear
 geezifylua
+gemfetchr
 geminilua
 genesi-password
 genny
@@ -2430,6 +2434,7 @@ luarocks_helloworld
 luarray
 luars232
 luarunner
+luasc2ai
 luascope
 luasec
 luasec-fixed
@@ -3779,6 +3784,10 @@ torch-dir-loader
 torch-graph-criterion
 torch-hdf5-logger
 torch-word-emb
+torch_cwrap
+torch_paths
+torch_threads
+torch_torch7
 tostring
 toto
 tpatterns

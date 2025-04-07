@@ -9,6 +9,10 @@
     "darwin/brew": {
       "cmd": "brew install rubysolo/tools/brows",
       "reference": "https://github.com/rubysolo/brows#installation"
+    },
+    "linux/brew": {
+      "cmd": "brew install rubysolo/tools/brows",
+      "reference": "https://github.com/rubysolo/brows#installation"
     }
   }
 }
