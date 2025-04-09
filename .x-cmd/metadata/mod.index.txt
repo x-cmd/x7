@@ -131,7 +131,7 @@ bfff022a0cda02c33d84cc920c309ef9225b991c iconv main NULL
 2dec1c482d17f55eac13cf498f20675bc0b0ddda ifconfig main NULL
 7a8e07bcfc827c7f6518456ce125efef54240a08 install main NULL
 afdee276c5b66ce74e7aa07a75d5404f0396bf36 instance main NULL
-9bac0a9f111f7050d393a106e5231b78d4e3db6f ip main NULL
+b92b2f66862e679d086701f9ff5fa3623a339737 ip main NULL
 bb2d9592389187e065d78a7f54a8b88ca9ea58bd is main NULL
 8de1c742cf631ad576a8bc12ab298d347579b0da ja main NULL
 aab6708671cbbd17416e3fac73530ec26965fd94 jar main NULL
@@ -255,7 +255,7 @@ b51a51b5dd9bb5097cca6876470d0e745da484ec slidev main NULL
 cb7148baf91fda837b480376258acfd43f0c65b3 solo main NULL
 10e497a98c58e701b7c4d76c94d78eda73fed82d spf main NULL
 aba0f4b74b7172d71324a94113c358011ef6f7e4 ssh main NULL
-59caeedc6725258249f31fd507ee1353b025519e starship main NULL
+43b389dcb94816ef79303a528109c209942c6f20 starship main NULL
 3bb1defc2eed56dd1231eb35b5a5f9ece2b4ed1f stat main NULL
 40c836ca20693f90689638a688258ff2fdd7dee9 str main NULL
 9002cdcdd26dcabae6f4fb23e6ceef14edcf40a7 sudo main NULL
@@ -266,7 +266,7 @@ d628139cdb9f27113d21de987b19eac2f24415d3 ted main NULL
 1e1c98d98bee32338e14e1580e57c1cc72ec9660 tee main NULL
 54014e2420d5ac2403282c8a272b028393f71589 telegram main NULL
 4bebf0f26cc64bb450ba28c9e8153a4a852d3a97 term main NULL
-acf865d9e5b8e86cf8f542c329abca02d2253ff7 theme main NULL
+c292cde6f1da4e3362cd699df0f7a81d3dedffb1 theme main NULL
 8089be430a2217f67a7e4a0111b8ac3efbf0248e tldr main NULL
 ddc89fb8fde4b5f63eaee550a35ad5b5b35451ad tmp main NULL
 48c6c2f62e10b46b2443f4206c5d2b442423e3d5 tmpl main NULL

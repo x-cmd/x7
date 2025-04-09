@@ -14,9 +14,10 @@ ___x_cmd_ip___main(){
         mask2no|no2mask|maskaddr|\
         class|class_|type|type_|info|cidr|validate|fill0|fill0_|map|\
         parse|parse_|\
-        iter|count|count_|toint|toint_|fromint|fromint_|\
-        addr)
+        iter|count|count_|toint|toint_|fromint|fromint_)
                             "___x_cmd_ip_${op}" "$@"    ;;
+
+        a|addr)             ___x_cmd_ip_addr    "$@"    ;;
 
         c|config)           ___x_cmd_ip_config  "$@"    ;;
 
