@@ -1,0 +1,49 @@
+
+___x_cmd_nets_exist(){
+    local datadir="${1:-"${___X_CMD_NETS_DATA}/latest"}"
+    [ -f "${datadir}/all" ]
+}
+
+___x_cmd_nets_view(){
+    local format=auto
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --csv|--tsv|--auto)     format="${1#--}" ;;
+            *)                      break ;;
+        esac
+    done
+
+    local datadir="${___X_CMD_NETS_DATA}/latest"
+
+    ___x_cmd_nets_exist "$datadir" || {
+        ___x_cmd_nets_update || return $?
+    }
+
+    local topic="${1:-internet}"
+    ___x_cmd_nets_view___"$format"
+}
+
+
+___x_cmd_nets_view___csv(){
+    ___x_cmd_nets_view___raw | ___x_cmd tsv tocsv
+}
+
+
+___x_cmd_nets_view___raw(){
+    ___x_cmd_cmds cat "$datadir/$topic"
+}
+
+___x_cmd_nets_view___app(){
+    ___x_cmd_nets_view___csv | ___x_cmd csv app
+}
+
+___x_cmd_nets_view___auto(){
+    if ___x_cmd_is_stdout2tty; then
+        ___x_cmd_nets_view___app    "$@"
+    else
+        ___x_cmd_nets_view___tsv    "$@"
+    fi
+}
+
+

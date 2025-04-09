@@ -7,7 +7,7 @@
   },
   "rule": {
     "/curl": {
-      "cmd": "curl --proto '=https' --tlsv1.2 -LsSf curl --proto '=https' --tlsv1.2 -LsSf https://github.com/LucasPickering/slumber/releases/download/v3.0.1/slumber-installer.sh | sh",
+      "cmd": "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/LucasPickering/slumber/releases/download/v3.0.1/slumber-installer.sh | sh",
       "reference": "https://github.com/LucasPickering/slumber/releases"
     },
     "/brew": {
@@ -21,14 +21,6 @@
     "(win|wsl2)/powershell": {
       "cmd": "powershell -ExecutionPolicy ByPass -c \"irm https://github.com/LucasPickering/slumber/releases/download/v3.0.1/slumber-installer.ps1 | iex\"",
       "reference": "https://github.com/LucasPickering/slumber/releases"
-    },
-    "arch/pacman": {
-      "cmd": "pacman -S \tslumber",
-      "reference": "https://archlinux.org/packages/extra/x86_64/slumber/"
-    },
-    "/nix-shell": {
-      "cmd": "nix-shell -p slumber",
-      "reference": "https://search.nixos.org/packages?query=slumber"
     }
   }
 }

@@ -7,6 +7,7 @@ ___x_cmd_ip_addr(){
     local format=auto
     while [ $# -gt 0 ]; do
         case "$1" in
+            -h|--help)      ___x_cmd help -m ip addr "$@" ;;
             --app)          format=app  ;;
             --tsv)          format=tsv  ;;
             --csv)          format=csv  ;;
@@ -25,7 +26,7 @@ ___x_cmd_ip_addr___check(){
     ! ___x_cmd_hascmd ip    || return 0
     ___x_cmd os is linux    || {
         ip:error "Command not found -> ip"
-        ip:warn "ip command is not avaiable on non-linux platform. Try using 'x ip c' or 'x ifconfig' as alternatives."
+        ip:warn "ip command is not avaiable on non-linux platform. Try using 'x ip config' or 'x ifconfig' as alternatives."
         return 1
     }
 }

@@ -1,0 +1,41 @@
+
+___x_cmd_nets_update(){
+    local datadir="${___X_CMD_NETS_DATA}/latest"
+
+    if [ -f "$datadir/all" ] && ___x_cmd fileage --in 300s "$datadir/all"; then
+        ___x_cmd ui yesno "The file is updated in lenss than 5 min. Do you want to update ?" || return 0
+    fi
+
+    ___x_cmd rmrf "$datadir"
+    ___x_cmd mkdirp "$datadir"
+    ___x_cmd_nets_update___raw
+
+    ___x_cmd_nets_convert "$datadir"
+}
+
+# collect then parse
+___x_cmd_nets_update___raw(){
+    if ___x_cmd os is linux; then
+        if ___x_cmd_hascmd netstat; then
+            ___x_cmd_cmds netstat -anp | ___x_cmd_nets_update___raw___all
+        else
+            ___x_cmd busybox netstat | ___x_cmd_nets_update___raw___all
+        fi
+    elif ___x_cmd os is win; then
+        ___x_cmd_cmds route >"$datadir/route"
+        ___x_cmd_cmds netstats | ___x_cmd_nets_update___raw___all
+    else
+        if ___x_cmd_hascmd netstat; then
+            ___x_cmd_cmds netstat -a | ___x_cmd_nets_update___raw___all
+        else
+            nets:error "No netstat found."
+            return 1
+        fi
+    fi
+}
+
+___x_cmd_nets_update___raw___all(){
+    # tee "$datadir/all" | ___x_cmd log uirotate
+
+    ___x_cmd_cmds awk -v datafp="$datadir/all" '{ print >>datafp ; print; fflush("/dev/stdout"); }' | ___x_cmd log uirotate
+}
