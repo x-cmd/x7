@@ -24,9 +24,11 @@ ___x_cmd_nets_update___raw(){
     elif ___x_cmd os is win; then
         ___x_cmd_cmds route >"$datadir/route"
         ___x_cmd_cmds netstats | ___x_cmd_nets_update___raw___all
+    elif ___x_cmd os is darwin; then
+        ___x_cmd_cmds netstat -anv | ___x_cmd_nets_update___raw___all
     else
         if ___x_cmd_hascmd netstat; then
-            ___x_cmd_cmds netstat -a | ___x_cmd_nets_update___raw___all
+            ___x_cmd_cmds netstat -an | ___x_cmd_nets_update___raw___all
         else
             nets:error "No netstat found."
             return 1

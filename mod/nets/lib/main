@@ -9,17 +9,17 @@ ___x_cmd_nets___main(){
 
     local op="$1";      shift
     case "$op" in
-        -h|--help)      ___x_cmd help -m nets   "$@";    return 0 ;;
-        --|--runmain)   ___x_cmd_nets___runmain "$@" ;;
+        -h|--help)      ___x_cmd help -m nets           "$@";    return 0 ;;
+        --|--runmain)   ___x_cmd_nets___runmain         "$@" ;;
 
-        convert)        ___x_cmd_nets_convert   "$@" ;;
-        update)         ___x_cmd_nets_update    "$@" ;;
-        view)           ___x_cmd_nets_view      "$@" ;;
-        ls)             ___x_cmd_nets_ls        "$@" ;;
+        convert)        ___x_cmd_nets_convert           "$@" ;;
+        update)         ___x_cmd_nets_update            "$@" ;;
+        view)           ___x_cmd_nets_view              "$@" ;;
+        ls)             ___x_cmd_nets_ls                "$@" ;;
 
-        runmain)        ___x_cmd_nets_runmain   "$@" ;;
+        runmain)        ___x_cmd_nets_runmain           "$@" ;;
 
-        *)              ___x_cmd_nets_runmain   "$@" ;;
+        *)              ___x_cmd_nets_runmain   "$op"   "$@" ;;
     esac
 }
 
