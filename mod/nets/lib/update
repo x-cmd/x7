@@ -3,14 +3,24 @@ ___x_cmd_nets_update(){
     local datadir="${___X_CMD_NETS_DATA}/latest"
 
     if [ -f "$datadir/all" ] && ___x_cmd fileage --in 300s "$datadir/all"; then
-        ___x_cmd ui yesno "The file is updated in lenss than 5 min. Do you want to update ?" || return 0
+        ___x_cmd ui yesno "The file is updated in less than 5 min. Do you want to update ?"
+        case $? in
+            0)      ;;
+            130)    return 130 ;;
+            *)      return 0
+        esac
     fi
 
     ___x_cmd rmrf "$datadir"
     ___x_cmd mkdirp "$datadir"
     ___x_cmd_nets_update___raw
+    nets:info "Update suscces."
 
-    ___x_cmd_nets_convert "$datadir"
+    ___x_cmd_nets_convert "$datadir" || return $?
+    nets:info "Preprocessing suscces."
+
+    nets:info --next 'x nets ls' "Using 'x nets ls' to show the tables avaiables"
+    nets:info --next 'x nets view' "Using 'x nets view [table name, optional]' to intereact with the table"
 }
 
 # collect then parse

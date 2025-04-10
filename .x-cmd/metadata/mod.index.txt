@@ -8,7 +8,7 @@ feef04c88d4c3b0d547f3bef63bd2a1beed4e923 apt main NULL
 963ebbd6fe9c5039066982fe27c7a7eafc163b6b arg main NULL
 eae3392df329f7012eeb31081cd1e0d35bdb7d3f arp main NULL
 0723a17151ed484e615dd1787b65c263c9923d5a ascii main NULL
-235540496c8bb93eaf3f700f02336ee7ff1e2788 asdf main NULL
+9055c4fa322b84f4a15766b836541e8687dec967 asdf main NULL
 ed8cbefbe47baa72de9eac17742f831499a12471 assert main NULL
 7cb40885b6ffb5bf2fe7603295f9e7044283cb71 awk main NULL
 551af6ae3114f48ee1da2f1ed91cc3ef93153bc4 bakman main NULL
@@ -169,7 +169,7 @@ a8f640001ba06d8ea9cfae9fd2a758c68a765575 lua main NULL
 0d30f3c5df1aaf15a7bc243e7e07502301ca15c5 luarocks main NULL
 018e8a8cfb9dbd47bb8db36353d8e87b2e995cb8 lynis main NULL
 9f039bfb5027f0fa2a2683f20c17568292a5665f ma main NULL
-b2884fa0ce3e4a50d412de94c9ca707ad546bfb1 mac main NULL
+6205e45b7d0924c1946c61aaa208666cf08dc956 mac main NULL
 ee22cbf1fd39b62e77f5ce63ffc7d86079395d43 man main NULL
 a6af2996b4683eca0d392bb7fe1a2a6160e8737d mankier main NULL
 b92d1e66d21b18dab1dab1f2645d286b480318d4 mawk main NULL
@@ -185,7 +185,7 @@ fe21c231ff06e52b964671415fa613802dbc001d moonshot main NULL
 91865bcefff41e4d13849c1e4949686ca4e141af mv main NULL
 9d40897410fd70d459cef8b5ef3265e4092a6223 nano main NULL
 e845256a7d35c79b0bb3d644f516d9c15ec9681f ncdu main NULL
-786369ef6970ee1f84e5a5ab063b4e8f5f5c42dd nets main NULL
+502490c28dad72ab9c5c05c5784eedcbf8bc640a nets main NULL
 07ef47eeb3ec3915c0a5b3e4f282d95dec889e00 node main NULL
 5ed1891673751c863526b32a7881a87a9f424463 notify main NULL
 7f3b254ded8145e8c98cfb6eed7a3bc0e6a3f657 npm main NULL

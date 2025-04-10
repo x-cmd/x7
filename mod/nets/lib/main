@@ -5,7 +5,7 @@ ___x_cmd log init nets
 xrc:mod:lib     nets   update   view
 
 ___x_cmd_nets___main(){
-    [ "$#" -gt 0 ] ||   set -- runmain
+    [ "$#" -gt 0 ] ||   set -- view
 
     local op="$1";      shift
     case "$op" in
@@ -13,13 +13,13 @@ ___x_cmd_nets___main(){
         --|--runmain)   ___x_cmd_nets___runmain         "$@" ;;
 
         convert)        ___x_cmd_nets_convert           "$@" ;;
-        update)         ___x_cmd_nets_update            "$@" ;;
-        view)           ___x_cmd_nets_view              "$@" ;;
+
+        u|update)       ___x_cmd_nets_update            "$@" ;;
+        v|view)         ___x_cmd_nets_view              "$@" ;;
+
         ls)             ___x_cmd_nets_ls                "$@" ;;
 
-        runmain)        ___x_cmd_nets_runmain           "$@" ;;
-
-        *)              ___x_cmd_nets_runmain   "$op"   "$@" ;;
+        *)              ___x_cmd_nets_view   "$op"   "$@" ;;
     esac
 }
 
@@ -36,13 +36,3 @@ ___x_cmd_nets_ls(){
     local datadir="${1:-"$___X_CMD_NETS_DATA/latest"}"
     ___x_cmd fsiter "$datadir" | ___x_cmd_cmds grep -v all
 }
-
-___x_cmd_nets_runmain(){
-    if [ $# -eq 0 ]; then
-        nets:info "You can view one of the data in the list using 'x nets view <data>'"
-        ___x_cmd nets ls
-    else
-        ___x_cmd nets view "$@"
-    fi
-}
-

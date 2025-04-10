@@ -18,12 +18,12 @@ ___x_cmd_asdf_ls(){
         -l|--local)         shift; ___x_cmd_asdf_ls___local           ;;
         --app)              shift; ___x_cmd_asdf_ls___app             ;;
         -h|--help)          shift; ___x_cmd help -m asdf ls           ;;
-        *)                  ___x_cmd_asdf___bin list             "$@" ;;
+        *)                  ___x_cmd_asdf___runmain list             "$@" ;;
     esac
 }
 
 ___x_cmd_asdf_ls___install(){
-    ___x_cmd_asdf___bin list 2>&1 | ___x_cmd_cmds awk '$0 !~ "^[ ]"{ print $1 }'  | ___x_cmd_cmds sort
+    ___x_cmd_asdf___runmain list 2>&1 | ___x_cmd_cmds awk '$0 !~ "^[ ]"{ print $1 }'  | ___x_cmd_cmds sort
 }
 
 ___x_cmd_asdf_ls___all(){
@@ -37,9 +37,9 @@ ___x_cmd_asdf_ls___app(){
 ___x_cmd_asdf_ls___local(){
     if ___x_cmd_is_stdout2tty && ___x_cmd_runmode_allow_manual ; then
         asdf:info "Display current packages"
-        ___x_cmd_asdf___bin  current  2>&1  | ___x_cmd_cmds awk '{ print $1 }' | ___x_cmd pick --width 40 --col 10
+        ___x_cmd_asdf___runmain current  2>&1  | ___x_cmd_cmds awk '{ print $1 }' | ___x_cmd pick --width 40 --col 10
     else
-        ___x_cmd_asdf___bin  current  2>&1
+        ___x_cmd_asdf___runmain current  2>&1
     fi
 }
 
