@@ -43,6 +43,16 @@ true
 :
 "The asdf ecosystem relies on git commands, so if git is missing from your environment, you may encounter failures when using asdf to install certain software."
 }
+,
+{
+"cn"
+:
+"asdf 模块现已支持使用 Go 重写的 asdf 版本，即 0.16.0 及以上版本。\n相较于此前的 Bash 实现（如 0.15.0 及更早版本），新版本内部结构发生了较大变动，推荐用户阅读官方迁移指南以确保平稳升级：https://asdf-vm.com/guide/upgrading-to-v0-16.html\n"
+,
+"en"
+:
+"The asdf module now supports versions of asdf rewritten in Go (v0.16.0 and above).\nCompared to the previous Bash-based implementation (such as v0.15.0 and earlier), the new version introduces significant structural changes.\nUsers are encouraged to read the official upgrade guide to ensure a smooth transition: https://asdf-vm.com/guide/upgrading-to-v0-16.html\n"
+}
 ]
 ,
 "#subcmd:Enhance"
@@ -55,8 +65,6 @@ true
 "ls"
 ,
 "la"
-,
-"nv"
 ,
 "ddgo|:"
 ,
@@ -349,22 +357,6 @@ true
 }
 }
 ,
-"nv"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"使用交互式 UI 来选择需要安装的应用"
-,
-"en"
-:
-"Use interactive UI to select the application to be installed"
-}
-}
-,
 "use"
 :
 {
@@ -425,11 +417,11 @@ true
 {
 "cn"
 :
-"卸载指定包并移除其 plugin。(增强功能，相当于 plugin remove + uninstall)"
+"卸载指定包并移除其 plugin。(相当于 plugin remove )"
 ,
 "en"
 :
-"Uninstall the specified package and remove its plugin.(Enhanced function, equivalent to plugin remove + uninstall)"
+"Uninstall the specified package and remove its plugin.(equivalent to plugin remove)"
 }
 ,
 "#1"

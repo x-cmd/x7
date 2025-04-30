@@ -2,6 +2,7 @@
 
 ___x_cmd log init mac
 
+xrc shortcut
 xrc:mod:lib     mac             \
     _desktop/_index             \
     _device/_index              \

@@ -10,11 +10,13 @@ ___x_cmd_asdf_use(){
     asdf:info "run cmd -> asdf plugin add $name"
     ___x_cmd_asdf___runmain plugin add   "$name"              || return $?
 
-    asdf:info "run cmd -> asdf install $name   $version"
+    asdf:info "run cmd -> asdf install $name $version"
     ___x_cmd_asdf___runmain install   "$name" "$version"      || return $?
 
-    asdf:info "run cmd -> asdf set --home $name    $version"
+    asdf:info "run cmd -> asdf set --home $name $version"
     ___x_cmd_asdf___runmain set --home    "$name" "$version"  || return $?
+
+    asdf:info "Using -> $name $version"
 }
 
 ___x_cmd_asdf_unuse(){
@@ -27,6 +29,8 @@ ___x_cmd_asdf_unuse(){
     # asdf:info "run cmd -> asdf uninstall $name"
     # ___x_cmd_asdf___runmain uninstall   "$name"           || return $?
 
-    asdf:info "run cmd -> asdf plugin remove  $name"
+    asdf:info "run cmd -> asdf plugin remove $name"
     ___x_cmd_asdf___runmain plugin    remove "$name"      || return $?
+
+    asdf:info "Unused $name"
 }

@@ -718,6 +718,7 @@ functional
 functorflow
 funnyfiles.nvim
 fusionscript
+fyil
 fzf-lua
 fzfx.nvim
 fzy
@@ -880,6 +881,7 @@ hsm_statechart
 ht16k33
 htk
 htlua
+html
 html-entities
 html-lua
 html-tags
@@ -1400,6 +1402,7 @@ lapis-eswidget
 lapis-exceptions
 lapis-redis
 lapis-spec-screenshot
+lapis-stats
 lapis-systemd
 lapis_layout
 lascii85
@@ -1651,6 +1654,7 @@ lua-arangodb
 lua-argparse
 lua-askpass
 lua-avro
+lua-barcode-lookup
 lua-basex
 lua-bcrypt
 lua-ber
@@ -2265,6 +2269,7 @@ luadist2
 luadns
 luadoc
 luadocumentor
+luadtp
 luaec25519
 luaejdb
 luaepnf
@@ -2521,6 +2526,7 @@ lugate
 luggage
 luix
 lulpeg
+lulu
 luluman
 luma
 lumber
@@ -2668,6 +2674,7 @@ metamodule
 metaty
 mexbt
 mfr
+mi-lua-resty-worker-events
 microlight
 microscope
 microsoftsapi
@@ -2991,7 +2998,6 @@ nvim-client-proxy
 nvim-cokeline
 nvim-dap
 nvim-dap-ui
-nvim-dbee
 nvim-dev-container
 nvim-faker
 nvim-java
@@ -3816,6 +3822,7 @@ tree-sitter-bitbake
 tree-sitter-blade
 tree-sitter-blueprint
 tree-sitter-bp
+tree-sitter-brightscript
 tree-sitter-c
 tree-sitter-c_sharp
 tree-sitter-caddy
@@ -4252,6 +4259,7 @@ whetlab
 which
 which-key.nvim
 wib-kong
+wifi-lua-resty-kafka
 wildcard_pattern
 winapi
 windcon

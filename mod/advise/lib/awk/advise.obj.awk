@@ -153,7 +153,7 @@ function aobj_get_description( obj, obj_prefix, lang,               d, _kp, _kp_
     _n = obj[ _kp_name ]
     if ( _n == "{" ) d = obj[ _kp_name, obj[ _kp_name, 1 ] ]
     if ( d =="null" ) d = aobj_get_value_with_local_language(obj, _kp_name, lang)
-    if ( d == "" ) {
+    if ( ! d ) {
         _kp = aobj_get_special_value_id( obj_prefix, "desc" )
         if ( (d = obj[ _kp ]) == "{" ) d = aobj_get_value_with_local_language(obj, _kp, lang)
     }

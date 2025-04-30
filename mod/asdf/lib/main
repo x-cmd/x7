@@ -4,10 +4,10 @@ ___x_cmd log init asdf
 
 xrc:mod:lib     asdf      \
     __download __install  __activate  __runcmd  \
-    ls  nv  use  ddgo
+    ls  use  ddgo
 
 ___x_cmd_asdf___main(){
-    [ $# -gt 0 ] ||     set -   nv
+    [ $# -gt 0 ] ||     set -   la
 
     local op="$1";      shift
     case "$op" in
@@ -16,7 +16,6 @@ ___x_cmd_asdf___main(){
         use|unuse)      ___x_cmd_asdf_"$op"                 "$@" ;;
         ls)             ___x_cmd_asdf_ls                    "$@" ;;
         la)             ___x_cmd_asdf_la                    "$@" ;;
-        nv)             ___x_cmd_asdf___nv                  "$@" ;;
 
         --download|--install|--uninstall|\
         --upgrade|--remove|\
@@ -25,6 +24,9 @@ ___x_cmd_asdf___main(){
 
         :|ddgo)         ___x_cmd_asdf_ddgo                  "$@" ;;
         ::|ddgoai)      ___x_cmd_asdf_ddgoai                "$@" ;;
+
+        --plugininfo)   ___x_cmd_asdf___plugin_info         "$@" ;;
+        --fzdata)       ___x_cmd_asdf_ls_fz_data            "$@" ;;
 
         --|--runmain)   ___x_cmd_asdf___runmain             "$@" ;;
         --runcmd)       ___x_cmd_asdf___runcmd              "$@" ;;
