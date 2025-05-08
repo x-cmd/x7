@@ -53,7 +53,7 @@ ___x_cmd_pkg_ls___xbin_desc(){
 }
 
 ___x_cmd_pkg_ls___xbin_desc___fp_(){
-    local lang="${___X_CMD_HELP_LANGUAGE:-$___X_CMD_WEBSRC_REGION}"
+    local lang="$___X_CMD_LANG"
     case "$lang" in
         cn|zh)  lang=cn ;;
         *)      lang=en ;;

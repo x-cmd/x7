@@ -211,6 +211,7 @@ busted-flaky
 busted-hjtest
 busted-htest
 busted-jsonl
+busted-matrix
 busted-stable
 busted_resty
 bustez
@@ -2167,6 +2168,7 @@ lua-value-browser
 lua-vcard
 lua-vips
 lua-vosk
+lua-wasm32
 lua-websockets
 lua-websockets-bit32
 lua-webview
@@ -3130,6 +3132,7 @@ org.conman.uuid
 orgmode
 orm
 os-pipe
+os-urandom
 osc
 oscpack
 osrm-lua-libs
@@ -3479,6 +3482,7 @@ screenkey.nvim
 scribe
 scrollbar.nvim
 scrypt
+seal
 seawolf
 secmc-plugin
 see
@@ -3521,6 +3525,7 @@ sharedtensor
 shazam-arm64
 shazam-x86_64
 shell-games
+shelua
 shelve
 shexpand
 shiki
@@ -3536,6 +3541,7 @@ silex.sile
 simple-lua-json
 simple_classes_lua
 simple_test
+simpleenum
 simpleitk
 simulua
 sinx-lua
@@ -3592,6 +3598,7 @@ sqlite.lua
 sqlite3
 sqlrocks
 sqltable
+sqlua
 squall-router
 squirrel.nvim
 squirt
@@ -4171,6 +4178,7 @@ uap-lua
 udev
 ufy
 ufylayout
+ui.nvim
 uinput
 ulf.log
 ulid
