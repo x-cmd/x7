@@ -1,9 +1,11 @@
 # shellcheck shell=dash
 
+xrc:mod:lib     root        repoint
+
 ___x_cmd_root___main(){
     local op="$1"
     case "$op" in
-        ls|set|reset|cleanup)
+        ls|set|reset|cleanup|repoint)
             shift; "___x_cmd_root_$op" "$@"
             ;;
         *)
