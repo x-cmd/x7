@@ -84,5 +84,5 @@ ___x_cmd_root_repoint___mksoftlink(){
         return $?
     }
 
-    ___x_cmd mklink -d "$tgt" "$linkname"
+    ___x_cmd mklink -j "$tgt" "$linkname"
 }
