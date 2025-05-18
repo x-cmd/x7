@@ -96,7 +96,7 @@ ___x_cmd_nu___setup_is_required(){
         ___x_cmd boot ensurerccodewithoutextra  \
                                 "$___X_CMD_NU_SETUP_RCCODE"                 "$rcfile"                                   && \
             ___x_cmd_cmds cmp   "$___X_CMD_ROOT_MOD/nu/lib/rc/rc.nu"        "$HOME/.x-cmd.root/local/data/nu/rc.nu"     && \
-            ___x_cmd_cmds cmp   "$___X_CMD_ROOT_MOD/nu/lib/rc/core.nu"      "$HOME/.x-cmd.root/local/data/nu/core.nu"   && \
+            ___x_cmd_cmds cmp   "$___X_CMD_ROOT_MOD/nu/lib/rc/core.nu"      "$HOME/.x-cmd.root/local/data/nu/core.nu"
     } 1>/dev/null 2>/dev/null
 }
 
