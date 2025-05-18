@@ -86,7 +86,7 @@ export def --env --wrapped ___x_cmd_nu_rc_xbinexp [ ...args ] {
 
     $env.___X_CMD_REAL_CALLER_SHELL = "nu"
 
-    ___x_cmd ...$args
+    ___x_cmdexe_exp ...$args
 
     let exit_code = $env.LAST_EXIT_CODE
 
@@ -147,7 +147,7 @@ export def --env --wrapped ___x_cmd_nu_rc_xbinexp [ ...args ] {
 # export alias ___x_cmd   = bash $"($env.HOME)/.x-cmd.root/bin/xbinexp"
 # export alias x          = bash $"($env.HOME)/.x-cmd.root/bin/xbinexp"
 
-export def --env --wrapped ___x_cmd [ ...args ] {
+export def --env --wrapped ___x_cmdexe_exp [ ...args ] {
     if ( $nu.os-info.name == "windows" ) {
         ~/.x-cmd.root/bin/___x_cmdexe_exp.bat ...$args
     } else {
@@ -155,8 +155,8 @@ export def --env --wrapped ___x_cmd [ ...args ] {
     }
 }
 
-export def --env --wrapped x [ ...args ] {
-    if ( ($args | get 0) == "cd" ) {
+export def --env --wrapped ___x_cmd [ ...args ] {
+    if ((($args | length) > 0) and ( ($args | get 0) == "cd" )) {
         ___x_cmd_cd ...( $args | skip 1 )
         return
     }
@@ -167,6 +167,8 @@ export def --env --wrapped x [ ...args ] {
         bash $"($env.HOME)/.x-cmd.root/bin/___x_cmdexe_exp" ...$args
     }
 }
+
+export alias x  = ___x_cmd
 
 export def --env --wrapped ___x_cmd_cd [ ...args ] {
     if ($args | length) == 0 {
