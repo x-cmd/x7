@@ -1,0 +1,21 @@
+
+___x_cmd_termux_torch(){
+    [ $# -gt 0 ]    ||      set -- status
+
+    local op="$1";  shift
+    case "$op" in
+        -h|--help)      ___x_cmd help -m termux torch   "$@" ;;
+        on|off)         ___x_cmd_termux_torch_set "$op" "$@" ;;
+        set|status)
+                        ___x_cmd_termux_torch_"$op"     "$@" ;;
+
+    esac
+}
+
+___x_cmd_termux_torch_set(){
+    :
+}
+
+___x_cmd_termux_torch_status(){
+    :
+}

@@ -1,0 +1,9 @@
+
+___x_cmd_termux_wifi(){
+    [ $# -gt 0 ]    ||      set -- info
+
+    local op="$1";  shift
+    case "$op" in
+
+    esac
+}
