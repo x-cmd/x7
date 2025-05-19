@@ -74,15 +74,15 @@ ___x_cmd_nu___boot_init_rcfile_home_(){
 ___x_cmd_nu___boot_init_rcfile_(){
 
     ___x_cmd_nu___boot_init_rcfile_home_ || return
-    local rchome="$x_"
-    x_=; ___x_cmd_shq1_ "$rchome/.x-cmd.root/local/data/nu/rc.nu"
+
+    x_=; ___x_cmd_shq1_ "$___X_CMD_ROOT"
     local nufp="$x_";
 
     # local X_STR='if ( $"($env.HOME)/.x-cmd.root/local/data/nu/rc.nu" | path exists ) { source "'"$nufp"'"; } # boot up x-cmd.'
     # local X_STR='if ( $"($env.HOME)/.x-cmd.root/local/data/nu/rc.nu" | path exists ) { use "'"$nufp"'" *; } # boot up x-cmd.'
     # ___X_CMD_NU_SETUP_RCCODE="use ${nufp} *; source ${advfp}; # boot up x-cmd."
-    ___X_CMD_NU_SETUP_RCCODE="source ${nufp}; # boot up x-cmd"
-    ___X_CMD_NU_SETUP_RCCODE="const ___X_CMD_ROOT = '$rchome'; $___X_CMD_NU_SETUP_RCCODE"
+    ___X_CMD_NU_SETUP_RCCODE="source $\"(\$___X_CMD_ROOT)/local/data/nu/rc.nu\"; # boot up x-cmd"
+    ___X_CMD_NU_SETUP_RCCODE="const ___X_CMD_ROOT = $nufp; $___X_CMD_NU_SETUP_RCCODE"
 
     ___x_cmd_nu_rcpath_
     x_="$___X_CMD_NU_RCPATH"
