@@ -27,7 +27,7 @@ ___x_cmd_advise_addon_use(){
 ___x_cmd_advise_addon_use___compile_all(){
     local provider="$1"
     local shellname
-    for shellname in bash zsh fish elvish nu tcsh xonsh; do
+    for shellname in bash zsh fish elvish nu tcsh xonsh powershell; do
         ___x_cmd_advise_addon_use___compile_shellfile "$provider" "$shellname" || return $?
     done
     printf "%s\n" "$provider" > "$___X_CMD_ADVISE_ADDON_CHCHE/provider"
@@ -43,6 +43,7 @@ ___x_cmd_advise_addon_use___compile_shellfile(){
         elvish)     suffix="elv" ;;
         pwsh)       suffix="ps1" ;;
         xonsh)      suffix="xsh" ;;
+        powershell) suffix="ps1" ;;
         *) ;;
     esac
 
