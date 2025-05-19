@@ -15,8 +15,9 @@ ___x_cmd_advise_addon(){
 ___x_cmd_advise_addon_use(){
     local provider="$1";
     case "$provider" in
-        -h|--help)  ___x_cmd help -m advise addon use; return ;;
         carapace)   ___x_cmd_advise_addon_carapace___check || return $? ;;
+        -h|--help)  ___x_cmd help -m advise addon use; return ;;
+        '')         ___x_cmd help -m advise addon use >&2; return 64 ;;
         *)          N=advise M="Unknown [provider=$provider]" log:ret:64 ;;
     esac
 

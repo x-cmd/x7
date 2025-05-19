@@ -98,14 +98,7 @@ export def --env --wrapped ___x_cmd_nu_rc_xbinexp [ ...args ] {
     }
 
     let data = ls $env.___X_CMD_XBINEXP_FP | each { |i|
-        {
-            key:($i.name | str replace --regex "^.+/" "" | str replace --regex "^.*?_" ""),
-            value: ( open $i.name --raw )
-        }
-    }
-
-    let data = ls $env.___X_CMD_XBINEXP_FP | each { |i|
-        if ( $nu.os-info.name == "windows" ) {
+        if (( $nu.os-info.name == "windows" ) and ($i.name in [ "PATH", "PWD" ]))  {
             {
                 key: ( $i.name | str replace --regex "^.+\\\\" "" | str replace --regex "^.*?_" ""),
                 value: ( ( open $i.name --raw | path split | get 0 ) + :\ + ( open $i.name --raw | path split | skip 1 | path join ) )
