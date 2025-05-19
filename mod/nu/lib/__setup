@@ -76,7 +76,8 @@ ___x_cmd_nu___boot_init_rcfile_(){
         case "$rootpath" in
             /*/*)
                 local p="${rootpath#/?/}"
-                rootpath="${rootpath%"$p"}:/$p"
+                rootpath="${rootpath%"/$p"}"
+                rootpath="${rootpath#/}:/$p"
         esac
     fi
 
