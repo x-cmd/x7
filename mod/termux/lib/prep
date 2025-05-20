@@ -4,7 +4,7 @@ ___X_CMD_TERMUX_PREP_DONE="$___X_CMD_ROOT_DATA/termux/prep/done"
 ___x_cmd_termux_prep(){
     termux:info "Install softwares that are widely used in x-cmd"
 
-    set -- xz-utils 7zip zstd curl git fzf sqlite tmux jq yq
+    set -- xz-utils 7zip zstd curl git fzf sqlite tmux jq yq termux-tools
     case "$1" in
         min)            ;;
         all|"")        set -- "$@" python nodejs openssh nmap

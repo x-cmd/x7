@@ -1,0 +1,65 @@
+
+
+___x_cmd_termux_pd_mirror(){
+    local op="$1";      shift
+    case "$op" in
+        -h|--help)      ___x_cmd_help -m termux pd mirror "$@" ;;
+
+        use|unuse|isset)
+                        ___x_cmd_termux_pd_mirror_"$op" "$@" ;;
+
+        *)              N=termux M="Unknown subcmd -> $op" log:ret:64 ;;
+    esac
+}
+
+___x_cmd_termux_pd_mirror_use(){
+    # while [ $# -gt 0 ]; do
+    #     case "$1" in
+    #         cb|codeberg)      ___x_cmd_termux_pd_mirror_regulate "https://" ;;
+    #         tuna)             ___x_cmd_termux_pd_mirror_regulate "https://" ;;
+    #         bfsu)             ___x_cmd_termux_pd_mirror_regulate "https://" ;;
+    #         official|gh)      ___x_cmd_termux_pd_mirror_unuse ;;
+    #     esac
+    # done
+
+    ___x_cmd_termux_pd_mirror_set
+}
+
+___x_cmd_termux_pd_mirror_isset(){
+    ___x_cmd_cmds grep TERMUX_PROOT_DISTR_URL https://github.com/termux/proot-distro 1>/dev/null 2>/dev/null
+}
+
+___x_cmd_termux_pd_mirror_set(){(
+    local pddir='/data/data/com.termux/files/usr/etc/proot-distro'
+    [ -d "$pddir" ] || N=termux M="proot-distro folder not found. Please reinstall using 'x termux pd prep'" log:ret:1
+
+    ___x_cmd_cmds_cd "$pddir"
+
+    # In the future, we provide a mirror size
+    local metafile
+    while read -r metafile; do
+        ___x_cmd_termux_pd_mirror_isset || {
+            ___x_cmd_cmds sed -i 's|https://github.com/termux/proot-distro|${TERMUX_PROOT_DISTR_URL:-https://ghfast.top/github.com/termux/proot-distro}|g' "$metafile"
+        }
+    done <<A
+$(___x_cmd fsiter /data/data/com.termux/files/usr/etc/proot-distro)
+A
+
+)}
+
+___x_cmd_termux_pd_mirror_unuse(){
+    local pddir='/data/data/com.termux/files/usr/etc/proot-distro'
+    [ -d "$pddir" ] || N=termux M="proot-distro folder not found. Please reinstall using 'x termux pd prep'" log:ret:1
+
+    ___x_cmd_termux_pd_mirror_isset || echo "$?"
+
+    # In the future, we provide a mirror size
+    local metafile
+    while read -r metafile; do
+        ___x_cmd_termux_pd_mirror_isset || {
+            ___x_cmd_cmds sed -i 's|$[{]TERMUX_PROOT_DISTR_URL:-[^}]+[}]|https://github.com/termux/proot-distro|g' "$metafile"
+        }
+    done <<A
+$(___x_cmd fsiter /data/data/com.termux/files/usr/etc/proot-distro)
+A
+}

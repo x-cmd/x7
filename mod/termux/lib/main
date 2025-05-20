@@ -5,32 +5,33 @@ ___x_cmd log init termux
 xrc:mod:lib     termux      \
                 shortcut        prep            \
                 torch   wifi    cpu     sshd    \
+                pr      pd/_index               \
                 pkg/_index
 
 ___x_cmd_termux___main(){
-    [ "$#" -gt 0 ] ||   set -- info
+    [ "$#" -gt 0 ] ||   set -- --help
 
     local op="$1"; shift
     case "$op" in
-        --prep|prep)    ___x_cmd_termux_prep        "$@" ;;
+        -h|--help)          ___x_cmd help -m termux             "$@" ;;
+        --prep|prep)        ___x_cmd_termux_prep                "$@" ;;
 
-        v|vibratre)     ___x_cmd_termux_vibrate     "$@" ;;
+        v|vibratre)         ___x_cmd_termux_vibrate             "$@" ;;
 
-        o|open)         ___x_cmd_termux_open        "$@" ;;
+        o|open)             ___x_cmd_termux_open                "$@" ;;
 
-        b|browse|openurl)
-                        ___x_cmd_termux_openurl     "$@" ;;
-
-        cp)             ___x_cmd_termux_cp          "$@" ;;
-        pa|paste)       ___x_cmd_termux_paste       "$@" ;;
+        i|install)          ___x_cmd_termux_pkg install         "$@" ;;
+        b|browse|openurl)   ___x_cmd_termux_openurl             "$@" ;;
+        cp)                 ___x_cmd_termux_cp                  "$@" ;;
+        pa|paste)           ___x_cmd_termux_paste               "$@" ;;
 
         noti|notification)
-                        ___x_cmd_termux_noti        "$@" ;;
+                            ___x_cmd_termux_noti                "$@" ;;
 
-        cam)            ___x_cmd_termux_cam         "$@" ;;
-        mp)             ___x_cmd_termux_mp          "$@" ;;
-        tele)           ___x_cmd_termux_tele        "$@" ;;
-        ir)             ___x_cmd_termux_ir          "$@" ;;
+        cam)                ___x_cmd_termux_cam                 "$@" ;;
+        mp)                 ___x_cmd_termux_mp                  "$@" ;;
+        tele)               ___x_cmd_termux_tele                "$@" ;;
+        ir)                 ___x_cmd_termux_ir                  "$@" ;;
 
         toast|dialog|\
         sms|contact|call|\
@@ -39,12 +40,24 @@ ___x_cmd_termux___main(){
         cpu|\
         say|info|tts|api|\
         shortcut|pkg)
-                        ___x_cmd_termux_"$op"       "$@" ;;
+                            ___x_cmd_termux_"$op"               "$@" ;;
 
-        st|storage)     ___x_cmd_termux_storage     "$@" ;;
+        st|storage)         ___x_cmd_termux_storage             "$@" ;;
+        mic|microphone)     ___x_cmd_termux_microphone          "$@" ;;
 
+        pr|proot)           ___x_cmd_termux_pr                  "$@" ;;
+        pd|proot-distro)
+                            ___x_cmd_termux_pd                  "$@" ;;
+        prun)               ___x_cmd_termux_pd  run             "$@" ;;
 
-        mic|microphone) ___x_cmd_termux_microphone  "$@" ;;
+        alp|alpine)         ___x_cmd_termux pd run alpine       "$@" ;;
+        ubu|ubuntu)         ___x_cmd_termux pd run ubuntu       "$@" ;;
+        fed|fedora)         ___x_cmd_termux pd run fedora       "$@" ;;
+        arch)               ___x_cmd_termux pd run archlinux    "$@" ;;
+        suse)               ___x_cmd_termux pd run opensuse     "$@" ;;
+
+        artix|debian|manjaro|pardus|adelie|chimera|deepin|opensuse|rocklinux|void)
+                            ___x_cmd_termux pd run "$op"    "$@" ;;
     esac
 }
 

@@ -1,0 +1,44 @@
+
+xrc:mod:lib     termux      pd/mirror   pd/run
+
+___x_cmd_termux_pd(){
+    [ $# -gt 0 ]    ||  set -- --help
+
+    local op="$1";  shift
+    case "$op" in
+        i)          op=install ;;
+        l)          op=login ;;
+        ls)         op=list  ;;
+        rm)         op=remove ;;
+        clear)      op=clear-cache ;;
+        cp)         op=copy ;;
+    esac
+
+    case "$op" in
+        -h|--help)  ___x_cmd_termux_pd_help "$@"
+                    return 0 ;;
+
+        mirror|run|prep)
+                    ___x_cmd_termux_pd_"$op"        "$@" ;;
+
+        *)          ___x_cmd_termux_pd___cmd  "$op" "$@" ;;
+    esac
+}
+
+___x_cmd_termux_pd___cmd(){
+    ___x_cmd_hascmd proot-distro || {
+        ___x_cmd_termux_pd_prep
+
+        ___x_cmd_hascmd proot-distro || N=termux M="Fail to prepare proot-distro command. Maybe try again later" log:ret:1
+    }
+
+    ___x_cmd_cmds proot-distro "$@"
+}
+
+___x_cmd_termux_pd_help(){
+    ___x_cmd_termux_pd___cmd -h "$@"
+}
+
+___x_cmd_termux_pd_prep(){
+    ___x_cmd_cmds pkg reinstall -y proot proot-distro 1>&2
+}
