@@ -1,2 +1,208 @@
 {
+"#name"
+:
+{
+"termux"
+:
+null
+,
+"en"
+:
+"Termux Utility"
+,
+"cn"
+:
+"Termux 实用功能"
 }
+,
+"#desc"
+:
+{
+"en"
+:
+"The termux module integrates various utility functions that Termux users may need"
+,
+"cn"
+:
+"termux 模块集成了 Termux 用户可能需要的各种实用功能"
+}
+,
+"pr|proot"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"用户态模拟 chroot 环境，让非 root 用户在 Termux 中运行 Linux 发行版或隔离的文件系统。"
+,
+"en"
+:
+"User-space implementation of `chroot`, enabling unprivileged users to run Linux distributions or isolated filesystems within Termux."
+}
+,
+"$ref"
+:
+"x-advise://termux/data/pr.jso"
+}
+,
+"pd|proot-distro"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"基于 proot 的发行版管理工具，支持一键安装和启动 Ubuntu、Debian 等 Linux 发行版。"
+,
+"en"
+:
+"A PRoot-based Linux distribution manager for Termux, allowing easy installation and launching of distros like Ubuntu and Debian."
+}
+,
+"$ref"
+:
+"x-advise://termux/data/pd.jso"
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x termux pd ls"
+,
+"cn"
+:
+"查看支持的发行版"
+,
+"en"
+:
+"List supported distributions"
+}
+,
+{
+"cmd"
+:
+"x termux pd install ubuntu"
+,
+"cn"
+:
+"安装 Ubuntu 发行版"
+,
+"en"
+:
+"Install the Ubuntu distribution"
+}
+,
+{
+"cmd"
+:
+"x termux pd run ubuntu"
+,
+"cn"
+:
+"启动 Ubuntu 发行版"
+,
+"en"
+:
+"Launch the Ubuntu distribution"
+}
+,
+{
+"cmd"
+:
+"x termux pd login ubuntu"
+,
+"cn"
+:
+"登录 Ubuntu 发行版"
+,
+"en"
+:
+"Login to the Ubuntu distribution"
+}
+,
+{
+"cmd"
+:
+"x termux pd run ubuntu bash"
+,
+"cn"
+:
+"在 Ubuntu 发行版中运行 bash"
+,
+"en"
+:
+"Run bash in the Ubuntu distribution"
+}
+]
+}
+,
+"prun"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Run a command in the specified distribution, equivalent to proot-distro run command"
+,
+"cn"
+:
+"在指定的发行版中运行命令，等同于 proot-distro run 命令"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x termux pd install ubuntu"
+,
+"cn"
+:
+"安装 Ubuntu 发行版"
+,
+"en"
+:
+"Install the Ubuntu distribution"
+}
+,
+{
+"cmd"
+:
+"x termux prun ubuntu bash"
+,
+"cn"
+:
+"在 Ubuntu 发行版中运行 bash"
+}
+]
+,
+"#other"
+:
+{
+"en"
+:
+{
+"Please visit our homepage for more information:"
+:
+"https://x-cmd.com"
+}
+,
+"cn"
+:
+{
+"请访问我们的主页以获取更多信息："
+:
+"https://x-cmd.com"
+}
+}
+}
+
