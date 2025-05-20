@@ -124,20 +124,6 @@ null
 :
 "Login to the Ubuntu distribution"
 }
-,
-{
-"cmd"
-:
-"x termux pd run ubuntu bash"
-,
-"cn"
-:
-"在 Ubuntu 发行版中运行 bash"
-,
-"en"
-:
-"Run bash in the Ubuntu distribution"
-}
 ]
 }
 ,
