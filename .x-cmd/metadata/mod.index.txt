@@ -10,7 +10,7 @@ eae3392df329f7012eeb31081cd1e0d35bdb7d3f arp main NULL
 c24dce13f149216064987834cf35f3a55fe30705 ascii main NULL
 bd7323017ba35e9eff5fffe702b8414c4b639bbe asdf main NULL
 ed8cbefbe47baa72de9eac17742f831499a12471 assert main NULL
-ec951480fd467b0974ee9120b616ed699b421412 awk main NULL
+5cf1793120647d17b1f4a4065af8c38f6010dbe2 awk main NULL
 551af6ae3114f48ee1da2f1ed91cc3ef93153bc4 bakman main NULL
 0eec3c09da77caacf24881504e74958d9ee6935b boot main NULL
 b76759f663dd2348692dcbd342a99cc3bc3ec2b7 brew main NULL
@@ -24,7 +24,7 @@ ce09bd8120645999e35a7edf9b7d9fe836ec1529 cacert main NULL
 47029c2786b95b9f8de56e6b581ac65e53864ef7 caddy main NULL
 8805a78026e5478f4083bbb8cbdd52b7468e12ce cama main NULL
 0e6f06b99d0d5ccd007e5dab737a8f0d179cb574 cat main NULL
-b49388032b01df3419020a9842070e5fab62cc2e cawk main NULL
+299de5006d792c3db5bbf4bf7b4816d0b10a0361 cawk main NULL
 91a0fb35f9333884c8ceff50a0db7ea7505fdfc8 cb main NULL
 8c5d5e96c40d83d3a0fc412c0d83be3adf92fd3b ccmd main NULL
 39541b53cecef7d414b202988dace646cead3355 cd main NULL
