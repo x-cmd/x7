@@ -2,7 +2,7 @@
 ___x_cmd log init apt
 
 xrc mirror proxy
-xrc:mod:lib apt     __xmirror/_index __xproxy __repo install nv fz ls osv
+xrc:mod:lib apt     __xmirror/_index __xproxy __repo install nv fz ls osv snap
 
 ___x_cmd_apt___main(){
     [ "$#" -gt 0 ] ||       set -- fz
@@ -28,12 +28,14 @@ ___x_cmd_apt___main(){
         proxy|--xproxy)     ___x_cmd_apt___xproxy               "$@" ;;
         mirror|--xmirror)   ___x_cmd_apt___xmirror              "$@" ;;
 
-        reinstall|update\
-        |remove|autoremove\
-        |upgrade|full-upgrade\
-        |edit-sources|satisfy)
+        reinstall|update|\
+        remove|autoremove|\
+        upgrade|full-upgrade|\
+        edit-sources|satisfy)
                             ___x_cmd_apt___exec     "$op"       "$@" ;;
 
+
+        snap)               ___x_cmd_apt_snap                   "$@" ;;
 
         -h|--help)          ___x_cmd help -m apt                "$@" ;;
         *)                  ___x_cmd_cmds apt       "$op"       "$@" ;;
@@ -97,4 +99,8 @@ ___x_cmd_apt___lsraw_(){
         ___x_cmd_apt___repo_lsname > "$x_"
     }
     [ -f "$x_" ]
+}
+
+___x_cmd_apt___hasindex(){
+    [ -f "/var/lib/apt/lists/partial" ] || [ -f "/data/data/com.termux/cache/apt/pkgcache.bin" ]
 }

@@ -9,11 +9,11 @@
 ,
 "en"
 :
-"Read the input"
+"Speak the entered text"
 ,
 "cn"
 :
-"阅读输入的内容"
+"朗读输入的文本内容"
 }
 ,
 {
@@ -23,11 +23,25 @@
 ,
 "en"
 :
-"Read the input"
+"Speak input text 2x faster"
 ,
 "cn"
 :
-"阅读输入的内容"
+"使用2倍速朗读输入的文本内容"
+}
+,
+{
+"cmd"
+:
+"x termux say -s MUSIC <read content>"
+,
+"en"
+:
+"Specifies to use media audio stream to output reading sound."
+,
+"cn"
+:
+"指定使用媒体音频流输出朗读声音"
 }
 ]
 ,
@@ -39,11 +53,11 @@
 {
 "en"
 :
-"Read at 2x speed"
+"speech rate to use"
 ,
 "cn"
 :
-"使用2倍速阅读"
+"语音合成使用的语速"
 }
 ,
 "#1"

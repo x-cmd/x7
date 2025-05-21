@@ -35,11 +35,11 @@ null
 {
 "cn"
 :
-"用户态模拟 chroot 环境，让非 root 用户在 Termux 中运行 Linux 发行版或隔离的文件系统。"
+"让手机震动指定时长（单位毫秒，默认 200 毫秒"
 ,
 "en"
 :
-"User-space implementation of `chroot`, enabling unprivileged users to run Linux distributions or isolated filesystems within Termux."
+"Vibrates the device for a specified duration in milliseconds (default 200ms)."
 }
 ,
 "$ref"
@@ -55,12 +55,30 @@ null
 {
 "cn"
 :
-"改变 Termux 的软件源"
+"更改 Termux 软件源镜像，以加快软件包下载速度或解决连接问题。"
 ,
 "en"
 :
-"Change the software source of Termux"
+"Change Termux software source mirror to speed up package downloads or solve connection problems."
 }
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x termux cr"
+,
+"cn"
+:
+"进入更换软件源镜像界面"
+,
+"en"
+:
+"Enter the interface for changing software source image."
+}
+]
 }
 ,
 "say"
@@ -71,11 +89,11 @@ null
 {
 "cn"
 :
-"文本转语音"
+"调用系统语音引擎朗读指定文本。"
 ,
 "en"
 :
-"Text to speech"
+"Call the system speech engine to read the specified text."
 }
 ,
 "$ref"
@@ -158,17 +176,17 @@ null
 ,
 "cn"
 :
-"打开网页链接"
+"通过浏览器打开网页链接"
 ,
 "en"
 :
-"Open a web link"
+"Open the web link via browser"
 }
 ,
 {
 "cmd"
 :
-"x termux open /sdcard/test.txt"
+"x termux open <file_name>"
 ,
 "cn"
 :
@@ -220,13 +238,13 @@ null
 :
 "x termux br x-cmd.com"
 ,
-"en"
-:
-"Open the web page x-cmd.com"
-,
 "cn"
 :
-"打开网页 x-cmd.com"
+"通过浏览器打开网页链接"
+,
+"en"
+:
+"Open the web link via browser"
 }
 ]
 }

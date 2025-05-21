@@ -634,11 +634,5 @@ true
 "$ref"
 :
 "x-advise://chat/data/provider_model.jso"
-,
-"#option:inner"
-:
-[
-"--provider"
-]
 }
 
