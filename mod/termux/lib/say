@@ -4,6 +4,7 @@ ___x_cmd_termux_say(){
     local ___X_CMD_TERMUX_SAY_MAIN_OPTS=""
 
     local stream=""
+    local stdinmode=""
 
     while [ $# -gt 0 ]; do
         case "$1" in
@@ -24,11 +25,20 @@ ___x_cmd_termux_say(){
 
             -p|--pitch)     [ $# -ge 2 ] || N=termux M="Exepcted argument after $1"     log:ret:64;
                             ___x_cmd cmdstr ___X_CMD_TERMUX_SAY_MAIN_OPTS -p "$2";  shift 2 ;;
+            -|--stdin)      stdinmode=1 ;;
             *)              break ;;
         esac
 
         break
     done
 
-    eval ___x_cmd_cmds termux-tts-speak "$___X_CMD_TERMUX_SAY_MAIN_OPTS" '"$@"'
+    local content
+    if [ -n "$stdinmode" ] || [ $# -eq 0 ]; then
+        content="$(___x_cmd_cmds cat)"
+    else
+        local IFS=' '
+        content="$*"
+    fi
+
+    eval ___x_cmd_cmds termux-tts-speak "$___X_CMD_TERMUX_SAY_MAIN_OPTS" '"$content"'
 }

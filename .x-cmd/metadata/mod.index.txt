@@ -10,7 +10,7 @@ eae3392df329f7012eeb31081cd1e0d35bdb7d3f arp main NULL
 c24dce13f149216064987834cf35f3a55fe30705 ascii main NULL
 bd7323017ba35e9eff5fffe702b8414c4b639bbe asdf main NULL
 ed8cbefbe47baa72de9eac17742f831499a12471 assert main NULL
-5cf1793120647d17b1f4a4065af8c38f6010dbe2 awk main NULL
+cf8e7e2d8064192a83aebc08302b301428b56ad3 awk main NULL
 551af6ae3114f48ee1da2f1ed91cc3ef93153bc4 bakman main NULL
 0eec3c09da77caacf24881504e74958d9ee6935b boot main NULL
 b76759f663dd2348692dcbd342a99cc3bc3ec2b7 brew main NULL
@@ -222,7 +222,7 @@ d718d202e675e983282dcd8bf4462786a442e105 pkg main NULL
 f01c9c1644cfb433e566e86eba28696f069ea1e8 plwr main NULL
 daa38097f0706109b057fbfe23ac2d65abcefd7a proxy main NULL
 b8cc2607a873e512a609318aacfc16ba534f8d5a prta main NULL
-bd9b807f2637c6e82ce05a744aaf14d5360f5988 ps main NULL
+114474596a28d89b8d3a759374a0bec0d189f6e9 ps main NULL
 44409803d10fbe61660b5f746785798c9fb94fd7 pwd main NULL
 87bbb6886a8edb63b644238c58499bcdfb122842 pwsh main NULL
 412c928f44be156b964f22b2e034e2a6cf2ebf21 python main NULL
@@ -248,7 +248,7 @@ bf2c5803a8566debfbf63cb87c0e2df44a7539ba sd main NULL
 1be1c97365d3bfec6bc5d1043da2edd850bcd70c se main NULL
 b314f700db01f0e0e25e2cd1942cfa00532dafce sed main NULL
 f18d8cc6f740fc8d3f79db856650e85df3e2284c seq main NULL
-062485df3397fd4af360764c261cad8cb8da9c38 set main NULL
+9fbba9a9ef264efcaff870de2925902052443b9e set main NULL
 9e9f3dc8b432acf99421cca5e79cb5f0fc6f97b9 shim main NULL
 9d0616436281aefc646590cf22c3165a69e9b1c2 shodan main NULL
 d679db2b24e93105c3510a5ecb5fa7efcdf7837d shortcut main NULL
@@ -271,13 +271,13 @@ d628139cdb9f27113d21de987b19eac2f24415d3 ted main NULL
 1e1c98d98bee32338e14e1580e57c1cc72ec9660 tee main NULL
 54014e2420d5ac2403282c8a272b028393f71589 telegram main NULL
 4bebf0f26cc64bb450ba28c9e8153a4a852d3a97 term main NULL
-7f9ffc9cda08ac3270d3e96b8c90d619b4f32f77 termux main NULL
+9cbccde4ba65698dd31834d2699cdf9d09da978c termux main NULL
 ac21ee0e932c8b32f4d942b616168816d96e0eb9 theme main NULL
 763155f18ac41f8b325660bf58ae3d19ae44dcae tldr main NULL
 ddc89fb8fde4b5f63eaee550a35ad5b5b35451ad tmp main NULL
 48c6c2f62e10b46b2443f4206c5d2b442423e3d5 tmpl main NULL
 68af6036a7483fc13f3612dccb190e0107774d86 top main NULL
-078371f873dcc7838556ede5dcb133701d1f229d tping main NULL
+f782f0cd6ba5d6f2bceffd02f6f5dff0677eaf0b tping main NULL
 1895b7752b1af46d80f357d96ebcb72c8243e4dc trex main NULL
 fdff0b8aa7166bdce6c81d6baca734294e10a143 tsv main NULL
 0d24d5452ee70df2c0eea7b44afe449b09c3f789 tty main NULL

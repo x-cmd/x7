@@ -213,34 +213,6 @@ null
 ]
 }
 ,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x termux pd install ubuntu"
-,
-"cn"
-:
-"安装 Ubuntu 发行版"
-,
-"en"
-:
-"Install the Ubuntu distribution"
-}
-,
-{
-"cmd"
-:
-"x termux prun ubuntu bash"
-,
-"cn"
-:
-"在 Ubuntu 发行版中运行 bash"
-}
-]
-,
 "#subcmd:pkg"
 :
 [
@@ -759,6 +731,48 @@ null
 :
 [
 "-h|--help"
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"m"
+,
+"cn"
+:
+"x-cmd 在 termux 环境中默认配置 m 为 x termux 的缩写, m 取自单词 machine 的第一个字母"
+,
+"en"
+:
+"x-cmd in termux environment defaults to m as an abbreviation for x termux, m is the first letter of word machine"
+}
+,
+{
+"cmd"
+:
+"x termux pd install ubuntu"
+,
+"cn"
+:
+"安装 Ubuntu 发行版"
+,
+"en"
+:
+"Install the Ubuntu distribution"
+}
+,
+{
+"cmd"
+:
+"x termux prun ubuntu bash"
+,
+"cn"
+:
+"在 Ubuntu 发行版中运行 bash"
+}
 ]
 ,
 "#other"
