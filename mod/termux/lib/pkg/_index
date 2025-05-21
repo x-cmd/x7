@@ -1,7 +1,7 @@
 
 xrc     apt
 
-xrc:mod:lib     termux      pkg/_fz
+xrc:mod:lib     termux      pkg/_fz     pkg/snap
 
 ___x_cmd_termux_pkg(){
     [ $# -gt 0  ]   ||  set -- --fz
@@ -16,6 +16,8 @@ ___x_cmd_termux_pkg(){
 
         --fzfpreview)   ___x_cmd_termux_pkg___fzf_preview   "$@" ;;
         --fzdata)       ___x_cmd_termux_pkg___fz_data       "$@" ;;
+
+        snap)           ___x_cmd_termux_pkg_snap            "$@" ;;
 
         *)              ___x_cmd_cmds pkg                   "$@" ;;
     esac

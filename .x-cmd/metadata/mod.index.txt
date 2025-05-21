@@ -4,7 +4,7 @@
 c3a2ee48e35e37bc9b5885c2eecaed4effa25dd6 alpine main NULL
 56525f31030f01f70af00812dd5092d89a1d6e7d api main NULL
 898e6ecc191bdfb8ce7c760e7ce3372fcb866ffd apk main NULL
-30d6c50fe9cf1f8939a8976ba6f178842b32f94b apt main NULL
+1c4503afb368cec1bba3ce32e033e71af8b3df1c apt main NULL
 963ebbd6fe9c5039066982fe27c7a7eafc163b6b arg main NULL
 eae3392df329f7012eeb31081cd1e0d35bdb7d3f arp main NULL
 c24dce13f149216064987834cf35f3a55fe30705 ascii main NULL
@@ -272,7 +272,7 @@ d628139cdb9f27113d21de987b19eac2f24415d3 ted main NULL
 1e1c98d98bee32338e14e1580e57c1cc72ec9660 tee main NULL
 54014e2420d5ac2403282c8a272b028393f71589 telegram main NULL
 4bebf0f26cc64bb450ba28c9e8153a4a852d3a97 term main NULL
-632b0d4082dcac6b23736bf88b19b5325a833f9c termux main NULL
+1f285af3ac87757187a22dcc2f65a39e5fb9c999 termux main NULL
 ac21ee0e932c8b32f4d942b616168816d96e0eb9 theme main NULL
 763155f18ac41f8b325660bf58ae3d19ae44dcae tldr main NULL
 ddc89fb8fde4b5f63eaee550a35ad5b5b35451ad tmp main NULL

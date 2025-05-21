@@ -104,3 +104,7 @@ ___x_cmd_apt___lsraw_(){
 ___x_cmd_apt___hasindex(){
     [ -f "/var/lib/apt/lists/partial" ] || [ -f "/data/data/com.termux/cache/apt/pkgcache.bin" ]
 }
+
+___x_cmd_apt___haspriv(){
+    [ -w "/var/lib/apt/lists/partial" ] || [ -w "/data/data/com.termux/cache/apt/pkgcache.bin" ]
+}

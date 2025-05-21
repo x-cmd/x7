@@ -1,0 +1,4 @@
+
+xrc:mod:lib termux  \
+    api/battery api/cpu api/torch api/vibrate api/wifi api/say
+

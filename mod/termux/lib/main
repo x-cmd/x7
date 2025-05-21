@@ -4,10 +4,8 @@ ___x_cmd log init termux
 
 xrc:mod:lib     termux      \
                 shortcut        prep            \
-                torch   wifi    cpu     sshd    \
-                pr      pd/_index               \
-                say     vibrate     pkg/_index  \
-                battery
+                sshd    pr      pd/_index       \
+                pkg/_index  api/_index
 
 ___x_cmd_termux___main(){
     [ "$#" -gt 0 ] ||   set -- --help
@@ -16,6 +14,7 @@ ___x_cmd_termux___main(){
     case "$op" in
         -h|--help)          ___x_cmd help -m termux             "$@" ;;
         --prep|prep)        ___x_cmd_termux_prep                "$@" ;;
+        cr|change-repo)     ___x_cmd_termux_cr                  "$@" ;;
 
         v|vibrate)          ___x_cmd_termux_vibrate             "$@" ;;
 
@@ -27,8 +26,6 @@ ___x_cmd_termux___main(){
 
         noti|notification)
                             ___x_cmd_termux_noti                "$@" ;;
-
-        cr|change-repo)     ___x_cmd_termux_cr                  "$@" ;;
 
         cam)                ___x_cmd_termux_cam                 "$@" ;;
         mp)                 ___x_cmd_termux_mp                  "$@" ;;
