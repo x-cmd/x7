@@ -20,12 +20,250 @@ null
 {
 "en"
 :
-"The termux module integrates various utility functions that Termux users may need"
+"The termux module integrates various utility functions that Termux users may need.\nNote that the termux-api related functions need to install the Termux:API App by yourself, and install the termux-api package locally.\n"
 ,
 "cn"
 :
-"termux 模块集成了 Termux 用户可能需要的各种实用功能"
+"termux 模块集成了 Termux 用户可能需要的各种实用功能.\n注意, termux-api 相关的功能需要自行安装 Termux:API App, 并在本地安装 termux-api 包.\n"
 }
+,
+"v|vibrate"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"用户态模拟 chroot 环境，让非 root 用户在 Termux 中运行 Linux 发行版或隔离的文件系统。"
+,
+"en"
+:
+"User-space implementation of `chroot`, enabling unprivileged users to run Linux distributions or isolated filesystems within Termux."
+}
+,
+"$ref"
+:
+"x-advise://termux/data/vibrate.jso"
+}
+,
+"cr|change-repo"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"改变 Termux 的软件源"
+,
+"en"
+:
+"Change the software source of Termux"
+}
+}
+,
+"say"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"文本转语音"
+,
+"en"
+:
+"Text to speech"
+}
+,
+"$ref"
+:
+"x-advise://termux/data/say.jso"
+}
+,
+"b|battery"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看电池状态"
+,
+"en"
+:
+"View battery status"
+}
+}
+,
+"o|open"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"打开文件或者网络链接, 注意, 只有当前在 Termux App, 才能打开文件管理器或者浏览器并显示相关资源."
+,
+"en"
+:
+"Open files or network links. Note that you can only open the file manager or browser and display the relevant resources when you are using it in Termux."
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"文件路径或者网络链接"
+,
+"en"
+:
+"File path or network link"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x termux open https://x-cmd.com"
+,
+"cn"
+:
+"打开网页链接"
+,
+"en"
+:
+"Open a web link"
+}
+,
+{
+"cmd"
+:
+"x termux open /sdcard/test.txt"
+,
+"cn"
+:
+"打开本地文件"
+,
+"en"
+:
+"Open a local file"
+}
+]
+}
+,
+"br|browse"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"打开网络链接, 注意, 只有当前位于 Termux App 时, 才能打开浏览器并跳转到该网页."
+,
+"en"
+:
+"Open network links, note that you can only open the browser and jump to the page when you are using it in Termux."
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"网络链接"
+,
+"en"
+:
+"Network link"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x termux br x-cmd.com"
+,
+"en"
+:
+"Open the web page x-cmd.com"
+,
+"cn"
+:
+"打开网页 x-cmd.com"
+}
+]
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x termux pd install ubuntu"
+,
+"cn"
+:
+"安装 Ubuntu 发行版"
+,
+"en"
+:
+"Install the Ubuntu distribution"
+}
+,
+{
+"cmd"
+:
+"x termux prun ubuntu bash"
+,
+"cn"
+:
+"在 Ubuntu 发行版中运行 bash"
+}
+]
+,
+"#subcmd:pkg"
+:
+[
+"prep|prepare"
+,
+"cr|change-repo"
+,
+"pkg"
+]
+,
+"#subcmd:termux-api"
+:
+[
+"o|open"
+,
+"br|browse"
+,
+"b|battery"
+,
+"v|vibrate"
+,
+"say"
+]
 ,
 "pr|proot"
 :
@@ -207,60 +445,19 @@ null
 ]
 }
 ,
-"v|vibrate"
+"alp|alpine"
 :
 {
 "#desc"
 :
 {
-"cn"
-:
-"用户态模拟 chroot 环境，让非 root 用户在 Termux 中运行 Linux 发行版或隔离的文件系统。"
-,
 "en"
 :
-"User-space implementation of `chroot`, enabling unprivileged users to run Linux distributions or isolated filesystems within Termux."
-}
+"Alpine Linux distribution, shortcut for 'x termux pd run alpine'"
 ,
-"$ref"
-:
-"x-advise://termux/data/vibrate.jso"
-}
-,
-"cr|change-repo"
-:
-{
-"#desc"
-:
-{
 "cn"
 :
-"改变 Termux 的软件源"
-,
-"en"
-:
-"Change the software source of Termux"
-}
-}
-,
-"say"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"文本转语音"
-,
-"en"
-:
-"Text to speech"
-}
-,
-"$ref"
-:
-"x-advise://termux/data/say.jso"
+"Alpine Linux 发行版, 'x termux pd run alpine' 的快捷方式"
 }
 ,
 "#tldr"
@@ -269,26 +466,299 @@ null
 {
 "cmd"
 :
-"x termux pd install ubuntu"
+"x termux alp"
 ,
 "cn"
 :
-"安装 Ubuntu 发行版"
+"打开 Alpine 发行版, 相当于 'x termux pd run alpine' 或者 'proot-distro login alpine'"
 ,
 "en"
 :
-"Install the Ubuntu distribution"
+"Open the Alpine distribution, equivalent to 'x termux pd run alpine' or 'proot-distro login alpine'"
 }
 ,
 {
 "cmd"
 :
-"x termux prun ubuntu bash"
+"x termux alp ls /bin"
+,
+"en"
+:
+"Run ls /bin in the Alpine Linux distribution"
 ,
 "cn"
 :
-"在 Ubuntu 发行版中运行 bash"
+"在 Alpine Linux 发行版中运行 ls /bin"
 }
+]
+}
+,
+"arch|archlinux"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Arch Linux distribution, shortcut for 'x termux pd run archlinux'"
+,
+"cn"
+:
+"Arch Linux 发行版, 'x termux pd run archlinux' 的快捷方式"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x termux arch"
+,
+"cn"
+:
+"打开 archlinux 发行版, 相当于 'x termux pd run archlinux' 或者 'proot-distro login archlinux'"
+,
+"en"
+:
+"Open the archlinux distribution, equivalent to 'x termux pd run archlinux' or 'proot-distro login archlinux'"
+}
+,
+{
+"cmd"
+:
+"x termux arch ls /bin"
+,
+"en"
+:
+"Run ls /bin in the Arch Linux distribution"
+,
+"cn"
+:
+"在 Arch Linux 发行版中运行 ls /bin"
+}
+]
+}
+,
+"deb|debian"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Debian Linux distribution, shortcut for 'x termux pd run Debian'"
+,
+"cn"
+:
+"Debian Linux 发行版, 'x termux pd run Debian' 的快捷方式"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x termux deb"
+,
+"cn"
+:
+"打开 debian 发行版, 相当于 'x termux pd run debian' 或者 'proot-distro login debian'"
+,
+"en"
+:
+"Open the debian distribution, equivalent to 'x termux pd run debian' or 'proot-distro login debian'"
+}
+,
+{
+"cmd"
+:
+"x termux deb ls /bin"
+,
+"en"
+:
+"Run ls /bin in the Debian distribution"
+,
+"cn"
+:
+"在 Debian 发行版中运行 ls /bin"
+}
+]
+}
+,
+"fed|fedora"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Fedora Linux distribution, shortcut for 'x termux pd run fedora'"
+,
+"cn"
+:
+"Fedora Linux 发行版, 'x termux pd run fedora' 的快捷方式"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x termux fed"
+,
+"cn"
+:
+"打开 Fedora 发行版, 相当于 'x termux pd run fedora' 或者 'proot-distro login fedora'"
+,
+"en"
+:
+"Open the Fedora distribution, equivalent to 'x termux pd run fedora' or 'proot-distro login fedora'"
+}
+,
+{
+"cmd"
+:
+"x termux fed ls /bin"
+,
+"en"
+:
+"Run ls /bin in the Fedora distribution"
+,
+"cn"
+:
+"在 Fedora 发行版中运行 ls /bin"
+}
+]
+}
+,
+"ubu|ubuntu"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Ubuntu Linux distribution, shortcut for 'x termux pd run ubuntu'"
+,
+"cn"
+:
+"Ubuntu Linux 发行版, 'x termux pd run ubuntu' 的快捷方式"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x termux ubu"
+,
+"cn"
+:
+"打开 Ubuntu 发行版, 相当于 'x termux pd run ubuntu' 或者 'proot-distro login ubuntu'"
+,
+"en"
+:
+"Open the Ubuntu distribution, equivalent to 'x termux pd run ubuntu' or 'proot-distro login ubuntu'"
+}
+,
+{
+"cmd"
+:
+"x termux ubu ls /bin"
+,
+"en"
+:
+"Run ls /bin in the Ubuntu distribution"
+,
+"cn"
+:
+"在 Ubuntu 发行版中运行 ls /bin"
+}
+]
+}
+,
+"suse"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"SUSE Linux distribution, shortcut for 'x termux pd run suse'"
+,
+"cn"
+:
+"SUSE Linux 发行版, 'x termux pd run suse' 的快捷方式"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x termux suse"
+,
+"cn"
+:
+"打开 SUSE 发行版, 相当于 'x termux pd run suse' 或者 'proot-distro login suse'"
+,
+"en"
+:
+"Open the SUSE distribution, equivalent to 'x termux pd run suse' or 'proot-distro login suse'"
+}
+,
+{
+"cmd"
+:
+"x termux suse ls /bin"
+,
+"en"
+:
+"Run ls /bin in the SUSE distribution"
+,
+"cn"
+:
+"在 SUSE 发行版中运行 ls /bin"
+}
+]
+}
+,
+"#subcmd:proot"
+:
+[
+"prun"
+,
+"pr|proot"
+,
+"pd|proot-distro"
+,
+"alp|alpine"
+,
+"arch|archlinux"
+,
+"deb|debian"
+,
+"fed|fedora"
+,
+"ubu|ubuntu"
+,
+"suse"
+]
+,
+"#subcmd:misc"
+:
+[
+"-h|--help"
 ]
 ,
 "#other"

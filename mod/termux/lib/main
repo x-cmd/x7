@@ -6,7 +6,8 @@ xrc:mod:lib     termux      \
                 shortcut        prep            \
                 torch   wifi    cpu     sshd    \
                 pr      pd/_index               \
-                say     vibrate     pkg/_index
+                say     vibrate     pkg/_index  \
+                battery
 
 ___x_cmd_termux___main(){
     [ "$#" -gt 0 ] ||   set -- --help
@@ -21,7 +22,8 @@ ___x_cmd_termux___main(){
         o|open)             ___x_cmd_termux_open                "$@" ;;
 
         i|install)          ___x_cmd_termux_pkg install         "$@" ;;
-        b|browse|openurl)   ___x_cmd_termux_browse              "$@" ;;
+        br|brow|browse|openurl)
+                            ___x_cmd_termux_browse              "$@" ;;
 
         noti|notification)
                             ___x_cmd_termux_noti                "$@" ;;
@@ -36,11 +38,12 @@ ___x_cmd_termux___main(){
         toast|dialog|\
         sms|contact|call|\
         wake|\
-        wifi|torch|battery|\
-        cpu|\
+        wifi|torch|cpu|\
         say|info|tts|api|\
         shortcut|pkg)
                             ___x_cmd_termux_"$op"               "$@" ;;
+
+        b|battery)          ___x_cmd_termux_battery             "$@" ;;
 
         st|storage)         ___x_cmd_termux_storage             "$@" ;;
         mic|microphone)     ___x_cmd_termux_microphone          "$@" ;;
