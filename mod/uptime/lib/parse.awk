@@ -12,6 +12,11 @@ function str_trim(astr){
     return astr
 }
 
+function lag_trim(astr){
+    gsub(/,/, "", astr)
+    return str_trim( astr )
+}
+
 {
     printf(UI_KEY "%-15s"   UI_END "  :  " UI_VAL "%s\n"    UI_END,     "Current-time"      , str_trim($1) )
 
@@ -21,8 +26,8 @@ function str_trim(astr){
 
     printf(UI_KEY "%-15s"   UI_END "  :  " UI_VAL "%s\n"    UI_END,     "Number-of-users"   , ($6 ~ /^[0-9]+$/) ? $6 : 1 )
     printf(UI_KEY "%-15s"   UI_END "  :\n" UI_END,                      "Load-average" )
-    printf(UI_KEY "  %-8s"  UI_END "  :  " UI_VAL "%6s\n"    UI_END,     "1-min"            , str_trim($(NF-2)) )
-    printf(UI_KEY "  %-8s"  UI_END "  :  " UI_VAL "%6s\n"    UI_END,     "5-min"            , str_trim($(NF-1)) )
-    printf(UI_KEY "  %-8s"  UI_END "  :  " UI_VAL "%6s\n"    UI_END,     "15-min"           , str_trim($(NF)) )
+    printf(UI_KEY "  %-8s"  UI_END "  :  " UI_VAL "%6s\n"    UI_END,     "1-min"            , lag_trim($(NF-2)) )
+    printf(UI_KEY "  %-8s"  UI_END "  :  " UI_VAL "%6s\n"    UI_END,     "5-min"            , lag_trim($(NF-1)) )
+    printf(UI_KEY "  %-8s"  UI_END "  :  " UI_VAL "%6s\n"    UI_END,     "15-min"           , lag_trim($(NF)) )
 
 }

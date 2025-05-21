@@ -27,5 +27,10 @@ ___x_cmd_termux_pd_run(){
     done
     dist="${dist:-ubuntu}"
 
+    local dp="${TERMUX__PREFIX}/var/lib/proot-distro/installed-rootfs/$dist"
+    [ -d "$dp" ] || {
+        ___x_cmd_termux pd install "$dist" || N=termux M="Fail to install $dist" log:ret:1
+    }
+
     ___x_cmd_termux_pd___cmd login "$dist" -- "$@"
 }

@@ -272,7 +272,7 @@ d628139cdb9f27113d21de987b19eac2f24415d3 ted main NULL
 1e1c98d98bee32338e14e1580e57c1cc72ec9660 tee main NULL
 54014e2420d5ac2403282c8a272b028393f71589 telegram main NULL
 4bebf0f26cc64bb450ba28c9e8153a4a852d3a97 term main NULL
-b5e162c978710b11cc36c5a46222c874a5ee49b1 termux main NULL
+632b0d4082dcac6b23736bf88b19b5325a833f9c termux main NULL
 ac21ee0e932c8b32f4d942b616168816d96e0eb9 theme main NULL
 763155f18ac41f8b325660bf58ae3d19ae44dcae tldr main NULL
 ddc89fb8fde4b5f63eaee550a35ad5b5b35451ad tmp main NULL
@@ -290,7 +290,7 @@ c786215b6ee64ffe674412efcf2a4319a97ca160 tz main NULL
 d8ee558013bd1de499aa1ef6bb8e196791f369cf uname main NULL
 e26dd26397f0f8f7db5a1bef686e3799b5cd6c55 uninstall main NULL
 46fbba30a98f45254375b96ce2c73e120c0723a8 upgrade main NULL
-7e9535fefefc695eec06135b3b22260ea2cc7c90 uptime main NULL
+f4622bbe1783674ecac2d41037eccbc79e7e5543 uptime main NULL
 befef8ac37b15ba229fc5559b1dba4996562b309 url main NULL
 5746198bc5ef17bce1caf6976af66d4920a830c3 user main NULL
 cc899ef04cf4e5dbe1861586e19d965596e86159 val main NULL
