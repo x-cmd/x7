@@ -97,6 +97,24 @@ null
 :
 "View battery status"
 }
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x termux battery"
+,
+"en"
+:
+"View current battery status"
+,
+"cn"
+:
+"查看当前电池状态"
+}
+]
 }
 ,
 "o|open"
@@ -351,6 +369,24 @@ null
 :
 "在指定的发行版中运行命令，等同于 proot-distro run 命令"
 }
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x termux prun <linux distributions>"
+,
+"cn"
+:
+"Run the specified Linux distribution and enter the Linux environment"
+,
+"en"
+:
+"运行指定 linux 发行版，并进入linux环境"
+}
+]
 }
 ,
 "prep|prepare"

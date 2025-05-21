@@ -1,4 +1,36 @@
 {
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x termux say <read content>"
+,
+"en"
+:
+"Read the input"
+,
+"cn"
+:
+"阅读输入的内容"
+}
+,
+{
+"cmd"
+:
+"x termux say -r 2 <read content>"
+,
+"en"
+:
+"Read the input"
+,
+"cn"
+:
+"阅读输入的内容"
+}
+]
+,
 "-r|--rate"
 :
 {
@@ -7,11 +39,11 @@
 {
 "en"
 :
-"speech rate to use"
+"Read at 2x speed"
 ,
 "cn"
 :
-"语音合成使用的语速"
+"使用2倍速阅读"
 }
 ,
 "#1"
