@@ -143,6 +143,126 @@ null
 }
 }
 ,
+"prep|prepare"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Install necessary packages for better x-cmd operation in termux"
+,
+"cn"
+:
+"安装必要的包以更好地在 termux 中运行 x-cmd"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"The set of packages to be installed ( default is all, candidates: min, all )"
+,
+"cn"
+:
+"要安装的包的集合 ( 默认是 all, 候选: min, all )"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x termux prep"
+,
+"cn"
+:
+"安装所有推荐的包以更好地在 termux 中运行 x-cmd, 等同于 x termux prep all"
+,
+"en"
+:
+"Install all recommended packages for better x-cmd operation in termux, equivalent to x termux prep all"
+}
+,
+{
+"cmd"
+:
+"x termux prep min"
+,
+"cn"
+:
+"安装最小的推荐包以更好地在 termux 中运行 x-cmd"
+,
+"en"
+:
+"Install the minimum recommended packages for better x-cmd operation in termux"
+}
+]
+}
+,
+"v|vibrate"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"用户态模拟 chroot 环境，让非 root 用户在 Termux 中运行 Linux 发行版或隔离的文件系统。"
+,
+"en"
+:
+"User-space implementation of `chroot`, enabling unprivileged users to run Linux distributions or isolated filesystems within Termux."
+}
+,
+"$ref"
+:
+"x-advise://termux/data/vibrate.jso"
+}
+,
+"cr|change-repo"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"改变 Termux 的软件源"
+,
+"en"
+:
+"Change the software source of Termux"
+}
+}
+,
+"say"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"文本转语音"
+,
+"en"
+:
+"Text to speech"
+}
+,
+"$ref"
+:
+"x-advise://termux/data/say.jso"
+}
+,
 "#tldr"
 :
 [

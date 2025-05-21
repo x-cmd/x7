@@ -6,7 +6,7 @@ xrc:mod:lib     termux      \
                 shortcut        prep            \
                 torch   wifi    cpu     sshd    \
                 pr      pd/_index               \
-                pkg/_index
+                say     vibrate     pkg/_index
 
 ___x_cmd_termux___main(){
     [ "$#" -gt 0 ] ||   set -- --help
@@ -16,17 +16,17 @@ ___x_cmd_termux___main(){
         -h|--help)          ___x_cmd help -m termux             "$@" ;;
         --prep|prep)        ___x_cmd_termux_prep                "$@" ;;
 
-        v|vibratre)         ___x_cmd_termux_vibrate             "$@" ;;
+        v|vibrate)          ___x_cmd_termux_vibrate             "$@" ;;
 
         o|open)             ___x_cmd_termux_open                "$@" ;;
 
         i|install)          ___x_cmd_termux_pkg install         "$@" ;;
-        b|browse|openurl)   ___x_cmd_termux_openurl             "$@" ;;
-        cp)                 ___x_cmd_termux_cp                  "$@" ;;
-        pa|paste)           ___x_cmd_termux_paste               "$@" ;;
+        b|browse|openurl)   ___x_cmd_termux_browse              "$@" ;;
 
         noti|notification)
                             ___x_cmd_termux_noti                "$@" ;;
+
+        cr|change-repo)     ___x_cmd_termux_cr                  "$@" ;;
 
         cam)                ___x_cmd_termux_cam                 "$@" ;;
         mp)                 ___x_cmd_termux_mp                  "$@" ;;
@@ -51,18 +51,19 @@ ___x_cmd_termux___main(){
         prun)               ___x_cmd_termux_pd  run             "$@" ;;
 
         alp|alpine)         ___x_cmd_termux pd run alpine       "$@" ;;
-        ubu|ubuntu)         ___x_cmd_termux pd run ubuntu       "$@" ;;
+        arch|archlinux)     ___x_cmd_termux pd run archlinux    "$@" ;;
+        deb|debian)         ___x_cmd_termux pd run debian       "$@" ;;
         fed|fedora)         ___x_cmd_termux pd run fedora       "$@" ;;
-        arch)               ___x_cmd_termux pd run archlinux    "$@" ;;
+        ubu|ubuntu)         ___x_cmd_termux pd run ubuntu       "$@" ;;
         suse)               ___x_cmd_termux pd run opensuse     "$@" ;;
 
-        artix|debian|manjaro|pardus|adelie|chimera|deepin|opensuse|rocklinux|void)
+        artix|manjaro|pardus|adelie|chimera|deepin|opensuse|rocklinux|void)
                             ___x_cmd_termux pd run "$op"    "$@" ;;
     esac
 }
 
-___x_cmd_termux_run(){
-    command docker run --name termux -it "$@" termux/termux-docker
+___x_cmd_termux_drun(){
+    ___x_cmd docker run --name termux -it "$@" termux/termux-docker
 }
 
 ___x_cmd_termux_info(){
@@ -72,18 +73,17 @@ ___x_cmd_termux_info(){
     ___x_cmd_cmds termux-info       "$@"
 }
 
-___x_cmd_termux_vibrate(){
-    case "$1" in
-        -h|--help)      ___x_cmd help -m termux vibrate  "$@"; return ;;
-    esac
-    ___x_cmd_cmds termux-vibrate    "$@"
-}
-
 ___x_cmd_termux_browse(){
     case "$1" in
         -h|--help)      ___x_cmd help -m termux browse  "$@"; return ;;
     esac
-    ___x_cmd_cmds termux-open-url   "$@"
+
+    local website="$1"
+    case "$website" in
+        *://)   ;;
+        *)      website="https://$website"
+    esac
+    ___x_cmd_cmds termux-open-url   "$website"
 }
 
 ___x_cmd_termux_open(){
@@ -93,3 +93,6 @@ ___x_cmd_termux_open(){
     ___x_cmd_cmds termux-open       "$@"
 }
 
+___x_cmd_termux_cr(){
+    ___x_cmd_cmds termux-change-repo "$@"
+}

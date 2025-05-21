@@ -8,7 +8,7 @@ ___x_cmd_termux_pd_mirror(){
 
     local op="$1";      shift
     case "$op" in
-        -h|--help)      ___x_cmd_help -m termux pd mirror   "$@" ;;
+        -h|--help)      ___x_cmd help -m termux pd mirror   "$@" ;;
 
         ls|set|unset)
                         ___x_cmd_termux_pd_mirror_"$op"     "$@" ;;
@@ -75,7 +75,7 @@ ___x_cmd_termux_pd_mirror_set(){(
         termux:error "Invalid mirror name: $1"
         return 1
     fi
-    termux:info "Setting dnf mirror $url"
+    termux:info "Setting termux proot-distro mirror $url"
 
     # In the future, we provide a mirror size
     local metafile

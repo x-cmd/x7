@@ -21,6 +21,8 @@ ___x_cmd_termux_pd(){
         mirror|run|prep)
                     ___x_cmd_termux_pd_"$op"        "$@" ;;
 
+        --)         ___x_cmd_termux_pd___cmd        "$@" ;;
+
         *)          ___x_cmd_termux_pd___cmd  "$op" "$@" ;;
     esac
 }
@@ -36,7 +38,8 @@ ___x_cmd_termux_pd___cmd(){
 }
 
 ___x_cmd_termux_pd_help(){
-    ___x_cmd_termux_pd___cmd -h "$@"
+    # ___x_cmd_termux_pd___cmd -h "$@"
+    ___x_cmd help -m termux pd "$@"
 }
 
 ___x_cmd_termux_pd_prep(){
