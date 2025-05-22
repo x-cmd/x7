@@ -1,4 +1,4 @@
-
+xrc curl
 ___x_cmd_termux_pd_curlaria2c(){
     local url=""
     local output=""

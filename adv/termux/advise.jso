@@ -273,6 +273,70 @@ null
 "say"
 ]
 ,
+"prep|prepare"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Install necessary packages for better x-cmd operation in termux"
+,
+"cn"
+:
+"安装必要的包以更好地在 termux 中运行 x-cmd"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"The set of packages to be installed ( default is all, candidates: min, all )"
+,
+"cn"
+:
+"要安装的包的集合 ( 默认是 all, 候选: min, all )"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x termux prep"
+,
+"cn"
+:
+"安装所有推荐的包以更好地在 termux 中运行 x-cmd, 等同于 x termux prep all"
+,
+"en"
+:
+"Install all recommended packages for better x-cmd operation in termux, equivalent to x termux prep all"
+}
+,
+{
+"cmd"
+:
+"x termux prep min"
+,
+"cn"
+:
+"安装最小的推荐包以更好地在 termux 中运行 x-cmd"
+,
+"en"
+:
+"Install the minimum recommended packages for better x-cmd operation in termux"
+}
+]
+}
+,
 "pr|proot"
 :
 {
@@ -381,11 +445,11 @@ null
 {
 "en"
 :
-"Run a command in the specified distribution, equivalent to proot-distro run command"
+"Run a command in the specified distribution, shortcut for 'x termux pd run'"
 ,
 "cn"
 :
-"在指定的发行版中运行命令，等同于 proot-distro run 命令"
+"在指定的发行版中运行命令，'x termux pd run' 的快捷方式\""
 }
 ,
 "#tldr"
@@ -403,70 +467,6 @@ null
 "en"
 :
 "运行指定 linux 发行版，并进入linux环境"
-}
-]
-}
-,
-"prep|prepare"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Install necessary packages for better x-cmd operation in termux"
-,
-"cn"
-:
-"安装必要的包以更好地在 termux 中运行 x-cmd"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"The set of packages to be installed ( default is all, candidates: min, all )"
-,
-"cn"
-:
-"要安装的包的集合 ( 默认是 all, 候选: min, all )"
-}
-}
-,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x termux prep"
-,
-"cn"
-:
-"安装所有推荐的包以更好地在 termux 中运行 x-cmd, 等同于 x termux prep all"
-,
-"en"
-:
-"Install all recommended packages for better x-cmd operation in termux, equivalent to x termux prep all"
-}
-,
-{
-"cmd"
-:
-"x termux prep min"
-,
-"cn"
-:
-"安装最小的推荐包以更好地在 termux 中运行 x-cmd"
-,
-"en"
-:
-"Install the minimum recommended packages for better x-cmd operation in termux"
 }
 ]
 }
@@ -762,11 +762,11 @@ null
 "#subcmd:proot"
 :
 [
-"prun"
-,
 "pr|proot"
 ,
 "pd|proot-distro"
+,
+"prun"
 ,
 "alp|alpine"
 ,
