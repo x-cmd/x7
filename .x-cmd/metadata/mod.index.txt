@@ -134,6 +134,7 @@ d8012965d140802d4b5a46fabbfd0f0609bdb7d1 install main NULL
 afdee276c5b66ce74e7aa07a75d5404f0396bf36 instance main NULL
 fe9daf41d8fac4704503fcd17b5f44415cd0426e ip main NULL
 bb2d9592389187e065d78a7f54a8b88ca9ea58bd is main NULL
+e03532ed7f47d8d35360afc453bd251001e6d873 ish main NULL
 8de1c742cf631ad576a8bc12ab298d347579b0da ja main NULL
 aab6708671cbbd17416e3fac73530ec26965fd94 jar main NULL
 c6cd475d0e1a6b98d59e9e2d1f74728605ddee08 java main NULL
@@ -309,7 +310,7 @@ b8255740083c7ed52ab6d6752db0a51327106a2f winget main NULL
 a209e0f67c87f56d1a77922f95c206b5db639f29 wx main NULL
 ed40b70ccc9d16178cb1356f4e96d29eadb2add7 x-cmd main NULL
 d3be37edf456887b18d236a19e1103fc1f2dbf85 xq main NULL
-b2a6273560a563b631c319e5aa807b7add46370e xrc main NULL
+fcfeac34b190a453e191c9003c3f7fd3e6b97fad xrc main NULL
 61806f8ddd2aab6d45db4ef0604d64164c0cb92b xx main NULL
 1cd68b621f094dc5ecb884567ce8a1a69dd21711 yml main NULL
 dca7dd0693aa68c2fd7cc830bdfd289f645f4a95 yo main NULL
