@@ -113,17 +113,17 @@ null
 ,
 "en"
 :
-"Change apk repo to v3.19, then update"
+"Change apk repo to v3.18 by default, then update"
 ,
 "cn"
 :
-"更改 apk 源为 v3.19, 然后更新"
+"更改 apk 源为 v3.18 by default, 然后更新"
 }
 ,
 {
 "cmd"
 :
-"x ish kw"
+"x ish ka"
 ,
 "en"
 :
