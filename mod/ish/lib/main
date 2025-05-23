@@ -12,6 +12,8 @@ ___x_cmd_ish___main(){
 
         kakeepawake)    ___x_cmd_ish_keepawak   "$@" ;;
 
+        cr)             ___x_cmd_ish_cr         "$@" ;;
+
         prep|prepare)   ___x_cmd_ish_prep       "$@" ;;
 
         *)              N=ish M="Unknown subcmd -> $op" log:ret:64 ;;
@@ -35,6 +37,16 @@ ___x_cmd_ish_prep(){
 # m ka
 ___x_cmd_ish_keepawake(){
     printf "%s\n" "Notice, choose 'always'. If there is no such an option. Go to preference -> privacy -> location, grant ish 'always'."
-    cat /etc/location >&2 &
+    cat /dev/location > /dev/null &  # try not using ___x_cmd_cmds
 }
 
+
+___x_cmd_ish_cr(){
+    printf "%s\n" \
+        'https://dl-cdn.alpinelinux.org/alpine/v3.19/main'      \
+        'https://dl-cdn.alpinelinux.org/alpine/v3.19/community' > /etc/apk/repositories
+
+    ___x_cmd rm -rf /ish || true
+
+    ___x_cmd_cmds apk upgrade && ___x_cmd_cmds apk fix
+}

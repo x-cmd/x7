@@ -229,7 +229,7 @@ ___x_cmd_is_termux(){
 }
 
 ___x_cmd_is_ish(){
-    [ -e /ish ]
+    [ -e /proc/ish ]
 }
 
 ___x_cmd_is_suitable_advise_env(){
