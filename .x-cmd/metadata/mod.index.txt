@@ -12,7 +12,7 @@ bd7323017ba35e9eff5fffe702b8414c4b639bbe asdf main NULL
 ed8cbefbe47baa72de9eac17742f831499a12471 assert main NULL
 6a1311c22f023312cb653f48924dbcda72d76759 awk main NULL
 551af6ae3114f48ee1da2f1ed91cc3ef93153bc4 bakman main NULL
-878ad9520961a33d8ca57190e351ba1d7df40561 boot main NULL
+8a2d9833483a5e1d82f80d7d8d3bebdeebdca9c8 boot main NULL
 a9adda86142c0e0bb8ebc5873f7f317524474bfe brew main NULL
 4469dc0c1e6c0cf2ab957231e2e02a357f9bd6b3 browse main NULL
 a847df129f3b965d5f18884df014684f7637299a btop main NULL
@@ -260,7 +260,7 @@ b51a51b5dd9bb5097cca6876470d0e745da484ec slidev main NULL
 18e4470de12b2a0cdb7c6f59860c45d0bea9b726 smart main NULL
 cb7148baf91fda837b480376258acfd43f0c65b3 solo main NULL
 10e497a98c58e701b7c4d76c94d78eda73fed82d spf main NULL
-972c3b41c732aa689a4ee7c43613954174f4c161 ssh main NULL
+eaa6fe135f5fccde808ba88bbf56efa10cca2e4f ssh main NULL
 52088cbba97ceafa76d2b5126ac876b6b32307d7 starship main NULL
 3bb1defc2eed56dd1231eb35b5a5f9ece2b4ed1f stat main NULL
 40c836ca20693f90689638a688258ff2fdd7dee9 str main NULL
@@ -272,7 +272,7 @@ d628139cdb9f27113d21de987b19eac2f24415d3 ted main NULL
 1e1c98d98bee32338e14e1580e57c1cc72ec9660 tee main NULL
 54014e2420d5ac2403282c8a272b028393f71589 telegram main NULL
 4bebf0f26cc64bb450ba28c9e8153a4a852d3a97 term main NULL
-cf88cf43e5e1116539796165fbfbbea58cb944a3 termux main NULL
+83555774081d0cc2994a4f3eb18dcc7d4c68d278 termux main NULL
 ac21ee0e932c8b32f4d942b616168816d96e0eb9 theme main NULL
 763155f18ac41f8b325660bf58ae3d19ae44dcae tldr main NULL
 ddc89fb8fde4b5f63eaee550a35ad5b5b35451ad tmp main NULL
@@ -294,7 +294,7 @@ f4622bbe1783674ecac2d41037eccbc79e7e5543 uptime main NULL
 befef8ac37b15ba229fc5559b1dba4996562b309 url main NULL
 5746198bc5ef17bce1caf6976af66d4920a830c3 user main NULL
 cc899ef04cf4e5dbe1861586e19d965596e86159 val main NULL
-7121f7a6629e69156ef8a949221e9e371694b3cb version main NULL
+54e1a9fd45765de8e1027df09fdeb7348113bb45 version main NULL
 afe8c2167fc93666f4ae68a67da63bae81affdad vim main NULL
 6f43a78b4d2b49e73a2f3ab30c97a921e5c40dca wchar main NULL
 43f4163302d11dd36ae97600ef59eda72c1c7822 websrc main NULL
@@ -307,7 +307,7 @@ b8255740083c7ed52ab6d6752db0a51327106a2f winget main NULL
 315788d9a43c3b03eaf1e673bb516993c5c1303d wsl main NULL
 1f2ddf3a5e143c23f7c3ec1f1961056951297293 wttr main NULL
 a209e0f67c87f56d1a77922f95c206b5db639f29 wx main NULL
-e31716b18c1e8bf2508a88a9d3c403152ed0f4fa x-cmd main NULL
+ed40b70ccc9d16178cb1356f4e96d29eadb2add7 x-cmd main NULL
 d3be37edf456887b18d236a19e1103fc1f2dbf85 xq main NULL
 b2a6273560a563b631c319e5aa807b7add46370e xrc main NULL
 61806f8ddd2aab6d45db4ef0604d64164c0cb92b xx main NULL
