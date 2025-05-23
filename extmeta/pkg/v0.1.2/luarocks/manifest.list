@@ -603,6 +603,7 @@ eventbus
 eventemitter
 evm
 evo
+evolved.lua
 exaerror
 example
 exasol-virtual-schema-common-lua
@@ -4186,6 +4187,7 @@ type
 typecheck
 typed
 typedobject
+typeid
 typical
 typst-lua
 u-test
