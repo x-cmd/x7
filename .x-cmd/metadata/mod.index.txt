@@ -88,7 +88,7 @@ e3ddc3c59abb290d46bec8d6112a944b89e141ac fkill main NULL
 cc4c5058e05373f5892a9d58eba45b704accbd42 fskv main NULL
 75d99fb5d5059ecb31301b29d4f6cffd94fb72e9 fslock main NULL
 8a68b81fd1ad06e7c95b40a400558e56a543f9f0 functor main NULL
-e054fb5d7b13d667c98b6a0666a5185ff3953f8c fzf main NULL
+e61fd323c8deca32b792db1c84b41df929cc0be0 fzf main NULL
 f8c8680a2467a2b8741cb7dfd6df11474945bcbc gawk main NULL
 c7e7455b4779ad4bf0f3d2ccd97f0a7df86fdb48 gcode main NULL
 dcbbd3beb270e31be94dd3d5a37781fa218bd7ce gddy main NULL
@@ -231,7 +231,7 @@ b8cc2607a873e512a609318aacfc16ba534f8d5a prta main NULL
 b7cf9fa983a6ae20a08abbd29906422f1acf0321 qr main NULL
 13b6844f830dfecffb5e3aaf3779cc4d73cf4642 qywx main NULL
 268ddc88cf606133cf9dd658678b9c8ea145dc72 raku main NULL
-9cfda0a5e0b2158691fa3152c0c5c05890b250f9 rand main NULL
+26af321f5ef2d7324197117b88b3dbfac4728c60 rand main NULL
 7cd8e647783af6223c22523d4c84d0fb3f39b297 retry main NULL
 738b2f9f9996ae00397cd3a2368930eb3e5aac42 rfc main NULL
 9ce304579b7815ef4b7677048ecd0948d478cd28 rg main NULL
