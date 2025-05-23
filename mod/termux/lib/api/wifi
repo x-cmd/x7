@@ -13,6 +13,10 @@ ___x_cmd_termux_wifi_current(){
     ___x_cmd_cmds termux-wifi-connectioninfo | ___x_cmd j2y
 }
 
+___x_cmd_termux_wifi_scan(){
+    :
+}
+
 ___x_cmd_termux_wifi_enable(){
     ___x_cmd_cmds termux-wifi-enable true
 }
@@ -34,5 +38,5 @@ ___x_cmd_termux_wifi_ls___yml(){
 }
 
 ___x_cmd_termux_wifi_ls___json(){
-    ___x_cmd_cmds termux-wifi-connectioninfo
+    ___x_cmd_cmds termux-wifi-scaninfo
 }

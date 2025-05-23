@@ -40,7 +40,7 @@ ___x_cmd_cawk___main(){
     fi
 
     local _locale="$___X_CMD_LOCALE_DEF_C"
-    [ -z "$TERMUX_VERSION" ] || _locale="$___X_CMD_LOCALE_DEF_UTF8"
+    ! ___x_cmd_is_termux || _locale="$___X_CMD_LOCALE_DEF_UTF8"
 
     LC_ALL="$_locale" \
     ___x_cmd_awk_runinside                  \

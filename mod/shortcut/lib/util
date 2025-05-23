@@ -36,9 +36,9 @@ ___x_cmd_shortcut___check_platform(){
 
 ___x_cmd_shortcut___get_platform_(){
     x_=""
-    if [ -n "$TERMUX_VERSION" ]; then
-        x_="termux"
+    if ! ___x_cmd_is_termux; then
+        ___x_cmd os name_
     else
-        ___x_cmd os name_ || return $?
+        x_="termux"
     fi
 }

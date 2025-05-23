@@ -15,7 +15,7 @@ ___x_cmd_apt_install(){
 
 ___x_cmd_apt_install___app(){
     {
-        [ -f "/var/lib/apt/lists/lock" ] || [ -f /data/data/com.termux/cache/apt/pkgcache.bin ]
+        [ -f "/var/lib/apt/lists/lock" ] || [ -f "${TERMUX__ROOTFS%/files}/cache/apt/pkgcache.bin" ]
     } || {
         apt:info "The first use of apt is detected and the local software repository list is ready to be updated."
         ___x_cmd apt update || return 1

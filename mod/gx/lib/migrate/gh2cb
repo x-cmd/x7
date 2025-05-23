@@ -10,7 +10,6 @@ ___x_cmd_gx_migrate_release_gh2cb(){
     } | {
         CHECK_PARAM=tag_name RET_FIELD=id ___x_cmd_gx_migrate_release___verify
     } | (
-        # ___x_cmd_gx_migrate_release_gh2cb termux/proot-distro x-cmd-sourcecode/proot-distro
         local cb_release_id
         while read -r release_name && read -r tag_name && read -r release_id && read -r is_exist && read -r second_release_id; do
             [ "${release_name}" = "null" ] || unset release_name
@@ -33,14 +32,14 @@ ___x_cmd_gx_migrate_release_gh2cb___attachment(){
     local gh_owner_repo="$1"
     local cb_owner_repo="$2"
     local gh_release_id="$3"
-    local gc_tag_name="$4"
+    local cb_tag_name="$4"
     local cb_release_id="${5}"
     {
         < "${___X_CMD_ROOT_TMP}/gx/___x_cmd_gx_github_${app_name}" \
             x jo env '.*' .id .assets -- '[ "$id" != '"${gh_release_id}"' ] || printf "%s\n" "$assets"'
 
         < "${___X_CMD_ROOT_TMP}/gx/___x_cmd_gx_codeberg_${app_name}" \
-            x jo env '.*' .tag_name assets=.assets.links -- '[ "$tag_name" != '"${gc_tag_name}"' ] || printf "%s\n" "$assets"'
+            x jo env '.*' .tag_name .assets -- '[ "$tag_name" != '"${cb_tag_name}"' ] || printf "%s\n" "$assets"'
     } | {
         #
         CHECK_PARAM=name RET_FIELD=browser_download_url ___x_cmd_gx_migrate_release___verify attachment

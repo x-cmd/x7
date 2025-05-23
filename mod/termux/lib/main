@@ -5,7 +5,7 @@ ___x_cmd log init termux
 xrc:mod:lib     termux      \
                 shortcut        prep            \
                 sshd    pr      pd/_index       \
-                pkg/_index  api/_index
+                pkg/_index      api/_index      prop
 
 ___x_cmd_termux___main(){
     [ "$#" -gt 0 ] ||   set -- --help
@@ -13,37 +13,14 @@ ___x_cmd_termux___main(){
     local op="$1"; shift
     case "$op" in
         -h|--help)          ___x_cmd help -m termux             "$@" ;;
+        ver|version)        ___x_cmd_termux_version             "$@" ;;
+        pp|prop)            ___x_cmd_termux_prop                "$@" ;;
+
         --prep|prep)        ___x_cmd_termux_prep                "$@" ;;
         cr|change-repo)     ___x_cmd_termux_cr                  "$@" ;;
-
-        v|vibrate)          ___x_cmd_termux_vibrate             "$@" ;;
-
-        o|open)             ___x_cmd_termux_open                "$@" ;;
+        shortcut|pkg)       ___x_cmd_termux_"$op"               "$@" ;;
 
         i|install)          ___x_cmd_termux_pkg install         "$@" ;;
-        br|brow|browse|openurl)
-                            ___x_cmd_termux_browse              "$@" ;;
-
-        noti|notification)
-                            ___x_cmd_termux_noti                "$@" ;;
-
-        cam)                ___x_cmd_termux_cam                 "$@" ;;
-        mp)                 ___x_cmd_termux_mp                  "$@" ;;
-        tele)               ___x_cmd_termux_tele                "$@" ;;
-        ir)                 ___x_cmd_termux_ir                  "$@" ;;
-
-        toast|dialog|\
-        sms|contact|call|\
-        wake|\
-        wifi|torch|cpu|\
-        say|info|tts|api|\
-        shortcut|pkg)
-                            ___x_cmd_termux_"$op"               "$@" ;;
-
-        b|battery)          ___x_cmd_termux_battery             "$@" ;;
-
-        st|storage)         ___x_cmd_termux_storage             "$@" ;;
-        mic|microphone)     ___x_cmd_termux_microphone          "$@" ;;
 
         pr|proot)           ___x_cmd_termux_pr                  "$@" ;;
         pd|proot-distro)
@@ -58,7 +35,9 @@ ___x_cmd_termux___main(){
         suse)               ___x_cmd_termux pd run opensuse     "$@" ;;
 
         artix|manjaro|pardus|adelie|chimera|deepin|opensuse|rocklinux|void)
-                            ___x_cmd_termux pd run "$op"    "$@" ;;
+                            ___x_cmd_termux pd run "$op"        "$@" ;;
+
+        *)                  ___x_cmd_termux___apimain   "$op"   "$@" ;;
     esac
 }
 
@@ -66,33 +45,11 @@ ___x_cmd_termux_drun(){
     ___x_cmd docker run --name termux -it "$@" termux/termux-docker
 }
 
-___x_cmd_termux_info(){
-    case "$1" in
-        -h|--help)      ___x_cmd help -m termux browse  "$@"; return ;;
-    esac
-    ___x_cmd_cmds termux-info       "$@"
-}
-
-___x_cmd_termux_browse(){
-    case "$1" in
-        -h|--help)      ___x_cmd help -m termux browse  "$@"; return ;;
-    esac
-
-    local website="$1"
-    case "$website" in
-        *://)   ;;
-        *)      website="https://$website"
-    esac
-    ___x_cmd_cmds termux-open-url   "$website"
-}
-
-___x_cmd_termux_open(){
-    case "$1" in
-        -h|--help)      ___x_cmd help -m termux open    "$@"; return ;;
-    esac
-    ___x_cmd_cmds termux-open       "$@"
-}
-
 ___x_cmd_termux_cr(){
     ___x_cmd_cmds termux-change-repo "$@"
 }
+
+___x_cmd_termux_version(){
+    printf "%s\n" "$TERMUX_VERSION"
+}
+

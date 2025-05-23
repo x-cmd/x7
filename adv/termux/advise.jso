@@ -135,6 +135,46 @@ null
 ]
 }
 ,
+"sms"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"手机短信管理."
+,
+"en"
+:
+"Mobile SMS management."
+}
+,
+"$ref"
+:
+"x-advise://termux/data/sms.jso"
+}
+,
+"vol"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"获取或设置 Android 设备的音量级别（如媒体音量、通话音量等）."
+,
+"en"
+:
+"Gets or sets the volume level of the Android device (such as media volume, call volume, etc.)."
+}
+,
+"$ref"
+:
+"x-advise://termux/data/vol.jso"
+}
+,
 "o|open"
 :
 {

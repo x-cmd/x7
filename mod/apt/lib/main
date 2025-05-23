@@ -93,7 +93,7 @@ ___x_cmd_apt___lsraw_(){
     x_="$___X_CMD_APT_CACHE_PATH/lsname"
 
     {
-        [ "$x_" -nt "/var/lib/apt/lists/partial" ] || [ "$x_" -nt "/data/data/com.termux/cache/apt/pkgcache.bin" ]
+        [ "$x_" -nt "/var/lib/apt/lists/partial" ] || [ "$x_" -nt "${TERMUX__ROOTFS%/files}/cache/apt/pkgcache.bin" ]
     } || {
         ___x_cmd rmrf "$x_"
         ___x_cmd_apt___repo_lsname > "$x_"

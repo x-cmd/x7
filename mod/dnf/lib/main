@@ -74,3 +74,7 @@ ___x_cmd_dnf___lsraw_(){
     }
     [ -f "$x_" ]
 }
+
+___x_cmd_dnf___haspriv(){
+    [ -w "/usr/bin" ] || [ -w "${TERMUX__ROOTFS}/usr/bin" ]
+}

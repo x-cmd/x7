@@ -20,9 +20,9 @@ ___x_cmd_dnf_snap(){
     ___x_cmd_hascmd "$cmd" || {
         pkgnamelist="${pkgnamelist:-"$cmd"}"
 
-        [ -w /usr/bin ] || {
+        ___x_cmd_dnf___haspriv || {
             dnf:error --next "sudo dnf install $pkgnamelist" \
-                "You do not have permission. You can mannualy install $pkgnamelist"
+                "You do not have permission. Please manually install $pkgnamelist"
             return 1
         }
 
