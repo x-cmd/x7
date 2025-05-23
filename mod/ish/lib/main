@@ -21,12 +21,12 @@ ___x_cmd_ish___main(){
 }
 
 ___x_cmd_ish_version(){
-    printf "version:    ";  ___x_cmd rat /etc/version
-    printf "apkversion: ";  ___x_cmd rat /etc/apk-version
+    printf "version:  ";  ___x_cmd cat /proc/ish/version
+    printf "colors:   ";  ___x_cmd cat /proc/ish/colors
 }
 
 ___x_cmd_ish_prep(){
-    [ ! -e /ish ] || ___x_cmd_ish_cr
+    # [ ! -e /ish ] || ___x_cmd_ish_cr
 
     # sqlite
     ___x_cmd apk add    curl git python fzf bash jq yq sqlite
@@ -44,18 +44,21 @@ ___x_cmd_ish_keepawake(){
 
 
 ___x_cmd_ish_cr(){
+    local apkver="${1:-"v3.18"}"
+
     if ___x_cmd websrc is cn; then
-        ish:info "Changing apk repo -> https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.19"
+        ish:info "Changing apk repo -> https://mirrors.tuna.tsinghua.edu.cn/alpine/$apkver"
         printf "%s\n" \
-            'https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.19/main'      \
-            'https://mirrors.tuna.tsinghua.edu.cn/alpine/v3.19/community' > /etc/apk/repositories
+            "https://mirrors.tuna.tsinghua.edu.cn/alpine/$apkver/main"      \
+            "https://mirrors.tuna.tsinghua.edu.cn/alpine/$apkver/community" > /etc/apk/repositories
     else
-        ish:info "Changing apk repo -> https://dl-cdn.alpinelinux.org/alpine/v3.19"
+        ish:info "Changing apk repo -> https://dl-cdn.alpinelinux.org/alpine/$apkver"
         printf "%s\n" \
-            'https://dl-cdn.alpinelinux.org/alpine/v3.19/main'      \
-            'https://dl-cdn.alpinelinux.org/alpine/v3.19/community' > /etc/apk/repositories
+            "https://dl-cdn.alpinelinux.org/alpine/$apkver/main"      \
+            "https://dl-cdn.alpinelinux.org/alpine/$apkver/community" > /etc/apk/repositories
     fi
 
     [ ! -e /ish ] || ___x_cmd_cmds rm -rf /ish || true
     ___x_cmd_cmds apk upgrade && ___x_cmd_cmds apk fix
 }
+
