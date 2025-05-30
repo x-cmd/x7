@@ -26,8 +26,8 @@ ___x_cmd_dnf_snap(){
             return 1
         }
 
-        eval ___x_cmd_cmds dnf install "$pkgnamelist" || {
-            dnf:error --next "dnf install $pkgnamelist"  \
+        eval ___x_cmd_cmds dnf install -y "$pkgnamelist" || {
+            dnf:error --next "dnf install -y $pkgnamelist"  \
                 "Fail to isntall $pkgnamelist. You can try it manually"
             return 1
         }

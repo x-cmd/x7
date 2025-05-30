@@ -20,6 +20,7 @@ adjustbox
 adopure.nvim
 ads1015
 adt.lua
+adtp
 adxl345
 aerial.nvim
 aes_everywhere
@@ -187,6 +188,7 @@ bitvec
 bk-tree
 bkopenssl
 blackjack
+blaze.nvim
 blowfish
 bme280
 bolt
@@ -484,6 +486,7 @@ donut.nvim
 donutlify.nvim
 doris.nvim
 dorm.lua
+dotenv
 down.lua
 down.nvim
 dprint
@@ -712,6 +715,7 @@ fsoutcall
 fsrouter
 fss
 fstat
+fsynth
 ftcsv
 fugit2.nvim
 fullscript-kong-oidc
@@ -841,6 +845,7 @@ haskell-tools.nvim
 haxe-deps
 hc
 hc3emu
+hc3emu2
 hdf5
 hdrhistogram
 header-transfer
@@ -1844,6 +1849,7 @@ lua-maxminddb
 lua-mbedtls
 lua-mc
 lua-mcrypt
+lua-memcached
 lua-messagepack
 lua-messagepack-lua53
 lua-mikrotik
@@ -2355,6 +2361,7 @@ luakatsu
 luakiwis
 luakube
 luakuroshiro
+lual
 lualame
 lualand
 lualdap
@@ -3480,6 +3487,7 @@ santoku-system
 santoku-template
 santoku-test
 santoku-test-runner
+santoku-threads
 santoku-tsetlin
 santoku-web
 sass

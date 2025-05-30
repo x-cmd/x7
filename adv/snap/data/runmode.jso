@@ -1,0 +1,36 @@
+{
+"#cand"
+:
+[
+{
+"auto"
+:
+null
+,
+"#desc"
+:
+{
+"cn"
+:
+"自动（默认），首选使用 x-cmd pkg 模块下载软件，在 termux 模块使用本地的 pkg 命令下载软件"
+,
+"en"
+:
+"Automatically (default): prefer use x-cmd pkg module to download software, but use local pkg command in Termux"
+}
+}
+,
+{
+"sys"
+:
+null
+}
+,
+{
+"pkg"
+:
+null
+}
+]
+}
+

@@ -1,0 +1,48 @@
+# shellcheck shell=dash
+
+xrc:mod:lib     pkg     envvar
+xrc:mod:lib     snap    ls  run  runmode var whichpkg_
+
+___x_cmd_snap___main(){
+    local op="$1";
+    case "$op" in
+        -h|--help)      ___x_cmd help -m snap;      return ;;
+        "")             ___x_cmd help -m snap >&2;  return 64 ;;
+        --runcmd|--whichpkg_|--genfun)
+                        shift; ___x_cmd_snap___"${op#--}" "$@" ;;
+        --runmode|--var|--run)
+                        shift; ___x_cmd_snap_"${op#--}" "$@" ;;
+        *)              ___x_cmd_snap_run "$@" ;;
+    esac
+}
+
+___x_cmd_snap___runcmd(){
+    local cmd="$1"; shift
+
+    [ ! -f "$___X_CMD_ROOT_DATA/snap/var/$cmd" ] || {
+        . "$___X_CMD_ROOT_DATA/snap/var/$cmd"
+    }
+
+    "$cmd" "$@"
+}
+
+___x_cmd_snap___genfun(){
+    local cmd="$1";     [ -n "$cmd" ] || N=snap M="Please provide the command name" log:ret:64
+    local funname="$2"; [ -n "$funname" ] || N=snap M="Please provide the function name" log:ret:64
+
+    ! command -v "$funname" 2>/dev/null 1>&2 || {
+        ___x_cmd log :snap error "Function \`$funname\` already exists"
+        return 1
+    }
+
+    ___x_cmd_snap___whichpkg_ pkg "$cmd" || {
+        ___x_cmd log :snap error "Not found snap package for \`$cmd\`"
+        return 1
+    }
+
+    eval "
+${funname}(){
+    ___x_cmd snap --run ${cmd} \"\$@\"
+}
+"
+}

@@ -4,8 +4,8 @@ ___x_cmd_termux_sms(){
 
     local op="$1";      shift
     case "$op" in
-        send|ls)        ___x_cmd_termux_sms_"$op"   "$@" ;;
-        -h|--help)      ___x_cmd help -m termux sms "$@" ;;
+        send|ls|--fzfinfo)          ___x_cmd_termux_sms_"$op"   "$@" ;;
+        -h|--help)                  ___x_cmd help -m termux sms "$@" ;;
 
         *)  N=termux M="Invalid subcmd -> $op" log:ret:64
     esac
@@ -26,7 +26,9 @@ ___x_cmd_termux_sms_ls___tsv(){
 }
 
 ___x_cmd_termux_sms_ls___csv(){
-    :
+    printf "%s,%s,%s,%s,%s\n" threadid type address received body
+    ___x_cmd_termux_sms_ls___json | \
+        ___x_cmd jq -r '.[] | [ .threadid, .type, (.address // .number), .received,( .body | @text ) ] | @csv'
 }
 
 ___x_cmd_termux_sms_ls___yml(){
@@ -37,8 +39,27 @@ ___x_cmd_termux_sms_ls___json(){
     ___x_cmd_cmds termux-sms-list "$@"
 }
 
+___x_cmd_termux_sms___fzfinfo(){
+    local data="$1"
+    data="${data%%"$___X_CMD_UNSEENCHAR_011"*}"
+
+    ___x_cmd_termux_sms_ls___tsv        |   \
+        ___x_cmd_sms_ls___tsvlabel      |   \
+        a="$data" command awk 'NR==ENVIRON["a"]{
+            print $6
+        }' | ___x_cmd j2y
+        # ___x_cmd_hua_qianjiashi___fzfinfo___color
+}
+
 # Using fzf
 ___x_cmd_termux_sms_fz(){
-    :
+    ___x_cmd_termux_sms_ls___tsv "$@"       \
+        |   ___x_cmd_termux___tsvlabel         \
+        |   ___x_cmd_termux___fzfpretty        \
+        |   command awk -v FS='\t' '{
+                printf("\033[2m" "%s\t" "\033[0;32m" "%-12s\t" "\033[2;33m"  "%s\t" "\033[2;37m" "%s\t" "\033[2m" "%s\t" "\033[0;36m" "%s\n", $1, $2, $3, $4, $5,$6)
+            }'  \
+        |   ___x_cmd_termux___fzf --preview="___x_cmdexe termux sms --fzfinfo {1} " --preview-window="right:20%,wrap"
 }
+
 

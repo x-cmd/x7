@@ -1,0 +1,17 @@
+
+___x_cmd_snap_ls(){
+    :
+}
+
+# List all of the snap mod
+# m pkg --> termux pkg
+# brew  -->
+# m pkg --> freebsd pkg
+
+# apk ( root )
+# apt ( root )
+# dnf ( root )
+# pacman ( root )
+# yay ( root )
+# scoop ( root )
+

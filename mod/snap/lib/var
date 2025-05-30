@@ -1,0 +1,41 @@
+
+___x_cmd_snap_var(){
+    [ $# -gt 0 ]    ||  set -- --help
+    local op="$1";      shift
+    case "$op" in
+        set|setproxy|ls)
+            ___x_cmd_snap_var_"$op" "$@" ;;
+    esac
+}
+
+# x snap var set jq abc=3wr
+
+___x_cmd_snap_var_set(){
+    case "$1" in
+        -h|--help)      ___x_cmd help -m snap var set "$@"; return 0 ;;
+    esac
+
+    local cmd="$1"; shift
+
+    local data=""
+    while [ $# -gt 0 ]; do
+        printf "%s\n" "local ${1%%=*}"
+        data="${data}${1}
+"
+        shift
+    done >"$___X_CMD_ROOT_DATA/snap/var/$cmd"
+
+    printf "%s" "$data" > "$cmd"
+}
+
+___x_cmd_snap_var_setproxy(){
+    local p="$1"
+
+    ___x_cmd_snap_var_set   \
+        http_proxy="$p"     http_sproxy="$p"    ftp_proxy="$p"  all_proxy="$p"  \
+        HTTP_PROXY="$p"     HTTPS_RPOXY="$p"    FTP_PROXY="$p"  ALL_PROXY="$p"
+}
+
+___x_cmd_snap_var_ls(){
+    :
+}
