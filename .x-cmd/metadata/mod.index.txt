@@ -61,7 +61,7 @@ dd3b4f2d8576dffb8a64950661d07f1856b2a25c depend main NULL
 c3fee2c50085f2ce9a5e86e1d1348cbfb6bb0395 dict main NULL
 a147ed49cbd6e20def67e5eec2c59d077e4523a6 dingtalk main NULL
 77fbb21b70e97e76ae4802b952bd046f721b4453 discord main NULL
-eee0f3f74d8da8d15dd60879355f26c0a38eb12f dnf main NULL
+f98fa1db8ac40be4431f392874d75c97a50628ec dnf main NULL
 dd0151993bbe165afb1ab8c297d257b94d98c19e dns main NULL
 f74214173ce40430e4fc7bf04f48eb3eee62bae5 docker main NULL
 2f20fcbdd2b93b787eb9518b0ecebd06730b709e dos2unix main NULL
@@ -308,7 +308,7 @@ b8255740083c7ed52ab6d6752db0a51327106a2f winget main NULL
 315788d9a43c3b03eaf1e673bb516993c5c1303d wsl main NULL
 1f2ddf3a5e143c23f7c3ec1f1961056951297293 wttr main NULL
 a209e0f67c87f56d1a77922f95c206b5db639f29 wx main NULL
-3103e6e948dcc613655f080299160148cbb98ade x-cmd main NULL
+3133e090a3728a8e5087ed30d01a3a7fec27efa7 x-cmd main NULL
 d3be37edf456887b18d236a19e1103fc1f2dbf85 xq main NULL
 1f4e29853de208ae507cdbb9164a2fac42628fd6 xrc main NULL
 61806f8ddd2aab6d45db4ef0604d64164c0cb92b xx main NULL

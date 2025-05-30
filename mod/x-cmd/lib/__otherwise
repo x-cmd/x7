@@ -74,7 +74,7 @@ ___x_cmd_main___otherwise_other(){
 
     # TODO: If we fail to introduct from xbin. Please provide the interface, ask user for what he/she wants and whether set the alias for that module globally.
     ___x_cmd_main_otherwise_code=$?
-    if ___x_cmd pkg xbin init "$op"; then
+    if ___x_cmd snap --genfun "$op" "___x_cmd_${___X_CMD_STR___DASH2UNDERLINE}"; then
         "___x_cmd_${___X_CMD_STR___DASH2UNDERLINE}" "$@"
         return
     fi
