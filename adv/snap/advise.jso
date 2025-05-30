@@ -91,6 +91,14 @@ true
 true
 }
 ,
+"--preparecmd"
+:
+{
+"#subcmd"
+:
+true
+}
+,
 "#subcmd:inner"
 :
 [
@@ -99,6 +107,8 @@ true
 "--whichpkg_"
 ,
 "--genfun"
+,
+"--preparecmd"
 ]
 ,
 "#subcmd_help_tip"

@@ -42,6 +42,5 @@ ___x_cmd_yq_repl(){
 }
 
 ___x_cmd_yq___preparecmd(){
-    ! ___x_cmd hascmd yq || return 0
-    ___x_cmd_yq___cmd --version >/dev/null
+    ___x_cmd snap --preparecmd yq
 }

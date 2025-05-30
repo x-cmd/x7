@@ -42,6 +42,5 @@ ___x_cmd_jq___cmd(){
 }
 
 ___x_cmd_jq___preparecmd(){
-    ! ___x_cmd hascmd jq || return 0
-    ___x_cmd_jq___cmd --version >/dev/null
+    ___x_cmd snap --preparecmd jq
 }

@@ -12,8 +12,7 @@ ___x_cmd_ll___fzfapp(){
 }
 
 ___x_cmd_ll___preparecmd(){
-    ! ___x_cmd hascmd eza || return 0
-    ___x_cmd_ll___eza --version >/dev/null
+    ___x_cmd snap --preparecmd eza
 }
 
 ___x_cmd_ll___eza(){

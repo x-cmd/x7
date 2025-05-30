@@ -123,7 +123,7 @@ ___x_cmd_main___otherwise_other___app___list(){
     # we can consider using csv app ...
     ___x_cmd advise gen_x_advise
     ___x_cmd advise subcmd list_with_desc -f "$___X_CMD_ADVISE_MAN_CACHE_X_ADVISE_JSO" --sep "\t-- [mod]:"
-    ___x_cmd pkg ls --xbin-desc "\t-- [pkg]:"
+    ___x_cmd snap --ls --pkglist-desc "\t-- [snap]:"
 }
 
 ___x_cmd_main___otherwise_other___app___grep(){

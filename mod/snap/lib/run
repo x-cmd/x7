@@ -1,4 +1,4 @@
-
+# shellcheck shell=dash
 
 ___x_cmd_snap_run(){
     local cmd="$1"; shift
