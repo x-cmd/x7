@@ -220,7 +220,7 @@ e88c35132ffd4554e3f749d85f7a82b60e07ca0d pipx main NULL
 42abe45cdef3a523ea3d8da0d5b8956b09b19388 pixi main NULL
 8f5957b9e628610b77e6f262f8e9a90268865d2d pkg main NULL
 81a29c70f4fd9c364e5b6dcdcf9e9e21f7183846 pkgx main NULL
-f01c9c1644cfb433e566e86eba28696f069ea1e8 plwr main NULL
+ca1cdf75f8fc224eb264db71292ea39919c61381 plwr main NULL
 daa38097f0706109b057fbfe23ac2d65abcefd7a proxy main NULL
 b8cc2607a873e512a609318aacfc16ba534f8d5a prta main NULL
 114474596a28d89b8d3a759374a0bec0d189f6e9 ps main NULL
@@ -273,7 +273,7 @@ d628139cdb9f27113d21de987b19eac2f24415d3 ted main NULL
 1e1c98d98bee32338e14e1580e57c1cc72ec9660 tee main NULL
 54014e2420d5ac2403282c8a272b028393f71589 telegram main NULL
 4bebf0f26cc64bb450ba28c9e8153a4a852d3a97 term main NULL
-64e227b8eab2f9c0f5db0d0888149c93e8507dec termux main NULL
+dadb5ab2b4a73034ddbdacf317b39a37d8465927 termux main NULL
 ac21ee0e932c8b32f4d942b616168816d96e0eb9 theme main NULL
 763155f18ac41f8b325660bf58ae3d19ae44dcae tldr main NULL
 ddc89fb8fde4b5f63eaee550a35ad5b5b35451ad tmp main NULL
