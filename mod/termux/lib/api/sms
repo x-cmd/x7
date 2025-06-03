@@ -18,7 +18,7 @@ ___x_cmd_termux_sms_send(){
 
 
 ___x_cmd_termux_sms_ls(){
-    [ $# -gt 0 ]    ||      set -- fzf
+    [ $# -gt 0 ]    ||      set -- --fzf
 
     local op="$1";      shift
     case "$op" in
@@ -28,7 +28,6 @@ ___x_cmd_termux_sms_ls(){
         -h|--help)  ___x_cmd help -m termux sms ls "$@" ;;
         *)  N=termux M="Invalid subcmd -> $op" log:ret:64
     esac
-    ___x_cmd_termux_sms_ls___yml "$@"
 }
 
 ___x_cmd_termux_sms_ls___tsv(){
@@ -37,7 +36,7 @@ ___x_cmd_termux_sms_ls___tsv(){
 
 ___x_cmd_termux_sms_ls___csv(){
     printf "%s,%s,%s,%s,%s\n" threadid type address received body
-    ___x_cmd_termux_sms_ls___json | \
+    ___x_cmd_termux_sms_ls___json "$@" | \
         ___x_cmd jq -r '.[] | [ .threadid, .type, (.address // .number), .received,( .body | @text ) ] | @csv'
 }
 
@@ -49,14 +48,19 @@ ___x_cmd_termux_sms_ls___json(){
     ___x_cmd_cmds termux-sms-list "$@"
 }
 
-___x_cmd_termux_sms___fzfinfo(){
+___x_cmd_termux_sms_ls___fzfinfo(){
     local data="$1"
     data="${data%%"$___X_CMD_UNSEENCHAR_011"*}"
-
-    ___x_cmd_termux_sms_ls___tsv        |   \
-        ___x_cmd_sms_ls___tsvlabel      |   \
+    ___x_cmd_termux_sms_ls___tsv    |   \
+        ___x_cmd_termux___tsvlabel      |   \
         a="$data" command awk 'NR==ENVIRON["a"]{
-            print $6
+            $1 = ""
+            $2 = ""
+            $3 = ""
+            $4 = ""
+            $5 = ""
+            $6 = ""
+            print $0
         }' | ___x_cmd j2y
 }
 
@@ -66,9 +70,9 @@ ___x_cmd_termux_sms_ls___fzf(){
         |   ___x_cmd_termux___tsvlabel         \
         |   ___x_cmd_termux___fzfpretty        \
         |   command awk -v FS='\t' '{
-                printf("\033[2m" "%s\t" "\033[0;32m" "%-12s\t" "\033[2;33m"  "%s\t" "\033[2;37m" "%s\t" "\033[2m" "%s\t" "\033[0;36m" "%s\n", $1, $2, $3, $4, $5,$6)
+                printf("\033[2m" "%s\t" "\033[0;32m" "%-12s\t" "\033[2;33m"  "%s\t" "\033[2;37m" "%s\t" "\033[0;36m" "%s\n", $1, $3, $4, $5,$6)
             }'  \
-        |   ___x_cmd_termux___fzf --preview="___x_cmdexe termux sms ls --fzfinfo {1} " --preview-window="right:20%,wrap"
+        |   ___x_cmd_termux___fzf --preview="___x_cmdexe termux sms ls --fzfinfo {1}" --preview-window="right:20%,wrap"
 }
 
 

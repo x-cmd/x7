@@ -10,7 +10,7 @@ eae3392df329f7012eeb31081cd1e0d35bdb7d3f arp main NULL
 0d59fb8df36894c460dee371e4cdfcbaa0e2405c ascii main NULL
 bd7323017ba35e9eff5fffe702b8414c4b639bbe asdf main NULL
 ed8cbefbe47baa72de9eac17742f831499a12471 assert main NULL
-6a1311c22f023312cb653f48924dbcda72d76759 awk main NULL
+4bcb62f93c5d9c9349aabfb2251d10f5c5407f6a awk main NULL
 551af6ae3114f48ee1da2f1ed91cc3ef93153bc4 bakman main NULL
 8a2d9833483a5e1d82f80d7d8d3bebdeebdca9c8 boot main NULL
 a9adda86142c0e0bb8ebc5873f7f317524474bfe brew main NULL
@@ -273,7 +273,7 @@ d628139cdb9f27113d21de987b19eac2f24415d3 ted main NULL
 1e1c98d98bee32338e14e1580e57c1cc72ec9660 tee main NULL
 54014e2420d5ac2403282c8a272b028393f71589 telegram main NULL
 4bebf0f26cc64bb450ba28c9e8153a4a852d3a97 term main NULL
-dadb5ab2b4a73034ddbdacf317b39a37d8465927 termux main NULL
+86a6a976b92a83dadf36dd342db19a899256f6e1 termux main NULL
 ac21ee0e932c8b32f4d942b616168816d96e0eb9 theme main NULL
 763155f18ac41f8b325660bf58ae3d19ae44dcae tldr main NULL
 ddc89fb8fde4b5f63eaee550a35ad5b5b35451ad tmp main NULL
@@ -295,7 +295,7 @@ f4622bbe1783674ecac2d41037eccbc79e7e5543 uptime main NULL
 befef8ac37b15ba229fc5559b1dba4996562b309 url main NULL
 5746198bc5ef17bce1caf6976af66d4920a830c3 user main NULL
 cc899ef04cf4e5dbe1861586e19d965596e86159 val main NULL
-54e1a9fd45765de8e1027df09fdeb7348113bb45 version main NULL
+33e4b5e90310d24abcb548c536992c6eea643126 version main NULL
 afe8c2167fc93666f4ae68a67da63bae81affdad vim main NULL
 6f43a78b4d2b49e73a2f3ab30c97a921e5c40dca wchar main NULL
 43f4163302d11dd36ae97600ef59eda72c1c7822 websrc main NULL
