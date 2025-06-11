@@ -1,4 +1,4 @@
-301c7eda505a88c91e49fb9324c412b91642a684 advise main NULL
+94a922e57d21c049b69c7a220d760415a33562a2 advise main NULL
 3ca4fde89e52707adf8cf21ec16ec365c4824efa agent main NULL
 6f5f36a1f447c0e8024bb193bc7b6b72ba22b591 alias main NULL
 b9c81c9c771b6f32136915adf404833e4c2223d0 alpine main NULL
@@ -10,7 +10,7 @@ eae3392df329f7012eeb31081cd1e0d35bdb7d3f arp main NULL
 0d59fb8df36894c460dee371e4cdfcbaa0e2405c ascii main NULL
 bd7323017ba35e9eff5fffe702b8414c4b639bbe asdf main NULL
 ed8cbefbe47baa72de9eac17742f831499a12471 assert main NULL
-4bcb62f93c5d9c9349aabfb2251d10f5c5407f6a awk main NULL
+99de1c238d3c9e1f74db16b9539e155829eb7914 awk main NULL
 551af6ae3114f48ee1da2f1ed91cc3ef93153bc4 bakman main NULL
 8a2d9833483a5e1d82f80d7d8d3bebdeebdca9c8 boot main NULL
 a9adda86142c0e0bb8ebc5873f7f317524474bfe brew main NULL
@@ -30,7 +30,7 @@ f512eee001804d80251d6733508dbf14aa3d2599 cawk main NULL
 39541b53cecef7d414b202988dace646cead3355 cd main NULL
 64076297de22ecf55bb8850c23b7f8816ad78765 centos main NULL
 2c4dcfb467169109bd4536a2eb5c138eed935c13 cfgy main NULL
-ddfaa7059625fdb45f4e4c7121b70ce8673a8972 chat main NULL
+efebeda1532916f220f95ae889fb1357c3a0323b chat main NULL
 87c98ca9b8dd920c1868440986b4e1d0261e1c8b choco main NULL
 eb383d659df9a123b5f51a44108a42a20d7aee54 cht main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
@@ -92,7 +92,7 @@ cc4c5058e05373f5892a9d58eba45b704accbd42 fskv main NULL
 f8c8680a2467a2b8741cb7dfd6df11474945bcbc gawk main NULL
 c7e7455b4779ad4bf0f3d2ccd97f0a7df86fdb48 gcode main NULL
 dcbbd3beb270e31be94dd3d5a37781fa218bd7ce gddy main NULL
-49242df456a651d815f16d662a841337ee99ed1b gemini main NULL
+ccd3b6e70522de1f41931e034f5da7a3a5c4373f gemini main NULL
 381b448cb7a9f87330c187772c9f169f92be1850 gh main NULL
 db9f53b1243c2e3ebee3112a604d0b54979b9184 git main NULL
 05d93fce44eb99382ff7aa926a6067dfcd0bb805 gitb main NULL
@@ -113,7 +113,7 @@ d9cec71c721b284b040659386a680a539e06796e gx main NULL
 19ccc597589a12421505552a0bc647c96a365ffb hashdir main NULL
 f9e010c970b37dbbd9518e6b42e23364520bf706 helpapp main NULL
 d08874a20cc01afc642202240ebd5d8c70208bf7 history main NULL
-c0c58469c27d7a1e959f63e4a43e18dc714b0d54 hn main NULL
+39bbf99d1a93ee67c9356ad9956c7f65839a738b hn main NULL
 2dec7daea07626047a970c2f01f0e57fe376a6f2 hok main NULL
 7f6cd5a463a020b3bc0f81f75b45e9d9587701d3 home main NULL
 91d540ebdd6ed706505b054fca5839bc80403038 host main NULL
@@ -148,7 +148,7 @@ ef004ce5936688c9c1c3a7987853640346080cbe jsr main NULL
 46518bfa071260d45fb918c9c335be2b279b3976 kev main NULL
 30a1c7671c1f8e1c00402acb6592d710b3ad332b kill main NULL
 c3ce5fc3efdb8c89b6d8371dd45f80032e3e8428 kotlin main NULL
-7b5699a345cf455fd1a81869d3ba3d4ac098aed8 lang main NULL
+e2762d55e64234ddab35675f6b7e93555e8738d2 lang main NULL
 9995d116ada615b97c9a0d9008683e0f284178cc last main NULL
 40dbf6781a4ac0916b53c54e5afcbc126ce0ed34 ldict main NULL
 3579dd0d3c6b3e4f2350958dc85ab2e04865d35a lenv main NULL
@@ -159,7 +159,7 @@ a047f40225fbc7609ccd389386b859a2e17d11a4 link main NULL
 e3cf1ed8538cf85ead6cca18723dc4551945247e list main NULL
 d51a27c0ddd8bb7115835a311c49cff6549fae7c ll main NULL
 2be4fb9803de5b34702fdbfcea3335c261cdbdc8 llist main NULL
-45dc645360bc37568493d0603375ba102e8cfeef llmf main NULL
+0e61a5762593bdd0ea664935d722407118e8e91d llmf main NULL
 67d9cbd0ad47a24714067a7fa93a99c506163d02 lms main NULL
 7307880801b826d2bdfe0c2fea29b5cc39298cd3 locale main NULL
 fdcd8945ae17bfee37d3a8601d7f6b1ccfa397a0 log main NULL
@@ -178,7 +178,7 @@ b92d1e66d21b18dab1dab1f2645d286b480318d4 mawk main NULL
 dbab642604cd549edb783c90b8069c92a8ace1bf md main NULL
 bf3056a42e537434160296d8d5370f5175098bfc micro main NULL
 8985e1b83c400df28634d32510c9349eee38a2af mirror main NULL
-02e95a1664076ee4e26a56a6c82dba6d03678231 mistral main NULL
+27abc4ac0a60afc60fd0333b98efeae6c86941b9 mistral main NULL
 1ae57a0a0c26ad08093ef98ce2afde89713222ad mklink main NULL
 3be335152ac727aaa8033fce538aab483c214513 mline main NULL
 60a702756a9564cf94c02b20706d0270a497b9b9 moon main NULL
@@ -197,10 +197,10 @@ e845256a7d35c79b0bb3d644f516d9c15ec9681f ncdu main NULL
 4e561a92dcfbdf8922465acbb00b37c477142f72 nu main NULL
 78b8cca5cf7dc5bdc8eea53cda877743c1f0f0fe nvim main NULL
 8e1916b1b145cd50f27b35417fb2ac7f9af2e537 ohmyposh main NULL
-39fa4cb43bab8c283014b9759035d9743e37354b ollama main NULL
+68dc8da814c824e9e0a07e95ec8ef56b317cb3ce ollama main NULL
 e7584a737004bdc488e53dce1dd37173bc7e3aeb onsh main NULL
 22bb3cb41b592381474747d4c4ae1b6670d2077d open main NULL
-e1b8e6cda491fec0ad240bb6b49e30c8bce74979 openai main NULL
+5460c51048a3a11e7222d3c5801650077f92a770 openai main NULL
 d6bff728bf37a597df07aa7531dac55e76dcc030 os main NULL
 c18cc3239772b7953dd6b14a43467f53bb55f324 osv main NULL
 5a9572f2256b37f843bc247882c92c78c96ebb32 ourl main NULL
@@ -242,7 +242,7 @@ ece9082ffda4c02957b23f8a48b3c66db316dc1a route main NULL
 cb509b17c1933d817c387ed1851f582cefe9b535 ruby main NULL
 787a6f7fd8b6b9527034d43c293f7bf89fac6dca scoop main NULL
 fb8dd35b1362bea9b88ad9b9a6b6a5988b18290e scorecard main NULL
-39d3d78622ad0a903b28329b982e4b8a5ec1faa4 scotty main NULL
+ef55ea27085f71646a938b913cf68f6f5bf43878 scotty main NULL
 d64ad733bea3a4a0e413cabb7bf8f7c7973c54d2 screen main NULL
 bf2c5803a8566debfbf63cb87c0e2df44a7539ba sd main NULL
 962fbf6729470d85914f2ee22f36988d2e1de8bc sdict main NULL
@@ -258,7 +258,7 @@ f18d8cc6f740fc8d3f79db856650e85df3e2284c seq main NULL
 193a8b8fdcb5f56752fac433986612405ae3898d sleep main NULL
 b51a51b5dd9bb5097cca6876470d0e745da484ec slidev main NULL
 18e4470de12b2a0cdb7c6f59860c45d0bea9b726 smart main NULL
-0ed6b1fc972abf06d039ea16bb1af33f4d4b46fb snap main NULL
+74125a4b51a0fb159339f375681dfdf8661cb670 snap main NULL
 cb7148baf91fda837b480376258acfd43f0c65b3 solo main NULL
 10e497a98c58e701b7c4d76c94d78eda73fed82d spf main NULL
 eaa6fe135f5fccde808ba88bbf56efa10cca2e4f ssh main NULL

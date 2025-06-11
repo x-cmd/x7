@@ -1,7 +1,7 @@
 # shellcheck shell=dash
 
 xrc:mod:lib     pkg     envvar
-xrc:mod:lib     snap    ls  run  runmode var whichpkg_
+xrc:mod:lib     snap    ls  runmode run var whichpkg_
 
 if ___x_cmd_is_suitable_advise_env; then
     xrc:mod:lib snap    advise
@@ -24,12 +24,12 @@ ___x_cmd_snap___main(){
 ___x_cmd_snap___runcmd(){
     [ -z "$___X_CMD_SNAP_IS_PREPARECMD" ] || return 0
 
-    local cmd="$1"; shift
-    [ ! -f "$___X_CMD_ROOT_DATA/snap/var/$cmd" ] || {
-        . "$___X_CMD_ROOT_DATA/snap/var/$cmd"
-    }
-
-    "$cmd" "$@"
+    local cmd="$1";  shift
+    if [ -f "$___X_CMD_ROOT_DATA/snap/var/$cmd" ]; then
+        ___x_cmd_source "$___X_CMD_ROOT_DATA/snap/var/$cmd" "$@"
+    else
+        "$cmd" "$@"
+    fi
 }
 
 ___x_cmd_snap___preparecmd(){

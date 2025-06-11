@@ -1064,6 +1064,7 @@ kong-force-https
 kong-force-ssl
 kong-forward-proxy
 kong-forwarded-user-auth
+kong-google-recaptcha-plugin
 kong-header-access-control
 kong-http-to-https
 kong-http-to-https-redirect
@@ -2922,6 +2923,7 @@ native
 nats
 navigator.lua
 navigator.nvim
+nbt
 ncache
 nchan
 nclassic
@@ -3046,6 +3048,7 @@ nvim-snippy
 nvim-surround
 nvim-telescope-cycler
 nvim-tree.lua
+nvim-treesitter-context
 nvim-treesitter-legacy-api
 nvim-ufo
 nvim-web-devicons
@@ -3464,7 +3467,6 @@ samp-favorites
 sample_rtcomponent
 sandbox
 santoku
-santoku-bert
 santoku-bitmap
 santoku-bundle
 santoku-cli
@@ -3856,6 +3858,7 @@ tree-sitter-blueprint
 tree-sitter-bp
 tree-sitter-brightscript
 tree-sitter-c
+tree-sitter-c3
 tree-sitter-c_sharp
 tree-sitter-caddy
 tree-sitter-cairo

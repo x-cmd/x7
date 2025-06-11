@@ -1,6 +1,11 @@
 # shellcheck shell=dash
 
 ___x_cmd_snap_run(){
+    case "$1" in
+        -h|--help)  ___x_cmd help -m snap --run; return ;;
+        "")         ___x_cmd help -m snap --run >&2; return 64 ;;
+    esac
+
     local cmd="$1"; shift
     if ___x_cmd_hascmd "$cmd"; then
         "$cmd"  "$@"
