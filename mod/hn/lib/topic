@@ -1,7 +1,7 @@
 
 
 ___x_cmd_hn_topic(){
-    local topic="${1:-top}";  shift
+    local topic="${1:-top}";
     case "$topic" in
         -h|--help)      ___x_cmd help -m hn topic ;;
         top|new|best|ask|show|job)
