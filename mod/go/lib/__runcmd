@@ -1,5 +1,8 @@
 
 ___x_cmd_go___runmain(){
+    case "$1" in
+        u-*)     ___x_cmd_go___runcmd_hub "$@"; return ;;
+    esac
     ___x_cmd_go___runcmd "$@"
 }
 
@@ -18,16 +21,13 @@ ___x_cmd_go___runcmd_hub(){
     local ___X_CMD_GO_WHICHFILE=
     local x_=
     ___x_cmd_go___setarg_ "$@" || return
-    go:debug "Args ==> $*"
     go:debug "cmd x_ ==> $x_"
     [ -z "$x_" ] || eval "$x_"
+    go:debug "Args ==> $*"
     ___x_cmd_go___runcmd run "$@"
 }
 
 ___x_cmd_go___runcmd(){
-    case "$1" in
-        u-*)     ___x_cmd_go___runcmd_hub "$@"; return ;;
-    esac
     if ___x_cmd_hascmd go; then
         ___x_cmd_go___runcmd(){ ___x_cmd_cmds go "$@" ; }
     else

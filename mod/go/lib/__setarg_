@@ -7,6 +7,7 @@ ___x_cmd_go___setarg_(){
     local justadd=
     while [ "$#" -gt 0 ]; do
         if [ -n "$justadd" ]; then
+            shift; i=$((i+1))
             x_="$x_ \"\$$i\""
         else
             case "$1" in
@@ -26,7 +27,7 @@ ___x_cmd_go___setarg_(){
                     ___X_CMD_GO_WHICHFILE="$___X_CMD_WHICH_ONE_RESULT"
                     x_="$x_ \"\$___X_CMD_GO_WHICHFILE\""
                     justadd=1
-                    return
+                    continue
                 fi
 
                 x_=""
