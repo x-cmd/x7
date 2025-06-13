@@ -26,12 +26,9 @@ ___x_cmd_node___main(){
 }
 
 ___x_cmd_node___cmd(){
-    if ___x_cmd_hasbin "$1"; then
+    if ___x_cmd_hasbin "$1" && ___x_cmd_hasbin npm; then
         "$@"
         return
     fi
-
-    ___x_cmd_node_load || return
-    local bin="$1"; shift
-    "$___X_CMD_NODE_SHIMAPP_PATH/$bin" "$@"
+    ___x_cmd snap --run "$@"
 }
