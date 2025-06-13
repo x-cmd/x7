@@ -73,11 +73,6 @@ ___x_cmd_pkg_sphere_snap___get_binpath_inner_(){
     [ -n "$binname" ]   || N=pkg M="Provide a bin name" log:ret:1
     shift; x_shift_count=$((x_shift_count + 1))
 
-    [ -n "$name" ]      || {
-        x_=""; ___x_cmd snap --whichpkg_ pkg "$binname" || N=pkg M="Not found package name for $binname" log:ret:1
-        name="$x_"
-    }
-
     x_binpath=""
     local execfile="${___X_CMD_ROOT_PKG_EXEC_BINPATH}/${binname}"
     if [ -f "$execfile" ]; then
@@ -85,6 +80,11 @@ ___x_cmd_pkg_sphere_snap___get_binpath_inner_(){
             return 0
         fi
     fi
+
+    [ -n "$name" ]      || {
+        x_=""; ___x_cmd snap --whichpkg_ pkg "$binname" || N=pkg M="Not found package name for $binname" log:ret:1
+        name="$x_"
+    }
 
     ___x_cmd_pkg_sphere_snap___ensure_execfp \
         --sphere "$sphere_name" --sphereroot "$___X_CMD_PKG_ROOT_SPHERE" \
@@ -94,7 +94,6 @@ ___x_cmd_pkg_sphere_snap___get_binpath_inner_(){
         pkg:error "Not found exec filepath for $binname"
         return 1
     }
-
     if ___x_cmd_readr x_binpath <"$execfile" && [ -x "$x_binpath" ]; then
         return 0
     fi

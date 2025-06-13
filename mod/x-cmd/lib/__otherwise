@@ -128,7 +128,7 @@ ___x_cmd_main___otherwise_other___app___list(){
 
 ___x_cmd_main___otherwise_other___app___grep(){
     ___x_cmd_cmds awk -v kw="$1" '
-        BEGIN{ kw = tolower(kw); }
+        BEGIN{ kw = tolower(kw); gsub("^[^a-z0-9]+", "", kw); }
         {
             name = tolower($0)
             if (match(name, "[ \t\v]")) name = substr(name, 1, RSTART - 1)

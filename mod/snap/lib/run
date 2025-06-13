@@ -42,6 +42,7 @@ ___x_cmd_snap_run___syssnap(){
     elif    ___x_cmd hascmd dnf     ; then      ___x_cmd dnf snap           "$cmd" "$@"
     elif    ___x_cmd hascmd go      ; then      ___x_cmd go snap            "$cmd" "$@"
     elif    ___x_cmd hascmd pixi    ; then      ___x_cmd pixi snap          "$cmd" "$@"
+    else    ___x_cmd pkg snap "$cmd" "$@"
     fi
     # elif    ___x_cmd hascmd yay     ; then      ___x_cmd yay snap           "$cmd" "$@"
 }
