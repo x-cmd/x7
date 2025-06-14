@@ -52,6 +52,7 @@ annotate
 ansicolors
 ansikit
 ao
+aolite
 api-gateway-request-validation
 api7-dkjson
 api7-lua-protobuf
@@ -189,6 +190,7 @@ bk-tree
 bkopenssl
 blackjack
 blaze.nvim
+blink.cmp
 blowfish
 bme280
 bolt
@@ -204,6 +206,7 @@ brocatel
 brotli-ffi
 bufferline.nvim
 bufio
+buildkite-test-collector
 bump
 bump-3dpd
 busted
@@ -1999,6 +2002,7 @@ lua-resty-jsonrpc-batch
 lua-resty-jwt
 lua-resty-jwt-48606
 lua-resty-jwt-verification
+lua-resty-jwt2
 lua-resty-kafka
 lua-resty-keycloak
 lua-resty-ksuid
@@ -2430,6 +2434,7 @@ luaprompt
 luaproxy
 luapsql
 luaqub
+luar
 luarabbit
 luaredis
 luarepl
@@ -2444,6 +2449,7 @@ luarocks-build-cpp
 luarocks-build-cyan
 luarocks-build-extended
 luarocks-build-fennel
+luarocks-build-list
 luarocks-build-lr-hooks
 luarocks-build-lrocket
 luarocks-build-lrocket-next
@@ -2545,6 +2551,7 @@ luchia
 ludent
 lugate
 luggage
+lui
 luix
 lulpeg
 lulu
@@ -2673,6 +2680,7 @@ md2html
 md5
 mecab
 media_player
+mediapipe_lua
 mediator2
 mediator_lua
 mediatypes
@@ -2684,6 +2692,7 @@ megaqueue
 meisocafe.hammerspoon.dkb
 melange-nvim
 melipayamak
+melt
 memlimit
 memo
 memoize
@@ -3503,6 +3512,7 @@ scene
 scheduler
 schema
 schemastore.nvim
+schemer
 schwartziantransformutils
 sci
 screenkey.nvim
@@ -3655,6 +3665,7 @@ str
 strbuffer
 stream
 streamcsv
+streams
 strease
 strictness
 string-capitalize
@@ -3831,6 +3842,7 @@ torch_threads
 torch_torch7
 tostring
 toto
+touchdown
 tpatterns
 tpdu
 tprint

@@ -19,7 +19,7 @@ ___x_cmd_python_load(){
 
     ___x_cmd_python_load_checkenv || {
         python:debug "Cannot find python installed in this current environment"
-        ___x_cmd_python_load_env
+        ___x_cmd snap --run python3 --version >/dev/null 
         return
     }
 
