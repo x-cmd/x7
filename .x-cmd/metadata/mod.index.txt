@@ -47,7 +47,7 @@ b0818e8075a70a5a2c124274414baf82957d3ecb coin main NULL
 39f5bc9b12c762f833c38903d945bf875da8df33 cowsay main NULL
 1b66a0f7957572bb3d3da4404ab457e982b0c4ed cp main NULL
 066af42500f9231816a43b84580e5ef28399e3d3 cpu main NULL
-43164a5fa14bd44bb036934bf921ea2b541768a2 csv main NULL
+a3e1f094957170862bd237d38a3bcbf8f3e0d329 csv main NULL
 6bfbfa5bbefad4b74fcf3f1845c1c9d295275ee7 curl main NULL
 0361927c517e8c620237c17a1569087779fbee0a cutt main NULL
 af7f836904ebdb9e4715f6671b2e62772be3b9fc daemon main NULL
@@ -63,7 +63,7 @@ a147ed49cbd6e20def67e5eec2c59d077e4523a6 dingtalk main NULL
 77fbb21b70e97e76ae4802b952bd046f721b4453 discord main NULL
 f98fa1db8ac40be4431f392874d75c97a50628ec dnf main NULL
 dd0151993bbe165afb1ab8c297d257b94d98c19e dns main NULL
-f74214173ce40430e4fc7bf04f48eb3eee62bae5 docker main NULL
+0ecb4019305969a0f03b0c3099f0c5a7dd2f379b docker main NULL
 2f20fcbdd2b93b787eb9518b0ecebd06730b709e dos2unix main NULL
 9d02206bc2d9eae2449819da1d14ee7315c6ed8a dregistry main NULL
 31c7a767db36c457156796cd074a915577a7125c eclist main NULL
@@ -225,7 +225,7 @@ daa38097f0706109b057fbfe23ac2d65abcefd7a proxy main NULL
 b8cc2607a873e512a609318aacfc16ba534f8d5a prta main NULL
 114474596a28d89b8d3a759374a0bec0d189f6e9 ps main NULL
 44409803d10fbe61660b5f746785798c9fb94fd7 pwd main NULL
-87bbb6886a8edb63b644238c58499bcdfb122842 pwsh main NULL
+fb64c409c1be597e69fcb369f4ac51446886562c pwsh main NULL
 807fda3253c014f7119e4b26e2a39c31f9f10c6b python main NULL
 b7cf9fa983a6ae20a08abbd29906422f1acf0321 qr main NULL
 13b6844f830dfecffb5e3aaf3779cc4d73cf4642 qywx main NULL
@@ -262,7 +262,7 @@ b51a51b5dd9bb5097cca6876470d0e745da484ec slidev main NULL
 318bb998e9791a9ebed08116ed8a662befffd01f solo main NULL
 10e497a98c58e701b7c4d76c94d78eda73fed82d spf main NULL
 eaa6fe135f5fccde808ba88bbf56efa10cca2e4f ssh main NULL
-52088cbba97ceafa76d2b5126ac876b6b32307d7 starship main NULL
+524571aa4d2af1f5f821dee704c07c7c05ce192a starship main NULL
 3bb1defc2eed56dd1231eb35b5a5f9ece2b4ed1f stat main NULL
 40c836ca20693f90689638a688258ff2fdd7dee9 str main NULL
 9002cdcdd26dcabae6f4fb23e6ceef14edcf40a7 sudo main NULL
@@ -295,7 +295,7 @@ f4622bbe1783674ecac2d41037eccbc79e7e5543 uptime main NULL
 befef8ac37b15ba229fc5559b1dba4996562b309 url main NULL
 5746198bc5ef17bce1caf6976af66d4920a830c3 user main NULL
 cc899ef04cf4e5dbe1861586e19d965596e86159 val main NULL
-c6c029709c6a0345baeded711c56afb1ec31c60c version main NULL
+53afa69bf323115d35cb39a709df34531502d4ff version main NULL
 afe8c2167fc93666f4ae68a67da63bae81affdad vim main NULL
 6f43a78b4d2b49e73a2f3ab30c97a921e5c40dca wchar main NULL
 43f4163302d11dd36ae97600ef59eda72c1c7822 websrc main NULL
