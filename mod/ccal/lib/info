@@ -1,0 +1,29 @@
+
+___x_cmd_ccal_info(){
+    case "$1" in
+        -h|--help)      ___x_cmd help -m ccal info "$@" ; return 0 ;;
+    esac
+
+    local ymd="$1"
+
+    case "$ymd" in
+        "")     ymd="$(___x_cmd_cmds date +%Y-%m-%d)"
+    esac
+
+    local y="${ymd%%-*}"
+    local m="${ymd#*-}"; m="${m%-*}"
+
+    ___x_cmd_ccal_draw "$y-$m"
+
+    # ___x_cmd_ccal_lunar cat "$y" "$m" | {
+    #     ___x_cmd_cmds awk -v ymd="$ymd" -v FS='\t' '
+    # $1~ymd{
+    #     printf("  \033[31m[宜] %s\n", $12)
+    #     printf("\n")
+    #     printf("  \033[32m[忌] %s\n", $13)
+    #     exit
+    # }
+    # '
+    # }
+
+}

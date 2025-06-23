@@ -1,9 +1,11 @@
 # shellcheck shell=dash
 
-xrc:mod:lib     ccal   __runcmd lunar/_index draw fz fzm holiday
+___x_cmd log init ccal
+
+xrc:mod:lib     ccal   __runcmd lunar/_index draw fz fzm info sx
 
 ___x_cmd_ccal___main(){
-    [ "$#" -gt 0 ] ||   set -- draw
+    [ "$#" -gt 0 ] ||   set -- fz
 
     local op="$1";      shift
     case "$op" in
@@ -13,15 +15,21 @@ ___x_cmd_ccal___main(){
 
         lunar)          ___x_cmd_ccal_lunar         "$@" ;;
 
-        draw)           ___x_cmd_ccal_draw          "$@" ;;
+        i|info)         ___x_cmd_ccal_info          "$@" ;;
+
+        s|show|draw)    ___x_cmd_ccal_draw          "$@" ;;
 
         --|--runmain)   ___x_cmd_ccal_draw          "$@" ;;
 
+        f)              ___x_cmd_ccal_fz            "$@" ;;
         fz|fzm)         ___x_cmd_ccal_"$op"         "$@" ;;
+        --fzpreview)    ___x_cmd_ccal___fzpreview   "$@" ;;
+
         --fzmdraw)      ___x_cmd_ccal___fzmdraw     "$@" ;;
 
         h|holiday)      ___x_cmd_ccal_holiday       "$@" ;;
 
+        t|today)        ___x_cmd_ccal_draw today    "$@" ;;
         */*)            ___x_cmd_ccal_draw "$op"    "$@" ;;
         *)
                         if ___x_cmd is int "$op"; then

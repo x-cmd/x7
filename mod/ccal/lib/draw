@@ -55,5 +55,10 @@ ___x_cmd_ccal_draw___runmain(){
     local year="$1"
     local month="$2"
     ___x_cmd_ccal_lunar_cat --tsv "$year" "$month" | \
-        ___x_cmd_cmds awk -v today="$today" -f "$___X_CMD_ROOT_MOD/ccal/lib/awk/draw.awk"
+        ___x_cmd_cmds awk -v today="$today"                 \
+            -f "$___X_CMD_ROOT_MOD/ccal/lib/awk/gongli.awk" \
+            -f "$___X_CMD_ROOT_MOD/ccal/lib/awk/lunar.awk"  \
+            -f "$___X_CMD_ROOT_MOD/ccal/lib/awk/ccal.awk"   \
+            -f "$___X_CMD_ROOT_MOD/ccal/lib/awk/ymd.awk"    \
+            -f "$___X_CMD_ROOT_MOD/ccal/lib/awk/draw.awk"
 }

@@ -53,13 +53,17 @@ ___x_cmd_ccal_fz(){
                 --height='80%'
                 --bind='ctrl-w:toggle-preview-wrap'
                 --bind='ctrl-r:change-preview-window(52,80%,border|hidden|right)'
-                --bind='ctrl-t:pos($today_pos)'
-                --header='ctrl-t: JUMP to $today'
+                --bind='ctrl-t:print(|restart|)+accept'
+                --header='ctrl-t: RESET to $today'
                 --bind='right:accept'
-                --preview-window='52,right'
+                --preview-window='52,right,wrap'
                 --bind='load:pos($cursor_pos)'
-            " ___x_cmd fzf --preview="___x_cmdexe ccal draw {1}"
+            " ___x_cmd fzf --preview="___x_cmdexe ccal --fzpreview {1} $today"
         })" || return $?
+
+        case "$date" in
+            *"|restart|"*)      continue ;;
+        esac
 
         tmpy="${date%%-*}"
         tmpm="${date#*-}"; tmpm="${tmpm%-*}"
@@ -70,14 +74,12 @@ ___x_cmd_ccal_fz(){
     done
 }
 
+___x_cmd_ccal___fzpreview(){
+    local ym="$1"
+    local today_ym="$2"
 
-___x_cmd_ccal_fzm(){
-    local y=1900
-    local today; today="$(___x_cmd_cmds date +%Y/%m)"
-    local today_y="${today%%/*}"
-    local today_m="${today#*/}"
-
-    local year="$1"
-    local month="$2"
-
+    case "$today_ym" in
+        "$ym")      ___x_cmd ccal info ;;
+        *)          HLDAY="$ym-1" ___x_cmd ccal show "$ym"
+    esac
 }

@@ -1,6 +1,4 @@
 
-___x_cmd log init ccal
-
 xrc:mod:lib   ccal      lunar/cat
 
 ___x_cmd_ccal_lunar(){
@@ -23,15 +21,15 @@ ___x_cmd_ccal_lunar___runmain(){
 }
 
 ___x_cmd_ccal_lunar_ls(){
-    ___x_cmd seq 1900:2099 | while read year; do
-        ___x_cmd seq 1:12 | while read month; do
-            ___x_cmd_ccal_lunar_cat $year $month
+    ___x_cmd seq 1900:2099 | while read -r year; do
+        ___x_cmd seq 1:12 | while read -r month; do
+            ___x_cmd_ccal_lunar_cat "$year" "$month"
         done
     done
 }
 
 ___X_CMD_CCAL_DATA="$___X_CMD_ROOT_DATA/ccal/data"
-___X_CMD_CCAL_DATA_VERSION=v0.0.2
+___X_CMD_CCAL_DATA_VERSION=v0.0.3
 ___X_CMD_CCAL_DATA_FILE="$___X_CMD_CCAL_DATA/ccal-data-${___X_CMD_CCAL_DATA_VERSION}.tar.gz"
 
 ___x_cmd_ccal_lunar_prepare(){

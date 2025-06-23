@@ -1,2 +1,160 @@
 {
+"#name"
+:
+{
+"ccal"
+:
+null
+,
+"en"
+:
+"Chinese Lunar Calendar"
+,
+"cn"
+:
+"中国农历"
 }
+,
+"#desc"
+:
+{
+"en"
+:
+"The ccal module is a terminal-based calendar tool designed for Chinese users.\nIt provides a clear view of both Gregorian and lunar calendars, including solar terms, traditional Chinese holidays, sexagenary cycle (heavenly stems and earthly branches), six-day cycle, and daily almanac guidance for auspicious and inauspicious activities.\nIdeal for checking Chinese festivals or consulting the traditional calendar for daily planning.\n"
+,
+"cn"
+:
+"ccal 模块是专为中文用户设计的终端日历工具，支持农历、节气和传统节日的显示。\n它以简洁的方式呈现公历与农历对照日历，并提供干支纪年、黄历宜忌、六曜等信息，适合查阅每日黄历或节日安排。\n"
+}
+,
+"fz"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"使用 fzf 提供交互式日历查询体验，可快速跳转到指定日期或节日。"
+,
+"en"
+:
+"Use fzf to provide an interactive calendar interface, allowing quick jumps to specific dates or holidays."
+}
+}
+,
+"lunar"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"农历信息，包括干支纪年与生肖"
+,
+"en"
+:
+"Lunar calendar info, including Chinese zodiac and stem-branch cycle"
+}
+}
+,
+"i|info"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Show today's detailed lunar info, including solar terms, zodiac, and daily \"almanac\" tips."
+,
+"cn"
+:
+"显示今日农历详情，包括节气、干支、宜忌等黄历信息"
+}
+}
+,
+"s|show|draw"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"绘制指定年月的日历"
+,
+"en"
+:
+"Render the calendar for the specified year and month"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x ccal"
+,
+"en"
+:
+"Print this month's calendar and today's lunar calendar, solar terms, zodiac signs, duty days, taboos and other detailed information."
+,
+"cn"
+:
+"打印本月日历和今日农历、节气、干支、值日、宜忌等详细信息"
+}
+,
+{
+"cmd"
+:
+"x ccal 2025-06"
+,
+"en"
+:
+"Print a calendar for June 2025."
+,
+"cn"
+:
+"打印 2025 年 6 月的日历"
+}
+,
+{
+"cmd"
+:
+"x ccal fz"
+,
+"cn"
+:
+"使用 fzf 提供交互式日历查询体验，可快速跳转到指定日期或节日。"
+,
+"en"
+:
+"Use fzf to provide an interactive calendar interface, allowing quick jumps to specific dates or holidays."
+}
+]
+,
+"#other"
+:
+{
+"en"
+:
+{
+"Please visit our homepage for more information:"
+:
+"https://x-cmd.com"
+}
+,
+"cn"
+:
+{
+"请访问我们的主页以获取更多信息："
+:
+"https://x-cmd.com"
+}
+}
+}
+

@@ -51,9 +51,9 @@ ___x_cmd_ccal_fzm(){
             --bind='ctrl-r:change-preview-window(80%,52,border|hidden|right)'
             --bind='left:print(..)+accept'
             --bind='right:accept'
-            --preview-window='right,52,wrap'
+            --preview-window='right:52,wrap'
             --bind='load:pos($today_pos)'
-            --preview='___x_cmdexe ccal --fzmdraw {1} {8} {9}'
+            --preview='___x_cmdexe ccal --fzmdraw {1} {6} {8}'
         " ___x_cmd fzf
     }
     )"
@@ -62,7 +62,9 @@ ___x_cmd_ccal_fzm(){
 
 ___x_cmd_ccal___fzmdraw(){
     HLDAY="$1" ___x_cmdexe ccal draw "$1"
-    printf "  \033[31m[宜] %s\n\n" "$2"
-    printf "  \033[32m[忌] %s\n" "$3"
+    # printf "  \033[31m[宜] %s\n\n" "$2"
+    # printf "  \033[32m[忌] %s\n" "$3"
+
+    # printf "\n\n\n\n\n"  # Extra \n to prevent fzf bug
 }
 
