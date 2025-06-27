@@ -2,80 +2,11 @@ BEGIN{
     FS = "\t"
 }
 
-
-# TODO: using an object for this.
-function ccal_parse_all(){
-    date            = $1 # like 1910-05-01	一
-    lunar_date      = $2
-    lunar_daycount  = $3
-
-    # parse yea mon day from gongli date
-    ymd_parse( o_gdate, "", date )
-    day = ymd_d( o_gdate )
-    datekp = ymd_kp( o_gdate )
-
-    # parse yea mon day from lunar_date
-    split(lunar_date, a, "-")
-    ccal[ datekp, "ly"    ]        = lunar_yea = int(a[1])
-    ccal[ datekp, "lm"    ]        = lunar_mon = a[2]
-    ccal[ datekp, "ld"    ]        = lunar_day = int(a[3])
-
-    lunar_wd        = $5
-    wday = wmap[ lunar_wd ]
-
-    ganzhi          = $6
-    split( ganzhi, a, " ")
-
-    ccal[ datekp, "nianganzhi" ]   = a[1]
-    ccal[ datekp, "yueganzhi" ]    = a[2]
-    ccal[ datekp, "ganzhi" ]       = a[3]
-
-    lunar_jieqi             = $7
-    lunar_jieqi_next        = $8
-
-    ccal[ datekp, "yi"    ]        = $12
-    ccal[ datekp, "ji"    ]        = $13
-}
-
 {
-    # ccal_parse_all()
     datekp = ccal_add( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13 )
 
-    ccal[ datekp, "lm-zh"    ] = lunar_mon_zh = lunar_get_month_zh( ccal_lm( datekp ), ccal_ldaycount( datekp )  )
-    ccal[ datekp, "ld-zh"    ] = lunar_day_zh = lunar_get_day_zh( ccal_ld( datekp ) )
-
-    ccal[ datekp ] = lunar_day_zh
-
-    xiuxi = ccal_xiuxi( datekp )
-    if (ccal_is_jiaqi( datekp ) ) {
-        ccal[ datekp, "x" ] = "\033[1;31m"
-    } else if (xiuxi == "休") {
-        ccal[ datekp, "x" ] = "\033[1;31m"
-    } else if (xiuxi == "工") {
-        ccal[ datekp, "x" ] = "\033[0m"
-    } else if (ccal_is_weekend(datekp)) {
-        ccal[ datekp, "x" ] = "\033[31m"
-    } else {
-        ccal[ datekp, "x" ] = "\033[0m"
-    }
-
-    gongli_holiday = ccal_holiday_gongli( datekp )
-
-    lunar_jieqi = ccal_jieqi( datekp )
-
-    if (lunar_jieqi != "无") {
-        ccal[ datekp ] = "\033[0;31m" lunar_jieqi       " " "\033[0m" "  "
-    } else if ( gongli_holiday != "" ) {
-        ccal[ datekp ] = "\033[0;31m" gongli_holiday    " " "\033[0m" "  "
-    } else if (lunar_day_zh == "初一") {
-        if ( ccal_ldaycount( datekp ) == 30) {
-            ccal[ datekp ] = "\033[0;31;1m" lunar_mon_zh " "
-        } else {
-            ccal[ datekp ] = "\033[0;31;2m" lunar_mon_zh " "
-        }
-    } else {
-        ccal[ datekp ] =  ccal[ datekp ]                        " " "\033[0m" "  "
-    }
+    ccal_set( datekp, "lm-zh", lunar_get_month_zh( ccal_lm( datekp ), ccal_ldaycount( datekp )  ) )
+    ccal_set( datekp, "ld-zh", lunar_get_day_zh( ccal_ld( datekp ) ) )
 
     lastkp = datekp
     lastday = ccal_d( datekp )
@@ -86,30 +17,82 @@ BEGIN{
     ymd_parse( HLDAY, "", ( hlday = ENVIRON["HLDAY"] ) )
 }
 
-function draw_lunar(){
+
+function draw_lunar_title( _fmt ){
+    _fmt = LEADING "\033[1;4m" "                " "\033[1m" "%04d %s年 " "%02d 月"  "               " "\033[0m" SP
+
+    printf(_fmt, ymd_y( o_gdate ),  ani , ymd_m( o_gdate ))
+}
+
+BEGIN{
+    WD_STYLE = ( wdtitle != "" ) ? wdtitle : ENVIRON[ "CCAL_WD_STYLE" ]
+    if  (WD_STYLE == "en")          WD_STYLE_CODE = 0
+    else if (WD_STYLE == "xingqi")  WD_STYLE_CODE = 2
+    else if (WD_STYLE == "libai")   WD_STYLE_CODE = 3
+    else if (WD_STYLE == "yao")     WD_STYLE_CODE = 4
+    else                            WD_STYLE_CODE = 1
+}
+
+function draw_lunar_wd( start,      i, w ){
+    printf(LEADING)
+    if (start == "")    start = 0
+    for (i=start; i<=start + 6; ++i) {
+        w = i % 7
+        if ( (w == 0) || (w == 6) ) {
+            printf("\033[0;31m" "%s" SP,        gongli_wd_name( w, WD_STYLE_CODE ))
+        } else {
+            printf("\033[0m%s" SP,              gongli_wd_name( w, WD_STYLE_CODE ))
+        }
+    }
+}
+
+function draw_lunar_gday_style( datekp,     xiuxi ){
+    xiuxi = ccal_xiuxi( datekp )
+    if (ccal_is_jiaqi( datekp ) ) {
+        return "\033[1;31m"
+    } else if (xiuxi == "休") {
+        return "\033[1;31m"
+    } else if (xiuxi == "工") {
+        return ""
+    } else if (ccal_is_weekend(datekp)) {
+        return "\033[31m"
+    } else {
+        return ""
+    }
+}
+
+function draw_lunar_lday( datekp ){
+    if ( ccal_is_jieqi(datekp) ) {
+        return "\033[31m" ccal_jieqi( datekp )            " " "\033[0m" "  "
+    } else if ( ccal_is_holiday_gongli( datekp ) ) {
+        return "\033[31m" ccal_holiday_gongli( datekp )   " " "\033[0m" "  "
+    } else if ( ccal_ld( datekp ) == 1 ) {
+        if ( ccal_ldaycount( datekp ) == 30 ) {
+            return "\033[31;1m" ccal_get( datekp, "lm-zh" ) "\033[0m" " "
+        } else {
+            return "\033[31;2m" ccal_get( datekp, "lm-zh" ) "\033[0m" " "
+        }
+    } else {
+        return  "\033[2m" ccal_get( datekp, "ld-zh" )   " " "\033[0m" "  "
+    }
+}
+
+function draw_cal(){
     SP = " " "\033[0m" "  "
 
     LEADING = "  "
 
-    printf("\n")
+    printf("\n");       draw_lunar_title()
 
-    printf(LEADING "\033[1;4m" "                " "\033[1m" "%04d %s年 " "%02d 月"  "               " "\033[0m" SP, ymd_y( o_gdate ),  ani , ymd_m( o_gdate ))
+    WD_START = int( ENVIRON[ "XCAL_WD_START" ] )
+    WD_END = ( (WD_START + 6) ) % 7
 
-    printf("\n\n")
-
-
-    printf(LEADING "\033[31m" "%s" SP,  gongli_wd_name( 0, WD_STYLE_CODE ))
-    printf("%s" SP,                     gongli_wd_name( 1, WD_STYLE_CODE ))
-    printf("%s" SP,                     gongli_wd_name( 2, WD_STYLE_CODE ))
-    printf("%s" SP,                     gongli_wd_name( 3, WD_STYLE_CODE ))
-    printf("%s" SP,                     gongli_wd_name( 4, WD_STYLE_CODE ))
-    printf("%s" SP,                     gongli_wd_name( 5, WD_STYLE_CODE ))
-    printf("\033[31m" "%s" SP,          gongli_wd_name( 6, WD_STYLE_CODE ))
+    printf("\n\n");     draw_lunar_wd( WD_START )
     printf("\n\n")
 
     ym_kp = ymd_kp_ym( o_gdate )
 
-    space = ccal_wd( ym_kp SUBSEP 1 )
+    space = ( ( ccal_wd( ym_kp SUBSEP 1 ) - WD_START ) + 7 ) % 7
     line0 = ""
     for (i=1; i<=space; ++i) {
         line0 = line0 ("    " SP)
@@ -125,19 +108,19 @@ function draw_lunar(){
         line2 = line2 "\033[0m"
 
         if ( ymd_eqymd( TODAY, "",      ymd_y( o_gdate ), ymd_m( o_gdate ), i ) ) {
-            line1 = line1 "\033[7;1m"
-            line2 = line2 "\033[7;1m"
+            line1 = line1 "\033[0;7;1m"
+            line2 = line2 "\033[0;7;1m"
         }
 
         if ( ymd_eqymd( HLDAY, "",   ymd_y( o_gdate ), ymd_m( o_gdate ), i ) ) {
-            line1 = line1 "\033[46;1m"
-            line2 = line2 "\033[46;1m"
+            line1 = line1 "\033[0;46;1m"
+            line2 = line2 "\033[0;46;1m"
         }
 
-        line1 = line1 sprintf(ccal[ ym_kp, i, "x" ] "%3d " SP, i)
-        line2 = line2 sprintf("\033[2m" "%s", ccal[ ym_kp, i ])
+        line1 = line1 sprintf(draw_lunar_gday_style( ym_kp SUBSEP i ) "%3d " SP, i)
+        line2 = line2 sprintf( "%s", draw_lunar_lday( ym_kp SUBSEP i ) )
 
-        if (w == 6) {
+        if (w == WD_END) {
             if (i != lastday) {
                 printf("%s\n%s\n", line1, line2)
                 line1 = LEADING
@@ -150,7 +133,7 @@ function draw_lunar(){
     printf("\033[0m\n")
 }
 
-function draw_lunar_info( _d, kp, o ){
+function draw_info( _d, kp, o ){
 
     ym_kp = ymd_kp_ym( o_gdate )
 
@@ -163,27 +146,65 @@ function draw_lunar_info( _d, kp, o ){
 
     kp = ym_kp SUBSEP _d
 
-    o = ccal[ ym_kp, _d, "lm-zh"    ]
-    gsub("(^[ ]+)|([ ]+$)", "", o)
+    _line = ""
 
-    printf("  %s %-8s %-10s %-10s\n", "[轩辕]", lunar_xuanyuan( ccal_ly( kp ) ) "年", o, ccal[ ym_kp, _d, "ld-zh"    ] )
+    xiuxi = ccal_xiuxi( kp )
 
-    o = ccal_mgz( kp )
-    gsub("(^[ ]+)|([ ]+$)", "", o)
+    _emoji = ccal_emoji( kp )
+    if (xiuxi == "休") {
+        _line = _line _emoji "  假日 (" ccal_related( kp ) ")"
+    } else if (xiuxi == "工") {
+        _line = _line _emoji "  工作 (" ccal_related( kp ) ")"
+    } else if (ccal_is_weekend(kp)) {
+        _line = _line _emoji "  假日 " "周" ccal_wd_zh( kp )
+    } else {
+        _line = _line _emoji "  工作 " "周" ccal_wd_zh( kp )
+    }
 
-    printf("  %s %-8s %-10s %-10s\n",  "[干支]", ccal_ygz( kp ) "年",  o "月", ccal_dgz( kp ) "日"  )
+    if (ccal_is_holiday_gongli( kp ) ) _line = _line  "  "  ccal_holiday_gongli( kp ) " "
+    printf("  %s\n", _line)
+
+    DISABLE_INFO_LUNAR = ( infolunar != "" ) ? infolunar : ENVIRON[ "DISABLE_INFO_LUNAR" ]
+    if ( DISABLE_INFO_LUNAR == "enable") {
+        draw_info_lunar( kp )
+    }
+
+
+    DISABLE_INFO_YIJI = ( infoyiji != "" ) ? infoyiji : ENVIRON[ "DISABLE_INFO_YIJI" ]
+    if ( DISABLE_INFO_YIJI == "enable") {
+        printf("\033[31m" "  %s%s\n", "[宜] ", draw_yiji_str( ccal_yi( kp ) ))
+        printf("\033[0;32m")
+        printf("  %s%s\n", "[忌]", " " draw_yiji_str( ccal_ji( kp ) ))
+        printf("\033[0m\n")
+    }
+
+    printf("\n")
+}
+
+function draw_info_lunar( kp,        _line ){
+    _line = ""
+    if (ccal_is_jieqi( kp ) )           _line = _line "[节气] " ccal_jieqi( kp ) " "
+    if (ccal_is_holiday_lunar( kp ) )   _line = _line "[" ccal_holiday_lunar( kp ) "] "
+    printf("  %s\n", _line)
+
+    if (ccal_is_holiday_lunar( kp ) ) _line = _line "  " ccal_holiday_lunar( kp ) " "
+    printf("  %s %s\t%s\t%s\t%s\n",   "\033[33m" "[轩辕]" "\033[0m",           \
+        "\033[33m" lunar_xuanyuan( ccal_ly( kp ) ) "年" "\033[0m",        ccal_lm_zh( kp ) "月",          ccal_get( kp, "ld-zh" ) "日", \
+        LUNAR_SX_EMO[ ccal_sx( kp )] " " ccal_sx( kp ) "年" )
+
+    printf("  %s %s\t%s\t%s\n",   "[干支]",           \
+        ccal_ygz( kp ) "年",                         ccal_mgz( kp ) "月",            ccal_dgz( kp ) "日"  )
 
     printf("\033[36m" "  [%s] %s" "\033[0m\n", "值星", ccal_jianchu( kp ) "日" )
 
     printf("\033[36m" "  [%s] %s" "\033[0m\n", "六曜", ccal_liuyao( kp ) )
 
-
     o = ""
     if (ccal_sns( kp )) {
-        o = sprintf("\033[0;7m" "%s" "\033[0m ", "三娘煞")
+        o =     sprintf("\033[0;7m" "%s" "\033[0m ", "三娘煞")
     }
     if (ccal_ygj( kp )) {
-        o = o sprintf("\033[0;7m" "%s" "\033[0m ", "杨公忌")
+        o = o   sprintf("\033[0;7m" "%s" "\033[0m ", "杨公忌")
     }
     if ( o != "") {
         printf("  [%s] %s\n", "俗忌", o)
@@ -191,16 +212,22 @@ function draw_lunar_info( _d, kp, o ){
         printf("\n")
     }
     printf("\033[0m\n")
+}
 
-    printf("\033[31m" "  [%s] %s\n", "宜", ccal_yi( kp ))
-    printf("\033[0m\n")
-    printf("\033[32m" "  [%s] %s\n", "忌", ccal_ji( kp ))
-    printf("\033[0m\n\n")
+function draw_yiji_str( s,      i, a, l, r ){
+    r = "  "
+    gsub( "[\r\n]", "", s )  # Notice, there is \r in the data.
+    l = split( s, a, " " )
+    for (i=1; i<=l; ++i) {
+        r = r sprintf("%8s", a[i]) "  "
+        if (i%4 == 0) r = r "\n         "
+    }
+    return r
 }
 
 END{
     ymd_new( o_gdate, "",   ccal_y( lastkp ), ccal_m( lastkp ), ccal_d( lastkp ) )
-    draw_lunar()
-    draw_lunar_info()
+    draw_cal()
+    draw_info()
 }
 

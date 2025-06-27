@@ -49,12 +49,21 @@ function gongli_is_jiaqi( m, d ){
 
 }
 
+BEGIN{
+    GONGLI_WD_CHAR_EN[ 0 ]  = "Sun."
+    GONGLI_WD_CHAR_EN[ 1 ]  = "Mon."
+    GONGLI_WD_CHAR_EN[ 2 ]  = "Tue."
+    GONGLI_WD_CHAR_EN[ 3 ]  = "Wed."
+    GONGLI_WD_CHAR_EN[ 4 ]  = "Thu."
+    GONGLI_WD_CHAR_EN[ 5 ]  = "Fri."
+    GONGLI_WD_CHAR_EN[ 6 ]  = "Sat."
+}
 
 BEGIN{
     GONGLI_WD_CHAR_ZH[ 0 ]  = "日"
     GONGLI_WD_CHAR_ZH[ 1 ]  = "一"
     GONGLI_WD_CHAR_ZH[ 2 ]  = "二"
-    GONGLI_WD_CHAR_ZH[ 3 ]  = "大"
+    GONGLI_WD_CHAR_ZH[ 3 ]  = "三"
     GONGLI_WD_CHAR_ZH[ 4 ]  = "四"
     GONGLI_WD_CHAR_ZH[ 5 ]  = "五"
     GONGLI_WD_CHAR_ZH[ 6 ]  = "六"
@@ -70,19 +79,22 @@ BEGIN {
     GONGLI_WD_YAO[ 6 ]      = "土曜"
 }
 
+function gongli_wd_name_en( id ){           return(             GONGLI_WD_CHAR_EN[  id ] ); }
 function gongli_wd_name_zhou( id ){         return( "周"        GONGLI_WD_CHAR_ZH[  id ]); }
 function gongli_wd_name_xingqi( id ){       return( "星期"      GONGLI_WD_CHAR_ZH[  id ]); }
 function gongli_wd_name_libai( id ){        return( "礼拜"      GONGLI_WD_CHAR_ZH[  id ]); }
 function gongli_wd_name_yao( id ){          return(             GONGLI_WD_YAO[      id ]); }
 
 BEGIN{
-    GONGLI_WD_STYLE_ZHOU    = 0
-    GONGLI_WD_STYLE_XINGQI  = 1
-    GONGLI_WD_STYLE_LIBAI   = 2
-    GONGLI_WD_STYLE_YAO     = 9
+    GONGLI_WD_STYLE_EN      = 0
+    GONGLI_WD_STYLE_ZHOU    = 1
+    GONGLI_WD_STYLE_XINGQI  = 2
+    GONGLI_WD_STYLE_LIBAI   = 3
+    GONGLI_WD_STYLE_YAO     = 4
 }
 
 function gongli_wd_name( id,    style ){
+    if (style == GONGLI_WD_STYLE_EN)        return gongli_wd_name_en( id )
     if (style == GONGLI_WD_STYLE_XINGQI)    return gongli_wd_name_xingqi( id )
     if (style == GONGLI_WD_STYLE_LIBAI)     return gongli_wd_name_libai( id )
     if (style == GONGLI_WD_STYLE_YAO)       return gongli_wd_name_yao( id )

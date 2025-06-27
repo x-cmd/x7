@@ -5,7 +5,7 @@ BEGIN{
     LUNAR_FESTIVAL[ 2 ,  1 ]    = "中和" # "春社 土地诞"
     LUNAR_FESTIVAL[ 2 ,  2 ]    = "龙抬头" # "春社 土地诞"
     LUNAR_FESTIVAL[ 2 , 15 ]    = "花朝" # "春社 土地诞"
-    LUNAR_FESTIVAL[ 3 ,  3 ]    = "上巳"
+    LUNAR_FESTIVAL[ 3 ,  3 ]    = "上巳";           LUNAR_FESTIVAL_DESC[ 3 ,  3 ]    = "黄帝祭, 轩辕节; 上巳, 可踏青游春, 临水宴饮, 曲水流觞"
     LUNAR_FESTIVAL[ 5 ,  5 ]    = "端午"
     LUNAR_FESTIVAL[ 7 ,  7 ]    = "七夕"
     LUNAR_FESTIVAL[ 7 , 15 ]    = "中元"
@@ -25,6 +25,11 @@ function lunar_get_festival( m, d,   n1, n2,     r ){
     # TODO: how to calculate 寒食和小寒食 ( 清明节 1, 2 )
     # TODO: 除夕, 春节前一天
     return ""
+}
+
+function lunar_get_festival_desc( m, d,   n1, n2,     r ){
+    if (( r = LUNAR_FESTIVAL_DESC[ int(m), int(d) ] ) != "")  return r
+    return ( lunar_get_festival( m, d ) )
 }
 
 BEGIN{
@@ -78,7 +83,8 @@ function lunar_get_month_zh( m, daycount,       mi ){
     mi = int(m)
     mi = ( (mi > 10) ? LUNAR_D[ mi ] : (LUNAR_D[ mi ] "月") )
 
-    return (m ~ /a$/) ? ( "闰" mi ) : ( mi "  " )
+    # Notice: "\033[0m" is tmp fixed for highlight style
+    return (m ~ /a$/) ? ( "闰" mi ) : ( mi " " "\033[0m" " " )
 }
 
 BEGIN{
@@ -161,4 +167,19 @@ function lunar_is_yangji( m, d ) {
 
 function lunar_is_xiong( m, d ){
     return (lunar_is_yangji( m, d ) * 1000) + (lunar_sns( m, d ) * 100 ) + 0
+}
+
+BEGIN {
+    LUNAR_SX_EMO[ "鼠" ] = "🐭"
+    LUNAR_SX_EMO[ "牛" ] = "🐮"
+    LUNAR_SX_EMO[ "虎" ] = "🐯"
+    LUNAR_SX_EMO[ "兔" ] = "🐰"
+    LUNAR_SX_EMO[ "龙" ] = "🐲"
+    LUNAR_SX_EMO[ "蛇" ] = "🐍"
+    LUNAR_SX_EMO[ "马" ] = "🐴"
+    LUNAR_SX_EMO[ "羊" ] = "🐑"
+    LUNAR_SX_EMO[ "猴" ] = "🐵"
+    LUNAR_SX_EMO[ "鸡" ] = "🐔"
+    LUNAR_SX_EMO[ "狗" ] = "🐶"
+    LUNAR_SX_EMO[ "猪" ] = "🐷"
 }

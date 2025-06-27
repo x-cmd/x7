@@ -218,6 +218,7 @@ busted-htest
 busted-jsonl
 busted-matrix
 busted-stable
+busted-tl
 busted_resty
 bustez
 butter
@@ -340,6 +341,7 @@ comment-box.nvim
 comment.nvim
 commonmark
 commons.nvim
+communiteq-lua-resty-auto-ssl
 compat52
 compat53
 comvita-kong-oidc
@@ -1486,6 +1488,8 @@ lgsl
 liba
 libcidr-ffi
 libdeflate
+liblua
+libluajit
 libmagic
 libmdbx
 libphonenumber
@@ -1899,6 +1903,7 @@ lua-package
 lua-parser
 lua-path
 lua-payssion
+lua-pcg
 lua-periphery
 lua-pg-dmo
 lua-pie
@@ -3429,6 +3434,7 @@ riseml
 rjson
 rkeys
 rl
+rllib
 rmdir
 rmrf
 rndplugin
