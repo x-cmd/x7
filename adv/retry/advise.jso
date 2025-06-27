@@ -121,11 +121,11 @@ null
 ,
 "en"
 :
-"Retry the command until it succeeds, with a default interval of 1 second."
+"Retry the command until it succeeds, with a default interval of 5 second."
 ,
 "cn"
 :
-"重试命令直到成功，默认间隔为1秒。"
+"重试命令直到成功，默认间隔为5秒。"
 }
 ,
 {
@@ -149,11 +149,11 @@ null
 ,
 "en"
 :
-"Retry the command until it succeeds, with a default interval of 10 second."
+"Retry the command until it succeeds, with a retry interval of 10 second."
 ,
 "cn"
 :
-"重试命令直到成功, 默认间隔为 10 秒."
+"重试命令直到成功, 重试间隔为 10 秒."
 }
 ,
 {

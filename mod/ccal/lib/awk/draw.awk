@@ -84,7 +84,7 @@ function draw_cal(){
 
     printf("\n");       draw_lunar_title()
 
-    WD_START = int( ENVIRON[ "XCAL_WD_START" ] )
+    WD_START = ( wdstart != "" ) ? int( wdstart ) : int( ENVIRON[ "XCAL_WD_START" ] )
     WD_END = ( (WD_START + 6) ) % 7
 
     printf("\n\n");     draw_lunar_wd( WD_START )
@@ -165,13 +165,13 @@ function draw_info( _d, kp, o ){
     printf("  %s\n", _line)
 
     DISABLE_INFO_LUNAR = ( infolunar != "" ) ? infolunar : ENVIRON[ "DISABLE_INFO_LUNAR" ]
-    if ( DISABLE_INFO_LUNAR == "enable") {
+    if ( DISABLE_INFO_LUNAR != "disable") {
         draw_info_lunar( kp )
     }
 
 
     DISABLE_INFO_YIJI = ( infoyiji != "" ) ? infoyiji : ENVIRON[ "DISABLE_INFO_YIJI" ]
-    if ( DISABLE_INFO_YIJI == "enable") {
+    if ( DISABLE_INFO_YIJI != "disable") {
         printf("\033[31m" "  %s%s\n", "[宜] ", draw_yiji_str( ccal_yi( kp ) ))
         printf("\033[0;32m")
         printf("  %s%s\n", "[忌]", " " draw_yiji_str( ccal_ji( kp ) ))

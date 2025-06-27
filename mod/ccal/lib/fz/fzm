@@ -22,7 +22,7 @@ ___x_cmd_ccal_fzm(){
 
 ___x_cmd_ccal___fzm(){
     ___x_cmd_ccal_fz___date_ "$___X_CMD_CCAL_FZ_RESULT"
-
+    ___X_CMD_CCAL_FZ_DATE_M="${___X_CMD_CCAL_FZ_DATE_M#0}"
     local cursor_pos="$((  (___X_CMD_CCAL_FZ_DATE_Y - 1900) * 12 + ___X_CMD_CCAL_FZ_DATE_M ))"
 
     ___x_cmd_ccal_lunar_prepare_index || return $?

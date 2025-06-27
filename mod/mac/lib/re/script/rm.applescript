@@ -8,5 +8,6 @@ on run argv
             delete r
         end repeat
         quit
+        return "success"
     end tell
 end run
