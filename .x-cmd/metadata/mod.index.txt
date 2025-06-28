@@ -65,7 +65,7 @@ a147ed49cbd6e20def67e5eec2c59d077e4523a6 dingtalk main NULL
 77fbb21b70e97e76ae4802b952bd046f721b4453 discord main NULL
 f98fa1db8ac40be4431f392874d75c97a50628ec dnf main NULL
 dd0151993bbe165afb1ab8c297d257b94d98c19e dns main NULL
-cb7995493c3fbcad1cd685b12ada65e8802c3bc9 docker main NULL
+1d9d7dd4e1492401aa139222fc946df3762ecc98 docker main NULL
 2f20fcbdd2b93b787eb9518b0ecebd06730b709e dos2unix main NULL
 9d02206bc2d9eae2449819da1d14ee7315c6ed8a dregistry main NULL
 31c7a767db36c457156796cd074a915577a7125c eclist main NULL
@@ -262,7 +262,7 @@ f18d8cc6f740fc8d3f79db856650e85df3e2284c seq main NULL
 b51a51b5dd9bb5097cca6876470d0e745da484ec slidev main NULL
 915be82b3680473c7bee560f966837a76f4320c9 smart main NULL
 7f349a1094372da039db123c21646df503318f64 snap main NULL
-0a2530b517774dec2f6b3e1f074936ba59a13d41 solo main NULL
+1c4275d952fc735e7d2f982399aeb8b511c54679 solo main NULL
 10e497a98c58e701b7c4d76c94d78eda73fed82d spf main NULL
 eaa6fe135f5fccde808ba88bbf56efa10cca2e4f ssh main NULL
 524571aa4d2af1f5f821dee704c07c7c05ce192a starship main NULL
@@ -312,7 +312,7 @@ b8255740083c7ed52ab6d6752db0a51327106a2f winget main NULL
 1f2ddf3a5e143c23f7c3ec1f1961056951297293 wttr main NULL
 a209e0f67c87f56d1a77922f95c206b5db639f29 wx main NULL
 f0e38b3a8a721c06d230be97c304cd71844e30c2 x-cmd main NULL
-d788ebd17a1badd63c7029a3e42cb8a72f87a88f xgo main NULL
+aa4c741c33dcf8e7f252004647f9a14fb52cde65 xgo main NULL
 d3be37edf456887b18d236a19e1103fc1f2dbf85 xq main NULL
 1f4e29853de208ae507cdbb9164a2fac42628fd6 xrc main NULL
 61806f8ddd2aab6d45db4ef0604d64164c0cb92b xx main NULL

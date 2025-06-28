@@ -56,9 +56,15 @@ ___x_cmd_solo_tryinit___code_(){
             x_="${x_}${NL}x go get"
             x_="${x_}${NL}x go build \$(___x_cmd wsroot)/${wsfn}"
             ;;
-        gop|xgo)
+        gop)
             x_='x go mod init main'
-            [ -z "$x_xgo" ] || x_="${x_}${NL}xgo get ${x_xgo}"
+            [ -z "$x_gop" ] || x_="${x_}${NL}gop get ${x_gop}"
+            x_="${x_}${NL}x go get"
+            x_="${x_}${NL}x gop build \$(___x_cmd wsroot)/${wsfn}"
+            ;;
+        xgo)
+            x_='x go mod init main'
+            [ -z "$x_xgo" ] || x_="${x_}${NL}x go get ${x_xgo}"
             x_="${x_}${NL}x go get"
             x_="${x_}${NL}x xgo build \$(___x_cmd wsroot)/${wsfn}"
             ;;
