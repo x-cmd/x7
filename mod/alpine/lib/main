@@ -8,12 +8,26 @@ xrc arg
 
 xrc:mod:lib         alpine  \
     image/_index            \
-    refit/_index            \
     container/_index        \
     lzim/_index             \
     snap    daemon
-    # cmd snap    daemon
 
+
+# xal
+# xal jq
+# xal snap jq
+# xal refit
+# xal x gh
+# xal init
+# xal img refit
+# xal img create
+# xal img refit
+# xal img ls
+
+# xal xub xka
+
+# xd refit xal-base
+# xd refit xal-jq
 
 ___x_cmd_alpine___main(){
     [ "$#" -gt 0 ]  ||   set -- sh
@@ -27,11 +41,12 @@ ___x_cmd_alpine___main(){
         refit|daemon|container|apk|ps|lzim)
                     ___x_cmd_alpine_"$op"           "$@" ;;
 
+        init|cfg)   ___x_cmd_alpine_cfg             "$@" ;;
         --|snap)    ___x_cmd_alpine_snap            "$@" ;;
+
         *)          ___x_cmd_alpine_snap "$op"      "$@" ;;
     esac
 }
-
 
 ___x_cmd_alpine___app(){
     ___x_cmd_alpine container ps    "$@"

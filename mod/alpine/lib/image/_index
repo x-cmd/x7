@@ -1,6 +1,6 @@
 # shellcheck shell=dash
 
-xrc:mod:lib     alpine              image/prepare image/download image/ls
+xrc:mod:lib     alpine              image/ls
 
 ___X_CMD_ALPINE_IMAGE_PERFIX=xal
 
@@ -16,8 +16,7 @@ ___x_cmd_alpine_image___main(){
     case "$op" in
         -h|--help)      ___x_cmd help -m alpine image   "$@" ;;
 
-        prepare_|prepare|\
-        ls|download|refit)
+        ls|refit)
                         ___x_cmd_alpine_image_"$op"     "$@"    ;;
         rm|lsid|rma)
                         ___x_cmd docker image "$op"     "$@"    ;;
