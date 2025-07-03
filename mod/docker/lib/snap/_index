@@ -116,7 +116,7 @@ ___x_cmd_docker_snap___run(){
     fi
 
     if [ -z "$name" ]; then
-        ___x_cmd_docker_snap___getname_;    name="$x_"
+        ___x_cmd_docker_snap___getname_ "$imagetype";    name="$x_"
         ___x_cmd cmdstr RUN_OPTS --rm
         docker:debug    --image "$image"    \
                         "Starting anonymous [container=$name], with auto-remove enabled."

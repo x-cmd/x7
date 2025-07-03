@@ -139,5 +139,15 @@ ___x_cmd_docker_simg_prepare___imgname_(){
     esac
 
     # using -- to seperate pkgs ...
-    x_="$x_/$( ___x_cmd_cmds awk -v "n=$pkg" 'BEGIN{ gsub("[=:/-]", "_", n);  print n; }' )"
+    x_="$x_/$( ___x_cmd_cmds awk -v "n=$pkg" '
+        BEGIN{
+            gsub("https://", "", n)
+            gsub("github.com",      "gh", n)
+            gsub("gitlab.com",      "gl", n)
+            gsub("codeberg.org",    "cb", n)
+            gsub("[=:\\/-@.]", "_", n);
+            n = tolower(n);
+            print n
+        }
+    ')"
 }

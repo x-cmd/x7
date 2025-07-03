@@ -7,11 +7,8 @@ ___X_CMD_ALPINE_PREFIX=xal
 xrc arg
 
 xrc:mod:lib         alpine  \
-    image/_index            \
-    container/_index        \
     lzim/_index             \
-    snap    daemon
-
+    image ps snap
 
 # xal
 # xal jq
@@ -29,6 +26,13 @@ xrc:mod:lib         alpine  \
 # xd refit xal-base
 # xd refit xal-jq
 
+# xal jq
+# xal go/github.com/gosop/gosop:gosop
+
+# xal go/github.com/gosop/gosop:gosop
+
+# xal
+
 ___x_cmd_alpine___main(){
     [ "$#" -gt 0 ]  ||   set -- sh
 
@@ -38,8 +42,7 @@ ___x_cmd_alpine___main(){
 
         img|image)  ___x_cmd_alpine_image           "$@" ;;
 
-        refit|daemon|container|apk|ps|lzim)
-                    ___x_cmd_alpine_"$op"           "$@" ;;
+        refit|ps)   ___x_cmd_alpine_"$op"           "$@" ;;
 
         init|cfg)   ___x_cmd_alpine_cfg             "$@" ;;
         --|snap)    ___x_cmd_alpine_snap            "$@" ;;

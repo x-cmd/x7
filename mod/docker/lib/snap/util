@@ -5,7 +5,7 @@ ___x_cmd_docker_snap___parse__(){
 
     case "$data" in
         *:*)
-            REFIT_CMD="${data#*:}"
+            REFIT_CMD="${data##*:}"
             data="${data%:"$REFIT_CMD"}"
             ;;
     esac
@@ -31,9 +31,22 @@ ___x_cmd_docker_snap___parse__(){
 }
 
 ___x_cmd_docker_snap___getname_(){
+    local imagetype="$1"
+
+    case "$imagetype" in
+        alpine)     imagetype=xal ;;
+        debian)     imagetype=xde ;;
+        fedora)     imagetype=xfe ;;
+        ubuntu)     imagetype=xub ;;
+        kali)       imagetype=xka ;;
+        arch)       imagetype=xar ;;
+
+        *)          imagetype=xd  ;;
+    esac
+
     x_="$RANDOM"
     [ -n "$x_" ] || x_="$(___x_cmd rand int 1 30000)"
-    x_="xd-$$-$x_"
+    x_="${imagetype}-$$-$x_"
 }
 
 

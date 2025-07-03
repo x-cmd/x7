@@ -61,6 +61,8 @@ ADD     latest.tgz      /usr/share/x-cmd/v/latest
 
 }
 
+___X_CMD_DOCKER_SNAP_UID=501
+
 ___x_cmd_docker_refit(){
     [ "$#" -gt 0 ] || set - --help
     case "$1" in
@@ -211,7 +213,7 @@ ___x_cmd_docker_refit(){
 
             printf "%s\n" "RUN ___X_CMD_ROOTBIN_SLEEP=0 x-cmd"
 
-            [ -z "$userabc" ]       || ___x_cmd_docker_refit_code_adduser   "$baseimage"    abc abc     501 # normally 1000
+            [ -z "$userabc" ]       || ___x_cmd_docker_refit_code_adduser   "$baseimage"    abc abc   "$___X_CMD_DOCKER_SNAP_UID"   # normally 1000
 
             local xcmd="/root/.x-cmd.root/bin/___x_cmdexe"
 
@@ -395,7 +397,7 @@ ___x_cmd_docker_refit_code_run_go(){
     [ "$refitcnmirror" = disable ]  ||  ___x_cmd_docker_refit_code_run  "$xcmd go proxy set || true"
 
     printf "%s\n" \
-        "RUN --mount=type=cache,target=${USHO}/.cache/go-build,uid=1000,gid=1000 \\"    \
+        "RUN --mount=type=cache,target=${USHO}/.cache/go-build,uid=$___X_CMD_DOCKER_SNAP_UID,gid=$___X_CMD_DOCKER_SNAP_UID \\"    \
         "go install $go"
 }
 
@@ -408,7 +410,7 @@ ___x_cmd_docker_refit_code_run_cargo(){
     ___x_cmd_docker_refit_code_run  "mkdir -p ${USHO}/.cargo" # If we don't do this, it will fail with os-permission
 
     printf "%s\n" \
-        "RUN --mount=type=cache,target=${USHO}/.cargo/registry,uid=1000,gid=1000 \\"    \
+        "RUN --mount=type=cache,target=${USHO}/.cargo/registry,uid=$___X_CMD_DOCKER_SNAP_UID,gid=$___X_CMD_DOCKER_SNAP_UID \\"    \
         "cargo install $cargo"
 }
 
@@ -419,7 +421,7 @@ ___x_cmd_docker_refit_code_run_zig(){
     local xcmd="${USHO}/.x-cmd.root/bin/___x_cmdexe"
 
     printf "%s\n" \
-        "RUN --mount=type=cache,target=${USHO}/.cache/zig,uid=1000,gid=1000 \\"    \
+        "RUN --mount=type=cache,target=${USHO}/.cache/zig,uid=$___X_CMD_DOCKER_SNAP_UID,gid=$___X_CMD_DOCKER_SNAP_UID \\"    \
         "zig fetch $zig"
 }
 
@@ -433,7 +435,7 @@ ___x_cmd_docker_refit_code_run_pip(){
     [ "$refitcnmirror" = disable ]  ||  ___x_cmd_docker_refit_code_run      "$xcmd mirror pip set ali"
 
     printf "%s\n" \
-        "RUN --mount=type=cache,target=${USHO}/.cache/pip,uid=1000,gid=1000 \\"    \
+        "RUN --mount=type=cache,target=${USHO}/.cache/pip,uid=$___X_CMD_DOCKER_SNAP_UID,gid=$___X_CMD_DOCKER_SNAP_UID \\"    \
         "python3 -m venv p && . p/bin/activate && pip3 install $pip"
 }
 
@@ -446,7 +448,7 @@ ___x_cmd_docker_refit_code_run_pixi(){
     ___x_cmd_docker_refit_code_run      "if $xcmd websrc is cn; then $xcmd mirror pip set ali; else $xcmd mirror pip unset; fi || true"
     ___x_cmd_docker_refit_code_run      "[ -d $USHO/.pixi ] || $xcmd pixi --install"
 
-    # "RUN --mount=type=cache,target=${USHO}/.cache/rattler/cache,uid=1000,gid=1000 \\"    \
+    # "RUN --mount=type=cache,target=${USHO}/.cache/rattler/cache,uid=$___X_CMD_DOCKER_SNAP_UID,gid=$___X_CMD_DOCKER_SNAP_UID \\"    \
     ___x_cmd_docker_refit_code_run      "$xcmd pixi global install $pixi"
 }
 
@@ -456,7 +458,7 @@ ___x_cmd_docker_refit_code_run_xenv(){
 
     local xcmd="${USHO}/.x-cmd.root/bin/___x_cmdexe"
 
-    # "RUN --mount=type=cache,target=${USHO}/.cache/rattler/cache,uid=1000,gid=1000 \\"    \
+    # "RUN --mount=type=cache,target=${USHO}/.cache/rattler/cache,uid=$___X_CMD_DOCKER_SNAP_UID,gid=$___X_CMD_DOCKER_SNAP_UID \\"    \
     ___x_cmd_docker_refit_code_run      "$xcmd env use $xenv"
 }
 
@@ -473,7 +475,7 @@ ___x_cmd_docker_refit_code_run_npm(){
     [ "$refitcnmirror" = disable ]  ||      ___x_cmd_docker_refit_code_run  "$xcmd npm proxy set || true"
 
     printf "%s\n" \
-        "RUN --mount=type=cache,target=${USHO}/.npm,uid=1000,gid=1000 \\"    \
+        "RUN --mount=type=cache,target=${USHO}/.npm,uid=$___X_CMD_DOCKER_SNAP_UID,gid=$___X_CMD_DOCKER_SNAP_UID \\"    \
         "npm install $npm"
 }
 
