@@ -52,7 +52,8 @@ ___x_cmd_docker_simg_prepare_(){
 }
 
 ___x_cmd_docker_simg_prepare___base_(){
-    x_="s/$imgtype/base"
+    ___x_cmd_docker_snap___imageprefix_ "$imgtype" || return $?
+    x_="${x_}-base"
     ! ___x_cmd_docker image exist "$x_"             || return 0
 
     case "$imgtype" in
@@ -100,6 +101,14 @@ ___x_cmd_docker_simg_prepare___base_(){
                 --pacman 'curl fzf jq sqlite3'
                 ;;
 
+        nixos)
+            ___x_cmd_docker_simg_download --imagetype "$imgtype" || return $?
+            ___x_cmd docker refit               \
+                --from nixos/nix --to "$x_"     \
+                --userabc                       \
+                --nix 'curl fzf jq sqlite3'
+                ;;
+
     esac
 }
 
@@ -128,18 +137,17 @@ ___x_cmd_docker_simg_prepare___imgname_(){
     local sys="$2"
     local pkg="$3"
 
-
-    x_="s/$imgtype"
+    ___x_cmd_docker_snap___imageprefix_ "$imgtype"
 
     docker:debug --img "$imgtype" --sys "$sys" --pkg "$pkg" --name "$x_" "Generate image name"
 
     case "$sys" in
         apt|apk|dnf|pacman)     ;;
-        *)                      x_="$x_/$sys" ;;
+        *)                      x_="${x_}-${sys}" ;;
     esac
 
     # using -- to seperate pkgs ...
-    x_="$x_/$( ___x_cmd_cmds awk -v "n=$pkg" '
+    x_="${x_}-$( ___x_cmd_cmds awk -v "n=$pkg" '
         BEGIN{
             gsub("https://", "", n)
             gsub("github.com",      "gh", n)
@@ -147,6 +155,8 @@ ___x_cmd_docker_simg_prepare___imgname_(){
             gsub("codeberg.org",    "cb", n)
             gsub("[=:\\/-@.]", "_", n);
             n = tolower(n);
+
+            gsub( "(^[_]+)|([_]+$)", "", n )
             print n
         }
     ')"

@@ -21,7 +21,7 @@ ___x_cmd_termux_pd_run(){
                             ___x_cmd cmdstr ___X_CMD_TERMUX_PD_RUN_MAIN_OPTS --workdir  "$2";           shift 2 ;;
 
             -|--)                           shift; break ;;
-            -h|--help)      ___x_cmd help -m termux prun; return ;;
+            -h|--help)      ___x_cmd help -m termux pd run --help; return ;;
             *)              dist="$1";      shift; break ;;
         esac
     done

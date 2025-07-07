@@ -1,7 +1,7 @@
 086cf82078c6366e02534db5ce32fba139b7f648 advise main NULL
 3ca4fde89e52707adf8cf21ec16ec365c4824efa agent main NULL
 6f5f36a1f447c0e8024bb193bc7b6b72ba22b591 alias main NULL
-7d09e4d02dca78595b0915a892bcc3d9241047e3 alpine main NULL
+45354438b5bce262a11787ed978dbe7690a1085c alpine main NULL
 977f9719c77b4670ffd48a9314a32a4b06d09d42 api main NULL
 a61ab1ebf6463c080e6ff45af6ae92e9b946e94f apk main NULL
 95183bfe5ac27d1fdd8d3a4dacb97a05844e3172 apt main NULL
@@ -28,7 +28,7 @@ df44d7ebc9778f99a63f6273294138d156db1ed6 cal main NULL
 0e6f06b99d0d5ccd007e5dab737a8f0d179cb574 cat main NULL
 f512eee001804d80251d6733508dbf14aa3d2599 cawk main NULL
 91a0fb35f9333884c8ceff50a0db7ea7505fdfc8 cb main NULL
-cbe3d7242d18246fd8012f7382ddfd1f450df575 ccal main NULL
+d6d738d9645d52c940e8bcd122bc54ab72243978 ccal main NULL
 8c5d5e96c40d83d3a0fc412c0d83be3adf92fd3b ccmd main NULL
 a92f408226c833f4c20b4434cc2f87d0f33d8cd7 cd main NULL
 64076297de22ecf55bb8850c23b7f8816ad78765 centos main NULL
@@ -67,7 +67,7 @@ a147ed49cbd6e20def67e5eec2c59d077e4523a6 dingtalk main NULL
 77fbb21b70e97e76ae4802b952bd046f721b4453 discord main NULL
 f98fa1db8ac40be4431f392874d75c97a50628ec dnf main NULL
 dd0151993bbe165afb1ab8c297d257b94d98c19e dns main NULL
-f9567283b52e1e6096cb930f8aed184b5586211b docker main NULL
+c3f5cd646dc7b1120b2f6f9c17ce8cd3fa37feef docker main NULL
 2f20fcbdd2b93b787eb9518b0ecebd06730b709e dos2unix main NULL
 9d02206bc2d9eae2449819da1d14ee7315c6ed8a dregistry main NULL
 31c7a767db36c457156796cd074a915577a7125c eclist main NULL
@@ -117,7 +117,7 @@ c0b31ffaddc1773fef67fcbbcf3d830e4b87f60d gtb main NULL
 d9cec71c721b284b040659386a680a539e06796e gx main NULL
 4deec9d316882762588674dca08941d8c09c90ac hash main NULL
 19ccc597589a12421505552a0bc647c96a365ffb hashdir main NULL
-f67e5a4ebb924c99fa7c0cac539ac8d0576a8c44 helpapp main NULL
+360003e93b76e043992bff917649346572535c57 helpapp main NULL
 d08874a20cc01afc642202240ebd5d8c70208bf7 history main NULL
 96c4156848d50c98a682ede8adb764135cad8fd7 hn main NULL
 2dec7daea07626047a970c2f01f0e57fe376a6f2 hok main NULL
@@ -280,7 +280,7 @@ d628139cdb9f27113d21de987b19eac2f24415d3 ted main NULL
 1e1c98d98bee32338e14e1580e57c1cc72ec9660 tee main NULL
 54014e2420d5ac2403282c8a272b028393f71589 telegram main NULL
 4bebf0f26cc64bb450ba28c9e8153a4a852d3a97 term main NULL
-53e9a2d8244439fdeadf0402a5c7909f048e208a termux main NULL
+7d7091cb477dec154ff55af281d58a940fe9de9d termux main NULL
 ac21ee0e932c8b32f4d942b616168816d96e0eb9 theme main NULL
 97f6c6235e6a683efcd2e92c589d9b595bdae110 tldr main NULL
 ddc89fb8fde4b5f63eaee550a35ad5b5b35451ad tmp main NULL
@@ -303,7 +303,7 @@ f4622bbe1783674ecac2d41037eccbc79e7e5543 uptime main NULL
 befef8ac37b15ba229fc5559b1dba4996562b309 url main NULL
 5746198bc5ef17bce1caf6976af66d4920a830c3 user main NULL
 cc899ef04cf4e5dbe1861586e19d965596e86159 val main NULL
-46eed0f437626a85541d9a9854b798e0d3738ec6 version main NULL
+871de9eae91446965fd9da4ace8e4945cf0212ab version main NULL
 afe8c2167fc93666f4ae68a67da63bae81affdad vim main NULL
 6f43a78b4d2b49e73a2f3ab30c97a921e5c40dca wchar main NULL
 aeadb4832dae44fe69de904e210c10ff21057a8f websrc main NULL

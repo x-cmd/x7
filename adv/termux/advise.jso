@@ -657,40 +657,6 @@ null
 ]
 }
 ,
-"prun"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Run a command in the specified distribution, shortcut for 'x termux pd run'"
-,
-"cn"
-:
-"在指定的发行版中运行命令，'x termux pd run' 的快捷方式\""
-}
-,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x termux prun <linux distributions>"
-,
-"cn"
-:
-"Run the specified Linux distribution and enter the Linux environment"
-,
-"en"
-:
-"运行指定 linux 发行版，并进入linux环境"
-}
-]
-}
-,
 "alp|alpine"
 :
 {

@@ -11,7 +11,7 @@ ___x_cmd_docker_snap___parse__(){
     esac
 
     case "$data" in
-        apk/*|apt/*|dnf/*|go/*|npm/*|cargo/*|pip/*|pixi/*|asdf/*)
+        apk/*|apt/*|dnf/*|go/*|npm/*|cargo/*|pip/*|pixi/*|asdf/*|nix/*)
             REFIT_SYS="${data%%/*}"
             REFIT_PKG="${data#*/}"
             ;;
@@ -24,6 +24,7 @@ ___x_cmd_docker_snap___parse__(){
                 alpine)     REFIT_SYS=apk       ;;
                 fedora)     REFIT_SYS=dnf       ;;
                 arch)       REFIT_SYS=pacman    ;;
+                nixos)      REFIT_SYS=nix       ;;
                 *)          REFIT_SYS=apt       ;;
             esac
             ;;
@@ -40,6 +41,7 @@ ___x_cmd_docker_snap___getname_(){
         ubuntu)     imagetype=xub ;;
         kali)       imagetype=xka ;;
         arch)       imagetype=xar ;;
+        nixos)      imagetype=xni ;;
 
         *)          imagetype=xd  ;;
     esac
@@ -57,6 +59,7 @@ ___x_cmd_docker_snap___defaultpkgsys_(){
         arch)                               x_=--yay ;;
         debian|ubuntu|kali)                 x_=--apt ;;
         fedora|rocky|almal|centos|redhat)   x_=--dnf ;;
+        nixos)                              x_=--nix ;;
     esac
 }
 
@@ -68,6 +71,7 @@ ___x_cmd_docker_snap___imageprefix_(){
         ubuntu)     x_=xub     ;;
         kali)       x_=xka     ;;
         arch)       x_=xar     ;;
+        nixos)      x_=xni     ;;
         *)          x_=""; return 1 ;;
     esac
 }

@@ -26,7 +26,6 @@ ___x_cmd_ccal___fzy(){
     local pos="$(( ___X_CMD_CCAL_FZ_DATE_Y - 1900 + 1 ))"
 
     local FZF_DEFAULT_OPTS="
-        --header='ctrl-t: JUMP to $___X_CMD_CCAL_FZ_DATE_TODAY'
         --bind='ctrl-t:print(|restart|)+accept'
     "
 
