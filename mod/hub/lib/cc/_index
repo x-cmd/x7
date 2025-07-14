@@ -46,13 +46,13 @@ ___x_cmd_hub_cc_file_(){
     [ -f "${file_path}" ] || N=hub M="File does not exist, please enter the correct file path" log:ret:64
     local file_type="${file_path##*.}"
     case "$file_type" in
-        go|zig|gop) hub:debug "file_type: ${file_type}"     ;;
+        go|zig|gop|rs) hub:debug "file_type: ${file_type}"     ;;
         *) N=hub M="The script file does not support or does not recognize the script type" log:ret:64 ;;
     esac
 }
 
 ___x_cmd_hub_cc_build_(){
-    local url="https://cc-fbxrcohzbv.cn-hongkong.fcapp.run"
+    local url="https://cc-build-ckfagnfgui.us-west-1.fcapp.run"
     local hub_token
     hub_token="$(___x_cmd_hub_token)"
     local x_=; ___x_cmd_hub_cc_cerify_

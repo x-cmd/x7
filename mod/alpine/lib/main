@@ -28,7 +28,7 @@ ___X_CMD_ALPINE_PREFIX=xal
 # xal
 
 ___x_cmd_alpine___main(){
-    [ "$#" -gt 0 ]  || set -- sh
+    [ "$#" -gt 0 ]  || set -- bash
 
     local op="$1";      shift
     case "$op" in

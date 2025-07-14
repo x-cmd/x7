@@ -2,7 +2,7 @@
 ___x_cmd log init   kali
 
 ___x_cmd_kali___main(){
-    [ "$#" -gt 0 ]  || set -- sh
+    [ "$#" -gt 0 ]  || set -- bash
 
     local op="$1";      shift
     case "$op" in

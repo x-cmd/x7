@@ -2,7 +2,7 @@
 ___x_cmd log init   ubuntu
 
 ___x_cmd_ubuntu___main(){
-    [ "$#" -gt 0 ]  || set -- sh
+    [ "$#" -gt 0 ]  || set -- bash
 
     local op="$1";      shift
     case "$op" in

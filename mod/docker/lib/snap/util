@@ -104,10 +104,15 @@ ___x_cmd_docker_snap___lookup_(){
     ___x_cmd_install_snaplookup_ "$cmd"  deno
     docker:snap:exitif130orfound
 
+    ___x_cmd_install_snaplookup_ "$cmd"  pixi
+    docker:snap:exitif130orfound
+
     ___x_cmd_install_snaplookup_ "$cmd"  npm
     docker:snap:exitif130orfound
 
-    # ___x_cmd_install_lookupsnappkg_fromruleset_ "$cmd"  pixi
+    ___x_cmd_install_snaplookup_ "$cmd"  pip
+    docker:snap:exitif130orfound
 
+    # ___x_cmd_install_lookupsnappkg_fromruleset_ "$cmd"  pixi
     return 1
 }

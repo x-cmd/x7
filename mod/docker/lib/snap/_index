@@ -131,6 +131,7 @@ ___x_cmd_docker_snap___run(){
     local IFS=' '
     docker:debug "docker command -> ___x_cmd docker run $START_OPTS --name ${name} $RUN_OPTS $image"
     docker:debug "command argument -> $*"
+
     eval ___x_cmd docker run         "$START_OPTS" --name "${name}"          "$RUN_OPTS" "$image" "\"\$@\""
     # ___x_cmd_docker_snap___eval         ___x_cmd docker run         "$START_OPTS" --name "${name}"          "$RUN_OPTS" "$image" "\"\$@\""
 }
