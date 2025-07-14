@@ -64,3 +64,11 @@ ___x_cmd_tldr_lang___listfp_(){
     x_="$listfp"
     [ -f "$listfp" ]
 }
+
+___x_cmd_tldr_lang___list_exist(){
+    ___x_cmd_tldr_pages_prepare || return
+    local dirpath="$___X_CMD_TLDR_DIR_DATA/$___X_CMD_TLDR_PAGES_VERSION"
+    local i; for i in "$dirpath/pages."*; do
+        printf "%s\n" "${i##*"pages."}"
+    done
+}

@@ -9,9 +9,9 @@ ___x_cmd_docker_snap___parse__(){
             data="${data%:"$REFIT_CMD"}"
             ;;
         *)
-            # REFIT_CMD="$data"
-            # ___x_cmd install snapookup_ "$data" "$imgtype"
-            # data="$x_"
+            REFIT_CMD="$data"
+            ___x_cmd install snaplookup_ "$data" "$imgtype"
+            data="$x_"
             ;;
     esac
 

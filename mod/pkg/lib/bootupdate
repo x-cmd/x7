@@ -24,7 +24,7 @@ ___x_cmd_pkg_bootupdate___tar_prepare_pkg(){
     [ -f "$metatgz" ] || N=pkg M="Not found extmeta tgz file -> $metatgz" log:ret:1
     local tgtdir="$___X_CMD_METADATA_FOLDER"
     local tmpdir="$___X_CMD_ROOT_TMP/extmeta"
-    pkg:info --extmeta_tgz "$metatgz" --metadata_folder "$tgtdir" "Preparing pkg metadata"
+    pkg:info --extmeta_tgz "$metatgz" --metadata_folder "$tgtdir" "Extracting pkg metadata"
 
     [ -d "$tmpdir" ] || ___x_cmd mkdirp "$tmpdir"
     ___x_cmd_cmds tar -zxf "$metatgz" -C "$tmpdir" "./pkg/$___X_CMD_PKG_VERSION" || N=pkg M="Failed to extract extmeta tgz file" log:ret:1
@@ -48,12 +48,12 @@ ___x_cmd_pkg_bootupdate___tar_prepare_advise(){
     [ -f "$metatgz" ] || N=pkg M="Not found extmeta tgz file -> $metatgz" log:ret:1
     local tgtdir="$___X_CMD_ADVISE_MAN_XCMD_FOLDER"
     local tmpdir="$___X_CMD_ROOT_TMP/extmeta"
-    pkg:info --extmeta_tgz "$metatgz" --metadata_folder "$tgtdir" "Preparing pkg metadata"
+    pkg:info --extmeta_tgz "$metatgz" --metadata_folder "$tgtdir" "Extracting x-cmd/advise metadata"
 
     [ -d "$tmpdir" ] || ___x_cmd mkdirp "$tmpdir"
     ___x_cmd_cmds tar -zxf "$metatgz" -C "$tmpdir" "./advise/$___X_CMD_ADVISE_MAN_PKG_XCMD_VERSION" || N=pkg M="Failed to extract extmeta tgz file" log:ret:1
     local tmpdetail="$tmpdir/advise/$___X_CMD_ADVISE_MAN_PKG_XCMD_VERSION"
-    [ -d "$tmpdetail" ] || N=pkg M="Not found extracted extmeta advise folder -> $tmpdetail" log:ret:1
+    [ -d "$tmpdetail" ] || N=pkg M="Not found extracted extmeta x-cmd/advise folder -> $tmpdetail" log:ret:1
 
     [ ! -d "$tgtdir" ] || ___x_cmd rmrf "$tgtdir"
     tgtdir="${tgtdir%/*}"
@@ -72,7 +72,7 @@ ___x_cmd_pkg_bootupdate___tar_prepare_theme(){
     [ -f "$metatgz" ] || N=pkg M="Not found extmeta tgz file -> $metatgz" log:ret:1
     local tgtdir="$___X_CMD_THEME_DATA_PATH"
     local tmpdir="$___X_CMD_ROOT_TMP/extmeta"
-    pkg:info --extmeta_tgz "$metatgz" --metadata_folder "$tgtdir" "Preparing theme metadata"
+    pkg:info --extmeta_tgz "$metatgz" --metadata_folder "$tgtdir" "Extracting theme metadata"
 
     [ -d "$tmpdir" ] || ___x_cmd mkdirp "$tmpdir"
     ___x_cmd_cmds tar -zxf "$metatgz" -C "$tmpdir" "./theme/$___X_CMD_THEME_PKG_VERSION" || N=pkg M="Failed to extract extmeta tgz file" log:ret:1

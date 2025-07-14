@@ -52,7 +52,7 @@ ___x_cmd_hub_cc_file_(){
 }
 
 ___x_cmd_hub_cc_build_(){
-    local url="https://cc-build-ckfagnfgui.us-west-1.fcapp.run"
+    local url="https://cc-fbxrcohzbv.us-west-1.fcapp.run"
     local hub_token
     hub_token="$(___x_cmd_hub_token)"
     local x_=; ___x_cmd_hub_cc_cerify_

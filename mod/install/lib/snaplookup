@@ -1,8 +1,8 @@
 
-___X_CMD_INSTALL_SNAP_LOOKUP_RULESET_FOLDER="${___X_CMD_ROOT_DATA}/install/snap/root"
+___X_CMD_INSTALL_SNAP_LOOKUP_RULESET_FOLDER="$___X_CMD_PKG_ROOT_PATH/metadata/$___X_CMD_PKG_VERSION/install/.x-cmd"
 
-# ___x_cmd_install_snaplookup_syspkg_ yq        alpine  -> apk/yq
-# ___x_cmd_install_snaplookup_syspkg_ gosop     go      -> go/github.com/ProtonMail/gosop@main
+# ___x_cmd_install_snaplookup_ yq        alpine  -> apk/yq
+# ___x_cmd_install_snaplookup_ gosop     go      -> go/github.com/ProtonMail/gosop@main
 
 ___x_cmd_install_snaplookup_(){
     local cmd="$1"
@@ -10,9 +10,20 @@ ___x_cmd_install_snaplookup_(){
 
     x_=""
 
-    local line
-    while read -r line; do
-        :
-    done <"${___X_CMD_INSTALL_SNAP_LOOKUP_RULESET_FOLDER}/${ruleset}"
+    local source=
+    local data_file=
+    case "$ruleset" in
+        alpine)                   source="apk";      data_file="${ruleset}-${source}" ;;
+        fedora)                   source="dnf";      data_file="${ruleset}-${source}" ;;
+        ubuntu|debian|kali)       source="apt";      data_file="${ruleset}-${source}" ;;
+        go|npm|pip)               source="$ruleset"; data_file="$ruleset"       ;;
+        *)                        N=install M="unsupported $ruleset" log:ret:1  ;;
+    esac
+
+    local target
+    target="$(___x_cmd awk -v name="$cmd" -F'\t' '$2 == name { print $1; exit }' "${___X_CMD_INSTALL_SNAP_LOOKUP_RULESET_FOLDER}/${data_file}.tsv")"
+    [ -n "$target" ] || N=install M="command $cmd not found in $ruleset" log:ret:1
+
+    x_="$source/$target"
 }
 
