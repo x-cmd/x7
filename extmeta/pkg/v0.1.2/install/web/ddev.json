@@ -45,11 +45,5 @@
       "cmd": "curl -fsSL https://ddev.com/install.sh | bash",
       "reference": "https://ddev.readthedocs.io/en/stable/users/install/ddev-installation/#install-script-linux"
     }
-  },
-  "dsnap": {
-    "brew": "ddev",
-    "fedora/dnf": "ddev",
-    "ubuntu/apt": "ddev",
-    "debian/apt": "ddev"
   }
 }

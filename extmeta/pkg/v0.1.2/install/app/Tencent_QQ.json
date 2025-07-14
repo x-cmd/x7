@@ -26,8 +26,5 @@
       "cmd": "x winget installTencent.QQ",
       "reference": "https://winget.run/pkg/Tencent/QQ"
     }
-  },
-  "dsnap": {
-    "brew": "qq"
   }
 }

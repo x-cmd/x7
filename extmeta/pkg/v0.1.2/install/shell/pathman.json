@@ -22,6 +22,5 @@
       "cmd": "npm install -g pathman",
       "reference": "https://git.rootprojects.org/root/pathman#manual-install"
     }
-  },
-  "dsnap": null
+  }
 }

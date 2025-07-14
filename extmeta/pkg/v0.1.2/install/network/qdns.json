@@ -27,9 +27,5 @@
       "reference": "https://github.com/natesales/q?tab=readme-ov-file#installation",
       "dsnap": "github.com/natesales/q@latest"
     }
-  },
-  "dsnap": {
-    "brew": "natesales/repo/q",
-    "/go": "github.com/natesales/q@latest"
   }
 }

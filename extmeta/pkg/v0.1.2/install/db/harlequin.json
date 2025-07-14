@@ -6,12 +6,22 @@
     "en": "Harlequin is a SQL IDE for DuckDB, SQLite, and other databases that runs in your Terminal"
   },
   "rule": {
+    "/uv": {
+      "cmd": "uv tool install harlequin",
+      "reference": "https://github.com/tconbeer/harlequin?tab=readme-ov-file#installing-harlequin"
+    },
+    "/pip": {
+      "cmd": "pip install harlequin",
+      "reference": "https://github.com/tconbeer/harlequin?tab=readme-ov-file#installing-harlequin",
+      "dsnap": "harlequin"
+    },
+    "darwin/brew": {
+      "cmd": "brew install harlequin",
+      "reference": "https://github.com/tconbeer/harlequin?tab=readme-ov-file#installing-harlequin"
+    },
     "/pipx": {
       "cmd": "pipx install harlequin",
       "reference": "https://harlequin.sh/docs/getting-started"
     }
-  },
-  "dsnap": {
-    "/pip": "harlequin"
   }
 }

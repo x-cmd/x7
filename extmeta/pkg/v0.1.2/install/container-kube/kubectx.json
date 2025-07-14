@@ -38,8 +38,5 @@
       "cmd": "sudo pacman -S kubectx",
       "reference": "https://github.com/ahmetb/kubectx#pacman-arch-linux"
     }
-  },
-  "dsnap": {
-    "brew": "kubectx"
   }
 }

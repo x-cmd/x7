@@ -83,11 +83,5 @@
       "cmd": "sudo xbps-install -Su zig",
       "reference": "https://github.com/ziglang/zig/wiki/Install-Zig-from-a-Package-Manager#void-linux"
     }
-  },
-  "dsnap": {
-    "brew": "zig",
-    "/cargo": "zig",
-    "fedora/dnf": "zig",
-    "alpine/apk": "zig"
   }
 }

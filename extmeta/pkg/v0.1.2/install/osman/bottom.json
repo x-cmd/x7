@@ -51,8 +51,5 @@
       "cmd": "sudo dnf copr enable atim/bottom -y\n&& sudo dnf install bottom\n",
       "reference": "https://github.com/ClementTsang/bottom?tab=readme-ov-file#fedora--centos--almalinux--rocky-linux"
     }
-  },
-  "dsnap": {
-    "/cargo": "bottom"
   }
 }

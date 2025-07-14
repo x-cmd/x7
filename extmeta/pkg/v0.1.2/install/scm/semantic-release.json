@@ -15,8 +15,5 @@
       "cmd": "npx semantic-release",
       "reference": "https://github.com/semantic-release/semantic-release/blob/master/docs/usage/installation.md#global-installation"
     }
-  },
-  "dsnap": {
-    "/npm": "semantic-release"
   }
 }

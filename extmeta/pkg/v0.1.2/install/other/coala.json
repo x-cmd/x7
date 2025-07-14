@@ -11,8 +11,5 @@
       "reference": "https://github.com/coala/coala-bears"
     }
   },
-  "deprecated": "last commit was four years ago. ( 2021 ) Latest release was in 2017.",
-  "dsnap": {
-    "/pip": "coala-bears"
-  }
+  "deprecated": "last commit was four years ago. ( 2021 ) Latest release was in 2017."
 }

@@ -11,8 +11,5 @@
       "reference": "https://webhint.io/docs/user-guide/#install-webhint",
       "dsnap": "hint"
     }
-  },
-  "dsnap": {
-    "/npm": "hint"
   }
 }

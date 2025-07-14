@@ -11,8 +11,5 @@
       "reference": "https://github.com/pressly/sup?tab=readme-ov-file#installation",
       "dsnap": "github.com/pressly/sup/cmd/sup"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/pressly/sup/cmd/sup"
   }
 }

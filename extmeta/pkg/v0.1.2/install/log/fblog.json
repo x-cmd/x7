@@ -15,9 +15,5 @@
       "cmd": "brew install fblog",
       "reference": "https://formulae.brew.sh/formula/fblog#default"
     }
-  },
-  "dsnap": {
-    "brew": "fblog",
-    "/cargo": "fblog"
   }
 }

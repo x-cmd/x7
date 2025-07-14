@@ -44,10 +44,5 @@
       "cmd": "sudo rm -f /etc/yum.repos.d/bintray-rpm.repo || true\n&& curl -L https://www.scala-sbt.org/sbt-rpm.repo > sbt-rpm.repo\n&& sudo mv sbt-rpm.repo /etc/yum.repos.d/\n&& sudo yum install sbt\n",
       "reference": "https://www.scala-sbt.org/download.html"
     }
-  },
-  "dsnap": {
-    "brew": "sbt",
-    "ubuntu/apt": "sbt",
-    "debian/apt": "sbt"
   }
 }

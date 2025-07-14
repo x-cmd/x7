@@ -41,14 +41,5 @@
       "cmd": "sudo flatpak install org.fcitx.Fcitx5",
       "reference": "https://fcitx-im.org/wiki/Install_Fcitx_5#Install_Fcitx_5_from_Flatpak"
     }
-  },
-  "dsnap": {
-    "yum": "fcitx5",
-    "pacman": "fcitx5",
-    "zypper": "fcitx5",
-    "flatpak": "org.fcitx.Fcitx5",
-    "fedora/dnf": "fcitx5",
-    "ubuntu/apt": "fcitx5",
-    "debian/apt": "fcitx5"
   }
 }

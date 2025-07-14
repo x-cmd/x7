@@ -31,8 +31,5 @@
       "cmd": "conda install -c conda-forge ruff",
       "reference": "https://docs.astral.sh/ruff/installation/#installing-ruff"
     }
-  },
-  "dsnap": {
-    "/pip": "ruff"
   }
 }

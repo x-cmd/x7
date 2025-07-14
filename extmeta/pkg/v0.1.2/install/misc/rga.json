@@ -43,8 +43,5 @@
       "reference": "https://github.com/phiresky/ripgrep-all?tab=readme-ov-file#compile-from-source",
       "dsnap": "ripgrep_all"
     }
-  },
-  "dsnap": {
-    "/cargo": "ripgrep_all"
   }
 }

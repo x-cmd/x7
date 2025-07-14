@@ -15,9 +15,5 @@
       "cmd": "brew install sqlfluff",
       "reference": "https://formulae.brew.sh/formula/sqlfluff#default"
     }
-  },
-  "dsnap": {
-    "brew": "sqlfluff",
-    "/pip": "sqlfluff"
   }
 }

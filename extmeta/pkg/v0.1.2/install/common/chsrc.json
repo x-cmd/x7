@@ -30,8 +30,5 @@
       "cmd": "x pwsh \"& { $(iwr -useb https://chsrc.run/windows) } -Version pre\" | iex",
       "reference": "https://chsrc.run/"
     }
-  },
-  "dsnap": {
-    "brew": "chsrc"
   }
 }

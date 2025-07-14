@@ -19,9 +19,5 @@
       "cmd": "brew install assh",
       "reference": "https://github.com/moul/assh?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "brew": "assh",
-    "/go": "moul.io/assh/v2"
   }
 }

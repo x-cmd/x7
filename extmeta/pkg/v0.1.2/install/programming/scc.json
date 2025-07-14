@@ -31,8 +31,5 @@
       "cmd": "pkg install scc",
       "reference": "https://github.com/boyter/scc?tab=readme-ov-file#freebsd"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/boyter/scc@master"
   }
 }

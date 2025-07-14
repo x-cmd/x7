@@ -37,14 +37,5 @@
       "cmd": "emerge --ask app-misc/skim",
       "reference": "https://github.com/lotabout/skim?tab=readme-ov-file#package-managers"
     }
-  },
-  "dsnap": {
-    "brew": "sk",
-    "pacman": "skim",
-    "port": "skim",
-    "emerge": "app-misc/skim",
-    "/cargo": "skim",
-    "fedora/dnf": "skim",
-    "alpine/apk": "skim"
   }
 }

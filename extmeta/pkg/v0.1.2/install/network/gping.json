@@ -59,8 +59,5 @@
       "cmd": "cd /usr/ports/net-mgmt/gping && make install clean",
       "reference": "https://github.com/orf/gping?tab=readme-ov-file#install-cd"
     }
-  },
-  "dsnap": {
-    "/cargo": "gping"
   }
 }

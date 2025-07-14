@@ -64,14 +64,5 @@
       "cmd": "sudo xbps-install vhs",
       "reference": "https://github.com/charmbracelet/vhs#installation"
     }
-  },
-  "dsnap": {
-    "brew": "vhs",
-    "yum": "vhs",
-    "pacman": "vhs",
-    "xbps": "vhs",
-    "fedora/dnf": "vhs",
-    "ubuntu/apt": "vhs",
-    "debian/apt": "vhs"
   }
 }

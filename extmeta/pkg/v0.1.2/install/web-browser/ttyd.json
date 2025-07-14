@@ -19,9 +19,5 @@
       "reference": "https://command-not-found.com/ttyd",
       "dsnap": "ttyd"
     }
-  },
-  "dsnap": {
-    "brew": "ttyd",
-    "alpine/apk": "ttyd"
   }
 }

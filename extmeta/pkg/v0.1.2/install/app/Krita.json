@@ -113,11 +113,5 @@
       "cmd": "x winget install KDE.Krita",
       "reference": "https://winget.run/pkg/KDE/Krita"
     }
-  },
-  "dsnap": {
-    "brew": "krita",
-    "fedora/dnf": "krita",
-    "ubuntu/apt": "krita",
-    "debian/apt": "krita"
   }
 }

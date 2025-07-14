@@ -11,8 +11,5 @@
       "reference": "https://github.com/fiatjaf/jiq?tab=readme-ov-file#installation",
       "dsnap": "github.com/fiatjaf/jiq/cmd/jiq@latest"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/fiatjaf/jiq/cmd/jiq@latest"
   }
 }

@@ -42,13 +42,5 @@
       "cmd": "sudo apt-get install mypy",
       "reference": "https://command-not-found.com/mypy"
     }
-  },
-  "dsnap": {
-    "brew": "mypy",
-    "pacman": "mypy",
-    "/pip": "mypy",
-    "fedora/dnf": "mypy",
-    "ubuntu/apt": "mypy",
-    "debian/apt": "mypy"
   }
 }

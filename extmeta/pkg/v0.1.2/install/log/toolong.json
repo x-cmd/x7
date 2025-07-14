@@ -15,9 +15,5 @@
       "cmd": "pipx install toolong",
       "reference": "https://github.com/Textualize/toolong?tab=readme-ov-file#how"
     }
-  },
-  "dsnap": {
-    "pipx": "toolong",
-    "/pip": "toolong"
   }
 }

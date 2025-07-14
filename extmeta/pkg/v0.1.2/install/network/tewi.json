@@ -15,8 +15,5 @@
       "cmd": "pipx install tewi-transmission",
       "reference": "https://github.com/anlar/tewi#installation"
     }
-  },
-  "dsnap": {
-    "/pip": "tewi-transmission"
   }
 }

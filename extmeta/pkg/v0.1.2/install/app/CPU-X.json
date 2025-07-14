@@ -45,12 +45,5 @@
       "cmd": "pkg eopkg install cpu-x",
       "reference": "https://github.com/TheTumultuousUnicornOfDarkness/CPU-X?tab=readme-ov-file#from-repositories"
     }
-  },
-  "dsnap": {
-    "pkg": "cpu-x",
-    "eopkg": "cpu-x",
-    "fedora/dnf": "cpu-x",
-    "ubuntu/apt": "cpu-x",
-    "debian/apt": "cpu-x"
   }
 }

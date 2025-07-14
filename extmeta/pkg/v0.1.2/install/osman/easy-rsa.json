@@ -42,13 +42,5 @@
       "cmd": "sudo apt-get install easy-rsa",
       "reference": "https://command-not-found.com/easyrsa"
     }
-  },
-  "dsnap": {
-    "brew": "easy-rsa",
-    "pacman": "easy-rsa",
-    "fedora/dnf": "easy-rsa",
-    "alpine/apk": "easy-rsa",
-    "ubuntu/apt": "easy-rsa",
-    "debian/apt": "easy-rsa"
   }
 }

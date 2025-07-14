@@ -24,9 +24,5 @@
       "cmd": "sudo apt install oma",
       "reference": "https://github.com/aosc-dev/oma"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "oma",
-    "debian/apt": "oma"
   }
 }

@@ -38,8 +38,5 @@
       "cmd": "x scoop install dust",
       "reference": "https://github.com/bootandy/dust"
     }
-  },
-  "dsnap": {
-    "brew": "dust"
   }
 }

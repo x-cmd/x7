@@ -27,8 +27,5 @@
       "cmd": "pkgin install gitnr",
       "reference": "https://github.com/reemus-dev/gitnr?tab=readme-ov-file#netbsd"
     }
-  },
-  "dsnap": {
-    "/cargo": "gitnr"
   }
 }

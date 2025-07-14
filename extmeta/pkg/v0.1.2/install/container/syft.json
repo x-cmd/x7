@@ -30,8 +30,5 @@
       "cmd": "nix-env -i syft",
       "reference": "https://github.com/anchore/syft?tab=readme-ov-file#nix"
     }
-  },
-  "dsnap": {
-    "/go": "anchore/syft"
   }
 }

@@ -11,8 +11,5 @@
       "reference": "https://github.com/vercel/pkg?tab=readme-ov-file#usage",
       "dsnap": "pkg"
     }
-  },
-  "dsnap": {
-    "/npm": "pkg"
   }
 }

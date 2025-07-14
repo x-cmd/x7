@@ -44,11 +44,5 @@
       "cmd": "sudo pacman -S ctop",
       "reference": "https://github.com/bcicen/ctop?tab=readme-ov-file#arch"
     }
-  },
-  "dsnap": {
-    "brew": "ctop",
-    "port": "ctop",
-    "ubuntu/apt": "docker-ctop",
-    "debian/apt": "docker-ctop"
   }
 }

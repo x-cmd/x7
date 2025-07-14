@@ -29,6 +29,7 @@ jrnl	jrnl
 pocker	pocker
 kube-shell	kube-shell
 hexabyte	hexabyte
+k2l	ktool
 csvkit	csvclean|csvcut|csvformat|csvgrep|csvjoin|csvjson|csvlook|csvpy|csvsort|csvsql|csvstack|csvstat|in2csv|sql2csv
 visidata	visidata
 jc	jc
@@ -38,6 +39,7 @@ goose3	goose3
 trzsz	trzsz
 unidecode	unidecode
 dolphie	dolphie
+harlequin	harlequin
 houseplant	houseplant
 iredis	iredis
 mssql-cli	mssql-cli
@@ -136,6 +138,7 @@ pingtop	pingtop
 shodan	shodan
 speedtest-cli	speedtest-cli
 tewi-transmission	tewi
+wtfis	wtfis
 you-get	you-get
 youtube-dl	youtube-dl
 yt-dlp	yt-dlp

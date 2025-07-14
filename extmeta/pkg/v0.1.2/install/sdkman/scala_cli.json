@@ -68,11 +68,5 @@
       "cmd": "wget -q -O scala-cli.gz  https://github.com/Virtuslab/scala-cli/releases/latest/download/scala-cli-x86_64-pc-linux-static.gz && gunzip scala-cli.gz\n&& sudo chmod +x scala-cli\n&& sudo mv scala-cli /usr/bin/\n",
       "reference": "https://www.scala-sbt.org/download.html"
     }
-  },
-  "dsnap": {
-    "brew": "scala-cli",
-    "yum": "scala-cli",
-    "ubuntu/apt": "scala-cli",
-    "debian/apt": "scala-cli"
   }
 }

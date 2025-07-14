@@ -25,11 +25,5 @@
       "cmd": "sudo yum install libpcap-devel \\\n&& sudo yum install python3-scapy\n",
       "reference": "https://scapy.readthedocs.io/en/latest/installation.html#debian-ubuntu-fedora"
     }
-  },
-  "dsnap": {
-    "yum": "python3-scapy",
-    "/pip": "scapy",
-    "ubuntu/apt": "python3-scapy",
-    "debian/apt": "python3-scapy"
   }
 }

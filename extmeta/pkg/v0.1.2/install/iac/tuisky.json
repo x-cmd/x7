@@ -15,8 +15,5 @@
       "cmd": "paru -S tuisky",
       "reference": "https://github.com/sugyan/tuisky?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "/cargo": "tuisky"
   }
 }

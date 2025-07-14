@@ -34,12 +34,5 @@
       "reference": "https://github.com/elceef/dnstwist#installation",
       "dsnap": "dnstwist"
     }
-  },
-  "dsnap": {
-    "brew": "dnstwist",
-    "/pip": "dnstwist",
-    "fedora/dnf": "dnstwist",
-    "ubuntu/apt": "dnstwist",
-    "debian/apt": "dnstwist"
   }
 }

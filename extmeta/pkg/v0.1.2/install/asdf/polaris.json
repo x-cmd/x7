@@ -18,8 +18,5 @@
       "cmd": "x asdf use polaris",
       "reference": "https://github.com/particledecay/asdf-polaris?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "/go": "polaris"
   }
 }

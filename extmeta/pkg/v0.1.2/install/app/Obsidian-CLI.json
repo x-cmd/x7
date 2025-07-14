@@ -18,8 +18,5 @@
       "cmd": "flatpak install flathub md.obsidian.Obsidian",
       "reference": "https://flathub.org/apps/md.obsidian.Obsidian"
     }
-  },
-  "dsnap": {
-    "brew": "yakitrak/yakitrak/obs"
   }
 }

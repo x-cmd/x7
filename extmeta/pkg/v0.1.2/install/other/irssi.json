@@ -58,15 +58,5 @@
       "cmd": "sudo port install irssi",
       "reference": "https://ports.macports.org/port/irssi/"
     }
-  },
-  "dsnap": {
-    "brew": "irssi",
-    "yum": "irssi",
-    "zypper": "irssi",
-    "port": "irssi",
-    "fedora/dnf": "irssi",
-    "alpine/apk": "irssi",
-    "ubuntu/apt": "irssi",
-    "debian/apt": "irssi"
   }
 }

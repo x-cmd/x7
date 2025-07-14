@@ -41,12 +41,5 @@
       "cmd": "sudo apt-get install scala",
       "reference": "https://command-not-found.com/scala"
     }
-  },
-  "dsnap": {
-    "brew": "scala",
-    "pacman": "scala",
-    "fedora/dnf": "scala",
-    "ubuntu/apt": "scala",
-    "debian/apt": "scala"
   }
 }

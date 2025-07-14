@@ -18,6 +18,5 @@
       "cmd": "curl.exe -sLA \"MS\" https://webinstall.dev/serviceman | powershell",
       "reference": "https://github.com/therootcompany/serviceman?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": null
+  }
 }

@@ -20,6 +20,7 @@ csview	csview
 csvlens	csvlens
 tabiew	tabiew
 tidy-viewer	tidy-viewer
+xan	xan
 drivel	drivel
 jless	jless
 jnv	jnv
@@ -56,6 +57,7 @@ lsd	lsd
 xplr	xplr
 yazi-fm	yazi
 drft	drft
+fclones	fclones
 fselect	fselect
 hf	hf
 smartcat	smartcat
@@ -95,6 +97,7 @@ ripgrep_all	rga
 sigrs	sig
 vivid	vivid
 agg	agg
+asak	asak
 cavif	cavif
 gifski	gifski
 kbt	kbt
@@ -180,6 +183,7 @@ otti	otti
 pgen	pgen
 rage	rage
 sniffnet	sniffnet
+https://github.com/quantumsheep/sshs	sshs
 atac	atac
 bingrep	bingrep
 bcrab	boxercrab

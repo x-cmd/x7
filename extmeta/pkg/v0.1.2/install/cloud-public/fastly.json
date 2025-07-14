@@ -10,8 +10,5 @@
       "cmd": "brew install fastly/tap/fastly",
       "reference": "https://developer.fastly.com/learning/tools/cli/#installing"
     }
-  },
-  "dsnap": {
-    "brew": "fastly/tap/fastly"
   }
 }

@@ -50,8 +50,5 @@
       "cmd": "brew install weechat",
       "reference": "https://weechat.org/files/doc/weechat/stable/weechat_user.en.html#binary_packages"
     }
-  },
-  "dsnap": {
-    "brew": "weechat"
   }
 }

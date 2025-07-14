@@ -27,9 +27,5 @@
       "reference": "https://github.com/timvisee/ffsend?tab=readme-ov-file#linux-fedora-package",
       "dsnap": "ffsend"
     }
-  },
-  "dsnap": {
-    "brew": "ffsend",
-    "fedora/dnf": "ffsend"
   }
 }

@@ -10,8 +10,5 @@
       "cmd": "brew install folly",
       "reference": "https://github.com/facebook/folly?tab=readme-ov-file#homebrew"
     }
-  },
-  "dsnap": {
-    "brew": "folly"
   }
 }

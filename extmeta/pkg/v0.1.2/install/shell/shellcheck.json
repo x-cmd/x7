@@ -89,12 +89,5 @@
       "cmd": "sudo snap install --channel=edge shellcheck",
       "reference": "https://github.com/koalaman/shellcheck?tab=readme-ov-file#installing"
     }
-  },
-  "dsnap": {
-    "brew": "shellcheck",
-    "/cargo": "shellcheck",
-    "fedora/dnf": "ShellCheck",
-    "ubuntu/apt": "shellcheck",
-    "debian/apt": "shellcheck"
   }
 }

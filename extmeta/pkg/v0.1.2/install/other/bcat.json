@@ -11,8 +11,5 @@
       "reference": "https://github.com/kessler/node-bcat?tab=readme-ov-file#example",
       "dsnap": "bcat"
     }
-  },
-  "dsnap": {
-    "/npm": "bcat"
   }
 }

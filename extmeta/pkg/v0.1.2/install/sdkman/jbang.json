@@ -38,8 +38,5 @@
       "cmd": "brew install jbangdev/tap/jbang",
       "reference": "https://www.jbang.dev/download/"
     }
-  },
-  "dsnap": {
-    "brew": "jbangdev/tap/jbang"
   }
 }

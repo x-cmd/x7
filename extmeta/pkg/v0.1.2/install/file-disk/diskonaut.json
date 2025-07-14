@@ -32,11 +32,5 @@
       "cmd": "sudo yay diskonaut",
       "reference": "https://github.com/imsnif/diskonaut?tab=readme-ov-file#arch-linux"
     }
-  },
-  "dsnap": {
-    "brew": "diskonaut",
-    "yay": "diskonaut",
-    "/cargo": "diskonaut",
-    "fedora/dnf": "diskonaut"
   }
 }

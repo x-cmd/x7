@@ -15,8 +15,5 @@
       "reference": "https://github.com/orhun/pkgtop#installation",
       "dsnap": "pkgtop"
     }
-  },
-  "dsnap": {
-    "/go": "pkgtop"
   }
 }

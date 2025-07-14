@@ -47,8 +47,5 @@
       "cmd": "sudo zypper install xplr",
       "reference": "https://software.opensuse.org//download.html?project=openSUSE%3AFactory&package=xplr"
     }
-  },
-  "dsnap": {
-    "/cargo": "xplr"
   }
 }

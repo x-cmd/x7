@@ -11,8 +11,5 @@
       "reference": "https://www.nltk.org/install.html#mac-unix",
       "dsnap": "nltk"
     }
-  },
-  "dsnap": {
-    "/pip": "nltk"
   }
 }

@@ -66,12 +66,5 @@
       "reference": "https://wezfurlong.org/wezterm/install/source.html#building-without-wayland-support-on-unix-systems",
       "dsnap": "wezterm"
     }
-  },
-  "dsnap": {
-    "brew": "wezterm",
-    "/cargo": "wezterm",
-    "fedora/dnf": "wezterm",
-    "ubuntu/apt": "wezterm",
-    "debian/apt": "wezterm"
   }
 }

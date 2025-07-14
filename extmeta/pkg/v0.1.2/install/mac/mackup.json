@@ -15,9 +15,5 @@
       "cmd": "brew install mackup",
       "reference": "https://github.com/lra/mackup#quickstart"
     }
-  },
-  "dsnap": {
-    "brew": "mackup",
-    "/pip": "mackup"
   }
 }

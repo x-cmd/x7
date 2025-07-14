@@ -95,14 +95,5 @@
       "cmd": "x winget install restic.restic",
       "reference": "https://winget.run/pkg/restic/restic"
     }
-  },
-  "dsnap": {
-    "brew": "restic",
-    "pacman": "restic",
-    "/go": "restic",
-    "fedora/dnf": "restic",
-    "alpine/apk": "restic",
-    "ubuntu/apt": "restic",
-    "debian/apt": "restic"
   }
 }

@@ -18,8 +18,5 @@
       "cmd": "pkg install grv",
       "reference": "https://github.com/rgburke/grv?tab=readme-ov-file#freebsd"
     }
-  },
-  "dsnap": {
-    "/go": "grv"
   }
 }

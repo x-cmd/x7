@@ -23,8 +23,5 @@
       "cmd": "x scoop install ttyper",
       "reference": "https://github.com/max-niederman/ttyper?tab=readme-ov-file#scoop"
     }
-  },
-  "dsnap": {
-    "/cargo": "ttyper"
   }
 }

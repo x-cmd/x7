@@ -18,8 +18,5 @@
       "cmd": "x asdf use kubectl-buildkit",
       "reference": "https://github.com/ezcater/asdf-kubectl-buildkit?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "brew": "kubectl-buildkit"
   }
 }

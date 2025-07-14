@@ -15,8 +15,5 @@
       "cmd": "pip install -e git+https://github.com/ovh/ovh-cli.git#egg=ovh-cli",
       "reference": "https://github.com/ovh/ovh-cli?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "/pip": "ovhcli"
   }
 }

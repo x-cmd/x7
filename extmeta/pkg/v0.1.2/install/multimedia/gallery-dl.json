@@ -55,8 +55,5 @@
       "cmd": "x choco install gallery-dl",
       "reference": "https://github.com/mikf/gallery-dl#chocolatey"
     }
-  },
-  "dsnap": {
-    "/pip": "gallery-dl"
   }
 }

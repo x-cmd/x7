@@ -50,14 +50,5 @@
       "reference": "https://command-not-found.com/w3m",
       "dsnap": "w3m"
     }
-  },
-  "dsnap": {
-    "brew": "w3m",
-    "pacman": "w3m",
-    "yum": "w3m",
-    "fedora/dnf": "w3m",
-    "alpine/apk": "w3m",
-    "ubuntu/apt": "w3m",
-    "debian/apt": "w3m"
   }
 }

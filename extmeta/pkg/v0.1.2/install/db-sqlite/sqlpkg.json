@@ -18,8 +18,5 @@
       "cmd": "curl.exe https://webi.ms/sqlpkg | powershell",
       "reference": "https://github.com/nalgeon/sqlpkg-cli?tab=readme-ov-file#download-and-install-preferred-method"
     }
-  },
-  "dsnap": {
-    "/go": "sqlpkg"
   }
 }

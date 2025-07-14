@@ -71,8 +71,5 @@
       "cmd": "sudo port selfupdate && sudo port install dive",
       "reference": "https://github.com/wagoodman/dive?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/wagoodman/dive"
   }
 }

@@ -23,10 +23,5 @@
       "cmd": "x asdf use stern",
       "reference": "https://github.com/looztra/asdf-stern?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "brew": "stern",
-    "krew": "stern",
-    "/go": "github.com/stern/stern@latest"
   }
 }

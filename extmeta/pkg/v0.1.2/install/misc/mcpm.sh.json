@@ -23,10 +23,5 @@
       "cmd": "pipx install mcpm",
       "reference": "https://github.com/pathintegral-institute/mcpm.sh#-pipx-recommended-for-python-tools"
     }
-  },
-  "dsnap": {
-    "pipx": "mcpm",
-    "brew": "mcpm",
-    "/pip": "mcpm"
   }
 }

@@ -74,12 +74,5 @@
       "cmd": "sudo yum install vlc",
       "reference": "https://www.videolan.org/vlc/download-redhat.html"
     }
-  },
-  "dsnap": {
-    "brew": "vlc",
-    "fedora/dnf": "vlc",
-    "alpine/apk": "vlc",
-    "ubuntu/apt": "vlc",
-    "debian/apt": "vlc"
   }
 }

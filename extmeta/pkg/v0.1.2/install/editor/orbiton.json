@@ -19,9 +19,5 @@
       "reference": "https://github.com/xyproto/orbiton?tab=readme-ov-file#quick-start",
       "dsnap": "github.com/xyproto/orbiton/v2"
     }
-  },
-  "dsnap": {
-    "brew": "orbiton",
-    "/go": "github.com/xyproto/orbiton/v2"
   }
 }

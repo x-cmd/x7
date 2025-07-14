@@ -11,8 +11,5 @@
       "reference": "https://lib.rs/crates/cavif",
       "dsnap": "cavif"
     }
-  },
-  "dsnap": {
-    "/cargo": "cavif"
   }
 }

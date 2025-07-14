@@ -15,9 +15,5 @@
       "reference": "https://github.com/charles-001/dolphie#installation",
       "dsnap": "dolphie"
     }
-  },
-  "dsnap": {
-    "brew": "dolphie",
-    "/pip": "dolphie"
   }
 }

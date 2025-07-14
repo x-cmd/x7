@@ -59,8 +59,5 @@
       "cmd": "pkg install www/py-httpie",
       "reference": "https://httpie.io/docs/cli/freebsd"
     }
-  },
-  "dsnap": {
-    "/pip": "httpie"
   }
 }

@@ -11,8 +11,5 @@
       "reference": "https://github.com/pyinfra-dev/pyinfra?tab=readme-ov-file#quickstart",
       "dsnap": "pyinfra"
     }
-  },
-  "dsnap": {
-    "/pip": "pyinfra"
   }
 }

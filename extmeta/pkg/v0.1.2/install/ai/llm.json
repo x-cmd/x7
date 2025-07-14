@@ -19,9 +19,5 @@
       "cmd": "brew install llm",
       "reference": "https://formulae.brew.sh/formula/llm#default"
     }
-  },
-  "dsnap": {
-    "brew": "llm",
-    "/pip": "llm"
   }
 }

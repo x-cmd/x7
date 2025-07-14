@@ -11,8 +11,5 @@
       "reference": "https://github.com/hako/bbcli?tab=readme-ov-file#installation--usage",
       "dsnap": "bbcli"
     }
-  },
-  "dsnap": {
-    "/pip": "bbcli"
   }
 }

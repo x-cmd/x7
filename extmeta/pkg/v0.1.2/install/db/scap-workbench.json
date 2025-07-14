@@ -33,11 +33,5 @@
       "cmd": "sudo apt-get install scap-workbench",
       "reference": "https://command-not-found.com/scap-workbench"
     }
-  },
-  "dsnap": {
-    "yum": "scap-workbench",
-    "fedora/dnf": "scap-workbench",
-    "ubuntu/apt": "scap-workbench",
-    "debian/apt": "scap-workbench"
   }
 }

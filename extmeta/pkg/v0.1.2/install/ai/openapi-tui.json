@@ -19,8 +19,5 @@
       "cmd": "nix profile install github:zaghaghi/openapi-tui",
       "reference": "https://github.com/zaghaghi/openapi-tui?tab=readme-ov-file#nixos"
     }
-  },
-  "dsnap": {
-    "/cargo": "openapi-tui"
   }
 }

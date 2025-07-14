@@ -19,9 +19,5 @@
       "cmd": "sudo pacman -S oha",
       "reference": "https://github.com/hatoo/oha?tab=readme-ov-file#on-macos-homebrew"
     }
-  },
-  "dsnap": {
-    "brew": "oha",
-    "/cargo": "oha"
   }
 }

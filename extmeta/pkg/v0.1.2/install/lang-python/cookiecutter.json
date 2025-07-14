@@ -15,8 +15,5 @@
       "reference": "https://github.com/cookiecutter/cookiecutter?tab=readme-ov-file#installation",
       "dsnap": "cookiecutter"
     }
-  },
-  "dsnap": {
-    "/pip": "cookiecutter"
   }
 }

@@ -15,8 +15,5 @@
       "cmd": "curl -sL firebase.tools | bash",
       "reference": "https://github.com/firebase/firebase-tools?tab=readme-ov-file#standalone-binary"
     }
-  },
-  "dsnap": {
-    "/npm": "firebase-tools"
   }
 }

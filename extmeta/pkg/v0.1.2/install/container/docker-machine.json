@@ -18,6 +18,5 @@
       "cmd": "x scoop install docker-machine",
       "reference": "https://scoop.sh/#/apps?q=docker-machine"
     }
-  },
-  "dsnap": null
+  }
 }

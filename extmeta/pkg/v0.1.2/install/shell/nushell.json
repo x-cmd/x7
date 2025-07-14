@@ -35,8 +35,5 @@
       "cmd": "nix profile install nixpkgs#nushell",
       "reference": "https://www.nushell.sh/#nix-profile"
     }
-  },
-  "dsnap": {
-    "/npm": "nushell"
   }
 }

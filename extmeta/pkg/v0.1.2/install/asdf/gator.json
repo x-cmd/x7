@@ -14,8 +14,5 @@
       "cmd": "x asdf use gator",
       "reference": "https://github.com/MxNxPx/asdf-gator?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "/go": "gator"
   }
 }

@@ -18,6 +18,5 @@
       "cmd": "wget https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.tar.xz",
       "reference": "https://github.com/ryanoasis/nerd-fonts/releases/"
     }
-  },
-  "dsnap": null
+  }
 }

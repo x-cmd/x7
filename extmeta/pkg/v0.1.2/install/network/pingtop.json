@@ -11,8 +11,5 @@
       "reference": "https://github.com/laixintao/pingtop#installation",
       "dsnap": "pingtop"
     }
-  },
-  "dsnap": {
-    "/pip": "pingtop"
   }
 }

@@ -42,13 +42,5 @@
       "cmd": "sudo apt-get install passwd",
       "reference": "https://command-not-found.com/chsh"
     }
-  },
-  "dsnap": {
-    "pacman": "util-linux",
-    "yum": "util-linux-ng",
-    "fedora/dnf": "util-linux-user",
-    "alpine/apk": "util-linux",
-    "ubuntu/apt": "passwd",
-    "debian/apt": "passwd"
   }
 }

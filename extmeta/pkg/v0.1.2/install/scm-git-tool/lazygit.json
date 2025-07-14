@@ -87,18 +87,5 @@
       "cmd": "sudo eopkg install lazygit",
       "reference": "https://github.com/jesseduffield/lazygit#solus-linux"
     }
-  },
-  "dsnap": {
-    "brew": "lazygit",
-    "zypper": "lazygit",
-    "winget": "lazygit",
-    "scoop": "lazygit",
-    "choco": "lazygit",
-    "pacman": "lazygit",
-    "emerge": "lazygit",
-    "xbps": "lazygit",
-    "eopkg": "lazygit",
-    "pkg": "lazygit",
-    "fedora/dnf": "lazygit"
   }
 }

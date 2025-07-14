@@ -79,21 +79,5 @@
       "cmd": "x winget install AlDanial.Cloc",
       "reference": "https://github.com/AlDanial/cloc?tab=readme-ov-file#install-via-package-manager"
     }
-  },
-  "dsnap": {
-    "brew": "cloc",
-    "pacman": "cloc",
-    "yum": "cloc",
-    "emerge": "dev-util/cloc",
-    "pkg": "cloc",
-    "port": "cloc",
-    "scoop": "cloc",
-    "choco": "cloc",
-    "winget": "AlDanial.Cloc",
-    "/npm": "cloc",
-    "fedora/dnf": "cloc",
-    "alpine/apk": "cloc",
-    "ubuntu/apt": "cloc",
-    "debian/apt": "cloc"
   }
 }

@@ -15,8 +15,5 @@
       "cmd": "nix run github:laixintao/flameshow",
       "reference": "https://github.com/laixintao/flameshow?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "/pip": "flameshow"
   }
 }

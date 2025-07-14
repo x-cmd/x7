@@ -11,8 +11,5 @@
       "reference": "https://github.com/yeoman/yo?tab=readme-ov-file#usage",
       "dsnap": "yo"
     }
-  },
-  "dsnap": {
-    "/npm": "yo"
   }
 }

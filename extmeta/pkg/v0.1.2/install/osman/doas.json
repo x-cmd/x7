@@ -97,12 +97,5 @@
       "cmd": "sudo xbps-install opendoas",
       "reference": "https://linuxtldr.com/install-doas/"
     }
-  },
-  "dsnap": {
-    "pacman": "opendoas",
-    "xbps": "opendoas",
-    "fedora/dnf": "opendoas",
-    "ubuntu/apt": "doas",
-    "debian/apt": "doas"
   }
 }

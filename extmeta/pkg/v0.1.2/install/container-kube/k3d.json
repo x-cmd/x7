@@ -37,12 +37,5 @@
       "cmd": "sudo apt-get install k3d",
       "reference": "https://command-not-found.com/k3d"
     }
-  },
-  "dsnap": {
-    "brew": "k3d",
-    "/go": "k3d",
-    "fedora/dnf": "k3d",
-    "ubuntu/apt": "k3d",
-    "debian/apt": "k3d"
   }
 }

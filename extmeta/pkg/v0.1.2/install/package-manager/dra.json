@@ -18,8 +18,5 @@
       "cmd": "eget devmatteini/dra",
       "reference": "https://github.com/devmatteini/dra#installation"
     }
-  },
-  "dsnap": {
-    "/cargo": "dra"
   }
 }

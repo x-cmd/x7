@@ -19,8 +19,5 @@
       "cmd": "brew install gitu",
       "reference": "https://formulae.brew.sh/formula/gitu#default"
     }
-  },
-  "dsnap": {
-    "/cargo": "gitu"
   }
 }

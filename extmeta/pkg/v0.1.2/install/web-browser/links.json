@@ -53,15 +53,5 @@
       "cmd": "sudo zypper install links",
       "reference": "https://software.opensuse.org//download.html?project=openSUSE%3AFactory&package=links"
     }
-  },
-  "dsnap": {
-    "brew": "links",
-    "pacman": "links",
-    "yum": "links",
-    "zypper": "links",
-    "fedora/dnf": "links",
-    "alpine/apk": "links",
-    "ubuntu/apt": "links",
-    "debian/apt": "links"
   }
 }

@@ -11,8 +11,5 @@
       "reference": "https://github.com/KillianLucas/open-interpreter?tab=readme-ov-file#quick-start",
       "dsnap": "open-interpreter"
     }
-  },
-  "dsnap": {
-    "/pip": "open-interpreter"
   }
 }

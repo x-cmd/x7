@@ -43,10 +43,5 @@
       "cmd": "brew install goreleaser",
       "reference": "https://formulae.brew.sh/formula/goreleaser#default"
     }
-  },
-  "dsnap": {
-    "brew": "goreleaser",
-    "aur": "goreleaser-bin",
-    "/go": "github.com/goreleaser/goreleaser@latest"
   }
 }

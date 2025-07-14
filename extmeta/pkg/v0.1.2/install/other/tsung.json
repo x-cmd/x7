@@ -32,9 +32,5 @@
       "cmd": "sudo apt-get install tsung",
       "reference": "https://command-not-found.com/tsung"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "tsung",
-    "debian/apt": "tsung"
   }
 }

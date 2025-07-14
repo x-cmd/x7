@@ -41,13 +41,5 @@
       "cmd": "x choco install sphinx",
       "reference": "https://www.sphinx-doc.org/en/master/usage/installation.html#chocolatey"
     }
-  },
-  "dsnap": {
-    "yum": "python-sphinx",
-    "brew": "sphinx-doc",
-    "port": "py39-sphinx",
-    "/pip": "sphinx",
-    "ubuntu/apt": "python3-sphinx",
-    "debian/apt": "python3-sphinx"
   }
 }

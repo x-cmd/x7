@@ -38,12 +38,5 @@
       "cmd": "sudo apt-get install dnsutils",
       "reference": "https://command-not-found.com/dig"
     }
-  },
-  "dsnap": {
-    "pacman": "bind-tools",
-    "fedora/dnf": "bind-utils",
-    "alpine/apk": "bind-tools",
-    "ubuntu/apt": "dnsutils",
-    "debian/apt": "dnsutils"
   }
 }

@@ -19,8 +19,5 @@
       "reference": "https://github.com/glandium/git-cinnabar?tab=readme-ov-file#cargo",
       "dsnap": "git-cinnabar"
     }
-  },
-  "dsnap": {
-    "/cargo": "git-cinnabar"
   }
 }

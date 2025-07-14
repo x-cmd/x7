@@ -54,14 +54,5 @@
       "cmd": "sudo apt-get install zsh",
       "reference": "https://command-not-found.com/zsh"
     }
-  },
-  "dsnap": {
-    "brew": "zsh",
-    "yum": "zsh",
-    "pacman": "zsh",
-    "fedora/dnf": "zsh",
-    "alpine/apk": "zsh",
-    "ubuntu/apt": "zsh",
-    "debian/apt": "zsh"
   }
 }

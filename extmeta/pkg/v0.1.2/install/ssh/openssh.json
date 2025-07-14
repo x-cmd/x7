@@ -28,12 +28,5 @@
       "cmd": "sudo zypper install openssh",
       "reference": "https://linuxways.net/opensuse/how-to-enable-ssh-on-opensuse/"
     }
-  },
-  "dsnap": {
-    "brew": "openssh",
-    "pacman": "openssh",
-    "zypper": "openssh",
-    "fedora/dnf": "openssh",
-    "alpine/apk": "openssh"
   }
 }

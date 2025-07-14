@@ -11,8 +11,5 @@
       "reference": "https://github.com/rye/eb?tab=readme-ov-file#installing-it",
       "dsnap": "eb"
     }
-  },
-  "dsnap": {
-    "/cargo": "eb"
   }
 }

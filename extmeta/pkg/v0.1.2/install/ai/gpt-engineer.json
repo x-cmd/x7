@@ -11,8 +11,5 @@
       "reference": "https://gpt-engineer.readthedocs.io/en/latest/installation.html#stable-release",
       "dsnap": "gpt_engineer"
     }
-  },
-  "dsnap": {
-    "/pip": "gpt_engineer"
   }
 }

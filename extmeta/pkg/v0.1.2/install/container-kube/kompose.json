@@ -39,11 +39,5 @@
       "cmd": "x asdf use kompose",
       "reference": "https://github.com/technikhil314/asdf-kompose?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "brew": "kompose",
-    "choco": "kubernetes-kompose",
-    "winget": "Kubernetes.kompose",
-    "/go": "github.com/kubernetes/kompose@latest"
   }
 }

@@ -39,9 +39,5 @@
       "cmd": "x scoop install dua",
       "reference": "https://lib.rs/install/dua-cli"
     }
-  },
-  "dsnap": {
-    "brew": "dua-cli",
-    "/cargo": "dua-cli"
   }
 }

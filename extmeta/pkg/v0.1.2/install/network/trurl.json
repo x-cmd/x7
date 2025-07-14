@@ -10,8 +10,5 @@
       "cmd": "brew install trurl",
       "reference": "https://formulae.brew.sh/formula/trurl#default"
     }
-  },
-  "dsnap": {
-    "brew": "trurl"
   }
 }

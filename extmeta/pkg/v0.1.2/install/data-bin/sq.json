@@ -23,9 +23,5 @@
       "reference": "https://github.com/neilotoole/sq?tab=readme-ov-file#go",
       "dsnap": "github.com/neilotoole/sq"
     }
-  },
-  "dsnap": {
-    "brew": "sq",
-    "/go": "github.com/neilotoole/sq"
   }
 }

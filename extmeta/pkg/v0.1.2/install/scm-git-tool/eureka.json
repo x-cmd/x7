@@ -15,9 +15,5 @@
       "cmd": "brew install eureka",
       "reference": "https://formulae.brew.sh/formula/eureka#default"
     }
-  },
-  "dsnap": {
-    "brew": "eureka",
-    "/cargo": "eureka"
   }
 }

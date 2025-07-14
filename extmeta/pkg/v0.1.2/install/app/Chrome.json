@@ -42,8 +42,5 @@
       "cmd": "sudo dnf install google-chrome-stable",
       "reference": "https://linuxtldr.com/installing-google-chrome/"
     }
-  },
-  "dsnap": {
-    "brew": "google-chrome"
   }
 }

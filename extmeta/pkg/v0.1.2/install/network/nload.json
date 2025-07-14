@@ -45,11 +45,5 @@
       "cmd": "brew install nload",
       "reference": "https://formulae.brew.sh/formula/nload#default"
     }
-  },
-  "dsnap": {
-    "brew": "nload",
-    "fedora/dnf": "nload",
-    "ubuntu/apt": "nload",
-    "debian/apt": "nload"
   }
 }

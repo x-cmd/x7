@@ -15,9 +15,5 @@
       "cmd": "yarn global add eas-cli",
       "reference": "https://github.com/expo/eas-cli?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "yarn": "eas-cli",
-    "/npm": "eas-cli"
   }
 }

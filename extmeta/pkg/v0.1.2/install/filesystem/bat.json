@@ -94,24 +94,5 @@
       "cmd": "x choco install bat",
       "reference": "https://github.com/sharkdp/bat"
     }
-  },
-  "dsnap": {
-    "brew": "bat",
-    "pacman": "bat",
-    "yum": "bacula-console-bat",
-    "zypper": "bat",
-    "emerge": "sys-apps/bat",
-    "xbps": "bat",
-    "pkg": "bat",
-    "pkg_add": "bat",
-    "nix": "bat",
-    "port": "bat",
-    "winget": "sharkdp.bat",
-    "scoop": "bat",
-    "choco": "bat",
-    "fedora/dnf": "bat",
-    "alpine/apk": "bat",
-    "ubuntu/apt": "bacula-console-qt",
-    "debian/apt": "bacula-console-qt"
   }
 }

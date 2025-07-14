@@ -11,8 +11,5 @@
       "reference": "https://github.com/encode/httpx?tab=readme-ov-file#installation",
       "dsnap": "httpx[cli]"
     }
-  },
-  "dsnap": {
-    "/pip": "httpx[cli]"
   }
 }

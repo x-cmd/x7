@@ -58,7 +58,7 @@ ___x_cmd_docker_simg_prepare___base_(){
 
     case "$imgtype" in
         alpine)
-            ___x_cmd_docker_simg_download --imagetype alpine        || return $?
+            ___x_cmd_docker_simg_download --if0 --imagetype alpine        || return $?
             ___x_cmd docker refit               \
                 --from alpine                   \
                 --to "$x_"                      \
@@ -67,25 +67,25 @@ ___x_cmd_docker_simg_prepare___base_(){
                 ;;
 
         debian|ubuntu)
-            ___x_cmd_docker_simg_download --imagetype "$imgtype"    || return $?
+            ___x_cmd_docker_simg_download --if0 --imagetype "$imgtype"    || return $?
             ___x_cmd docker refit               \
                 --from "$imgtype"               \
                 --to "$x_"                      \
                 --userabc                       \
-                --apt 'curl fzf jq sqlite3'
+                --apt 'curl fzf jq sqlite3 ca-certificates'
                 ;;
 
         kali)
-            ___x_cmd_docker_simg_download --imagetype "$imgtype"    || return $?
+            ___x_cmd_docker_simg_download --if0 --imagetype "$imgtype"    || return $?
             ___x_cmd docker refit               \
                 --from kalilinux/kali-rolling   \
                 --to "$x_"                      \
                 --userabc                       \
-                --apt 'curl fzf jq sqlite3'
+                --apt 'curl fzf jq sqlite3 ca-certificates'
                 ;;
 
         fedora)
-            ___x_cmd_docker_simg_download --imagetype "$imgtype" || return $?
+            ___x_cmd_docker_simg_download --if0 --imagetype "$imgtype" || return $?
             ___x_cmd docker refit               \
                 --from fedora                   \
                 --to "$x_"                      \
@@ -94,7 +94,7 @@ ___x_cmd_docker_simg_prepare___base_(){
                 ;;
 
         arch)
-            ___x_cmd_docker_simg_download --imagetype "$imgtype" || return $?
+            ___x_cmd_docker_simg_download --if0 --imagetype "$imgtype" || return $?
             ___x_cmd docker refit               \
                 --from archlinux --to "$x_"     \
                 --userabc                       \
@@ -102,7 +102,7 @@ ___x_cmd_docker_simg_prepare___base_(){
                 ;;
 
         nixos)
-            ___x_cmd_docker_simg_download --imagetype "$imgtype" || return $?
+            ___x_cmd_docker_simg_download --if0 --imagetype "$imgtype" || return $?
             ___x_cmd docker refit               \
                 --from nixos/nix --to "$x_"     \
                 --userabc                       \

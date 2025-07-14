@@ -15,8 +15,5 @@
       "cmd": "paru -S cargo-selector",
       "reference": "https://github.com/lusingander/cargo-selector?tab=readme-ov-file#aur"
     }
-  },
-  "dsnap": {
-    "/cargo": "cargo-selector"
   }
 }

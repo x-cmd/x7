@@ -11,8 +11,5 @@
       "reference": "https://github.com/thread53/pqviewer?tab=readme-ov-file#installing-pqviewer",
       "dsnap": "pqviewer"
     }
-  },
-  "dsnap": {
-    "/pip": "pqviewer"
   }
 }

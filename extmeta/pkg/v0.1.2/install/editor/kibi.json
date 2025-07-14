@@ -29,11 +29,5 @@
       "reference": "https://github.com/ilai-deutel/kibi?tab=readme-ov-file#installation",
       "dsnap": "kibi"
     }
-  },
-  "dsnap": {
-    "pkgin": "kibi",
-    "/cargo": "kibi",
-    "fedora/dnf": "kibi",
-    "alpine/apk": "kibi"
   }
 }

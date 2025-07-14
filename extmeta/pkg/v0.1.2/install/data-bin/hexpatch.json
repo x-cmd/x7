@@ -19,8 +19,5 @@
       "cmd": "pacman -S hexpatch",
       "reference": "https://github.com/Etto48/HexPatch?tab=readme-ov-file#arch-linux"
     }
-  },
-  "dsnap": {
-    "/cargo": "hex-patch"
   }
 }

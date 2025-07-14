@@ -15,8 +15,5 @@
       "cmd": "yaourt -S tufw-git",
       "reference": "https://github.com/peltho/tufw?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/peltho/tufw/cmd/tufw"
   }
 }

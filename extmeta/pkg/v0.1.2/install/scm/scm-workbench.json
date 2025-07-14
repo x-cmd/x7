@@ -11,8 +11,5 @@
       "reference": "https://scm-workbench.barrys-emacs.org/",
       "dsnap": "scm-workbench"
     }
-  },
-  "dsnap": {
-    "fedora/dnf": "scm-workbench"
   }
 }

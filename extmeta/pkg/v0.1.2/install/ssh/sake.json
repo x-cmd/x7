@@ -39,9 +39,5 @@
       "reference": "https://sakecli.com/installation/",
       "dsnap": "github.com/alajmo/sake@latest"
     }
-  },
-  "dsnap": {
-    "brew": "sake",
-    "/go": "github.com/alajmo/sake@latest"
   }
 }

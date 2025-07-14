@@ -11,8 +11,5 @@
       "reference": "https://pypi.org/project/glance/",
       "dsnap": "glance"
     }
-  },
-  "dsnap": {
-    "/pip": "glance"
   }
 }

@@ -15,8 +15,5 @@
       "cmd": "pipx install pocker-tui",
       "reference": "https://github.com/pommee/Pocker#-installation"
     }
-  },
-  "dsnap": {
-    "/pip": "pocker"
   }
 }

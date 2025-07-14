@@ -27,9 +27,5 @@
       "cmd": "x asdf use kubie",
       "reference": "https://github.com/johnhamelink/asdf-kubie"
     }
-  },
-  "dsnap": {
-    "brew": "kubie",
-    "/cargo": "kubie"
   }
 }

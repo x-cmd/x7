@@ -42,8 +42,5 @@
       "cmd": "sudo port selfupdate && sudo port install direnv",
       "reference": "https://ports.macports.org/port/direnv/"
     }
-  },
-  "dsnap": {
-    "/go": "direnv"
   }
 }

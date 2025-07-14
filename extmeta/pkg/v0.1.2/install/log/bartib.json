@@ -24,10 +24,5 @@
       "reference": "https://github.com/nikolassv/bartib?tab=readme-ov-file#via-apk-alpine-linux",
       "dsnap": "bartib"
     }
-  },
-  "dsnap": {
-    "brew": "bartib",
-    "/cargo": "bartib",
-    "alpine/apk": "bartib"
   }
 }

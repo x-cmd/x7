@@ -50,13 +50,5 @@
       "cmd": "mkdir $HOME/src\ncd $HOME/src\ngit clone https://github.com/tdewolff/minify.git\ncd minify\nmake install\n",
       "reference": "https://github.com/tdewolff/minify/tree/master/cmd/minify#installation"
     }
-  },
-  "dsnap": {
-    "brew": "tdewolff/tap/minify",
-    "docker": "tdewolff/minify",
-    "/pip": "minify",
-    "/npm": "minify",
-    "/go": "minify",
-    "alpine/apk": "minify"
   }
 }

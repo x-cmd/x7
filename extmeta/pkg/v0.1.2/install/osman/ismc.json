@@ -11,8 +11,5 @@
       "reference": "https://github.com/dkorunic/iSMC#using-go-install",
       "dsnap": "github.com/dkorunic/iSMC@latest"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/dkorunic/iSMC@latest"
   }
 }

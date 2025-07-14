@@ -15,9 +15,5 @@
       "reference": "https://pypi.org/project/docutils/#files",
       "dsnap": "docutils"
     }
-  },
-  "dsnap": {
-    "brew": "docutils",
-    "/pip": "docutils"
   }
 }

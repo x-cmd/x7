@@ -41,12 +41,5 @@
       "cmd": "sudo apt-get install ffmpeg",
       "reference": "https://command-not-found.com/ffmpeg"
     }
-  },
-  "dsnap": {
-    "brew": "ffmpeg",
-    "pacman": "ffmpeg",
-    "alpine/apk": "ffmpeg",
-    "ubuntu/apt": "ffmpeg",
-    "debian/apt": "ffmpeg"
   }
 }

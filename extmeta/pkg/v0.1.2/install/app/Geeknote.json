@@ -15,9 +15,5 @@
       "cmd": "brew install --HEAD https://raw.githubusercontent.com/jeffkowalski/geeknote/master/geeknote.rb",
       "reference": "https://github.com/jeffkowalski/geeknote?tab=readme-ov-file#homebrew-installation"
     }
-  },
-  "dsnap": {
-    "brew": "geeknote",
-    "/pip": "pytest"
   }
 }

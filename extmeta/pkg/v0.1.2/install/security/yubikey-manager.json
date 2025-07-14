@@ -15,9 +15,5 @@
       "cmd": "brew install --cask yubico-yubikey-manager",
       "reference": "https://formulae.brew.sh/cask/yubico-yubikey-manager#default"
     }
-  },
-  "dsnap": {
-    "brew": "yubico-yubikey-manager",
-    "/pip": "yubikey-manager"
   }
 }

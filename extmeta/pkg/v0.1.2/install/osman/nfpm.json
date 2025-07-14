@@ -10,8 +10,5 @@
       "cmd": "brew install nfpm",
       "reference": "https://nfpm.goreleaser.com/install/#homebrew"
     }
-  },
-  "dsnap": {
-    "brew": "nfpm"
   }
 }

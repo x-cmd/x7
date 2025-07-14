@@ -10,8 +10,5 @@
       "cmd": "brew install orbstack",
       "reference": "https://docs.orbstack.dev/quick-start#installation"
     }
-  },
-  "dsnap": {
-    "brew": "orbstack"
   }
 }

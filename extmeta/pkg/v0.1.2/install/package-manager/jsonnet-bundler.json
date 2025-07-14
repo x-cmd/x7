@@ -27,9 +27,5 @@
       "reference": "https://tanka.dev/install#jsonnet-bundler",
       "dsnap": "github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb@latest"
     }
-  },
-  "dsnap": {
-    "brew": "jsonnet-bundler",
-    "/go": "github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb@latest"
   }
 }

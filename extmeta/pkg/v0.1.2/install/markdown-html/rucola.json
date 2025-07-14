@@ -23,9 +23,5 @@
       "cmd": "eget Linus-Mussmaecher/rucola",
       "reference": "https://github.com/Linus-Mussmaecher/rucola#installation"
     }
-  },
-  "dsnap": {
-    "brew": "Linus-Mussmaecher/tap/rucola",
-    "/cargo": "rucola-notes"
   }
 }

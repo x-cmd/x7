@@ -10,8 +10,5 @@
       "cmd": "brew install augeas",
       "reference": "https://formulae.brew.sh/formula/augeas#default"
     }
-  },
-  "dsnap": {
-    "brew": "augeas"
   }
 }

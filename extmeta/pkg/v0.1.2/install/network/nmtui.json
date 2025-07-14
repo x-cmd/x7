@@ -42,11 +42,5 @@
       "reference": "https://command-not-found.com/nmtui",
       "dsnap": "NetworkManager-tui-1"
     }
-  },
-  "dsnap": {
-    "fedora/dnf": "NetworkManager-tui-1",
-    "alpine/apk": "networkmanager",
-    "ubuntu/apt": "network-manager",
-    "debian/apt": "network-manager"
   }
 }

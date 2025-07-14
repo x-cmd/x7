@@ -50,14 +50,5 @@
       "cmd": "sudo apt-get install virtualenv",
       "reference": "https://command-not-found.com/virtualenv"
     }
-  },
-  "dsnap": {
-    "brew": "virtualenv",
-    "pacman": "virtualenv",
-    "yum": "virtualenv",
-    "/pip": "virtualenv",
-    "fedora/dnf": "virtualenv",
-    "ubuntu/apt": "virtualenv",
-    "debian/apt": "virtualenv"
   }
 }

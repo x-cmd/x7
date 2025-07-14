@@ -22,8 +22,5 @@
       "cmd": "x asdf use okteto",
       "reference": "https://github.com/BradenM/asdf-okteto?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "/go": "okteto"
   }
 }

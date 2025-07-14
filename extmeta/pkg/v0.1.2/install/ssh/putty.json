@@ -10,8 +10,5 @@
       "cmd": "brew install putty",
       "reference": "https://formulae.brew.sh/formula/putty#default"
     }
-  },
-  "dsnap": {
-    "brew": "putty"
   }
 }

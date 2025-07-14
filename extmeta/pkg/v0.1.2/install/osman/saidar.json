@@ -45,12 +45,5 @@
       "cmd": "sudo zypper install libstatgrab",
       "reference": "https://software.opensuse.org//download.html?project=openSUSE%3AFactory&package=libstatgrab"
     }
-  },
-  "dsnap": {
-    "brew": "libstatgrab",
-    "zypper": "libstatgrab",
-    "fedora/dnf": "saidar",
-    "ubuntu/apt": "saidar",
-    "debian/apt": "saidar"
   }
 }

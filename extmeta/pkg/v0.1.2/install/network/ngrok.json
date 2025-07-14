@@ -41,10 +41,5 @@
       "cmd": "sudo snap install ngrok",
       "reference": "https://download.ngrok.com/linux"
     }
-  },
-  "dsnap": {
-    "brew": "ngrok",
-    "ubuntu/apt": "ngrok",
-    "debian/apt": "ngrok"
   }
 }

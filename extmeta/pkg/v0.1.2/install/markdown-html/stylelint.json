@@ -15,8 +15,5 @@
       "cmd": "brew install stylelint",
       "reference": "https://formulae.brew.sh/formula/stylelint#default"
     }
-  },
-  "dsnap": {
-    "/npm": "stylelint"
   }
 }

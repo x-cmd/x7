@@ -18,8 +18,5 @@
       "cmd": "brew install pkgxdev/made/pkgx",
       "reference": "https://pkgx.sh/?via=brew"
     }
-  },
-  "dsnap": {
-    "/go": "pkgx"
   }
 }

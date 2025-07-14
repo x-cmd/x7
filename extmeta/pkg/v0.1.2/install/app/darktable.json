@@ -37,13 +37,5 @@
       "cmd": "sudo port install darktable +quartz",
       "reference": "https://www.darktable.org/install/"
     }
-  },
-  "dsnap": {
-    "brew": "darktable",
-    "flatpak": "org.darktable.Darktable",
-    "fedora/dnf": "darktable",
-    "alpine/apk": "darktable",
-    "ubuntu/apt": "darktable",
-    "debian/apt": "darktable"
   }
 }

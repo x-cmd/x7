@@ -15,9 +15,5 @@
       "cmd": "brew install lusingander/tap/ddv",
       "reference": "https://github.com/lusingander/ddv?tab=readme-ov-file#homebrew-macos"
     }
-  },
-  "dsnap": {
-    "brew": "ddv",
-    "/cargo": "ddv"
   }
 }

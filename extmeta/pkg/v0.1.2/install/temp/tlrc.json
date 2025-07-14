@@ -47,9 +47,5 @@
       "reference": "https://github.com/tldr-pages/tlrc?tab=readme-ov-file#from-cratesio",
       "dsnap": "tlrc"
     }
-  },
-  "dsnap": {
-    "brew": "tlrc",
-    "/cargo": "tlrc"
   }
 }

@@ -62,16 +62,5 @@
       "reference": "https://podman.io/docs/installation",
       "dsnap": "podman"
     }
-  },
-  "dsnap": {
-    "brew": "podman",
-    "yum": "podman",
-    "zypper": "podman",
-    "pacman": "podman",
-    "emerge": "podman",
-    "fedora/dnf": "podman",
-    "alpine/apk": "podman",
-    "ubuntu/apt": "podman",
-    "debian/apt": "podman"
   }
 }

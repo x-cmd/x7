@@ -11,8 +11,5 @@
       "reference": "https://github.com/noprobelm/tempy?tab=readme-ov-file#installation",
       "dsnap": "tempy"
     }
-  },
-  "dsnap": {
-    "/pip": "tempy"
   }
 }

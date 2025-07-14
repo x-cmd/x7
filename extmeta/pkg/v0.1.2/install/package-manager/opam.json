@@ -85,12 +85,5 @@
       "cmd": "x scoop install main/opam",
       "reference": "https://scoop.sh/#/apps?q=opam&id=27fc742eb0eb0f53e5ed84d5c1cc4bff7254ea16"
     }
-  },
-  "dsnap": {
-    "brew": "opam",
-    "winget": "opam",
-    "fedora/dnf": "opam",
-    "ubuntu/apt": "opam",
-    "debian/apt": "opam"
   }
 }

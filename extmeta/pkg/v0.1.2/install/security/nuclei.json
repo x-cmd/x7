@@ -15,9 +15,5 @@
       "cmd": "brew install nuclei",
       "reference": "https://github.com/projectdiscovery/nuclei?tab=readme-ov-file#install-nuclei"
     }
-  },
-  "dsnap": {
-    "brew": "nuclei",
-    "/go": "github.com/projectdiscovery/nuclei/v3/cmd/nuclei"
   }
 }

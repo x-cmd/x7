@@ -11,8 +11,5 @@
       "reference": "https://google.github.io/zx/getting-started#install",
       "dsnap": "zx"
     }
-  },
-  "dsnap": {
-    "/npm": "zx"
   }
 }

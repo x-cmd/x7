@@ -94,17 +94,5 @@
       "cmd": "x winget install nepnep.neofetch-win",
       "reference": "https://winget.run/pkg/nepnep/neofetch-win"
     }
-  },
-  "dsnap": {
-    "brew": "neofetch",
-    "pacman": "neofetch",
-    "emerge": "app-misc/neofetch",
-    "zypper": "neofetch",
-    "pkg": "neofetch",
-    "nix": "neofetch",
-    "fedora/dnf": "neofetch",
-    "alpine/apk": "neofetch",
-    "ubuntu/apt": "neofetch",
-    "debian/apt": "neofetch"
   }
 }

@@ -19,9 +19,5 @@
       "cmd": "brew install textualize/homebrew/frogmouth",
       "reference": "https://github.com/Textualize/frogmouth?tab=readme-ov-file#installing"
     }
-  },
-  "dsnap": {
-    "brew": "frogmouth",
-    "/pip": "frogmouth"
   }
 }

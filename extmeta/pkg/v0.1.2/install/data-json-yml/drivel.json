@@ -11,8 +11,5 @@
       "reference": "https://github.com/hgrsd/drivel?tab=readme-ov-file#installation",
       "dsnap": "drivel"
     }
-  },
-  "dsnap": {
-    "/cargo": "drivel"
   }
 }

@@ -19,8 +19,5 @@
       "cmd": "x pacman -S binsider",
       "reference": "https://binsider.dev/installation/other/"
     }
-  },
-  "dsnap": {
-    "/cargo": "binsider"
   }
 }

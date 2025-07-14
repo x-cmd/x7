@@ -19,9 +19,5 @@
       "cmd": "eget graelo/pumas",
       "reference": "https://github.com/graelo/pumas#installation"
     }
-  },
-  "dsnap": {
-    "brew": "pumas",
-    "/cargo": "pumas"
   }
 }

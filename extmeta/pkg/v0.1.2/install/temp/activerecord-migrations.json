@@ -10,8 +10,5 @@
       "cmd": "gem 'activerecord-migrations'",
       "reference": "https://github.com/ioquatix/activerecord-migrations?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "/go": "activerecord-migrations"
   }
 }

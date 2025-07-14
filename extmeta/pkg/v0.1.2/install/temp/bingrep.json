@@ -11,8 +11,5 @@
       "reference": "https://github.com/m4b/bingrep?tab=readme-ov-file#install",
       "dsnap": "bingrep"
     }
-  },
-  "dsnap": {
-    "/cargo": "bingrep"
   }
 }

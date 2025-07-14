@@ -57,14 +57,5 @@
       "cmd": "curl https://cisofy.com/files/lynis-3.0.9.tar.gz -o lynis.tar.gz",
       "reference": "https://cisofy.com/documentation/lynis/get-started/#installation-package"
     }
-  },
-  "dsnap": {
-    "brew": "lynis",
-    "pacman": "lynis",
-    "yum": "lynis",
-    "zypper": "lynis",
-    "fedora/dnf": "lynis",
-    "ubuntu/apt": "lynis",
-    "debian/apt": "lynis"
   }
 }

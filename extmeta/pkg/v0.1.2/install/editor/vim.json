@@ -66,12 +66,5 @@
       "cmd": "pkg_add vim",
       "reference": "https://rodolfo.io/openbsd/vim/2015/02/20/install-vim-openbsd.html"
     }
-  },
-  "dsnap": {
-    "brew": "vim",
-    "fedora/dnf": "vim",
-    "alpine/apk": "vim",
-    "ubuntu/apt": "vim",
-    "debian/apt": "vim"
   }
 }

@@ -11,8 +11,5 @@
       "reference": "https://www.npmjs.com/package/shelljs",
       "dsnap": "shelljs"
     }
-  },
-  "dsnap": {
-    "/npm": "shelljs"
   }
 }

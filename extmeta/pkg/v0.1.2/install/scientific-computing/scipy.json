@@ -34,12 +34,5 @@
       "reference": "https://scipy.org/install/#fedora",
       "dsnap": "python3-scipy"
     }
-  },
-  "dsnap": {
-    "brew": "scipy",
-    "/pip": "scipy",
-    "fedora/dnf": "python3-scipy",
-    "ubuntu/apt": "python3-scipy",
-    "debian/apt": "python3-scipy"
   }
 }

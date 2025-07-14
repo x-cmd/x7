@@ -15,9 +15,5 @@
       "reference": "https://github.com/tomnomnom/gron?tab=readme-ov-file#installation",
       "dsnap": "github.com/tomnomnom/gron@latest"
     }
-  },
-  "dsnap": {
-    "brew": "gron",
-    "/go": "github.com/tomnomnom/gron@latest"
   }
 }

@@ -26,8 +26,5 @@
       "cmd": "pkg install websocat",
       "reference": "https://github.com/vi/websocat#installation"
     }
-  },
-  "dsnap": {
-    "asdf": "websocat"
   }
 }

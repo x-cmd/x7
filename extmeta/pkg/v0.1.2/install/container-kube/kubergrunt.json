@@ -23,8 +23,5 @@
       "cmd": "x asdf use kubergrunt",
       "reference": "https://github.com/NeoHsu/asdf-kubergrunt?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "/go": "kubergrunt"
   }
 }

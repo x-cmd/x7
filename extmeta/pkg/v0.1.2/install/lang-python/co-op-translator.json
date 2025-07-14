@@ -15,8 +15,5 @@
       "cmd": "poetry add co-op-translator",
       "reference": "https://github.com/Azure/co-op-translator?tab=readme-ov-file#install-via-poetry"
     }
-  },
-  "dsnap": {
-    "/pip": "co-op-translator"
   }
 }

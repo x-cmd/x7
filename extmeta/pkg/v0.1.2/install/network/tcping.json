@@ -25,11 +25,5 @@
       "cmd": "brew install pouriyajamshidi/tap/tcping",
       "reference": "https://github.com/pouriyajamshidi/tcping?tab=readme-ov-file#download"
     }
-  },
-  "dsnap": {
-    "brew": "pouriyajamshidi/tap/tcping",
-    "/go": "github.com/pouriyajamshidi/tcping@latest",
-    "ubuntu/apt": "tcping_amd64.deb",
-    "debian/apt": "tcping_amd64.deb"
   }
 }

@@ -53,11 +53,5 @@
       "cmd": "sudo zypper ar https://nvidia.github.io/libnvidia-container/stable/rpm/nvidia-container-toolkit.repo \\ &&\nsudo zypper --gpg-auto-import-keys install -y nvidia-container-toolkit\n",
       "reference": "https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html#with-zypper-opensuse-sle"
     }
-  },
-  "dsnap": {
-    "zypper": "nvidia-container-toolkit",
-    "fedora/dnf": "nvidia-container-toolkit",
-    "ubuntu/apt": "nvidia-container-toolkit",
-    "debian/apt": "nvidia-container-toolkit"
   }
 }

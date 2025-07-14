@@ -15,9 +15,5 @@
       "reference": "https://gitlab.com/cmocka/cmocka/-/blob/master/INSTALL.md?ref_type=heads",
       "dsnap": "libcmocka-dev"
     }
-  },
-  "dsnap": {
-    "brew": "cmocka",
-    "ubuntu/apt": "libcmocka-dev"
   }
 }

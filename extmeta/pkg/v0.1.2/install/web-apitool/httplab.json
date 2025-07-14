@@ -19,8 +19,5 @@
       "reference": "https://github.com/qustavo/httplab#install",
       "dsnap": "github.com/gchaincl/httplab/cmd/httplab@latest"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/gchaincl/httplab/cmd/httplab@latest"
   }
 }

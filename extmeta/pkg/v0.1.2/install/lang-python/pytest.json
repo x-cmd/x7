@@ -11,8 +11,5 @@
       "reference": "https://docs.pytest.org/en/7.4.x/getting-started.html#install-pytest",
       "dsnap": "pytest"
     }
-  },
-  "dsnap": {
-    "/pip": "pytest"
   }
 }

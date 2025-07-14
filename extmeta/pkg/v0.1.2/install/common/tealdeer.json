@@ -37,12 +37,5 @@
       "cmd": "x scoop install tealdeer",
       "reference": "https://tealdeer-rs.github.io/tealdeer/installing.html#package-managers"
     }
-  },
-  "dsnap": {
-    "brew": "tealdeer",
-    "/cargo": "tealdeer",
-    "fedora/dnf": "tealdeer",
-    "alpine/apk": "tealdeer",
-    "debian/apt": "tealdeer"
   }
 }

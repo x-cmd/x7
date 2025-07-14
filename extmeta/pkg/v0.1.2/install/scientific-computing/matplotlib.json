@@ -50,12 +50,5 @@
       "cmd": "sudo apt-get install python3-matplotlib",
       "reference": "https://matplotlib.org/stable/users/installing/index.html#linux-package-manager"
     }
-  },
-  "dsnap": {
-    "brew": "python-matplotlib",
-    "/pip": "matplotlib",
-    "fedora/dnf": "python3-matplotlib",
-    "ubuntu/apt": "python3-matplotlib",
-    "debian/apt": "python3-matplotlib"
   }
 }

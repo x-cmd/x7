@@ -19,8 +19,5 @@
       "cmd": "brew install httpstat",
       "reference": "https://github.com/reorx/httpstat?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "/pip": "httpstat"
   }
 }

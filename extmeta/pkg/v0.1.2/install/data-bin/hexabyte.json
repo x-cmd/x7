@@ -15,8 +15,5 @@
       "reference": "https://github.com/thetacom/hexabyte#install",
       "dsnap": "hexabyte"
     }
-  },
-  "dsnap": {
-    "/pip": "hexabyte"
   }
 }

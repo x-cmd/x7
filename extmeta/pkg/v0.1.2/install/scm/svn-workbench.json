@@ -24,9 +24,5 @@
       "cmd": "sudo apt-get install svn-workbench",
       "reference": "https://command-not-found.com/svn-workbench"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "svn-workbench",
-    "debian/apt": "svn-workbench"
   }
 }

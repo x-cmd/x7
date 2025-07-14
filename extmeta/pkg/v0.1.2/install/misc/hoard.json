@@ -23,10 +23,5 @@
       "cmd": "sudo port install hoard-cli",
       "reference": "https://github.com/Hyde46/hoard?tab=readme-ov-file#macports-macos"
     }
-  },
-  "dsnap": {
-    "paru": "hoard",
-    "brew": "hoard",
-    "/cargo": "hoard-rs"
   }
 }

@@ -19,8 +19,5 @@
       "cmd": "x scoop install pueue",
       "reference": "https://scoop.sh/#/apps?q=pueue"
     }
-  },
-  "dsnap": {
-    "/cargo": "pueue"
   }
 }

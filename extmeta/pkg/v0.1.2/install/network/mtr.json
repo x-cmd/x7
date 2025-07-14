@@ -74,11 +74,5 @@
       "cmd": "sudo zypper addrepo https://download.opensuse.org/repositories/network:utilities/15.6/network:utilities.repo && \\\nsudo zypper refresh && \\\nsudo zypper install mtr\n",
       "reference": "https://software.opensuse.org/download.html?project=network%3Autilities&package=mtr"
     }
-  },
-  "dsnap": {
-    "fedora/dnf": "mtr",
-    "alpine/apk": "mtr",
-    "ubuntu/apt": "mtr",
-    "debian/apt": "mtr"
   }
 }

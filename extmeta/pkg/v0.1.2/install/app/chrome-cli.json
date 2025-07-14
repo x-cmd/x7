@@ -10,8 +10,5 @@
       "cmd": "brew install chrome-cli",
       "reference": "https://formulae.brew.sh/formula/chrome-cli#default"
     }
-  },
-  "dsnap": {
-    "brew": "chrome-cli"
   }
 }

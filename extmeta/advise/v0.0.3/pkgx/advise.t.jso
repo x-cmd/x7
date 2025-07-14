@@ -9,6 +9,38 @@ null
 }
 ]
 ,
+"--query|-Q"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Check if a given program is available via pkgx without executing it."
+,
+"cn"
+:
+"检查指定的程序是否可通过 pkgx 使用，但不实际执行。"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Software name"
+,
+"cn"
+:
+"软件名"
+}
+}
+}
+,
 "--quiet|-q"
 :
 {

@@ -11,8 +11,5 @@
       "reference": "https://github.com/koraa/huniq?tab=readme-ov-file#installation",
       "dsnap": "huniq"
     }
-  },
-  "dsnap": {
-    "/cargo": "huniq"
   }
 }

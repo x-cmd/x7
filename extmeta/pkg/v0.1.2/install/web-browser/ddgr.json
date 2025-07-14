@@ -20,10 +20,5 @@
       "reference": "https://github.com/jarun/ddgr?tab=readme-ov-file#from-a-package-manager",
       "dsnap": "ddgr"
     }
-  },
-  "dsnap": {
-    "brew": "ddgr",
-    "fedora/dnf": "ddgr",
-    "ubuntu/apt": "ddgr"
   }
 }

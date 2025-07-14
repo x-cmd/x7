@@ -15,8 +15,5 @@
       "cmd": "nix profile install github:nate-sys/tuime",
       "reference": "https://github.com/nate-sys/tuime?tab=readme-ov-file#nix"
     }
-  },
-  "dsnap": {
-    "/cargo": "tuime"
   }
 }

@@ -19,8 +19,5 @@
       "cmd": "apk add netscanner --repository=http://dl-cdn.alpinelinux.org/alpine/edge/testing/",
       "reference": "https://github.com/Chleba/netscanner?tab=readme-ov-file#install-on-alpineedge-linux"
     }
-  },
-  "dsnap": {
-    "/cargo": "netscanner"
   }
 }

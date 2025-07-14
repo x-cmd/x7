@@ -37,12 +37,5 @@
       "cmd": "sudo apt-get install systemd",
       "reference": "https://dockerfile.run/systemctl"
     }
-  },
-  "dsnap": {
-    "pacman": "systemd",
-    "yum": "systemd",
-    "fedora/dnf": "systemd",
-    "ubuntu/apt": "systemd",
-    "debian/apt": "systemd"
   }
 }

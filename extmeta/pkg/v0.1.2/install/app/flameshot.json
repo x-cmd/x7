@@ -109,12 +109,5 @@
       "cmd": "sudo snap install flameshot",
       "reference": "https://snapcraft.io/install/flameshot/ubuntu"
     }
-  },
-  "dsnap": {
-    "brew": "flameshot",
-    "snap": "flameshot",
-    "fedora/dnf": "flameshot",
-    "ubuntu/apt": "flameshot",
-    "debian/apt": "flameshot"
   }
 }

@@ -11,8 +11,5 @@
       "reference": "https://github.com/egoist/tsup?tab=readme-ov-file#%EF%B8%8F-install",
       "dsnap": "tsup"
     }
-  },
-  "dsnap": {
-    "/npm": "tsup"
   }
 }

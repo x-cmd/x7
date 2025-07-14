@@ -19,8 +19,5 @@
       "cmd": "nix-env -iA nixpkgs.impala",
       "reference": "https://github.com/pythops/impala#-installation"
     }
-  },
-  "dsnap": {
-    "/cargo": "impala"
   }
 }

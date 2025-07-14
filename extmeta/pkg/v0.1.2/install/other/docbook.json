@@ -10,8 +10,5 @@
       "cmd": "brew install docbook",
       "reference": "https://formulae.brew.sh/formula/docbook#default"
     }
-  },
-  "dsnap": {
-    "brew": "docbook"
   }
 }

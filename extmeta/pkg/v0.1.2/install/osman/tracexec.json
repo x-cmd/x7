@@ -15,8 +15,5 @@
       "reference": "https://github.com/kxxt/tracexec/blob/main/INSTALL.md#install-via-cargo",
       "dsnap": "tracexec"
     }
-  },
-  "dsnap": {
-    "/cargo": "tracexec"
   }
 }

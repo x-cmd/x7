@@ -37,14 +37,5 @@
       "reference": "https://github.com/dvorka/hstr/blob/master/INSTALLATION.md#alpine-linux",
       "dsnap": "hstr"
     }
-  },
-  "dsnap": {
-    "brew": "hstr",
-    "port": "hstr",
-    "yum": "hstr",
-    "emerge": "app-shells/hstr",
-    "fedora/dnf": "hstr",
-    "alpine/apk": "hstr",
-    "ubuntu/apt": "hstr"
   }
 }

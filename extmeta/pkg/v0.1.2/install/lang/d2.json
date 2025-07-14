@@ -23,8 +23,5 @@
       "cmd": "x scoop install d2",
       "reference": "https://scoop.sh/#/apps?q=d2"
     }
-  },
-  "dsnap": {
-    "/go": "oss.terrastruct.com/d2"
   }
 }

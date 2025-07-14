@@ -10,8 +10,5 @@
       "cmd": "brew install mesa-glu",
       "reference": "https://formulae.brew.sh/formula/mesa-glu#default"
     }
-  },
-  "dsnap": {
-    "brew": "mesa-glu"
   }
 }

@@ -51,9 +51,5 @@
       "reference": "https://kopia.io/docs/installation/#compilation-from-source",
       "dsnap": "kopia"
     }
-  },
-  "dsnap": {
-    "brew": "kopia",
-    "/go": "kopia"
   }
 }

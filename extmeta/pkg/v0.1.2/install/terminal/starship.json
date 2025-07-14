@@ -88,11 +88,5 @@
       "cmd": "x winget install starship",
       "reference": "https://github.com/starship/starship"
     }
-  },
-  "dsnap": {
-    "brew": "starship",
-    "/cargo": "starship",
-    "fedora/dnf": "starship",
-    "alpine/apk": "starship"
   }
 }

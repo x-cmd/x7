@@ -35,9 +35,5 @@
       "reference": "https://github.com/AmmarAbouZor/tui-journal?tab=readme-ov-file#install-with-default-features",
       "dsnap": "tui-journal"
     }
-  },
-  "dsnap": {
-    "brew": "AmmarAbouZor/homebrew-tui-journal/tui-journal",
-    "/cargo": "tui-journal"
   }
 }

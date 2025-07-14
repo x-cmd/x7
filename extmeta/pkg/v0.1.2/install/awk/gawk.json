@@ -53,16 +53,5 @@
       "cmd": "sudo zypper install -y gawk",
       "reference": "http://blog.fpliu.com/it/software/GNU/awk"
     }
-  },
-  "dsnap": {
-    "brew": "gawk",
-    "yum": "gawk",
-    "pacman": "gawk",
-    "emerge": "gawk",
-    "zypper": "gawk",
-    "fedora/dnf": "gawk",
-    "alpine/apk": "gawk",
-    "ubuntu/apt": "gawk",
-    "debian/apt": "gawk"
   }
 }

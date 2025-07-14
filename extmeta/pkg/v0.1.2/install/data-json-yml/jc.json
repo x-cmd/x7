@@ -48,11 +48,5 @@
       "cmd": "portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean",
       "reference": "https://github.com/kellyjonbrazil/jc?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "brew": "jc",
-    "/pip": "jc",
-    "fedora/dnf": "jc",
-    "alpine/apk": "jc"
   }
 }

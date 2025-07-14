@@ -31,8 +31,5 @@
       "cmd": "x choco install kustomize",
       "reference": "https://kubectl.docs.kubernetes.io/installation/kustomize/chocolatey/"
     }
-  },
-  "dsnap": {
-    "/go": "sigs.k8s.io/kustomize/kustomize/v5"
   }
 }

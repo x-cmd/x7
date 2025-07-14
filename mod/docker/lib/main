@@ -6,7 +6,7 @@
 
 ___x_cmd log init docker
 xrc:mod:lib docker      ximg/_index     origin/_index   ext/_index   mirror/_index   daemon/_index \
-    app setup advise id simg/_index     snap/_index     refit/_index    cfg
+    app setup advise id simg/_index     snap/_index     refit/_index    cfg     fz/_index
 
 ___x_cmd_docker___main(){
     [ "$#" -gt 0 ] || set - --help
@@ -55,14 +55,20 @@ ___x_cmd_docker___main(){
         mirror)         ___x_cmd_docker_mirror              "$@"  ;;
         d|daemon)       ___x_cmd_docker_daemon              "$@"  ;;
 
+        lz)             ___x_cmd_docker_lz                  "$@"  ;;
+
         x/*)            ___x_cmd_docker_rritq "$op"         "$@"  ;;
         %*)             ___x_cmd_docker_rritq "x/${op#%}"   "$@"  ;;
+
         alp|alpine|bus|busybox|cen|centos|deb|debian|\
         fed|fedora|ubu|ubuntu|gen|gentoo|\
         roc|rocky|alm|almal)
                         ___x_cmd_docker_rritq "x/$op"       "$@"  ;;
 
-        simg|snap)      ___x_cmd_docker_"$op"               "$@"  ;;
+        simg|snap|snapx|fz)
+                        ___x_cmd_docker_"$op"               "$@"  ;;
+
+        :*)             ___x_cmd_docker_snapx "$op#"        "$@"  ;;
 
         --cfg|cfg)      ___x_cmd_docker_cfg                 "$@"  ;;
         --init|init)    ___x_cmd_docker_init                "$@"  ;;
@@ -113,4 +119,8 @@ ___x_cmd___docker_origin(){
     fi
 
     "$@"
+}
+
+___x_cmd_docker_lz(){
+    ___x_cmd lazydocker "$@"
 }

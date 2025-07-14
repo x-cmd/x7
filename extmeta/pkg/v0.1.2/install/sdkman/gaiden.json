@@ -10,8 +10,5 @@
       "cmd": "sdk install gaiden",
       "reference": "http://kobo.github.io/gaiden/getting-started.html#installation"
     }
-  },
-  "dsnap": {
-    "groovy": "gaiden"
   }
 }

@@ -20,10 +20,5 @@
       "cmd": "sudo apt-get install mdp",
       "reference": "brew install mdp"
     }
-  },
-  "dsnap": {
-    "brew": "mdp",
-    "ubuntu/apt": "mdp",
-    "debian/apt": "mdp"
   }
 }

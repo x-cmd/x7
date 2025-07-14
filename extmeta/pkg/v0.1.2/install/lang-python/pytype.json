@@ -15,8 +15,5 @@
       "cmd": "sudo apt install build-essential python3-dev libpython3-dev",
       "reference": "https://github.com/google/pytype?tab=readme-ov-file#installing-on-wsl"
     }
-  },
-  "dsnap": {
-    "/pip": "pytype"
   }
 }

@@ -34,8 +34,5 @@
       "cmd": "x asdf use flux",
       "reference": "https://github.com/tablexi/asdf-flux2?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "brew": "flux"
   }
 }

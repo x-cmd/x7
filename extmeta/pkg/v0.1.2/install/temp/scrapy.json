@@ -11,8 +11,5 @@
       "reference": "https://github.com/scrapy/scrapy?tab=readme-ov-file#install",
       "dsnap": "scrapy"
     }
-  },
-  "dsnap": {
-    "/pip": "scrapy"
   }
 }

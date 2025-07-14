@@ -72,10 +72,5 @@
       "cmd": "mamba install git-delta -c conda-forge",
       "reference": "https://dandavison.github.io/delta/installation.html"
     }
-  },
-  "dsnap": {
-    "brew": "git-delta",
-    "/cargo": "git-delta",
-    "fedora/dnf": "git-delta"
   }
 }

@@ -11,8 +11,5 @@
       "reference": "https://github.com/OJ/gobuster?tab=readme-ov-file#easy-installation",
       "dsnap": "github.com/OJ/gobuster/v3"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/OJ/gobuster/v3"
   }
 }

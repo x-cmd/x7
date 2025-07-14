@@ -18,8 +18,5 @@
       "cmd": "brew install --cask visual-studio",
       "reference": "https://formulae.brew.sh/cask/visual-studio#default"
     }
-  },
-  "dsnap": {
-    "brew": "visual-studio"
   }
 }

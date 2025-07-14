@@ -46,13 +46,5 @@
       "cmd": "sudo apt-get install julia",
       "reference": "https://command-not-found.com/julia"
     }
-  },
-  "dsnap": {
-    "brew": "julia",
-    "pacman": "julia",
-    "fedora/dnf": "julia",
-    "alpine/apk": "julia",
-    "ubuntu/apt": "julia",
-    "debian/apt": "julia"
   }
 }

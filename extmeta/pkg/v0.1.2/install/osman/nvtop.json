@@ -73,12 +73,5 @@
       "cmd": "pixi global install nvtop",
       "reference": "https://github.com/Syllo/nvtop?tab=readme-ov-file#pixi"
     }
-  },
-  "dsnap": {
-    "pacman": "nvtop",
-    "zypper": "nvtop",
-    "fedora/dnf": "nvtop",
-    "ubuntu/apt": "nvtop",
-    "debian/apt": "nvtop"
   }
 }

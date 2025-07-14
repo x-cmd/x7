@@ -27,10 +27,5 @@
       "cmd": "sudo port install murex",
       "reference": "https://murex.rocks/INSTALL.html#macports"
     }
-  },
-  "dsnap": {
-    "brew": "murex",
-    "port": "murex",
-    "/go": "github.com/lmorg/murex@latest"
   }
 }

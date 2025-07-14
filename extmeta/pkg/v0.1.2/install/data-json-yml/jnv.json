@@ -19,10 +19,5 @@
       "reference": "https://github.com/ynqa/jnv?tab=readme-ov-file#cargo",
       "dsnap": "jnv"
     }
-  },
-  "dsnap": {
-    "brew": "ynqa/tap/jnv",
-    "port": "jnv",
-    "/cargo": "jnv"
   }
 }

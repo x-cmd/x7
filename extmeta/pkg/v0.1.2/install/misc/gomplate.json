@@ -45,11 +45,5 @@
       "cmd": "sh <(curl https://tea.xyz) +gomplate.ca sh",
       "reference": "https://docs.gomplate.ca/installing/#install-with-teaxyz"
     }
-  },
-  "dsnap": {
-    "brew": "gomplate",
-    "/npm": "gomplate",
-    "/go": "gomplate",
-    "alpine/apk": "gomplate"
   }
 }

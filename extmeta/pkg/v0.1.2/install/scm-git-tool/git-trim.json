@@ -15,9 +15,5 @@
       "cmd": "brew install git-trim",
       "reference": "https://formulae.brew.sh/formula/git-trim#default"
     }
-  },
-  "dsnap": {
-    "brew": "git-trim",
-    "/cargo": "git-trim"
   }
 }

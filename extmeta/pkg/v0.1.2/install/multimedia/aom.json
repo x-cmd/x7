@@ -10,8 +10,5 @@
       "cmd": "brew install aom",
       "reference": "https://formulae.brew.sh/formula/aom#default"
     }
-  },
-  "dsnap": {
-    "brew": "aom"
   }
 }

@@ -43,8 +43,5 @@
       "cmd": "sudo nix-env -iA trippy",
       "reference": "https://trippy.cli.rs/#nix"
     }
-  },
-  "dsnap": {
-    "/cargo": "trippy"
   }
 }

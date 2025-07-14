@@ -18,8 +18,5 @@
       "cmd": "brew install wasmtime",
       "reference": "https://formulae.brew.sh/formula/wasmtime#default"
     }
-  },
-  "dsnap": {
-    "/cargo": "wasmtime"
   }
 }

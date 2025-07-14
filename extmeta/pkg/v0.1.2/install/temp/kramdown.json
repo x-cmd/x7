@@ -28,10 +28,5 @@
       "cmd": "sudo gem install kramdown",
       "reference": "https://kramdown.gettalong.org/installation.html"
     }
-  },
-  "dsnap": {
-    "gem": "kramdown",
-    "ubuntu/apt": "ruby",
-    "debian/apt": "ruby"
   }
 }

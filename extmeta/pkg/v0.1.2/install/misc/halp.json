@@ -19,8 +19,5 @@
       "cmd": "paru -S halp-git",
       "reference": "https://github.com/orhun/halp?tab=readme-ov-file#arch-linux"
     }
-  },
-  "dsnap": {
-    "/cargo": "halp"
   }
 }

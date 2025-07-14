@@ -31,8 +31,5 @@
       "cmd": "brew install wasmer",
       "reference": "https://formulae.brew.sh/formula/wasmer#default"
     }
-  },
-  "dsnap": {
-    "/cargo": "wasmer-cli"
   }
 }

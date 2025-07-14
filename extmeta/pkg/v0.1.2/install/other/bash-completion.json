@@ -10,8 +10,5 @@
       "cmd": "brew install bash-completion",
       "reference": "https://formulae.brew.sh/formula/bash-completion#default"
     }
-  },
-  "dsnap": {
-    "brew": "bash-completion"
   }
 }

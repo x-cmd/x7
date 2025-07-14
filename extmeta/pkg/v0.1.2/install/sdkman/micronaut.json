@@ -26,8 +26,5 @@
       "cmd": "x choco install micronaut",
       "reference": "https://micronaut-projects.github.io/micronaut-starter/latest/guide/index.html#installChocolatey"
     }
-  },
-  "dsnap": {
-    "sdk": "micronaut"
   }
 }

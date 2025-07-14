@@ -19,10 +19,5 @@
       "cmd": "sudo zypper in macchina",
       "reference": "https://github.com/Macchina-CLI/macchina/wiki/Installation#opensuse-tumbleweed"
     }
-  },
-  "dsnap": {
-    "brew": "macchina",
-    "/cargo": "macchina",
-    "fedora/dnf": "macchina"
   }
 }

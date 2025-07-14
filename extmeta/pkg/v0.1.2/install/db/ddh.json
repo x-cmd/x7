@@ -15,9 +15,5 @@
       "cmd": "brew install ddh",
       "reference": "https://formulae.brew.sh/formula/ddh#default"
     }
-  },
-  "dsnap": {
-    "brew": "ddh",
-    "/cargo": "ddh"
   }
 }

@@ -31,8 +31,5 @@
       "reference": "https://github.com/Equationzhao/g?tab=readme-ov-file#from-source",
       "dsnap": "github.com/Equationzhao/g@latest"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/Equationzhao/g@latest"
   }
 }

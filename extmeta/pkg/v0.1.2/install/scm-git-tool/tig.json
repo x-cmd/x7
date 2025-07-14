@@ -50,15 +50,5 @@
       "cmd": "nix-env -i tig",
       "reference": "https://github.com/jonas/tig/blob/master/INSTALL.adoc#installation-using-nix"
     }
-  },
-  "dsnap": {
-    "brew": "tig",
-    "pacman": "tig",
-    "pkg": "tig",
-    "nix": "tig",
-    "fedora/dnf": "tig",
-    "alpine/apk": "tig",
-    "ubuntu/apt": "tig",
-    "debian/apt": "tig"
   }
 }

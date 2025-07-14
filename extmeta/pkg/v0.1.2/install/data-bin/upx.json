@@ -24,9 +24,5 @@
       "reference": "https://command-not-found.com/zstd",
       "dsnap": "upx"
     }
-  },
-  "dsnap": {
-    "fedora/dnf": "upx",
-    "alpine/apk": "upx"
   }
 }

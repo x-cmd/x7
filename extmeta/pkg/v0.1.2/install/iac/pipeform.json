@@ -11,8 +11,5 @@
       "reference": "https://github.com/magodo/pipeform#installation",
       "dsnap": "github.com/magodo/pipeform@main"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/magodo/pipeform@main"
   }
 }

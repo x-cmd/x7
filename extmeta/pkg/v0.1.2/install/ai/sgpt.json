@@ -19,9 +19,5 @@
       "reference": "https://github.com/tbckr/sgpt?tab=readme-ov-file#using-go",
       "dsnap": "sgpt"
     }
-  },
-  "dsnap": {
-    "brew": "sgpt",
-    "/go": "sgpt"
   }
 }

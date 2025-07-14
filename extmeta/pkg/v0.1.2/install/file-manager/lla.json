@@ -27,8 +27,5 @@
       "cmd": "pkgin install lla",
       "reference": "https://github.com/chaqchase/lla?tab=readme-ov-file#using-package-manager"
     }
-  },
-  "dsnap": {
-    "/cargo": "lla"
   }
 }

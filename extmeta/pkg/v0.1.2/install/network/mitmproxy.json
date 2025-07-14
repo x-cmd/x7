@@ -61,14 +61,5 @@
       "cmd": "x choco install mitmproxy",
       "reference": "https://community.chocolatey.org/packages?q=mitmproxy"
     }
-  },
-  "dsnap": {
-    "brew": "mitmproxy",
-    "zypper": "mitmproxy",
-    "pacman": "mitmproxy",
-    "/pip": "mitmproxy",
-    "fedora/dnf": "mitmproxy",
-    "ubuntu/apt": "mitmproxy",
-    "debian/apt": "mitmproxy"
   }
 }

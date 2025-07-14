@@ -24,10 +24,5 @@
       "reference": "https://github.com/wg/wrk",
       "dsnap": "wrk"
     }
-  },
-  "dsnap": {
-    "brew": "wrk",
-    "ubuntu/apt": "wrk",
-    "debian/apt": "wrk"
   }
 }

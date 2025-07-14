@@ -10,8 +10,5 @@
       "cmd": "sdk install infrastructor",
       "reference": "https://github.com/infrastructor/infrastructor#installation"
     }
-  },
-  "dsnap": {
-    "groovy": "infrastructor"
   }
 }

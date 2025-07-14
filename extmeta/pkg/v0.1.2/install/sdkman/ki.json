@@ -26,8 +26,5 @@
       "cmd": "sudo trizen -S ki-shell-bin",
       "reference": "https://github.com/Kotlin/kotlin-interactive-shell#arch-linux"
     }
-  },
-  "dsnap": {
-    "brew": "ki"
   }
 }

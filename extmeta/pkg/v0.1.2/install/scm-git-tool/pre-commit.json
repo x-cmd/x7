@@ -19,9 +19,5 @@
       "cmd": "brew install pre-commit",
       "reference": "https://formulae.brew.sh/formula/pre-commit#default"
     }
-  },
-  "dsnap": {
-    "brew": "pre-commit",
-    "/pip": "pre-commit"
   }
 }

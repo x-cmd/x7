@@ -11,8 +11,5 @@
       "reference": "https://github.com/landscapeio/prospector?tab=readme-ov-file#installation",
       "dsnap": "prospector"
     }
-  },
-  "dsnap": {
-    "/pip": "prospector"
   }
 }

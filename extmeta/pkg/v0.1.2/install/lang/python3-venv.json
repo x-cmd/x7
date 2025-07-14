@@ -16,9 +16,5 @@
       "reference": "https://packages.ubuntu.com/",
       "dsnap": "python3-venv"
     }
-  },
-  "dsnap": {
-    "debian/apt": "python3-venv",
-    "ubuntu/apt": "python3-venv"
   }
 }

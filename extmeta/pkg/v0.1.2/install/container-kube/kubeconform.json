@@ -23,10 +23,5 @@
       "cmd": "x asdf use kubeconform",
       "reference": "https://github.com/lirlia/asdf-kubeconform?tab=readme-ov-file#usage"
     }
-  },
-  "dsnap": {
-    "brew": "kubeconform",
-    "winget": "YannHamon.kubeconform",
-    "/go": "github.com/yannh/kubeconform/cmd/kubeconform@latest"
   }
 }

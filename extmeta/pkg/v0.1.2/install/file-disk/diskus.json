@@ -27,9 +27,5 @@
       "cmd": "pacman -S diskus",
       "reference": "https://github.com/sharkdp/diskus?tab=readme-ov-file#on-arch-based-systems"
     }
-  },
-  "dsnap": {
-    "brew": "diskus",
-    "/cargo": "diskus"
   }
 }

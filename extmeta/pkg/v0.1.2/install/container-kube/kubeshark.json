@@ -26,8 +26,5 @@
       "cmd": "x asdf use kubeshark",
       "reference": "https://github.com/carnei-ro/asdf-kubeshark?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "brew": "kubeshark"
   }
 }

@@ -19,8 +19,5 @@
       "cmd": "brew install pip-audit",
       "reference": "https://formulae.brew.sh/formula/pip-audit#default"
     }
-  },
-  "dsnap": {
-    "/pip": "pip-audit"
   }
 }

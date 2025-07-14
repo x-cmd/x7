@@ -23,10 +23,5 @@
       "cmd": "pipx install snowmachine",
       "reference": "https://github.com/sontek/snowmachine#snowmachine"
     }
-  },
-  "dsnap": {
-    "brew": "snowmachine",
-    "pipx": "snowmachine",
-    "/pip": "snowmachine"
   }
 }

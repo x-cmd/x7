@@ -15,9 +15,5 @@
       "cmd": "brew install licensor",
       "reference": "https://github.com/raftario/licensor?tab=readme-ov-file#homebrew"
     }
-  },
-  "dsnap": {
-    "brew": "licensor",
-    "/cargo": "licensor"
   }
 }

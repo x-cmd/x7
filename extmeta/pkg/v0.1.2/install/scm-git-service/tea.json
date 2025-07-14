@@ -36,11 +36,5 @@
       "cmd": "git clone https://gitea.com/gitea/tea.git # or: tea clone gitea.com/gitea/tea ;)\ncd tea\nmake\n",
       "reference": "https://gitea.com/gitea/tea#compilation"
     }
-  },
-  "dsnap": {
-    "brew": "tea",
-    "/go": "tea",
-    "ubuntu/apt": "tea",
-    "debian/apt": "tea"
   }
 }

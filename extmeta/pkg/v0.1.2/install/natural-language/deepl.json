@@ -11,8 +11,5 @@
       "reference": "https://github.com/deeplcom/deepl-python?tab=readme-ov-file#installation",
       "dsnap": "deepl"
     }
-  },
-  "dsnap": {
-    "/pip": "deepl"
   }
 }

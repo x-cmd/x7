@@ -20,10 +20,5 @@
       "reference": "https://pypi.org/project/aws-cdk-lib/",
       "dsnap": "aws-cdk-lib"
     }
-  },
-  "dsnap": {
-    "brew": "aws-cdk",
-    "/pip": "aws-cdk-lib",
-    "/npm": "aws-cdk"
   }
 }

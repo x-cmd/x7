@@ -28,11 +28,5 @@
       "cmd": "sudo bash -c \"curl https://raw.githubusercontent.com/ravachol/kew/main/install.sh | bash\"",
       "reference": "https://github.com/ravachol/kew?tab=readme-ov-file#installing-with-quick-install-script"
     }
-  },
-  "dsnap": {
-    "yay": "kew",
-    "brew": "kew",
-    "ubuntu/apt": "kew",
-    "debian/apt": "kew"
   }
 }

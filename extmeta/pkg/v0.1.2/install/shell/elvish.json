@@ -44,12 +44,5 @@
       "cmd": "sudo port selfupdate && sudo port install elvish",
       "reference": "https://elv.sh/get/#macos"
     }
-  },
-  "dsnap": {
-    "brew": "elvish",
-    "pacman": "elvish",
-    "nix": "elvish",
-    "ubuntu/apt": "elvish",
-    "debian/apt": "elvish"
   }
 }

@@ -24,10 +24,5 @@
       "reference": "https://repology.org/project/fnt/versions",
       "dsnap": "fnt"
     }
-  },
-  "dsnap": {
-    "brew": "fnt",
-    "ubuntu/apt": "fnt",
-    "debian/apt": "fnt"
   }
 }

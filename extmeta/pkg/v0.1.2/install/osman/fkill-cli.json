@@ -11,8 +11,5 @@
       "reference": "https://github.com/sindresorhus/fkill-cli?tab=readme-ov-file#install",
       "dsnap": "fkill-cli"
     }
-  },
-  "dsnap": {
-    "/npm": "fkill-cli"
   }
 }

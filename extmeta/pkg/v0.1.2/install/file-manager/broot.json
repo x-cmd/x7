@@ -50,15 +50,5 @@
       "cmd": "sudo zypper install broot",
       "reference": "https://software.opensuse.org//download.html?project=openSUSE%3AFactory&package=broot"
     }
-  },
-  "dsnap": {
-    "brew": "broot",
-    "pkgin": "broot",
-    "emerge": "broot",
-    "zypper": "broot",
-    "/cargo": "broot",
-    "alpine/apk": "broot",
-    "ubuntu/apt": "broot",
-    "debian/apt": "broot"
   }
 }

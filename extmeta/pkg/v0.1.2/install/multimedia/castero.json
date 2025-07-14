@@ -11,8 +11,5 @@
       "reference": "https://github.com/xgi/castero?tab=readme-ov-file#installation",
       "dsnap": "castero"
     }
-  },
-  "dsnap": {
-    "/pip": "castero"
   }
 }

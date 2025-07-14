@@ -11,8 +11,5 @@
       "reference": "https://github.com/schachmat/wego?tab=readme-ov-file#installation",
       "dsnap": "github.com/schachmat/wego@latest"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/schachmat/wego@latest"
   }
 }

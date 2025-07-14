@@ -49,15 +49,5 @@
       "cmd": "nix-env -i exa",
       "reference": "https://the.exa.website/"
     }
-  },
-  "dsnap": {
-    "pacman": "exa",
-    "zypper": "exa",
-    "emerge": "sys-apps/exa",
-    "nix": "exa",
-    "fedora/dnf": "exa",
-    "alpine/apk": "exa",
-    "ubuntu/apt": "exa",
-    "debian/apt": "exa"
   }
 }

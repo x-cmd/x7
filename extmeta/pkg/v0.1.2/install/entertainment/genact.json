@@ -47,8 +47,5 @@
       "cmd": "curl -L https://github.com/svenstaro/genact/releases/download/v1.3.0/genact-1.3.0-x86_64-apple-darwin -o genact-osx && \\\nchmod +x genact-osx\n",
       "reference": "https://github.com/svenstaro/genact?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "/cargo": "genact"
   }
 }

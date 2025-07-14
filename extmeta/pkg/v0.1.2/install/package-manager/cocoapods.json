@@ -18,8 +18,5 @@
       "cmd": "brew install cocoapods",
       "reference": "https://formulae.brew.sh/formula/cocoapods#default"
     }
-  },
-  "dsnap": {
-    "gem": "cocoapods"
   }
 }

@@ -11,8 +11,5 @@
       "reference": "https://github.com/happyapplehorse/gptui?tab=readme-ov-file#install-with-pip",
       "dsnap": "gptui"
     }
-  },
-  "dsnap": {
-    "/pip": "gptui"
   }
 }

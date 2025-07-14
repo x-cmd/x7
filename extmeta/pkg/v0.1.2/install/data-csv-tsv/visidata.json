@@ -36,13 +36,5 @@
       "cmd": "guix install visidata",
       "reference": "https://www.visidata.org/install/#linux"
     }
-  },
-  "dsnap": {
-    "brew": "visidata",
-    "pacman": "visidata",
-    "nix-env": "visidata",
-    "guix": "visidata",
-    "/pip": "visidata",
-    "debian/apt": "visidata"
   }
 }

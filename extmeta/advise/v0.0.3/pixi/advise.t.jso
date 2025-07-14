@@ -20,11 +20,15 @@ null
 ,
 "install|i"
 ,
+"reinstall"
+,
+"lock"
+,
 "update"
 ,
 "run|r"
 ,
-"project"
+"workspace"
 ,
 "task"
 ,
@@ -135,6 +139,38 @@ null
 }
 }
 ,
+"reinstall"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Re-install an environment, both updating the lockfile and re-installing the environment"
+,
+"cn"
+:
+"重新安装环境，同时更新锁定文件"
+}
+}
+,
+"lock"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Solve environment and update the lock file without installing the environments"
+,
+"cn"
+:
+"解决环境并更新锁定文件，而不安装环境"
+}
+}
+,
 "update"
 :
 {
@@ -231,7 +267,7 @@ null
 }
 }
 ,
-"project"
+"workspace"
 :
 {
 "#desc"
@@ -239,16 +275,16 @@ null
 {
 "en"
 :
-"Modify the project configuration file through the command line"
+"Modify the workspace configuration file through the command line"
 ,
 "cn"
 :
-"通过命令行修改项目配置文件"
+"通过命令行来修改工作区的配置文件"
 }
 ,
 "$ref"
 :
-"x-cmd-advise://pixi/data/project/advise.t.jso"
+"x-cmd-advise://pixi/data/workspace/advise.t.jso"
 }
 ,
 "task"

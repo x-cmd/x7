@@ -6,25 +6,40 @@
     "en": "The universal proxy platform"
   },
   "rule": {
-    "debian/curl": {
-      "cmd": "bash <(curl -fsSL https://sing-box.app/deb-install.sh)",
+    "/curl": {
+      "cmd": "curl -fsSL https://sing-box.app/install.sh | sh",
       "reference": "https://sing-box.sagernet.org/installation/package-manager/"
     },
-    "ubuntu/curl": {
-      "cmd": "bash <(curl -fsSL https://sing-box.app/deb-install.sh)",
+    "darwin/brew": {
+      "cmd": "brew install sing-box",
       "reference": "https://sing-box.sagernet.org/installation/package-manager/"
     },
-    "rhel/curl": {
-      "cmd": "bash <(curl -fsSL https://sing-box.app/rpm-install.sh)",
+    "alpine/apk": {
+      "cmd": "apk add sing-box",
+      "reference": "https://sing-box.sagernet.org/installation/package-manager/",
+      "dsnap": "sing-box"
+    },
+    "ubuntu/apt": {
+      "cmd": "apt install sing-box",
+      "reference": "https://sing-box.sagernet.org/installation/package-manager/",
+      "dsnap": "sing-box"
+    },
+    "debian/apt": {
+      "cmd": "apt install sing-box",
+      "reference": "https://sing-box.sagernet.org/installation/package-manager/",
+      "dsnap": "sing-box"
+    },
+    "(win|wsl2)/scoop": {
+      "cmd": "scoop install sing-box",
       "reference": "https://sing-box.sagernet.org/installation/package-manager/"
     },
-    "arch/curl": {
-      "cmd": "bash <(curl -fsSL https://sing-box.app/arch-install.sh)",
+    "(win|wsl2)/choco": {
+      "cmd": "choco install sing-box",
+      "reference": "https://sing-box.sagernet.org/installation/package-manager/"
+    },
+    "(win|wsl2)/winget": {
+      "cmd": "winget install sing-box",
       "reference": "https://sing-box.sagernet.org/installation/package-manager/"
     }
-  },
-  "dsnap": {
-    "fedora/dnf": "sing-box",
-    "alpine/apk": "sing-box"
   }
 }

@@ -20,10 +20,5 @@
       "cmd": "brew install fman/tap/fman",
       "reference": "https://github.com/nore-dev/fman?tab=readme-ov-file#brew"
     }
-  },
-  "dsnap": {
-    "brew": "fman/tap/fman",
-    "/npm": "@nore-dev/fman",
-    "/go": "github.com/nore-dev/fman"
   }
 }

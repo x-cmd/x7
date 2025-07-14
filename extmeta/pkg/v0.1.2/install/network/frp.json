@@ -11,9 +11,6 @@
       "reference": "https://formulae.brew.sh/formula/frpc#default"
     }
   },
-  "dsnap": {
-    "brew": "frpc"
-  },
   "binlist": [
     "frps",
     "frpc"

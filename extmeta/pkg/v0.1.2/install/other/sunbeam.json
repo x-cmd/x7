@@ -23,9 +23,5 @@
       "reference": "https://sunbeam.pomdtr.me/docs/user-guide/installation.html",
       "dsnap": "sunbeam"
     }
-  },
-  "dsnap": {
-    "brew": "sunbeam",
-    "/go": "sunbeam"
   }
 }

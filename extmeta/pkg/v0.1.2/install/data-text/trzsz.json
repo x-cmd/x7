@@ -20,10 +20,5 @@
       "reference": "https://github.com/trzsz/trzsz?tab=readme-ov-file#installation",
       "dsnap": "trzsz"
     }
-  },
-  "dsnap": {
-    "brew": "trzsz",
-    "/pip": "trzsz",
-    "/npm": "trzsz"
   }
 }

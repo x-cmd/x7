@@ -11,8 +11,5 @@
       "reference": "https://github.com/joelibaceta/video-to-ascii?tab=readme-ov-file#installation",
       "dsnap": "video-to-ascii"
     }
-  },
-  "dsnap": {
-    "/pip": "video-to-ascii"
   }
 }

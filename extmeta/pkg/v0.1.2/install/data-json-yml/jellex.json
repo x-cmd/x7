@@ -11,8 +11,5 @@
       "reference": "https://github.com/kellyjonbrazil/jellex?tab=readme-ov-file#install",
       "dsnap": "jellex"
     }
-  },
-  "dsnap": {
-    "/pip": "jellex"
   }
 }

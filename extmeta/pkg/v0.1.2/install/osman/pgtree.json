@@ -11,8 +11,5 @@
       "reference": "https://github.com/joknarf/pgtree#installation",
       "dsnap": "pgtree"
     }
-  },
-  "dsnap": {
-    "/pip": "pgtree"
   }
 }

@@ -19,10 +19,5 @@
       "cmd": "brew install yewtube",
       "reference": "https://formulae.brew.sh/formula/yewtube#default"
     }
-  },
-  "dsnap": {
-    "pipx": "yewtube",
-    "brew": "yewtube",
-    "/pip": "yewtube"
   }
 }

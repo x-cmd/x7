@@ -19,10 +19,5 @@
       "reference": "https://github.com/laktak/rsyncy#installation",
       "dsnap": "rsyncy"
     }
-  },
-  "dsnap": {
-    "brew": "rsyncy",
-    "pipx": "rsyncy",
-    "/pip": "rsyncy"
   }
 }

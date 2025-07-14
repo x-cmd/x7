@@ -19,10 +19,5 @@
       "reference": "https://github.com/antonmedv/walk?tab=readme-ov-file#install",
       "dsnap": "github.com/antonmedv/walk"
     }
-  },
-  "dsnap": {
-    "brew": "walk",
-    "openbsd": "walk",
-    "/go": "github.com/antonmedv/walk"
   }
 }

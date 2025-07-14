@@ -35,9 +35,5 @@
       "cmd": "pkgin install t-rec",
       "reference": "https://github.com/sassman/t-rec-rs?tab=readme-ov-file#installation-on-netbsd"
     }
-  },
-  "dsnap": {
-    "brew": "t-rec",
-    "/cargo": "t-rec"
   }
 }

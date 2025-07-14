@@ -15,9 +15,5 @@
       "reference": "https://github.com/dhth/omm#-installation",
       "dsnap": "omm"
     }
-  },
-  "dsnap": {
-    "brew": "omm",
-    "/go": "omm"
   }
 }

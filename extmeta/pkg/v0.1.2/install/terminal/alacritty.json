@@ -23,8 +23,5 @@
       "cmd": "x choco install alacritty",
       "reference": "https://community.chocolatey.org/packages/alacritty"
     }
-  },
-  "dsnap": {
-    "/cargo": "alacritty"
   }
 }

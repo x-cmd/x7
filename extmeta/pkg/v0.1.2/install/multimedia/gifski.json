@@ -15,9 +15,5 @@
       "reference": "https://github.com/ImageOptim/gifski/?tab=readme-ov-file#download-and-install",
       "dsnap": "gifski"
     }
-  },
-  "dsnap": {
-    "brew": "gifski",
-    "/cargo": "gifski"
   }
 }

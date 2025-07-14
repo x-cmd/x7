@@ -25,11 +25,5 @@
       "reference": "https://github.com/dvorka/mindforger/wiki/Installation#fedora",
       "dsnap": "mindforger-MAJOR.MINOR.REVISION.rpm"
     }
-  },
-  "dsnap": {
-    "brew": "mindforger",
-    "fedora/dnf": "mindforger-MAJOR.MINOR.REVISION.rpm",
-    "ubuntu/apt": "mindforger",
-    "debian/apt": "mindforger"
   }
 }

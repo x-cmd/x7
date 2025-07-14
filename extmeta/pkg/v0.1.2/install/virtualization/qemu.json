@@ -57,12 +57,5 @@
       "cmd": "sudo pacman -S mingw-w64-x86_64-qemu",
       "reference": "https://www.qemu.org/download/#windows"
     }
-  },
-  "dsnap": {
-    "brew": "qemu",
-    "yum": "qemu-kvm",
-    "fedora/dnf": "qemu",
-    "ubuntu/apt": "qemu-system",
-    "debian/apt": "qemu-system"
   }
 }

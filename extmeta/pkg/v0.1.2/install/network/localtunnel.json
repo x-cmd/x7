@@ -19,9 +19,5 @@
       "cmd": "brew install localtunnel",
       "reference": "https://formulae.brew.sh/formula/localtunnel#default"
     }
-  },
-  "dsnap": {
-    "brew": "localtunnel",
-    "/npm": "localtunnel"
   }
 }

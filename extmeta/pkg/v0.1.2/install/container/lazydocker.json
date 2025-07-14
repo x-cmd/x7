@@ -35,9 +35,5 @@
       "cmd": "yay -S lazydocker",
       "reference": "https://github.com/jesseduffield/lazydocker?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "brew": "lazydocker",
-    "/go": "github.com/jesseduffield/lazydocker@latest"
   }
 }

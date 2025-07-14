@@ -11,8 +11,5 @@
       "reference": "https://github.com/pilcrowonpaper/arctic?tab=readme-ov-file#arctic",
       "dsnap": "arctic"
     }
-  },
-  "dsnap": {
-    "/npm": "arctic"
   }
 }

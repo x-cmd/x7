@@ -46,14 +46,5 @@
       "cmd": "sudo apt-get install sqlite3",
       "reference": "https://command-not-found.com/sqlite3"
     }
-  },
-  "dsnap": {
-    "brew": "sqlite",
-    "pacman": "sqlite3",
-    "yum": "sqlite",
-    "fedora/dnf": "sqlite",
-    "alpine/apk": "sqlite",
-    "ubuntu/apt": "sqlite3",
-    "debian/apt": "sqlite3"
   }
 }

@@ -22,8 +22,5 @@
       "cmd": "sudo apt-get install proot",
       "reference": "https://command-not-found.com/proot"
     }
-  },
-  "dsnap": {
-    "/cargo": "proot"
   }
 }

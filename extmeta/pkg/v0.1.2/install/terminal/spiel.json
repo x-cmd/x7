@@ -11,8 +11,5 @@
       "reference": "https://www.spiel.how/quickstart/",
       "dsnap": "spiel"
     }
-  },
-  "dsnap": {
-    "/pip": "spiel"
   }
 }

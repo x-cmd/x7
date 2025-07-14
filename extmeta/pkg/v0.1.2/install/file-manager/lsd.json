@@ -75,8 +75,5 @@
       "reference": "https://github.com/lsd-rs/lsd?tab=readme-ov-file#from-source",
       "dsnap": "lsd"
     }
-  },
-  "dsnap": {
-    "/cargo": "lsd"
   }
 }

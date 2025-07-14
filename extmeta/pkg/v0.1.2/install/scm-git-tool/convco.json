@@ -15,9 +15,5 @@
       "cmd": "brew install convco",
       "reference": "https://convco.github.io/"
     }
-  },
-  "dsnap": {
-    "brew": "convco",
-    "/cargo": "convco"
   }
 }

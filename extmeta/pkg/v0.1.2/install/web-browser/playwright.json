@@ -15,8 +15,5 @@
       "reference": "https://playwright.dev/docs/cli",
       "dsnap": "playwright"
     }
-  },
-  "dsnap": {
-    "/npm": "playwright"
   }
 }

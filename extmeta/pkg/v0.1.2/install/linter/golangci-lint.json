@@ -23,8 +23,5 @@
       "reference": "https://golangci-lint.run/usage/install/#install-from-source",
       "dsnap": "golangci-lint"
     }
-  },
-  "dsnap": {
-    "/go": "golangci-lint"
   }
 }

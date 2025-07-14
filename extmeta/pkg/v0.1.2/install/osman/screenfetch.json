@@ -45,13 +45,5 @@
       "cmd": "pkg install screenFetch",
       "reference": "https://github.com/KittyKatt/screenFetch/wiki/Installation#freebsd"
     }
-  },
-  "dsnap": {
-    "brew": "screenfetch",
-    "pacman": "screenfetch",
-    "pkg": "screenFetch",
-    "fedora/dnf": "screenfetchh",
-    "ubuntu/apt": "screenfetch",
-    "debian/apt": "screenfetch"
   }
 }

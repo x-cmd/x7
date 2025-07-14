@@ -46,12 +46,5 @@
       "cmd": "sudo apt-get install bash",
       "reference": "https://command-not-found.com/bash"
     }
-  },
-  "dsnap": {
-    "brew": "bash",
-    "fedora/dnf": "bash",
-    "alpine/apk": "bash",
-    "ubuntu/apt": "bash",
-    "debian/apt": "bash"
   }
 }

@@ -15,8 +15,5 @@
       "reference": "https://github.com/YS-L/flamelens#installation",
       "dsnap": "flamelens"
     }
-  },
-  "dsnap": {
-    "/cargo": "flamelens"
   }
 }

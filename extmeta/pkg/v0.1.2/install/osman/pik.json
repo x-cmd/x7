@@ -23,8 +23,5 @@
       "reference": "https://github.com/jacek-kurlit/pik?tab=readme-ov-file#installation",
       "dsnap": "pik"
     }
-  },
-  "dsnap": {
-    "/cargo": "pik"
   }
 }

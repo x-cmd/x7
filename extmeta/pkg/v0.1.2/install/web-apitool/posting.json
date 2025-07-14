@@ -18,8 +18,5 @@
       "cmd": "pipx install posting",
       "reference": "https://github.com/darrenburns/posting#installation"
     }
-  },
-  "dsnap": {
-    "/pip": "posting"
   }
 }

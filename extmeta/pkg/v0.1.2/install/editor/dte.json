@@ -32,9 +32,5 @@
       "cmd": "pkg install dte",
       "reference": "https://gitlab.com/craigbarnes/dte#installing"
     }
-  },
-  "dsnap": {
-    "debian/apt": "dte",
-    "ubuntu/apt": "dte"
   }
 }

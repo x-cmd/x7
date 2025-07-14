@@ -138,11 +138,5 @@
       "cmd": "pkg_add neovim",
       "reference": "https://github.com/neovim/neovim/blob/master/INSTALL.md#openbsd"
     }
-  },
-  "dsnap": {
-    "fedora/dnf": "neovim",
-    "alpine/apk": "neovim",
-    "ubuntu/apt": "neovim",
-    "debian/apt": "neovim"
   }
 }

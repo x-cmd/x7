@@ -40,9 +40,5 @@
       "cmd": "sudo dnf install mutt",
       "reference": "https://command-not-found.com/mutt"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "mutt",
-    "debian/apt": "mutt"
   }
 }

@@ -87,8 +87,5 @@
       "cmd": "sudo apt install just",
       "reference": "https://just.systems/man/zh/chapter_4.html"
     }
-  },
-  "dsnap": {
-    "/cargo": "just"
   }
 }

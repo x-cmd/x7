@@ -19,9 +19,5 @@
       "cmd": "brew install datasette",
       "reference": "https://github.com/simonw/datasette#installation"
     }
-  },
-  "dsnap": {
-    "brew": "datasette",
-    "/pip": "datasette"
   }
 }

@@ -10,8 +10,5 @@
       "cmd": "brew install haskell-language-server",
       "reference": "https://formulae.brew.sh/formula/haskell-language-server#default"
     }
-  },
-  "dsnap": {
-    "brew": "haskell-language-server"
   }
 }

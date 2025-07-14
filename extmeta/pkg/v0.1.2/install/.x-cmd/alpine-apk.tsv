@@ -65,6 +65,7 @@ cmus	cmus
 ffmpeg	ffmpeg
 ocrmypdf	ocrmypdf
 aria2	aria2
+apk	asn
 bmon	bmon
 certbot	certbot
 curl	curl
@@ -75,6 +76,7 @@ iptraf-ng	iptraf-ng
 mosquitto	mosquitto
 mtr	mtr
 networkmanager	nmtui
+sing-box	sing-box
 socat	socat
 speedtest-cli	speedtest-cli
 wavemon	wavemon
@@ -123,6 +125,7 @@ mosh	mosh
 openssh	openssh-client
 openssh	openssh-server
 openssh	openssh
+sshs	sshs
 gifsicle	gifsicle
 multitail	multitail
 gum	gum
@@ -131,6 +134,7 @@ tmux	tmux
 ali	ali
 hyperfine	hyperfine
 siege	siege
+nemu	nemu
 hurl	hurl
 amfora	amfora
 ttyd	ttyd

@@ -15,9 +15,5 @@
       "cmd": "yay -S termpicker",
       "reference": "https://github.com/ChausseBenjamin/termpicker?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "yay": "termpicker",
-    "/go": "github.com/ChausseBenjamin/termpicker@latest"
   }
 }

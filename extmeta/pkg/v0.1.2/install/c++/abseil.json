@@ -10,8 +10,5 @@
       "cmd": "brew install abseil",
       "reference": "https://formulae.brew.sh/formula/abseil#default"
     }
-  },
-  "dsnap": {
-    "brew": "abseil"
   }
 }

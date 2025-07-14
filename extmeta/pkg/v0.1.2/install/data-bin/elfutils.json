@@ -10,8 +10,5 @@
       "cmd": "brew install elfutils",
       "reference": "https://formulae.brew.sh/formula/elfutils#default"
     }
-  },
-  "dsnap": {
-    "brew": "elfutils"
   }
 }

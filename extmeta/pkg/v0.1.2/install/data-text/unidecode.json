@@ -35,8 +35,5 @@
       "cmd": "sudo apt-get install python3-unidecode",
       "reference": "https://command-not-found.com/unidecode"
     }
-  },
-  "dsnap": {
-    "/pip": "unidecode"
   }
 }

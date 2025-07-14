@@ -40,9 +40,5 @@
       "cmd": "sudo pacman -S snapd",
       "reference": "https://snapcraft.io/docs/installing-snap-on-manjaro-linux"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "snapd",
-    "debian/apt": "snapd"
   }
 }

@@ -11,8 +11,5 @@
       "reference": "https://cspell.org/docs/installation/#npm-global",
       "dsnap": "cspell"
     }
-  },
-  "dsnap": {
-    "/npm": "cspell"
   }
 }

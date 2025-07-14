@@ -22,6 +22,5 @@
       "cmd": "pkg install trdsql",
       "reference": "https://github.com/noborus/trdsql#install"
     }
-  },
-  "dsnap": null
+  }
 }

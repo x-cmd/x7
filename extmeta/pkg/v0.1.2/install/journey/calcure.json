@@ -18,6 +18,5 @@
       "cmd": "nix-shell -p calcure",
       "reference": "https://search.nixos.org/packages?query=calcure"
     }
-  },
-  "dsnap": null
+  }
 }

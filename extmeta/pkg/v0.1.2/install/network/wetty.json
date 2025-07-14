@@ -11,8 +11,5 @@
       "reference": "https://github.com/butlerx/wetty?tab=readme-ov-file#install",
       "dsnap": "wetty"
     }
-  },
-  "dsnap": {
-    "/npm": "wetty"
   }
 }

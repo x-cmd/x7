@@ -78,8 +78,5 @@
       "cmd": "x winget install Discord.Discord",
       "reference": "https://winget.run/pkg/Discord/Discord"
     }
-  },
-  "dsnap": {
-    "brew": "discord"
   }
 }

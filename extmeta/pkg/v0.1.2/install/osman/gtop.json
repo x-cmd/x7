@@ -11,8 +11,5 @@
       "reference": "https://github.com/aksakalli/gtop?tab=readme-ov-file#installation",
       "dsnap": "gtop"
     }
-  },
-  "dsnap": {
-    "/npm": "gtop"
   }
 }

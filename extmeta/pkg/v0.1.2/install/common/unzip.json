@@ -54,16 +54,5 @@
       "cmd": "sudo zypper install unzip",
       "reference": "https://www.edustorage.net/entry/how-to-unzip-file-in-opensuse-linux"
     }
-  },
-  "dsnap": {
-    "brew": "unzip",
-    "yum": "unzip",
-    "zypper": "unzip",
-    "pacman": "unzip",
-    "emerge": "app-arch/unzip",
-    "fedora/dnf": "unzip",
-    "alpine/apk": "unzip",
-    "ubuntu/apt": "unzip",
-    "debian/apt": "unzip"
   }
 }

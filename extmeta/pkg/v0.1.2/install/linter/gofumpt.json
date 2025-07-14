@@ -15,8 +15,5 @@
       "reference": "https://github.com/mvdan/gofumpt?tab=readme-ov-file#gofumpt",
       "dsnap": "mvdan.cc/gofumpt@latest"
     }
-  },
-  "dsnap": {
-    "/go": "mvdan.cc/gofumpt@latest"
   }
 }

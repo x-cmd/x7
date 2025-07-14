@@ -22,8 +22,5 @@
       "cmd": "x asdf use kcctl",
       "reference": "https://github.com/joschi/asdf-kcctl?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "asdf": "kcctl"
   }
 }

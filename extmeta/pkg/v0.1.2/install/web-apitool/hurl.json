@@ -66,12 +66,5 @@
       "reference": "https://hurl.dev/docs/installation.html#npm",
       "dsnap": "@orangeopensource/hurl"
     }
-  },
-  "dsnap": {
-    "brew": "hurl",
-    "/npm": "@orangeopensource/hurl",
-    "alpine/apk": "hurl",
-    "ubuntu/apt": "hurl",
-    "debian/apt": "hurl"
   }
 }

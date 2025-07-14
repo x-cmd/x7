@@ -28,10 +28,5 @@
       "cmd": "pkgx install supabase",
       "reference": "https://github.com/supabase/cli?tab=readme-ov-file#install-the-cli"
     }
-  },
-  "dsnap": {
-    "brew": "supabase",
-    "/npm": "supabase",
-    "/go": "github.com/supabase/cli"
   }
 }

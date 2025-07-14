@@ -11,8 +11,5 @@
       "reference": "https://github.com/withcatai/catai?tab=readme-ov-file#installation--use",
       "dsnap": "catai"
     }
-  },
-  "dsnap": {
-    "/npm": "catai"
   }
 }

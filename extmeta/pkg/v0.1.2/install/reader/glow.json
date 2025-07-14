@@ -72,15 +72,5 @@
       "cmd": "sudo eopkg install glow",
       "reference": "https://github.com/charmbracelet/glow#package-manager"
     }
-  },
-  "dsnap": {
-    "brew": "glow",
-    "pacman": "glow",
-    "yum": "glow",
-    "xbps": "glow",
-    "pkg": "glow",
-    "eopkg": "glow",
-    "ubuntu/apt": "glow",
-    "debian/apt": "glow"
   }
 }

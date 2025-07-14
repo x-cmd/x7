@@ -15,9 +15,5 @@
       "reference": "https://github.com/pdfcpu/pdfcpu#installation",
       "dsnap": "golang-github-pdfcpu"
     }
-  },
-  "dsnap": {
-    "brew": "pdfcpu",
-    "fedora/dnf": "golang-github-pdfcpu"
   }
 }

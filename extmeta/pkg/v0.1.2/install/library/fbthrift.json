@@ -10,8 +10,5 @@
       "cmd": "brew install fbthrift",
       "reference": "https://formulae.brew.sh/formula/fbthrift#default"
     }
-  },
-  "dsnap": {
-    "brew": "fbthrift"
   }
 }

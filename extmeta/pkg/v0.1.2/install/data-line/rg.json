@@ -81,13 +81,5 @@
       "cmd": "sudo pkgman install ripgrep_x86",
       "reference": "https://github.com/BurntSushi/ripgrep#installation"
     }
-  },
-  "dsnap": {
-    "brew": "ripgrep",
-    "/cargo": "ripgrep",
-    "fedora/dnf": "ripgrep",
-    "alpine/apk": "ripgrep",
-    "ubuntu/apt": "ripgrep",
-    "debian/apt": "ripgrep"
   }
 }

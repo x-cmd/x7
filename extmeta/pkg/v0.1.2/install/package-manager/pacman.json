@@ -34,6 +34,5 @@
       "cmd": "sudo apt-get install pacman",
       "reference": "https://command-not-found.com/pacman"
     }
-  },
-  "dsnap": null
+  }
 }

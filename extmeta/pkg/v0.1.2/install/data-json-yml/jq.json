@@ -10,10 +10,6 @@
       "cmd": "x asdf use jq",
       "reference": "https://github.com/lsanwick/asdf-jq"
     },
-    "darwin/brew": {
-      "cmd": "brew install jq",
-      "reference": "https://formulae.brew.sh/formula/jq#default"
-    },
     "debian/apt": {
       "cmd": "sudo apt-get install jq",
       "reference": "https://command-not-found.com/jq",
@@ -29,31 +25,27 @@
       "reference": "https://command-not-found.com/jq",
       "dsnap": "jq"
     },
-    "arch/pacman": {
-      "cmd": "sudo pacman -S jq",
-      "reference": "https://command-not-found.com/jq"
-    },
-    "kali/apt": {
-      "cmd": "sudo apt-get install jq",
-      "reference": "https://command-not-found.com/jq"
-    },
     "fedora/dnf": {
       "cmd": "sudo dnf install jq",
       "reference": "https://command-not-found.com/jq",
       "dsnap": "jq"
     },
+    "arch/pacman": {
+      "cmd": "sudo pacman -S jq",
+      "reference": "https://command-not-found.com/jq"
+    },
+    "darwin/brew": {
+      "cmd": "brew install jq",
+      "reference": "https://formulae.brew.sh/formula/jq#default"
+    },
+    "kali/apt": {
+      "cmd": "sudo apt-get install jq",
+      "reference": "https://command-not-found.com/jq"
+    },
     "raspbian/apt": {
       "cmd": "sudo apt-get install jq",
       "reference": "https://command-not-found.com/jq"
     }
-  },
-  "dsnap": {
-    "fedora/dnf": "jq",
-    "alpine/apk": "jq",
-    "ubuntu/apt": "jq",
-    "debian/apt": "jq",
-    "kali/apt": "jq",
-    "brew": "jq"
   },
   "binlist": [
     "jq"

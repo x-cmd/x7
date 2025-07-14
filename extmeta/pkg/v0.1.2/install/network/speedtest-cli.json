@@ -63,15 +63,5 @@
       "cmd": "curl -Lo speedtest-cli https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py\n&& chmod +x speedtest-cli\n",
       "reference": "https://github.com/sivel/speedtest-cli#just-download-like-the-way-it-used-to-be"
     }
-  },
-  "dsnap": {
-    "brew": "speedtest-cli",
-    "pacman": "speedtest-cli",
-    "choco": "speedtest-cli",
-    "/pip": "speedtest-cli",
-    "fedora/dnf": "speedtest-cli",
-    "alpine/apk": "speedtest-cli",
-    "ubuntu/apt": "speedtest-cli",
-    "debian/apt": "speedtest-cli"
   }
 }

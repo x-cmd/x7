@@ -35,9 +35,5 @@
       "cmd": "x choco install stylua",
       "reference": "https://community.chocolatey.org/packages/stylua"
     }
-  },
-  "dsnap": {
-    "brew": "stylua",
-    "/cargo": "stylua"
   }
 }

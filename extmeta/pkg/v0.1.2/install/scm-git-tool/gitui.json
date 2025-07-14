@@ -31,8 +31,5 @@
       "cmd": "x winget install -e --id StephanDilly.gitui",
       "reference": "https://winget.run/pkg/StephanDilly/gitui"
     }
-  },
-  "dsnap": {
-    "/cargo": "gitui"
   }
 }

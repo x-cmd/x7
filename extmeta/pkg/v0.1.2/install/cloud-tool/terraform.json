@@ -58,14 +58,5 @@
       "cmd": "sudo yum install -y yum-utils shadow-utils\n&& sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo\n&& sudo yum -y install terraform\n",
       "reference": "https://developer.hashicorp.com/terraform/install?product_intent=terraform"
     }
-  },
-  "dsnap": {
-    "brew": "terraform",
-    "pacman": "terraform",
-    "yum": "terraform",
-    "fedora/dnf": "terraform",
-    "alpine/apk": "terraform",
-    "ubuntu/apt": "terraform",
-    "debian/apt": "terraform"
   }
 }

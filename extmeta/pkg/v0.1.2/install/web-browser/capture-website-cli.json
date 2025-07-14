@@ -11,8 +11,5 @@
       "reference": "https://github.com/sindresorhus/capture-website-cli?tab=readme-ov-file#install",
       "dsnap": "capture-website-cli"
     }
-  },
-  "dsnap": {
-    "/npm": "capture-website-cli"
   }
 }

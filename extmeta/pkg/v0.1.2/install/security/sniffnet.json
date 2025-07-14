@@ -23,11 +23,5 @@
       "cmd": "pkg install sniffnet",
       "reference": "https://github.com/GyulyVGC/sniffnet?tab=readme-ov-file#download"
     }
-  },
-  "dsnap": {
-    "brew": "sniffnet",
-    "pacman": "sniffnet",
-    "pkg": "sniffnet",
-    "/cargo": "sniffnet"
   }
 }

@@ -18,8 +18,5 @@
       "cmd": "curl.exe -A MS https://webinstall.dev/sclient | powershell",
       "reference": "https://github.com/therootcompany/sclient?tab=readme-ov-file#mac-linux"
     }
-  },
-  "dsnap": {
-    "/go": "sclient"
   }
 }

@@ -15,6 +15,18 @@ null
 "Enhanced docker command"
 }
 ,
+"#desc"
+:
+{
+"cn"
+:
+"基于 x-cmd 封装原生 Docker 命令，提供更友好的交互式操作界面与快捷命令，简化容器与镜像管理流程，提升日常开发与运维效率。"
+,
+"en"
+:
+"A wrapper around native Docker commands powered by x-cmd, offering interactive UIs and shortcut commands to simplify container and image management for improved developer and DevOps workflows."
+}
+,
 "#tip:note"
 :
 [
@@ -45,14 +57,14 @@ null
 "images"
 ,
 "image|img"
+,
+"refit"
 ]
 ,
 "#subcmd:Enhancement-container"
 :
 [
 "setup"
-,
-"refit"
 ,
 "container"
 ,
@@ -63,7 +75,135 @@ null
 "exec"
 ,
 "network|nw"
+,
+"snap"
 ]
+,
+"#subcmd:Integrations"
+:
+[
+"lz"
+,
+"fz"
+]
+,
+"lz"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"通过 lazydocker 图形界面管理 Docker 容器、镜像、网络等资源"
+,
+"en"
+:
+"Manage Docker containers, images, networks, and more via the lazydocker TUI"
+}
+,
+"$ref"
+:
+"x-cmd-advise://lazydocker/advise.t.jso"
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x docker lz"
+,
+"cn"
+:
+"通过 lazydocker 图形界面管理 Docker 容器、镜像、网络等资源"
+,
+"en"
+:
+"Manage Docker containers, images, networks, and more via the lazydocker TUI"
+}
+]
+}
+,
+"fz"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"基于 fzf 的交互式 Docker 管理界面，支持容器与镜像的快速选择与操作"
+,
+"en"
+:
+"Interactive Docker management interface powered by fzf, allowing quick access to containers and images"
+}
+,
+"img"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"交互式浏览和选择本地 Docker 镜像，可用于后续操作如运行或删除"
+,
+"en"
+:
+"Interactively browse and select local Docker images for actions like run or remove"
+}
+}
+,
+"ps"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"交互式列出正在运行的容器，可执行常见操作如进入、停止、查看详情等"
+,
+"en"
+:
+"Interactively list running containers and perform common actions like exec, stop, or inspect"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x docker fz"
+,
+"cn"
+:
+"打开交互式界面，浏览并操作正在运行的容器"
+,
+"en"
+:
+"Open an interactive interface to browse and manage running containers"
+}
+,
+{
+"cmd"
+:
+"x docker fz img"
+,
+"cn"
+:
+"打开交互式界面，查看本地镜像并执行删除、运行等操作"
+,
+"en"
+:
+"Open an interactive interface to view local images and perform actions like remove or run"
+}
+]
+}
 ,
 "daemon|d"
 :
@@ -255,11 +395,11 @@ null
 {
 "en"
 :
-"snap"
+"Rebuild the specified Docker image"
 ,
 "cn"
 :
-"snap"
+"重构指定的 Docker 镜像"
 }
 ,
 "$ref"
@@ -273,18 +413,18 @@ null
 "#desc"
 :
 {
-"en"
-:
-"Manage images"
-,
 "cn"
 :
-"管理镜像"
+"基于指定镜像构建并运行轻量容器，可自动安装并执行常用工具（如 jq、node 等），适合快速测试与命令隔离运行"
+,
+"en"
+:
+"Build and run lightweight containers based on a selected image, with optional tool installation and execution (e.g. jq, node). Ideal for quick testing and isolated command execution."
 }
 ,
 "$ref"
 :
-"x-cmd-advise://docker/data/snap.jso"
+"x-advise://docker/data/snap.jso"
 }
 ,
 "image|img"

@@ -37,12 +37,5 @@
       "cmd": "sudo zypper install nmon",
       "reference": "https://software.opensuse.org//download.html?project=openSUSE%3AFactory&package=nmon"
     }
-  },
-  "dsnap": {
-    "brew": "nmon",
-    "fedora/dnf": "nmon",
-    "alpine/apk": "nmon",
-    "ubuntu/apt": "nmon",
-    "debian/apt": "nmon"
   }
 }

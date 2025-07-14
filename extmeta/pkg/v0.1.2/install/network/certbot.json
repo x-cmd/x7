@@ -50,15 +50,5 @@
       "cmd": "x winget install EFF.Certbot",
       "reference": "https://winget.run/pkg/EFF/Certbot"
     }
-  },
-  "dsnap": {
-    "brew": "certbot",
-    "pacman": "certbot",
-    "winget": "EFF.Certbot",
-    "/pip": "certbot",
-    "fedora/dnf": "certbot",
-    "alpine/apk": "certbot",
-    "ubuntu/apt": "certbot",
-    "debian/apt": "certbot"
   }
 }

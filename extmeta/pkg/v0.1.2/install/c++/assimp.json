@@ -28,10 +28,5 @@
       "reference": "https://github.com/assimp/assimp/blob/master/Build.md#install-pyassimp",
       "dsnap": "pyassimp"
     }
-  },
-  "dsnap": {
-    "brew": "assimp",
-    "/pip": "pyassimp",
-    "ubuntu/apt": "libassimp-dev"
   }
 }

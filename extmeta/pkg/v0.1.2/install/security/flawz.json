@@ -40,10 +40,5 @@
       "cmd": "pkgin install flawz",
       "reference": "https://github.com/orhun/flawz?tab=readme-ov-file#netbsd"
     }
-  },
-  "dsnap": {
-    "brew": "flawz",
-    "/cargo": "flawz",
-    "alpine/apk": "flawz"
   }
 }

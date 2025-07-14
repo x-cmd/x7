@@ -35,8 +35,5 @@
       "cmd": "npm install -g dprint",
       "reference": "https://dprint.dev/install/"
     }
-  },
-  "dsnap": {
-    "/cargo": "dprint"
   }
 }

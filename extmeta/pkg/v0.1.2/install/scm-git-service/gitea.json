@@ -19,10 +19,5 @@
       "cmd": "sudo pacman -S gitea",
       "reference": "https://command-not-found.com/gitea"
     }
-  },
-  "dsnap": {
-    "brew": "gitea",
-    "pacman": "gitea",
-    "alpine/apk": "gitea"
   }
 }

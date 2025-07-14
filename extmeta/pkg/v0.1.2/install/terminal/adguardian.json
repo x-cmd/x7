@@ -35,8 +35,5 @@
       "cmd": "nix-env -iA nixos.adguardian",
       "reference": "https://search.nixos.org/packages?channel=unstable&show=adguardian&from=0&size=50&sort=relevance&type=packages&query=adguardian"
     }
-  },
-  "dsnap": {
-    "/cargo": "adguardian"
   }
 }

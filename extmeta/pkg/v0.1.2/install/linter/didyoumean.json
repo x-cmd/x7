@@ -19,8 +19,5 @@
       "cmd": "nix-env install -iA nixpkgs.didyoumean",
       "reference": "https://github.com/hisbaan/didyoumean?tab=readme-ov-file#nixos"
     }
-  },
-  "dsnap": {
-    "/cargo": "didyoumean"
   }
 }

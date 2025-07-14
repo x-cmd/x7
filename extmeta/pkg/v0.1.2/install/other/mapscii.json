@@ -11,8 +11,5 @@
       "reference": "https://github.com/rastapasta/mapscii",
       "dsnap": "mapscii"
     }
-  },
-  "dsnap": {
-    "/npm": "mapscii"
   }
 }

@@ -54,12 +54,5 @@
       "reference": "https://github.com/containers/skopeo/blob/main/install.md#ubuntu",
       "dsnap": "skopeo"
     }
-  },
-  "dsnap": {
-    "brew": "skopeo",
-    "fedora/dnf": "skopeo",
-    "alpine/apk": "skopeo",
-    "ubuntu/apt": "skopeo",
-    "debian/apt": "skopeo"
   }
 }

@@ -18,6 +18,5 @@
       "cmd": "x winget install MSYS2.MSYS2",
       "reference": "https://winget.run/pkg/MSYS2/MSYS2"
     }
-  },
-  "dsnap": null
+  }
 }

@@ -15,8 +15,5 @@
       "cmd": "pkgin install netop",
       "reference": "https://github.com/ZingerLittleBee/netop#installation"
     }
-  },
-  "dsnap": {
-    "/cargo": "netop"
   }
 }

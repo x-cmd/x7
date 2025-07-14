@@ -11,8 +11,5 @@
       "reference": "https://github.com/yunify/qingcloud-cli?tab=readme-ov-file#installation",
       "dsnap": "qingcloud-cli"
     }
-  },
-  "dsnap": {
-    "/pip": "qingcloud-cli"
   }
 }

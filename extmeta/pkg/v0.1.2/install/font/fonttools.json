@@ -15,9 +15,5 @@
       "cmd": "brew install fonttools",
       "reference": "https://formulae.brew.sh/formula/fonttools#default"
     }
-  },
-  "dsnap": {
-    "brew": "fonttools",
-    "/pip": "fonttools"
   }
 }

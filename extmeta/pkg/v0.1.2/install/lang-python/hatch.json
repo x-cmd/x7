@@ -48,15 +48,5 @@
       "cmd": "sudo xbps-install hatch",
       "reference": "https://hatch.pypa.io/latest/install/#void-linux"
     }
-  },
-  "dsnap": {
-    "pipx": "hatch",
-    "brew": "hatch",
-    "conda": "hatch",
-    "mamba": "hatch",
-    "fedora/dnf": "hatch",
-    "darwin/port": "hatch",
-    "void/xbps": "hatch",
-    "/pip": "hatch"
   }
 }

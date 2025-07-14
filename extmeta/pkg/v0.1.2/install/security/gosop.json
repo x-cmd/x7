@@ -11,8 +11,5 @@
       "reference": "https://github.com/ProtonMail/gosop?tab=readme-ov-file#install",
       "dsnap": "github.com/ProtonMail/gosop"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/ProtonMail/gosop"
   }
 }

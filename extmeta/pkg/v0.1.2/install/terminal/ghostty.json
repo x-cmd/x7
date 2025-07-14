@@ -18,8 +18,5 @@
       "cmd": "yay -S ghostty-git",
       "reference": "https://ghostty.org/docs/install/binary#aur"
     }
-  },
-  "dsnap": {
-    "brew": "ghostty"
   }
 }

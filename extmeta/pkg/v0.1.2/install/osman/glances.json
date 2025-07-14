@@ -62,13 +62,5 @@
       "cmd": "sudo zypper install python-Glances",
       "reference": "https://software.opensuse.org//download.html?project=openSUSE%3AFactory&package=python-Glances"
     }
-  },
-  "dsnap": {
-    "brew": "glances",
-    "/pip": "glances",
-    "fedora/dnf": "glances",
-    "alpine/apk": "glances",
-    "ubuntu/apt": "glances",
-    "debian/apt": "glances"
   }
 }

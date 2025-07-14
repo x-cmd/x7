@@ -18,8 +18,5 @@
       "cmd": "x pwsh iwr https://fly.io/install.ps1 -useb | iex",
       "reference": "https://github.com/superfly/flyctl?tab=readme-ov-file#windows"
     }
-  },
-  "dsnap": {
-    "brew": "flyctl"
   }
 }

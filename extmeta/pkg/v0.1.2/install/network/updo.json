@@ -15,8 +15,5 @@
       "cmd": "eget Owloops/updo",
       "reference": "https://github.com/Owloops/updo#installation"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/Owloops/updo@latest"
   }
 }

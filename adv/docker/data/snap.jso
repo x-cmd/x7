@@ -1,5 +1,21 @@
 {
-"--name"
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Available commands of the software"
+,
+"cn"
+:
+"软件的可用命令"
+}
+}
+,
+"--name|-n"
 :
 {
 "#desc"
@@ -7,7 +23,7 @@
 {
 "cn"
 :
-"指定容器名称（需带前缀，建议 xd- 开头，守护进程模式下必填）"
+"指定容器名称（需带前缀，建议以 xd- 开头，守护进程模式下必填）"
 ,
 "en"
 :
@@ -23,7 +39,7 @@
 }
 }
 ,
-"--img"
+"--nocache"
 :
 {
 "#desc"
@@ -31,11 +47,11 @@
 {
 "cn"
 :
-"指定镜像名（如未指定则自动生成）"
+"禁用宿主机与容器之间的包缓存目录挂载"
 ,
 "en"
 :
-"Specify image name (auto-generated if not set)"
+"Disable cache volume mount between host and container"
 }
 ,
 "#1"
@@ -43,7 +59,31 @@
 {
 "#example"
 :
-"xd snap --img myrepo/myimage:latest bash"
+"xd snap --nocache jq"
+}
+}
+,
+"--image|--img"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定完整镜像名称（若未指定，将根据工具和类型自动生成）"
+,
+"en"
+:
+"Specify full image name (auto-generated if omitted)"
+}
+,
+"#1"
+:
+{
+"#example"
+:
+"xd snap --img myrepo/custom:latest bash"
 }
 }
 ,
@@ -55,35 +95,23 @@
 {
 "cn"
 :
-"指定基础镜像类型（如 alpine、ubuntu、debian、fedora 等）"
+"指定基础镜像类型，如 alpine、ubuntu、debian、fedora、arch、nixos 等"
 ,
 "en"
 :
-"Specify base image type (e.g., alpine, ubuntu, debian, fedora)"
+"Specify base image type such as alpine, ubuntu, debian, fedora, arch, nixos"
 }
 ,
 "#1"
 :
 {
-"#cand"
-:
-[
-"alpine"
-,
-"ubuntu"
-,
-"debian"
-,
-"fedora"
-]
-,
 "#example"
 :
-"xd snap --imagetype ubuntu bash"
+"xd snap --imagetype ubuntu curl"
 }
 }
 ,
-"--nocache"
+"--daemon|-d"
 :
 {
 "#desc"
@@ -91,11 +119,11 @@
 {
 "cn"
 :
-"关闭包管理器缓存挂载（默认开启缓存）"
+"以守护进程方式运行容器，适合长期驻留任务（需配合 --name）"
 ,
 "en"
 :
-"Disable package manager cache mount (enabled by default)"
+"Run container in daemon mode, suitable for long-running tasks (requires --name)"
 }
 ,
 "#1"
@@ -103,35 +131,11 @@
 {
 "#example"
 :
-"xd snap --nocache bash"
+"xd snap --name xd-devd --daemon node"
 }
 }
 ,
-"--daemon"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"以守护进程方式运行容器（后台运行，需配合 --name）"
-,
-"en"
-:
-"Run container in daemon mode (background, requires --name)"
-}
-,
-"#1"
-:
-{
-"#example"
-:
-"xd snap --daemon --name xd-myapp bash"
-}
-}
-,
-"--volume"
+"--volume|-v"
 :
 {
 "#desc"
@@ -167,7 +171,7 @@
 }
 }
 ,
-"--port"
+"--publish|--port|-p"
 :
 {
 "#desc"
@@ -203,7 +207,7 @@
 }
 }
 ,
-"--network"
+"--network|--net"
 :
 {
 "#desc"
@@ -236,126 +240,6 @@
 "#example"
 :
 "xd snap --network host bash"
-}
-}
-,
-"--pwd"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"挂载当前目录并设置工作目录为 /p（常用于开发调试）"
-,
-"en"
-:
-"Mount current directory and set workdir to /p (useful for development)"
-}
-,
-"#1"
-:
-{
-"#example"
-:
-"xd snap --pwd bash"
-}
-}
-,
-"--env"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"设置环境变量，格式为 <变量名>=<值>"
-,
-"en"
-:
-"Set environment variable, format <VAR>=<VALUE>"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"变量名=值"
-,
-"en"
-:
-"VAR=VALUE"
-}
-,
-"#example"
-:
-"xd snap -e TZ=Asia/Shanghai bash"
-}
-}
-,
-"--user"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"指定容器内运行用户（如 user、root 等）"
-,
-"en"
-:
-"Specify user inside container (e.g., user, root)"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"用户名"
-,
-"en"
-:
-"Username"
-}
-,
-"#example"
-:
-"xd snap --user user bash"
-}
-}
-,
-"--root"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"以 root 用户运行（等价于 --user root）"
-,
-"en"
-:
-"Run as root user (equivalent to --user root)"
-}
-,
-"#1"
-:
-{
-"#example"
-:
-"xd snap --root bash"
 }
 }
 ,
@@ -431,7 +315,7 @@
 }
 }
 ,
-"--workdir"
+"--pwd"
 :
 {
 "#desc"
@@ -439,11 +323,11 @@
 {
 "cn"
 :
-"(Dockerfile WORKDIR) 更改工作目录"
+"挂载当前目录并设置工作目录为 /p（常用于开发调试）"
 ,
 "en"
 :
-"(Dockerfile WORKDIR) Change working directory"
+"Mount current directory and set workdir to /p (useful for development)"
 }
 ,
 "#1"
@@ -451,7 +335,91 @@
 {
 "#example"
 :
-"xd snap --workdir /app bash"
+"xd snap --pwd bash"
+}
+}
+,
+"--env|-e"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"设置环境变量，格式为 <变量名>=<值>"
+,
+"en"
+:
+"Set environment variable, format <VAR>=<VALUE>"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"变量名=值"
+,
+"en"
+:
+"VAR=VALUE"
+}
+,
+"#example"
+:
+"xd snap -e TZ=Asia/Shanghai bash"
+}
+}
+,
+"--user"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定容器中运行命令的用户（格式：uid[:gid]）"
+,
+"en"
+:
+"Specify user to run the command in container (format: uid[:gid])"
+}
+,
+"#1"
+:
+{
+"#example"
+:
+"xd snap --user 1000:1000 bash"
+}
+}
+,
+"--root|-r"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"以 root 用户运行（等价于 --user root）"
+,
+"en"
+:
+"Run as root user (equivalent to --user root)"
+}
+,
+"#1"
+:
+{
+"#example"
+:
+"xd snap --root bash"
 }
 }
 ,

@@ -23,9 +23,5 @@
       "reference": "https://pypi.org/project/azure-cli/",
       "dsnap": "azure-cli"
     }
-  },
-  "dsnap": {
-    "brew": "azure-cli",
-    "/pip": "azure-cli"
   }
 }

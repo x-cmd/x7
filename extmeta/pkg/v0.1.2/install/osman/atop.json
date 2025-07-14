@@ -50,14 +50,5 @@
       "cmd": "sudo zypper install atop",
       "reference": "https://software.opensuse.org//download.html?project=openSUSE%3AFactory&package=atop"
     }
-  },
-  "dsnap": {
-    "pacman": "atop",
-    "brew": "atop",
-    "zypper": "atop",
-    "fedora/dnf": "atop",
-    "alpine/apk": "atop",
-    "ubuntu/apt": "atop",
-    "debian/apt": "atop"
   }
 }

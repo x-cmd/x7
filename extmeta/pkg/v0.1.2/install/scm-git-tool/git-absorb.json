@@ -34,12 +34,5 @@
       "reference": "https://github.com/tummychow/git-absorb?tab=readme-ov-file#installing",
       "dsnap": "git-absorb"
     }
-  },
-  "dsnap": {
-    "brew": "git-absorb",
-    "/cargo": "git-absorb",
-    "fedora/dnf": "git-absorb",
-    "ubuntu/apt": "git-absorb",
-    "debian/apt": "git-absorb"
   }
 }

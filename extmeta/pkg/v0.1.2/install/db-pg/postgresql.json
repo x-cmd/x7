@@ -22,9 +22,5 @@
       "cmd": "sudo dnf install postgresql-server",
       "reference": "https://command-not-found.com/postgresql-setup"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "postgresql",
-    "debian/apt": "postgresql"
   }
 }

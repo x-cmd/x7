@@ -30,6 +30,5 @@
       "cmd": "x winget install -e --id Vercel.Hyper",
       "reference": "https://winget.run/pkg/Vercel/Hyper"
     }
-  },
-  "dsnap": null
+  }
 }

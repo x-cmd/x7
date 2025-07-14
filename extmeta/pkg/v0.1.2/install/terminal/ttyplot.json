@@ -31,11 +31,5 @@
       "cmd": "pkg install ttyplot",
       "reference": "https://github.com/tenox7/ttyplot?tab=readme-ov-file#get"
     }
-  },
-  "dsnap": {
-    "brew": "ttyplot",
-    "snap": "ttyplot",
-    "pkg": "ttyplot",
-    "debian/apt": "ttyplot"
   }
 }

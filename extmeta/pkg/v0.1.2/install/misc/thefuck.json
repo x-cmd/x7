@@ -35,8 +35,5 @@
       "cmd": "sudo pacman -S thefuck",
       "reference": "https://github.com/nvbn/thefuck#installation"
     }
-  },
-  "dsnap": {
-    "/pip": "thefuck"
   }
 }

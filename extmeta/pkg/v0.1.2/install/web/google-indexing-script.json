@@ -11,8 +11,5 @@
       "reference": "https://github.com/goenning/google-indexing-script?tab=readme-ov-file#installation",
       "dsnap": "google-indexing-script"
     }
-  },
-  "dsnap": {
-    "/npm": "google-indexing-script"
   }
 }

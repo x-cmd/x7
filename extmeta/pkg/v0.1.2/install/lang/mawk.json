@@ -33,11 +33,5 @@
       "cmd": "sudo apt-get install mawk",
       "reference": "https://command-not-found.com/mawk"
     }
-  },
-  "dsnap": {
-    "brew": "mawk",
-    "fedora/dnf": "mawk",
-    "ubuntu/apt": "mawk",
-    "debian/apt": "mawk"
   }
 }

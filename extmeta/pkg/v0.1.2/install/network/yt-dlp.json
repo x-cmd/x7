@@ -50,14 +50,5 @@
       "cmd": "x cchoco install yt-dlp",
       "reference": "https://github.com/yt-dlp/yt-dlp/wiki/Installation#chocolatey"
     }
-  },
-  "dsnap": {
-    "brew": "yt-dlp",
-    "pacman": "yt-dlp",
-    "port": "yt-dlp",
-    "/pip": "yt-dlp",
-    "alpine/apk": "yt-dlp",
-    "ubuntu/apt": "yt-dlp",
-    "debian/apt": "yt-dlp"
   }
 }

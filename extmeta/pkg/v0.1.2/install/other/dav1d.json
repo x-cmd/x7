@@ -10,8 +10,5 @@
       "cmd": "brew install dav1d",
       "reference": "https://formulae.brew.sh/formula/dav1d#default"
     }
-  },
-  "dsnap": {
-    "brew": "dav1d"
   }
 }

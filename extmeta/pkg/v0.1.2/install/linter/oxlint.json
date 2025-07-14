@@ -15,8 +15,5 @@
       "cmd": "npx oxlint@latest",
       "reference": "https://oxc-project.github.io/docs/guide/usage/linter.html#installation"
     }
-  },
-  "dsnap": {
-    "/npm": "oxlint"
   }
 }

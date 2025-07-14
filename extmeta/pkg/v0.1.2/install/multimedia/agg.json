@@ -19,9 +19,5 @@
       "cmd": "x scoop install agg",
       "reference": "https://scoop.sh/#/apps?q=agg"
     }
-  },
-  "dsnap": {
-    "brew": "agg",
-    "/cargo": "agg"
   }
 }

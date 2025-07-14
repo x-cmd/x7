@@ -15,8 +15,5 @@
       "reference": "https://github.com/getsops/sops?tab=readme-ov-file#12development-branch",
       "dsnap": "github.com/getsops/sops"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/getsops/sops"
   }
 }

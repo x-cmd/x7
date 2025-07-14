@@ -54,15 +54,5 @@
       "cmd": "sudo zypper install zip",
       "reference": "https://software.opensuse.org/download/package?package=zip&project=Archiving"
     }
-  },
-  "dsnap": {
-    "brew": "zip",
-    "yum": "zip",
-    "zypper": "zip",
-    "emerge": "app-arch/zip",
-    "fedora/dnf": "zip",
-    "alpine/apk": "zip",
-    "ubuntu/apt": "zip",
-    "debian/apt": "zip"
   }
 }

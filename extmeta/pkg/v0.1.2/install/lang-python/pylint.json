@@ -42,15 +42,5 @@
       "reference": "https://pylint.org/#install",
       "dsnap": "pylint"
     }
-  },
-  "dsnap": {
-    "emerge": "pylint",
-    "pacman": "python-pylint",
-    "portmaster": "pylint",
-    "zypper": "python3-pylint",
-    "/pip": "pylint",
-    "fedora/dnf": "pylint",
-    "ubuntu/apt": "pylint",
-    "debian/apt": "pylint"
   }
 }

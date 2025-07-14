@@ -23,8 +23,5 @@
       "reference": "https://github.com/brittonhayes/pillager#installation",
       "dsnap": "github.com/brittonhayes/pillager"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/brittonhayes/pillager"
   }
 }

@@ -16,9 +16,5 @@
       "reference": "https://www.raspberrypi.com/software/",
       "dsnap": "rpi-imager"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "rpi-imager",
-    "debian/apt": "rpi-imager"
   }
 }

@@ -42,13 +42,5 @@
       "cmd": "sudo apt-get install smartmontools",
       "reference": "https://command-not-found.com/smartctl"
     }
-  },
-  "dsnap": {
-    "brew": "smartmontools",
-    "pacman": "smartmontools",
-    "fedora/dnf": "smartmontools-1",
-    "alpine/apk": "smartmontools",
-    "ubuntu/apt": "smartmontools",
-    "debian/apt": "smartmontools"
   }
 }

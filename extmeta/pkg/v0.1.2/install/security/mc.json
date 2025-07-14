@@ -23,9 +23,5 @@
       "cmd": "sudo zypper install mc",
       "reference": "https://software.opensuse.org//download.html?project=openSUSE%3AFactory&package=mc"
     }
-  },
-  "dsnap": {
-    "brew": "minio/stable/mc",
-    "/go": "github.com/minio/mc@latest"
   }
 }

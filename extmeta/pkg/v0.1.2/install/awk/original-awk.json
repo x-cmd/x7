@@ -24,9 +24,5 @@
       "cmd": "sudo apt-get install original-awk",
       "reference": "https://command-not-found.com/original-awk"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "original-awk",
-    "debian/apt": "original-awk"
   }
 }

@@ -11,8 +11,5 @@
       "reference": "https://github.com/privatenumber/tsx?tab=readme-ov-file#global-installation",
       "dsnap": "tsx"
     }
-  },
-  "dsnap": {
-    "/npm": "tsx"
   }
 }

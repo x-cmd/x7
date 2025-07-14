@@ -15,9 +15,5 @@
       "cmd": "brew install bore-cli",
       "reference": "https://github.com/ekzhang/bore?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "brew": "bore-cli",
-    "/cargo": "bore-cli"
   }
 }

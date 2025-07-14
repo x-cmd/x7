@@ -15,9 +15,5 @@
       "reference": "https://github.com/drewwyatt/git-tidy?tab=readme-ov-file#cargo",
       "dsnap": "git-tidy"
     }
-  },
-  "dsnap": {
-    "brew": "git-tidy",
-    "/cargo": "git-tidy"
   }
 }

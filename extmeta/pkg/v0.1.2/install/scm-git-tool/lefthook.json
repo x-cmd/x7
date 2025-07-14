@@ -58,15 +58,5 @@
       "cmd": "x winget install evilmartians.lefthook",
       "reference": "https://github.com/evilmartians/lefthook/blob/master/docs/install.md#-winget-for-windows"
     }
-  },
-  "dsnap": {
-    "brew": "lefthook",
-    "yum": "lefthook",
-    "snap": "lefthook",
-    "yay": "lefthook",
-    "/pip": "lefthook",
-    "/npm": "lefthook",
-    "ubuntu/apt": "lefthook",
-    "debian/apt": "lefthook"
   }
 }

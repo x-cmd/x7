@@ -39,8 +39,5 @@
       "cmd": "apk add pixi",
       "reference": "https://github.com/prefix-dev/pixi/?tab=readme-ov-file#alpine-linux"
     }
-  },
-  "dsnap": {
-    "/cargo": "pixi"
   }
 }

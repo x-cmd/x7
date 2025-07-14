@@ -33,11 +33,5 @@
       "cmd": "sudo apt-get install pgcli",
       "reference": "https://command-not-found.com/pgcli"
     }
-  },
-  "dsnap": {
-    "brew": "pgcli",
-    "/pip": "pgcli",
-    "ubuntu/apt": "pgcli",
-    "debian/apt": "pgcli"
   }
 }

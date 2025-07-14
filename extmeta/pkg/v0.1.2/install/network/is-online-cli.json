@@ -11,8 +11,5 @@
       "reference": "https://github.com/sindresorhus/is-online-cli?tab=readme-ov-file#install",
       "dsnap": "is-online-cli"
     }
-  },
-  "dsnap": {
-    "/npm": "is-online-cli"
   }
 }

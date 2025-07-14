@@ -11,8 +11,5 @@
       "reference": "https://pybowler.io/docs/basics-setup",
       "dsnap": "bowler"
     }
-  },
-  "dsnap": {
-    "/pip": "bowler"
   }
 }

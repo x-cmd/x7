@@ -32,10 +32,5 @@
       "cmd": "brew install uv",
       "reference": "https://docs.astral.sh/uv/getting-started/installation/#installing-uv"
     }
-  },
-  "dsnap": {
-    "brew": "uv",
-    "/pip": "uv",
-    "/cargo": "uv"
   }
 }

@@ -39,8 +39,5 @@
       "cmd": "sudo apt-get install twine",
       "reference": "https://command-not-found.com/twine"
     }
-  },
-  "dsnap": {
-    "/pip": "twine"
   }
 }

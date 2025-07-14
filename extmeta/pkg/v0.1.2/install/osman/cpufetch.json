@@ -70,12 +70,5 @@
       "cmd": "eget Dr-Noob/cpufetch",
       "reference": "https://github.com/Dr-Noob/cpufetch"
     }
-  },
-  "dsnap": {
-    "brew": "cpufetch",
-    "fedora/dnf": "cpufetch",
-    "alpine/apk": "cpufetch",
-    "ubuntu/apt": "cpufetch",
-    "debian/apt": "cpufetch"
   }
 }

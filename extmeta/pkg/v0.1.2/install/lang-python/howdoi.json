@@ -41,11 +41,5 @@
       "cmd": "sudo zypper install howdoi",
       "reference": "https://software.opensuse.org//download.html?project=home%3Athomas-schraitle&package=howdoi"
     }
-  },
-  "dsnap": {
-    "brew": "howdoi",
-    "/pip": "howdoi",
-    "ubuntu/apt": "howdoi",
-    "debian/apt": "howdoi"
   }
 }

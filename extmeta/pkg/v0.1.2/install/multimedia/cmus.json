@@ -45,13 +45,5 @@
       "cmd": "sudo zypper install cmus",
       "reference": "https://software.opensuse.org//download.html?project=openSUSE%3AFactory&package=cmus"
     }
-  },
-  "dsnap": {
-    "brew": "cmus",
-    "pacman": "cmus",
-    "zypper": "cmus",
-    "alpine/apk": "cmus",
-    "ubuntu/apt": "cmus",
-    "debian/apt": "cmus"
   }
 }

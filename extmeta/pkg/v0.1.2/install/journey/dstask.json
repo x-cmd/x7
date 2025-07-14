@@ -27,11 +27,5 @@
       "cmd": "nix-shell -p dstask",
       "reference": "https://search.nixos.org/packages?query=dstask"
     }
-  },
-  "dsnap": {
-    "brew": "dstask",
-    "/cargo": "dstask",
-    "fedora/dnf": "dstask",
-    "alpine/apk": "dstask"
   }
 }

@@ -35,8 +35,5 @@
       "cmd": "x asdf use timoni",
       "reference": "https://github.com/Smana/asdf-timoni?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "/go": "timoni"
   }
 }

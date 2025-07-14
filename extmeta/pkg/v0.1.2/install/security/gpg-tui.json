@@ -32,11 +32,5 @@
       "cmd": "pkgin install gpg-tui",
       "reference": "https://github.com/orhun/gpg-tui?tab=readme-ov-file#netbsd"
     }
-  },
-  "dsnap": {
-    "brew": "gpg-tui",
-    "/cargo": "gpg-tui",
-    "fedora/dnf": "gpg-tui",
-    "alpine/apk": "gpg-tui"
   }
 }

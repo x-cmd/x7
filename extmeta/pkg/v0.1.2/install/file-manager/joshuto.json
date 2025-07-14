@@ -43,9 +43,5 @@
       "cmd": "brew install joshuto",
       "reference": "https://github.com/kamiyaa/joshuto?tab=readme-ov-file#macoslinux-homebrew"
     }
-  },
-  "dsnap": {
-    "brew": "joshuto",
-    "/cargo": "kamiyaa/joshuto"
   }
 }

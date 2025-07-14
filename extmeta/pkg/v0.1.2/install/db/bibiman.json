@@ -19,8 +19,5 @@
       "cmd": "nix-env -iA bibiman",
       "reference": "https://codeberg.org/lukeflo/bibiman"
     }
-  },
-  "dsnap": {
-    "/cargo": "bibiman"
   }
 }

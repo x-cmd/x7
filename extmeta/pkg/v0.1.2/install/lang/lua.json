@@ -32,12 +32,5 @@
       "reference": "https://command-not-found.com/lua",
       "dsnap": "lua"
     }
-  },
-  "dsnap": {
-    "brew": "lua",
-    "pacman": "lua",
-    "yum": "lua",
-    "fedora/dnf": "lua",
-    "alpine/apk": "lua"
   }
 }

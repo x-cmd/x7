@@ -11,8 +11,5 @@
       "reference": "https://github.com/Unitech/pm2?tab=readme-ov-file#installing-pm2",
       "dsnap": "pm2"
     }
-  },
-  "dsnap": {
-    "/npm": "pm2"
   }
 }

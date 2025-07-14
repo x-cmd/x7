@@ -42,12 +42,5 @@
       "reference": "https://pypi.org/project/mercurial/",
       "dsnap": "mercurial"
     }
-  },
-  "dsnap": {
-    "brew": "mercurial",
-    "/pip": "mercurial",
-    "fedora/dnf": "mercurial",
-    "ubuntu/apt": "mercurial",
-    "debian/apt": "mercurial"
   }
 }

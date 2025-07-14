@@ -11,8 +11,5 @@
       "reference": "https://github.com/release-it/release-it?tab=readme-ov-file#installation",
       "dsnap": "release-it"
     }
-  },
-  "dsnap": {
-    "/npm": "release-it"
   }
 }

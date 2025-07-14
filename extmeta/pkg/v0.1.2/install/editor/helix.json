@@ -70,18 +70,5 @@
       "cmd": "sudo pacman -S mingw-w64-ucrt-x86_64-helix",
       "reference": "https://docs.helix-editor.com/install.html#msys2"
     }
-  },
-  "dsnap": {
-    "brew": "helix",
-    "pacman": "helix",
-    "snap": "helix",
-    "winget": "Helix.Helix",
-    "scoop": "helix",
-    "choco": "helix",
-    "msys2": "mingw-w64-ucrt-x86_64-helix",
-    "fedora/dnf": "helix",
-    "alpine/apk": "github-cli",
-    "ubuntu/apt": "helix",
-    "debian/apt": "helix"
   }
 }

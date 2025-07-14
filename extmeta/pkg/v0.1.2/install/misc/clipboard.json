@@ -75,9 +75,5 @@
       "cmd": "x winget install -e --id Slackadays.Clipboard",
       "reference": "https://github.com/Slackadays/Clipboard#-1"
     }
-  },
-  "dsnap": {
-    "brew": "clipboard",
-    "alpine/apk": "clipboard"
   }
 }

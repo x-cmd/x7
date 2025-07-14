@@ -11,8 +11,5 @@
       "reference": "https://github.com/mop-tracker/mop?tab=readme-ov-file#installing-mop-from-source",
       "dsnap": "mop"
     }
-  },
-  "dsnap": {
-    "/go": "mop"
   }
 }

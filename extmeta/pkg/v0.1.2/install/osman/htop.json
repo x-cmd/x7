@@ -53,14 +53,5 @@
       "cmd": "sudo zypper install htop",
       "reference": "https://software.opensuse.org//download.html?project=openSUSE%3AFactory&package=htop"
     }
-  },
-  "dsnap": {
-    "emerge": "sys-process/htop",
-    "pacman": "htop",
-    "brew": "htop",
-    "zypper": "htop",
-    "fedora/dnf": "htop",
-    "ubuntu/apt": "htop",
-    "debian/apt": "htop"
   }
 }

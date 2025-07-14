@@ -47,8 +47,5 @@
       "cmd": "sudo zypper install yazi",
       "reference": "https://software.opensuse.org//download.html?project=openSUSE%3AFactory&package=yazi"
     }
-  },
-  "dsnap": {
-    "/cargo": "yazi-fm"
   }
 }

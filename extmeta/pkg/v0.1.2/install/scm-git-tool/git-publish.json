@@ -32,10 +32,5 @@
       "cmd": "sudo yum install git-publish",
       "reference": "https://github.com/stefanha/git-publish?tab=readme-ov-file#packages"
     }
-  },
-  "dsnap": {
-    "yum": "git-publish",
-    "ubuntu/apt": "git-publish",
-    "debian/apt": "git-publish"
   }
 }

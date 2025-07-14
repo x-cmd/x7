@@ -63,8 +63,5 @@
       "cmd": "x choco install beets",
       "reference": "https://community.chocolatey.org/packages/beets"
     }
-  },
-  "dsnap": {
-    "/pip": "beets"
   }
 }

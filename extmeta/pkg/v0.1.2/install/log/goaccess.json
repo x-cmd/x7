@@ -64,9 +64,5 @@
       "cmd": "pkgin install goaccess",
       "reference": "https://github.com/allinurl/goaccess?tab=readme-ov-file#pkgsrc-netbsd-solaris-smartos-"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "goaccess",
-    "debian/apt": "goaccess"
   }
 }

@@ -11,8 +11,5 @@
       "reference": "https://github.com/pythops/tegratop?tab=readme-ov-file#-installation",
       "dsnap": "tegratop"
     }
-  },
-  "dsnap": {
-    "/cargo": "tegratop"
   }
 }

@@ -29,10 +29,5 @@
       "cmd": "sudo apt-get install zypper",
       "reference": "https://command-not-found.com/zypper"
     }
-  },
-  "dsnap": {
-    "fedora/dnf": "zypper",
-    "ubuntu/apt": "zypper",
-    "debian/apt": "zypper"
   }
 }

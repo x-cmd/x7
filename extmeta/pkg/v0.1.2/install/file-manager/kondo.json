@@ -38,8 +38,5 @@
       "cmd": "eget tbillington/kondo",
       "reference": "https://github.com/tbillington/kondo#installation"
     }
-  },
-  "dsnap": {
-    "brew": "kondo"
   }
 }

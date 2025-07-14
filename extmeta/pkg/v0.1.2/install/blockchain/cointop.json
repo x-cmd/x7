@@ -52,14 +52,5 @@
       "cmd": "go get -u github.com/cointop-sh/cointop",
       "reference": "https://docs.cointop.sh/install/#windows-powershell--wsl"
     }
-  },
-  "dsnap": {
-    "brew": "cointop",
-    "snap": "cointop",
-    "yay": "cointop",
-    "xbps": "cointop",
-    "nixpkgs": "cointop",
-    "/go": "github.com/cointop-sh/cointop@latest",
-    "fedora/dnf": "cointop"
   }
 }

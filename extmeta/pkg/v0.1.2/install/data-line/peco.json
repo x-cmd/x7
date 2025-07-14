@@ -30,10 +30,5 @@
       "cmd": "x choco install peco",
       "reference": "https://github.com/peco/peco#installation"
     }
-  },
-  "dsnap": {
-    "brew": "peco",
-    "/cargo": "peco",
-    "/go": "peco"
   }
 }

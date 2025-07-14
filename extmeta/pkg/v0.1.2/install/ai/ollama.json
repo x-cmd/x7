@@ -22,9 +22,5 @@
       "cmd": "brew install ollama",
       "reference": "https://formulae.brew.sh/formula/ollama#default"
     }
-  },
-  "dsnap": {
-    "brew": "ollama",
-    "/go": "ollama"
   }
 }

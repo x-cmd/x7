@@ -11,8 +11,5 @@
       "reference": "https://github.com/mifi/editly?tab=readme-ov-file#installing",
       "dsnap": "editly"
     }
-  },
-  "dsnap": {
-    "/npm": "editly"
   }
 }

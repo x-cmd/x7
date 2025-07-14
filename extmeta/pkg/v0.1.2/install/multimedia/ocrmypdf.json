@@ -83,16 +83,5 @@
       "cmd": "sudo snap install ocrmypdf",
       "reference": "https://ocrmypdf.readthedocs.io/en/latest/installation.html#installing-ocrmypdf"
     }
-  },
-  "dsnap": {
-    "brew": "ocrmypdf",
-    "pacman": "ocrmypdf",
-    "emerge": "app-text/OCRmyPDF",
-    "pkg": "textproc/py-ocrmypdf",
-    "/pip": "ocrmypdf",
-    "fedora/dnf": "ocrmypdf",
-    "alpine/apk": "ocrmypdf",
-    "ubuntu/apt": "ocrmypdf",
-    "debian/apt": "ocrmypdf"
   }
 }

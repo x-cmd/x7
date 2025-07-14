@@ -15,9 +15,5 @@
       "cmd": "brew install angular-cli",
       "reference": "https://formulae.brew.sh/formula/angular-cli#default"
     }
-  },
-  "dsnap": {
-    "brew": "angular-cli",
-    "/npm": "@angular/cli"
   }
 }

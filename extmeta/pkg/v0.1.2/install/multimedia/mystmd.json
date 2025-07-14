@@ -20,10 +20,5 @@
       "reference": "https://mystmd.org/guide/quickstart#installing-the-myst-markdown-cli",
       "dsnap": "mystmd"
     }
-  },
-  "dsnap": {
-    "conda": "mystmd",
-    "/pip": "mystmd",
-    "/npm": "mystmd"
   }
 }

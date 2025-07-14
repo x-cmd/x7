@@ -42,13 +42,5 @@
       "cmd": "sudo apt-get install p7zip-full",
       "reference": "https://command-not-found.com/7za"
     }
-  },
-  "dsnap": {
-    "brew": "p7zip",
-    "pacman": "p7zip",
-    "fedora/dnf": "p7zip",
-    "alpine/apk": "p7zip",
-    "ubuntu/apt": "p7zip-full",
-    "debian/apt": "p7zip-full"
   }
 }

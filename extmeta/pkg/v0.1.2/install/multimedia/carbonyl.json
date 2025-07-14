@@ -11,8 +11,5 @@
       "reference": "https://github.com/fathyb/carbonyl?tab=readme-ov-file#npm",
       "dsnap": "carbonyl"
     }
-  },
-  "dsnap": {
-    "/npm": "carbonyl"
   }
 }

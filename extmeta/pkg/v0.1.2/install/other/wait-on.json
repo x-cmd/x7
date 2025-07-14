@@ -11,8 +11,5 @@
       "reference": "https://github.com/jeffbski/wait-on?tab=readme-ov-file#installation",
       "dsnap": "wait-on"
     }
-  },
-  "dsnap": {
-    "/npm": "wait-on"
   }
 }

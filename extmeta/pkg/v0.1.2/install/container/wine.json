@@ -58,16 +58,5 @@
       "cmd": "sudo dnf install winehq-stable",
       "reference": "https://wiki.winehq.org/Mageia"
     }
-  },
-  "dsnap": {
-    "brew": "wine-stable",
-    "pacman": "wine",
-    "yum": "wine",
-    "zypper": "wine",
-    "emerge": "virtual/wine",
-    "fedora/dnf": "wine",
-    "alpine/apk": "wine",
-    "ubuntu/apt": "wine",
-    "debian/apt": "wine"
   }
 }

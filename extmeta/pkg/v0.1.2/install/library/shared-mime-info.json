@@ -10,8 +10,5 @@
       "cmd": "brew install shared-mime-info",
       "reference": "https://formulae.brew.sh/formula/shared-mime-info#default"
     }
-  },
-  "dsnap": {
-    "brew": "shared-mime-info"
   }
 }

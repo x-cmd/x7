@@ -11,8 +11,5 @@
       "reference": "https://github.com/adameste/anidbcli?tab=readme-ov-file#installation",
       "dsnap": "anidbcli"
     }
-  },
-  "dsnap": {
-    "/pip": "anidbcli"
   }
 }

@@ -46,15 +46,5 @@
       "cmd": "pkg install py39-pipenv",
       "reference": "https://pypi.org/project/pipenv/#installation"
     }
-  },
-  "dsnap": {
-    "brew": "pipenv",
-    "pacman": "pipenv",
-    "emerge": "pipenv",
-    "pkg": "py39-pipenv",
-    "/pip": "pipenv",
-    "fedora/dnf": "pipenv",
-    "ubuntu/apt": "pipenv",
-    "debian/apt": "pipenv"
   }
 }

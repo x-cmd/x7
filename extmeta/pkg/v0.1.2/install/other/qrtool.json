@@ -27,8 +27,5 @@
       "cmd": "zypper install qrtool",
       "reference": "https://github.com/sorairolake/qrtool?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "/cargo": "qrtool"
   }
 }

@@ -23,8 +23,5 @@
       "cmd": "brew tap natesales/repo https://github.com/natesales/repo",
       "reference": "https://github.com/natesales/repo?tab=readme-ov-file#brew"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/natesales/q@latest"
   }
 }

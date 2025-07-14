@@ -45,11 +45,5 @@
       "cmd": "x winget install globalping",
       "reference": "https://github.com/jsdelivr/globalping-cli?tab=readme-ov-file#windows---winget"
     }
-  },
-  "dsnap": {
-    "brew": "globalping",
-    "fedora/dnf": "globalping",
-    "ubuntu/apt": "globalping",
-    "debian/apt": "globalping"
   }
 }

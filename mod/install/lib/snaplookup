@@ -1,0 +1,18 @@
+
+___X_CMD_INSTALL_SNAP_LOOKUP_RULESET_FOLDER="${___X_CMD_ROOT_DATA}/install/snap/root"
+
+# ___x_cmd_install_snaplookup_syspkg_ yq        alpine  -> apk/yq
+# ___x_cmd_install_snaplookup_syspkg_ gosop     go      -> go/github.com/ProtonMail/gosop@main
+
+___x_cmd_install_snaplookup_(){
+    local cmd="$1"
+    local ruleset="$2"
+
+    x_=""
+
+    local line
+    while read -r line; do
+        :
+    done <"${___X_CMD_INSTALL_SNAP_LOOKUP_RULESET_FOLDER}/${ruleset}"
+}
+

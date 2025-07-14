@@ -18,8 +18,5 @@
       "cmd": "docker pull dslim/slim",
       "reference": "https://github.com/slimtoolkit/slim"
     }
-  },
-  "dsnap": {
-    "docker": "dslim/slim"
   }
 }

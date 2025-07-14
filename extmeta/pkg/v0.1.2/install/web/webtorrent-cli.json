@@ -11,8 +11,5 @@
       "reference": "https://github.com/webtorrent/webtorrent-cli?tab=readme-ov-file#install",
       "dsnap": "webtorrent-cli"
     }
-  },
-  "dsnap": {
-    "/npm": "webtorrent-cli"
   }
 }

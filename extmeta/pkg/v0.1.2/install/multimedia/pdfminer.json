@@ -11,8 +11,5 @@
       "reference": "https://github.com/euske/pdfminer?tab=readme-ov-file#how-to-use",
       "dsnap": "pdfminer"
     }
-  },
-  "dsnap": {
-    "/pip": "pdfminer"
   }
 }

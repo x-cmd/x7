@@ -15,9 +15,5 @@
       "cmd": "brew install prettier",
       "reference": "https://formulae.brew.sh/formula/prettier#default"
     }
-  },
-  "dsnap": {
-    "brew": "prettier",
-    "/npm": "prettier"
   }
 }

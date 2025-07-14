@@ -23,9 +23,5 @@
       "cmd": "x asdf use kpt",
       "reference": "https://github.com/nlamirault/asdf-kpt?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "brew": "kpt",
-    "/go": "github.com/GoogleContainerTools/kpt@main"
   }
 }

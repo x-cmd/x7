@@ -23,9 +23,5 @@
       "cmd": "brew install otree",
       "reference": "https://github.com/fioncat/otree?tab=readme-ov-file#macos-and-linux-homebrew"
     }
-  },
-  "dsnap": {
-    "brew": "otree",
-    "/cargo": "otree"
   }
 }

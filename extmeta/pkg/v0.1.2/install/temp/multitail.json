@@ -46,14 +46,5 @@
       "cmd": "sudo apt-get install multitail",
       "reference": "https://command-not-found.com/multitail"
     }
-  },
-  "dsnap": {
-    "brew": "multitail",
-    "pacman": "multitail",
-    "yum": "multitail",
-    "fedora/dnf": "multitail",
-    "alpine/apk": "multitail",
-    "ubuntu/apt": "multitail",
-    "debian/apt": "multitail"
   }
 }

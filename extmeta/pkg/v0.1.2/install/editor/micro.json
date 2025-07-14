@@ -77,12 +77,5 @@
       "cmd": "pkg_add micro",
       "reference": "https://github.com/zyedidia/micro#installation"
     }
-  },
-  "dsnap": {
-    "brew": "micro",
-    "snap": "micro",
-    "fedora/dnf": "micro",
-    "ubuntu/apt": "micro",
-    "debian/apt": "micro"
   }
 }

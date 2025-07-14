@@ -22,8 +22,5 @@
       "cmd": "x scoop install conftest",
       "reference": "https://www.conftest.dev/install/"
     }
-  },
-  "dsnap": {
-    "/go": "conftest"
   }
 }

@@ -19,9 +19,5 @@
       "reference": "https://github.com/curlpipe/ox?tab=readme-ov-file#manual",
       "dsnap": "ox"
     }
-  },
-  "dsnap": {
-    "brew": "ox",
-    "/cargo": "ox"
   }
 }

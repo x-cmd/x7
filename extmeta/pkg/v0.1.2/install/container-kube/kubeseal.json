@@ -31,10 +31,5 @@
       "reference": "https://github.com/bitnami-labs/sealed-secrets?tab=readme-ov-file#installation-from-source",
       "dsnap": "github.com/bitnami-labs/sealed-secrets/cmd/kubeseal@main"
     }
-  },
-  "dsnap": {
-    "brew": "kubeseal",
-    "nixpkgs": "kubeseal",
-    "/go": "github.com/bitnami-labs/sealed-secrets/cmd/kubeseal@main"
   }
 }

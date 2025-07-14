@@ -10,8 +10,5 @@
       "cmd": "brew install ballerina",
       "reference": "https://formulae.brew.sh/formula/ballerina#default"
     }
-  },
-  "dsnap": {
-    "brew": "ballerina"
   }
 }

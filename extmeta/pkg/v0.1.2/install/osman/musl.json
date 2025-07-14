@@ -23,8 +23,5 @@
       "cmd": "sudo apt-get install musl-tools",
       "reference": "https://command-not-found.com/musl-gcc"
     }
-  },
-  "dsnap": {
-    "alpine/apk": "musl"
   }
 }

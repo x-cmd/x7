@@ -15,9 +15,5 @@
       "cmd": "brew install webpack",
       "reference": "https://formulae.brew.sh/formula/webpack#default"
     }
-  },
-  "dsnap": {
-    "brew": "webpack",
-    "/npm": "webpack"
   }
 }

@@ -79,17 +79,5 @@
       "cmd": "sudo zypper install ranger",
       "reference": "https://www.tecmint.com/linux-terminal-file-managers/"
     }
-  },
-  "dsnap": {
-    "pipx": "ranger-fm",
-    "pacman": "ranger",
-    "yum": "ranger",
-    "emerge": "sys-apps/ranger",
-    "zypper": "ranger",
-    "/pip": "ranger-fm",
-    "fedora/dnf": "ranger",
-    "alpine/apk": "ranger",
-    "ubuntu/apt": "ranger",
-    "debian/apt": "ranger"
   }
 }

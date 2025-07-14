@@ -11,8 +11,5 @@
       "reference": "https://github.com/remy/nodemon?tab=readme-ov-file#installation",
       "dsnap": "nodemon"
     }
-  },
-  "dsnap": {
-    "/npm": "nodemon"
   }
 }

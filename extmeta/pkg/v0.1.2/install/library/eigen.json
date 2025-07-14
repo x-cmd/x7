@@ -10,8 +10,5 @@
       "cmd": "brew install eigen",
       "reference": "https://formulae.brew.sh/formula/eigen#default"
     }
-  },
-  "dsnap": {
-    "brew": "eigen"
   }
 }

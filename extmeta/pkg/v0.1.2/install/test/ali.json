@@ -66,13 +66,5 @@
       "reference": "https://github.com/nakabonne/ali?tab=readme-ov-file#installation",
       "dsnap": "github.com/nakabonne/ali@latest"
     }
-  },
-  "dsnap": {
-    "brew": "nakabonne/ali/ali",
-    "/go": "github.com/nakabonne/ali@latest",
-    "fedora/dnf": "ali",
-    "alpine/apk": "ali",
-    "ubuntu/apt": "ali",
-    "debian/apt": "ali"
   }
 }

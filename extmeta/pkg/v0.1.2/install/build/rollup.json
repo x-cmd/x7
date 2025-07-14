@@ -11,8 +11,5 @@
       "reference": "https://rollupjs.org/introduction/#installation",
       "dsnap": "rollup"
     }
-  },
-  "dsnap": {
-    "/npm": "rollup"
   }
 }

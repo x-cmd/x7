@@ -36,10 +36,5 @@
       "cmd": "sudo nix-shell -p duc",
       "reference": "https://search.nixos.org/packages?channel=unstable&show=duc&from=0&size=50&sort=relevance&type=packages&query=duc"
     }
-  },
-  "dsnap": {
-    "brew": "duc",
-    "ubuntu/apt": "duc",
-    "debian/apt": "duc"
   }
 }

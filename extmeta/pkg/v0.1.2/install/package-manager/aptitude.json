@@ -24,9 +24,5 @@
       "cmd": "sudo apt-get install aptitude",
       "reference": "https://command-not-found.com/aptitude-curses"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "aptitude",
-    "debian/apt": "aptitude"
   }
 }

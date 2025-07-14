@@ -11,8 +11,5 @@
       "reference": "https://github.com/PabloLec/neoss?tab=readme-ov-file#installation",
       "dsnap": "neoss"
     }
-  },
-  "dsnap": {
-    "/npm": "neoss"
   }
 }

@@ -14,8 +14,5 @@
       "cmd": "x asdf use crossplane-cli",
       "reference": "https://github.com/joke/asdf-crossplane-cli?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "/go": "crossplane-cli"
   }
 }

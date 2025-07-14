@@ -15,8 +15,5 @@
       "cmd": "pipx install terminaltexteffects",
       "reference": "https://github.com/ChrisBuilds/terminaltexteffects?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "/pip": "terminaltexteffects"
   }
 }

@@ -65,13 +65,5 @@
       "cmd": "x winget install charmbracelet.gum",
       "reference": "https://github.com/charmbracelet/gum#installation"
     }
-  },
-  "dsnap": {
-    "brew": "gum",
-    "yum": "gum",
-    "nix": "gum",
-    "alpine/apk": "gum",
-    "ubuntu/apt": "gum",
-    "debian/apt": "gum"
   }
 }

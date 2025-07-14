@@ -19,9 +19,5 @@
       "cmd": "sudo port install jwt-cli",
       "reference": "https://github.com/mike-engel/jwt-cli?tab=readme-ov-file#macports"
     }
-  },
-  "dsnap": {
-    "brew": "mike-engel/jwt-cli/jwt-cli",
-    "/cargo": "jwt-cli"
   }
 }

@@ -15,9 +15,5 @@
       "reference": "https://github.com/maaslalani/invoice?tab=readme-ov-file#installation",
       "dsnap": "github.com/maaslalani/invoice"
     }
-  },
-  "dsnap": {
-    "brew": "invoice",
-    "/go": "github.com/maaslalani/invoice"
   }
 }

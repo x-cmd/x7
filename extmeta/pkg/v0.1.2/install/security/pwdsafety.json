@@ -19,8 +19,5 @@
       "reference": "https://github.com/edoardottt/pwdsafety#get-started-",
       "dsnap": "pwdsafety"
     }
-  },
-  "dsnap": {
-    "/go": "pwdsafety"
   }
 }

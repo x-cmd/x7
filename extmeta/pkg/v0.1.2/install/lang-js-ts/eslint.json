@@ -15,8 +15,5 @@
       "cmd": "brew install eslint",
       "reference": "https://formulae.brew.sh/formula/eslint#default"
     }
-  },
-  "dsnap": {
-    "/npm": "eslint"
   }
 }

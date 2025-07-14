@@ -34,8 +34,5 @@
       "cmd": "sudo apt-get install imgp",
       "reference": "https://command-not-found.com/imgp"
     }
-  },
-  "dsnap": {
-    "/pip": "pillow"
   }
 }

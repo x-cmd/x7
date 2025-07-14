@@ -25,11 +25,5 @@
       "reference": "https://pkgs.alpinelinux.org/package/edge/main/x86_64/gnupg",
       "dsnap": "gnupg"
     }
-  },
-  "dsnap": {
-    "brew": "gnupg",
-    "fedora/dnf": "gnupg",
-    "alpine/apk": "gnupg",
-    "ubuntu/apt": "gnupg"
   }
 }

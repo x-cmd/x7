@@ -15,9 +15,5 @@
       "cmd": "brew tap tencentcloud/tccli\n&& brew install tccli\n",
       "reference": "https://github.com/TencentCloud/tencentcloud-cli?tab=readme-ov-file#%E5%AE%89%E8%A3%85tccli"
     }
-  },
-  "dsnap": {
-    "brew": "tccli",
-    "/pip": "tccli"
   }
 }

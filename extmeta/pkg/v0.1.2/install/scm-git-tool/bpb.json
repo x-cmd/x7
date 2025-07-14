@@ -11,8 +11,5 @@
       "reference": "https://github.com/withoutboats/bpb?tab=readme-ov-file#how-to-install",
       "dsnap": "bpb"
     }
-  },
-  "dsnap": {
-    "/cargo": "bpb"
   }
 }

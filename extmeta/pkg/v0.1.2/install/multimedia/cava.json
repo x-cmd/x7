@@ -36,10 +36,5 @@
       "cmd": "brew install cava",
       "reference": "https://github.com/karlstav/cava?tab=readme-ov-file#macos"
     }
-  },
-  "dsnap": {
-    "brew": "cava",
-    "ubuntu/apt": "cava",
-    "debian/apt": "cava"
   }
 }

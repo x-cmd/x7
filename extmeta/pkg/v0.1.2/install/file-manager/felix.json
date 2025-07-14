@@ -19,8 +19,5 @@
       "cmd": "pkgin install felix",
       "reference": "https://kyoheiu.dev/felix/#installation"
     }
-  },
-  "dsnap": {
-    "/cargo": "felix"
   }
 }

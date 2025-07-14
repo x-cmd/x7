@@ -33,10 +33,5 @@
       "reference": "https://command-not-found.com/tcptrack",
       "dsnap": "tcptrack"
     }
-  },
-  "dsnap": {
-    "fedora/dnf": "tcptrack",
-    "ubuntu/apt": "tcptrack",
-    "debian/apt": "tcptrack"
   }
 }

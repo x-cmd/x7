@@ -11,8 +11,5 @@
       "reference": "https://github.com/szktkfm/mdtt?tab=readme-ov-file#-installation",
       "dsnap": "github.com/szktkfm/mdtt/cmd/mdtt"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/szktkfm/mdtt/cmd/mdtt"
   }
 }

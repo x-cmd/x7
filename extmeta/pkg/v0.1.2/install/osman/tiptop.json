@@ -19,8 +19,5 @@
       "cmd": "sudo apt install tiptop",
       "reference": "https://github.com/nschloe/tiptop"
     }
-  },
-  "dsnap": {
-    "/pip": "tiptop"
   }
 }

@@ -19,9 +19,5 @@
       "cmd": "brew install --cask keep",
       "reference": "https://formulae.brew.sh/cask/keep#default"
     }
-  },
-  "dsnap": {
-    "brew": "keep",
-    "/pip": "keep"
   }
 }

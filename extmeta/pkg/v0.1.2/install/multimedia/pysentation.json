@@ -11,8 +11,5 @@
       "reference": "https://github.com/mimseyedi/pysentation?tab=readme-ov-file#installation-",
       "dsnap": "pysentation"
     }
-  },
-  "dsnap": {
-    "/pip": "pysentation"
   }
 }

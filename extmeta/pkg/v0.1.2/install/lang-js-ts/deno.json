@@ -30,8 +30,5 @@
       "cmd": "x choco install deno",
       "reference": "https://github.com/denoland/deno/#install"
     }
-  },
-  "dsnap": {
-    "brew": "deno"
   }
 }

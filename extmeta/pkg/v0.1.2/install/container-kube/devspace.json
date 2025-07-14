@@ -39,10 +39,5 @@
       "cmd": "x asdf use devspace",
       "reference": "https://github.com/NeoHsu/asdf-devspace?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "yarn": "devspace",
-    "brew": "devspace",
-    "/npm": "devspace"
   }
 }

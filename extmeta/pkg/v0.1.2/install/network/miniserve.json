@@ -27,8 +27,5 @@
       "reference": "https://github.com/svenstaro/miniserve?tab=readme-ov-file#how-to-install",
       "dsnap": "miniserve"
     }
-  },
-  "dsnap": {
-    "/cargo": "miniserve"
   }
 }

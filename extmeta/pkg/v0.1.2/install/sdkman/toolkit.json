@@ -18,8 +18,5 @@
       "cmd": "x choco install toolkit",
       "reference": "https://github.com/IoT-Technology/IoT-Toolkit?tab=readme-ov-file#windows"
     }
-  },
-  "dsnap": {
-    "brew": "toolkit"
   }
 }

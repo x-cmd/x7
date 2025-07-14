@@ -23,9 +23,5 @@
       "cmd": "wget  https://github.com/laixintao/iredis/releases/latest/download/iredis.tar.gz \\\n&& tar -xzf iredis.tar.gz \\\n&& ./iredis\n",
       "reference": "https://github.com/laixintao/iredis#download-binary"
     }
-  },
-  "dsnap": {
-    "brew": "iredis",
-    "/pip": "iredis"
   }
 }

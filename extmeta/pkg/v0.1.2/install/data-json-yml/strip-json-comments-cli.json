@@ -11,8 +11,5 @@
       "reference": "https://github.com/sindresorhus/strip-json-comments-cli?tab=readme-ov-file#install",
       "dsnap": "strip-json-comments-cli"
     }
-  },
-  "dsnap": {
-    "/npm": "strip-json-comments-cli"
   }
 }

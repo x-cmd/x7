@@ -46,12 +46,5 @@
       "cmd": "sudo zypper install iftop",
       "reference": "https://software.opensuse.org//download.html?project=openSUSE%3AFactory&package=iftop"
     }
-  },
-  "dsnap": {
-    "brew": "iftop",
-    "fedora/dnf": "iftop",
-    "alpine/apk": "iftop",
-    "ubuntu/apt": "iftop",
-    "debian/apt": "iftop"
   }
 }

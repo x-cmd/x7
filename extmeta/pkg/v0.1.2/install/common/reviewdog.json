@@ -18,8 +18,5 @@
       "cmd": "x scoop install reviewdog",
       "reference": "https://github.com/reviewdog/reviewdog?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "/go": "reviewdog"
   }
 }

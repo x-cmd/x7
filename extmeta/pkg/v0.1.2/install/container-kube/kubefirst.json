@@ -22,8 +22,5 @@
       "cmd": "x asdf use kubefirst",
       "reference": "https://github.com/Claywd/asdf-kubefirst?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "brew": "kubefirst"
   }
 }

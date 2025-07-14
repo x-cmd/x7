@@ -18,6 +18,5 @@
       "cmd": "x pwsh iwr https://ps1.edgedb.com -useb | iex",
       "reference": "https://www.edgedb.com/docs/cli/index"
     }
-  },
-  "dsnap": null
+  }
 }

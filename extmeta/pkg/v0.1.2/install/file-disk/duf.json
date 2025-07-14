@@ -60,14 +60,5 @@
       "cmd": "x choco install duf",
       "reference": "https://github.com/muesli/duf"
     }
-  },
-  "dsnap": {
-    "brew": "duf",
-    "/cargo": "duf",
-    "/go": "duf",
-    "fedora/dnf": "duf",
-    "alpine/apk": "duf",
-    "ubuntu/apt": "duf",
-    "debian/apt": "duf"
   }
 }

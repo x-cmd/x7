@@ -28,9 +28,5 @@
       "cmd": "nix-channel --add https://nixos.org/channels/nixos-unstable\n&& nix-channel --update nixos\n&& nix-env -iA nixos.kmon\n",
       "reference": "https://github.com/orhun/kmon#installation"
     }
-  },
-  "dsnap": {
-    "/cargo": "kmon",
-    "alpine/apk": "kmon"
   }
 }

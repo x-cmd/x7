@@ -31,8 +31,5 @@
       "reference": "https://github.com/insanum/gcalcli?tab=readme-ov-file#install-from-pypi",
       "dsnap": "gcalcli"
     }
-  },
-  "dsnap": {
-    "/pip": "gcalcli"
   }
 }

@@ -51,8 +51,5 @@
       "cmd": "git clone https://github.com/charmbracelet/melt.git\n&& cd melt\n&& go build ./cmd/melt/\n",
       "reference": "https://github.com/charmbracelet/melt/?tab=readme-ov-file#build-requires-go-117"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/charmbracelet/melt/cmd/melt@latest"
   }
 }

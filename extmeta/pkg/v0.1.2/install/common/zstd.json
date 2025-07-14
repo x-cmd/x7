@@ -42,13 +42,5 @@
       "cmd": "sudo apt-get install zstd",
       "reference": "https://command-not-found.com/zstd"
     }
-  },
-  "dsnap": {
-    "brew": "zstd",
-    "pacman": "zstd",
-    "fedora/dnf": "zstd",
-    "alpine/apk": "zstd",
-    "ubuntu/apt": "zstd",
-    "debian/apt": "zstd"
   }
 }

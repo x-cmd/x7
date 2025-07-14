@@ -15,8 +15,5 @@
       "cmd": "brew install newman",
       "reference": "https://github.com/postmanlabs/newman?tab=readme-ov-file#using-homebrew"
     }
-  },
-  "dsnap": {
-    "/npm": "newman"
   }
 }

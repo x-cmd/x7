@@ -26,8 +26,5 @@
       "cmd": "sudo xbps-install pywal",
       "reference": "https://github.com/dylanaraps/pywal/wiki/Installation#-void-linux"
     }
-  },
-  "dsnap": {
-    "/pip": "pywal"
   }
 }

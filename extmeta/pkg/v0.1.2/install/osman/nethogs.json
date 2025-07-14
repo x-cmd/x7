@@ -50,13 +50,5 @@
       "cmd": "sudo zypper install nethogs",
       "reference": "https://software.opensuse.org//download.html?project=openSUSE%3AFactory&package=nethogs"
     }
-  },
-  "dsnap": {
-    "brew": "nethogs",
-    "zypper": "nethogs",
-    "fedora/dnf": "nethogs",
-    "alpine/apk": "nethogs",
-    "ubuntu/apt": "nethogs",
-    "debian/apt": "nethogs"
   }
 }

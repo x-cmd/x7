@@ -27,9 +27,5 @@
       "reference": "https://github.com/maaslalani/slides?tab=readme-ov-file#installation",
       "dsnap": "slides"
     }
-  },
-  "dsnap": {
-    "brew": "slides",
-    "/go": "slides"
   }
 }

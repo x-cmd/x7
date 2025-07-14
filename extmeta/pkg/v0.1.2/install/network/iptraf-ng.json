@@ -46,12 +46,5 @@
       "cmd": "sudo zypper install iptraf-ng",
       "reference": "https://software.opensuse.org//download.html?project=openSUSE%3AFactory&package=iptraf-ng"
     }
-  },
-  "dsnap": {
-    "zypper": "iptraf-ng",
-    "fedora/dnf": "iptraf-ng",
-    "alpine/apk": "iptraf-ng",
-    "ubuntu/apt": "iptraf-ng",
-    "debian/apt": "iptraf-ng"
   }
 }

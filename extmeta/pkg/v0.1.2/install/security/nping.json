@@ -42,12 +42,5 @@
       "cmd": "sudo apt-get install nmap",
       "reference": "https://command-not-found.com/nping"
     }
-  },
-  "dsnap": {
-    "brew": "nmap",
-    "fedora/dnf": "nmap-2",
-    "alpine/apk": "nmap",
-    "ubuntu/apt": "nmap",
-    "debian/apt": "nmap"
   }
 }

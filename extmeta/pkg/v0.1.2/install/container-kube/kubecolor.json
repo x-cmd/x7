@@ -19,9 +19,5 @@
       "cmd": "x asdf use kubecolor",
       "reference": "https://github.com/dex4er/asdf-kubecolor?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "brew": "kubecolor",
-    "/go": "kubecolor"
   }
 }

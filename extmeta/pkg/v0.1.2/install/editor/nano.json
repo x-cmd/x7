@@ -62,13 +62,5 @@
       "cmd": "sudo apt-get install nano",
       "reference": "https://command-not-found.com/nano"
     }
-  },
-  "dsnap": {
-    "brew": "nano",
-    "/cargo": "nano",
-    "fedora/dnf": "nano",
-    "alpine/apk": "nano",
-    "ubuntu/apt": "nano",
-    "debian/apt": "nano"
   }
 }

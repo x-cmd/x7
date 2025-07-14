@@ -6,6 +6,11 @@
     "en": "A TUI tool for managing SSH connections"
   },
   "rule": {
+    "/cargo": {
+      "cmd": "cargo install --git https://github.com/quantumsheep/sshs",
+      "reference": "https://github.com/quantumsheep/sshs?tab=readme-ov-file#from-sources",
+      "dsnap": "https://github.com/quantumsheep/sshs"
+    },
     "darwin/brew": {
       "cmd": "brew install sshs",
       "reference": "https://github.com/quantumsheep/sshs?tab=readme-ov-file#homebrew"
@@ -28,15 +33,12 @@
     },
     "alpine/apk": {
       "cmd": "apk add sshs",
-      "reference": "https://github.com/quantumsheep/sshs?tab=readme-ov-file#alpine-linux"
+      "reference": "https://github.com/quantumsheep/sshs?tab=readme-ov-file#alpine-linux",
+      "dsnap": "sshs"
     },
     "nix/nix": {
       "cmd": "nix profile install 'github:quantumsheep/sshs'",
       "reference": "https://github.com/quantumsheep/sshs?tab=readme-ov-file#nixos--nix"
     }
-  },
-  "dsnap": {
-    "brew": "sshs",
-    "/cargo": "sshs"
   }
 }

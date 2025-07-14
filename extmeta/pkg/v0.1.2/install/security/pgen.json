@@ -11,8 +11,5 @@
       "reference": "https://github.com/ctsrc/Pgen?tab=readme-ov-file#installation",
       "dsnap": "pgen"
     }
-  },
-  "dsnap": {
-    "/cargo": "pgen"
   }
 }

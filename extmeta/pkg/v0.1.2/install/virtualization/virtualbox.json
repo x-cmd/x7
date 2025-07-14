@@ -44,13 +44,5 @@
       "cmd": "sudo zypper in virtualbox",
       "reference": "https://zh.opensuse.org/Virtualbox"
     }
-  },
-  "dsnap": {
-    "brew": "virtualbox",
-    "pacman": "virtualbox",
-    "zypper": "virtualbox",
-    "fedora/dnf": "virtualbox",
-    "ubuntu/apt": "virtualbox-qt",
-    "debian/apt": "virtualbox-qt"
   }
 }

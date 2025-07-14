@@ -19,9 +19,5 @@
       "cmd": "brew tap gnebbia/kb https://github.com/gnebbia/kb.git\nbrew install gnebbia/kb/kb\n",
       "reference": "https://github.com/gnebbia/kb?tab=readme-ov-file#installation-with-homebrew"
     }
-  },
-  "dsnap": {
-    "brew": "kb",
-    "/pip": "kb-manager"
   }
 }

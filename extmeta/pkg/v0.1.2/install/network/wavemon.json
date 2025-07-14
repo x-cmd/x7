@@ -46,11 +46,5 @@
       "reference": "https://command-not-found.com/wavemon",
       "dsnap": "wavemon"
     }
-  },
-  "dsnap": {
-    "fedora/dnf": "wavemon",
-    "alpine/apk": "wavemon",
-    "ubuntu/apt": "wavemon",
-    "debian/apt": "wavemon"
   }
 }

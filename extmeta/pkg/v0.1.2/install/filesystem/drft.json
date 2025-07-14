@@ -11,8 +11,5 @@
       "reference": "https://codeberg.org/nightsail/drft",
       "dsnap": "drft"
     }
-  },
-  "dsnap": {
-    "/cargo": "drft"
   }
 }

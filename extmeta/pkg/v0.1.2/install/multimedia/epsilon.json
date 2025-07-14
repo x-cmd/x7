@@ -28,10 +28,5 @@
       "cmd": "sudo apt-get install epsilon-bin",
       "reference": "https://command-not-found.com/epsilon"
     }
-  },
-  "dsnap": {
-    "brew": "epsilon",
-    "ubuntu/apt": "epsilon-bin",
-    "debian/apt": "epsilon-bin"
   }
 }

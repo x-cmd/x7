@@ -11,8 +11,5 @@
       "reference": "https://github.com/kurolabs/stegcloak?tab=readme-ov-file#installing",
       "dsnap": "stegcloak"
     }
-  },
-  "dsnap": {
-    "/npm": "stegcloak"
   }
 }

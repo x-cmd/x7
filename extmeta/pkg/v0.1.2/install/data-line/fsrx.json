@@ -11,8 +11,5 @@
       "reference": "https://github.com/jrnxf/fsrx?tab=readme-ov-file#cargo",
       "dsnap": "fsrx"
     }
-  },
-  "dsnap": {
-    "/cargo": "fsrx"
   }
 }

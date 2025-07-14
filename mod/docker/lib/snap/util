@@ -8,16 +8,21 @@ ___x_cmd_docker_snap___parse__(){
             REFIT_CMD="${data##*:}"
             data="${data%:"$REFIT_CMD"}"
             ;;
+        *)
+            # REFIT_CMD="$data"
+            # ___x_cmd install snapookup_ "$data" "$imgtype"
+            # data="$x_"
+            ;;
     esac
 
     case "$data" in
         apk/*|apt/*|dnf/*|go/*|npm/*|cargo/*|pip/*|pixi/*|asdf/*|nix/*)
             REFIT_SYS="${data%%/*}"
             REFIT_PKG="${data#*/}"
+            return 0
             ;;
         */*)
             N=docker M="Unknown -> $data" log:ret:64 ;;
-
         *)
             REFIT_PKG="$data"
             case "$imgtype" in
@@ -74,4 +79,35 @@ ___x_cmd_docker_snap___imageprefix_(){
         nixos)      x_=xni     ;;
         *)          x_=""; return 1 ;;
     esac
+}
+
+alias docker:snap:exitif130orfound='
+    case "$?" in
+        130)        return 130
+    esac
+    [ -z "$x_" ] || return 0
+'
+
+___x_cmd_docker_snap___lookup_(){
+    local cmd="$1"
+    local imgtype="$2"
+
+    ___x_cmd_install_snaplookup_ "$cmd" "$imgtype"
+    docker:snap:exitif130orfound
+
+    ___x_cmd_install_snaplookup_ "$cmd"  go
+    docker:snap:exitif130orfound
+
+    ___x_cmd_install_snaplookup_ "$cmd"  rust
+    docker:snap:exitif130orfound
+
+    ___x_cmd_install_snaplookup_ "$cmd"  deno
+    docker:snap:exitif130orfound
+
+    ___x_cmd_install_snaplookup_ "$cmd"  npm
+    docker:snap:exitif130orfound
+
+    # ___x_cmd_install_lookupsnappkg_fromruleset_ "$cmd"  pixi
+
+    return 1
 }

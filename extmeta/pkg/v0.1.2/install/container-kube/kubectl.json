@@ -56,11 +56,5 @@
       "reference": "https://command-not-found.com/kubectl",
       "dsnap": "kubernetes-client"
     }
-  },
-  "dsnap": {
-    "brew": "kubectl",
-    "yum": "kubernetes-client",
-    "fedora/dnf": "kubernetes-client",
-    "debian/apt": "kubernetes-client"
   }
 }

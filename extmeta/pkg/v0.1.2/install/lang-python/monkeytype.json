@@ -11,8 +11,5 @@
       "reference": "https://github.com/Instagram/MonkeyType?tab=readme-ov-file#installing",
       "dsnap": "MonkeyType"
     }
-  },
-  "dsnap": {
-    "/pip": "MonkeyType"
   }
 }

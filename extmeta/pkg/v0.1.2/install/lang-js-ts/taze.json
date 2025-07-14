@@ -15,8 +15,5 @@
       "cmd": "npx taze",
       "reference": "https://github.com/antfu/taze?tab=readme-ov-file#features"
     }
-  },
-  "dsnap": {
-    "/npm": "taze"
   }
 }

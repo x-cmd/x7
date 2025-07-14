@@ -28,14 +28,15 @@ ___x_cmd_tldr___main(){
 
         nv|--app)               ___x_cmd_tldr_nv        "$@" ;;
         --fzdata)               ___x_cmd_tldr___fz_data "$@" ;;
-        --fz|--fzf)             ___x_cmd_tldr___fzf     "$@" ;;
+        fz|--fz|--fzf)          ___x_cmd_tldr___fzf     "$@" ;;
 
         --which|-w)             ___x_cmd_tldr_which     "$@" ;;
         --version|-v)           ___x_cmd_tldr_version   "$@" ;;
         u|--update|-u)          ___x_cmd_tldr_update    "$@" ;;
         l|--ls|-l)              ___x_cmd_tldr_list      "$@" ;;
         --lang|-L)              ___x_cmd_tldr_lang      "$@" ;;
-        --cat)                  ___x_cmd_tldr_cat       "$@" ;;
+        --cat)                  local ___X_CMD_TLDR_NOT_INTERACTIVE=1
+                                ___x_cmd_tldr_cat       "$@" ;;
 
         --help|-h)              ___x_cmd help -m tldr        ;;
         *)                      ___x_cmd_tldr_cat "$op" "$@" ;;

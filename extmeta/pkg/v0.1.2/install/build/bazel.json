@@ -27,9 +27,5 @@
       "cmd": "sudo zypper install bazel",
       "reference": "https://bazel.build/install/suse#install-opensuse"
     }
-  },
-  "dsnap": {
-    "brew": "bazel",
-    "ubuntu/apt": "bazel"
   }
 }

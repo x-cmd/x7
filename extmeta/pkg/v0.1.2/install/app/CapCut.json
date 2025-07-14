@@ -10,8 +10,5 @@
       "cmd": "x winget install ByteDance.JianyingPro",
       "reference": "https://winget.run/pkg/ByteDance/JianyingPro"
     }
-  },
-  "dsnap": {
-    "winget": "ByteDance.JianyingPro"
   }
 }

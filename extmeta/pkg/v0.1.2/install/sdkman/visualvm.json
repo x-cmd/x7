@@ -28,11 +28,5 @@
       "cmd": "sudo apt-get install visualvm",
       "reference": "https://command-not-found.com/visualvm"
     }
-  },
-  "dsnap": {
-    "brew": "visualvm",
-    "pacman": "visualvm",
-    "ubuntu/apt": "visualvm",
-    "debian/apt": "visualvm"
   }
 }

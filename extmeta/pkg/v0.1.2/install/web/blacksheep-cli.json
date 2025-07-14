@@ -11,8 +11,5 @@
       "reference": "https://www.neoteroi.dev/blacksheep/cli/#installing-the-cli",
       "dsnap": "blacksheep-cli"
     }
-  },
-  "dsnap": {
-    "/pip": "blacksheep-cli"
   }
 }

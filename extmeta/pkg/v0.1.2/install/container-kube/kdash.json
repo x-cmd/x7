@@ -35,9 +35,5 @@
       "cmd": "curl https://raw.githubusercontent.com/kdash-rs/kdash/main/deployment/getLatest.sh | bash",
       "reference": "https://github.com/kdash-rs/kdash?tab=readme-ov-file#install-script"
     }
-  },
-  "dsnap": {
-    "brew": "kdash",
-    "/cargo": "kdash"
   }
 }

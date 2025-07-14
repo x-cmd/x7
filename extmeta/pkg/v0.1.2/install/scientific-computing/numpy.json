@@ -15,8 +15,5 @@
       "cmd": "conda install numpy",
       "reference": "https://numpy.org/install/"
     }
-  },
-  "dsnap": {
-    "/pip": "numpy"
   }
 }

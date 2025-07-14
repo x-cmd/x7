@@ -39,8 +39,5 @@
       "cmd": "eget lifailon/lazyjournal --to ~/.local/bin",
       "reference": "https://github.com/Lifailon/lazyjournal#eget"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/Lifailon/lazyjournal@latest"
   }
 }

@@ -11,8 +11,5 @@
       "reference": "https://pydoit.org/install.html",
       "dsnap": "doit"
     }
-  },
-  "dsnap": {
-    "/pip": "doit"
   }
 }

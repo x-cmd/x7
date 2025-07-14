@@ -64,18 +64,5 @@
       "cmd": "sudo xbps-install task",
       "reference": "https://taskwarrior.org/download/"
     }
-  },
-  "dsnap": {
-    "brew": "task",
-    "yum": "task",
-    "pacman": "task",
-    "zypper": "taskwarrior",
-    "emerge": "task",
-    "pkg": "taskwarrior",
-    "pkg_add": "taskwarrior",
-    "xbps": "task",
-    "fedora/dnf": "task",
-    "ubuntu/apt": "taskwarrior",
-    "debian/apt": "taskwarrior"
   }
 }

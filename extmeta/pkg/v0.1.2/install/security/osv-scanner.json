@@ -39,12 +39,5 @@
       "cmd": "pkg_add osv-scanner",
       "reference": "https://google.github.io/osv-scanner/installation/"
     }
-  },
-  "dsnap": {
-    "brew": "osv-scanner",
-    "pkg": "osv-scanner",
-    "pkg_add": "osv-scanner",
-    "/go": "github.com/google/osv-scanner/cmd/osv-scanner@v1",
-    "alpine/apk": "osv-scanner"
   }
 }

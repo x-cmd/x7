@@ -32,10 +32,5 @@
       "cmd": "yarn global add cfonts",
       "reference": "https://github.com/dominikwilkowski/cfonts?tab=readme-ov-file#yarn"
     }
-  },
-  "dsnap": {
-    "yarn": "cfonts",
-    "/npm": "cfonts",
-    "/cargo": "cfonts"
   }
 }

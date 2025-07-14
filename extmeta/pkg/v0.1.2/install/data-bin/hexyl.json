@@ -87,8 +87,5 @@
       "cmd": "guix package -i hexyl",
       "reference": "https://github.com/sharkdp/hexyl?tab=readme-ov-file#via-guix"
     }
-  },
-  "dsnap": {
-    "/cargo": "hexyl"
   }
 }

@@ -44,10 +44,5 @@
       "reference": "https://github.com/alexpasmantier/television/wiki/Installation",
       "dsnap": "television"
     }
-  },
-  "dsnap": {
-    "brew": "television",
-    "/cargo": "television",
-    "alpine/apk": "television"
   }
 }

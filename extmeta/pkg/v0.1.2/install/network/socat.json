@@ -46,14 +46,5 @@
       "cmd": "sudo apt-get install socat",
       "reference": "https://command-not-found.com/socat"
     }
-  },
-  "dsnap": {
-    "brew": "socat",
-    "pacman": "socat",
-    "yum": "socat",
-    "fedora/dnf": "socat",
-    "alpine/apk": "socat",
-    "ubuntu/apt": "socat",
-    "debian/apt": "socat"
   }
 }

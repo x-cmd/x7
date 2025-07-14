@@ -118,6 +118,7 @@ ocrmypdf	ocrmypdf
 tintin++	tintin++
 vhs	vhs
 aria2	aria2
+asn	asn
 bmon	bmon
 certbot	certbot
 curl	curl
@@ -134,6 +135,7 @@ mtr	mtr
 ngrok	ngrok
 nload	nload
 network-manager	nmtui
+sing-box	sing-box
 socat	socat
 speedtest-cli	speedtest-cli
 tcping_amd64.deb	tcping

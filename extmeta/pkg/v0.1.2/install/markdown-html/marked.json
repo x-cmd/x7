@@ -11,8 +11,5 @@
       "reference": "https://github.com/markedjs/marked?tab=readme-ov-file#installation",
       "dsnap": "marked"
     }
-  },
-  "dsnap": {
-    "/npm": "marked"
   }
 }

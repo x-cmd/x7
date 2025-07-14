@@ -15,8 +15,5 @@
       "reference": "https://github.com/Byron/gitoxide?tab=readme-ov-file#from-source-via-cargo",
       "dsnap": "gitoxide"
     }
-  },
-  "dsnap": {
-    "/cargo": "gitoxide"
   }
 }

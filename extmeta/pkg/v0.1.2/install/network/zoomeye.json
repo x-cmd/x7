@@ -11,8 +11,5 @@
       "reference": "https://github.com/knownsec/zoomeye-python?tab=readme-ov-file#0x01-installation",
       "dsnap": "zoomeye"
     }
-  },
-  "dsnap": {
-    "/pip": "zoomeye"
   }
 }

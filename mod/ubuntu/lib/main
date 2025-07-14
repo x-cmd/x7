@@ -1,21 +1,45 @@
 # shellcheck shell=dash
-
-xrc:mod:lib     ubuntu   __runcmd
+___x_cmd log init   ubuntu
 
 ___x_cmd_ubuntu___main(){
-    [ "$#" -gt 0 ] ||   set -- bash
+    [ "$#" -gt 0 ]  || set -- sh
 
     local op="$1";      shift
     case "$op" in
-        -h|--help)      ___x_cmd help -m ubuntu "$@";    return 0 ;;
+        -h|--help)      ___x_cmd help -m ubuntu         "$@" ;;
 
+        img|image)      ___x_cmd_ubuntu_image           "$@" ;;
+
+        refit|ps|fz)    ___x_cmd_ubuntu_"$op"           "$@" ;;
+
+        init|cfg)       ___x_cmd_ubuntu_cfg             "$@" ;;
         --|snap)        ___x_cmd_ubuntu_snap            "$@" ;;
+        :*)             ___x_cmd_ubuntu_snapx "$op"     "$@" ;;
+
         *)              ___x_cmd_ubuntu_snap "$op"      "$@" ;;
     esac
 }
 
+___x_cmd_ubuntu_ps(){
+    ___x_cmd docker ps --prefix "xub" "$@"
+}
+
+___x_cmd_ubuntu_image(){
+    ___X_CMD_DOCKER_IMAGE_PREFIX="xub-" \
+        ___x_cmd docker image "$@"
+}
+
+___x_cmd_ubuntu_fz(){
+    ___X_CMD_DOCKER_PS_PREFIX="xub-"        \
+    ___X_CMD_DOCKER_IMAGE_PREFIX="xub-"     \
+        ___x_cmd docker fz  "$@"
+}
 
 ___x_cmd_ubuntu_snap(){
     ___x_cmd docker snap --imagetype ubuntu "$@"
 }
 
+___x_cmd_ubuntu_snapx(){
+    ___X_CMD_DOCKER_IMGTYPE=ubuntu  \
+        ___x_cmd docker snapx --name "$@"
+}

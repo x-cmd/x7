@@ -19,9 +19,5 @@
       "reference": "https://github.com/JFryy/qq/?tab=readme-ov-file#installation",
       "dsnap": "qq/cli"
     }
-  },
-  "dsnap": {
-    "brew": "qq",
-    "/go": "qq/cli"
   }
 }

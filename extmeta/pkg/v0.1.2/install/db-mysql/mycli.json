@@ -42,13 +42,5 @@
       "cmd": "sudo apt-get install mycli",
       "reference": "https://command-not-found.com/mycli"
     }
-  },
-  "dsnap": {
-    "pip3": "mycli",
-    "brew": "mycli",
-    "/pip": "mycli",
-    "fedora/dnf": "mycli",
-    "ubuntu/apt": "mycli",
-    "debian/apt": "mycli"
   }
 }

@@ -7,7 +7,7 @@
   },
   "rule": {
     "win/powershell": {
-      "cmd": "x pwsh powershell -ExecutionPolicy ByPass -c \"irm https://aider.chat/install.ps1 | iex\"",
+      "cmd": "x pwsh -ExecutionPolicy ByPass -c \"irm https://aider.chat/install.ps1 | iex\"",
       "reference": "https://aider.chat/docs/install.html#windows"
     },
     "/curl": {
@@ -35,10 +35,5 @@
       "cmd": "brew install aider",
       "reference": "https://formulae.brew.sh/formula/aider#default"
     }
-  },
-  "dsnap": {
-    "brew": "aider",
-    "pipx": "aider-chat",
-    "/pip": "aider-chat"
   }
 }

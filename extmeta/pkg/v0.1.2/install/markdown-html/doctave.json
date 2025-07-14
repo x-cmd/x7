@@ -15,9 +15,5 @@
       "reference": "https://github.com/Doctave/doctave?tab=readme-ov-file#cargo-rust-package-manager",
       "dsnap": "doctave"
     }
-  },
-  "dsnap": {
-    "brew": "doctave",
-    "/cargo": "doctave"
   }
 }

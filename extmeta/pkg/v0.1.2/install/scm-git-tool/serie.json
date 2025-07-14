@@ -27,9 +27,5 @@
       "cmd": "eget lusingander/serie",
       "reference": "https://github.com/lusingander/serie#installation"
     }
-  },
-  "dsnap": {
-    "brew": "lusingander/tap/serie",
-    "/cargo": "serie"
   }
 }

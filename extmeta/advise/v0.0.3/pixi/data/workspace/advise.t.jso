@@ -3,7 +3,7 @@
 :
 [
 {
-"pixi project [OPTIONS] <COMMAND>"
+"pixi workspace [OPTIONS] <COMMAND>"
 :
 null
 }
@@ -17,11 +17,11 @@ null
 {
 "en"
 :
-"Commands to manage project channels"
+"Commands to manage workspace channels"
 ,
 "cn"
 :
-"管理项目频道的命令"
+"管理工作区频道的命令"
 }
 }
 ,
@@ -33,11 +33,11 @@ null
 {
 "en"
 :
-"Commands to manage project description"
+"Commands to manage workspace description"
 ,
 "cn"
 :
-"管理项目描述的命令"
+"管理工作区描述的命令"
 }
 }
 ,
@@ -49,11 +49,11 @@ null
 {
 "en"
 :
-"Commands to manage project platforms"
+"Commands to manage workspace platforms"
 ,
 "cn"
 :
-"管理项目平台的命令"
+"管理工作区平台的命令"
 }
 }
 ,
@@ -65,11 +65,11 @@ null
 {
 "en"
 :
-"Commands to manage project version"
+"Commands to manage workspace version"
 ,
 "cn"
 :
-"管理项目版本的命令"
+"管理工作区版本的命令"
 }
 }
 ,
@@ -97,11 +97,43 @@ null
 {
 "en"
 :
-"Commands to export projects to other formats"
+"Commands to export workspaces to other formats"
 ,
 "cn"
 :
-"将项目导出为其他格式"
+"将工作区导出为其他格式"
+}
+}
+,
+"name"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Commands to manage workspace name"
+,
+"cn"
+:
+"管理工作区名称等命令"
+}
+}
+,
+"system-requirements"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Commands to manage workspace system requirements"
+,
+"cn"
+:
+"管理工作区系统要求的命令"
 }
 }
 ,

@@ -20,9 +20,5 @@
       "reference": "https://superdb.org/docs/install/#building-from-source",
       "dsnap": "super"
     }
-  },
-  "dsnap": {
-    "brew": "super",
-    "/go": "super"
   }
 }

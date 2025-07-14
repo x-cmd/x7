@@ -24,9 +24,5 @@
       "cmd": "sudo apt-get install ash",
       "reference": "https://command-not-found.com/ash"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "ash",
-    "debian/apt": "ash"
   }
 }

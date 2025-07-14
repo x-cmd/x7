@@ -19,8 +19,5 @@
       "cmd": "brew tap napisani/procmux\n&& brew install procmux\n",
       "reference": "https://github.com/napisani/procmux#installation"
     }
-  },
-  "dsnap": {
-    "/pip": "procmux"
   }
 }

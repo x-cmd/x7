@@ -50,12 +50,5 @@
       "reference": "https://github.com/mesonbuild/meson?tab=readme-ov-file#installing-from-source",
       "dsnap": "meson"
     }
-  },
-  "dsnap": {
-    "brew": "meson",
-    "/pip": "meson",
-    "fedora/dnf": "meson",
-    "ubuntu/apt": "meson",
-    "debian/apt": "meson"
   }
 }

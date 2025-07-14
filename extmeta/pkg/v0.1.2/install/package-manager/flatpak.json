@@ -48,14 +48,5 @@
       "cmd": "sudo apt-get install apt",
       "reference": "https://command-not-found.com/apt-get"
     }
-  },
-  "dsnap": {
-    "zypper": "flatpak",
-    "pacman": "flatpak",
-    "yum": "flatpak",
-    "emerge": "sys-apps/flatpak",
-    "fedora/dnf": "flatpak",
-    "ubuntu/apt": "flatpak",
-    "debian/apt": "flatpak"
   }
 }

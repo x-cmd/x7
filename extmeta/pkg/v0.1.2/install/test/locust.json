@@ -14,8 +14,5 @@
       "cmd": "brew install locust",
       "reference": "https://formulae.brew.sh/formula/locust#default"
     }
-  },
-  "dsnap": {
-    "/pip": "locust"
   }
 }

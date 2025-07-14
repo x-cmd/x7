@@ -11,8 +11,5 @@
       "reference": "https://jakejs.com/docs-page.html#item-overview-installation",
       "dsnap": "jake"
     }
-  },
-  "dsnap": {
-    "/npm": "jake"
   }
 }

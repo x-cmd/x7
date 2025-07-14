@@ -11,8 +11,5 @@
       "reference": "https://github.com/aceliuchanghong/bili_douyin_xhs_uploader?tab=readme-ov-file#install",
       "dsnap": "bili_douyin_xhs_uploader"
     }
-  },
-  "dsnap": {
-    "/pip": "bili_douyin_xhs_uploader"
   }
 }

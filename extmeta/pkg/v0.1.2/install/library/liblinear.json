@@ -15,9 +15,5 @@
       "cmd": "brew install liblinear",
       "reference": "https://formulae.brew.sh/formula/liblinear#default"
     }
-  },
-  "dsnap": {
-    "brew": "liblinear",
-    "/pip": "liblinear-official"
   }
 }

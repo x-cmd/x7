@@ -25,11 +25,5 @@
       "reference": "https://pkgs.alpinelinux.org/package/edge/testing/x86_64/hashcat",
       "dsnap": "hashcat"
     }
-  },
-  "dsnap": {
-    "brew": "hashcat",
-    "fedora/dnf": "hashcat",
-    "alpine/apk": "hashcat",
-    "ubuntu/apt": "hashcat"
   }
 }

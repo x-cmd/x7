@@ -15,9 +15,5 @@
       "cmd": "brew install gitmoji",
       "reference": "https://github.com/carloscuesta/gitmoji-cli?tab=readme-ov-file#brew"
     }
-  },
-  "dsnap": {
-    "brew": "gitmoji",
-    "/npm": "gitmoji-cli"
   }
 }

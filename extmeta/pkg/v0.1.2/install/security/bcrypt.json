@@ -86,13 +86,5 @@
       "cmd": "sudo snap install bcrypt-tool",
       "reference": "https://snapcraft.io/install/bcrypt-tool/ubuntu"
     }
-  },
-  "dsnap": {
-    "brew": "bcrypt",
-    "snap": "bcrypt-tool",
-    "/pip": "bcrypt",
-    "fedora/dnf": "bcrypt",
-    "ubuntu/apt": "bcrypt",
-    "debian/apt": "bcrypt"
   }
 }

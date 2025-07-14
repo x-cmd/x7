@@ -10,8 +10,5 @@
       "cmd": "",
       "reference": "https://github.com/apache/jmeter"
     }
-  },
-  "dsnap": {
-    "/go": "jmeter"
   }
 }

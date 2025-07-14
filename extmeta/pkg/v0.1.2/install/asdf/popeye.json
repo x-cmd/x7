@@ -19,9 +19,5 @@
       "cmd": "x asdf use popeye",
       "reference": "https://github.com/nlamirault/asdf-popeye?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "brew": "derailed/popeye/popeye",
-    "/go": "github.com/derailed/popeye@latest"
   }
 }

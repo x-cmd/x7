@@ -41,12 +41,5 @@
       "cmd": "sudo apt-get install java",
       "reference": "https://command-not-found.com/java"
     }
-  },
-  "dsnap": {
-    "/cargo": "java",
-    "fedora/dnf": "java",
-    "alpine/apk": "java",
-    "ubuntu/apt": "java",
-    "debian/apt": "java"
   }
 }

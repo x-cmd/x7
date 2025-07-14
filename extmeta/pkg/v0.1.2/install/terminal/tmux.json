@@ -50,14 +50,5 @@
       "cmd": "sudo apt-get install tmux",
       "reference": "https://command-not-found.com/tmux"
     }
-  },
-  "dsnap": {
-    "brew": "tmux",
-    "pacman": "tmux",
-    "yum": "tmux",
-    "fedora/dnf": "tmux",
-    "alpine/apk": "tmux",
-    "ubuntu/apt": "tmux",
-    "debian/apt": "tmux"
   }
 }

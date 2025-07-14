@@ -11,8 +11,5 @@
       "reference": "https://github.com/mckaywrigley/chatbot-ui?tab=readme-ov-file#local-quickstart",
       "dsnap": "chatbot-ui"
     }
-  },
-  "dsnap": {
-    "/npm": "chatbot-ui"
   }
 }

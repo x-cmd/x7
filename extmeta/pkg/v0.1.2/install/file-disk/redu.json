@@ -11,8 +11,5 @@
       "reference": "https://github.com/drdo/redu?tab=readme-ov-file#installing",
       "dsnap": "redu"
     }
-  },
-  "dsnap": {
-    "/cargo": "redu"
   }
 }

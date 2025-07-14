@@ -19,10 +19,5 @@
       "cmd": "sudo yay -S litecli",
       "reference": "https://github.com/dbcli/litecli#installation"
     }
-  },
-  "dsnap": {
-    "brew": "litecli",
-    "yay": "litecli",
-    "/pip": "litecli"
   }
 }

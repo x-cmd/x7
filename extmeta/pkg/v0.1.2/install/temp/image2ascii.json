@@ -11,8 +11,5 @@
       "reference": "https://github.com/qeesung/image2ascii?tab=readme-ov-file#installation",
       "dsnap": "github.com/qeesung/image2ascii@latest"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/qeesung/image2ascii@latest"
   }
 }

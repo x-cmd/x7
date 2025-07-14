@@ -51,8 +51,5 @@
       "cmd": "nix-env -iA lychee",
       "reference": "https://github.com/lycheeverse/lychee#nixpkgs"
     }
-  },
-  "dsnap": {
-    "/cargo": "lychee"
   }
 }

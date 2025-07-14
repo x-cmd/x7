@@ -23,9 +23,5 @@
       "cmd": "nix run github:typst/typst -- --version",
       "reference": "https://github.com/typst/typst?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "brew": "typst",
-    "/cargo": "typst-cli"
   }
 }

@@ -53,16 +53,5 @@
       "reference": "https://github.com/gopasspw/gopass?tab=readme-ov-file#from-source",
       "dsnap": "github.com/gopasspw/gopass@latest"
     }
-  },
-  "dsnap": {
-    "brew": "gopass",
-    "port": "gopass",
-    "pacman": "gopass",
-    "scoop": "gopass",
-    "choco": "gopass",
-    "winget": "gopass.gopass",
-    "/go": "github.com/gopasspw/gopass@latest",
-    "fedora/dnf": "gopass",
-    "alpine/apk": "gopass"
   }
 }

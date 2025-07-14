@@ -15,9 +15,5 @@
       "reference": "https://github.com/jesseduffield/lazynpm?tab=readme-ov-file#go",
       "dsnap": "lazynpm"
     }
-  },
-  "dsnap": {
-    "brew": "lazynpm",
-    "/go": "lazynpm"
   }
 }

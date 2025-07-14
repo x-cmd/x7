@@ -14,8 +14,5 @@
       "cmd": "brew install cask",
       "reference": "https://cask.readthedocs.io/en/latest/guide/installation.html#package-managers"
     }
-  },
-  "dsnap": {
-    "/go": "cask"
   }
 }

@@ -43,7 +43,7 @@ ___x_cmd_docker_snap(){
             -d|--daemon)            daemon=1;           shift 1 ;;
 
             -v|--volume)            arg:add START_OPTS "$1"      "$2" ;   arg:2:shift ;;
-            -p|--port)              arg:add START_OPTS --port    "$2" ;   arg:2:shift ;;
+            -p|--port|--publish)    arg:add START_OPTS --publish "$2" ;   arg:2:shift ;;
 
             --net|--network)        arg:add START_OPTS --network "$2" ;   arg:2:shift ;;
 
@@ -66,7 +66,10 @@ ___x_cmd_docker_snap(){
         esac
     done
 
-    [ -z "$name" ] || ___x_cmd str startswith "$name" "${___X_CMD_ALPINE_PREFIX}-"      || N=docker M="Please provide container name with prefix -> ${___X_CMD_ALPINE_PREFIX}-" log:ret:64
+    [ -z "$name" ] || ___x_cmd str startswith "$name" "${___X_CMD_ALPINE_PREFIX}-"      || {
+        name="${___X_CMD_ALPINE_PREFIX}-${name}"
+    } # N=docker M="Please provide container name with prefix -> ${___X_CMD_ALPINE_PREFIX}-" log:ret:64
+
     ! { [ -n "$daemon" ] && [ -z "$name" ]; }                                           || N=docker M="Please provide container name for daemon -> $daemon" log:ret:64
 
     [ $# -gt 0 ]    || set -- bash

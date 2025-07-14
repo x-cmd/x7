@@ -46,13 +46,5 @@
       "cmd": "sudo apt-get install aria2",
       "reference": "https://command-not-found.com/aria2c"
     }
-  },
-  "dsnap": {
-    "brew": "aria2",
-    "pacman": "aria2",
-    "fedora/dnf": "aria2",
-    "alpine/apk": "aria2",
-    "ubuntu/apt": "aria2",
-    "debian/apt": "aria2"
   }
 }

@@ -34,8 +34,5 @@
       "cmd": "x asdf use skaffold",
       "reference": "https://github.com/nklmilojevic/asdf-skaffold?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "/go": "skaffold"
   }
 }

@@ -65,13 +65,5 @@
       "cmd": "x winget install hpjansson.Chafa",
       "reference": "https://hpjansson.org/chafa/download/"
     }
-  },
-  "dsnap": {
-    "brew": "chafa",
-    "pkg": "chafa",
-    "zypper": "chafa",
-    "fedora/dnf": "chafa",
-    "ubuntu/apt": "chafa",
-    "debian/apt": "chafa"
   }
 }

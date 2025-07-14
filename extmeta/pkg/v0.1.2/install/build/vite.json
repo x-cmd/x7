@@ -15,9 +15,5 @@
       "cmd": "brew install vite",
       "reference": "https://formulae.brew.sh/formula/vite#default"
     }
-  },
-  "dsnap": {
-    "brew": "vite",
-    "/npm": "vite"
   }
 }

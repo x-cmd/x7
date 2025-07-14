@@ -15,8 +15,5 @@
       "cmd": "pipx install litellm",
       "reference": "https://github.com/BerriAI/litellm?tab=readme-ov-file#usage-docs"
     }
-  },
-  "dsnap": {
-    "/pip": "litellm"
   }
 }

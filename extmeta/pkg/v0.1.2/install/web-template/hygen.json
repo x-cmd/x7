@@ -19,9 +19,5 @@
       "cmd": "brew tap jondot/tap\n&& brew install hygen\n",
       "reference": "https://github.com/jondot/hygen?tab=readme-ov-file#quick-start"
     }
-  },
-  "dsnap": {
-    "brew": "hygen",
-    "/npm": "hygen"
   }
 }

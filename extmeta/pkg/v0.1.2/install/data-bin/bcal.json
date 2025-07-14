@@ -29,11 +29,5 @@
       "cmd": "brew install bcal",
       "reference": "https://formulae.brew.sh/formula/bcal#default"
     }
-  },
-  "dsnap": {
-    "brew": "bcal",
-    "fedora/dnf": "bcal",
-    "ubuntu/apt": "bcal",
-    "debian/apt": "bcal"
   }
 }

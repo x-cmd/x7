@@ -47,8 +47,5 @@
       "cmd": "scoop install mise",
       "reference": "https://mise.jdx.dev/installing-mise.html"
     }
-  },
-  "dsnap": {
-    "/cargo": "mise"
   }
 }

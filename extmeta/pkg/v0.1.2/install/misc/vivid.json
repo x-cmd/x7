@@ -15,9 +15,5 @@
       "cmd": "brew install vivid",
       "reference": "https://github.com/sharkdp/vivid?tab=readme-ov-file#on-macos"
     }
-  },
-  "dsnap": {
-    "brew": "vivid",
-    "/cargo": "vivid"
   }
 }

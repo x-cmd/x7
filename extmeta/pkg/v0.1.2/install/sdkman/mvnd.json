@@ -18,8 +18,5 @@
       "cmd": "brew install mvndaemon/homebrew-mvnd/mvnd",
       "reference": "https://github.com/apache/maven-mvnd#install-using-homebrew"
     }
-  },
-  "dsnap": {
-    "brew": "mvnd"
   }
 }

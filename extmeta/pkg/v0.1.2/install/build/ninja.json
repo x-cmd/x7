@@ -74,12 +74,5 @@
       "cmd": "spack install ninja",
       "reference": "https://github.com/ninja-build/ninja/wiki/Pre-built-Ninja-packages#user-level-package-managers"
     }
-  },
-  "dsnap": {
-    "brew": "ninja",
-    "fedora/dnf": "ninja-build",
-    "alpine/apk": "ninja",
-    "ubuntu/apt": "ninja-build",
-    "debian/apt": "ninja-build"
   }
 }

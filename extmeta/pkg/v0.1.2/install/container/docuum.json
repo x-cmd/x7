@@ -23,8 +23,5 @@
       "reference": "https://github.com/stepchowfun/docuum?tab=readme-ov-file#installation-with-cargo",
       "dsnap": "docuum"
     }
-  },
-  "dsnap": {
-    "/cargo": "docuum"
   }
 }

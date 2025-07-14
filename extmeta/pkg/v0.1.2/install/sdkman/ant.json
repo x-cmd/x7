@@ -45,13 +45,5 @@
       "cmd": "sudo apt-get install ant",
       "reference": "https://command-not-found.com/ant"
     }
-  },
-  "dsnap": {
-    "brew": "ant",
-    "yum": "ant",
-    "pacman": "ant",
-    "fedora/dnf": "ant",
-    "ubuntu/apt": "ant",
-    "debian/apt": "ant"
   }
 }

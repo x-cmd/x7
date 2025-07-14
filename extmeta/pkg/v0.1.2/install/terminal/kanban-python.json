@@ -15,8 +15,5 @@
       "cmd": "pipx install kanban-python",
       "reference": "https://github.com/Zaloog/kanban-python?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "/pip": "kanban-python"
   }
 }

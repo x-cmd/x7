@@ -11,8 +11,5 @@
       "reference": "https://github.com/Neoteroi/BlackSheep?tab=readme-ov-file#blacksheep",
       "dsnap": "blacksheep"
     }
-  },
-  "dsnap": {
-    "/pip": "blacksheep"
   }
 }

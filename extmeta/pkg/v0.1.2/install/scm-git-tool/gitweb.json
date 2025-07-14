@@ -19,10 +19,5 @@
       "cmd": "sudo port install gitweb",
       "reference": "https://github.com/yoannfleurydev/gitweb?tab=readme-ov-file#-the-macports-way"
     }
-  },
-  "dsnap": {
-    "brew": "gitweb",
-    "port": "gitweb",
-    "/cargo": "gitweb"
   }
 }

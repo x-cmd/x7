@@ -11,8 +11,5 @@
       "reference": "https://github.com/commenthol/markedpp?tab=readme-ov-file#3-installation",
       "dsnap": "markedpp"
     }
-  },
-  "dsnap": {
-    "/npm": "markedpp"
   }
 }

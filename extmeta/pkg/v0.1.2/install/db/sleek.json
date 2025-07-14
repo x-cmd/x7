@@ -15,9 +15,5 @@
       "cmd": "brew install --cask sleek",
       "reference": "https://formulae.brew.sh/cask/sleek#default"
     }
-  },
-  "dsnap": {
-    "brew": "sleek",
-    "/cargo": "sleek"
   }
 }

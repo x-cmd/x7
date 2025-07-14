@@ -27,9 +27,5 @@
       "cmd": "curl https://raw.githubusercontent.com/jwt-rs/jwt-ui/main/deployment/getLatest.sh | bash",
       "reference": "https://github.com/jwt-rs/jwt-ui?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "brew": "jwt-ui",
-    "/cargo": "jwt-ui"
   }
 }

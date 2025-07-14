@@ -23,8 +23,5 @@
       "cmd": "pipx install isort",
       "reference": "https://pycqa.github.io/isort/docs/quick_start/1.-install.html"
     }
-  },
-  "dsnap": {
-    "/pip": "isort"
   }
 }

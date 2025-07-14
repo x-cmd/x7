@@ -10,8 +10,5 @@
       "cmd": "brew install libaec",
       "reference": "https://formulae.brew.sh/formula/libaec#default"
     }
-  },
-  "dsnap": {
-    "brew": "libaec"
   }
 }

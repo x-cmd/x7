@@ -10,8 +10,5 @@
       "cmd": "brew install lighthouse",
       "reference": "https://formulae.brew.sh/formula/lighthouse#default"
     }
-  },
-  "dsnap": {
-    "brew": "lighthouse"
   }
 }

@@ -29,11 +29,5 @@
       "reference": "https://www.qemu.org/download/#linux",
       "dsnap": "qemu-kvm"
     }
-  },
-  "dsnap": {
-    "yum": "qemu-kvm",
-    "fedora/dnf": "qemu-kvm",
-    "ubuntu/apt": "qemu-kvm",
-    "debian/apt": "qemu-kvm"
   }
 }

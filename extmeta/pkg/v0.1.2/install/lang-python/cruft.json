@@ -44,11 +44,5 @@
       "cmd": "x scoop install extras/cruft",
       "reference": "https://scoop.sh/#/apps?q=cruft"
     }
-  },
-  "dsnap": {
-    "brew": "cruft",
-    "/pip": "cruft",
-    "ubuntu/apt": "cruft",
-    "debian/apt": "cruft"
   }
 }

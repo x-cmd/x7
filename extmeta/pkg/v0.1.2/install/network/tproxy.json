@@ -15,8 +15,5 @@
       "cmd": "scoop install tproxy",
       "reference": "https://github.com/kevwan/tproxy?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/kevwan/tproxy"
   }
 }

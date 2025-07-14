@@ -10,8 +10,5 @@
       "cmd": "brew install fontforge",
       "reference": "https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher"
     }
-  },
-  "dsnap": {
-    "brew": "fontforge"
   }
 }

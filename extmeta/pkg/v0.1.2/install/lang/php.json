@@ -50,14 +50,5 @@
       "cmd": "sudo apt-get install php",
       "reference": "https://command-not-found.com/php"
     }
-  },
-  "dsnap": {
-    "brew": "php",
-    "pacman": "php",
-    "yum": "php-cli",
-    "fedora/dnf": "php-cli",
-    "alpine/apk": "php",
-    "ubuntu/apt": "php",
-    "debian/apt": "php"
   }
 }

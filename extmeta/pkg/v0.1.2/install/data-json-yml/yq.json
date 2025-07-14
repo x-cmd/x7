@@ -15,6 +15,11 @@
       "reference": "https://github.com/mikefarah/yq?tab=readme-ov-file#go-install",
       "dsnap": "github.com/mikefarah/yq/v4@latest"
     },
+    "alpine/apk": {
+      "cmd": "sudo apk add yq",
+      "reference": "https://github.com/mikefarah/yq",
+      "dsnap": "yq"
+    },
     "darwin/brew": {
       "cmd": "brew install yq",
       "reference": "https://formulae.brew.sh/formula/yq#default"
@@ -22,11 +27,6 @@
     "/snap": {
       "cmd": "snap install yq",
       "reference": "https://github.com/mikefarah/yq"
-    },
-    "alpine/apk": {
-      "cmd": "sudo apk add yq",
-      "reference": "https://github.com/mikefarah/yq",
-      "dsnap": "yq"
     },
     "arch/pacman": {
       "cmd": "sudo pacman -S go-yq",
@@ -48,17 +48,6 @@
       "cmd": "sudo port selfupdate && sudo port install yq",
       "reference": "https://github.com/mikefarah/yq"
     }
-  },
-  "dsnap": {
-    "brew": "yq",
-    "pacman": "go-yq",
-    "snap": "yq",
-    "winget": "MikeFarah.yq",
-    "scoop": "main/yq",
-    "choco": "yq",
-    "port": "yq",
-    "/go": "mikefarah/yq",
-    "alpine/apk": "yq"
   },
   "binlist": [
     "yq"

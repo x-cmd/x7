@@ -22,10 +22,5 @@
       "cmd": "pkg install feh",
       "reference": "https://www.freshports.org/graphics/feh"
     }
-  },
-  "dsnap": {
-    "brew": "feh",
-    "pacman": "feh",
-    "pkg": "feh"
   }
 }

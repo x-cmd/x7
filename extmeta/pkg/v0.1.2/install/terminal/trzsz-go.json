@@ -44,10 +44,5 @@
       "reference": "https://github.com/trzsz/trzsz-go?tab=readme-ov-file#installation",
       "dsnap": "github.com/trzsz/trzsz-go/cmd/trzsz@latest"
     }
-  },
-  "dsnap": {
-    "brew": "trzsz-go",
-    "/go": "github.com/trzsz/trzsz-go/cmd/trzsz@latest",
-    "debian/apt": "trzsz"
   }
 }

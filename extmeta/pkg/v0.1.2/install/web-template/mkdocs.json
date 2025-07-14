@@ -39,9 +39,5 @@
       "cmd": "x choco install mkdocs",
       "reference": "https://community.chocolatey.org/packages/mkdocs"
     }
-  },
-  "dsnap": {
-    "brew": "mkdocs",
-    "/pip": "mkdocs"
   }
 }

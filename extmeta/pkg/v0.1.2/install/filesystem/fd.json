@@ -95,20 +95,5 @@
       "cmd": "x choco install fd",
       "reference": "https://github.com/sharkdp/fd"
     }
-  },
-  "dsnap": {
-    "brew": "fd",
-    "pacman": "fd",
-    "zypper": "fd",
-    "emerge": "fd",
-    "xbps": "fd",
-    "pkg": "fd-find",
-    "nixpkgs": "fd",
-    "guix": "fd",
-    "/npm": "fd-find",
-    "fedora/dnf": "fd-find",
-    "alpine/apk": "fd",
-    "ubuntu/apt": "fd-find",
-    "debian/apt": "fd-find"
   }
 }

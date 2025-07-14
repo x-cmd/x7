@@ -15,9 +15,5 @@
       "cmd": "brew install gemini-cli",
       "reference": "https://formulae.brew.sh/formula/gemini-cli"
     }
-  },
-  "dsnap": {
-    "brew": "gemini-cli",
-    "/npm": "@google/gemini-cli"
   }
 }

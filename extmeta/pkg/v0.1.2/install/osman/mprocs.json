@@ -32,12 +32,5 @@
       "cmd": "sudo yay mprocs",
       "reference": "https://github.com/pvolok/mprocs?tab=readme-ov-file#aur-arch-linux"
     }
-  },
-  "dsnap": {
-    "brew": "mprocs",
-    "yarn": "mprocs",
-    "yay": "mprocs",
-    "/npm": "mprocs",
-    "/cargo": "mprocs"
   }
 }

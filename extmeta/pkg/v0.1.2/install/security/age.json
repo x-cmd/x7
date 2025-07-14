@@ -54,18 +54,5 @@
       "cmd": "x choco install age.portable",
       "reference": "https://github.com/FiloSottile/age?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "brew": "age",
-    "port": "age",
-    "pacman": "age",
-    "emerge": "app-crypt/age",
-    "nix": "age",
-    "scoop": "extras/age",
-    "choco": "age.portable",
-    "fedora/dnf": "age",
-    "alpine/apk": "age",
-    "ubuntu/apt": "age",
-    "debian/apt": "age"
   }
 }

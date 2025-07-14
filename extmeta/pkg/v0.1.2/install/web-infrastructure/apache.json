@@ -41,13 +41,5 @@
       "cmd": "sudo apt install apache2 -y",
       "reference": "https://linuxhint.com/set-up-apache-web-server-raspberry-pi/"
     }
-  },
-  "dsnap": {
-    "brew": "httpd",
-    "pacman": "apache",
-    "yum": "httpd",
-    "fedora/dnf": "httpd",
-    "ubuntu/apt": "apache2",
-    "debian/apt": "apache2"
   }
 }

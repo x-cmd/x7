@@ -9,9 +9,30 @@
     "darwin/brew": {
       "cmd": "brew install asn",
       "reference": "https://formulae.brew.sh/formula/asn#default"
+    },
+    "ubuntu/apt": {
+      "cmd": "sudo apt update && sudo apt install asn",
+      "reference": "https://github.com/nitefood/asn?tab=readme-ov-file#method-2-installing-a-packaged-version-of-the-script",
+      "dsnap": "asn"
+    },
+    "debian/apt": {
+      "cmd": "sudo apt update && sudo apt install asn",
+      "reference": "https://github.com/nitefood/asn?tab=readme-ov-file#method-2-installing-a-packaged-version-of-the-script",
+      "dsnap": "asn"
+    },
+    "kali/apt": {
+      "cmd": "sudo apt update && sudo apt install asn",
+      "reference": "https://github.com/nitefood/asn?tab=readme-ov-file#method-2-installing-a-packaged-version-of-the-script",
+      "dsnap": "asn"
+    },
+    "arch/yay": {
+      "cmd": "yay -S asn-git",
+      "reference": "https://github.com/nitefood/asn?tab=readme-ov-file#method-2-installing-a-packaged-version-of-the-script"
+    },
+    "alpine/apk": {
+      "cmd": "apk add -X https://dl-cdn.alpinelinux.org/alpine/v3.19/community asn",
+      "reference": "https://github.com/nitefood/asn?tab=readme-ov-file#method-2-installing-a-packaged-version-of-the-script",
+      "dsnap": "apk"
     }
-  },
-  "dsnap": {
-    "brew": "asn"
   }
 }

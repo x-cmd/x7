@@ -10,8 +10,5 @@
       "cmd": "x asdf use tridentctl",
       "reference": "https://github.com/asdf-community/asdf-tridentctl?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "/go": "tridentctl"
   }
 }

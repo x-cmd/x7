@@ -50,14 +50,5 @@
       "cmd": "sudo zypper install cgdb",
       "reference": "https://software.opensuse.org//download.html?project=openSUSE%3AFactory&package=cgdb"
     }
-  },
-  "dsnap": {
-    "brew": "cgdb",
-    "pacman": "cgdb",
-    "zypper": "cgdb",
-    "fedora/dnf": "cgdb",
-    "alpine/apk": "cgdb",
-    "ubuntu/apt": "cgdb",
-    "debian/apt": "cgdb"
   }
 }

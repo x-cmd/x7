@@ -11,8 +11,5 @@
       "reference": "https://github.com/MrRio/vtop?tab=readme-ov-file#how-to-install",
       "dsnap": "vtop"
     }
-  },
-  "dsnap": {
-    "/npm": "vtop"
   }
 }

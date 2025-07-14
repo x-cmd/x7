@@ -15,9 +15,5 @@
       "reference": "https://github.com/yudai/gotty?tab=readme-ov-file#go-get-installation-development",
       "dsnap": "github.com/yudai/gotty"
     }
-  },
-  "dsnap": {
-    "brew": "yudai/gotty/gotty",
-    "/go": "github.com/yudai/gotty"
   }
 }

@@ -82,12 +82,5 @@
       "cmd": "sudo zypper install mc",
       "reference": "https://www.tecmint.com/linux-terminal-file-managers/"
     }
-  },
-  "dsnap": {
-    "brew": "midnight-commander",
-    "fedora/dnf": "mc",
-    "alpine/apk": "mc",
-    "ubuntu/apt": "mc",
-    "debian/apt": "mc"
   }
 }

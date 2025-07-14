@@ -31,10 +31,5 @@
       "cmd": "x asdf use tanka",
       "reference": "https://github.com/trotttrotttrott/asdf-tanka?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "brew": "tanka",
-    "curl": "tanka",
-    "/go": "github.com/grafana/tanka/cmd/tk@latest"
   }
 }

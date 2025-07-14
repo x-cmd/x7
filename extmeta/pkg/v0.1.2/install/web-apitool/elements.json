@@ -11,8 +11,5 @@
       "reference": "https://github.com/stoplightio/elements?tab=readme-ov-file#react-component",
       "dsnap": "@stoplight/elements"
     }
-  },
-  "dsnap": {
-    "/npm": "@stoplight/elements"
   }
 }

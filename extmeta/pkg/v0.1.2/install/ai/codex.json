@@ -27,9 +27,5 @@
       "cmd": "brew install codex",
       "reference": "https://formulae.brew.sh/formula/codex"
     }
-  },
-  "dsnap": {
-    "brew": "codex",
-    "/npm": "@openai/codex"
   }
 }

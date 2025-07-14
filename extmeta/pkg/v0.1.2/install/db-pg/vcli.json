@@ -11,8 +11,5 @@
       "reference": "https://github.com/dbcli/vcli#installation",
       "dsnap": "vcli"
     }
-  },
-  "dsnap": {
-    "/pip": "vcli"
   }
 }

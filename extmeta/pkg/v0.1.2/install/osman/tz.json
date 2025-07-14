@@ -15,9 +15,5 @@
       "reference": "https://github.com/oz/tz?tab=readme-ov-file#go",
       "dsnap": "github.com/oz/tz"
     }
-  },
-  "dsnap": {
-    "brew": "tz",
-    "/go": "github.com/oz/tz"
   }
 }

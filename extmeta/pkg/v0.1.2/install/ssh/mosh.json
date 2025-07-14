@@ -66,12 +66,5 @@
       "cmd": "pkgutil -i mosh",
       "reference": "https://mosh.org/#getting"
     }
-  },
-  "dsnap": {
-    "brew": "mosh",
-    "fedora/dnf": "mosh",
-    "alpine/apk": "mosh",
-    "ubuntu/apt": "mosh",
-    "debian/apt": "mosh"
   }
 }

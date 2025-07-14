@@ -19,9 +19,5 @@
       "reference": "https://github.com/justjanne/powerline-go?tab=readme-ov-file#other-platforms",
       "dsnap": "github.com/justjanne/powerline-go@latest"
     }
-  },
-  "dsnap": {
-    "brew": "powerline-go",
-    "/go": "github.com/justjanne/powerline-go@latest"
   }
 }

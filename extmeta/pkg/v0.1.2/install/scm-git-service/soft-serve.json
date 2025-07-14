@@ -51,10 +51,5 @@
       "cmd": "nix-env -iA nixpkgs.soft-serve",
       "reference": "https://github.com/charmbracelet/soft-serve#installation"
     }
-  },
-  "dsnap": {
-    "brew": "soft-serve",
-    "/go": "soft-serve",
-    "fedora/dnf": "soft-serve"
   }
 }

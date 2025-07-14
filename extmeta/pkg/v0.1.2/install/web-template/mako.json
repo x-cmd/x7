@@ -11,8 +11,5 @@
       "reference": "https://www.makotemplates.org/download.html",
       "dsnap": "Mako"
     }
-  },
-  "dsnap": {
-    "/pip": "Mako"
   }
 }

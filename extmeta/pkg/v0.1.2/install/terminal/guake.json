@@ -46,12 +46,5 @@
       "reference": "https://guake.readthedocs.io/en/latest/user/installing.html#install-from-pypi",
       "dsnap": "guake"
     }
-  },
-  "dsnap": {
-    "pacman": "guake",
-    "/pip": "guake",
-    "fedora/dnf": "guake",
-    "ubuntu/apt": "guake",
-    "debian/apt": "guake"
   }
 }

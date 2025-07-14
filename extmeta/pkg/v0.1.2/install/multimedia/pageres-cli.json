@@ -11,8 +11,5 @@
       "reference": "https://github.com/sindresorhus/pageres-cli?tab=readme-ov-file#install",
       "dsnap": "pageres-cli"
     }
-  },
-  "dsnap": {
-    "/npm": "pageres-cli"
   }
 }

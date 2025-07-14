@@ -34,8 +34,5 @@
       "cmd": "x asdf use tilt",
       "reference": "https://docs.tilt.dev/install.html#asdf"
     }
-  },
-  "dsnap": {
-    "brew": "tilt-dev/tap/tilt"
   }
 }

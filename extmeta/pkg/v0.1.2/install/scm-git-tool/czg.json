@@ -15,9 +15,5 @@
       "cmd": "brew install czg",
       "reference": "https://formulae.brew.sh/formula/czg#default"
     }
-  },
-  "dsnap": {
-    "brew": "czg",
-    "/npm": "czg"
   }
 }

@@ -36,10 +36,5 @@
       "reference": "https://tintin.mudhalla.net/install.php#Ubuntu",
       "dsnap": "tintin++"
     }
-  },
-  "dsnap": {
-    "brew": "tintin",
-    "ubuntu/apt": "tintin++",
-    "debian/apt": "tintin++"
   }
 }

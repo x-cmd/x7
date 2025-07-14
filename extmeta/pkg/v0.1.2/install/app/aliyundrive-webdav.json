@@ -19,8 +19,5 @@
       "cmd": "x scoop install main/aliyundrive-webdav",
       "reference": "https://scoop.sh/#/apps?q=aliyun"
     }
-  },
-  "dsnap": {
-    "/pip": "aliyundrive-webdav"
   }
 }

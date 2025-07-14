@@ -15,8 +15,5 @@
       "cmd": "npx wrangler",
       "reference": "npx create-cloudflare@latest"
     }
-  },
-  "dsnap": {
-    "/npm": "wrangler"
   }
 }

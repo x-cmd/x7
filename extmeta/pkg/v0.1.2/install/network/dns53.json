@@ -32,10 +32,5 @@
       "reference": "https://docs.purpleclay.dev/dns53/install/binary/#go-install",
       "dsnap": "dns53"
     }
-  },
-  "dsnap": {
-    "brew": "dns53",
-    "/go": "dns53",
-    "ubuntu/apt": "dns53"
   }
 }

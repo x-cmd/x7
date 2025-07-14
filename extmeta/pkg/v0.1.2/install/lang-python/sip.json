@@ -41,12 +41,5 @@
       "cmd": "sudo apt-get install sip-devel",
       "reference": "https://command-not-found.com/sip"
     }
-  },
-  "dsnap": {
-    "brew": "sip",
-    "yum": "sip-devel",
-    "fedora/dnf": "sip",
-    "ubuntu/apt": "sip-devel",
-    "debian/apt": "sip-devel"
   }
 }

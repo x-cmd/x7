@@ -82,13 +82,5 @@
       "cmd": "x choco install onefetch",
       "reference": "https://github.com/o2sh/onefetch/wiki/Installation"
     }
-  },
-  "dsnap": {
-    "brew": "onefetch",
-    "snap": "onefetch",
-    "/cargo": "onefetch",
-    "fedora/dnf": "onefetch",
-    "alpine/apk": "onefetch",
-    "ubuntu/apt": "onefetch"
   }
 }

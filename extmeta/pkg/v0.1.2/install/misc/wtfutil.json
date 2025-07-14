@@ -23,10 +23,5 @@
       "reference": "https://github.com/wtfutil/wtf?tab=readme-ov-file#installing-from-source",
       "dsnap": "github.com/wtfutil/wtf"
     }
-  },
-  "dsnap": {
-    "brew": "wtfutil",
-    "port": "wtfutil",
-    "/go": "github.com/wtfutil/wtf"
   }
 }

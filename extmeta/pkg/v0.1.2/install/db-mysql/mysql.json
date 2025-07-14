@@ -54,12 +54,5 @@
       "cmd": "sudo emerge --ask dev-db/mysql",
       "reference": "https://wiki.gentoo.org/wiki/MySQL"
     }
-  },
-  "dsnap": {
-    "brew": "mysql",
-    "fedora/dnf": "mysql-community-server",
-    "alpine/apk": "mysql",
-    "ubuntu/apt": "mysql-server",
-    "debian/apt": "mysql-server"
   }
 }

@@ -15,8 +15,5 @@
       "reference": "https://github.com/copier-org/copier?tab=readme-ov-file#installation",
       "dsnap": "copier"
     }
-  },
-  "dsnap": {
-    "/pip": "copier"
   }
 }

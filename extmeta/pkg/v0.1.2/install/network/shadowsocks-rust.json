@@ -19,9 +19,5 @@
       "cmd": "snap install shadowsocks-rust",
       "reference": "https://github.com/shadowsocks/shadowsocks-rust?tab=readme-ov-file#install-using-snap"
     }
-  },
-  "dsnap": {
-    "brew": "shadowsocks-rust",
-    "/cargo": "shadowsocks-rust"
   }
 }

@@ -42,14 +42,5 @@
       "reference": "https://github.com/dalance/procs",
       "dsnap": "busybox"
     }
-  },
-  "dsnap": {
-    "brew": "procs",
-    "pacman": "busybox",
-    "yum": "busybox",
-    "fedora/dnf": "busybox",
-    "alpine/apk": "busybox",
-    "ubuntu/apt": "busybox",
-    "debian/apt": "busybox"
   }
 }

@@ -37,12 +37,5 @@
       "cmd": "sudo apt-get install gost",
       "reference": "https://command-not-found.com/gost"
     }
-  },
-  "dsnap": {
-    "brew": "gost",
-    "pacman": "gost",
-    "alpine/apk": "mosquitto",
-    "ubuntu/apt": "gost",
-    "debian/apt": "gost"
   }
 }

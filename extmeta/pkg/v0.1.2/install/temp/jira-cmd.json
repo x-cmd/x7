@@ -11,8 +11,5 @@
       "reference": "https://github.com/palashkulsh/jira-cmd?tab=readme-ov-file#installation",
       "dsnap": "jira-cmd"
     }
-  },
-  "dsnap": {
-    "/npm": "jira-cmd"
   }
 }

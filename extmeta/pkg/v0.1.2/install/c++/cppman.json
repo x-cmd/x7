@@ -33,12 +33,5 @@
       "cmd": "sudo port install cppman",
       "reference": "https://github.com/aitjcize/cppman?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "brew": "cppman",
-    "port": "cppman",
-    "/pip": "cppman",
-    "ubuntu/apt": "cppman",
-    "debian/apt": "cppman"
   }
 }

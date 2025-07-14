@@ -11,8 +11,5 @@
       "reference": "https://github.com/sindresorhus/fast-cli?tab=readme-ov-file#install",
       "dsnap": "fast-cli"
     }
-  },
-  "dsnap": {
-    "/npm": "fast-cli"
   }
 }

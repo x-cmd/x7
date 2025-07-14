@@ -4,12 +4,6 @@ ___x_cmd log init   alpine
 
 ___X_CMD_ALPINE_PREFIX=xal
 
-xrc arg
-
-xrc:mod:lib         alpine  \
-    lzim/_index             \
-    image ps snap
-
 # xal
 # xal jq
 # xal snap jq
@@ -34,20 +28,22 @@ xrc:mod:lib         alpine  \
 # xal
 
 ___x_cmd_alpine___main(){
-    [ "$#" -gt 0 ]  ||   set -- sh
+    [ "$#" -gt 0 ]  || set -- sh
 
-    local op="$1";  shift
+    local op="$1";      shift
     case "$op" in
-        -h|--help)  ___x_cmd help -m alpine         "$@" ;;
+        -h|--help)      ___x_cmd help -m alpine         "$@" ;;
 
-        img|image)  ___x_cmd_alpine_image           "$@" ;;
+        img|image)      ___x_cmd_alpine_image           "$@" ;;
 
-        refit|ps)   ___x_cmd_alpine_"$op"           "$@" ;;
+        refit|ps|fz)    ___x_cmd_alpine_"$op"           "$@" ;;
 
-        init|cfg)   ___x_cmd_alpine_cfg             "$@" ;;
-        --|snap)    ___x_cmd_alpine_snap            "$@" ;;
+        init|cfg)       ___x_cmd_alpine_cfg             "$@" ;;
+        --|snap)        ___x_cmd_alpine_snap            "$@" ;;
 
-        *)          ___x_cmd_alpine_snap "$op"      "$@" ;;
+        :*)             ___x_cmd_alpine_snapx "$op"     "$@" ;;
+
+        *)              ___x_cmd_alpine_snap "$op"      "$@" ;;
     esac
 }
 
@@ -59,3 +55,53 @@ ___x_cmd_alpine___app(){
 ___x_cmd_alpine_apk(){
     ___x_cmd_alpine_snap --user root x apk "$@"
 }
+
+___x_cmd_alpine_ps(){
+    ___x_cmd docker ps \
+        --prefix "xal" \
+        -a "$@"
+}
+
+___x_cmd_alpine_image(){
+    ___X_CMD_DOCKER_IMAGE_PREFIX="xal-" \
+        ___x_cmd docker image "$@"
+}
+
+___x_cmd_alpine_fz(){
+    ___X_CMD_DOCKER_PS_PREFIX="xal-"        \
+    ___X_CMD_DOCKER_IMAGE_PREFIX="xal-"     \
+        ___x_cmd docker fz  "$@"
+}
+
+# Scenario 1:
+# xal snap yq --version
+
+# xal snap --apk yq yq --version
+
+# Scenario 2:
+# xal refit --apk yq xal/yq
+# xal snap --image yq xal/yq --version
+
+# Scenario 3:
+# xal refit --apk yq --image yq
+# xal daemon run --name yq xal/yq
+# xal daemon snap yq yq
+
+# go version
+# x alpine refit --go github.com/x-cmd.org/gosop@latest -i xal/gosop
+# x alpine snap --image gosop gosop "$@"
+
+# Scenario 5: how to use solo in alpine ...
+# x alpine snap x a.py
+# xal x a.py -> using root ?
+# x a.py
+
+___x_cmd_alpine_snap(){
+    ___x_cmd docker snap --imagetype alpine "$@"
+}
+
+___x_cmd_alpine_snapx(){
+    ___X_CMD_DOCKER_IMGTYPE=alpine  \
+        ___x_cmd docker snapx "$@"
+}
+

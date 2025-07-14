@@ -50,15 +50,5 @@
       "cmd": "sudo zypper install nginx",
       "reference": "https://en.opensuse.org/Nginx"
     }
-  },
-  "dsnap": {
-    "brew": "nginx",
-    "pacman": "nginx",
-    "emerge": "www-servers/nginx",
-    "zypper": "nginx",
-    "fedora/dnf": "nginx-extras",
-    "alpine/apk": "nginx",
-    "ubuntu/apt": "nginx-extras",
-    "debian/apt": "nginx-extras"
   }
 }

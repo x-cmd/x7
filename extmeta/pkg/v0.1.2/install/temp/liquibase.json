@@ -28,9 +28,5 @@
       "cmd": "brew install liquibase",
       "reference": "https://formulae.brew.sh/formula/liquibase#default"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "liquibase",
-    "debian/apt": "liquibase"
   }
 }

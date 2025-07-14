@@ -11,8 +11,5 @@
       "reference": "https://github.com/gergelyk/bkp#installation",
       "dsnap": "bkp"
     }
-  },
-  "dsnap": {
-    "/pip": "bkp"
   }
 }

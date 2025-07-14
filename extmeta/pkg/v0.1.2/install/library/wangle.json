@@ -10,8 +10,5 @@
       "cmd": "brew install wangle",
       "reference": "https://formulae.brew.sh/formula/wangle#default"
     }
-  },
-  "dsnap": {
-    "brew": "wangle"
   }
 }

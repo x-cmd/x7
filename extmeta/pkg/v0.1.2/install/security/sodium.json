@@ -10,8 +10,5 @@
       "cmd": "brew install libsodium",
       "reference": "https://formulae.brew.sh/formula/libsodium#default"
     }
-  },
-  "dsnap": {
-    "brew": "libsodium"
   }
 }

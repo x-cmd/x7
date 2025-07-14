@@ -66,11 +66,5 @@
       "cmd": "x scoop install rakudo-moar",
       "reference": "https://rakudo.org/downloads"
     }
-  },
-  "dsnap": {
-    "fedora/dnf": "rakudo",
-    "alpine/apk": "rakudo",
-    "ubuntu/apt": "rakudo",
-    "debian/apt": "rakudo"
   }
 }

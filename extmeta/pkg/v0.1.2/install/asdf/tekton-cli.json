@@ -70,8 +70,5 @@
       "cmd": "x asdf use tekton-cli",
       "reference": "https://github.com/johnhamelink/asdf-tekton-cli"
     }
-  },
-  "dsnap": {
-    "brew": "tektoncd-cli"
   }
 }

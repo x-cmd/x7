@@ -97,6 +97,7 @@ async-utils
 async.lua
 asyncio
 atlas
+atmos
 atpath
 audiodataload
 audit-log
@@ -660,6 +661,7 @@ fennel_rblx
 fenster
 fensteraudio
 ff
+ff-lua
 fffonion-busted
 fffonion-lua-resty-kafka
 ffi-bzlib
@@ -714,6 +716,7 @@ forma
 formatter
 formatterfiveone
 fp
+fplot
 fr
 freetype
 freeze-code.nvim
@@ -1469,6 +1472,7 @@ leg
 legendary.nvim
 leo
 lerror
+lest
 leste
 lester
 levents
@@ -3003,6 +3007,7 @@ ngx_lua_datadog
 ngxjsonform
 ngxlogex
 nightfox.nvim
+nixessitycore
 nixio
 nlua
 nluarepl

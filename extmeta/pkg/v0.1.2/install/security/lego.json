@@ -39,12 +39,5 @@
       "reference": "https://go-acme.github.io/lego/installation/index.html",
       "dsnap": "github.com/go-acme/lego/v4/cmd/lego@latest"
     }
-  },
-  "dsnap": {
-    "brew": "lego",
-    "/cargo": "lego",
-    "/go": "github.com/go-acme/lego/v4/cmd/lego@latest",
-    "fedora/dnf": "lego",
-    "alpine/apk": "lego"
   }
 }

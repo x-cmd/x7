@@ -11,8 +11,5 @@
       "reference": "https://github.com/ReagentX/Logria?tab=readme-ov-file#cargo-recommended",
       "dsnap": "logria"
     }
-  },
-  "dsnap": {
-    "/cargo": "logria"
   }
 }

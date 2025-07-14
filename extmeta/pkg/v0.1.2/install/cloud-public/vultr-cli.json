@@ -27,10 +27,5 @@
       "cmd": "pkg_add vultr-cli",
       "reference": "https://github.com/vultr/vultr-cli?tab=readme-ov-file#installing-on-openbsd"
     }
-  },
-  "dsnap": {
-    "brew": "vultr/vultr-cli/vultr-cli",
-    "/go": "vultr-cli",
-    "fedora/dnf": "vultr-cli"
   }
 }

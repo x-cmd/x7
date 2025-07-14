@@ -42,12 +42,5 @@
       "cmd": "sudo apt-get install s3cmd",
       "reference": "https://command-not-found.com/s3cmd"
     }
-  },
-  "dsnap": {
-    "brew": "s3cmd",
-    "/pip": "s3cmd",
-    "fedora/dnf": "s3cmd",
-    "ubuntu/apt": "s3cmd",
-    "debian/apt": "s3cmd"
   }
 }

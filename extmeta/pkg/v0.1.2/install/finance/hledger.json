@@ -74,12 +74,5 @@
       "cmd": "nix-shell -p hledger hledger-ui hledger-web",
       "reference": "https://hledger.org/install.html#nix-linux-mac"
     }
-  },
-  "dsnap": {
-    "brew": "hledger",
-    "fedora/dnf": "hledger",
-    "alpine/apk": "hledger",
-    "ubuntu/apt": "hledger",
-    "debian/apt": "hledger"
   }
 }

@@ -11,8 +11,5 @@
       "reference": "https://www.rspack.dev/guide/quick-start.html",
       "dsnap": "@rspack/cli"
     }
-  },
-  "dsnap": {
-    "/npm": "@rspack/cli"
   }
 }

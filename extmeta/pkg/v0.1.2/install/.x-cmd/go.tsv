@@ -11,6 +11,7 @@ github.com/elementalvoid/tonnage@latest	tonnage
 github.com/cointop-sh/cointop@latest	cointop
 github.com/cloudflare/cloudflare-go	flarectl
 github.com/mrusme/planor	planor
+github.com/peak/s5cmd/v2@master	s5cmd
 github.com/mholt/archiver/v4	archiver
 github.com/sigstore/cosign/v2/cmd/cosign@latest	cosign
 github.com/wagoodman/dive	dive
@@ -27,6 +28,7 @@ github.com/bitnami-labs/sealed-secrets/cmd/kubeseal@main	kubeseal
 kubespy	kubespy
 github.com/itchyny/bed/cmd/bed@latest	bed
 github.com/wader/fq@latest	fq
+github.com/dece2183/hexowl@latest	hexowl
 github.com/neilotoole/sq	sq
 github.com/nao1215/sqly	sqly
 dyff	dyff
@@ -73,6 +75,7 @@ github.com/aurc/loggo@latest	loggo
 github.com/noborus/mdtsql/cmd/mdtsql@latest	mdtsql
 github.com/szktkfm/mdtt/cmd/mdtt	mdtt
 minify	minify
+github.com/savedra1/clipse@v1.1.0	clipse
 github.com/golang-migrate/migrate/cmd/migrate	gomigrate
 gomplate	gomplate
 github.com/maaslalani/invoice	invoice
@@ -155,6 +158,7 @@ github.com/whoop-t/manly@latest	manly
 github.com/trzsz/trzsz-go/cmd/trzsz@latest	trzsz-go
 github.com/nakabonne/ali@latest	ali
 github.com/ffuf/ffuf/v2	ffuf
+github.com/k1LoW/octocov@latest	octocov
 github.com/gchaincl/httplab/cmd/httplab@latest	httplab
 github.com/yudai/gotty	gotty
 github.com/minio/minio-go/v7	minio

@@ -16,9 +16,5 @@
       "reference": "https://gitlab.com/packaging/scli/#installation",
       "dsnap": "python3-scli"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "python3-scli",
-    "debian/apt": "python3-scli"
   }
 }

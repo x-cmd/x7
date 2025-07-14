@@ -11,8 +11,5 @@
       "reference": "https://protobuf.dev/getting-started/gotutorial/#compiling-protocol-buffers",
       "dsnap": "google.golang.org/protobuf/cmd/protoc-gen-go"
     }
-  },
-  "dsnap": {
-    "/go": "google.golang.org/protobuf/cmd/protoc-gen-go"
   }
 }

@@ -42,12 +42,5 @@
       "cmd": "sudo aapt-get install bubblewrap",
       "reference": "https://command-not-found.com/bwrap"
     }
-  },
-  "dsnap": {
-    "brew": "bubblewrap",
-    "fedora/dnf": "bubblewrap",
-    "alpine/apk": "bubblewrap",
-    "ubuntu/apt": "bubblewrap",
-    "debian/apt": "bubblewrap"
   }
 }

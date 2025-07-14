@@ -43,9 +43,5 @@
       "cmd": "pkg install monolith",
       "reference": "https://github.com/y2z/monolith?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "brew": "monolith",
-    "/cargo": "monolith"
   }
 }

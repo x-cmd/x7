@@ -19,10 +19,5 @@
       "cmd": "brew install buku",
       "reference": "https://formulae.brew.sh/formula/buku#default"
     }
-  },
-  "dsnap": {
-    "pip3": "buku",
-    "brew": "buku",
-    "/pip": "buku"
   }
 }

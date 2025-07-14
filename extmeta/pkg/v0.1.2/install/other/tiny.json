@@ -11,8 +11,5 @@
       "reference": "https://github.com/osa1/tiny?tab=readme-ov-file#installation",
       "dsnap": "tiny"
     }
-  },
-  "dsnap": {
-    "/cargo": "tiny"
   }
 }

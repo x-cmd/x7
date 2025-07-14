@@ -19,9 +19,5 @@
       "cmd": "nix-env -iA nixpkgs.tenere",
       "reference": "https://github.com/pythops/tenere?tab=readme-ov-file#-installation"
     }
-  },
-  "dsnap": {
-    "brew": "tenere",
-    "/cargo": "tenere"
   }
 }

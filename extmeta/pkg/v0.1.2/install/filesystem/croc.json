@@ -63,8 +63,5 @@
       "cmd": "sudo emerge net-misc/croc",
       "reference": "https://github.com/schollz/croc?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/schollz/croc/v9"
   }
 }

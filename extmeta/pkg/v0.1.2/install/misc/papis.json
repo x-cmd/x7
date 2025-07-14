@@ -19,8 +19,5 @@
       "cmd": "nix-env -i papis",
       "reference": "https://papis.readthedocs.io/en/latest/install.html"
     }
-  },
-  "dsnap": {
-    "/pip": "papis"
   }
 }

@@ -23,8 +23,5 @@
       "cmd": "\\ sudo eselect repository enable lamdness && \\ sudo emaint -r lamdness sync && \\ sudo emerge -av net-wireless/bluetui",
       "reference": "https://github.com/pythops/bluetui?tab=readme-ov-file#-gentoo"
     }
-  },
-  "dsnap": {
-    "/cargo": "bluetui"
   }
 }

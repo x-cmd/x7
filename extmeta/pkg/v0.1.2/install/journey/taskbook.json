@@ -19,8 +19,5 @@
       "cmd": "snap install taskbook",
       "reference": "https://github.com/klaudiosinani/taskbook?tab=readme-ov-file#snapcraft"
     }
-  },
-  "dsnap": {
-    "/npm": "taskbook"
   }
 }

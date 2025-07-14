@@ -11,8 +11,5 @@
       "reference": "https://github.com/sindresorhus/terminal-image-cli?tab=readme-ov-file#install",
       "dsnap": "terminal-image-cli"
     }
-  },
-  "dsnap": {
-    "/npm": "terminal-image-cli"
   }
 }

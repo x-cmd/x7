@@ -11,8 +11,5 @@
       "reference": "https://github.com/alexfernandez/loadtest?tab=readme-ov-file#installation",
       "dsnap": "loadtest"
     }
-  },
-  "dsnap": {
-    "/npm": "loadtest"
   }
 }

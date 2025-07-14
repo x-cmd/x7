@@ -19,9 +19,5 @@
       "cmd": "brew install davep/homebrew/tinboard",
       "reference": "https://github.com/davep/tinboard#installing"
     }
-  },
-  "dsnap": {
-    "brew": "tinboard",
-    "/pip": "tinboard"
   }
 }

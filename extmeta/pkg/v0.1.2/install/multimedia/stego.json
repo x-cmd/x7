@@ -11,8 +11,5 @@
       "reference": "https://github.com/ajmwagar/stego?tab=readme-ov-file#-installation",
       "dsnap": "stego"
     }
-  },
-  "dsnap": {
-    "/cargo": "stego"
   }
 }

@@ -23,9 +23,5 @@
       "cmd": "x winget install hrkfdn.ncspot",
       "reference": "https://winget.run/search?query=hrkfdn.ncspot"
     }
-  },
-  "dsnap": {
-    "brew": "ncspot",
-    "/cargo": "ncspot"
   }
 }

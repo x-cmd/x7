@@ -11,8 +11,5 @@
       "reference": "https://github.com/ceuk/spotui?tab=readme-ov-file#getting-started",
       "dsnap": "spotui"
     }
-  },
-  "dsnap": {
-    "/pip": "spotui"
   }
 }

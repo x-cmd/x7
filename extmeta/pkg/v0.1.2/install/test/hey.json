@@ -19,10 +19,5 @@
       "reference": "https://github.com/rakyll/hey",
       "dsnap": "hey"
     }
-  },
-  "dsnap": {
-    "brew": "hey",
-    "/go": "hey",
-    "ubuntu/apt": "hey"
   }
 }

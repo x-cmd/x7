@@ -15,9 +15,5 @@
       "cmd": "brew install nao1215/tap/sqly",
       "reference": "https://github.com/nao1215/sqly?tab=readme-ov-file#how-to-install"
     }
-  },
-  "dsnap": {
-    "brew": "nao1215/tap/sqly",
-    "/go": "github.com/nao1215/sqly"
   }
 }

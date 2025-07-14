@@ -24,9 +24,5 @@
       "cmd": "sudo apt-get install dpkg-awk",
       "reference": "https://command-not-found.com/dpkg-awk"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "dpkg-awk",
-    "debian/apt": "dpkg-awk"
   }
 }

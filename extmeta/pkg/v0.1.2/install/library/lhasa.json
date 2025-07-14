@@ -36,13 +36,5 @@
       "cmd": "sudo xbps-install lhasa",
       "reference": "https://fragglet.github.io/lhasa/"
     }
-  },
-  "dsnap": {
-    "brew": "lhasa",
-    "/cargo": "lhasa",
-    "fedora/dnf": "lhasa",
-    "alpine/apk": "lhasa",
-    "ubuntu/apt": "lhasa",
-    "debian/apt": "lhasa"
   }
 }

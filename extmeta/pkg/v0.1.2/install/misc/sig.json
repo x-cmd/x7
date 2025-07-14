@@ -19,9 +19,5 @@
       "cmd": "pacman -S sig",
       "reference": "https://github.com/ynqa/sig#arch-linux"
     }
-  },
-  "dsnap": {
-    "brew": "sigrs",
-    "/cargo": "sigrs"
   }
 }

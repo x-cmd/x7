@@ -53,15 +53,5 @@
       "cmd": "sudo zypper install elinks",
       "reference": "https://software.opensuse.org//download.html?project=openSUSE%3AFactory&package=elinks"
     }
-  },
-  "dsnap": {
-    "brew": "elinks",
-    "pacman": "elinks",
-    "yum": "elinks",
-    "zypper": "elinks",
-    "fedora/dnf": "elinks",
-    "alpine/apk": "elinks",
-    "ubuntu/apt": "elinks",
-    "debian/apt": "elinks"
   }
 }

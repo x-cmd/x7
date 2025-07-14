@@ -41,13 +41,5 @@
       "cmd": "sudo apt-get install qrencode",
       "reference": "https://command-not-found.com/qrencode"
     }
-  },
-  "dsnap": {
-    "brew": "qrencode",
-    "yum": "qrencode",
-    "pacman": "qrencode",
-    "fedora/dnf": "qrencode",
-    "ubuntu/apt": "qrencode",
-    "debian/apt": "qrencode"
   }
 }

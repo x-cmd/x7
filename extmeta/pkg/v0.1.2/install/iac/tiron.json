@@ -10,8 +10,5 @@
       "cmd": "curl -sL https://tiron.run/install.sh | sh",
       "reference": "https://tiron.run/docs/getting-started/overview/"
     }
-  },
-  "dsnap": {
-    "/cargo": "tiron"
   }
 }

@@ -15,8 +15,5 @@
       "cmd": "conda install -c conda-forge huggingface_hub",
       "reference": "https://huggingface.co/docs/huggingface_hub/installation#install-with-conda"
     }
-  },
-  "dsnap": {
-    "/pip": "huggingface_hub"
   }
 }

@@ -11,8 +11,5 @@
       "reference": "https://github.com/jendrikseipp/vulture?tab=readme-ov-file#installation",
       "dsnap": "vulture"
     }
-  },
-  "dsnap": {
-    "/pip": "vulture"
   }
 }

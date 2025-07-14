@@ -18,8 +18,5 @@
       "cmd": "x scoop install argo",
       "reference": "https://scoop.sh/#/apps?q=argo"
     }
-  },
-  "dsnap": {
-    "/go": "argo"
   }
 }

@@ -44,11 +44,5 @@
       "cmd": "sudo snap install termshark",
       "reference": "https://github.com/gcla/termshark/blob/master/docs/Packages.md#snapcraft"
     }
-  },
-  "dsnap": {
-    "brew": "termshark",
-    "snap": "termshark",
-    "ubuntu/apt": "termshark",
-    "debian/apt": "termshark"
   }
 }

@@ -33,11 +33,5 @@
       "cmd": "sudo apt-get install activemq",
       "reference": "https://command-not-found.com/activemq"
     }
-  },
-  "dsnap": {
-    "brew": "activemq",
-    "fedora/dnf": "activemq",
-    "ubuntu/apt": "activemq",
-    "debian/apt": "activemq"
   }
 }

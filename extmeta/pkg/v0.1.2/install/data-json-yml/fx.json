@@ -35,8 +35,5 @@
       "reference": "https://fx.wtf/install",
       "dsnap": "github.com/antonmedv/fx@latest"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/antonmedv/fx@latest"
   }
 }

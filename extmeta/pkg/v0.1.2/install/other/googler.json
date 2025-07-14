@@ -36,9 +36,5 @@
       "cmd": "sudo apt-get install googler",
       "reference": "https://command-not-found.com/googler"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "googler",
-    "debian/apt": "googler"
   }
 }

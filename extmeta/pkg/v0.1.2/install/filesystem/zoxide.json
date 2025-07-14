@@ -119,8 +119,5 @@
       "cmd": "sudo pkg install zoxide",
       "reference": "https://github.com/ajeetdsouza/zoxide?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "/cargo": "zoxide"
   }
 }

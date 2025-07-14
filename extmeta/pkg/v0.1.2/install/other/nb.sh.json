@@ -11,8 +11,5 @@
       "reference": "https://www.npmjs.com/package/nb.sh",
       "dsnap": "nb.sh"
     }
-  },
-  "dsnap": {
-    "/npm": "nb.sh"
   }
 }

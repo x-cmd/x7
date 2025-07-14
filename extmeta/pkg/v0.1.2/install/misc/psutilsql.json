@@ -11,8 +11,5 @@
       "reference": "https://github.com/noborus/psutilsql?tab=readme-ov-file#install",
       "dsnap": "github.com/noborus/psutilsql"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/noborus/psutilsql"
   }
 }

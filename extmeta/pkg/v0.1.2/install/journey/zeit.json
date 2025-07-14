@@ -11,8 +11,5 @@
       "reference": "https://pkg.go.dev/github.com/mrusme/zeit",
       "dsnap": "github.com/mrusme/zeit"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/mrusme/zeit"
   }
 }

@@ -81,15 +81,5 @@
       "cmd": "sudo pacman -S mingw-w64-{i686,x86_64}-ag",
       "reference": "https://github.com/ggreer/the_silver_searcher?tab=readme-ov-file#windows"
     }
-  },
-  "dsnap": {
-    "brew": "the_silver_searcher",
-    "pacman": "the_silver_searcher",
-    "yum": "the_silver_searcher",
-    "sbopkg": "the_silver_searcher",
-    "zypper": "the_silver_searcher",
-    "fedora/dnf": "the_silver_searcher",
-    "ubuntu/apt": "silversearcher-ag",
-    "debian/apt": "silversearcher-ag"
   }
 }

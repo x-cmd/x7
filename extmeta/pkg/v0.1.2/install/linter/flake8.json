@@ -11,8 +11,5 @@
       "reference": "https://flake8.pycqa.org/en/latest/index.html#quickstart",
       "dsnap": "flake8"
     }
-  },
-  "dsnap": {
-    "/pip": "flake8"
   }
 }

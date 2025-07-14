@@ -23,9 +23,5 @@
       "cmd": "nix-shell -p cotp",
       "reference": "https://github.com/replydev/cotp#installation"
     }
-  },
-  "dsnap": {
-    "brew": "cotp",
-    "/cargo": "cotp"
   }
 }

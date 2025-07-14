@@ -38,14 +38,5 @@
       "reference": "https://min.io/download?license=agpl&platform=linux",
       "dsnap": "minio"
     }
-  },
-  "dsnap": {
-    "brew": "minio/stable/minio",
-    "stack": "minio-hs",
-    "vcpkg": "minio-cpp",
-    "/pip": "minio",
-    "/npm": "minio",
-    "/cargo": "minio",
-    "/go": "github.com/minio/minio-go/v7"
   }
 }

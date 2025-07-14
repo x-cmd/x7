@@ -11,8 +11,5 @@
       "reference": "https://github.com/sindresorhus/np?tab=readme-ov-file#install",
       "dsnap": "np"
     }
-  },
-  "dsnap": {
-    "/npm": "np"
   }
 }

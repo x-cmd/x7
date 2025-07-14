@@ -50,13 +50,5 @@
       "cmd": "sudo apt-get install gifsicle",
       "reference": "https://command-not-found.com/gifsicle"
     }
-  },
-  "dsnap": {
-    "brew": "gifsicle",
-    "pacman": "gifsicle",
-    "fedora/dnf": "gifsicle",
-    "alpine/apk": "gifsicle",
-    "ubuntu/apt": "gifsicle",
-    "debian/apt": "gifsicle"
   }
 }

@@ -15,8 +15,5 @@
       "cmd": "pipx install norwegianblue",
       "reference": "https://github.com/hugovk/norwegianblue?tab=readme-ov-file#with-pipx"
     }
-  },
-  "dsnap": {
-    "/pip": "norwegianblue"
   }
 }

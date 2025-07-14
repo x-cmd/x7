@@ -15,8 +15,5 @@
       "cmd": "yay -S drive-bin",
       "reference": "https://github.com/odeke-em/drive/blob/master/platform_packages.md#arch-linux-or-arch-based-distros"
     }
-  },
-  "dsnap": {
-    "fedora/dnf": "drive-google"
   }
 }

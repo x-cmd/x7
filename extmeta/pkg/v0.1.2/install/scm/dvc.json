@@ -43,8 +43,5 @@
       "cmd": "sudo yum install dvc-0.62.1-1.x86_64.rpm",
       "reference": "https://dvc.org/doc/install/linux#from-pkg-on-fedora-centos"
     }
-  },
-  "dsnap": {
-    "/pip": "dvc"
   }
 }

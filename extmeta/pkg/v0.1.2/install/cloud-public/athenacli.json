@@ -15,9 +15,5 @@
       "cmd": "brew install athenacli",
       "reference": "https://formulae.brew.sh/formula/athenacli#default"
     }
-  },
-  "dsnap": {
-    "brew": "athenacli",
-    "/pip": "athenacli"
   }
 }

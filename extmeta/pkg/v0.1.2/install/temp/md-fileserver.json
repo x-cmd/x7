@@ -11,8 +11,5 @@
       "reference": "https://github.com/commenthol/md-fileserver?tab=readme-ov-file#installation",
       "dsnap": "md-fileserver"
     }
-  },
-  "dsnap": {
-    "/npm": "md-fileserver"
   }
 }

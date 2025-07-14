@@ -11,8 +11,5 @@
       "reference": "https://github.com/timofurrer/try?tab=readme-ov-file#installation",
       "dsnap": "trypackage"
     }
-  },
-  "dsnap": {
-    "/pip": "trypackage"
   }
 }

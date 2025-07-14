@@ -46,12 +46,5 @@
       "reference": "https://command-not-found.com/mcabber",
       "dsnap": "mcabber"
     }
-  },
-  "dsnap": {
-    "brew": "mcabber",
-    "fedora/dnf": "mcabber",
-    "alpine/apk": "mcabber",
-    "ubuntu/apt": "mcabber",
-    "debian/apt": "mcabber"
   }
 }

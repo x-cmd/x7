@@ -47,9 +47,5 @@
       "cmd": "x scoop install curlie",
       "reference": "https://curlie.io/#install"
     }
-  },
-  "dsnap": {
-    "brew": "curlie",
-    "/go": "github.com/rs/curlie@latest"
   }
 }

@@ -46,13 +46,5 @@
       "cmd": "sudo apt-get install redis-tools",
       "reference": "https://command-not-found.com/redis-cli"
     }
-  },
-  "dsnap": {
-    "brew": "redis",
-    "pacman": "redis",
-    "fedora/dnf": "redis",
-    "alpine/apk": "redis",
-    "ubuntu/apt": "redis-tools",
-    "debian/apt": "redis-tools"
   }
 }

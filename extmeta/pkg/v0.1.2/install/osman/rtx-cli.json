@@ -10,8 +10,5 @@
       "cmd": "brew install rtx",
       "reference": "https://formulae.brew.sh/formula/rtx#default"
     }
-  },
-  "dsnap": {
-    "brew": "rtx"
   }
 }

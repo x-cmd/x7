@@ -31,8 +31,5 @@
       "reference": "https://github.com/zyedidia/eget#how-to-get-eget",
       "dsnap": "github.com/zyedidia/eget@latest"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/zyedidia/eget@latest"
   }
 }

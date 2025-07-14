@@ -78,6 +78,5 @@
       "cmd": "brew install --cask steam",
       "reference": "https://formulae.brew.sh/cask/steam#default"
     }
-  },
-  "dsnap": null
+  }
 }

@@ -20,10 +20,5 @@
       "reference": "https://command-not-found.com/flit",
       "dsnap": "flit"
     }
-  },
-  "dsnap": {
-    "brew": "flit",
-    "/pip": "flit",
-    "fedora/dnf": "flit"
   }
 }

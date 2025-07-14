@@ -22,8 +22,5 @@
       "cmd": "brew install sevenzip",
       "reference": "https://formulae.brew.sh/formula/sevenzip#default"
     }
-  },
-  "dsnap": {
-    "brew": "sevenzip"
   }
 }

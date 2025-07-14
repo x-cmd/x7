@@ -15,9 +15,5 @@
       "cmd": "brew install esbuild",
       "reference": "https://formulae.brew.sh/formula/esbuild#default"
     }
-  },
-  "dsnap": {
-    "brew": "esbuild",
-    "/npm": "esbuild"
   }
 }

@@ -90,17 +90,5 @@
       "cmd": "pkg_add asciinema",
       "reference": "https://asciinema.org/docs/installation#installing-on-openbsd"
     }
-  },
-  "dsnap": {
-    "yum": "asciinema",
-    "emerge": "asciinema",
-    "brew": "asciinema",
-    "port": "asciinema",
-    "pkg": "py39-asciinema",
-    "pkg_add": "asciinema",
-    "/pip": "asciinema",
-    "fedora/dnf": "asciinema",
-    "ubuntu/apt": "asciinema",
-    "debian/apt": "asciinema"
   }
 }

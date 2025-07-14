@@ -10,8 +10,5 @@
       "cmd": "brew install mpdecimal",
       "reference": "https://formulae.brew.sh/formula/mpdecimal#default"
     }
-  },
-  "dsnap": {
-    "brew": "mpdecimal"
   }
 }

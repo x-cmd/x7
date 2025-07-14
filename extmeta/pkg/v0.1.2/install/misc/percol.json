@@ -11,8 +11,5 @@
       "reference": "https://github.com/mooz/percol?tab=readme-ov-file#installation",
       "dsnap": "percol"
     }
-  },
-  "dsnap": {
-    "/pip": "percol"
   }
 }

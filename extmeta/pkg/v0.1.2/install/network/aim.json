@@ -19,8 +19,5 @@
       "cmd": "brew install aim",
       "reference": "https://github.com/mihaigalos/aim#%EF%B8%8E-installation"
     }
-  },
-  "dsnap": {
-    "/cargo": "aim"
   }
 }

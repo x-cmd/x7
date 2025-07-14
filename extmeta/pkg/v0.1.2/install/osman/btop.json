@@ -30,8 +30,5 @@
       "cmd": "brew install btop",
       "reference": "https://github.com/aristocratos/btop?tab=readme-ov-file#installation"
     }
-  },
-  "dsnap": {
-    "brew": "btop"
   }
 }

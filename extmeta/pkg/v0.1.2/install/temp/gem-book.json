@@ -11,8 +11,5 @@
       "reference": "https://book.gemjs.org/cli",
       "dsnap": "gem-book"
     }
-  },
-  "dsnap": {
-    "/npm": "gem-book"
   }
 }

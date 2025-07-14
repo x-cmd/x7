@@ -15,8 +15,5 @@
       "cmd": "tea +crates.io/sanitize true",
       "reference": "https://github.com/jhheider/sanitize?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "/cargo": "sanitize"
   }
 }

@@ -15,8 +15,5 @@
       "cmd": "x asdf use tonnage",
       "reference": "https://github.com/elementalvoid/asdf-tonnage?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/elementalvoid/tonnage@latest"
   }
 }

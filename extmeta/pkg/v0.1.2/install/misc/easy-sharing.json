@@ -11,8 +11,5 @@
       "reference": "https://github.com/parvardegr/sharing?tab=readme-ov-file#usage",
       "dsnap": "easy-sharing"
     }
-  },
-  "dsnap": {
-    "/npm": "easy-sharing"
   }
 }

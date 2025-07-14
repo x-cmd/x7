@@ -15,9 +15,5 @@
       "cmd": "brew install click",
       "reference": "https://formulae.brew.sh/formula/click#default"
     }
-  },
-  "dsnap": {
-    "brew": "click",
-    "/cargo": "click"
   }
 }

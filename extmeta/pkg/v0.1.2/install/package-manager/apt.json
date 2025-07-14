@@ -32,9 +32,5 @@
       "cmd": "brew install apt",
       "reference": "https://formulae.brew.sh/formula/apt#default"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "apt",
-    "debian/apt": "apt"
   }
 }

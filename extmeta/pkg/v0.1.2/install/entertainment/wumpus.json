@@ -10,8 +10,5 @@
       "cmd": "brew install wumpus",
       "reference": "https://formulae.brew.sh/formula/wumpus#default"
     }
-  },
-  "dsnap": {
-    "brew": "wumpus"
   }
 }

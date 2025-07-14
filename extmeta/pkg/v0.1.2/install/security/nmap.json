@@ -50,13 +50,5 @@
       "cmd": "x scoop bucket add main && x scoop install main/nmap",
       "reference": "https://scoop.sh/#/apps?q=nmap"
     }
-  },
-  "dsnap": {
-    "brew": "nmap",
-    "yum": "nmap",
-    "fedora/dnf": "nmap",
-    "alpine/apk": "nmap",
-    "ubuntu/apt": "nmap",
-    "debian/apt": "nmap"
   }
 }

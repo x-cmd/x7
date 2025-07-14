@@ -85,12 +85,5 @@
       "cmd": "sudo flatpak install flathub com.vscodium.codium",
       "reference": "https://vscodium.com/#flatpak-option-linux"
     }
-  },
-  "dsnap": {
-    "brew": "vscodium",
-    "flatpak": "com.vscodium.codium",
-    "fedora/dnf": "codium",
-    "ubuntu/apt": "codium",
-    "debian/apt": "codium"
   }
 }

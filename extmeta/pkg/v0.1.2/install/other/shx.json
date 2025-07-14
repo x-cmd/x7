@@ -11,8 +11,5 @@
       "reference": "https://github.com/shelljs/shx?tab=readme-ov-file#install",
       "dsnap": "shx"
     }
-  },
-  "dsnap": {
-    "/npm": "shx"
   }
 }

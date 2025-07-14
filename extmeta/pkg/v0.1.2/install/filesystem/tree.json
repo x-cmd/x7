@@ -62,16 +62,5 @@
       "cmd": "sudo snap install tree",
       "reference": "https://snapcraft.io/install/tree/opensuse"
     }
-  },
-  "dsnap": {
-    "brew": "tree",
-    "pacman": "tree",
-    "yum": "tree",
-    "zypper": "tree",
-    "snap": "tree",
-    "fedora/dnf": "tree",
-    "alpine/apk": "tree",
-    "ubuntu/apt": "tree",
-    "debian/apt": "tree"
   }
 }

@@ -73,11 +73,5 @@
       "reference": "https://www.getzola.org/documentation/getting-started/installation/#from-source",
       "dsnap": "zola"
     }
-  },
-  "dsnap": {
-    "brew": "zola",
-    "/cargo": "zola",
-    "fedora/dnf": "zola",
-    "alpine/apk": "zola"
   }
 }

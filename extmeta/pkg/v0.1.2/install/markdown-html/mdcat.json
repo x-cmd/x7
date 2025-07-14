@@ -11,8 +11,5 @@
       "reference": "https://crates.io/crates/mdcat",
       "dsnap": "mdcat"
     }
-  },
-  "dsnap": {
-    "/cargo": "mdcat"
   }
 }

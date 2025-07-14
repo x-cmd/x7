@@ -19,8 +19,5 @@
       "cmd": "yay -S nodejs-tget",
       "reference": "https://github.com/jeffjose/tget?tab=readme-ov-file#tget"
     }
-  },
-  "dsnap": {
-    "/npm": "t-get"
   }
 }

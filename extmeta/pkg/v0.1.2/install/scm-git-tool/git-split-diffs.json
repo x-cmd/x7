@@ -11,8 +11,5 @@
       "reference": "https://github.com/banga/git-split-diffs#install-globally",
       "dsnap": "git-split-diffs"
     }
-  },
-  "dsnap": {
-    "/npm": "git-split-diffs"
   }
 }

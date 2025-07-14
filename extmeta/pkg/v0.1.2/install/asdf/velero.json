@@ -18,8 +18,5 @@
       "cmd": "x asdf use velero",
       "reference": "https://github.com/looztra/asdf-velero?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "brew": "velero"
   }
 }

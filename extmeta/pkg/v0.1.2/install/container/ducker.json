@@ -19,8 +19,5 @@
       "cmd": "brew install ducker",
       "reference": "https://github.com/robertpsoane/ducker?tab=readme-ov-file#brew"
     }
-  },
-  "dsnap": {
-    "/cargo": "ducker"
   }
 }

@@ -65,13 +65,5 @@
       "cmd": "x scoop install eza",
       "reference": "https://github.com/eza-community/eza/blob/main/INSTALL.md#scoop-windows"
     }
-  },
-  "dsnap": {
-    "brew": "eza",
-    "/cargo": "eza",
-    "fedora/dnf": "eza",
-    "alpine/apk": "eza",
-    "ubuntu/apt": "eza",
-    "debian/apt": "eza"
   }
 }

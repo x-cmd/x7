@@ -22,6 +22,5 @@
       "cmd": "x nix --xinistall",
       "reference": "https://nixos.org/manual/nix/stable/installation/installing-binary"
     }
-  },
-  "dsnap": null
+  }
 }

@@ -36,11 +36,5 @@
       "reference": "https://command-not-found.com/gcc",
       "dsnap": "gcc"
     }
-  },
-  "dsnap": {
-    "pacman": "gcc",
-    "brew": "gcc",
-    "fedora/dnf": "gcc",
-    "alpine/apk": "gcc"
   }
 }

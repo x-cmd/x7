@@ -45,14 +45,5 @@
       "cmd": "sudo apt-get install pandoc",
       "reference": "https://command-not-found.com/pandoc"
     }
-  },
-  "dsnap": {
-    "brew": "pandoc",
-    "winget": "JohnMacFarlane.Pandoc",
-    "choco": "pandoc",
-    "pacman": "pandoc",
-    "fedora/dnf": "pandoc",
-    "ubuntu/apt": "pandoc",
-    "debian/apt": "pandoc"
   }
 }

@@ -22,8 +22,5 @@
       "cmd": "brew install --cask wpsoffice",
       "reference": "https://formulae.brew.sh/cask/wpsoffice#default"
     }
-  },
-  "dsnap": {
-    "brew": "wpsoffice"
   }
 }

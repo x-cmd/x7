@@ -23,9 +23,5 @@
       "cmd": "x scoop install cue",
       "reference": "https://scoop.sh/#/apps?q=cue"
     }
-  },
-  "dsnap": {
-    "brew": "cue-lang/tap/cue",
-    "/go": "cuelang.org/go/cmd/cue"
   }
 }

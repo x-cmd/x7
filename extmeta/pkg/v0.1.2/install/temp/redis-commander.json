@@ -11,8 +11,5 @@
       "reference": "https://github.com/joeferner/redis-commander?tab=readme-ov-file#install-and-run",
       "dsnap": "redis-commander"
     }
-  },
-  "dsnap": {
-    "/npm": "redis-commander"
   }
 }

@@ -15,8 +15,5 @@
       "reference": null,
       "dsnap": "pyfunky"
     }
-  },
-  "dsnap": {
-    "/pip": "pyfunky"
   }
 }

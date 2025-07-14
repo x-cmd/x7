@@ -87,14 +87,5 @@
       "cmd": "sudo zypper in borgbackup",
       "reference": "https://borgbackup.readthedocs.io/en/stable/installation.html#distribution-package"
     }
-  },
-  "dsnap": {
-    "brew": "borgbackup",
-    "pacman": "borg",
-    "/pip": "borgbackup",
-    "fedora/dnf": "borgbackup",
-    "alpine/apk": "borgbackup",
-    "ubuntu/apt": "borgbackup",
-    "debian/apt": "borgbackup"
   }
 }

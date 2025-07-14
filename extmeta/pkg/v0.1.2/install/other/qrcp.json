@@ -23,9 +23,5 @@
       "cmd": "brew install qrcp",
       "reference": "https://github.com/claudiodangelis/qrcp?tab=readme-ov-file#homebrew"
     }
-  },
-  "dsnap": {
-    "brew": "qrcp",
-    "/go": "github.com/claudiodangelis/qrcp@latest"
   }
 }

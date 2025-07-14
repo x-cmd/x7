@@ -38,8 +38,5 @@
       "cmd": "curl.exe https://webi.ms/chromedriver | powershell",
       "reference": "https://webinstall.dev/chromedriver/"
     }
-  },
-  "dsnap": {
-    "brew": "chromedriver"
   }
 }

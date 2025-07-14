@@ -53,15 +53,5 @@
       "cmd": "git clone https://salsa.debian.org/reproducible-builds/diffoscope.git",
       "reference": "https://diffoscope.org"
     }
-  },
-  "dsnap": {
-    "brew": "diffoscope",
-    "zypper": "diffoscope",
-    "pacman": "diffoscope",
-    "pkg": "py38-diffoscope",
-    "pkg_add": "diffoscope",
-    "/pip": "diffoscope",
-    "fedora/dnf": "diffoscope",
-    "debian/apt": "diffoscope"
   }
 }

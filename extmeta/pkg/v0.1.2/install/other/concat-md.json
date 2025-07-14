@@ -11,8 +11,5 @@
       "reference": "https://github.com/ozum/concat-md?tab=readme-ov-file#concat-md",
       "dsnap": "concat-md"
     }
-  },
-  "dsnap": {
-    "/npm": "concat-md"
   }
 }

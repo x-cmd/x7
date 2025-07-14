@@ -81,22 +81,5 @@
       "cmd": "winget install fzf",
       "reference": "https://github.com/junegunn/fzf?tab=readme-ov-file#windows"
     }
-  },
-  "dsnap": {
-    "brew": "fzf",
-    "pacman": "fzf",
-    "nixpkgs": "fzf",
-    "pkg": "fzf",
-    "pkgin": "fzf",
-    "pkg_add": "fzf",
-    "emerge": "app-shells/fzf",
-    "zypper": "fzf",
-    "choco": "fzf",
-    "scoop": "fzf",
-    "winget": "fzf",
-    "fedora/dnf": "fzf",
-    "alpine/apk": "fzf",
-    "ubuntu/apt": "fzf",
-    "debian/apt": "fzf"
   }
 }

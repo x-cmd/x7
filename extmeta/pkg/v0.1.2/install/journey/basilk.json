@@ -19,9 +19,5 @@
       "cmd": "brew install GabAlpha/tap/basilk",
       "reference": "https://github.com/GabAlpha/basilk#installation"
     }
-  },
-  "dsnap": {
-    "brew": "basilk",
-    "/cargo": "basilk"
   }
 }

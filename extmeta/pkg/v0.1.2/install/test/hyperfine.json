@@ -77,19 +77,5 @@
       "cmd": "x choco install hyperfine",
       "reference": "https://github.com/sharkdp/hyperfine"
     }
-  },
-  "dsnap": {
-    "brew": "hyperfine",
-    "pacman": "hyperfine",
-    "zypper": "hyperfine",
-    "emerge": "app-benchmarks/hyperfine",
-    "xbps": "hyperfine",
-    "pkg": "hyperfine",
-    "pkg_add": "hyperfine",
-    "nixpkgs": "hyperfine",
-    "port": "hyperfine",
-    "fedora/dnf": "hyperfine",
-    "alpine/apk": "hyperfine",
-    "debian/apt": "hyperfine"
   }
 }

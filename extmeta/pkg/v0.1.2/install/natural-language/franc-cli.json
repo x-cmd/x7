@@ -11,8 +11,5 @@
       "reference": "https://github.com/wooorm/franc/tree/main?tab=readme-ov-file#cli",
       "dsnap": "franc-cli"
     }
-  },
-  "dsnap": {
-    "/npm": "franc-cli"
   }
 }

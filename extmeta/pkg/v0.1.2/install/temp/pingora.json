@@ -11,8 +11,5 @@
       "reference": "https://github.com/cloudflare/pingora/blob/main/docs/quick_start.md",
       "dsnap": "load_balancer"
     }
-  },
-  "dsnap": {
-    "/cargo": "load_balancer"
   }
 }

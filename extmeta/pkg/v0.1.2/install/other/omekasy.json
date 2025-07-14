@@ -15,9 +15,5 @@
       "cmd": "brew install omekasy",
       "reference": "https://github.com/ikanago/omekasy?tab=readme-ov-file#homebrew"
     }
-  },
-  "dsnap": {
-    "brew": "omekasy",
-    "/cargo": "omekasy"
   }
 }

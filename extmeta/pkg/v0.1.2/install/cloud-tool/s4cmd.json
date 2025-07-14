@@ -33,11 +33,5 @@
       "cmd": "sudo apt-get install s4cmd",
       "reference": "https://command-not-found.com/s4cmd"
     }
-  },
-  "dsnap": {
-    "brew": "s4cmd",
-    "/pip": "s4cmd",
-    "ubuntu/apt": "s4cmd",
-    "debian/apt": "s4cmd"
   }
 }

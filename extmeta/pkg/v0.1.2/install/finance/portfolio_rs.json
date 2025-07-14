@@ -11,8 +11,5 @@
       "reference": "https://crates.io/crates/portfolio_rs",
       "dsnap": "portfolio_rs"
     }
-  },
-  "dsnap": {
-    "/cargo": "portfolio_rs"
   }
 }

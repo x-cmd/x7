@@ -18,8 +18,5 @@
       "cmd": "brew install kubent",
       "reference": "https://github.com/doitintl/kube-no-trouble?tab=readme-ov-file#homebrew"
     }
-  },
-  "dsnap": {
-    "/go": "kubent"
   }
 }

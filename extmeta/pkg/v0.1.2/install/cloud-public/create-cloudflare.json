@@ -15,8 +15,5 @@
       "cmd": "yarn create cloudflare",
       "reference": "https://developers.cloudflare.com/workers/get-started/guide/#1-create-a-new-worker-project"
     }
-  },
-  "dsnap": {
-    "/npm": "cloudflare"
   }
 }

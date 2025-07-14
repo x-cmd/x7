@@ -11,8 +11,5 @@
       "reference": "https://github.com/wemake-services/wemake-python-styleguide?tab=readme-ov-file#quickstart",
       "dsnap": "wemake-python-styleguide"
     }
-  },
-  "dsnap": {
-    "/pip": "wemake-python-styleguide"
   }
 }

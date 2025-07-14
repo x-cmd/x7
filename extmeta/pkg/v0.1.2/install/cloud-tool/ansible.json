@@ -55,16 +55,5 @@
       "cmd": "sudo apt-get install ansible",
       "reference": "https://command-not-found.com/ansible"
     }
-  },
-  "dsnap": {
-    "pipx": "ansible",
-    "brew": "ansible",
-    "pacman": "ansible",
-    "yum": "ansible",
-    "/pip": "ansible",
-    "fedora/dnf": "ansible",
-    "alpine/apk": "ansible",
-    "ubuntu/apt": "ansible",
-    "debian/apt": "ansible"
   }
 }

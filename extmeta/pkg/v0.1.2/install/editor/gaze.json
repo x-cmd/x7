@@ -10,8 +10,5 @@
       "cmd": "brew install gaze",
       "reference": "https://github.com/wtetsu/gaze?tab=readme-ov-file#homebrew-macos"
     }
-  },
-  "dsnap": {
-    "brew": "gaze"
   }
 }

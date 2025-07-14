@@ -10,8 +10,5 @@
       "cmd": "brew install hicolor-icon-theme",
       "reference": "https://formulae.brew.sh/formula/hicolor-icon-theme#default"
     }
-  },
-  "dsnap": {
-    "brew": "hicolor-icon-theme"
   }
 }

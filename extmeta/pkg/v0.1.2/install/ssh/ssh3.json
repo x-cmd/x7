@@ -19,9 +19,5 @@
       "cmd": "x scoop bucket add main && x scoop install main/ssh3",
       "reference": "https://scoop.sh/#/apps?q=ssh3"
     }
-  },
-  "dsnap": {
-    "brew": "ssh3",
-    "/go": "github.com/francoismichel/ssh3/cmd/...@latest"
   }
 }

@@ -22,8 +22,5 @@
       "cmd": "sudo port install grype",
       "reference": "https://github.com/anchore/grype?tab=readme-ov-file#macports"
     }
-  },
-  "dsnap": {
-    "/go": "anchore/grype"
   }
 }

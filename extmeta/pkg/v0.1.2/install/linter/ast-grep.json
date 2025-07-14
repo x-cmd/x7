@@ -27,8 +27,5 @@
       "cmd": "x scoop install ast-grep",
       "reference": "https://scoop.sh/#/apps?q=ast-grep"
     }
-  },
-  "dsnap": {
-    "/cargo": "ast-grep"
   }
 }

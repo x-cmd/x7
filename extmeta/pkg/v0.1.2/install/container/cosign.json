@@ -44,11 +44,5 @@
       "cmd": "nix-env -iA nixos.cosign",
       "reference": "https://docs.sigstore.dev/system_config/installation/#nixos"
     }
-  },
-  "dsnap": {
-    "brew": "cosign",
-    "pacman": "cosign",
-    "/go": "github.com/sigstore/cosign/v2/cmd/cosign@latest",
-    "alpine/apk": "cosign"
   }
 }

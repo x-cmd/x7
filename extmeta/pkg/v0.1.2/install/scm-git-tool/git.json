@@ -86,13 +86,5 @@
       "cmd": "tazpkg get-install git",
       "reference": "https://git-scm.com/download/linux"
     }
-  },
-  "dsnap": {
-    "brew": "git",
-    "/cargo": "git",
-    "fedora/dnf": "git",
-    "alpine/apk": "git",
-    "ubuntu/apt": "git",
-    "debian/apt": "git"
   }
 }

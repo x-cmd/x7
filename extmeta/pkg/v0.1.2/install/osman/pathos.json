@@ -11,8 +11,5 @@
       "reference": "https://github.com/chip/pathos#installation",
       "dsnap": "github.com/chip/pathos@latest"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/chip/pathos@latest"
   }
 }

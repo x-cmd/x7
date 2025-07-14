@@ -23,9 +23,5 @@
       "cmd": "x choco install sass",
       "reference": "https://community.chocolatey.org/packages/sass"
     }
-  },
-  "dsnap": {
-    "brew": "node-sass",
-    "/npm": "sass"
   }
 }

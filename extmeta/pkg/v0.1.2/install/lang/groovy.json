@@ -45,12 +45,5 @@
       "cmd": "sudo apt-get install groovy",
       "reference": "https://command-not-found.com/groovy"
     }
-  },
-  "dsnap": {
-    "brew": "groovy",
-    "yum": "groovy",
-    "fedora/dnf": "groovy",
-    "ubuntu/apt": "groovy",
-    "debian/apt": "groovy"
   }
 }

@@ -36,11 +36,5 @@
       "cmd": "sudo eopkg install lutris",
       "reference": "https://lutris.net/downloads"
     }
-  },
-  "dsnap": {
-    "/cargo": "lutris",
-    "fedora/dnf": "lutris",
-    "alpine/apk": "lutris",
-    "debian/apt": "lutris"
   }
 }

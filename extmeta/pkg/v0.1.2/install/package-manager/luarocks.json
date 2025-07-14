@@ -76,9 +76,5 @@
       "cmd": "sudo apt-get install luarocks",
       "reference": "https://command-not-found.com/luarocks"
     }
-  },
-  "dsnap": {
-    "ubuntu/apt": "luarocks",
-    "debian/apt": "luarocks"
   }
 }

@@ -22,8 +22,5 @@
       "cmd": "conda install -c conda-forge bagels",
       "reference": "https://github.com/EnhancedJax/Bagels#windows"
     }
-  },
-  "dsnap": {
-    "/pip": "bagels"
   }
 }

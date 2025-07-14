@@ -15,9 +15,5 @@
       "cmd": "brew install trafilatura",
       "reference": "https://formulae.brew.sh/formula/trafilatura#default"
     }
-  },
-  "dsnap": {
-    "brew": "trafilatura",
-    "/pip": "trafilatura"
   }
 }

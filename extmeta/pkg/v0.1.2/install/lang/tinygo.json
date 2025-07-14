@@ -31,9 +31,5 @@
       "cmd": "x scoop install tinygo",
       "reference": "https://tinygo.org/getting-started/install/windows/#quick-install-via-scoop"
     }
-  },
-  "dsnap": {
-    "brew": "tinygo",
-    "fedora/dnf": "tinygo"
   }
 }

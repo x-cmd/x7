@@ -18,8 +18,5 @@
       "cmd": "x scoop install doggo",
       "reference": "https://github.com/mr-karan/doggo#package-managers"
     }
-  },
-  "dsnap": {
-    "/go": "doggo"
   }
 }

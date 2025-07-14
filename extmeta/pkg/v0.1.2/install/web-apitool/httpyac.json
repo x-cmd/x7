@@ -11,8 +11,5 @@
       "reference": "https://github.com/anweber/httpyac#installation",
       "dsnap": "httpyac"
     }
-  },
-  "dsnap": {
-    "/npm": "httpyac"
   }
 }

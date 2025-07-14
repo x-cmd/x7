@@ -32,13 +32,5 @@
       "cmd": "sudo port install cairo",
       "reference": "https://cairographics.org/download/"
     }
-  },
-  "dsnap": {
-    "brew": "cairo",
-    "yum": "cairo-devel",
-    "zypper": "cairo-devel",
-    "port": "cairo",
-    "ubuntu/apt": "libcairo2-dev",
-    "debian/apt": "libcairo2-dev"
   }
 }

@@ -15,8 +15,5 @@
       "cmd": "npx changeset",
       "reference": "https://github.com/changesets/changesets/blob/main/docs/intro-to-using-changesets.md#adding-changesets"
     }
-  },
-  "dsnap": {
-    "/npm": "@changesets/cli"
   }
 }

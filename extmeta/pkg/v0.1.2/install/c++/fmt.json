@@ -10,8 +10,5 @@
       "cmd": "brew install fmt",
       "reference": "https://formulae.brew.sh/formula/fmt#default"
     }
-  },
-  "dsnap": {
-    "brew": "fmt"
   }
 }

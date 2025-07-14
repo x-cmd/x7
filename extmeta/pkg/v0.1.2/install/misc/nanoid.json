@@ -11,8 +11,5 @@
       "reference": "https://github.com/ai/nanoid?tab=readme-ov-file#install",
       "dsnap": "nanoid"
     }
-  },
-  "dsnap": {
-    "/npm": "nanoid"
   }
 }

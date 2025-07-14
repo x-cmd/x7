@@ -22,8 +22,5 @@
       "cmd": "pacman -S termscp",
       "reference": "https://github.com/veeso/termscp?tab=readme-ov-file#get-started-"
     }
-  },
-  "dsnap": {
-    "/cargo": "termscp"
   }
 }

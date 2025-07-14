@@ -66,16 +66,5 @@
       "cmd": "nix-shell -p firefox",
       "reference": "https://search.nixos.org/packages?channel=unstable&show=firefox&from=0&size=50&sort=relevance&type=packages&query=firefox"
     }
-  },
-  "dsnap": {
-    "brew": "firefox",
-    "pacman": "firefox",
-    "yum": "firefox",
-    "flatpak": "org.mozilla.firefox",
-    "nix": "firefox",
-    "fedora/dnf": "firefox",
-    "alpine/apk": "firefox",
-    "ubuntu/apt": "firefox",
-    "debian/apt": "firefox"
   }
 }

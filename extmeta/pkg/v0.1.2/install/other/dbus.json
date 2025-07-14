@@ -10,8 +10,5 @@
       "cmd": "brew install dbus",
       "reference": "https://formulae.brew.sh/formula/dbus#default"
     }
-  },
-  "dsnap": {
-    "brew": "dbus"
   }
 }

@@ -12,9 +12,6 @@
       "dsnap": "csvkit"
     }
   },
-  "dsnap": {
-    "/pip": "csvkit"
-  },
   "binlist": [
     "csvclean",
     "csvcut",

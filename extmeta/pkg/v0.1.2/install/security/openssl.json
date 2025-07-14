@@ -46,14 +46,5 @@
       "cmd": "sudo apt-get install openssl",
       "reference": "https://command-not-found.com/openssl"
     }
-  },
-  "dsnap": {
-    "brew": "openssl@3.0",
-    "pacman": "openssl",
-    "yum": "openssl",
-    "fedora/dnf": "openssl",
-    "alpine/apk": "openssl",
-    "ubuntu/apt": "openssl",
-    "debian/apt": "openssl"
   }
 }

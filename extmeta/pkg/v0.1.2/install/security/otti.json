@@ -15,8 +15,5 @@
       "cmd": "paru -S otti",
       "reference": "https://github.com/dnaka91/otti#installation"
     }
-  },
-  "dsnap": {
-    "/cargo": "otti"
   }
 }

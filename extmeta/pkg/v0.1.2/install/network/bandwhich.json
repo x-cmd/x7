@@ -30,8 +30,5 @@
       "cmd": "pkg install bandwhich",
       "reference": "https://github.com/imsnif/bandwhich#freebsd"
     }
-  },
-  "dsnap": {
-    "brew": "bandwhich"
   }
 }

@@ -35,8 +35,5 @@
       "cmd": "x scoop bucket add frostming https://github.com/frostming/scoop-frostming.git\n&& x scoop install pdm\n",
       "reference": "https://pdm-project.org/latest/#other-installation-methods"
     }
-  },
-  "dsnap": {
-    "/pip": "pdm"
   }
 }

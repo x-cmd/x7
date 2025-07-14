@@ -23,9 +23,5 @@
       "cmd": "eget merschformann/gotz",
       "reference": "https://github.com/merschformann/gotz#installation"
     }
-  },
-  "dsnap": {
-    "brew": "gotz",
-    "/go": "github.com/merschformann/gotz@latest"
   }
 }

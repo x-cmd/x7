@@ -18,8 +18,5 @@
       "cmd": "x scoop install argocd",
       "reference": "https://scoop.sh/#/apps?q=argocd"
     }
-  },
-  "dsnap": {
-    "/go": "argocd"
   }
 }

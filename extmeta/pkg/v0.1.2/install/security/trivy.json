@@ -44,10 +44,5 @@
       "cmd": "x asdf use trivy",
       "reference": "https://github.com/zufardhiyaulhaq/asdf-trivy?tab=readme-ov-file#install"
     }
-  },
-  "dsnap": {
-    "brew": "trivy",
-    "ubuntu/apt": "trivy",
-    "debian/apt": "trivy"
   }
 }

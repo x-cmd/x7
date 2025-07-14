@@ -19,8 +19,5 @@
       "cmd": "curl -sL https://bit.ly/killport | sh",
       "reference": "https://github.com/jkfran/killport?tab=readme-ov-file#using-installsh"
     }
-  },
-  "dsnap": {
-    "/cargo": "killport"
   }
 }

@@ -19,8 +19,5 @@
       "cmd": "yay -S eddy",
       "reference": "https://github.com/70sh1/eddyinstallation"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/70sh1/eddy"
   }
 }

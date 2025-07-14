@@ -13,8 +13,5 @@
     "win/": {
       "reference": "https://rye.astral.sh/guide/installation/"
     }
-  },
-  "dsnap": {
-    "/cargo": "rye"
   }
 }

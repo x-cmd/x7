@@ -42,13 +42,5 @@
       "cmd": "sudo apt-get install siege",
       "reference": "https://command-not-found.com/siege"
     }
-  },
-  "dsnap": {
-    "brew": "siege",
-    "pacman": "siege",
-    "fedora/dnf": "siege",
-    "alpine/apk": "siege",
-    "ubuntu/apt": "siege",
-    "debian/apt": "siege"
   }
 }

@@ -15,8 +15,5 @@
       "reference": "https://github.com/hlsxx/tukai?tab=readme-ov-file#installation-from-the-cargo",
       "dsnap": "tukai"
     }
-  },
-  "dsnap": {
-    "/cargo": "tukai"
   }
 }

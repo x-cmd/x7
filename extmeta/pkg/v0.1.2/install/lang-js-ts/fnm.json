@@ -31,8 +31,5 @@
       "reference": "https://github.com/Schniz/fnm?tab=readme-ov-file#using-cargo-linuxmacoswindows",
       "dsnap": "fnm"
     }
-  },
-  "dsnap": {
-    "/cargo": "fnm"
   }
 }

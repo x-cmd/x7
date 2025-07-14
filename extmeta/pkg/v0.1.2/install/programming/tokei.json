@@ -67,8 +67,5 @@
       "cmd": "conda install -c conda-forge tokei",
       "reference": "https://github.com/XAMPPRocky/tokei#installation"
     }
-  },
-  "dsnap": {
-    "/cargo": "tokei"
   }
 }

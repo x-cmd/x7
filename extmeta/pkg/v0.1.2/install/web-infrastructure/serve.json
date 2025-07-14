@@ -11,8 +11,5 @@
       "reference": "https://github.com/vercel/serve?tab=readme-ov-file#usage",
       "dsnap": "serve"
     }
-  },
-  "dsnap": {
-    "/npm": "serve"
   }
 }

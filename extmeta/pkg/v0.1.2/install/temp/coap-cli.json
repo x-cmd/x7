@@ -11,8 +11,5 @@
       "reference": "https://github.com/coapjs/coap-cli?tab=readme-ov-file#install",
       "dsnap": "coap-cli"
     }
-  },
-  "dsnap": {
-    "/npm": "coap-cli"
   }
 }

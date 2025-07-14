@@ -37,12 +37,5 @@
       "cmd": "sudo apt-get install traceroute",
       "reference": "https://command-not-found.com/traceroute"
     }
-  },
-  "dsnap": {
-    "pacman": "traceroute",
-    "yum": "traceroute-3",
-    "fedora/dnf": "traceroute-3",
-    "ubuntu/apt": "traceroute",
-    "debian/apt": "traceroute"
   }
 }

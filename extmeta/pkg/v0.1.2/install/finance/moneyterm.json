@@ -15,9 +15,5 @@
       "cmd": "pipx install moneyterm",
       "reference": "https://github.com/ChrisBuilds/moneyterm#installation"
     }
-  },
-  "dsnap": {
-    "pipx": "moneyterm",
-    "/pip": "moneyterm"
   }
 }

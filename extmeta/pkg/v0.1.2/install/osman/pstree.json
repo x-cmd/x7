@@ -54,14 +54,5 @@
       "cmd": "sudo apt-get install psmisc",
       "reference": "https://command-not-found.com/pstree"
     }
-  },
-  "dsnap": {
-    "brew": "pstree",
-    "yum": "psmisc",
-    "pacman": "psmisc",
-    "fedora/dnf": "psmisc",
-    "alpine/apk": "psmisc",
-    "ubuntu/apt": "psmisc",
-    "debian/apt": "psmisc"
   }
 }

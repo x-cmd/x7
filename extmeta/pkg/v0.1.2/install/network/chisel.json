@@ -16,9 +16,5 @@
       "reference": "https://github.com/jpillora/chisel?tab=readme-ov-file#source",
       "dsnap": "github.com/jpillora/chisel@latest"
     }
-  },
-  "dsnap": {
-    "/go": "github.com/jpillora/chisel@latest",
-    "fedora/dnf": "chisel"
   }
 }

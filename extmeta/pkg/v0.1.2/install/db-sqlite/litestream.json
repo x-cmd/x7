@@ -19,8 +19,5 @@
       "reference": "https://litestream.io/install/source/",
       "dsnap": "litestream"
     }
-  },
-  "dsnap": {
-    "/go": "litestream"
   }
 }

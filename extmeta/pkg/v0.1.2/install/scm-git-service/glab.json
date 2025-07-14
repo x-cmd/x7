@@ -52,17 +52,5 @@
       "cmd": "nix-env -iA nixos.glab",
       "reference": "https://gitlab.com/gitlab-org/cli/-/blob/main/docs/installation_options.md#nixnixos"
     }
-  },
-  "dsnap": {
-    "brew": "glab",
-    "curl": "glab",
-    "scoop": "glab",
-    "winget": "glab",
-    "choco": "glab",
-    "pacman": "glab",
-    "nix": "glab",
-    "/go": "glab",
-    "fedora/dnf": "glab",
-    "alpine/apk": "glab"
   }
 }

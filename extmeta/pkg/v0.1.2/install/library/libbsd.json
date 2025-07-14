@@ -10,8 +10,5 @@
       "cmd": "brew install libbsd",
       "reference": "https://formulae.brew.sh/formula/libbsd#default"
     }
-  },
-  "dsnap": {
-    "brew": "libbsd"
   }
 }
