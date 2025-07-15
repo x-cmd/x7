@@ -63,8 +63,7 @@
 {
 "#desc"
 :
-null
-,
+{
 "cn"
 :
 "输入目录路径或文件路径。"
@@ -74,14 +73,14 @@ null
 "Enter a directory path or file path."
 }
 }
+}
 ,
 "#1"
 :
 {
 "#desc"
 :
-null
-,
+{
 "cn"
 :
 "输入需要编译的脚本文件路径。"
@@ -89,6 +88,7 @@ null
 "en"
 :
 "Enter the script file path to be compiled."
+}
 }
 }
 

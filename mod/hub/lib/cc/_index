@@ -32,7 +32,7 @@ ___x_cmd_hub_cc_(){
     file_name="${file_name%.*}"
     if x os is win;then
         file_path="$(x pwsh path linux_to_win "${file_path}")"
-        artifacts="$(x pwsh path linux_to_win "${artifacts}")"
+        [ -z "${artifacts}" ] || artifacts="$(x pwsh path linux_to_win "${artifacts}")"
     fi
     ___x_cmd_hub_cc_build_ "${file_path}" "${artifacts}"
 

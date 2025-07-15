@@ -123,7 +123,7 @@ fc94adee33de2bfc9fb222cbc1829867604d79a8 html main NULL
 8d59b9602ecee6da50bff38e9c08e40990425bf5 http main NULL
 3d92a9f96288bc6e3a15d3c20873625e13bf2ebc httpget main NULL
 f9b5e7a873ec0124c18651f77d4db36381edfa42 hua main NULL
-0ef6f383267a5787f57ab827048c243467b511c1 hub main NULL
+59c3c22d1eb895361c8718c430ef4d3783cf9ade hub main NULL
 1aabcce64d874ea553fb78792a5ea46d762cab04 huggingface main NULL
 6a1029a3e9a2ff1950a22c1e93a6c48bd0c99301 humantime main NULL
 a7db5970850cc5f0ad6186d97e65af0c97339a52 icmd main NULL
@@ -182,7 +182,7 @@ bf3056a42e537434160296d8d5370f5175098bfc micro main NULL
 1ae57a0a0c26ad08093ef98ce2afde89713222ad mklink main NULL
 3be335152ac727aaa8033fce538aab483c214513 mline main NULL
 60a702756a9564cf94c02b20706d0270a497b9b9 moon main NULL
-8979ea0e3caaee8d07e0ecf8bd02c64d7467a607 moonshot main NULL
+f3e451a491db092b83b75a722d55674124817abe moonshot main NULL
 8c18c4f0870835a9550df38cfdb3f8bb14a32480 mosh main NULL
 2178df4854fcd290d00f35e40bc70de476e3dce4 msys2 main NULL
 91865bcefff41e4d13849c1e4949686ca4e141af mv main NULL
@@ -200,7 +200,7 @@ bb804629d8c1c10d636824bf1bfe8d28c1b213a4 node main NULL
 da3c480b769b5e19e846f042558bd9d39fd239eb ollama main NULL
 e7584a737004bdc488e53dce1dd37173bc7e3aeb onsh main NULL
 22bb3cb41b592381474747d4c4ae1b6670d2077d open main NULL
-6971816dc2ed51ff36248379abef838ba94a581e openai main NULL
+db1e41fbf7857e3a8aef792ffee1bdc4c43b3eb7 openai main NULL
 d6bff728bf37a597df07aa7531dac55e76dcc030 os main NULL
 c18cc3239772b7953dd6b14a43467f53bb55f324 osv main NULL
 5a9572f2256b37f843bc247882c92c78c96ebb32 ourl main NULL
@@ -275,7 +275,7 @@ d628139cdb9f27113d21de987b19eac2f24415d3 ted main NULL
 4bebf0f26cc64bb450ba28c9e8153a4a852d3a97 term main NULL
 0e755f7d6a9c30b46a366f05b2eb5415ee40d7ed termux main NULL
 ac21ee0e932c8b32f4d942b616168816d96e0eb9 theme main NULL
-50bfa8ac3ed091d33a5f85590efb3f94ad675dcc tldr main NULL
+f0d0ad8b92cae5d1bb0605c26dbf8d6a7dd460db tldr main NULL
 ddc89fb8fde4b5f63eaee550a35ad5b5b35451ad tmp main NULL
 48c6c2f62e10b46b2443f4206c5d2b442423e3d5 tmpl main NULL
 564160458d347b934fd28164c84301f614c342f9 top main NULL

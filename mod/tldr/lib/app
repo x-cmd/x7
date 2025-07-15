@@ -69,9 +69,7 @@ ___x_cmd_tldr_app_full(){
 
     ___x_cmd_tui_app_processer(){
         printf "%s\n" "data:list"
-        ___x_cmd_cmds find "${___X_CMD_TLDR_DIR_DATA}/${___X_CMD_TLDR_PAGES_VERSION}" -type f | while read -r l; do
-            printf "%s\n" "${l#"${___X_CMD_TLDR_DIR_DATA}/${___X_CMD_TLDR_PAGES_VERSION}/"}"
-        done
+        ___x_cmd_tldr_list___allfile_pages
     }
 
     local ___X_CMD_TUI_CURRENT_TLDR_POSITION=; local _exitcode=
