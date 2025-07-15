@@ -63,6 +63,7 @@ a147ed49cbd6e20def67e5eec2c59d077e4523a6 dingtalk main NULL
 77fbb21b70e97e76ae4802b952bd046f721b4453 discord main NULL
 f98fa1db8ac40be4431f392874d75c97a50628ec dnf main NULL
 dd0151993bbe165afb1ab8c297d257b94d98c19e dns main NULL
+490dffca95333e1558b4029608608c650314659c docker main NULL
 2f20fcbdd2b93b787eb9518b0ecebd06730b709e dos2unix main NULL
 9d02206bc2d9eae2449819da1d14ee7315c6ed8a dregistry main NULL
 31c7a767db36c457156796cd074a915577a7125c eclist main NULL
