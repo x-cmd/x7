@@ -4,6 +4,20 @@ ___X_CMD_INSTALL_SNAP_LOOKUP_RULESET_FOLDER="$___X_CMD_PKG_ROOT_PATH/metadata/$_
 # ___x_cmd_install_snaplookup_ yq        alpine  -> apk/yq
 # ___x_cmd_install_snaplookup_ gosop     go      -> go/github.com/ProtonMail/gosop@main
 
+___x_cmd_install_snaplookup(){
+    local x_
+    ___x_cmd_install_snaplookup_ "$@" || {
+        local ret=$?
+        case "$ret" in
+            130)    install:warn "Exit after interrupted"   ;;
+            64)     install:warn "Unknown ruleset -> $2"    ;;
+            1)      install:warn "Fail to locate cmd in [ruleset=$2] -> $1"  ;;
+        esac
+        return $ret
+    }
+    printf "%s\n" "${x_}"
+}
+
 ___x_cmd_install_snaplookup_(){
     local cmd="$1"
     local ruleset="$2"
@@ -17,12 +31,17 @@ ___x_cmd_install_snaplookup_(){
         fedora)                   source="dnf";      data_file="${ruleset}-${source}" ;;
         ubuntu|debian|kali)       source="apt";      data_file="${ruleset}-${source}" ;;
         go|npm|pip)               source="$ruleset"; data_file="$ruleset"       ;;
-        *)                        N=install M="unsupported $ruleset" log:ret:1  ;;
+        # *)                        N=install M="unsupported $ruleset" log:ret:1  ;;
+        *)                        return 64
     esac
 
-    local target
-    target="$(___x_cmd awk -v name="$cmd" -F'\t' '$2 == name { print $1; exit }' "${___X_CMD_INSTALL_SNAP_LOOKUP_RULESET_FOLDER}/${data_file}.tsv")"
-    [ -n "$target" ] || N=install M="command $cmd not found in $ruleset" log:ret:1
+    local target=""
+    local fp="${___X_CMD_INSTALL_SNAP_LOOKUP_RULESET_FOLDER}/${data_file}.tsv"
+    [ -f "$fp" ] || return 1
+
+    target="$(___x_cmd awk -v name="$cmd" -F'\t' '$2 == name { print $1; exit }' "${fp}")"
+    [ -n "$target" ] || return 1
+    # N=install M="command $cmd not found in $ruleset" log:ret:1
 
     x_="$source/$target"
 }

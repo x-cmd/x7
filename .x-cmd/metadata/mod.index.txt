@@ -1,11 +1,9 @@
 fd7956ccf4e67ce5ddeef063474e8e2766776229 advise main NULL
 3ca4fde89e52707adf8cf21ec16ec365c4824efa agent main NULL
 6f5f36a1f447c0e8024bb193bc7b6b72ba22b591 alias main NULL
-1bda8cdcaa46c841330aa118f2dee88ca27c1f84 alpine main NULL
 977f9719c77b4670ffd48a9314a32a4b06d09d42 api main NULL
 a61ab1ebf6463c080e6ff45af6ae92e9b946e94f apk main NULL
 95183bfe5ac27d1fdd8d3a4dacb97a05844e3172 apt main NULL
-35e27b052149bef1037ffd660691eec0f9714438 arch main NULL
 963ebbd6fe9c5039066982fe27c7a7eafc163b6b arg main NULL
 eae3392df329f7012eeb31081cd1e0d35bdb7d3f arp main NULL
 0d59fb8df36894c460dee371e4cdfcbaa0e2405c ascii main NULL
@@ -31,9 +29,8 @@ f512eee001804d80251d6733508dbf14aa3d2599 cawk main NULL
 46212b1678340bd8aa2d07a6f0e41e15e56a711c ccal main NULL
 8c5d5e96c40d83d3a0fc412c0d83be3adf92fd3b ccmd main NULL
 3ca8aa4a0a30969b33cb7c817d33d2f5e6f65107 cd main NULL
-64076297de22ecf55bb8850c23b7f8816ad78765 centos main NULL
 2c4dcfb467169109bd4536a2eb5c138eed935c13 cfgy main NULL
-4dd579dd6beb6de1e1dee2652cbfbc64b1b185c7 chat main NULL
+b4e885f385591de4b697f9dc33a7c22fb4ed3804 chat main NULL
 87c98ca9b8dd920c1868440986b4e1d0261e1c8b choco main NULL
 eb383d659df9a123b5f51a44108a42a20d7aee54 cht main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
@@ -56,7 +53,6 @@ b0818e8075a70a5a2c124274414baf82957d3ecb coin main NULL
 af7f836904ebdb9e4715f6671b2e62772be3b9fc daemon main NULL
 56f0c9982c2010ef7907a3e0d4cf0754068a223e date main NULL
 7cd4ce840166d191f33ce2245767419b116c702d ddgo main NULL
-83aee9265967cd21f355bfd8e0c034b10711e113 debian main NULL
 e3eb54153c6598f74fd9521b231b898320b1b6d7 deepseek main NULL
 066d7e15ac52068caff83bd972b9f0404d6c434d demo main NULL
 78af0049428795d0125170ac1fdd637757ec237d deno main NULL
@@ -67,7 +63,6 @@ a147ed49cbd6e20def67e5eec2c59d077e4523a6 dingtalk main NULL
 77fbb21b70e97e76ae4802b952bd046f721b4453 discord main NULL
 f98fa1db8ac40be4431f392874d75c97a50628ec dnf main NULL
 dd0151993bbe165afb1ab8c297d257b94d98c19e dns main NULL
-b5fd9c8bc6b3fff071381bd0848080bd587e9911 docker main NULL
 2f20fcbdd2b93b787eb9518b0ecebd06730b709e dos2unix main NULL
 9d02206bc2d9eae2449819da1d14ee7315c6ed8a dregistry main NULL
 31c7a767db36c457156796cd074a915577a7125c eclist main NULL
@@ -78,7 +73,6 @@ b0a757985a1f40147dc3b096750610a488cc672b emoji main NULL
 3cc05d7afb7acec3a320af4201fcc50a0009cfbb env main NULL
 eabcd0893579e08bfd22ae4b34353acaec12c511 envy main NULL
 7360d917f17dbeb590e8060251723826469fab9d facl main NULL
-59e8ecaf0aab452ca3358a701dfed075402a23d1 fedora main NULL
 b0280d20d10e78c01dd9593da90b69cdeecac2fc feishu main NULL
 14f6b50ed7ae48738047f730d509c79922da9704 ff main NULL
 bddc6fef1b4ab3366272ca32d9d3f0fc42c268fc ffmpeg main NULL
@@ -98,8 +92,8 @@ f8c8680a2467a2b8741cb7dfd6df11474945bcbc gawk main NULL
 afc62654b01403e265ab32efbe00fa9c4deb9a7d gcal main NULL
 c7e7455b4779ad4bf0f3d2ccd97f0a7df86fdb48 gcode main NULL
 dcbbd3beb270e31be94dd3d5a37781fa218bd7ce gddy main NULL
-d966ff126253f7f23cf34a752c71954bf8ec6a77 gemini main NULL
-d02d5109189862476668c73a018db59f1ca8e876 gh main NULL
+3945d5a6c7bf17fc55f0147cdd1713cc57f5b31d gemini main NULL
+8451cf8d1a2a844c7bc1d74c932d928f2ac288ca gh main NULL
 c295f2b4d5f288c6a6d519445ebf279362532f31 git main NULL
 05d93fce44eb99382ff7aa926a6067dfcd0bb805 gitb main NULL
 62859fd4db9ef7b5252cc6dbd7ab16501f64f642 gitconfig main NULL
@@ -129,14 +123,14 @@ fc94adee33de2bfc9fb222cbc1829867604d79a8 html main NULL
 8d59b9602ecee6da50bff38e9c08e40990425bf5 http main NULL
 3d92a9f96288bc6e3a15d3c20873625e13bf2ebc httpget main NULL
 f9b5e7a873ec0124c18651f77d4db36381edfa42 hua main NULL
-34e72408b9e78dc85f0b3f0682328f9d2791cdd9 hub main NULL
+0ef6f383267a5787f57ab827048c243467b511c1 hub main NULL
 1aabcce64d874ea553fb78792a5ea46d762cab04 huggingface main NULL
 6a1029a3e9a2ff1950a22c1e93a6c48bd0c99301 humantime main NULL
 a7db5970850cc5f0ad6186d97e65af0c97339a52 icmd main NULL
 bfff022a0cda02c33d84cc920c309ef9225b991c iconv main NULL
 073462b6f58c9ec58f8b02d48a5eb9689b3a3ea7 id main NULL
 b543d629a647851e7df12b26b7655964d88b1838 ifconfig main NULL
-c65297f4bba6430f7bff2a8a12bba524983612d4 install main NULL
+58802f121b9efed938fe30775285f47af34bb2d1 install main NULL
 afdee276c5b66ce74e7aa07a75d5404f0396bf36 instance main NULL
 db3cd5ec6570febdb634fbab6e05e471848b4acc ip main NULL
 bb2d9592389187e065d78a7f54a8b88ca9ea58bd is main NULL
@@ -151,7 +145,6 @@ dff14c547f3524197516ea318a01d4da681a2fd9 job main NULL
 5d7b7e45ead09b65e622cabc8eca697ff9749876 jruby main NULL
 df63938ad4ffa05b98a0e5986dca5ca7b4f91f85 jsch main NULL
 ef004ce5936688c9c1c3a7987853640346080cbe jsr main NULL
-dde5fd53bc8a0c36f0cf32d84c23b3f38ac73447 kali main NULL
 46518bfa071260d45fb918c9c335be2b279b3976 kev main NULL
 30a1c7671c1f8e1c00402acb6592d710b3ad332b kill main NULL
 c3ce5fc3efdb8c89b6d8371dd45f80032e3e8428 kotlin main NULL
@@ -207,7 +200,7 @@ bb804629d8c1c10d636824bf1bfe8d28c1b213a4 node main NULL
 da3c480b769b5e19e846f042558bd9d39fd239eb ollama main NULL
 e7584a737004bdc488e53dce1dd37173bc7e3aeb onsh main NULL
 22bb3cb41b592381474747d4c4ae1b6670d2077d open main NULL
-64a80794f3a00c54d62f6c0c192ac6aea6027b43 openai main NULL
+6971816dc2ed51ff36248379abef838ba94a581e openai main NULL
 d6bff728bf37a597df07aa7531dac55e76dcc030 os main NULL
 c18cc3239772b7953dd6b14a43467f53bb55f324 osv main NULL
 5a9572f2256b37f843bc247882c92c78c96ebb32 ourl main NULL
@@ -282,7 +275,7 @@ d628139cdb9f27113d21de987b19eac2f24415d3 ted main NULL
 4bebf0f26cc64bb450ba28c9e8153a4a852d3a97 term main NULL
 0e755f7d6a9c30b46a366f05b2eb5415ee40d7ed termux main NULL
 ac21ee0e932c8b32f4d942b616168816d96e0eb9 theme main NULL
-0bb591c285685df0bd37450ccc3d39c365150c3e tldr main NULL
+50bfa8ac3ed091d33a5f85590efb3f94ad675dcc tldr main NULL
 ddc89fb8fde4b5f63eaee550a35ad5b5b35451ad tmp main NULL
 48c6c2f62e10b46b2443f4206c5d2b442423e3d5 tmpl main NULL
 564160458d347b934fd28164c84301f614c342f9 top main NULL
@@ -293,7 +286,6 @@ fdff0b8aa7166bdce6c81d6baca734294e10a143 tsv main NULL
 a88a08bf991e58c96347570502c1dbd43a60cf29 tui main NULL
 e74e5043b722b24ff4f66ca95c88c55ad4d45fe5 txt main NULL
 3bf49ac882bde0252e3c49927c8d1776d1e5cf01 tz main NULL
-881fede6e390c236cd8a0b277e739c7651f6d508 ubuntu main NULL
 7bd5a1082d4f1e4e7287dc7a2bc47e292ad8f785 uhb main NULL
 7d30f76d4af650341d3129d30c5a1325e521b6ef ui main NULL
 d8ee558013bd1de499aa1ef6bb8e196791f369cf uname main NULL
@@ -311,7 +303,7 @@ b6b921c3144a83bccd8ede6b62534846cb3187f4 webtop main NULL
 81c5f8c863f8a836de904010ba8e1f48a2ea9e8d whisper main NULL
 b8255740083c7ed52ab6d6752db0a51327106a2f winget main NULL
 4679c81366e1e39c524b396f2810ac5d88fc46d4 wkp main NULL
-2e10b9c9a0ce2f94ac85695b0d843bcc3276ea3c writer main NULL
+b807c00f88117b45e60a99b08719db0f107eab36 writer main NULL
 44361222fd44cb8fb61f23042d41d14a2c3a1e66 ws main NULL
 315788d9a43c3b03eaf1e673bb516993c5c1303d wsl main NULL
 1f2ddf3a5e143c23f7c3ec1f1961056951297293 wttr main NULL
