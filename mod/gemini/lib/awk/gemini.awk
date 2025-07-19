@@ -1,6 +1,8 @@
 BEGIN{
     Q2_1 = SUBSEP "\"1\""
     JOINSEP = "\n\n"
+
+    GEMINI_USE_GOOGLE_SEARCH = ENVIRON[ "use_google_search" ]
 }
 
 function gemini_gen_unit_str(str){
@@ -64,7 +66,7 @@ function gemini_req_from_creq(history_obj, minion_obj, question, creq_obj, creq_
     _temperature    = minion_temperature( minion_obj, MINION_KP )
     if (_temperature != "") _config = gemini_gen_generationConfig(_temperature)
 
-    # _use_google_search = true
+    _use_google_search = GEMINI_USE_GOOGLE_SEARCH
     _tools = gemini_gen_tools( _use_google_search )
 
     if ( ! chat_str_is_null(promote_content))  USER_LATEST_QUESTION = promote_content

@@ -10,10 +10,6 @@ provider:
     model: gpt-4o-mini
     temperature: 0.7
 
-# TODO: setting the variables
-# ___abc
-# ___cde
-
 prompt:
   system:
 
@@ -24,6 +20,8 @@ prompt:
     You might also be asked for some fact to complete, the black is ,,, or ::: or @@@, you just complete the ,,, or ::: or @@@ with the correct words.
 
     You MUST ALWAYS follow them as the example above. NO exceptions.
+
+    %{options_before_argument}%
 
   example:
     - u: write a shell command to print the current working directory
@@ -38,10 +36,17 @@ prompt:
 
 
   content: |
-    The file name is %{FILENAME}%
+    <--BASIC-COMMAND-->
+    %{basic_cmd}%
+    </--BASIC-COMMAND-->
 
-    The text to be explained is as below:
-    %{BODY}%
+    <--HELP-DOCUMENT-->
+    %{help_document}%
+    </--HELP-DOCUMENT-->
+
+    <--TASK-REQUEST-->
+    %{task}%
+    </--TASK-REQUEST-->
 
 history: 0
 

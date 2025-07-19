@@ -799,6 +799,34 @@ null
 {
 "cmd"
 :
+"xd alp typeinc"
+,
+"cn"
+:
+"运行 typeinc，测试你的打字速度和准确率"
+,
+"en"
+:
+"Run typeinc to test your typing speed and accuracy"
+}
+,
+{
+"cmd"
+:
+"xd alp asn -n bing.com"
+,
+"cn"
+:
+"查询 bing.com 的 ASN 和 IP 路由信息"
+,
+"en"
+:
+"Lookup ASN and routing information for bing.com"
+}
+,
+{
+"cmd"
+:
 "x ascii --yml | xd alp yq"
 ,
 "cn"

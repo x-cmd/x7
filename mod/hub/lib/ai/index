@@ -7,6 +7,7 @@ ___x_cmd_hub_ai(){
     local subcmd="$1";shift
     case "$subcmd" in
         context)  ___x_cmd_hub_ai_context "$@"  ;;
+        emb|embedding) ___x_cmd_hub_ai_emb "$@" ;;
         chat|*) ___x_cmd_hub_ai_chat "$@"       ;;
     esac
 }
@@ -23,4 +24,25 @@ ___x_cmd_hub_ai_chat(){
         ;;
     esac
     ___x_cmd curl -X GET -G --data-urlencode question="$*" "https://hub.x-cmd.net/api/v0/ai/chat"
+}
+
+___x_cmd_hub_ai_emb(){
+    local title
+    local file
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help)      ___x_cmd help -m hub ai  "$@" ;;
+            -t|--title)     title="$2";         arg:2:shift;;
+            -f)             file="$2";          arg:2:shift;;
+            *)              content="$1";       shift;;
+        esac
+    done
+    [ -z "$file" ] || [ -f "$file" ] || { hub:error "${file} file does not exist"; return 1;}
+
+    ___x_cmd ccmd 10m -- x hub account info -j | {
+       ___x_cmd jo env . .id
+       ___x_cmd curl -X POST 'https://cf-hub.it-9b9.workers.dev/api/v0/ai/embedding' \
+            $(___x_cmd curl gencode  userId="$id" title="$title" content="$content") ${file+"--form"} ${file+file=@"$file"}
+    }
+
 }
