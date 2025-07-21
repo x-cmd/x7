@@ -17,7 +17,12 @@ copy_main(){(
         x git meta branch
     ) >"$metadatadir/xx.info.txt"
 
-    local tgt; for tgt in X mod adv extmeta.tgz $metadatadir/version_sum $metadatadir/mod.index.txt $metadatadir/yy.info.txt $metadatadir/xx.info.txt; do
+    for i in "$dst/extmeta"*; do
+        x:info "Remove old extmeta data: $i"
+        x rmrf "$i"
+    done
+
+    local tgt; for tgt in X mod adv extmeta.tar $metadatadir/version_sum $metadatadir/mod.index.txt $metadatadir/yy.info.txt $metadatadir/xx.info.txt; do
         x rmrf "$dst/$tgt"
         command cp -r "$tgt" "$dst/$tgt"
     done
