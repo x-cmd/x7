@@ -1,12 +1,12 @@
 BEGIN{
     RS = "<"
-    if ( no_color ) {
+    if ( ENVIRON[ "NO_COLOR" ] ) {
         STYLE_TITLE = ""
         STYLE_URL   = ""
         STYLE_DESC  = ""
         STYLE_END   = ""
     } else {
-        STYLE_TITLE = "\033[1;36m"
+        STYLE_TITLE = "\033[96m"
         STYLE_URL   = "\033[90m"
         STYLE_DESC  = "\033[90m"
         STYLE_END   = "\033[0m"
@@ -63,6 +63,12 @@ function stdout_msg( title, url, desc ){
     }
 }
 
+function xml_transpose( s ){
+    gsub( "&gt;", ">", s )
+    gsub( "&lt;", "<", s )
+    return s
+}
+
 END {
-    stdout_msg(title, location, desc)
+    stdout_msg( xml_transpose( title ), xml_transpose( location ), xml_transpose( desc ) )
 }

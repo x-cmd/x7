@@ -1,5 +1,9 @@
 # shellcheck shell=dash
 
+___x_cmd_hub_file_ll(){
+    ___x_cmd_hub_file_ls -l "$@"
+}
+
 ___x_cmd_hub_file_ls(){
     local X_help_cmd='___x_cmd_hub___help file ls'
     help:arg:parse

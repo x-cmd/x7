@@ -31,7 +31,7 @@ ___x_cmd_gemini_gg___md(){
 }
 
 ___x_cmd_gemini_gg___llm(){
-    ___x_cmd_gemini_gg___parse "$@"
+    NO_COLOR=1 ___x_cmd_gemini_gg___parse "$@"
 }
 
 
@@ -45,22 +45,24 @@ ___x_cmd_gemini_gg___parse(){
 
     printf "%s\n" "$response_str" | ___x_cmd md llm
 
-    [ -n "$urllist" ] || return 0
-    local proxy=
-    ___x_cmd_gemini_cur   proxy:=   2>/dev/null
+    if [ -n "$urllist" ]; then
+        local proxy=
+        ___x_cmd_gemini_cur   proxy:=   2>/dev/null
 
-    local url=""
-    while read -r url; do
-        [ -n "$url" ] || continue
-        {
-            printf "%s: %s\n" "Location" "$url"
-            ___x_cmd ccmd "$cache_time" -- ___x_cmd proxy runifset "$proxy" \
-                ___x_cmd curl -s --dump-head - -L "$url"
-        } | ___x_cmd cawk -f lib/awk/gg_parse.awk
-    done <<A
+        printf "%s\n" "--------- WEB SOURCE ---------"
+
+        local url=""
+        while read -r url; do
+            [ -n "$url" ] || continue
+            {
+                printf "%s: %s\n" "Location" "$url"
+                ___x_cmd ccmd "$cache_time" -- ___x_cmd proxy runifset "$proxy" \
+                    ___x_cmd curl -s --dump-header - -L "$url"
+            } | ___x_cmd awk0 -f "$___X_CMD_ROOT_MOD/gemini/lib/awk/gg_parse.awk"
+        done <<A
 $urllist
 A
-
+    fi
 }
 
 ___x_cmd_gemini_gg___raw_(){
