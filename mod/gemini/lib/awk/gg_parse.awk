@@ -14,8 +14,8 @@ BEGIN{
 }
 
 function parse_location( data,          l, i, str, arr ){
-    l = split( data, arr, "\n" )
-    for (i=1; i<=l; ++i){
+        l = split( data, arr, "\n" )
+        for (i=1; i<=l; ++i){
         str = arr[i]
         if (str ~ "^[l|L]ocation:") {
             location = str

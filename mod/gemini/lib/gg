@@ -57,7 +57,7 @@ ___x_cmd_gemini_gg___parse(){
             {
                 printf "%s: %s\n" "Location" "$url"
                 ___x_cmd ccmd "$cache_time" -- ___x_cmd proxy runifset "$proxy" \
-                    ___x_cmd curl -s --dump-header - -L "$url"
+                    ___x_cmd curl -s --max-time 10 --dump-header - -L "$url"
             } | ___x_cmd awk0 -f "$___X_CMD_ROOT_MOD/gemini/lib/awk/gg_parse.awk"
         done <<A
 $urllist

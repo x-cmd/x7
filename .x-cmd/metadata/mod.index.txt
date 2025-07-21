@@ -9,7 +9,7 @@ eae3392df329f7012eeb31081cd1e0d35bdb7d3f arp main NULL
 0d59fb8df36894c460dee371e4cdfcbaa0e2405c ascii main NULL
 bd7323017ba35e9eff5fffe702b8414c4b639bbe asdf main NULL
 ed8cbefbe47baa72de9eac17742f831499a12471 assert main NULL
-247a8ee9d2b78c597314ed9291efb1c40c27aa4e awk main NULL
+bdbc42f0b9b33402308ef36e9bcda90339653f39 awk main NULL
 551af6ae3114f48ee1da2f1ed91cc3ef93153bc4 bakman main NULL
 386a2f4a1071a643524daa83de8aeb610bbbe76c boot main NULL
 a9adda86142c0e0bb8ebc5873f7f317524474bfe brew main NULL
@@ -61,9 +61,9 @@ dd3b4f2d8576dffb8a64950661d07f1856b2a25c depend main NULL
 aa6cbf716e293a41f756a82572b63f73d4575b04 dict main NULL
 a147ed49cbd6e20def67e5eec2c59d077e4523a6 dingtalk main NULL
 77fbb21b70e97e76ae4802b952bd046f721b4453 discord main NULL
-f98fa1db8ac40be4431f392874d75c97a50628ec dnf main NULL
+653370a214761eb5f9d200353bcc2a72fc9b4d7d dnf main NULL
 dd0151993bbe165afb1ab8c297d257b94d98c19e dns main NULL
-37e8f6a786b9d2a09be0217a073a27c011673069 docker main NULL
+dea30f04127156045a20e4f03f4fd1984eab9bb5 docker main NULL
 2f20fcbdd2b93b787eb9518b0ecebd06730b709e dos2unix main NULL
 9d02206bc2d9eae2449819da1d14ee7315c6ed8a dregistry main NULL
 31c7a767db36c457156796cd074a915577a7125c eclist main NULL
@@ -93,7 +93,7 @@ f8c8680a2467a2b8741cb7dfd6df11474945bcbc gawk main NULL
 afc62654b01403e265ab32efbe00fa9c4deb9a7d gcal main NULL
 c7e7455b4779ad4bf0f3d2ccd97f0a7df86fdb48 gcode main NULL
 dcbbd3beb270e31be94dd3d5a37781fa218bd7ce gddy main NULL
-0b82a36d8a95cbd363a42a412457fc400a2a89be gemini main NULL
+70112569f6f4c09d6a78a3c18ba873d001cb09fc gemini main NULL
 8451cf8d1a2a844c7bc1d74c932d928f2ac288ca gh main NULL
 c295f2b4d5f288c6a6d519445ebf279362532f31 git main NULL
 05d93fce44eb99382ff7aa926a6067dfcd0bb805 gitb main NULL
@@ -124,7 +124,7 @@ d08874a20cc01afc642202240ebd5d8c70208bf7 history main NULL
 8d59b9602ecee6da50bff38e9c08e40990425bf5 http main NULL
 3d92a9f96288bc6e3a15d3c20873625e13bf2ebc httpget main NULL
 f9b5e7a873ec0124c18651f77d4db36381edfa42 hua main NULL
-916734dca698028a0501d17e7344cda6b6ffbb25 hub main NULL
+7904e82e47cbf86084f1b18fca6938f4b81df599 hub main NULL
 1aabcce64d874ea553fb78792a5ea46d762cab04 huggingface main NULL
 6a1029a3e9a2ff1950a22c1e93a6c48bd0c99301 humantime main NULL
 a7db5970850cc5f0ad6186d97e65af0c97339a52 icmd main NULL
@@ -296,7 +296,7 @@ f4622bbe1783674ecac2d41037eccbc79e7e5543 uptime main NULL
 befef8ac37b15ba229fc5559b1dba4996562b309 url main NULL
 5746198bc5ef17bce1caf6976af66d4920a830c3 user main NULL
 cc899ef04cf4e5dbe1861586e19d965596e86159 val main NULL
-f6d1cd136c3bb5a2e57b1f2efd47d21d71040f6f version main NULL
+a0d8f36a8d54975233456b87260a598553ec0bca version main NULL
 afe8c2167fc93666f4ae68a67da63bae81affdad vim main NULL
 6f43a78b4d2b49e73a2f3ab30c97a921e5c40dca wchar main NULL
 aeadb4832dae44fe69de904e210c10ff21057a8f websrc main NULL
