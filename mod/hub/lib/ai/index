@@ -89,7 +89,7 @@ ___x_cmd_hub_ai_del(){
 
 
 ___x_cmd_hub_ai___fzfinfo(){
-    printf "%s" "$@" |  command awk '{
+    printf "%s" "$@" |  ___x_cmd_cmds awk '{
             $1 = ""
             $2 = ""
             print $0
@@ -101,7 +101,7 @@ ___x_cmd_hub_ai___fzf(){
     ___x_cmd_hub_ai___tsv "$@"              \
         |   ___x_cmd_hub___tsvlabel         \
         |   ___x_cmd_hub___fzfpretty        \
-        |   command awk -v FS='\t' 'BEGIN {
+        |   ___x_cmd_cmds awk -v FS='\t' 'BEGIN {
                 printf("\033[2m%s\t\033[0;32m%-10s\t\033[0;36m%-10s\n", "emb_id", "title", "content");
             }
             {
