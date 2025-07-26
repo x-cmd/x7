@@ -31,9 +31,8 @@ ___x_cmd_buse___runcmd(){
     if ___x_cmd_hascmd browser-use; then
         ___x_cmd_buse___runcmd(){  ___x_cmd_cmds browser-use "$@"; }
     else
-        ___x_cmd_buse___install || return
         ___x_cmd_buse___runcmd(){ ___x_cmd snap --run browser-use "$@" ; }
-    fi || return
+    fi || return $?
     ___x_cmd_buse___runcmd "$@"
 }
 
