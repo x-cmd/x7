@@ -138,7 +138,7 @@ ___x_cmd_docker_refit(){
 
             --ep)       ep="$2";        arg:2:shift  ;;
             --epxbin)   ep="[ \"/bin/xbin.sh\" ]";
-                                        arg:2:shift  ;;
+                                        shift  ;;
             --cmd)      cmd="$2";       arg:2:shift  ;;
 
             --script)   script="$2";    arg:2:shift  ;;

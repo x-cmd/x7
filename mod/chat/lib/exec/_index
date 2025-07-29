@@ -159,7 +159,7 @@ A
             # --edit)         inputtype="${1#--}";    shift 1 ;;
 
             -P|--nopipe)    inputtype=none;         shift 1 ;;      # For script process if inside the pipe
-            -p)             inputtype=pipe;
+            -p|--pipe)      inputtype=pipe;
                             inputdesc="$2"
                             [ $# -ge 2 ] || N=chat M="Please provide a description of the value of the input pipe" log:ret:64;
                             shift 2 ;;

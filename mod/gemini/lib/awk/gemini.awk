@@ -80,20 +80,34 @@ function gemini_req_from_creq(history_obj, minion_obj, question, creq_obj, creq_
 }
 
 # extract ...
-function gemini_res_to_cres(gemini_resp_o, cres_o, kp,      v, resp_kp ){
+function gemini_res_to_cres(gemini_resp_o, cres_o, kp,      v, resp_kp, usage_kp, usage_prompt_kp, usage_cand_kp, usage_total_kp){
     kp = ((kp != "") ? kp : Q2_1)
     cres_o[ kp ] = "{"
 
     resp_kp = Q2_1 SUBSEP "\"candidates\"" SUBSEP "\"1\""
+    usage_kp = Q2_1 SUBSEP "\"usageMetadata\""
+    usage_prompt_kp = usage_kp SUBSEP "\"promptTokenCount\""
+    usage_cand_kp   = usage_kp SUBSEP "\"candidatesTokenCount\""
+    usage_total_kp  = usage_kp SUBSEP "\"totalTokenCount\""
 
-    jdict_put( cres_o, kp, "\"reply\"", "\"\"" )
+    jdict_put( cres_o, kp, "\"reply\"", "{" )
     jmerge_force___value( cres_o, kp SUBSEP "\"reply\"", gemini_resp_o,  resp_kp SUBSEP "\"content\""  )
 
-    v = gemini_resp_o[ resp_kp SUBSEP "\"finishReason\""  ]
-    jdict_put( cres_o, kp, "\"finishReason\"", ( (v == "" )   ? "\"\"" : v) )
+    if ( (v = gemini_resp_o[ resp_kp SUBSEP "\"finishReason\"" ]) != "" )
+        jdict_put( cres_o, kp, "\"finishReason\"", v )
+    if ( (v = gemini_resp_o[ resp_kp SUBSEP "\"index\""  ])  != "" )
+        jdict_put( cres_o, kp, "\"index\"", v )
 
-    v = gemini_resp_o[ resp_kp SUBSEP "\"index\""  ]
-    jdict_put( cres_o, kp, "\"index\"",        ( (v == "" )   ? "\"\"" : v) )
+    jdict_put( cres_o, kp, "\"usage\"", "{" )
+    if ( (v = gemini_resp_o[ usage_prompt_kp ]) != "" )
+        jdict_put( cres_o, kp SUBSEP "\"usage\"", "\"prompt_tokens\"", v )
+    if ( (v = gemini_resp_o[ usage_cand_kp ]) != "" )
+        jdict_put( cres_o, kp SUBSEP "\"usage\"", "\"completion_tokens\"", v )
+    if ( (v = gemini_resp_o[ usage_total_kp ]) != "" )
+        jdict_put( cres_o, kp SUBSEP "\"usage\"", "\"total_tokens\"", v )
+
+    if ( (v = gemini_resp_o[ Q2_1 SUBSEP "\"modelVersion\"" ]) != "" )
+        jdict_put( cres_o, kp, "\"model\"", v )
 }
 
 function gemini_parse_response(gemini_resp_o, ret_o,        _kp, str, code){

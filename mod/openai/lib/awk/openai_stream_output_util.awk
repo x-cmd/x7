@@ -82,7 +82,7 @@ BEGIN{
     KP_CONTENT              = KP_DELTA SUBSEP "\"content\""
     KP_ERROR                = Q2_1 SUBSEP "\"error\""
     KP_OBJECT               = Q2_1 SUBSEP "\"object\""
-    KP_CREATED               = Q2_1 SUBSEP "\"created\""
+    KP_CREATED              = Q2_1 SUBSEP "\"created\""
     KP_REASONING_CONTENT    = KP_DELTA SUBSEP "\"reasoning_content\""
     KP_FINISH_REASON        = KP_CHOICES SUBSEP "\"1\"" SUBSEP "\"finish_reason\""
 
