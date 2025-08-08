@@ -46,6 +46,8 @@ ___x_cmd_gemini_chat_request___launch(){
             ___x_cmd retry --max 3 --interval 3 ___x_cmd_gemini_count_request___try
         fi
         _exitcode="$?"
+        printf "[EXITCODE] %s\n" "$_exitcode" >> "$XCMD_CHAT_DRAWFILE"
+        printf "[EXITCODE] %s\n" "$_exitcode" >> "$XCMD_CHAT_LOGFILE"
 
         ___x_cmd_gemini_chat_request___trapexit
         [ "$_exitcode" -eq 0 ] || false

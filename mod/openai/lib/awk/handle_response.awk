@@ -54,7 +54,7 @@ END{
         print "[FUNCTION-CALL-COUNT] " int(o_tool[ Q2_1 L ])    >> XCMD_CHAT_LOGFILE
     }
 
-    print "[EXITCODE] " _exitcode >> XCMD_CHAT_DRAWFILE
-    print "[EXITCODE] " _exitcode >> XCMD_CHAT_LOGFILE
+    # print "[EXITCODE] " _exitcode >> XCMD_CHAT_DRAWFILE
+    # print "[EXITCODE] " _exitcode >> XCMD_CHAT_LOGFILE
     exit( _exitcode )
 }

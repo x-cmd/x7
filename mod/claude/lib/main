@@ -4,13 +4,13 @@ ___x_cmd log init claude
 xrc:mod:lib     claude   __runcmd
 
 ___x_cmd_claude___main(){
-    [ "$#" -gt 0 ] ||   set -- --help
+    [ "$#" -gt 0 ] ||   set -- --runmain
 
     local op="$1";      shift
     case "$op" in
         -h|--help)      ___x_cmd help -m claude "$@";    return 0 ;;
-        --|--runcmd)    ___x_cmd_claude___runcmd        "$@" ;;
-        --runmain)      ___x_cmd_claude___runmain       "$@" ;;
+        --|--runmain)   ___x_cmd_claude___runmain       "$@" ;;
+        --runcmd)       ___x_cmd_claude___runcmd        "$@" ;;
         *)              ___x_cmd_claude___runmain "$op" "$@" ;;
     esac
 }
