@@ -1,4 +1,4 @@
-6bc9fa6b626196eb38518615f084d5b6849d40f6 advise main NULL
+d89432290c0aee4ab3b539246bce3fc07fc3feb6 advise main NULL
 3ca4fde89e52707adf8cf21ec16ec365c4824efa agent main NULL
 567e6c54bef0f14313531f212bdb9ecf9f0d1a76 aider main NULL
 6f5f36a1f447c0e8024bb193bc7b6b72ba22b591 alias main NULL
@@ -32,7 +32,7 @@ dceab47136cdf3e8320c67b24bc9a8c7e313004d ccal main NULL
 8c5d5e96c40d83d3a0fc412c0d83be3adf92fd3b ccmd main NULL
 3ca8aa4a0a30969b33cb7c817d33d2f5e6f65107 cd main NULL
 2c4dcfb467169109bd4536a2eb5c138eed935c13 cfgy main NULL
-bec9edb251a417692ffceec90d4b450a9f8529ff chat main NULL
+acafd78a0b5deaa20d608718df23930016af8365 chat main NULL
 87c98ca9b8dd920c1868440986b4e1d0261e1c8b choco main NULL
 eb383d659df9a123b5f51a44108a42a20d7aee54 cht main NULL
 517b7c48cefecbb3cbae9c25181b68a12e90f458 claude main NULL
@@ -130,7 +130,7 @@ d08874a20cc01afc642202240ebd5d8c70208bf7 history main NULL
 8d59b9602ecee6da50bff38e9c08e40990425bf5 http main NULL
 3d92a9f96288bc6e3a15d3c20873625e13bf2ebc httpget main NULL
 d3a72bdbf2036326bc8b7d47af2e9fa1f19fab9c hua main NULL
-83181530cfbfbd6cbd008c9296c8b71a290b82f0 hub main NULL
+050cd22ec9e32d933fb9ae82f7b22e60814ef5bb hub main NULL
 1aabcce64d874ea553fb78792a5ea46d762cab04 huggingface main NULL
 6a1029a3e9a2ff1950a22c1e93a6c48bd0c99301 humantime main NULL
 bc69a532a74151d8cf79f3fac41677d2306161dd icmd main NULL
@@ -292,7 +292,7 @@ f782f0cd6ba5d6f2bceffd02f6f5dff0677eaf0b tping main NULL
 1895b7752b1af46d80f357d96ebcb72c8243e4dc trex main NULL
 fdff0b8aa7166bdce6c81d6baca734294e10a143 tsv main NULL
 0d24d5452ee70df2c0eea7b44afe449b09c3f789 tty main NULL
-9ff6f5b54b23a6578d9593e4424d5ff360a4c0c6 tui main NULL
+24c00ecf73d00622b8093aab4c9f899f66d41d78 tui main NULL
 e74e5043b722b24ff4f66ca95c88c55ad4d45fe5 txt main NULL
 3bf49ac882bde0252e3c49927c8d1776d1e5cf01 tz main NULL
 7bd5a1082d4f1e4e7287dc7a2bc47e292ad8f785 uhb main NULL

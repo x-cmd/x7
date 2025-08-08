@@ -741,6 +741,22 @@
 "Force delete, even if the file does not exist"
 }
 }
+,
+"--cache"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"删除本地缓存文件。"
+,
+"en"
+:
+"Delete local cache files."
+}
+}
 }
 ,
 "#other"

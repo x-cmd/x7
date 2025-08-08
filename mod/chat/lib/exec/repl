@@ -70,6 +70,7 @@ ___x_cmd_chat___exec_repl___select(){
 # x ls | @ -a 'work.note' --> Save to the llm results ...
 
 ___x_cmd_chat___exec_repl_loop(){
+    trap ';' INT
     chat:info "repl [session=$session]"
 
     local id
