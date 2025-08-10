@@ -7,7 +7,7 @@ ___x_cmd_font_install(){
     local fontargs=""
     while [ $# -gt 0 ]; do
         case "$1" in
-            -h|--help)  ___x_cmd help -m font install "$@";     return 0 ;;
+            -h|--help)  ___x_cmd help -m font install "$@";  return ;;
             -*)         arg:add fontargs "$1";  shift ;;
             *)          break ;;
         esac
@@ -23,7 +23,7 @@ ___x_cmd_font_install(){
         ___x_cmd ui select id "Choose a font to install"        \
             "nerd/FiraCode"                                     \
             "Choose other fonts"                                \
-            "Go to nerdfont website to preview the nerdfont"    \
+            "Go to nerdfont website to preview the NerdFonts"    \
             "exit"
 
         case "$id" in

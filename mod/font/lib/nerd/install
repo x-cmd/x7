@@ -1,11 +1,11 @@
-# shellcheck shell=dash
+# shellcheck shell=dash disable=SC2016
 
 ___x_cmd_font_nerd_install(){
     local style=auto
     while [ $# -gt 0 ]; do
         case "$1" in
             --auto|--gh|--cb)   style="${1#--}"; shift ;;
-            -h|--help)          ___x_cmd help -m font nerd install; break ;;
+            -h|--help)          ___x_cmd help -m font nerd install; return ;;
             *)                  break ;;
         esac
     done
@@ -49,8 +49,9 @@ ___x_cmd_font_nerd_install___handler(){
     }
     # cp and refresh
     ___x_cmd_font_install___install_system "$tmp" || return
-    ___x_cmd_font_refresh || return
+    ___x_cmd_font_refresh "$___X_CMD_FONT_DIR" || return
 
-    ___x_cmd ui tf true "${name} Font Installation Successful, Tips:" \
-        "Set up terminal font: https://x-cmd.com/mod/font/cookbook-2"
+    ___x_cmd ui tf true "${name} Font Installation Successful, [Tips]:" \
+        "Set up terminal font: https://x-cmd.com/mod/font/cookbook-2"   \
+        "$(___x_cmd_font_nerd_info "$name" | ___x_cmd grep 'Family')"
 }

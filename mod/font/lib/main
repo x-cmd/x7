@@ -7,18 +7,19 @@ ___x_cmd log init font
 xrc:mod:lib  font      install  ls  nerd/_index
 
 ___x_cmd_font___main(){
-    [ "$#" -gt 0 ] ||   set -- nerd
+    [ "$#" -gt 0 ] ||   set -- --help
 
     local op="$1"; shift
     case "$op" in
         -h|--help)          ___x_cmd help -m font   "$@" ;;
 
-        refresh)            ___x_cmd_font_refresh ;;
+        refresh)            ___x_cmd_font_refresh   "$@" ;;
 
         i|install)          ___x_cmd_font_install  "$@" ;;
         nerd|noto)          ___x_cmd_font_"$op"    "$@" ;;
 
         cfonts|cfont|c)     ___x_cmd_font_cfont     "$@" ;;
+        *)                  ___x_cmd help -m font   "$@"; return 1 ;;
     esac
 }
 
@@ -46,7 +47,11 @@ ___x_cmd_font_cfont(){
 ___x_cmd_font_refresh(){
     if ___x_cmd_hascmd fc-cache; then
         font:info "Refresh font cache, this may take a moment..."
-        ___x_cmd sudo fc-cache -f "$___X_CMD_FONT_DIR"
+        if [ -n "$1" ]; then
+            ___x_cmd sudo fc-cache -f "$1"
+        else
+            ___x_cmd log uirotate ___x_cmd sudo fc-cache -f -v
+        fi
     else
         N=font M="Refresh failed. fc-cache command not found." log:ret:1
     fi

@@ -21,15 +21,15 @@ null
 {
 "cmd"
 :
-"x font"
+"x font nerd"
 ,
 "cn"
 :
-"开启交互模式预览字体信息"
+"开启交互模式预览 Nerd Fonts 字体信息"
 ,
 "en"
 :
-"Preview fonts information in interactive mode"
+"Preview Nerd Fonts information in interactive mode"
 }
 ,
 {
@@ -267,7 +267,7 @@ null
 {
 "cn"
 :
-"更新字体缓存"
+"刷新字体目录缓存"
 ,
 "en"
 :
@@ -284,7 +284,7 @@ null
 ,
 "cn"
 :
-"更新字体缓存"
+"刷新字体缓存"
 ,
 "en"
 :
