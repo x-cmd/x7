@@ -70,10 +70,9 @@ ___x_cmd_chat___exec_repl___select(){
 # x ls | @ -a 'work.note' --> Save to the llm results ...
 
 ___x_cmd_chat___exec_repl_loop(){
-    trap ';' INT
+    trap ':' INT
     chat:info "repl [session=$session]"
 
-    local id
     local history_num=10
     local ___X_CMD_MD_LLM_LESS_DISABLE=1
     local x_=""
@@ -116,6 +115,7 @@ Other inputs continue the loop, use \ to start multi-line input content
 }
 
 ___x_cmd_chat___exec_repl___nexthelp(){
+    local id=""
     ___x_cmd ui select id   "Next"                  \
         "/h         | show help"                    \
         "/exit      | exit the loop"                \
@@ -125,6 +125,7 @@ ___x_cmd_chat___exec_repl___nexthelp(){
         1)      ___x_cmd_chat___exec_repl___printhelp ;;
         2)      x_=EXIT;    return 0 ;;
         3)      ___x_cmd_chat___exec_repl_history app ;;
+        4)      x_=CONT;    return 0 ;;
     esac
 }
 
@@ -145,7 +146,7 @@ ___x_cmd_chat___exec_repl____handlecmd_(){
         /exit|/quit)    x_=EXIT;    return 0 ;;
         /init)          ___x_cmd_chat_init      ;;
         /history)       ___x_cmd_chat___exec_repl_history app   ;;
-        "")             ___x_cmd_chat___exec_repl___nexthelp    ;;
+        "")             ___x_cmd_chat___exec_repl___nexthelp; return ;;
 
         \=' '*)
                         chat:info "Execute the command —> ${x_#'= '}"

@@ -21,7 +21,7 @@ null
 {
 "cmd"
 :
-"x font nerd"
+"x font"
 ,
 "cn"
 :
@@ -188,6 +188,22 @@ null
 "en"
 :
 "Using Codeberg source"
+}
+}
+,
+"--linux"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"采用 Linux 的安装方式，提供给 WSL 桌面端用户"
+,
+"en"
+:
+"Use the Linux installation way for WSL desktop users"
 }
 }
 ,
