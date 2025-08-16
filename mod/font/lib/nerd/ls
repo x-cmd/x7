@@ -1,5 +1,7 @@
 # shellcheck shell=dash disable=SC2016
 ___x_cmd_font_nerd_ls(){
+    local X_help_cmd=""; X_help_cmd='x help -m font nerd ls' help:arg:parse
+
     if ! ___x_cmd_is_stdout2tty || ! ___x_cmd_runmode_allow_manual; then
         ___x_cmd_font_nerd___tsv_name
         return

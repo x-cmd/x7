@@ -13,7 +13,7 @@ ___x_cmd_ps_fz(){
 ___x_cmd_ps_fz___data(){
     if ___x_cmd os is linux; then
         if ___x_cmd_hascmd ps; then
-            ___x_cmd ps --tsv -o user,ppid,pid,tty,pcpu,pmem,vsz,rss,stat,time,command "$@"
+            ___x_cmd ps --tsv ax -o user,ppid,pid,tty,pcpu,pmem,vsz,rss,stat,time,command "$@"
         else
             #busybox
             ___x_cmd ps --tsv -o user,ppid,pid,tty,vsz,rss,stat,args "$@"
@@ -22,7 +22,7 @@ ___x_cmd_ps_fz___data(){
             ___x_cmd ps --tsv
     else
         if ___x_cmd_hascmd ps; then
-            ___x_cmd ps --tsv -o user,ppid,pid,tty,pcpu,pmem,vsz,rss,stat,time,command "$@"
+            ___x_cmd ps --tsv ax -o user,ppid,pid,tty,pcpu,pmem,vsz,rss,stat,time,command "$@"
         else
             ps:error "ps command not found."
             return 1

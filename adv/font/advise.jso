@@ -223,6 +223,38 @@ null
 }
 }
 }
+,
+"info"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看 Nerd Fonts 字体信息"
+,
+"en"
+:
+"View Nerd Fonts font information"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"字体名"
+,
+"en"
+:
+"Font Name"
+}
+}
+}
 }
 ,
 "install|i"

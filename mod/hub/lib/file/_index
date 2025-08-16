@@ -40,7 +40,7 @@ ___x_cmd_hub_file_normalize_remotefp_(){
 ___x_cmd_hub_file_normalize_remotefp(){
     local x_=
     ___x_cmd_hub_file_normalize_remotefp_ "$@" || return
-    printf "%s\n" "$x_"
+    printf "%s\n" "$x_" | tr -s /
 }
 
 # Section(put_dist): freeze

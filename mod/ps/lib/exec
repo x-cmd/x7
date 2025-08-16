@@ -110,28 +110,9 @@ ___x_cmd_ps___exec___info(){
 }
 
 
-___x_cmd_ps___exec___typeofping_(){
-    x_="$(
-        ___x_cmd_cmds ps -V 2>&1 | ___x_cmd_cmds awk -v retval="unknown" '
-
-    $0~/inetutils/{
-        retval = "inetutils"
-        exit
-    }
-
-    $0~/iputils/{
-        retval = "iputils"
-        exit
-    }
-
-    $0~/BusyBox/{
-        retval = "busybox"
-        exit
-    }
-
-    END{
-        print retval
-    }
-    '
-    )"
+___x_cmd_ps___exec___typeofps_(){
+    local helpmsg;      helpmsg="$(___x_cmd ps -V 2>&1)"
+    case "$helpmsg" in
+        *BusyBox*)      x_=busybox  ;;
+    esac
 }
