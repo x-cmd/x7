@@ -52,8 +52,9 @@ ___x_cmd_chat___exec(){
     local is_end_with_repl=""
     local is_interactive=""
 
-    local is_reasoning="false"
-    local is_stream="true"
+    local is_reasoning=""
+    local is_stream=""
+    local is_debug=""
 
     if ___x_cmd_is_stdout2tty && ___x_cmd_runmode_allow_chatty; then
         is_end_with_repl=1
@@ -173,10 +174,11 @@ A
 
             # deprecated ...
             --question)     question="$2";          [ $# -ge 2 ] || N=chat M="Please provide the question value" log:ret:64;  shift 2 ;;
-            --show-reasoning)
-                            is_reasoning="true";    shift 1 ;;
+            --reasoning)    is_reasoning="true";    shift 1 ;;
+            --no-reasoning) is_reasoning="false";   shift 1 ;;
+            --stream)       is_stream="true";       shift 1 ;;
             --no-stream)    is_stream="false";      shift 1 ;;
-
+            --debug)        is_debug=1;             shift 1 ;;
             --help|-h)
                             case "$provider" in
                                 gh) ___x_cmd help -m gh model chat request      ;;
@@ -283,9 +285,8 @@ ___x_cmd_chat___exec_inner_(){
     chat:debug --chatid "$chatid" --model "$model" --question "$question" --history_num "$history_num" --confirm_before_send "$confirm_before_send" "chat exec"
     [ -z "$imagelist" ] || {
         case "$provider" in
-            openai|gemini|gh|ollama|llmf|moonshot)  ;;
-            *)  chat:error "Currently, only [openai|gemini|gh|ollama|llmf|moonshot] support multimodal model, while [provider=$provider] does not support"
-                return 1
+            openai|gemini|gh|ollama|llmf|moonshot|mistral|siliconflow|openrouter)  ;;
+            *)  chat:warn "Multimodal models may not be supported"
                 ;;
         esac
     }

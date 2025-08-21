@@ -1,0 +1,41 @@
+# shellcheck shell=dash
+
+
+___x_cmd_sysctl___main(){
+    [ $# -gt 0 ] || set -- --all
+
+    local mode=""
+
+    # TODO: import the data to yml, json
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help)      ___x_cmd help -m mac sysctl "$@" ; return 0 ;;
+            -a|--all)       mode=all ;;
+
+            *)              break ;;
+        esac
+        shift
+    done
+
+    if [ -n "$mode" ]; then
+        ___x_cmd_sysctl___fz -a
+    else
+        ___x_cmd_sysctl___fz "$1"
+    fi
+}
+
+___x_cmd_sysctl___fz(){
+    ___x_cmd_is_stdout2tty || {
+        ___x_cmd_cmds sysctl "$@"
+        return $?
+    }
+
+    ___x_cmd_cmds sysctl "$@" | {
+        ___x_cmd_cmds awk -f "$___X_CMD_ROOT_MOD/sysctl/lib/awk/sysctl.awk"
+    } | {
+        ___x_cmd fzf --reverse --ansi
+    }
+}
+
+

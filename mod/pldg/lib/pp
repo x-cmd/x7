@@ -1,0 +1,41 @@
+
+___x_cmd_pldg_pp(){
+    pldg:info "Policy enabled as below"
+    [ -z "$stdio"       ] || printf "  - %s\n"  stdio
+    [ -z "$rpath"       ] || printf "  - %s\n"  rpath
+    [ -z "$wpath"       ] || printf "  - %s\n"  wpath
+    [ -z "$cpath"       ] || printf "  - %s\n"  cpath
+    [ -z "$dpath"       ] || printf "  - %s\n"  dpath
+    [ -z "$chown"       ] || printf "  - %s\n"  chown
+    [ -z "$flock"       ] || printf "  - %s\n"  flock
+    [ -z "$tty"         ] || printf "  - %s\n"  tty
+    [ -z "$recvfd"      ] || printf "  - %s\n"  recvfd
+    [ -z "$sendfd"      ] || printf "  - %s\n"  sendfd
+    [ -z "$fattr"       ] || printf "  - %s\n"  fattr
+    [ -z "$inet"        ] || printf "  - %s\n"  inet
+    [ -z "$unix"        ] || printf "  - %s\n"  unix
+    [ -z "$id"          ] || printf "  - %s\n"  id
+    [ -z "$dns"         ] || printf "  - %s\n"  dns
+    [ -z "$proc"        ] || printf "  - %s\n"  proc
+    [ -z "$exec"        ] || printf "  - %s\n"  exec
+    [ -z "$prot_exec"   ] || printf "  - %s\n"  prot_exec
+    [ -z "$vminfo"      ] || printf "  - %s\n"  vminfo
+    [ -z "$tmppath"     ] || printf "  - %s\n"  tmppath
+
+    if [ -n "$fs_all" ]; then
+        printf "  - %s\n" "Enabling unveiling using -V"
+    else
+        [ -z "$fs_root"     ] ||    printf "  - %s\n" "Allow all access to /"
+        [ -z "$fs_allrx"    ] ||    printf "  - %s\n" "Allow read/exec for /"
+
+        [ -z "$fs_font"     ] ||    printf "  - %s\n" "Allow font access"
+        [ -z "$fs_xcmd"     ] ||    printf "  - %s\n" "Allow x-cmd root folder access"
+
+        [ -z "$fs_localbin" ] ||    printf "  - %s\n" "Allow local bin folder access"
+
+        [ -z "$fs_pwd"      ] ||    printf "  - %s\n" "Allow all access to $PWD"
+        [ -z "$fs_home"     ] ||    printf "  - %s\n" "Allow all access to $HOME -- Caution !"
+
+        [ -z "$fs_ws"       ] ||    printf "  - %s\n" "Allow all access to WS"
+    fi >&2
+}

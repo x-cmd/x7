@@ -85,17 +85,29 @@ function handle_content_md(arr){
     hd_main( arr )
 }
 
-function handle_usage(str,          o, kp_usage, total_token, pt, ct, tt, detail_str ){
+function handle_usage(str,          o, kp_usage, total_token, at, it, ot, ict, icr, ott, otr, _cache_str, _thought_str, isr, ihr, ior, detail_str){
     if ( str == "" ) return
     jiparse_after_tokenize(o, str)
     kp_usage = Q2_1 SUBSEP "\"usage\""
-    total_token = int( o[ kp_usage SUBSEP "\"total_tokens\"" ] )
-    pt = int( o[ kp_usage SUBSEP "\"prompt_tokens\"" ] )
-    ct = int( o[ kp_usage SUBSEP "\"completion_tokens\"" ] )
-    tt = int( o[ kp_usage SUBSEP "\"thought_tokens\"" ] )
-    # model           = juq( o[ Q2_1 SUBSEP "\"model\"" ] )
+    at = int( o[ kp_usage SUBSEP "\"total\""  SUBSEP "\"tokens\"" ] )
+    if ( at <= 0 ) return
+    it = int( o[ kp_usage SUBSEP "\"input\""  SUBSEP "\"tokens\"" ] )
+    ot = int( o[ kp_usage SUBSEP "\"output\"" SUBSEP "\"tokens\"" ] )
 
-    detail_str = pt " prompt, " ct " completion"
-    if ( tt > 0 ) detail_str = detail_str ", " tt " thought"
-    print "\033[90m    Usage: " total_token " tokens (" detail_str ")\033[0m"
+    ict =  int( o[ kp_usage SUBSEP "\"input\"" SUBSEP "\"cache_tokens\"" ] )
+    icr =  o[ kp_usage SUBSEP "\"input\"" SUBSEP "\"ratio\"" SUBSEP "\"cache\"" ]
+    if ( ict > 0 ) icr = sprintf( "%.4f", (ict/it) )
+    if ( icr > 0 ) _cache_str = " (Cache " icr * 100 "%)"
+
+    ott = int( o[ kp_usage SUBSEP "\"output\"" SUBSEP "\"thought_tokens\"" ] )
+    if ( ott > 0 ) otr = sprintf("%.4f", (ott/ot) )
+    if ( otr > 0 ) _thought_str = " (Thought " otr * 100 "%)"
+
+    isr = o[ kp_usage SUBSEP "\"input\"" SUBSEP "\"ratio\"" SUBSEP "\"system\"" ]
+    ihr = o[ kp_usage SUBSEP "\"input\"" SUBSEP "\"ratio\"" SUBSEP "\"history\"" ]
+    ior = o[ kp_usage SUBSEP "\"input\"" SUBSEP "\"ratio\"" SUBSEP "\"other\"" ]
+
+    detail_str = sprintf("Token usage %s = Input %s + Output %s", at, it _cache_str, ot _thought_str ) "\n" \
+        sprintf("Input distribution → Sys %s | Hist %s | Other %s",  isr * 100 "%", ihr * 100 "%", ior * 100 "%")
+    print "\033[90m" detail_str "\033[0m"
 }

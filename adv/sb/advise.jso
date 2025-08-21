@@ -1,0 +1,116 @@
+{
+"#name"
+:
+{
+"sb"
+:
+null
+,
+"cn"
+:
+"在受限环境中安全运行命令，类似 Deno、Docker 的最小权限沙箱（sandbox）"
+,
+"en"
+:
+"Safely run commands in a restricted environment, like a minimal-permission sandbox"
+}
+,
+"#desc"
+:
+{
+"cn"
+:
+"`x sb` 是一个跨平台沙箱（sandbox）执行工具，用于以最小权限运行命令。\n\n它支持类似 Deno 风格的权限控制，例如 `--network` 启用网络访问，`--read` 指定可读路径，`--write` 指定可写路径，`--pwd` 允许访问当前目录等。\n\n在 macOS 上，它使用 `sandbox-exec` 创建临时 profile 文件进行隔离；\n在 Linux 上，使用 pledge 机制模拟最小权限运行；\n对于不支持的系统可使用 `___X_CMD_SB_RUN_ANYWAY=1` 强制执行。\n\n适用于想在不使用 Docker 的情况下，对脚本或命令运行进行权限隔离的场景。\n"
+,
+"en"
+:
+"`x sb` is a cross-platform sandbox runner that executes commands with minimal privileges.\n\nInspired by tools like Deno and Docker, it provides flags such as `--network`, `--read`, `--write`, and `--pwd` to control resource access explicitly.\n\nOn macOS, it uses `sandbox-exec` with dynamically generated profiles;\non Linux, it leverages pledge-style constraints;\non unsupported systems, execution can be forced using `___X_CMD_SB_RUN_ANYWAY=1`.\n\nIdeal for securing scripts or tools in lightweight, permission-restricted environments without needing full containers.\n"
+}
+,
+"airrun"
+:
+null
+,
+"editrun"
+:
+{
+"-f"
+:
+null
+}
+,
+"#usage"
+:
+[
+{
+"cn"
+:
+"运行脚本并启用网络访问"
+,
+"en"
+:
+"Run a script with network access"
+,
+"ex"
+:
+"x sb --network ./myscript.sh"
+}
+,
+{
+"cn"
+:
+"仅允许读取指定文件路径"
+,
+"en"
+:
+"Only allow reading from a specific file path"
+,
+"ex"
+:
+"x sb -r ./data/input.txt ./reader.sh"
+}
+,
+{
+"cn"
+:
+"允许写入指定目录"
+,
+"en"
+:
+"Allow writing to a specific directory"
+,
+"ex"
+:
+"x sb -w ./output ./writer.sh"
+}
+,
+{
+"cn"
+:
+"同时允许读写当前目录（如用于构建或缓存）"
+,
+"en"
+:
+"Allow read/write access to current directory (e.g. for building or caching)"
+,
+"ex"
+:
+"x sb --pwd ./build.sh"
+}
+,
+{
+"cn"
+:
+"在不支持的系统上强制执行"
+,
+"en"
+:
+"Force execution on unsupported systems"
+,
+"ex"
+:
+"___X_CMD_SB_RUN_ANYWAY=1 x sb ./myscript.sh"
+}
+]
+}
+

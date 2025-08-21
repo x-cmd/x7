@@ -45,11 +45,13 @@ ___x_cmd_ccal_lunar_prepare(){
 
 ___x_cmd_ccal_lunar_download(){
     local retcode=$?
-    ___x_cmd curl "https://codeberg.org/x-cmd/ccal-data/releases/download/${___X_CMD_CCAL_DATA_VERSION}/ccal-data.tar.xz" >"${___X_CMD_CCAL_DATA_FILE}.bak" || {
+    ___x_cmd curl --fail "https://codeberg.org/x-cmd/ccal-data/releases/download/${___X_CMD_CCAL_DATA_VERSION}/ccal-data.tar.xz" >"${___X_CMD_CCAL_DATA_FILE}.bak" || {
         retcode=$?
         ccal:error "Aborted: Failed to download ccal-data. Please check your network connection."
         return $retcode
     }
+
+    # TODO: Defensive programming -> test the bak and ensure it works.
 
     ___x_cmd_cmds mv "${___X_CMD_CCAL_DATA_FILE}.bak" "${___X_CMD_CCAL_DATA_FILE}"
 }

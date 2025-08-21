@@ -190,7 +190,7 @@ BEGIN{
     OPENAI_HAS_RESPONSE_CONTENT = 0
 }
 
-# { print $0 >> (OPENAI_CONTENT_DIR "/chat.running.yml"); }
+( IS_DEBUG ){ print $0 >> (OPENAI_CONTENT_DIR "/chat.running.yml"); }
 ($0 != ""){
     if ( IS_STREAM == true ) {
         if ($0 !~ "^:"){

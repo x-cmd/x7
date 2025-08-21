@@ -1,0 +1,352 @@
+( version 1 )
+
+( deny default )
+
+( define HOME (param "HOME") )
+( define ( x-home           sub ) ( string-append HOME                  "/"   sub ) )
+
+( define ___X_CMD_ROOT ( param "___X_CMD_ROOT" ) )
+( define ( x-cmd-root       sub ) ( string-append ___X_CMD_ROOT         "/"   sub ) )
+
+;; Notice, in x-cmd and x-cmd-root, sub value should not start with /
+
+( define ___X_CMD_ROOT_BIN ( x-cmd-root  "bin" ) )
+( define ( x-cmd-root-bin   sub ) ( string-append ___X_CMD_ROOT_BIN     "/"   sub ) )
+
+
+( define ( x-init )
+  ( begin
+    ;; ( allow process* )
+    ;; ( allow process-fork )
+    ;; ( allow syscall* )
+    ;; ( allow system* )
+
+    ;; ( allow file* process* ( subpath "/" ) )
+
+    ;; for version 3
+    ;; (import "dyld-support.sb")
+    ;; (import "system.sb")
+
+    ( allow file-read-metadata file-read-data ( literal "/" ) )
+
+    ( allow file-read-metadata file-read-data
+        ( subpath
+            "/usr/share"
+            "/var"          "/private/var"
+            "/etc"          "/private/etc"
+        )
+    )
+
+    ( allow file-read* file-map-executable
+      ( subpath
+          "/System/Cryptexes/App"
+          "/System/Cryptexes/OS"
+          "/System/Volumes/Preboot/Cryptexes/App/System"
+          "/System/Volumes/Preboot/Cryptexes/OS"
+      )
+    )
+
+    ( allow file-read-data file-write-data file-ioctl
+        ( require-all
+          ( literal "/dev/dtracehelper"  )
+          ( vnode-type CHARACTER-DEVICE  )
+        )
+    )
+
+    ( allow sysctl-read
+        ( sysctl-name
+            "kern.bootargs"
+            "kern.ngroups"
+            "security.mac.lockdown_mode_state"
+        )
+    )
+
+    ( allow mach-lookup
+      ( global-name
+          "com.apple.system.notification_center"
+          "com.apple.system.opendirectoryd.libinfo"
+      ) ;; for bash hostname
+    )
+
+  )
+)
+
+;; TODO: reconsider in the future
+( define ( x-allow-userconfig )
+  ( x-allowfs
+    ( x-home ".local" )
+    ( x-home ".bun"   )
+    ( x-home ".deno"  )
+    ( x-home "go"     )
+    ( x-home ".cargo" )
+  )
+)
+
+( define ( x-allow-home )
+  ( x-allowfs HOME )
+  ;; with protection for some important ...
+)
+
+( define ( x-allow-home-bin )
+  ( begin
+    ( allow file-read* process* file-test-existence
+      ( subpath
+        ( x-home  ".bun/bin" )
+        ( x-home  ".npm/bin" )
+        ( x-home  ".deno/bin" )
+      )
+
+      ( subpath
+        ( x-home  "go/bin" )
+        ( x-home  ".local/bin" )
+        ( x-home  ".cargo/bin" )
+      )
+    )
+  )
+)
+
+( define ( x-allow-sys-bin )
+  ( begin
+    ( allow process* file-read* file-test-existence
+      ( subpath
+          "/bin"                "/sbin"
+          "/usr/bin"            "/usr/sbin"
+          "/usr/local/bin"      "/usr/local/sbin"
+          "/Library/Developer/CommandLineTools/"
+          "/opt/homebrew/bin"  "/opt/homebrew/sbin" "/opt/homebrew/Cellar"
+      )
+    )
+  )
+)
+
+( define ( x-allow-tmpfs )
+  ( allow file-read* file-write* ;; file-unlink
+    ( subpath
+        "/private/tmp"          "/tmp"
+        "/private/var/tmp"      "/var/tmp"
+        "/private/var/folders"  "/var/folders"
+    )
+  )
+)
+
+( define ( x-allow-basic-x-cmd-root )
+  ( begin
+    ( allow file-read* file-write* ;; file-unlink
+        ( subpath
+          ___X_CMD_ROOT
+        )
+    )
+    ( allow process* file-read* file-write*
+        (   subpath
+            ___X_CMD_ROOT_BIN
+            ( x-cmd-root "local/data" )
+        )
+    )
+  )
+)
+
+( define ( x-allow-network )    ( allow network* ) )
+( define ( x-deny-network )     ( deny  network* ) )
+
+( define ( x-allow-fs )         ( allow   process* file* ( subpath "/" ) ( literal "/" ) ) )
+( define ( x-deny-fs )          ( deny    process* file* ( subpath "/" ) ( literal "/" ) ) )
+
+( define ( x-allow-fork )       ( allow process-fork ) )
+( define ( x-deny-fork )        ( deny  process-fork ) )
+
+( define ( x-allowfs fp )       ( deny process* file*   ( literal fp )  ( subpath fp ) ) )
+( define ( x-denyfs fp )        ( deny process* file*   ( literal fp )  ( subpath fp ) ) )
+
+( define ( x-allow-allrx  )     ( allow process* file-read*  file-ioctl file-test-existence ( literal "/" )  ( subpath "/" ) ) )
+
+( define ( x-forbid-privacy fp )
+  ( begin
+    ( x-forbid ( x-home ".ssh" ) )
+    ( x-forbid ( "/private/etc/passwd" ) )
+    ;; ( x-forbid ( "" ) )
+  )
+)
+
+( define ( x-allow-tty )      ( allow file-read* file-write* file-ioctl ( literal "/dev/tty"  ) ( prefix  "/dev/ttys" )) )
+( define ( x-deny-tty )       ( deny  file-read* file-write* file-ioctl ( literal "/dev/tty"  ) ( prefix  "/dev/ttys" )) )
+
+( define ( x-allow-dev0 )
+  ( begin
+    ( allow file-read* file-write* file-ioctl
+        ( literal "/dev/zero" )
+        ( literal "/dev/null" )
+    )
+
+    ( allow file-read*
+        ( literal "/dev/random"  )
+        ( literal "/dev/urandom" )
+    )
+  )
+)
+
+( define ( x-deny-dev0 )
+  ( begin
+    ( deny file-read* file-write* file-ioctl
+        ( literal "/dev/zero" )
+        ( literal "/dev/null" )
+    )
+
+    ( deny file-read*
+        ( literal "/dev/random"  )
+        ( literal "/dev/urandom" )
+    )
+  )
+)
+
+( define ( x-allow-time )
+  ( allow file-read*
+    ( subpath "/private/var/db/timezone" )
+    ( subpath "/usr/share/zoneinfo" )
+    ( subpath "/usr/share/zoneinfo.default" )
+    ( literal "/private/etc/localtime" )
+  )
+)
+
+( define ( x-allow-sysctl0 )
+  ( begin
+    ( allow sysctl-read
+        ( sysctl-name-prefix "hw.perflevel" )
+        ( sysctl-name        "sysctl.proc_cputype" )
+        ( sysctl-name
+            "kern.hostname"
+            "kern.maxfilesperproc"
+            "kern.osproductversion"
+            "kern.osrelease"
+            "kern.ostype"
+            "kern.osvariant_status"
+            "kern.osversion"
+            "kern.secure_kernel"
+            "kern.usrstack64"
+            "kern.version"
+        )
+        ;; TODO: kern.ngroups kern.bootargs
+
+        ( sysctl-name
+            "hw.activecpu"
+            "hw.busfrequency_compat"
+            "hw.byteorder"
+            "hw.cacheconfig"
+            "hw.cachelinesize_compat"
+            "hw.cpufamily"
+            "hw.cpufrequency_compat"
+            "hw.cputype"
+            "hw.l1dcachesize_compat"
+            "hw.l1icachesize_compat"
+            "hw.l2cachesize_compat"
+            "hw.l3cachesize_compat"
+            "hw.logicalcpu_max"
+            "hw.machine"
+            "hw.memsize"
+            "hw.ncpu"
+            "hw.nperflevels"
+        )
+
+        ( sysctl-name
+            "hw.optional.arm.FEAT_BF16"
+            "hw.optional.arm.FEAT_DotProd"
+            "hw.optional.arm.FEAT_FCMA"
+            "hw.optional.arm.FEAT_FHM"
+            "hw.optional.arm.FEAT_FP16"
+            "hw.optional.arm.FEAT_I8MM"
+            "hw.optional.arm.FEAT_JSCVT"
+            "hw.optional.arm.FEAT_LSE"
+            "hw.optional.arm.FEAT_RDM"
+            "hw.optional.arm.FEAT_SHA512"
+
+            "hw.optional.armv8_2_sha512"
+
+            ;; these are for
+            ;; "hw.optional.armv8_1_atomics"
+            ;; "hw.optional.armv8_crc32"
+
+            ;; consider cpu diff in intel mac
+            "hw.optional.*"
+
+            "hw.optional.armv*"
+            "hw.optional.arm.FEAT_DIT"
+        )
+
+        ( sysctl-name
+            "hw.packages"
+            "hw.pagesize_compat"
+            "hw.physicalcpu_max"
+            "hw.tbfrequency_compat"
+            "hw.vectorunit"
+        )
+    )
+  )
+)
+
+( define ( x-allow-font-access )
+  ( begin
+    ( allow file-read-data file-read-xattr
+        (   subpath
+            "/Library/Fonts"
+            "/System/Library/Fonts"
+            ( x-home "Library/Fonts" )
+        )
+    )
+    ( allow mach-lookup
+      ( global-name "com.apple.fonts" )
+      ( global-name "com.apple.FontObjectsServer" )
+    )
+
+    ( allow file-read* ( extension "com.apple.app-sandbox.read" ) )
+  )
+)
+
+;; can run /bin/echo hi at least
+( define ( x-ruleset-1 ) ( begin   ( allow default )
+    ( x-init )
+    ( x-allow-sys-bin )
+) )
+
+
+;; can run ?????
+( define ( x-ruleset-2 ) ( begin   ( x-ruleset-1 )
+    ( x-allow-tmpfs )
+    ( x-allow-dev0 )
+    ( x-allow-sysctl0 )
+    ( x-allow-home-bin )
+) )
+
+;; can run bash -c ...
+( define ( x-ruleset-3 ) ( begin   ( x-ruleset-2 )
+    ( x-allow-time )
+) )
+
+;; can run ??? ... most tui tools
+( define ( x-ruleset-4 ) ( begin   ( x-ruleset-3 )
+    ( x-allow-fork )
+    ( x-allow-tty )
+) )
+
+;; can run bash/zsh -i: with fork support ...
+;; can run x-cmd
+( define ( x-ruleset-5 ) ( begin   ( x-ruleset-4 )
+    ( x-allow-basic-x-cmd-root )
+) )
+
+;; APP: terminal app
+( define ( x-ruleset-6 ) ( begin   ( x-ruleset-5 )
+    ( x-allow-font-access )
+) )
+
+
+;; APP: firefox/chrome ...
+( define ( x-ruleset-7 ) ( begin   ( x-ruleset-6 )
+    ( x-allow-network )
+    ;;
+) )
+
+;; APP: ???
+( define ( x-ruleset-8 ) ( begin   ( x-ruleset-7 )
+) )
+
+
+

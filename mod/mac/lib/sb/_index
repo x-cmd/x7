@@ -1,0 +1,221 @@
+# shellcheck shell=dash
+
+___X_CMD_MAC_SB_CODE_CORE=''
+
+# m sb -0 --net --basic --tty -a / ls /bin
+# m sb -1 --net ls /bin
+# m sb -9 --nonet curl -h https://bing.com
+
+xrc:mod:lib     mac     sb/exec
+
+___x_cmd_mac_sb(){
+    [ $# -gt 0 ]    ||      set -- --help
+
+    local dryrun=""
+    local code=""
+
+    local tracemode=""
+
+    local pp=""
+
+    local x_=""
+
+    local default=deny
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help)      ___x_cmd help -m mac sb "$@" ; return 0 ;;
+            --dryrun)       dryrun=1    ;;
+
+            --pp|--print-policy)
+                            pp=1 ;;
+
+            --trace)        tracemode="$2";                                   arg:2:shift; continue ;;
+
+            -9)             default=allow  ;;
+            -0)             default=deny   ;;
+
+            -1|-2|-3|-4|-5|-6|-7|-8)
+                            default=deny
+                            ___x_cmd_mac_sb_addcode_      "( x-ruleset-${1#-} )"
+                            ;;
+
+            --init)         ___x_cmd_mac_sb_addcode_        "( x-init )"          ;;
+            --sysctl0)      ___x_cmd_mac_sb_addcode_        "( x-allow-sysctl0 )" ;;
+
+            --all)          ___x_cmd_mac_sb_addcode_        "( x-allowfs "/"   )" ;;
+            --allrx)        ___x_cmd_mac_sb_addcode_        "( x-allow-allrx   )" ;;
+
+            # Inner function
+            --wd|--workdir)
+                            [ -n "$2" ] || N=sb M="Expected directory path after -> $1" log:ret:64
+                            [ -d "$2" ] || ___x_cmd mkdirp "$2" || N=sb M="Fail to create directory -> $2" log:ret:1
+                            ___x_cmd_mac_sb___handlev allow rwxu:"$2" ;     arg:2:shift; continue ;;
+
+
+            --wf|--workfile)
+                            [ -n "$2" ] || N=sb M="Expected file path after -> $1" log:ret:64
+                            [ -f "$2" ] || {
+                                ___x_cmd ensurefp "$2"  || N=sb M="Fail to create directory for file -> $2" log:ret:1
+                                printf "">"$2"
+                            }
+                            ___x_cmd_mac_sb___handlev allow rwxu:"$2";      arg:2:shift; continue ;;
+
+            --dev0)         ___x_cmd_mac_sb_addcode_        "( x-allow-dev0 )"    ;;
+            --no-dev0)      ___x_cmd_mac_sb_addcode_        "( x-deny-dev0 )"     ;;
+
+            --tty)          ___x_cmd_mac_sb_addcode_        "( x-allow-tty )"     ;;
+            --no-tty)       ___x_cmd_mac_sb_addcode_        "( x-deny-tty )"      ;;
+
+            --fork)         ___x_cmd_mac_sb_addcode_        "( x-allow-fork )"    ;;
+            --no-fork)      ___x_cmd_mac_sb_addcode_        "( x-deny-fork )"     ;;
+
+            --net)          ___x_cmd_mac_sb_addcode_        "( x-allow-network )" ;;
+            --no-net)       ___x_cmd_mac_sb_addcode_        "( x-deny-network )"  ;;
+
+            --root)         ___x_cmd_mac_sb_addcode_        "( x-allowfs   "/"  )" ;;
+            --no-root)      ___x_cmd_mac_sb_addcode_        "( x-denyfs    "/"  )" ;;
+
+            # --sysbin)       ___x_cmd_mac_sb_addcode_        "( x-allow-sys-bin )"  ;;
+            --homebin)      ___x_cmd_mac_sb_addcode_        "( x-allow-home-bin )" ;;
+
+            --home)         ___x_cmd_mac_sb_addcode_        "( x-allowfs  HOME  )" ;;
+            --no-home)      ___x_cmd_mac_sb_addcode_        "( x-denyfs   HOME  )" ;;
+
+            --pwd)          ___x_cmd_mac_sb___handlev allow rwxu:"$PWD"            ;;
+            --no-pwd)       ___x_cmd_mac_sb___handlev deny  rwxu:"$PWD"            ;;
+
+            --ws)           ___x_cmd wsroot_ || N=mac M="Fail to fetch workspace -> $PWD" log:ret:64
+                            ___x_cmd_mac_sb___handlev allow rwxu:"${x_}"           ;;
+
+            --no-ws)        ___x_cmd wsroot_ || N=mac M="Fail to fetch workspace -> $PWD" log:ret:64
+                            ___x_cmd_mac_sb___handlev deny rwxu:"${x_}"            ;;
+
+            -c|--code)      ___x_cmd_mac_sb_addcode_      "$2";             arg:2:shift; continue ;;
+
+            -a)             ___x_cmd_mac_sb___handlev allow "$2";           arg:2:shift; continue ;;
+            -d)             ___x_cmd_mac_sb___handlev deny  "$2";           arg:2:shift; continue ;;
+
+            -F)             ___x_cmd_mac_sb_addcode_ "( x-denyfs \"$2\" )"; arg:2:shift; continue ;;
+
+            # -f)             arg:2:shift; continue ;;        # support file, load the code from file ...
+
+            *)              break ;;
+        esac
+        shift
+    done
+
+    ___x_cmd os is darwin || N=mac M="This function can only run on macOS." log:ret:1
+
+    local ___X_CMD_MAC_SB_CODE_CORE=""          # TODO: remove it so the code could be cached in the env.
+    [ -n "$___X_CMD_MAC_SB_CODE_CORE" ] || {
+        ___X_CMD_MAC_SB_CODE_CORE="$(___x_cmd_cmds cat "$___X_CMD_ROOT_MOD/mac/lib/sb/lib.sb")"
+    }
+
+    ___x_cmd_mac_sb_addcode_ " ( $default default ) "
+
+    [ -z "$dryrun" ]    || {       printf "%s\n" "$code" ;   return 0 ; }
+
+    [ -z "$pp" ]   || {
+        mac:info "Sandbox code is presented below."
+        printf "%s\n" "--- |"
+        local code_line
+        while read -r code_line; do
+            printf "  %s\n" "$code_line"
+        done <<A
+$code
+A
+        printf "%s\n" "---"
+    } >&2
+
+    code="${___X_CMD_MAC_SB_CODE_CORE}${___X_CMD_UNSEENCHAR_NEWLINE}${code}${___X_CMD_UNSEENCHAR_NEWLINE}"
+    ___x_cmd_mac_sb___exec -p "$code" "$@"
+}
+
+
+___x_cmd_mac_sb_addcode_(){
+    while [ $# -gt 0 ]; do
+        code="${code}$1
+"
+        shift
+    done
+}
+
+___x_cmd_mac_sb___handlev(){
+    local op="$1"
+    local arg="$2"
+
+    local s="r" ;
+    local strategy="" ;
+    local fp="$arg" ;
+
+    local res="" ;
+
+    local fptype="p" ;
+
+    case "$arg" in
+        f*)
+            if ___x_cmd_mac_sb___handlev_isrwux "${arg#?}"
+            then
+                fptype=f
+                arg="${arg#?}"
+            fi
+            ;;
+
+        d*)
+            if ___x_cmd_mac_sb___handlev_isrwux "${arg#?}"
+            then
+                fptype=d
+                arg="${arg#?}"
+            fi
+    esac
+
+    if ___x_cmd_mac_sb___handlev_isrwux "$arg"; then
+        s="${arg%%:*}"
+        fp="${arg#*:}"
+    fi
+
+    while [ -n "$s" ]; do
+        case "$s" in
+            r*)     strategy="$strategy file-read* file-test-existence"     ;;
+            w*)     strategy="$strategy file-write*"    ;;
+            x*)     strategy="$strategy process*"       ;;
+        esac
+        s="${s#?}"
+    done
+
+    # TODO: in the future, support multiple path ...
+
+    local fplist="$fp"
+    while [ -n "$fplist" ]; do
+        case "$fplist" in
+            *:*)
+                fp="${fplist%%:*}"
+                fplist="${fplist#*:}"
+                ;;
+            *)
+                fp="$fplist"
+                fplist=""
+        esac
+
+        case "$fptype" in
+            f)      res=" ( literal \"$fp\" ) " ;;
+            p)      res=" ( literal \"$fp\" ) ( subpath \"$fp\" ) " ;;
+            d)      res=" ( subpath \"$fp\" ) " ;;
+        esac
+    done
+
+    ___x_cmd_mac_sb_addcode_ "( $op $strategy $res )"
+}
+
+___x_cmd_mac_sb___handlev_isrwux(){
+    case "$1" in
+        r:*|w:*|x:*|\
+        rw:*|rx:*|\
+        wr:*|wx:*|\
+        xr:*|xw:*|\
+        rwx:*|rxw:*|wrx:*|wxr:*|xrw:*|xwr:*)
+            return 0
+    esac
+    return 1
+}
+

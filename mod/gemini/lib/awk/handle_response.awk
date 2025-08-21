@@ -2,7 +2,9 @@ BEGIN{
     XCMD_CHAT_LOGFILE   = ENVIRON[ "XCMD_CHAT_LOGFILE" ]
     XCMD_CHAT_DRAWFILE  = ENVIRON[ "XCMD_CHAT_DRAWFILE" ]
     GEMINI_CONTENT_DIR  = ENVIRON[ "content_dir" ]
+    # IS_STREAM           = ENVIRON[ "is_stream" ]
     IS_REASONING        = ENVIRON[ "is_reasoning" ]
+    IS_DEBUG            = ENVIRON[ "is_debug" ]
     DRAW_PREFIX         = "    "
     printf("%s\n", "[START]") >> XCMD_CHAT_DRAWFILE
     printf("%s", DRAW_PREFIX) >> XCMD_CHAT_DRAWFILE
@@ -43,10 +45,12 @@ END{
         }
 
         print jstr(o_response)                      > (GEMINI_CONTENT_DIR "/gemini.response.yml" )
-        gemini_res_to_cres( o_response, cres_o , SUBSEP "cres", o_tool, Q2_1 )
-        print cres_dump( cres_o, SUBSEP "cres" )    > (GEMINI_CONTENT_DIR "/chat.response.yml")
 
-        usage_str = cres_dump_usage( cres_o, SUBSEP "cres" )
+        creq_loadfromjsonfile( creq_obj, SUBSEP "creq", GEMINI_CONTENT_DIR "/chat.request.yml" )
+        gemini_res_to_cres( o_response, cres_obj, SUBSEP "cres", creq_obj, SUBSEP "creq", o_tool, Q2_1 )
+        print cres_dump( cres_obj, SUBSEP "cres" )    > (GEMINI_CONTENT_DIR "/chat.response.yml")
+
+        usage_str = cres_dump_usage( cres_obj, SUBSEP "cres" )
         print "[USAGE] " usage_str                              >> XCMD_CHAT_DRAWFILE
         print "[FUNCTION-CALL-COUNT] " int(o_tool[ Q2_1 L ])    >> XCMD_CHAT_LOGFILE
     }

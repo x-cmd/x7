@@ -90,7 +90,7 @@ ___x_cmd_chat___exec_repl_loop(){
         ___x_cmd_chat___exec_repl____handlecmd_
 
         case "$x_" in
-            EXIT)       return 0 ;;
+            EXIT)       break ;;
             CONT)       continue ;;
         esac
     done

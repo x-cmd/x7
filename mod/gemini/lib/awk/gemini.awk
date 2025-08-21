@@ -13,35 +13,35 @@ function gemini_gen_unit_str(str){
 }
 function gemini_gen_generationConfig(temperature, is_reasoning,                 str){
     if ( temperature != "" ) str = "\"temperature\": " temperature
-    if ( is_reasoning == true ) {
+    if ( is_reasoning == "true" ) {
         str = str (( str != "" ) ?  ", " : "")
         str = str "\"thinkingConfig\": { \"include_thoughts\": true }"
     }
     return ", \"generationConfig\": { " str " }"
 }
 
-function gemini_gen_history_str( history_obj, i,      _text_res, _text_req, _text_tool, _text_finishReason) {
-    _text_req = chat_history_get_req_text(history_obj,  Q2_1, i)
-    _text_res = chat_history_get_res_text(history_obj,  Q2_1, i)
-    _text_tool = chat_history_get_res_tool_call(history_obj, Q2_1, i)
-    _text_finishReason = chat_history_get_finishReason(history_obj,  Q2_1, i)
+function gemini_gen_history_str( history_obj, chatid, i,      _text_res, _text_req, _text_tool, _text_finishReason) {
+    _text_req = chat_history_get_req_text(history_obj, chatid, i)
+    _text_res = chat_history_get_res_text(history_obj, chatid, i)
+    _text_tool = chat_history_get_res_tool_call(history_obj, chatid, i)
+    _text_finishReason = chat_history_get_finishReason(history_obj, chatid, i)
     if( (_text_finishReason !~ "(STOP|stop|tool_calls)") || (_text_req =="") ||(_text_res == "")) return
     if ( _text_tool != "" ) {
         _text_res = (_text_res ~ "^\"" ) ? juq(_text_res) : _text_res
         _text_res = jqu( _text_res "\nfunctionCall:" _text_tool )
     }
 
-    return "{  \"parts\": [ {\"text\":" _text_req "} ],  \"role\": \"user\" }, {  \"parts\": [ {\"text\":" _text_res "} ],  \"role\": \"model\" }"
+    return "{ \"role\": \"user\", \"parts\": [{\"text\":" _text_req "}]}, { \"role\": \"model\", \"parts\": [{\"text\":" _text_res "}]}"
 }
 
-function gemini_gen_minion_content_str(minion_obj,      context, example, content){
-    context = minion_prompt_context(minion_obj, MINION_KP)
+function gemini_gen_minion_content_str(minion_obj, minion_kp, media_str,     context, example, content){
+    context = minion_prompt_context(minion_obj, minion_kp)
     context = (context != "") ? context JOINSEP : ""
 
-    example = minion_example_tostr(minion_obj, MINION_KP)
-    content = minion_prompt_content(minion_obj, MINION_KP)
+    example = minion_example_tostr(minion_obj, minion_kp)
+    content = minion_prompt_content(minion_obj, minion_kp)
 
-    return context example content
+    return "{\"text\": " jqu( context example content ) "}" media_str
 }
 
 function gemini_gen_safe_setting_str(             _safe_setting){
@@ -50,81 +50,118 @@ function gemini_gen_safe_setting_str(             _safe_setting){
     return _safe_setting
 }
 
-function gemini_req_from_creq(history_obj, minion_obj, question, creq_obj, creq_kp, is_reasoning,        str, i, l, _history_str, promote_content, \
-    promote_system_json, _filelist_str, _safe_setting, _temperature, _config, _media_str, _tool_str, _use_google_search ){
-    l = chat_history_get_maxnum(history_obj, Q2_1)
+function gemini_gen_last_msgtool_from_creq( msgtool_obj, creq_obj, creq_kp, chatid, session_dir,            provider, last_chatid, last_creq_obj, last_creq_kp ){
+    provider = juq(creq_obj[ creq_kp, "\"provider\"" ])
+    last_chatid = chat_history_get_last_chatid(session_dir, provider, chatid)
+    if ( last_chatid == "" ) return
+    last_creq_kp = SUBSEP "last-creq"
+    chat_history_get_last_creq( last_creq_obj, last_creq_kp, session_dir, provider, chatid, last_chatid )
+
+    return gemini_gen_msgtool_from_creq( msgtool_obj, last_creq_obj, last_creq_kp, last_chatid, session_dir, true )
+}
+
+function gemini_gen_msgtool_from_creq( msgtool_obj, creq_obj, creq_kp, chatid, session_dir, history_form_startpoint,                history_obj, history_num, i, l, str, \
+    _history_str, _creq_minion_kp, _system_str, _content_str, _media_str, _messages_str, _use_gg_search, _tool_str ){
+    history_num = creq_obj[ creq_kp S "\"history_num\"" ]
+    chat_history_load( history_obj, chatid, session_dir, history_num)
+    l = chat_history_get_maxnum(history_obj, chatid)
     for (i=1; i<=l; ++i){
-        str = gemini_gen_history_str(history_obj, i)
-        if(str != "") _history_str = _history_str str " ,"
+        str = gemini_gen_history_str(history_obj, chatid, i)
+        if (str != "") _history_str = _history_str str " ,"
     }
 
-    promote_content = gemini_gen_minion_content_str( minion_obj )
-
-    promote_system_json = minion_system_tostr(minion_obj, MINION_KP)
-    if (promote_system_json != "") promote_system_json = gemini_gen_unit_str(promote_system_json)
-
-    _filelist_str = minion_filelist_attach( minion_obj, MINION_KP)
-    if (_filelist_str != "") _filelist_str = gemini_gen_unit_str(_filelist_str)
-
-    _temperature    = minion_temperature( minion_obj, MINION_KP )
-    _config = gemini_gen_generationConfig(_temperature, is_reasoning)
-
-
-    if ( ! chat_str_is_null(promote_content))  USER_LATEST_QUESTION = promote_content
-    else USER_LATEST_QUESTION = question
-
-    _safe_setting   = gemini_gen_safe_setting_str()
-
-    _use_google_search = GEMINI_USE_GOOGLE_SEARCH
-    _tool_str       = gemini_gen_tool_str(creq_obj, creq_kp, _use_google_search)
+    _creq_minion_kp = creq_kp SUBSEP "\"minion\""
+    _system_str = minion_system_tostr(creq_obj, _creq_minion_kp)
+    if (_system_str != "") _system_str = gemini_gen_unit_str(_system_str)
 
     _media_str      = gemini_gen_media_str(creq_obj, creq_kp)
+    _content_str    = gemini_gen_minion_content_str( creq_obj, _creq_minion_kp, _media_str )
 
-    return "{" _safe_setting " \"contents\":[ " _history_str " {\"parts\":[ " promote_system_json " " _filelist_str " {\"text\": " jqu(USER_LATEST_QUESTION) "} " _media_str " ],\"role\":\"user\"}] " _config  _tool_str " }\n"
+    _messages_str   = "\"contents\":[" _history_str " {\"parts\":[ " _system_str _content_str " ],\"role\":\"user\"}]"
+    _use_gg_search  = GEMINI_USE_GOOGLE_SEARCH
+    _tool_str       = gemini_gen_tool_str(creq_obj, creq_kp, _use_gg_search)
+
+    creq_append_usage_input_ratio_SHO( creq_obj, creq_kp, _system_str, _history_str, _content_str _tool_str )
+    msgtool_obj[ "msg_str" ]  = _messages_str
+    msgtool_obj[ "tool_str" ] = _tool_str
+}
+
+function gemini_req_from_creq(creq_obj, creq_kp, chatid, session_dir,       msgtool_obj, last_msgtool_obj, cache_msg, cache_tool, _msgtool, _creq_minion_kp, _safe_setting, _config, _temperature){
+
+    gemini_gen_msgtool_from_creq(msgtool_obj, creq_obj, creq_kp, chatid, session_dir)
+    gemini_gen_last_msgtool_from_creq(last_msgtool_obj, creq_obj, creq_kp, chatid, session_dir)
+
+    cache_msg   = chat_cal_cached( msgtool_obj[ "msg_str" ], last_msgtool_obj[ "msg_str" ] )
+    cache_tool  = chat_cal_cached( msgtool_obj[ "tool_str" ], last_msgtool_obj[ "tool_str" ] )
+
+    _msgtool        = msgtool_obj[ "msg_str" ] msgtool_obj[ "tool_str" ]
+    creq_append_usage_input_ratio_cache( creq_obj, creq_kp, int(cache_msg + cache_tool), length( _msgtool ))
+
+    _creq_minion_kp = creq_kp SUBSEP "\"minion\""
+    _temperature    = minion_temperature( creq_obj, _creq_minion_kp )
+    _config         = gemini_gen_generationConfig(_temperature, creq_obj[ creq_kp, "\"is_reasoning\"" ] )
+    _safe_setting   = gemini_gen_safe_setting_str()
+    return "{" _safe_setting _msgtool _config " }"
 }
 
 # extract ...
-function gemini_res_to_cres(gemini_resp_o, cres_o, kp, o_tool, tool_kp,             v, resp_kp, resp_content_kp, usage_kp, usage_prompt_kp, usage_cand_kp, usage_total_kp){
-    kp = ((kp != "") ? kp : Q2_1)
-    cres_o[ kp ] = "{"
+function gemini_res_to_cres(gemini_resp_o, cres_obj, cres_kp, creq_obj, creq_kp, o_tool, tool_kp,
+    v, resp_kp, resp_content_kp, usage_kp, usage_prompt_kp, usage_cand_kp, usage_total_kp, usage_thought_kp, usage_cache_kp, cres_usage_kp, cres_input_kp, cres_output_kp, cres_total_kp ){
+    cres_kp = ((cres_kp != "") ? cres_kp : Q2_1)
+    cres_obj[ cres_kp ] = "{"
 
-    resp_kp = Q2_1 SUBSEP "\"candidates\"" SUBSEP "\"1\""
-    resp_content_kp = resp_kp SUBSEP "\"content\""
-    usage_kp = Q2_1 SUBSEP "\"usageMetadata\""
-    usage_prompt_kp = usage_kp SUBSEP "\"promptTokenCount\""
-    usage_cand_kp   = usage_kp SUBSEP "\"candidatesTokenCount\""
-    usage_total_kp  = usage_kp SUBSEP "\"totalTokenCount\""
-    usage_thought_kp  = usage_kp SUBSEP "\"thoughtsTokenCount\""
+    resp_kp             = Q2_1 SUBSEP "\"candidates\"" SUBSEP "\"1\""
+    resp_content_kp     = resp_kp SUBSEP "\"content\""
+    usage_kp            = Q2_1 SUBSEP "\"usageMetadata\""
+    usage_prompt_kp     = usage_kp SUBSEP "\"promptTokenCount\""
+    usage_cand_kp       = usage_kp SUBSEP "\"candidatesTokenCount\""
+    usage_total_kp      = usage_kp SUBSEP "\"totalTokenCount\""
+    usage_thought_kp    = usage_kp SUBSEP "\"thoughtsTokenCount\""
+    usage_cache_kp    = usage_kp SUBSEP "\"cachedContentTokenCount\""
 
-    jdict_put( cres_o, kp, "\"reply\"", "{" )
-    jdict_put( cres_o, kp SUBSEP "\"reply\"", "\"role\"", gemini_resp_o[ resp_content_kp SUBSEP "\"role\"" ] )
-    jdict_put( cres_o, kp SUBSEP "\"reply\"", "\"content\"", gemini_resp_o[ resp_content_kp SUBSEP "\"parts\"" SUBSEP "\"1\"" SUBSEP "\"text\"" ] )
+    jdict_put( cres_obj, cres_kp, "\"reply\"", "{" )
+    jdict_put( cres_obj, cres_kp SUBSEP "\"reply\"", "\"role\"", gemini_resp_o[ resp_content_kp SUBSEP "\"role\"" ] )
+    jdict_put( cres_obj, cres_kp SUBSEP "\"reply\"", "\"content\"", gemini_resp_o[ resp_content_kp SUBSEP "\"parts\"" SUBSEP "\"1\"" SUBSEP "\"text\"" ] )
     if ( o_tool[ tool_kp L ] > 0 ) {
-        jdict_put( cres_o, kp SUBSEP "\"reply\"", "\"tool_calls\"", "[" )
-        jmerge_force___value( cres_o, kp SUBSEP "\"reply\"" SUBSEP "\"tool_calls\"", o_tool, tool_kp )
+        jdict_put( cres_obj, cres_kp SUBSEP "\"reply\"", "\"tool_calls\"", "[" )
+        jmerge_force___value( cres_obj, cres_kp SUBSEP "\"reply\"" SUBSEP "\"tool_calls\"", o_tool, tool_kp )
     }
 
     if ( gemini_resp_o[ resp_content_kp SUBSEP "\"parts\"" SUBSEP "\"2\"" SUBSEP "\"thought\"" ] == "true" ) {
-        jdict_put( cres_o, kp SUBSEP "\"reply\"", "\"reasoning_content\"", gemini_resp_o[ resp_content_kp SUBSEP "\"parts\"" SUBSEP "\"2\"" SUBSEP "\"text\"" ] )
+        jdict_put( cres_obj, cres_kp SUBSEP "\"reply\"", "\"reasoning_content\"", gemini_resp_o[ resp_content_kp SUBSEP "\"parts\"" SUBSEP "\"2\"" SUBSEP "\"text\"" ] )
     }
 
     if ( (v = gemini_resp_o[ resp_kp SUBSEP "\"finishReason\"" ]) != "" )
-        jdict_put( cres_o, kp, "\"finishReason\"", v )
+        jdict_put( cres_obj, cres_kp, "\"finishReason\"", v )
     if ( (v = gemini_resp_o[ resp_kp SUBSEP "\"index\""  ])  != "" )
-        jdict_put( cres_o, kp, "\"index\"", v )
-
-    jdict_put( cres_o, kp, "\"usage\"", "{" )
-    if ( (v = gemini_resp_o[ usage_prompt_kp ]) != "" )
-        jdict_put( cres_o, kp SUBSEP "\"usage\"", "\"prompt_tokens\"", v )
-    if ( (v = gemini_resp_o[ usage_cand_kp ]) != "" )
-        jdict_put( cres_o, kp SUBSEP "\"usage\"", "\"completion_tokens\"", v )
-    if ( (v = gemini_resp_o[ usage_total_kp ]) != "" )
-        jdict_put( cres_o, kp SUBSEP "\"usage\"", "\"total_tokens\"", v )
-    if ( (v = gemini_resp_o[ usage_thought_kp ]) != "" )
-        jdict_put( cres_o, kp SUBSEP "\"usage\"", "\"thought_tokens\"", v )
+        jdict_put( cres_obj, cres_kp, "\"index\"", v )
 
     if ( (v = gemini_resp_o[ Q2_1 SUBSEP "\"modelVersion\"" ]) != "" )
-        jdict_put( cres_o, kp, "\"model\"", v )
+        jdict_put( cres_obj, cres_kp, "\"model\"", v )
+
+    # input output total
+    jdict_put( cres_obj, cres_kp, "\"raw_usage\"", "{" )
+    jmerge_force___value( cres_obj, cres_kp SUBSEP "\"raw_usage\"", gemini_resp_o, usage_kp )
+    jdict_put( cres_obj, cres_kp, "\"usage\"", "{" )
+    cres_usage_kp   = cres_kp SUBSEP "\"usage\""
+
+    jdict_put( cres_obj, cres_usage_kp, "\"input\"",    "{" )
+    cres_input_kp   = cres_usage_kp SUBSEP "\"input\""
+    jdict_put( cres_obj, cres_input_kp, "\"tokens\"",           int(gemini_resp_o[ usage_prompt_kp ] + gemini_resp_o[ usage_cache_kp ]) )
+    jdict_put( cres_obj, cres_input_kp, "\"cache_token\"",      int(gemini_resp_o[ usage_cache_kp ] ) )
+
+    jdict_put( cres_obj, cres_usage_kp, "\"output\"",   "{" )
+    cres_output_kp  = cres_usage_kp SUBSEP "\"output\""
+    jdict_put( cres_obj, cres_output_kp, "\"tokens\"",          int(gemini_resp_o[ usage_cand_kp ] + gemini_resp_o[ usage_thought_kp ]) )
+    jdict_put( cres_obj, cres_output_kp, "\"thought_tokens\"",  int(gemini_resp_o[ usage_thought_kp ]) )
+
+    jdict_put( cres_obj, cres_usage_kp, "\"total\"",    "{" )
+    cres_total_kp   = cres_usage_kp SUBSEP "\"total\""
+    jdict_put( cres_obj, cres_total_kp, "\"tokens\"",           int(gemini_resp_o[ usage_total_kp ]) )
+
+    # creq token ratio
+    usage_kp = creq_kp SUBSEP "\"usage\""
+    if ( creq_obj[ usage_kp ] == "{" ) jmerge_force___value( cres_obj, cres_kp SUBSEP "\"usage\"", creq_obj, usage_kp )
 }
 
 function gemini_parse_response(gemini_resp_o, ret_o,        _kp, str, code){
@@ -147,15 +184,16 @@ function gemini_gen_media_str(creq_obj, creq_kp,      _kp_media, i, l, _type, _u
         _url    = creq_obj[ _kp_key, "\"url\"" ]
         if ( _type == "\"image\"" ) {
             _type = "\"image_url\""
-            _type_msg = "image/" msg
+            _type_msg = "image/"
         }
 
         if ( _url != "" ) {
             _str    = _str ",{ \"inline_data\": { \"mime_type\": "_type", \"data\" : "jqu(_url)" } }"
         } else {
-            _msg    = _type_msg juq(creq_obj[ _kp_key, "\"msg\"" ])
             _base64 = juq(creq_obj[ _kp_key, "\"base64\"" ])
-            _str    = _str ",{ \"inline_data\": { \"mime_type\": "jqu(_type_msg)", \"data\" : "jqu(_base64)" } }"
+            _msg    = juq(creq_obj[ _kp_key, "\"msg\"" ])
+            _msg    = _type_msg _msg
+            _str    = _str ",{ \"inline_data\": { \"mime_type\": "jqu(_msg)", \"data\" : "jqu(_base64)" } }"
         }
 
     }

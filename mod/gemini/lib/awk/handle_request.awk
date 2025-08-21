@@ -2,13 +2,14 @@
 
 
 BEGIN{
-
+    PROVIDER_NAME     = "gemini"
     CHATID            = ENVIRON[ "chatid" ]
     MINION_JSON_CACHE = ENVIRON[ "minion_json_cache" ]
     SESSIONDIR        = ENVIRON[ "XCMD_CHAT_SESSION_DIR" ]
     QUESTION          = ""
     IMAGELIST         = ""
     IS_IMAGE_DATA     = 0
+    # IS_REASONING
 
     Q2_1               = SUBSEP "\"1\""
     MINION_KP          = Q2_1
@@ -26,24 +27,18 @@ BEGIN{
 
 END{
     minion_load_from_jsonfile( minion_obj, MINION_KP, MINION_JSON_CACHE , "gemini")
-    TYPE                = minion_type( minion_obj, MINION_KP )
     MODEL               = minion_model( minion_obj, MINION_KP )
-    HISTORY_NUM         = minion_history_num( minion_obj, MINION_KP )
-    TOOL_JSTR           = minion_tool_jstr( minion_obj, MINION_KP )
+    IS_STREAM           = minion_is_stream( minion_obj, MINION_KP, MODEL )
     IS_REASONING        = minion_is_reasoning( minion_obj, MINION_KP )
     mkdirp( SESSIONDIR "/" CHATID )
 
-    chat_history_load( history_obj, SESSIONDIR, HISTORY_NUM, CHATID)
+    creq_create( creq_obj, SUBSEP "creq", minion_obj, MINION_KP, PROVIDER_NAME, MODEL, QUESTION, CHATID, IMAGELIST, IS_STREAM, IS_REASONING )
+    gemini_request_body_json            = gemini_req_from_creq( creq_obj, SUBSEP "creq", CHATID, SESSIONDIR )    # Notice: it's must before creq_create
 
-    creq_create( creq_obj, minion_obj, MINION_KP,     TYPE, MODEL, QUESTION, CHATID, HISTORY_NUM, IMAGELIST, TOOL_JSTR)
-    chat_request_json                   = chat_str_replaceall( creq_dump( creq_obj))
-
-    gemini_request_body_json            = gemini_req_from_creq( history_obj, minion_obj,  QUESTION, creq_obj, CREQ_KP, IS_REASONING)    # Notice: it's must before creq_create
-    gemini_request_body_json            = chat_str_replaceall(  gemini_request_body_json)
-
-
+    chat_request_json                   = chat_str_replaceall( creq_dump( creq_obj, SUBSEP "creq"))
     print chat_request_json             > (SESSIONDIR "/" CHATID "/chat.request.yml")
 
+    gemini_request_body_json            = chat_str_replaceall(  gemini_request_body_json)
     print gemini_request_body_json      > (SESSIONDIR "/" CHATID "/gemini.request.body.yml")
 
     print SESSIONDIR "/" CHATID

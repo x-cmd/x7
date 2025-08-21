@@ -22,7 +22,7 @@ function cres_dump( o, _kp ){
 }
 
 
-function cres_load( o,  jsonstr,      _arrl, _arr, i ){
+function cres_load( o, jsonstr,      _arrl, _arr, i ){
     _arrl = json_split2tokenarr( _arr, jsonstr )
     for (i=1; i<=_arrl; ++i) {
         jiparse( o, _arr[i] )
@@ -41,7 +41,7 @@ function cres_loadfromjsonfile( o, kp, fp ){
 function cres_dump_usage(o, kp,           kp_usage, total_token, obj_usage ){
     kp_usage = kp  SUBSEP "\"usage\""
     if ( o[ kp_usage ] != "{" ) return
-    total_token       = int( o[ kp_usage SUBSEP "\"total_tokens\"" ] )
+    total_token       = int( o[ kp_usage SUBSEP "\"total\"" SUBSEP "\"tokens\"" ] )
     if ( total_token <= 0 ) return
 
     jlist_put(obj_usage, "", "{" )
