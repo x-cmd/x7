@@ -17,14 +17,14 @@ ___x_cmd_mac_sb___exec(){ (
     (
         ___x_cmd_cmds sleep 0.3
         read -r pid <"$tmpfile"
-        mac:info "The sb pid is -> $pid"
+        mac:info "sandbox exec PID -> $pid"
         # ___x_cmd_cmds log stream --style compact --predicate "processID == $pid AND sender == \"Sandbox\""  >"$tmpfile"
         exec log stream --style compact --predicate "sender == \"Sandbox\" AND message CONTAINS \"($pid)\""  >"$tmpfile"
     ) &
 
     local logpid=$!
 
-    mac:info "The log pid is -> $logpid"
+    mac:info "log collector PID -> $logpid"
 
     (
         trap 'kill -s INT "$logpid" || kill -9 "$logpid"' EXIT
@@ -36,13 +36,15 @@ ___x_cmd_mac_sb___exec(){ (
     )
     local errcode=$?
 
-    [ "$tracemode" != "--debug" ] || {
+    [ "$tracemode" != "-" ] || {
 
         printf "\n\n%s\n"       "----------------------"
         ___x_cmd_cmds cat "$tmpfile">&2
         printf "\n%s\n\n"       "----------------------"
         ___x_cmd rmrf "$tmpfile"
     }
+
+    mac:info "Exit Code -> $errcode"
 
     return $errcode
 ) }

@@ -85,7 +85,7 @@ function handle_content_md(arr){
     hd_main( arr )
 }
 
-function handle_usage(str,          o, kp_usage, total_token, at, it, ot, ict, icr, ott, otr, _cache_str, _thought_str, isr, ihr, ior, detail_str){
+function handle_usage(str,          o, kp_usage, total_token, at, it, ot, ict, icr, ott, otr, _cache_str, _thought_str, isr, ihr, ior, detail_str, model, provider, PRICE_DATA_DIR, price_data_file, usd_rate_file, currency, llmp_obj, ccy_obj, llmp_it, llmp_model, totalprice, amount, _amount_str) {
     if ( str == "" ) return
     jiparse_after_tokenize(o, str)
     kp_usage = Q2_1 SUBSEP "\"usage\""
@@ -107,7 +107,23 @@ function handle_usage(str,          o, kp_usage, total_token, at, it, ot, ict, i
     ihr = o[ kp_usage SUBSEP "\"input\"" SUBSEP "\"ratio\"" SUBSEP "\"history\"" ]
     ior = o[ kp_usage SUBSEP "\"input\"" SUBSEP "\"ratio\"" SUBSEP "\"other\"" ]
 
-    detail_str = sprintf("Token usage %s = Input %s + Output %s", at, it _cache_str, ot _thought_str ) "\n" \
+    model = o[ Q2_1 SUBSEP "\"model\"" ]
+    provider = o[ Q2_1 SUBSEP "\"provider\"" ]
+    PRICE_DATA_DIR = ENVIRON[ "___X_CMD_PRICE_DATA_DIR" ]
+    price_data_file = PRICE_DATA_DIR "/" juq(provider) "/latest.json"
+    usd_rate_file = PRICE_DATA_DIR "/usd-rate.json"
+    currency = "USD"
+    if ( jiparse2leaf_fromfile( llmp_obj, Q2_1, price_data_file ) && jiparse2leaf_fromfile( ccy_obj, "ccykp", usd_rate_file )  ) {
+        llmp_model = llmp_search_model( llmp_obj, Q2_1, model )
+        llmp_it = it - ict
+        if ( llmp_model != "" ) {
+            totalprice = llmp_total_calprice( llmp_obj, Q2_1, llmp_model, llmp_it, ict, ot )
+            amount = llmp_amount_calccy( ccy_obj, Q2_1, currency, totalprice )
+            _amount_str = "· Cost: " llmp_format_ccy( amount, currency )
+        }
+    }
+
+    detail_str = sprintf("Token: %s = Input %s + Output %s %s", at, it _cache_str, ot _thought_str, _amount_str ) "\n" \
         sprintf("Input distribution → Sys %s | Hist %s | Other %s",  isr * 100 "%", ihr * 100 "%", ior * 100 "%")
     print "\033[90m" detail_str "\033[0m"
 }

@@ -5,6 +5,8 @@ BEGIN{
     MINION_JSON_CACHE   = ENVIRON[ "minion_json_cache" ]
     def_model           = ENVIRON[ "def_model" ]
     SESSIONDIR          = ENVIRON[ "XCMD_CHAT_SESSION_DIR" ]
+    HIST_SESSIONDIR     = ENVIRON[ "XCMD_CHAT_HISTORY_SESSION_DIR" ]
+    HIST_SESSIONDIR     = ( HIST_SESSIONDIR != "" ) ? HIST_SESSIONDIR : SESSIONDIR
     QUESTION            = ""
     IMAGELIST           = ""
     Q2_1                = SUBSEP "\"1\""
@@ -27,13 +29,11 @@ END{
     mkdirp( SESSIONDIR "/" CHATID )
 
     creq_create( creq_obj, SUBSEP "creq", minion_obj, MINION_KP, PROVIDER_NAME, MODEL, QUESTION, CHATID, IMAGELIST, IS_STREAM, IS_REASONING )
-    openai_request_body_json            = openai_req_from_creq( creq_obj, SUBSEP "creq", CHATID, SESSIONDIR )
 
-    chat_request_json                   = chat_str_replaceall( creq_dump( creq_obj, SUBSEP "creq" ) )
-    print chat_request_json             > (SESSIONDIR "/" CHATID "/chat.request.yml")
-
-    openai_request_body_json            = chat_str_replaceall( openai_request_body_json )
+    openai_request_body_json            = openai_req_from_creq( creq_obj, SUBSEP "creq", CHATID, HIST_SESSIONDIR )
     print openai_request_body_json      > (SESSIONDIR "/" CHATID "/" PROVIDER_NAME ".request.body.yml")
+    chat_request_json                   = creq_dump( creq_obj, SUBSEP "creq" )
+    print chat_request_json             > (SESSIONDIR "/" CHATID "/chat.request.yml")
 
     print SESSIONDIR "/" CHATID
     print MODEL

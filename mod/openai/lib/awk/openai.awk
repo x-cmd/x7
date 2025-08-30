@@ -9,12 +9,11 @@ function openai_gen_unit_str( role, content ){
     return "{ \"role\": " role ", \"content\": " content " }"
 }
 
-function openai_gen_history_str( history_obj, chatid, i,        _text_req, _text_res, _text_tool, _text_finishReason, _res ){
+function openai_gen_history_str( history_obj, chatid, i,        _text_req, _text_res, _text_tool, _res ){
     _text_req = chat_history_get_req_text(history_obj, chatid, i)
     _text_res = chat_history_get_res_text(history_obj, chatid, i)
     _text_tool = chat_history_get_res_tool_call(history_obj, chatid, i)
-    _text_finishReason = chat_history_get_finishReason(history_obj, chatid, i)
-    if( (_text_finishReason !~ "(STOP|stop|tool_calls)") || (_text_req =="") ||(_text_res == "")) return
+    if (_text_req =="") return
 
     _res = openai_gen_unit_str( "user", _text_req )
     if ( ! chat_str_is_null( _text_res ) ) {
@@ -27,18 +26,20 @@ function openai_gen_history_str( history_obj, chatid, i,        _text_req, _text
     return _res
 }
 
-function openai_gen_minion_content_str(minion_obj, minion_kp, media_str,      context, example, content){
+function openai_gen_minion_content_str(minion_obj, minion_kp, media_str,      context, example, content, str){
     context = minion_prompt_context(minion_obj, minion_kp)
     context = ( context != "" ) ? context JOINSEP : ""
 
     example = minion_example_tostr(minion_obj, minion_kp)
     content = minion_prompt_content(minion_obj, minion_kp)
-    content = context example content
+    str = context example content
+    str = str_trim(str)
+    if ( str == "" ) str = "null"
 
     if( media_str != "" ){
-        return "{ \"role\": \"user\", \"content\": [ { \"type\": \"text\", \"text\": " jqu(content) " } " media_str " ] }"
+        return "{ \"role\": \"user\", \"content\": [ { \"type\": \"text\", \"text\": " jqu(str) " } " media_str " ] }"
     }
-    return openai_gen_unit_str( "user", content )
+    return openai_gen_unit_str( "user", str )
 
 }
 
@@ -94,21 +95,20 @@ function openai_gen_tool_function_str( creq_obj, creq_kp,           i, l, _kp_to
 
     return _res
 }
-function openai_gen_last_msgtool_from_creq( msgtool_obj, creq_obj, creq_kp, chatid, session_dir,             provider, last_chatid, last_creq_obj, last_creq_kp ){
-    provider = juq(creq_obj[ creq_kp, "\"provider\"" ])
-    last_chatid = chat_history_get_last_chatid(session_dir, provider, chatid)
+function openai_gen_last_msgtool_from_creq( current_msgtool_obj, msgtool_obj, chatid, hist_session_dir,             provider, last_chatid, last_creq_obj, last_creq_kp ){
+    last_chatid = chat_history_get_last_chatid(hist_session_dir, juq(current_msgtool_obj[ "provider" ]), chatid)
     if ( last_chatid == "" ) return
     last_creq_kp = SUBSEP "last-creq"
-    chat_history_get_last_creq( last_creq_obj, last_creq_kp, session_dir, provider, chatid, last_chatid )
-
-    return openai_gen_msgtool_from_creq( msgtool_obj, last_creq_obj, last_creq_kp, last_chatid, session_dir, true )
+    chat_history_get_last_creq( last_creq_obj, last_creq_kp, hist_session_dir, provider, chatid, last_chatid )
+    if ( (current_msgtool_obj[ "provider" ] != last_creq_obj[ last_creq_kp, "\"provider\"" ]) || (current_msgtool_obj[ "model" ] != last_creq_obj[ last_creq_kp, "\"model\"" ]) ) return
+    return openai_gen_msgtool_from_creq( msgtool_obj, last_creq_obj, last_creq_kp, last_chatid, hist_session_dir )
 }
 
-function openai_gen_msgtool_from_creq( msgtool_obj, creq_obj, creq_kp, chatid, session_dir, history_form_startpoint,                  history_obj, history_num, i, l, str, \
+function openai_gen_msgtool_from_creq( msgtool_obj, creq_obj, creq_kp, chatid, hist_session_dir,                  history_obj, history_num, i, l, str, \
     _history_str, _creq_minion_kp, _system_str, _media_str, _content_str, _messages_str, _tool_str){
 
     history_num = creq_obj[ creq_kp S "\"history_num\"" ]
-    chat_history_load( history_obj, chatid, session_dir, history_num)
+    chat_history_load( history_obj, chatid, hist_session_dir, history_num )
     l = chat_history_get_maxnum(history_obj, chatid)
     for (i=1; i<=l; ++i){
         str = openai_gen_history_str(history_obj, chatid, i)
@@ -133,17 +133,18 @@ function openai_gen_msgtool_from_creq( msgtool_obj, creq_obj, creq_kp, chatid, s
 
     msgtool_obj[ "msg_str" ]  = _messages_str
     msgtool_obj[ "tool_str" ] = _tool_str
+    msgtool_obj[ "provider" ] = creq_obj[ creq_kp, "\"provider\"" ]
+    msgtool_obj[ "model" ]    = creq_obj[ creq_kp, "\"model\"" ]
 }
 
-function openai_req_from_creq(creq_obj, creq_kp, chatid, session_dir,
+function openai_req_from_creq(creq_obj, creq_kp, chatid, hist_session_dir,
     msgtool_obj, last_msgtool_obj, cache_msg, cache_tool, _msgtool, _mode, _maxtoken_keyname, _maxtoken, _seed, _temperature, _jsonmode, _ctx, is_stream, _data_str, _stream_str, _reason_eddort){
-    openai_gen_msgtool_from_creq(msgtool_obj, creq_obj, creq_kp, chatid, session_dir)
-    openai_gen_last_msgtool_from_creq(last_msgtool_obj, creq_obj, creq_kp, chatid, session_dir)
+    openai_gen_msgtool_from_creq(msgtool_obj, creq_obj, creq_kp, chatid, hist_session_dir)
+    openai_gen_last_msgtool_from_creq(msgtool_obj, last_msgtool_obj, chatid, hist_session_dir)
+    _msgtool    = msgtool_obj[ "msg_str" ] msgtool_obj[ "tool_str" ]
 
     cache_msg   = chat_cal_cached( msgtool_obj[ "msg_str" ], last_msgtool_obj[ "msg_str" ] )
     cache_tool  = chat_cal_cached( msgtool_obj[ "tool_str" ], last_msgtool_obj[ "tool_str" ] )
-
-    _msgtool        = msgtool_obj[ "msg_str" ] msgtool_obj[ "tool_str" ]
     creq_append_usage_input_ratio_cache( creq_obj, creq_kp, int(cache_msg + cache_tool), length( _msgtool ))
 
     _creq_minion_kp = creq_kp SUBSEP "\"minion\""
@@ -153,7 +154,7 @@ function openai_req_from_creq(creq_obj, creq_kp, chatid, session_dir,
     _temperature    = minion_temperature( creq_obj, _creq_minion_kp )
     _jsonmode       = minion_is_jsonmode( creq_obj, _creq_minion_kp )
     _ctx            = minion_ctx( creq_obj, _creq_minion_kp )
-    is_stream       = minion_is_stream( creq_obj, _creq_minion_kp, _mode )
+    is_stream       = minion_is_stream( creq_obj, _creq_minion_kp, juq(_mode) )
 
     # Tip:
     #   in some case, _maxtoken is 0, but it is not a valid value for openai.
@@ -259,6 +260,8 @@ function openai_res_to_cres(openai_resp_o, cres_obj, cres_kp, creq_obj, creq_kp,
     # creq token ratio
     usage_kp        = creq_kp SUBSEP "\"usage\""
     if ( creq_obj[ usage_kp ] == "{" ) jmerge_force___value( cres_obj, cres_kp SUBSEP "\"usage\"", creq_obj, usage_kp )
+
+    jdict_put( cres_obj, cres_kp, "\"provider\"", creq_obj[ creq_kp, "\"provider\"" ]  )
 }
 
 function openai_res_to_cres___ollama_format(ollama_resp_o, cres_obj, cres_kp,          resp_kp){

@@ -5,7 +5,7 @@ ___x_cmd_lsof_fz(){
     local op="$1"
     case "$op" in
         -h|--help)      ___x_cmd help -m lsof fz "$@"; return ;;
-        --task)         task=yes; shift ;;
+        --task)         task=yes ;;
     esac
 
     {

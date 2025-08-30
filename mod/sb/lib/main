@@ -1,7 +1,7 @@
 # shellcheck shell=dash
 
 ___x_cmd log init sb
-xrc:mod:lib     sb   run    airrun  editrun
+xrc:mod:lib     sb   run    airrun  editrun landrun stdiorun
 
 
 # x plg jq      # very detailed control
@@ -20,6 +20,7 @@ ___x_cmd_sb___main(){
 
         airrun)         ___x_cmd_sb_airrun      "$@"    ;;
         editrun)        ___x_cmd_sb_editrun     "$@"    ;;
+        stdiorun)       ___x_cmd_sb_stdiorun    "$@"    ;;
                         # only allow reading/writing in the current workdir
 
         # Auto ...

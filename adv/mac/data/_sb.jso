@@ -198,11 +198,11 @@
 {
 "cn"
 :
-"允许所有目录文件系统访问 (x-allowfs \"/\")"
+"允许所有目录文件系统访问 (x-allow-rwx \"/\")"
 ,
 "en"
 :
-"Allow all filesystem access (x-allowfs \"/\")"
+"Allow all filesystem access (x-allow-rwx \"/\")"
 }
 }
 ,
@@ -482,11 +482,11 @@
 {
 "cn"
 :
-"允许网络访问 (x-allow-network)"
+"允许网络访问 (x-allow-net)"
 ,
 "en"
 :
-"Allow network access (x-allow-network)"
+"Allow network access (x-allow-net)"
 }
 }
 ,
@@ -498,11 +498,11 @@
 {
 "cn"
 :
-"拒绝网络访问 (x-deny-network)"
+"拒绝网络访问 (x-deny-net)"
 ,
 "en"
 :
-"Deny network access (x-deny-network)"
+"Deny network access (x-deny-net)"
 }
 }
 ,
@@ -514,11 +514,11 @@
 {
 "cn"
 :
-"允许根目录文件系统访问 (x-allowfs \"/\")"
+"允许根目录文件系统访问 (x-allow-rwx \"/\")"
 ,
 "en"
 :
-"Allow root filesystem access (x-allowfs \"/\")"
+"Allow root filesystem access (x-allow-rwx \"/\")"
 }
 }
 ,
@@ -546,11 +546,11 @@
 {
 "cn"
 :
-"允许对文件或路径进行操作。格式：`[rwux]:[f|d|p]:路径`。`r`读, `w`写, `u`删除, `x`执行。`f`特定文件, `d`目录及子目录, `p`文件或子目录(默认)。例如：`r:/path/to/file` (读文件), `w:/path/to/dir` (写目录), `x:/bin/bash` (执行), `d:/tmp` (目录及子目录), `f:/etc/hosts` (特定文件)\n"
+"允许对文件或路径进行操作。格式：`[rwx]:路径`。`r`读, `w`写, `x`执行。`p`文件或子目录(默认)。例如：`r:/path/to/file` (读文件), `w:/path/to/dir` (写目录), `x:/bin/bash` (执行), `d:/tmp` (目录及子目录), `f:/etc/hosts` (特定文件)\n"
 ,
 "en"
 :
-"Allow operations on a file or path. Format: `[rwux]:[f|d|p]:path`. `r`ead, `w`rite, `u`nlink, `x`ecute. `f`ile literal, `d`irectory subpath, `p`ath literal or subpath (default). E.g., `r:/path/to/file` (read file), `w:/path/to/dir` (write directory), `x:/bin/bash` (execute), `d:/tmp` (directory and subpaths), `f:/etc/hosts` (literal file)\n"
+"Allow operations on a file or path. Format: `[rwx]:path`. `r` read, `w` write, `x` execute. `p` file or subdirectory (default). For example: `r:/path/to/file` (read file), `w:/path/to/dir` (write directory), `x:/bin/bash` (execute), `d:/tmp` (directory and subdirectories), `f:/etc/hosts` (specific file)\n"
 }
 ,
 "##1"
@@ -590,11 +590,11 @@
 {
 "cn"
 :
-"权限和路径，例如 `rwx:/path/to/file` 或 `d:/path/to/dir`"
+"权限和路径，例如 `rwx:/path/to/file` 或 `/path/to/dir`"
 ,
 "en"
 :
-"Permissions and path, e.g., `rwx:/path/to/file` or `d:/path/to/dir`"
+"Permissions and path, e.g., `rwx:/path/to/file` or `/path/to/dir`"
 ,
 "#exec"
 :

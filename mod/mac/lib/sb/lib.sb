@@ -72,8 +72,8 @@
 )
 
 ;; TODO: reconsider in the future
-( define ( x-allow-userconfig )
-  ( x-allowfs
+( define ( x-homeconfig op )
+  ( x-rwx op
     ( x-home ".local" )
     ( x-home ".bun"   )
     ( x-home ".deno"  )
@@ -82,45 +82,35 @@
   )
 )
 
-( define ( x-allow-home )
-  ( x-allowfs HOME )
-  ;; with protection for some important ...
-)
-
-( define ( x-allow-home-bin )
-  ( begin
-    ( allow file-read* process* file-test-existence
-      ( subpath
-        ( x-home  ".bun/bin" )
-        ( x-home  ".npm/bin" )
-        ( x-home  ".deno/bin" )
-      )
-
-      ( subpath
-        ( x-home  "go/bin" )
-        ( x-home  ".local/bin" )
-        ( x-home  ".cargo/bin" )
-      )
+( define ( x-homebin op )
+  ( op  process*   file-read*  file-test-existence
+    ( subpath
+      ( x-home  ".bun/bin" )
+      ( x-home  ".npm/bin" )
+      ( x-home  ".deno/bin" )
+    )
+    ( subpath
+      ( x-home  "go/bin" )
+      ( x-home  ".local/bin" )
+      ( x-home  ".cargo/bin" )
     )
   )
 )
 
-( define ( x-allow-sys-bin )
-  ( begin
-    ( allow process* file-read* file-test-existence
-      ( subpath
-          "/bin"                "/sbin"
-          "/usr/bin"            "/usr/sbin"
-          "/usr/local/bin"      "/usr/local/sbin"
-          "/Library/Developer/CommandLineTools/"
-          "/opt/homebrew/bin"  "/opt/homebrew/sbin" "/opt/homebrew/Cellar"
-      )
+( define ( x-sysbin op )
+  ( op  process*   file-read*  file-test-existence
+    ( subpath
+        "/bin"                "/sbin"
+        "/usr/bin"            "/usr/sbin"
+        "/usr/local/bin"      "/usr/local/sbin"
+        "/Library/Developer/CommandLineTools/"
+        "/opt/homebrew/bin"  "/opt/homebrew/sbin" "/opt/homebrew/Cellar"
     )
   )
 )
 
-( define ( x-allow-tmpfs )
-  ( allow file-read* file-write* ;; file-unlink
+( define ( x-tmpfs op )
+  ( op file-read* file-write* ;; file-unlink
     ( subpath
         "/private/tmp"          "/tmp"
         "/private/var/tmp"      "/var/tmp"
@@ -129,15 +119,15 @@
   )
 )
 
-( define ( x-allow-basic-x-cmd-root )
+( define ( x-x-cmd-root op )
   ( begin
-    ( allow file-read* file-write* ;; file-unlink
+    ( op            file-read* file-test-existence  file-write*   file-ioctl
         ( subpath
-          ___X_CMD_ROOT
+            ___X_CMD_ROOT
         )
     )
-    ( allow process* file-read* file-write*
-        (   subpath
+    ( op process*   file-read* file-test-existence  file-write*
+        ( subpath
             ___X_CMD_ROOT_BIN
             ( x-cmd-root "local/data" )
         )
@@ -145,19 +135,50 @@
   )
 )
 
-( define ( x-allow-network )    ( allow network* ) )
-( define ( x-deny-network )     ( deny  network* ) )
+( define ( x-net    op )          ( op network* ) )
 
-( define ( x-allow-fs )         ( allow   process* file* ( subpath "/" ) ( literal "/" ) ) )
-( define ( x-deny-fs )          ( deny    process* file* ( subpath "/" ) ( literal "/" ) ) )
+( define ( x-fork   op )          ( op process-fork ) )
 
-( define ( x-allow-fork )       ( allow process-fork ) )
-( define ( x-deny-fork )        ( deny  process-fork ) )
+( define ( x-r      op fp )
+  ( when ( eq? op allow )         ( op          file-read* file-test-existence                              ( literal fp )  ( subpath fp ) ) )
+  ( when ( eq? op deny  )         ( op          file-read*                                                  ( literal fp )  ( subpath fp ) ) )
+)
 
-( define ( x-allowfs fp )       ( deny process* file*   ( literal fp )  ( subpath fp ) ) )
-( define ( x-denyfs fp )        ( deny process* file*   ( literal fp )  ( subpath fp ) ) )
+( define ( x-w      op fp )
+  ( when ( eq? op allow )         ( op                     file-test-existence  file-write*                 ( literal fp )  ( subpath fp ) ) )
+  ( when ( eq? op deny  )         ( op                                          file-write*                 ( literal fp )  ( subpath fp ) ) )
+)
 
-( define ( x-allow-allrx  )     ( allow process* file-read*  file-ioctl file-test-existence ( literal "/" )  ( subpath "/" ) ) )
+( define ( x-x      op fp )
+  ( when ( eq? op allow )         ( op process*                                                             ( literal fp )  ( subpath fp ) ) )
+  ( when ( eq? op deny  )         ( op process*                                                             ( literal fp )  ( subpath fp ) ) )
+)
+
+( define ( x-rx     op fp )
+  ( when ( eq? op allow )         ( op process* file-read* file-test-existence                              ( literal fp )  ( subpath fp ) ) )
+  ( when ( eq? op deny  )         ( op process* file-read*                                                  ( literal fp )  ( subpath fp ) ) )
+)
+
+( define ( x-rw     op fp )
+  ( when ( eq? op allow )         ( op          file-read* file-test-existence  file-write*                 ( literal fp )  ( subpath fp ) ) )
+  ( when ( eq? op deny  )         ( op          file-read*                      file-write*                 ( literal fp )  ( subpath fp ) ) )
+)
+
+( define ( x-wx     op fp )
+  ( when ( eq? op allow )         ( op process*            file-test-existence  file-write*                 ( literal fp )  ( subpath fp ) ) )
+  ( when ( eq? op deny )          ( op process*                                 file-write*                 ( literal fp )  ( subpath fp ) ) )
+)
+
+( define ( x-rwx    op fp )
+  ( when ( eq? op allow )         ( op process* file-read* file-test-existence  file-write*  file*          ( literal fp )  ( subpath fp ) ) )
+  ( when ( eq? op deny  )         ( op process* file-read*                      file-write*  file*          ( literal fp )  ( subpath fp ) ) )
+)
+
+( define ( x-e    op fp )         ( op                     file-test-existence                              ( literal fp )  ( subpath fp ) ) )
+( define ( x-ioctl    op fp )     ( op                     file-ioctl                                       ( literal fp )  ( subpath fp ) ) )
+
+( define ( x-allrx  op )          ( x-rx   op "/" ) )
+( define ( x-root   op )          ( x-rwx  op "/" ) )
 
 ( define ( x-forbid-privacy fp )
   ( begin
@@ -167,39 +188,24 @@
   )
 )
 
-( define ( x-allow-tty )      ( allow file-read* file-write* file-ioctl ( literal "/dev/tty"  ) ( prefix  "/dev/ttys" )) )
-( define ( x-deny-tty )       ( deny  file-read* file-write* file-ioctl ( literal "/dev/tty"  ) ( prefix  "/dev/ttys" )) )
+( define ( x-tty  op )   ( op file-read* file-write* file-ioctl ( literal "/dev/tty"  ) ( prefix  "/dev/ttys" )) )
 
-( define ( x-allow-dev0 )
+( define ( x-dev0 op )
   ( begin
-    ( allow file-read* file-write* file-ioctl
+    ( op    file-read* file-test-existence  file-write*   file-ioctl
         ( literal "/dev/zero" )
         ( literal "/dev/null" )
     )
 
-    ( allow file-read*
+    ( op    file-read* file-test-existence
         ( literal "/dev/random"  )
         ( literal "/dev/urandom" )
     )
   )
 )
 
-( define ( x-deny-dev0 )
-  ( begin
-    ( deny file-read* file-write* file-ioctl
-        ( literal "/dev/zero" )
-        ( literal "/dev/null" )
-    )
-
-    ( deny file-read*
-        ( literal "/dev/random"  )
-        ( literal "/dev/urandom" )
-    )
-  )
-)
-
-( define ( x-allow-time )
-  ( allow file-read*
+( define ( x-time op )
+  ( op    file-read* file-test-existence
     ( subpath "/private/var/db/timezone" )
     ( subpath "/usr/share/zoneinfo" )
     ( subpath "/usr/share/zoneinfo.default" )
@@ -207,9 +213,9 @@
   )
 )
 
-( define ( x-allow-sysctl0 )
+( define ( x-sysctl0 op )
   ( begin
-    ( allow sysctl-read
+    ( op  sysctl-read
         ( sysctl-name-prefix "hw.perflevel" )
         ( sysctl-name        "sysctl.proc_cputype" )
         ( sysctl-name
@@ -282,71 +288,20 @@
   )
 )
 
-( define ( x-allow-font-access )
+( define ( x-font-access op )
   ( begin
-    ( allow file-read-data file-read-xattr
+    ( op file-read-data file-test-existence file-read-xattr
         (   subpath
             "/Library/Fonts"
             "/System/Library/Fonts"
             ( x-home "Library/Fonts" )
         )
     )
-    ( allow mach-lookup
+    ( op mach-lookup
       ( global-name "com.apple.fonts" )
       ( global-name "com.apple.FontObjectsServer" )
     )
 
-    ( allow file-read* ( extension "com.apple.app-sandbox.read" ) )
+    ( op file-read* ( extension "com.apple.app-sandbox.read" ) )
   )
 )
-
-;; can run /bin/echo hi at least
-( define ( x-ruleset-1 ) ( begin   ( allow default )
-    ( x-init )
-    ( x-allow-sys-bin )
-) )
-
-
-;; can run ?????
-( define ( x-ruleset-2 ) ( begin   ( x-ruleset-1 )
-    ( x-allow-tmpfs )
-    ( x-allow-dev0 )
-    ( x-allow-sysctl0 )
-    ( x-allow-home-bin )
-) )
-
-;; can run bash -c ...
-( define ( x-ruleset-3 ) ( begin   ( x-ruleset-2 )
-    ( x-allow-time )
-) )
-
-;; can run ??? ... most tui tools
-( define ( x-ruleset-4 ) ( begin   ( x-ruleset-3 )
-    ( x-allow-fork )
-    ( x-allow-tty )
-) )
-
-;; can run bash/zsh -i: with fork support ...
-;; can run x-cmd
-( define ( x-ruleset-5 ) ( begin   ( x-ruleset-4 )
-    ( x-allow-basic-x-cmd-root )
-) )
-
-;; APP: terminal app
-( define ( x-ruleset-6 ) ( begin   ( x-ruleset-5 )
-    ( x-allow-font-access )
-) )
-
-
-;; APP: firefox/chrome ...
-( define ( x-ruleset-7 ) ( begin   ( x-ruleset-6 )
-    ( x-allow-network )
-    ;;
-) )
-
-;; APP: ???
-( define ( x-ruleset-8 ) ( begin   ( x-ruleset-7 )
-) )
-
-
-

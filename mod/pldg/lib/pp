@@ -1,26 +1,29 @@
 
 ___x_cmd_pldg_pp(){
-    pldg:info "Policy enabled as below"
-    [ -z "$stdio"       ] || printf "  - %s\n"  stdio
-    [ -z "$rpath"       ] || printf "  - %s\n"  rpath
-    [ -z "$wpath"       ] || printf "  - %s\n"  wpath
-    [ -z "$cpath"       ] || printf "  - %s\n"  cpath
-    [ -z "$dpath"       ] || printf "  - %s\n"  dpath
-    [ -z "$chown"       ] || printf "  - %s\n"  chown
-    [ -z "$flock"       ] || printf "  - %s\n"  flock
-    [ -z "$tty"         ] || printf "  - %s\n"  tty
-    [ -z "$recvfd"      ] || printf "  - %s\n"  recvfd
-    [ -z "$sendfd"      ] || printf "  - %s\n"  sendfd
-    [ -z "$fattr"       ] || printf "  - %s\n"  fattr
-    [ -z "$inet"        ] || printf "  - %s\n"  inet
-    [ -z "$unix"        ] || printf "  - %s\n"  unix
-    [ -z "$id"          ] || printf "  - %s\n"  id
-    [ -z "$dns"         ] || printf "  - %s\n"  dns
-    [ -z "$proc"        ] || printf "  - %s\n"  proc
-    [ -z "$exec"        ] || printf "  - %s\n"  exec
-    [ -z "$prot_exec"   ] || printf "  - %s\n"  prot_exec
-    [ -z "$vminfo"      ] || printf "  - %s\n"  vminfo
-    [ -z "$tmppath"     ] || printf "  - %s\n"  tmppath
+    local feature_info=""
+
+    [ -z "$stdio"       ] || feature_info="${feature_info} stdio"
+    [ -z "$rpath"       ] || feature_info="${feature_info} rpath"
+    [ -z "$wpath"       ] || feature_info="${feature_info} wpath"
+    [ -z "$cpath"       ] || feature_info="${feature_info} cpath"
+    [ -z "$dpath"       ] || feature_info="${feature_info} dpat"
+    [ -z "$chown"       ] || feature_info="${feature_info} chown"
+    [ -z "$flock"       ] || feature_info="${feature_info} flock"
+    [ -z "$tty"         ] || feature_info="${feature_info} tty"
+    [ -z "$recvfd"      ] || feature_info="${feature_info} recvfd"
+    [ -z "$sendfd"      ] || feature_info="${feature_info} sendfd"
+    [ -z "$fattr"       ] || feature_info="${feature_info} fattr"
+    [ -z "$inet"        ] || feature_info="${feature_info} inet"
+    [ -z "$unix"        ] || feature_info="${feature_info} uni"
+    [ -z "$id"          ] || feature_info="${feature_info} id"
+    [ -z "$dns"         ] || feature_info="${feature_info} dns"
+    [ -z "$proc"        ] || feature_info="${feature_info} proc"
+    [ -z "$exec"        ] || feature_info="${feature_info} exec"
+    [ -z "$prot_exec"   ] || feature_info="${feature_info} prot_exec"
+    [ -z "$vminfo"      ] || feature_info="${feature_info} vminfo"
+    [ -z "$tmppath"     ] || feature_info="${feature_info} tmppath"
+
+    pldg:info "Policy enabled as below -> ${feature_info}" >&2
 
     if [ -n "$fs_all" ]; then
         printf "  - %s\n" "Enabling unveiling using -V"

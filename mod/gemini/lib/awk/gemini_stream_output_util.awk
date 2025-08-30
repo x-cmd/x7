@@ -74,7 +74,7 @@ function gemini_record_response___tool_call( obj, kp,        name, args, dir, id
         mkdirp( dir )
         print name > (dir "/name")
         print args > (dir "/arg")
-        print "[FUNCTION-CALL] " idx >> XCMD_CHAT_LOGFILE
+        if ( IS_ENACTNONE != true ) print "[FUNCTION-CALL] " idx >> XCMD_CHAT_ENACTALL_LOGFILE
     }
 
     fflush()

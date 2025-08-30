@@ -19,20 +19,20 @@ function parse_device( s1, s2 ){
 }
 
 NR==1{
-    if ( $3 == "TID" )   LSOF_TYPE = 1
+    if ( $3 == "TID" )   LINUX_DATA = 1
 }
 
 NR>1{
     command = $2 " " str_limit( $1, 13 )
-    user    = str_limit( (LSOF_TYPE) ? $5 : $3, 8)
+    user    = str_limit( (LINUX_DATA) ? $5 : $3, 8)
     if ( task ) {
         tid     = $3
         tname   = $4
     }
-    fd      = (LSOF_TYPE) ? $6 : $4
-    type    = (LSOF_TYPE) ? $7 : $5
+    fd      = (LINUX_DATA) ? $6 : $4
+    type    = (LINUX_DATA) ? $7 : $5
     # device start
-    i       = (LSOF_TYPE) ? 8 : 6
+    i       = (LINUX_DATA) ? 8 : 6
 
     if ($i ~ "\"") {
         device          = parse_device($i, $(i+1))

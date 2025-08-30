@@ -48,6 +48,7 @@ function cres_dump_usage(o, kp,           kp_usage, total_token, obj_usage ){
     jdict_put(obj_usage, Q2_1, "\"usage\"", "{" )
     jmerge_force___value( obj_usage, Q2_1 SUBSEP "\"usage\"", o, kp_usage )
     jdict_put(obj_usage, Q2_1, "\"model\"", o[ kp SUBSEP "\"model\"" ])
+    jdict_put(obj_usage, Q2_1, "\"provider\"", o[ kp SUBSEP "\"provider\"" ])
     return jstr0( obj_usage, Q2_1, " ")
 }
 
