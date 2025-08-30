@@ -103,6 +103,7 @@ function creq_append_usage_input_ratio_SHO(o, kp, system_str, history_str, other
 
     jdict_put(o, kp, "\"usage\"", "{")
     jdict_put(o, _kp_usage, "\"input\"", "{")
+    jdict_put(o, _kp_input, "\"stringLength\"",  _al)
     jdict_put(o, _kp_input, "\"ratio\"", "{")
     jdict_put(o, _kp_ratio, "\"system\"",  _sr)
     jdict_put(o, _kp_ratio, "\"history\"", _hr)

@@ -32,7 +32,7 @@ ce09bd8120645999e35a7edf9b7d9fe836ec1529 cacert main NULL
 8c5d5e96c40d83d3a0fc412c0d83be3adf92fd3b ccmd main NULL
 3ca8aa4a0a30969b33cb7c817d33d2f5e6f65107 cd main NULL
 2c4dcfb467169109bd4536a2eb5c138eed935c13 cfgy main NULL
-18affc78aaf26193c7fba403aa5dfc6a7df2b893 chat main NULL
+2cb73054fea884305b64df7de87d252182dd8800 chat main NULL
 87c98ca9b8dd920c1868440986b4e1d0261e1c8b choco main NULL
 eb383d659df9a123b5f51a44108a42a20d7aee54 cht main NULL
 517b7c48cefecbb3cbae9c25181b68a12e90f458 claude main NULL
@@ -40,7 +40,7 @@ eb383d659df9a123b5f51a44108a42a20d7aee54 cht main NULL
 6a88c9eb4607bcb2c0eb235dcf312447fc1deb31 clear main NULL
 8c9c6e30c1af9e7470dd51a6cb5beda309cb8896 cmdnotfound main NULL
 2dd8b6ca8dab0adcffad70ee4e23ae3aceb3c5be co main NULL
-72dedfaa932333eb5bf91e1d6048a55ed532208d coco main NULL
+8ed3fda9f854f4cbe4538e4bc3d6708d53c3cb6b coco main NULL
 388bbac8a84de658af8178c462a9db51173c3481 code main NULL
 420e19372bf9068e44cb9da315e40ed00e306619 codex main NULL
 f8c12a06116b750381f0fe34f4a2b16312c6a7e4 codi main NULL
@@ -250,7 +250,7 @@ fa7caac661e09ecfff1da3a09e60ec2e781dfe69 rmrf main NULL
 beb8765940986db3735bde402c54999624b97472 root main NULL
 e1371b40d7a42eeca0cf144f3ba929c721a286e7 route main NULL
 cb509b17c1933d817c387ed1851f582cefe9b535 ruby main NULL
-9d59df4ab5ff57b9e90b4accd8ffd40daecc5963 sb main NULL
+8a12465c9ddba4c8558bb3a05a987d06ee37de5f sb main NULL
 787a6f7fd8b6b9527034d43c293f7bf89fac6dca scoop main NULL
 fb8dd35b1362bea9b88ad9b9a6b6a5988b18290e scorecard main NULL
 ef55ea27085f71646a938b913cf68f6f5bf43878 scotty main NULL
