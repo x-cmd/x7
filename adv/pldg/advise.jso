@@ -20,11 +20,11 @@ null
 {
 "cn"
 :
-"cosmo pledge 命令的简化封装; 用户现在可以采用 `-0|-1|-3|-5|-9` 进行基本权限的设置, 并增删权限."
+"x pldg 是 cosmo pledge 命令的简化封装，旨在让用户能轻松地在受限的沙箱环境中安全地运行程序。\n它引入了 `-0|-1|-3|-5|-9` 等数字安全等级，将复杂的权限组合简化为单个选项, 并可根据需要灵活地增删单个权限。\n"
 ,
 "en"
 :
-"A simplified wrapper for the cosmo pledge command; users can now use `-0|-1|-3|-5|-9` to set basic permissions and add or remove permissions."
+"x pldg is a simplified wrapper for the cosmo pledge command, designed to allow users to easily and safely run programs in a restricted sandbox environment.\nIt introduces numeric security levels such as `-0|-1|-3|-5|-9`, simplifying complex permission combinations into a single option, and allows individual permissions to be flexibly added or removed as needed.\n"
 }
 ,
 "-9"
@@ -717,7 +717,7 @@ null
 {
 "cmd"
 :
-"x pldg -9 --nonet curl --head https://x-cmd.com || echo \"Successfully stop curl from Internet\""
+"x pldg -9 --no-net curl --head https://x-cmd.com || echo \"Successfully stop curl from Internet\""
 ,
 "en"
 :
