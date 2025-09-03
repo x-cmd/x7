@@ -230,7 +230,7 @@ fc1bdd186544d3b93bc3dd435580d7a0748e3393 pixi main NULL
 81a29c70f4fd9c364e5b6dcdcf9e9e21f7183846 pkgx main NULL
 69ffd562498f3660f34aeb30fd5582f75376ebcc pldg main NULL
 ca1cdf75f8fc224eb264db71292ea39919c61381 plwr main NULL
-6d41fa717fb8d41277adad6207dad1f4243671fe price main NULL
+c6de5c314fef45c8a3a58cd18998bec798dab37d price main NULL
 daa38097f0706109b057fbfe23ac2d65abcefd7a proxy main NULL
 b8cc2607a873e512a609318aacfc16ba534f8d5a prta main NULL
 8ae92fad14401f45608c064b26909412aa3efa95 ps main NULL

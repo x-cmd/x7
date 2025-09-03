@@ -76,18 +76,18 @@ function llmp_format_currency( amount, ccy,          v ){
     if ( ccy == "USD" )      v = "$" v
     else if ( ccy == "CNY" ) v = "¥" v
     else if ( ccy == "EUR" ) v = "€" v
-    else if ( ccy == "GBP" ) v = "£" v
-    else if ( ccy == "INR" ) v = "₹" v
-    else if ( ccy == "AUD" ) v = "A$" v
-    else if ( ccy == "CAD" ) v = "C$" v
-    else if ( ccy == "SGD" ) v = "S$" v
-    else if ( ccy == "MYR" ) v = "RM" v
-    else if ( ccy == "JPY" ) v = "¥" v
-    else if ( ccy == "ARS" ) v = "AR$" v
-    else if ( ccy == "BHD" ) v = "BD" v
-    else if ( ccy == "BWP" ) v = "P" v
-    else if ( ccy == "BRL" ) v = "R$" v
     else v = ccy " " v
+    # else if ( ccy == "GBP" ) v = "£" v
+    # else if ( ccy == "INR" ) v = "₹" v
+    # else if ( ccy == "AUD" ) v = "A$" v
+    # else if ( ccy == "CAD" ) v = "C$" v
+    # else if ( ccy == "SGD" ) v = "S$" v
+    # else if ( ccy == "MYR" ) v = "RM" v
+    # else if ( ccy == "JPY" ) v = "¥" v
+    # else if ( ccy == "ARS" ) v = "AR$" v
+    # else if ( ccy == "BHD" ) v = "BD" v
+    # else if ( ccy == "BWP" ) v = "P" v
+    # else if ( ccy == "BRL" ) v = "R$" v
 
     return v
 }
