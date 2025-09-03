@@ -59,6 +59,7 @@ function minion_is_reasoning( o, prefix,            v, v1 ){
     if (v1 == "") v1 = ENVIRON[ "cfg_reasoning" ] ""
     if ( ! chat_str_is_null(v1) ) v = ((v1 ~ "^\"") ? juq(v1) : v1)
 
+    v = v ""
     if (( v == "true" ) || ( v == true ))           return true
     else if (( v == "false" ) || ( v == false ))    return false
 

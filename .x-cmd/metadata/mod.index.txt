@@ -32,7 +32,7 @@ ce09bd8120645999e35a7edf9b7d9fe836ec1529 cacert main NULL
 8c5d5e96c40d83d3a0fc412c0d83be3adf92fd3b ccmd main NULL
 3ca8aa4a0a30969b33cb7c817d33d2f5e6f65107 cd main NULL
 2c4dcfb467169109bd4536a2eb5c138eed935c13 cfgy main NULL
-212a59707e2c5d6cfdd0968483c6e04e3d72fde3 chat main NULL
+15b0dbcbee15b5f4e161021b17d7966ec174f514 chat main NULL
 87c98ca9b8dd920c1868440986b4e1d0261e1c8b choco main NULL
 eb383d659df9a123b5f51a44108a42a20d7aee54 cht main NULL
 517b7c48cefecbb3cbae9c25181b68a12e90f458 claude main NULL
@@ -99,7 +99,7 @@ f8c8680a2467a2b8741cb7dfd6df11474945bcbc gawk main NULL
 afc62654b01403e265ab32efbe00fa9c4deb9a7d gcal main NULL
 c7e7455b4779ad4bf0f3d2ccd97f0a7df86fdb48 gcode main NULL
 dcbbd3beb270e31be94dd3d5a37781fa218bd7ce gddy main NULL
-cfe1d8b7f9a8881f6419d43b885850a029af78c1 gemini main NULL
+8518001399a790a14c6e06501a3206f9d49255db gemini main NULL
 da2cc532911da1a2d0e1c380537151238f2b7a65 gh main NULL
 a3f39a012fcf0b8a4e130ff4d50440c65649103f git main NULL
 05d93fce44eb99382ff7aa926a6067dfcd0bb805 gitb main NULL
@@ -198,7 +198,7 @@ e8b19c8f7062a3c200f7d9ed2e1238e90243f994 nanorc main NULL
 e845256a7d35c79b0bb3d644f516d9c15ec9681f ncdu main NULL
 965ee5ef23bd7b8d147ac81e0e581986f4e19617 nets main NULL
 9582e9a98adb6772ada5ff1069229de426c1d55a node main NULL
-a44828620033201c504332d5f1741c66027a4b18 notify main NULL
+2a09d905e33f6fd6c085cc4405133ee84002c3f9 notify main NULL
 7f3b254ded8145e8c98cfb6eed7a3bc0e6a3f657 npm main NULL
 7a9c352f956c9d845872f27e3e83632bc98f1ac6 npx main NULL
 4e561a92dcfbdf8922465acbb00b37c477142f72 nu main NULL
@@ -228,7 +228,7 @@ e88c35132ffd4554e3f749d85f7a82b60e07ca0d pipx main NULL
 fc1bdd186544d3b93bc3dd435580d7a0748e3393 pixi main NULL
 776420ec8948f924ec37519641885f3857ffdd1c pkg main NULL
 81a29c70f4fd9c364e5b6dcdcf9e9e21f7183846 pkgx main NULL
-4236c1df1bbdeddcd55a8156887f2ebb9966e373 pldg main NULL
+529d27d68bd32c67ff4196ed7b3d5589a0fc20d5 pldg main NULL
 ca1cdf75f8fc224eb264db71292ea39919c61381 plwr main NULL
 6d41fa717fb8d41277adad6207dad1f4243671fe price main NULL
 daa38097f0706109b057fbfe23ac2d65abcefd7a proxy main NULL
@@ -308,7 +308,7 @@ f4622bbe1783674ecac2d41037eccbc79e7e5543 uptime main NULL
 4b4a2f0d115ffb5f7e7ed0077ad9ba57cc675b5b url main NULL
 5746198bc5ef17bce1caf6976af66d4920a830c3 user main NULL
 cc899ef04cf4e5dbe1861586e19d965596e86159 val main NULL
-f183d89f50d2c4f5c8ab8b773250954347bedce5 version main NULL
+6b5b8f3efe78219b20cfaa3f1a548a8b93464182 version main NULL
 65332d8ea26349e0bf3df358fc98f30ba7c7af6d vim main NULL
 6f43a78b4d2b49e73a2f3ab30c97a921e5c40dca wchar main NULL
 aeadb4832dae44fe69de904e210c10ff21057a8f websrc main NULL

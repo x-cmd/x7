@@ -15,10 +15,13 @@ function gemini_parse_response_data( text, obj,       _arr, _arrl, i, _current_k
     _arrl = json_split2tokenarr( _arr, text )
     for (i=1; i<=_arrl; ++i) {
         jiparse( obj, _arr[i] )
-        if (( JITER_LEVEL != 1 ) || ( JITER_CURLEN <= 0) || ( _arr[i] ~ "^[,:]?$")) continue
-
-        _current_kp = Q2_1
-        if ( IS_STREAM == true ) _current_kp = _current_kp SUBSEP "\""JITER_CURLEN"\""
+        if ( IS_STREAM == true ) {
+            if (( JITER_LEVEL != 1 ) || ( JITER_CURLEN <= 0) || ( _arr[i] ~ "^[,:]?$")) continue
+            _current_kp = Q2_1 SUBSEP "\""JITER_CURLEN"\""
+        } else {
+            if ( JITER_LEVEL != 0 ) continue
+            _current_kp = Q2_1
+        }
 
         if (( JITER_CURLEN == 1 ) && ( obj[ _current_kp, "\"error\"" ] != "" )) {
             GEMINI_RESPONSE_IS_ERROR_CONTENT = 1
