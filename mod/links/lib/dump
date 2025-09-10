@@ -40,7 +40,7 @@ ___x_cmd_links_dump(){
     if [ -n "$llmstxt" ]; then
         local llmstxt_url="$url/llms.txt"
         local llms_data
-        if llms_data="$(___x_cmd curl -s -L --fail "$llmstxt_url")"; then
+        if llms_data="$(___x_cmd ccmd 10m -- curl -s -L --fail "$llmstxt_url")"; then
             printf "%s\n" "$llms_data"
             return 0
         fi

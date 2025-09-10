@@ -33,7 +33,7 @@ ce09bd8120645999e35a7edf9b7d9fe836ec1529 cacert main NULL
 8c5d5e96c40d83d3a0fc412c0d83be3adf92fd3b ccmd main NULL
 3ca8aa4a0a30969b33cb7c817d33d2f5e6f65107 cd main NULL
 2c4dcfb467169109bd4536a2eb5c138eed935c13 cfgy main NULL
-2934a2f2da2d246996d4614c7eff686cd940f636 chat main NULL
+dccf38eabd9eba1fc3c7bc090b644b86f03c4abf chat main NULL
 87c98ca9b8dd920c1868440986b4e1d0261e1c8b choco main NULL
 eb383d659df9a123b5f51a44108a42a20d7aee54 cht main NULL
 517b7c48cefecbb3cbae9c25181b68a12e90f458 claude main NULL
@@ -101,7 +101,7 @@ afc62654b01403e265ab32efbe00fa9c4deb9a7d gcal main NULL
 c7e7455b4779ad4bf0f3d2ccd97f0a7df86fdb48 gcode main NULL
 dcbbd3beb270e31be94dd3d5a37781fa218bd7ce gddy main NULL
 e4e3a7d4fa8f44e9346a592c975693962760366c gemini main NULL
-87a24f49c8dd56985618c8a80384922fb0fc713d gh main NULL
+22ca01180bdac5ecb0ec7899ee7c6a5ce6af1d31 gh main NULL
 a3f39a012fcf0b8a4e130ff4d50440c65649103f git main NULL
 05d93fce44eb99382ff7aa926a6067dfcd0bb805 gitb main NULL
 62859fd4db9ef7b5252cc6dbd7ab16501f64f642 gitconfig main NULL
@@ -163,7 +163,7 @@ c3ce5fc3efdb8c89b6d8371dd45f80032e3e8428 kotlin main NULL
 658d08cfeb21f161a9bb2a19e2f1789a9c828168 less main NULL
 b354b753520903192788ada4e619d8a38cc69b7b line main NULL
 a047f40225fbc7609ccd389386b859a2e17d11a4 link main NULL
-929f5294a26dc0b6889cb9ac2a396399417cd92d links main NULL
+15f63d59f55e872368950b2ad2205d124c35991f links main NULL
 e3cf1ed8538cf85ead6cca18723dc4551945247e list main NULL
 1ec4c9041a3a0c8d080330796920f937886d1431 ll main NULL
 2be4fb9803de5b34702fdbfcea3335c261cdbdc8 llist main NULL
@@ -218,7 +218,7 @@ bad3449fa1724be7ee42b92fbb96bcd046833e21 p7zip main NULL
 9d1b6cd4b5a8fdaa7b14856640a75da870694f47 pacman main NULL
 027cf54d200e6e913c435210b111593d04b6ace8 pandoc main NULL
 995abe81430a5a262a82e011140d097722f5a767 param main NULL
-4f99256e042e1e9d3bc25437f90673cee4e5e8f9 paru main NULL
+84abacc5461339bcc70486cb7d5951a524359c8b paru main NULL
 cc0bc26b53d4ef2b96b24ff82d8e6c10147e204c path main NULL
 0a0c6e27d0d9f8c9a950135e89c2d750e87e3d87 pb main NULL
 ff590d80f7d9b0c032efc8632dfab61d0d78f5d8 perl main NULL
@@ -310,7 +310,7 @@ f4622bbe1783674ecac2d41037eccbc79e7e5543 uptime main NULL
 4b4a2f0d115ffb5f7e7ed0077ad9ba57cc675b5b url main NULL
 5746198bc5ef17bce1caf6976af66d4920a830c3 user main NULL
 cc899ef04cf4e5dbe1861586e19d965596e86159 val main NULL
-6b5b8f3efe78219b20cfaa3f1a548a8b93464182 version main NULL
+c8f653ed68c00f7b5ce1d08b8f3cf586c9a0b3cf version main NULL
 65332d8ea26349e0bf3df358fc98f30ba7c7af6d vim main NULL
 3735c5595eb0b481771548397bcffacf43c8184a wchar main NULL
 aeadb4832dae44fe69de904e210c10ff21057a8f websrc main NULL

@@ -1,36 +1,46 @@
+# shellcheck shell=dash
 
 ___x_cmd_gh_codeurl(){
+    param:void
+
     local x_=""
-    ___x_cmd_gh_codeurl_ "$@" || return $?
-    [ -n "$x_" ] || printf "%s\n" "$x_"
+    ___x_cmd_gh_codeurl_ "$@"
+    [ -n "$x_" ] || return 1
+    printf "%s\n" "$x_"
 }
 
 ___x_cmd_gh_codeurl_(){
     x_=""
 
     local url="$1"
-
-    local userrepo=""
-    local blob_after=""
+    local owner_repo=""
 
     case "$url" in
         https://github.com/*/*/blob/*)
-            userrepo="${url#https://github.com/}"
-            userrepo="${userrepo%%/blob/*}"
-            blob_after="${url#*/blob/}"
-            x_="https://raw.githubusercontent.com/$userrepo/refs/heads/${blob_after}" ;;
-
+            owner_repo="${url#https://github.com/}"
+            owner_repo="${owner_repo%%/blob/*}"
+            local blob_after="${url#*/blob/}"
+            x_="https://raw.githubusercontent.com/${owner_repo}/refs/heads/${blob_after}"
+            ;;
+        https://github.com/*/*/wiki | https://github.com/*/*/wiki/*)
+            owner_repo="${url#https://github.com/}"
+            owner_repo="${owner_repo%%/wiki*}"
+            local file="${url#*'/wiki'}"
+            [ -n "$file" ] || file="/Home"
+            x_="https://raw.githubusercontent.com/wiki/${owner_repo}${file}.md"
+            ;;
         https://github.com/*/*/*)
             x_=""
             ;;
-
         https://github.com/*/*)
-            # get default branch
-            userrepo="${url#https://github.com/}"
-            userrepo="${userrepo%/}"
-            local default_branch;
-            default_branch="$(___x_cmd gh repo info --json "$userrepo" | ___x_cmd_cmds jq -r .default_branch)"
-            x_="$url/blob/${default_branch}/README.md"
+            owner_repo="${url#https://github.com/}"
+            owner_repo="${owner_repo%/}"
+            local x_default_branch=""
+            if ! ___x_cmd_gh___get_x_default_branch_; then
+                gh:error "Can not get default branch of repo $owner_repo. Please have check it."
+                return 1
+            fi
+            x_="https://raw.githubusercontent.com/${owner_repo}/refs/heads/${x_default_branch}/README.md"
             ;;
     esac
 }
