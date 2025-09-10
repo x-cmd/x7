@@ -1,0 +1,36 @@
+
+___x_cmd_gh_codeurl(){
+    local x_=""
+    ___x_cmd_gh_codeurl_ "$@" || return $?
+    [ -n "$x_" ] || printf "%s\n" "$x_"
+}
+
+___x_cmd_gh_codeurl_(){
+    x_=""
+
+    local url="$1"
+
+    local userrepo=""
+    local blob_after=""
+
+    case "$url" in
+        https://github.com/*/*/blob/*)
+            userrepo="${url#https://github.com/}"
+            userrepo="${userrepo%%/blob/*}"
+            blob_after="${url#*/blob/}"
+            x_="https://raw.githubusercontent.com/$userrepo/refs/heads/${blob_after}" ;;
+
+        https://github.com/*/*/*)
+            x_=""
+            ;;
+
+        https://github.com/*/*)
+            # get default branch
+            userrepo="${url#https://github.com/}"
+            userrepo="${userrepo%/}"
+            local default_branch;
+            default_branch="$(___x_cmd gh repo info --json "$userrepo" | ___x_cmd_cmds jq -r .default_branch)"
+            x_="$url/blob/${default_branch}/README.md"
+            ;;
+    esac
+}
