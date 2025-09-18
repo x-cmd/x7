@@ -60,9 +60,15 @@ A
     fi
 
     if [ "$is_patchdiff" = "true" ]; then
-        ___x_cmd_cmds patch "$fp" << A
+        if ___x_cmd_hascmd; then
+            ___x_cmd_cmds patch -u --verbose --ignore-whitespace "$fp" << A
 $content
 A
+        else
+            ___x_cmd cosmo patch -u --verbose --ignore-whitespace "$fp" << A
+$content
+A
+        fi
     else
         printf "%s" "$content" >> "$fp"
     fi

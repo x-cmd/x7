@@ -7,7 +7,7 @@ xrc chat
 
 xrc:mod:lib     coco        \
     tool/enactall   tool/bfind   tool/findgrep   tool/mcp   tool/readfile   tool/writefile  tool/shcmd tool/histsum \
-    tool/diffv4a
+    tool/diffv4a    tool/create_temp_path
 
 ___x_cmd_coco_tool(){
     [ $# -gt 0 ]    ||  set -- --help
@@ -17,7 +17,7 @@ ___x_cmd_coco_tool(){
     case "$op" in
         -h|--help)      ___x_cmd help -m coco tool "$@" ;   shift ;;
         grep)           ;;
-        findgrep|readfile|writefile|diffv4a)
+        findgrep|readfile|writefile|diffv4a|create_temp_path)
                         ___x_cmd_coco_"$op" "$@"
                         ;;
     esac
@@ -36,11 +36,12 @@ ___x_cmd_coco_tool___enactcmd(){
     local cmdcode=0
     local cmdstatus='called'
     local cmdarg=""
+    local cmdarglog=""
     local parsejson; parsejson="$( ___x_cmd_coco___parse_json_args_ "$args" )"
     [ -z "$parsejson" ] || eval "$parsejson"
 
     coco:info ${desc:+"--desc"} ${desc:+"$desc"} \
-        "Function calling -> x coco $name $cmdarg"
+        "Function calling -> x coco $name $cmdarglog"
     printf "%s\n" "$cmdstatus"     > "$fcall_dir/status"
 
     eval "___x_cmd_coco_${name}" "$cmdarg" \

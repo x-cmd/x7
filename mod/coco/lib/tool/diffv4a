@@ -11,5 +11,13 @@ ___x_cmd_coco_diffv4a(){
         esac
     done
 
-    ___x_cmd_cmds diff -u "$old_file" "$new_file"
+    [ -f "$old_file" ] || N=coco M="Not found oldfile" log:ret:64
+    [ -f "$new_file" ] || N=coco M="Not found newfile" log:ret:64
+
+    if ___x_cmd_hascmd diff; then
+        ___x_cmd_cmds diff -u "$old_file" "$new_file"
+    else
+        # busybox ?
+        ___x_cmd cosmo diff -u "$old_file" "$new_file"
+    fi
 }

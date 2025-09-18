@@ -270,12 +270,14 @@ ___x_cmd_chat___exec_raw(){
     local reflist="$3"
     local filelist_attach="$4"
     local imagelist="$5"
-    ___x_cmd_chat___exec_inner_
+
+    envinfo="$(___x_cmd_chat___exec_envinfo)" \
+        ___x_cmd_chat___exec_inner
 }
 
-___x_cmd_chat___exec_inner_(){
+___x_cmd_chat___exec_inner(){
     local question="$question"
-    x_=; ___x_cmd str trimm_ "$reflist"
+    local x_=; ___x_cmd str trimm_ "$reflist"
     question="${x_}${question}"
 
     # TODO: scan the question, extract url.

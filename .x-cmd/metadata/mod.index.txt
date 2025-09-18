@@ -1,4 +1,4 @@
-7c9193cf1684eb8ce212500ad6ae88589ab68520 advise main NULL
+596c06312961554b2d3d25e5aa73d3a7e7d8e9bc advise main NULL
 3ca4fde89e52707adf8cf21ec16ec365c4824efa agent main NULL
 567e6c54bef0f14313531f212bdb9ecf9f0d1a76 aider main NULL
 6f5f36a1f447c0e8024bb193bc7b6b72ba22b591 alias main NULL
@@ -33,7 +33,7 @@ ce09bd8120645999e35a7edf9b7d9fe836ec1529 cacert main NULL
 8c5d5e96c40d83d3a0fc412c0d83be3adf92fd3b ccmd main NULL
 3ca8aa4a0a30969b33cb7c817d33d2f5e6f65107 cd main NULL
 2c4dcfb467169109bd4536a2eb5c138eed935c13 cfgy main NULL
-f0acdc904b4cda90566d8b766e8bb3bd5b1eb992 chat main NULL
+403392752b2d3556456bd5ad6b69f0fb882d0a93 chat main NULL
 87c98ca9b8dd920c1868440986b4e1d0261e1c8b choco main NULL
 eb383d659df9a123b5f51a44108a42a20d7aee54 cht main NULL
 517b7c48cefecbb3cbae9c25181b68a12e90f458 claude main NULL
@@ -41,7 +41,7 @@ eb383d659df9a123b5f51a44108a42a20d7aee54 cht main NULL
 6a88c9eb4607bcb2c0eb235dcf312447fc1deb31 clear main NULL
 8c9c6e30c1af9e7470dd51a6cb5beda309cb8896 cmdnotfound main NULL
 b1101a615c50bac21a3b79e0ec19a8e66ea92e96 co main NULL
-22a9f696bb1dd5d97c4a5cfcbafa6e0f389eb2dc coco main NULL
+92d2bcedb2ac801b0c3ca1803e6a0fd13ea37675 coco main NULL
 388bbac8a84de658af8178c462a9db51173c3481 code main NULL
 a7e094a3bc4e1f1b265c3623f973564c6c76170e codex main NULL
 f8c12a06116b750381f0fe34f4a2b16312c6a7e4 codi main NULL
@@ -88,7 +88,7 @@ aca3246651f1ef1b1e158f4c860f754651290790 fifo main NULL
 29147f0a6526483d0967fb4a02f12ab4a461f8c5 find main NULL
 29147f0a6526483d0967fb4a02f12ab4a461f8c5 find main NULL
 3ce8c3a325cd8e1cd787a67b48c4859feb3438f4 fish main NULL
-7e75456d41c81205964ff9f7d7bf4a989a201b8a fjo main NULL
+a1af17d7f14891466866295463b521ed97bd2d1c fjo main NULL
 e3ddc3c59abb290d46bec8d6112a944b89e141ac fkill main NULL
 29a98f85b4fd5b150060185d89afe150fb072ae9 font main NULL
 174a9124649ddf54070a12293bd46b0c7ae35b09 fsiter main NULL

@@ -1,0 +1,25 @@
+
+___x_cmd_coco_create_temp_path(){
+    arg:init:x  coco
+    local name=""
+    local is_directory=""
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --name)         name="$2";          arg:2:shift ;;
+            --is_directory) is_directory="$2";  arg:2:shift ;;
+            *)              break ;;
+        esac
+    done
+
+    [ -n "$file" ] || N=coco M="Please provider the exact name of the file or directory" log:ret:64
+    [ -d "$fcall_dir" ] || N=coco M="Directory for function call execution not found" log:ret:1
+    local tmpdir="$fcall_dir/tmp"
+    local tmpfp="$tmpdir/$name"
+    if [ "$is_directory" = true ]; then
+        coco:info "Creating temp directory -> $tmpfp"
+        ___x_cmd mkdirp "$tmpfp"
+    else
+        coco:info "Creating temp file -> $tmpfp"
+        ___x_cmd touch "$tmpfp"
+    fi
+}
