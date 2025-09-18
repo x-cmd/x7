@@ -4,12 +4,15 @@ name: default-tools
 
 prompt:
   system:
+    If more information is needed, prioritize using available function calls to obtain detailed and accurate results.
+    If a function call is not possible due to limitations, do not explain or apologize.
+    Instead, continue the task directly using reasoning, calculations, or content generation as needed to provide a useful result.
+    If the available information is insufficient, report the issue directly without fabrication.
+    Function done. No apology, no explanation. Continue next step immediately.
 
   context:
   example:
-  content: |
-    If more information is needed, please maximize the use of function calls to obtain more detailed and accurate results.
-    '%{BODY}%'
+  content: '%{BODY}%'
 tool:
   # choice:
   #   type: function
@@ -24,10 +27,10 @@ tool:
         properties:
           desc:
             type: string
-            description: "Required parameter, briefly describe the purpose of calling the current function and its role"
+            description: "Required parameter, a brief description of the function's purpose and usage. This parameter provides context for the AI when calling the function, helping to clarify its intended action and expected outcomes."
           folder:
             type: string
-            description: 'Required parameter, the path to the specified folder'
+            description: 'Required parameter, the absolute path to the specified folder'
           keyword:
             type: string
             description: 'Required parameter, the specific keyword to search for'
@@ -50,8 +53,57 @@ tool:
             description: "Required parameter, a brief description of the function's purpose and usage. This parameter provides context for the AI when calling the function, helping to clarify its intended action and expected outcomes."
           filepath:
             type: string
-            description: Required parameter, the path of the file to be read
+            description: Required parameter, the absolute path of the file to be read
         required:
           - desc
           - filepath
+    - name: writefile
+      description: |
+        Writes content to a specified file.
+        For file modifications, it is strongly recommended to provide content in patch-diff format, as this ensures changes are applied precisely and reduces the risk of overwriting unrelated parts of the file.
+      parameters:
+        type: object
+        properties:
+          desc:
+            type: string
+            description: "Required parameter, a brief description of the function's purpose and usage. This parameter provides context for the AI when calling the function, helping to clarify its intended action and expected outcomes."
+          filepath:
+            type: string
+            description: "Required parameter, the absolute path of the file to be written to."
+          content:
+            type: string
+            description: |
+              Required parameter: content — the text to be written to the file.
+              - Preferred approach: use patch-diff content (is_patchdiff=true), which allows safe and precise file modification.
+              - If is_patchdiff is true, content must be a valid patch-diff suitable for the patch command, which will update the file accordingly.
+              - If is_patchdiff is false, content will not overwrite the file but will instead be appended to the end of the existing file.
+          is_patchdiff:
+            type: boolean
+            description: |
+              Required parameter: indicates whether the write operation should treat the content as a patch diff.
+              - Preferred: true, so that the content is a valid patch-diff file and can safely modify the file.
+              - If false, the content will be appended directly to the existing file content without overwriting it.
 
+        required:
+          - desc
+          - filepath
+          - content
+          - is_patchdiff
+    - name: diffv4a
+      description: Compares two files using the v4a algorithm to generate a detailed diff output. The v4a concept focuses on advanced diffing techniques to improve accuracy and efficiency in file comparisons.
+      parameters:
+        type: object
+        properties:
+          desc:
+            type: string
+            description: "Required parameter, a brief description of the function's purpose and usage. This parameter provides context for the AI when calling the function, helping to clarify its intended action and expected outcomes."
+          oldfile:
+            type: string
+            description: "Required parameter, the absolute path of the old file to be compared."
+          newfile:
+            type: string
+            description: "Required parameter, the absolute path of the new file to be compared."
+        required:
+          - desc
+          - oldfile
+          - newfile

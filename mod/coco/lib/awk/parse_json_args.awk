@@ -12,8 +12,7 @@ END{
         val = o[ Q2_1, key ]
         val = (val ~ "^\"") ? juq(val) : val
         print sh_varset_val( "arg_" juq(key), val, true )
-
-        if ( key != "\"desc\"" ) _res = _res " --" juq(key) " " shqu1(val)
+        _res = _res " --" juq(key) " " shqu1(val)
     }
     print sh_varset_val( "cmdarg", _res, true )
 

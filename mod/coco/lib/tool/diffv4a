@@ -1,0 +1,15 @@
+
+___x_cmd_coco_diffv4a(){
+    local old_file=""
+    local new_file=""
+    arg:init:x  coco
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --oldfile)  old_file="$2";      arg:2:shift ;;
+            --newfile)  new_file="$2";      arg:2:shift ;;
+            *)          break ;;
+        esac
+    done
+
+    ___x_cmd_cmds diff -u "$old_file" "$new_file"
+}

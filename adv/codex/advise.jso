@@ -27,6 +27,10 @@ null
 "codex is a terminal-based AI programming assistant developed by OpenAI.\nIt connects to the OpenAI API to understand your local codebase, execute shell commands, generate patches, and assist with development tasks through conversational prompts.\nWith support for secure execution, approval strategies, and contextual code understanding, codex enhances the developer experience by bringing powerful AI assistance directly to your terminal.\nProject: https://github.com/openai/codex\n"
 }
 ,
+"$ref"
+:
+"x-advise://codex/data/sub.jso"
+,
 "#tldr"
 :
 [
@@ -47,7 +51,7 @@ null
 {
 "cmd"
 :
-"x codex \"用 Rust 实现冒泡排序\""
+"x codex e \"用 Rust 实现冒泡排序\""
 ,
 "cn"
 :
