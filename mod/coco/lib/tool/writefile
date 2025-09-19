@@ -36,16 +36,14 @@ A
             coco:info --m:content "$content" "Requesting user confirmation" 2>/dev/tty >&2
         fi
         ___x_cmd ui select confirmid "Requesting user confirmation" \
-            "Yes" "No" "Edit" 2>/dev/tty >&2 || return $?
+            "Yes" "No" 2>/dev/tty >&2 || return $?
 
         case "$confirmid" in
             1)  coco:info "User granted permission to write to file"
                 break ;;
             2)  coco:error "User permission denied for writing to file"
+                printf "[BREAK] 1\n" >> "$X_COCO_TOOL_ENACTCMD_FOLDER/log"
                 return 1
-                ;;
-            *)  content="$( ___x_cmd gum write --char-limit 0 --width 0 --header "<alt+enter/ctrl+j> new line • <ctrl+e> open editor • <enter> submit" --no-show-help --value "$content" )" || return $?
-                continue
                 ;;
         esac
     done
@@ -60,7 +58,7 @@ A
     fi
 
     if [ "$is_patchdiff" = "true" ]; then
-        if ___x_cmd_hascmd; then
+        if ___x_cmd_hascmd patch; then
             ___x_cmd_cmds patch -u --verbose --ignore-whitespace "$fp" << A
 $content
 A
@@ -70,7 +68,8 @@ $content
 A
         fi
     else
-        printf "%s" "$content" >> "$fp"
+        # append or overwrite
+        printf "%s\n" "$content" >> "$fp"
     fi
 }
 

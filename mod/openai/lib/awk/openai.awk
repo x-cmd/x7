@@ -14,7 +14,7 @@ function openai_gen_unit_str_rolecont( role, content ){
     return "{ \"role\": " role ", \"content\": " content " }"
 }
 
-function openai_gen_history_str( history_obj, chatid, i,        req_text, res_text, j, tool_l, tool_req, tool_res, tool_str, _res ){
+function openai_gen_history_str( history_obj, chatid, i,        req_text, res_text, j, tool_l, tool_req, tool_res, _res ){
     req_text = chat_history_get_req_text(history_obj, chatid, i)
     res_text = chat_history_get_res_text(history_obj, chatid, i)
     if (req_text =="") return
@@ -28,8 +28,8 @@ function openai_gen_history_str( history_obj, chatid, i,        req_text, res_te
     for (j=1; j<=tool_l; ++j){
         tool_req = chat_history_get_tool_req(history_obj, chatid, i, j)
         tool_res = chat_history_get_tool_res(history_obj, chatid, i, j)
-        tool_str = "[ " openai_gen_unit_str_text( tool_req ) "," openai_gen_unit_str_text( tool_res ) " ]"
-        _res = _res "," openai_gen_unit_str_rolecont("assistant", tool_str)
+        _res = _res "," openai_gen_unit_str_rolecont("assistant", tool_req)
+        _res = _res "," openai_gen_unit_str_rolecont("user", tool_res)
     }
     return _res
 }

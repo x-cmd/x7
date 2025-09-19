@@ -25,7 +25,7 @@ function gemini_gen_generationConfig(temperature, is_reasoning,                 
     return ", \"generationConfig\": { " str " }"
 }
 
-function gemini_gen_history_str( history_obj, chatid, i,      res_text, req_text, _res, tool_l, j, tool_req, tool_res, tool_str ) {
+function gemini_gen_history_str( history_obj, chatid, i,      res_text, req_text, _res, tool_l, j, tool_req, tool_res ) {
     req_text = chat_history_get_req_text(history_obj, chatid, i)
     res_text = chat_history_get_res_text(history_obj, chatid, i)
     if( req_text == "" ) return
@@ -41,8 +41,8 @@ function gemini_gen_history_str( history_obj, chatid, i,      res_text, req_text
     for (j=1; j<=tool_l; ++j){
         tool_req = chat_history_get_tool_req(history_obj, chatid, i, j)
         tool_res = chat_history_get_tool_res(history_obj, chatid, i, j)
-        tool_str = "[ " gemini_gen_unit_str_text( tool_req ) "," gemini_gen_unit_str_text( tool_res ) " ]"
-        _res = _res "," gemini_gen_unit_str_rolepart("model", tool_str)
+        _res = _res "," gemini_gen_unit_str_rolepart("model", gemini_gen_unit_str_text( tool_req ))
+        _res = _res "," gemini_gen_unit_str_rolepart("user", gemini_gen_unit_str_text( tool_res ))
     }
 
     return _res

@@ -71,8 +71,8 @@ tool_l, j, func_dir, func_desc, func_name, func_code, func_status, func_stdout, 
                 func_res = func_res "\n" chat_wrap_tag( "name", func_name )
                 func_res = func_res "\n" chat_wrap_tag( "status", func_status )
                 func_res = func_res "\n" chat_wrap_tag( "errcode", func_code )
-                func_res = func_res "\n" chat_wrap_tag( "stdout", func_stdout )
                 func_res = func_res "\n" chat_wrap_tag( "stderr", func_stderr )
+                func_res = func_res "\n" chat_wrap_tag( "stdout", func_stdout )
 
                 func_req = chat_wrap_tag( "funcmeta-request", func_req )
                 func_res = chat_wrap_tag( "funcmeta-result", func_res )

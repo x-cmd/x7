@@ -11,10 +11,11 @@ ___x_cmd_coco_create_temp_path(){
         esac
     done
 
-    [ -n "$file" ] || N=coco M="Please provider the exact name of the file or directory" log:ret:64
-    [ -d "$fcall_dir" ] || N=coco M="Directory for function call execution not found" log:ret:1
-    local tmpdir="$fcall_dir/tmp"
+    [ -n "$name" ] || N=coco M="Please provider the exact name of the file or directory" log:ret:64
+    [ -d "$X_COCO_TOOL_ENACTCMD_FCALL_DIR" ] || N=coco M="Directory for function call execution not found" log:ret:1
+    local tmpdir="$X_COCO_TOOL_ENACTCMD_FCALL_DIR/tmp"
     local tmpfp="$tmpdir/$name"
+    [ ! -e "$tmpfp" ] || N=coco M="File already exists -> $tmpfp" log:ret:1
     if [ "$is_directory" = true ]; then
         coco:info "Creating temp directory -> $tmpfp"
         ___x_cmd mkdirp "$tmpfp"

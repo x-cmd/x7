@@ -253,7 +253,7 @@ A
             x_=""; ___x_cmd_chat___exec_repl___id_ || return $?
             session="$x_"
         }
-        ___x_cmd_chat___exec_raw "$question" "$history_num" "$reflist" "$filelist_attach" "$imagelist" || return $?
+        ___x_cmd_chat___exec_raw "$question" "$history_num" "$reflist" "$filelist_attach" "$imagelist"
         [ -z "$question" ] || ___x_cmd_chat___exec_repl_history add "$question"
 
         ___x_cmd_chat___exec_repl --previous

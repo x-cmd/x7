@@ -33,6 +33,9 @@ ___x_cmd_coco_tool___enactcmd(){
 
     local fcall_dir="$folder/function-call/$fcidx"
 
+    local X_COCO_TOOL_ENACTCMD_FOLDER="$folder"
+    local X_COCO_TOOL_ENACTCMD_FCALL_DIR="$fcall_dir"
+
     local cmdcode=0
     local cmdstatus='called'
     local cmdarg=""

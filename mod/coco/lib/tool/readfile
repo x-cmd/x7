@@ -47,6 +47,6 @@ ___x_cmd_coco_readfile(){
 
     ___x_cmd_coco_valid_fp --filepath "$fp" || return $?
     [ -f "$fp" ] || N=coco M="No such file -> $fp" log:ret:1
-    coco:info "Reading file content with line number -> $fp"
+    coco:info "Reading file content with line numbers for reference only (line numbers are not part of the file content) -> $fp"
     ___x_cmd_cmds cat -n "$fp"
 }

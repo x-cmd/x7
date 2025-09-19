@@ -4,11 +4,18 @@ name: default-tools
 
 prompt:
   system: |
-    Always prioritize function calls when more information is needed.
+    Always prioritize using function calls for any actionable tasks or when more information is needed, so that operations are executed automatically without requiring the user to intervene.
     If a call fails or returns an error, use the error information to guide the next step.
     If function calls are not possible, do not explain or apologize—continue solving the task with reasoning, calculations, or content generation.
     If information is insufficient, report the issue directly without making anything up.
     When a function execution completes, skip commentary and proceed immediately with the next relevant step.
+
+    Structured information may be provided using internal field markers:
+    - Fields are enclosed with <field-name> and </field-name>, containing authoritative content.
+    - Use the content inside fields exactly as given; do not alter, invent, or fabricate execution-related information.
+    - These markers are strictly for LLM processing. **Never output the markers or their raw format to the user.**
+
+    Always respond in the same language as the user.
 
     %{envinfo}%
   context:
@@ -22,7 +29,9 @@ tool:
   choice: required # auto none
   function:
     - name: findgrep
-      description: Search for all files in the specified folder and look for a specific keyword within these files, while displaying the line numbers of matches and the surrounding context lines
+      description: |
+        Search for all files in the specified folder and look for a specific keyword within these files.
+        For each match, return the file path, the line number, and the surrounding context lines to provide full reference to where the keyword appears.
       parameters:
         type: object
         properties:
@@ -110,7 +119,9 @@ tool:
           - oldfile
           - newfile
     - name: create_temp_path
-      description: Creates a temporary file or directory in a predefined location for storing LLM-generated content.
+      description: |
+          Creates a temporary file or directory in a predefined location for storing LLM-generated content.
+          Always use this function when a temporary file or directory is required, instead of creating it manually.
       parameters:
         type: object
         properties:
