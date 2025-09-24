@@ -775,9 +775,9 @@
 "The filename that needs to be updated."
 }
 ,
-"#exec"
+"#exec:stdout:nospace"
 :
-"___x_cmd_advise__file"
+"x hub _advise lsfile"
 }
 }
 }

@@ -131,7 +131,7 @@ d08874a20cc01afc642202240ebd5d8c70208bf7 history main NULL
 8d59b9602ecee6da50bff38e9c08e40990425bf5 http main NULL
 880d48088b0c026c57b395ea41729f24eec7a0d3 httpget main NULL
 d3a72bdbf2036326bc8b7d47af2e9fa1f19fab9c hua main NULL
-e9ba674814d066ff177ab099978fac6e95298059 hub main NULL
+234e95a335b936294b40687bb88664ce559af86f hub main NULL
 1aabcce64d874ea553fb78792a5ea46d762cab04 huggingface main NULL
 11e04882ced25e3bbfe58a73d0244b0c814dbfc1 humantime main NULL
 954e6aefed4dde0bd9030dd4658ca71358ca03dc icmd main NULL
@@ -323,7 +323,7 @@ e782453bb556aa486b5caa015b8f644a44e08d3d ws main NULL
 315788d9a43c3b03eaf1e673bb516993c5c1303d wsl main NULL
 1f2ddf3a5e143c23f7c3ec1f1961056951297293 wttr main NULL
 a209e0f67c87f56d1a77922f95c206b5db639f29 wx main NULL
-33621fcfb752ff007ac07f33525ce8232ef9123b x-cmd main NULL
+5526d5b0f6c45b3fb87ad9d491a157d4d4f9918b x-cmd main NULL
 aa4c741c33dcf8e7f252004647f9a14fb52cde65 xgo main NULL
 d3be37edf456887b18d236a19e1103fc1f2dbf85 xq main NULL
 aae6ff2201bcbd3a7bedcbb7be728cb92eef6950 xrc main NULL
