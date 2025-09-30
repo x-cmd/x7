@@ -232,7 +232,7 @@ e853e68376a77dc357513462e50ab3e8bfafab18 pkg main NULL
 81a29c70f4fd9c364e5b6dcdcf9e9e21f7183846 pkgx main NULL
 69ffd562498f3660f34aeb30fd5582f75376ebcc pldg main NULL
 ca1cdf75f8fc224eb264db71292ea39919c61381 plwr main NULL
-77a4f9a796366b6e7aa91fc76977f3c9da486b7d price main NULL
+d9c674fed707d3ebe5a708217acbb9a20c3a69c2 price main NULL
 daa38097f0706109b057fbfe23ac2d65abcefd7a proxy main NULL
 b8cc2607a873e512a609318aacfc16ba534f8d5a prta main NULL
 84ada5131fc4ff2cb3b3b8d0a25f2f2008cf67cf ps main NULL
