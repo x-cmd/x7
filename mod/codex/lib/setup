@@ -1,0 +1,35 @@
+# shellcheck shell=dash disable=2016
+
+___x_cmd_codex___setup(){
+    local X_help_cmd; X_help_cmd='___x_cmd help -m codex setup' help:arg:parse
+
+    codex:info "Setting up x-cmd tools to Codex prompt"
+    local dir="${CODEX_HOME:-$HOME}/.codex"
+    ___x_cmd_cmds cp -rf "$___X_CMD_ROOT_MOD/codex/lib/data/prompts" "$dir" || return $?
+
+    local x_=""; ___x_cmd_codex___setup_get_agentfile_ || return $?
+    local fp="$x_"
+    codex:info "Setting up x-cmd skill to Codex -> $fp"
+    ___x_cmd ensurefp "$fp"         || return $?
+    ___x_cmd skill prompt >> "$fp"  || return $?
+
+    codex:info "Setup x-cmd complete"
+}
+
+___x_cmd_codex___setup_get_agentfile_(){
+    local dir="${CODEX_HOME:-$HOME}/.codex"
+    local fp="$dir/AGENTS.override.md"
+    [ -f "$fp" ] || fp="$dir/AGENTS.md"
+    [ -f "$fp" ] || {
+        local filename; filename="$(
+        < "$dir/config.toml" ___x_cmd_cmds awk '
+(match($0, "^project_doc_fallback_filenames[ \t]+=[ \t]+\\[[ \t]*\"")){
+    l = substr($0, RSTART+RLENGTH)
+    print substr(l, 1, index(l, "\"")-1)
+}
+'
+        )"
+        [ -z "$filename" ] || fp="$dir/$filename"
+    }
+    x_="$fp"
+}

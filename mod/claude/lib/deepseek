@@ -1,0 +1,30 @@
+
+___x_cmd_claude_deepseek(){
+    [ "$#" -gt 0 ] ||   set -- --runcmd
+
+    local op="$1";      shift
+    case "$op" in
+        -h|--help)      ___x_cmd help -m claude deepseek "$@";    return 0 ;;
+        --runcmd)       ___x_cmd_claude_deepseek___runcmd       "$@" ;;
+        *)              ___x_cmd_claude_deepseek___runcmd "$op" "$@" ;;
+    esac
+}
+
+___x_cmd_claude_deepseek___runcmd(){
+    local url="${ANTHROPIC_BASE_URL:-"https://api.deepseek.com/anthropic"}"
+    local token="${ANTHROPIC_AUTH_TOKEN}"
+    local timeout="${API_TIMEOUT_MS:-"60000"}"
+    local model="${ANTHROPIC_MODEL:-"deepseek-chat"}"
+    local fast_model="${ANTHROPIC_SMALL_FAST_MODEL:-"deepseek-chat"}"
+    local nonessential_traffic="${CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC:-"1"}"
+
+    [ -n "$token" ] || token="${DEEPSEEK_API_KEY:-"$(___x_cmd deepseek --cur get apikey 2>/dev/null)"}"
+
+    ANTHROPIC_BASE_URL="${url}"                                        \
+    ANTHROPIC_AUTH_TOKEN="${token}"                                    \
+    API_TIMEOUT_MS="${timeout}"                                        \
+    ANTHROPIC_MODEL="${model}"                                         \
+    ANTHROPIC_SMALL_FAST_MODEL="${fast_model}"                         \
+    CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="${nonessential_traffic}" \
+        ___x_cmd_claude___runcmd "$@"
+}

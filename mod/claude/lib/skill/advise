@@ -1,0 +1,18 @@
+
+___x_cmd_claude___advise_skill_ll(){
+    local dir="$___X_CMD_ROOT_MOD/claude/lib/data/skills"
+    ___x_cmd_cmds ls -1 "$dir"
+}
+
+___x_cmd_claude___advise_skill_ls(){
+    local project_dir=".claude/skills"
+    local user_dir="$HOME/.claude/skills"
+
+    if [ -d "$project_dir" ]; then
+        ___x_cmd_cmds ls -1 "$project_dir"
+    fi
+
+    if [ -d "$user_dir" ]; then
+        ___x_cmd_cmds ls -1 "$user_dir"
+    fi
+}

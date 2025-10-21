@@ -31,6 +31,28 @@ null
 :
 "x-advise://codex/data/sub.jso"
 ,
+"setup"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"将 x-cmd 工具注入到 ~/.codex 的用户级 Codex 环境中"
+,
+"en"
+:
+"Injecting x-cmd tool into user-level Codex environment at ~/.codex"
+}
+}
+,
+"#subcmd:Enhancement"
+:
+[
+"setup"
+]
+,
 "#tldr"
 :
 [

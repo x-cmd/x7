@@ -1,0 +1,16 @@
+# shellcheck shell=dash
+
+___x_cmd log init skill
+xrc:mod:lib     skill   unit
+
+___x_cmd_skill___main(){
+    [ "$#" -gt 0 ] ||   set -- --help
+
+    local op="$1";      shift
+    case "$op" in
+        -h|--help)      ___x_cmd help -m skill "$@";    return 0 ;;
+        ls|cat|which|prompt)
+                        ___x_cmd_skill_"$op" "$@" ;;
+        *)              N=skill M="Unknown subcmd -> $op" log:ret:64 ;;
+    esac
+}
