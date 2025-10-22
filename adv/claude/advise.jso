@@ -27,6 +27,45 @@ null
 "claude-code is a terminal-based AI programming agent developed by Anthropic.\nPowered by Claude Opus or Sonnet models, it enables semantic codebase search, patch generation, command execution, and Git operations through natural language.\nIt supports sub-agent workflows for parallelized tasks and enhances developer productivity directly from the command line.\nProject: https://github.com/anthropics/claude-code\n"
 }
 ,
+"use"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"使用指定提供商的模型启动 claude-code"
+,
+"en"
+:
+"Launch claude-code with a specified provider's model"
+}
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"使用 `x deepseek --cfg apikey=\"your key\"` 或 `export ANTHROPIC_AUTH_TOKEN=\"your key\"` 来配置 API key，以便 claude-code 能正常访问 DeepSeek 模型"
+,
+"en"
+:
+"Use `x deepseek --cfg apikey=\"your key\"` or `export ANTHROPIC_AUTH_TOKEN=\"your key\"` to configure your API key, allowing claude-code to access the DeepSeek model properly."
+}
+,
+{
+"cn"
+:
+"使用 `x moonshot --cfg apikey=\"your key\"` 或 `export ANTHROPIC_AUTH_TOKEN=\"your key\"` 来配置 API key，以便 claude-code 能正常访问 kimi k2 模型"
+,
+"en"
+:
+"Use `x moonshot --cfg apikey=\"your key\"` or `export ANTHROPIC_AUTH_TOKEN=\"your key\"` to configure your API key, allowing claude-code to access the kimi k2 model properly."
+}
+]
+,
 "deepseek|ds"
 :
 {
@@ -42,27 +81,13 @@ null
 "Launch claude-code and connect to the DeepSeek model."
 }
 ,
-"#tip"
-:
-[
-{
-"cn"
-:
-"使用 `x deepseek --cfg apikey=\"your key\"` 或 `export ANTHROPIC_AUTH_TOKEN=\"your key\"` 来配置 API key，以便 claude-code 能正常访问 DeepSeek 模型"
-,
-"en"
-:
-"Use `x deepseek --cfg apikey=\"your key\"` or `export ANTHROPIC_AUTH_TOKEN=\"your key\"` to configure your API key, allowing claude-code to access the DeepSeek model properly."
-}
-]
-,
 "#tldr"
 :
 [
 {
 "cmd"
 :
-"x claude ds"
+"x claude use ds"
 ,
 "cn"
 :
@@ -92,17 +117,7 @@ null
 ,
 "#tip"
 :
-[
-{
-"cn"
-:
-"使用 `x moonshot --cfg apikey=\"your key\"` 或 `export ANTHROPIC_AUTH_TOKEN=\"your key\"` 来配置 API key，以便 claude-code 能正常访问 kimi k2 模型"
-,
-"en"
-:
-"Use `x moonshot --cfg apikey=\"your key\"` or `export ANTHROPIC_AUTH_TOKEN=\"your key\"` to configure your API key, allowing claude-code to access the kimi k2 model properly."
-}
-]
+null
 ,
 "#tldr"
 :
@@ -110,7 +125,7 @@ null
 {
 "cmd"
 :
-"x claude kimi"
+"x claude use kimi"
 ,
 "cn"
 :
@@ -121,6 +136,7 @@ null
 "Launch claude-code and connect to the kimi k2 model."
 }
 ]
+}
 }
 ,
 "router"
@@ -328,7 +344,7 @@ null
 ,
 "#exec:stdout"
 :
-"xrc claude;___x_cmd_claude___advise_skill_ll"
+"___x_cmd skill --advise_list_full"
 }
 }
 ,
@@ -380,7 +396,7 @@ null
 ,
 "#exec:stdout"
 :
-"xrc claude;___x_cmd_claude___advise_skill_ls"
+"___x_cmd skill --advise_list_active \".claude/skills\" \"$HOME/.claude/skills\""
 }
 }
 ,
@@ -464,9 +480,7 @@ null
 "#subcmd:Enhancement"
 :
 [
-"deepseek|ds"
-,
-"kimi"
+"use"
 ,
 "router"
 ,

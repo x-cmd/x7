@@ -1,5 +1,5 @@
 
-xrc:mod:lib     gemini    cli/setup
+xrc:mod:lib     gemini    cli/setup cli/skill
 ___x_cmd_gemini_cli(){
     [ $# -gt 0 ]    ||  set -- --runcmd
 
@@ -9,6 +9,7 @@ ___x_cmd_gemini_cli(){
         --|--runmain)   ___x_cmd_gemini_cli___runmain      "$@" ;;
         --runcmd)       ___x_cmd_gemini_cli___runcmd        "$@" ;;
         setup)          ___x_cmd_gemini_cli___setup         "$@" ;;
+        skill)          ___x_cmd_gemini_cli___skill         "$@" ;;
         *)              ___x_cmd_gemini_cli___runmain "$op" "$@" ;;
     esac
 }

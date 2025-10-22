@@ -10,7 +10,7 @@ e45c46eebd0a63a9fb942f8f1ae3e3dcdb3c30c9 arp main NULL
 0d59fb8df36894c460dee371e4cdfcbaa0e2405c ascii main NULL
 bd7323017ba35e9eff5fffe702b8414c4b639bbe asdf main NULL
 ed8cbefbe47baa72de9eac17742f831499a12471 assert main NULL
-d49ce4967aa7351263da73292fc1878dd2cf9f29 aur main NULL
+d3b84be27fe59609815d9de7ba80a4d65e7c2f59 aur main NULL
 001e72a8ef3d25c5ae612f01ba732d74901ae911 awk main NULL
 551af6ae3114f48ee1da2f1ed91cc3ef93153bc4 bakman main NULL
 386a2f4a1071a643524daa83de8aeb610bbbe76c boot main NULL
@@ -36,14 +36,14 @@ ce09bd8120645999e35a7edf9b7d9fe836ec1529 cacert main NULL
 547d8008e32f0f0dd242900d35ab280dcf3cbffa chat main NULL
 87c98ca9b8dd920c1868440986b4e1d0261e1c8b choco main NULL
 8aedc61fca339913d608255c64e657bba8d0ca5a cht main NULL
-10e25d204c854f94567dd8ca6b5f7177cb0dd223 claude main NULL
+dd1ab8f73c8e399507ca67e94ed03d792f3efc3a claude main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
 6a88c9eb4607bcb2c0eb235dcf312447fc1deb31 clear main NULL
 8c9c6e30c1af9e7470dd51a6cb5beda309cb8896 cmdnotfound main NULL
 f73c95541663768aa925f06efd27f165532b4e7c co main NULL
 1817174a77ee568c65f9e6b0bdc8e6f5444e66ed coco main NULL
 388bbac8a84de658af8178c462a9db51173c3481 code main NULL
-295945f113024eeabaec81f89132c837eddd2461 codex main NULL
+ca00e569383ced7d13b61ec81d235eb2311cc624 codex main NULL
 f8c12a06116b750381f0fe34f4a2b16312c6a7e4 codi main NULL
 16d0e3e937534d9844c89d62a21b0c5c074eae22 coin main NULL
 d035fafc6b5f93a209548bba52cbe1adc791ea51 colr main NULL
@@ -100,7 +100,7 @@ f8c8680a2467a2b8741cb7dfd6df11474945bcbc gawk main NULL
 afc62654b01403e265ab32efbe00fa9c4deb9a7d gcal main NULL
 c7e7455b4779ad4bf0f3d2ccd97f0a7df86fdb48 gcode main NULL
 dcbbd3beb270e31be94dd3d5a37781fa218bd7ce gddy main NULL
-7b6387ba8b06d7e2819ef3f7a01f5f398c7dc4e0 gemini main NULL
+36fdcef1aeafc409c3e5032e2cf9d6e6f6535beb gemini main NULL
 94974d50e95b11625c9fa2e37562d0896222e8ac gh main NULL
 3bcdb7a702ddbb99bc13ebc34a821416b940e5a3 git main NULL
 05d93fce44eb99382ff7aa926a6067dfcd0bb805 gitb main NULL
@@ -173,7 +173,7 @@ cd49fccfc29d8011d6c4789a52d1238143c15cdf locale main NULL
 fdcd8945ae17bfee37d3a8601d7f6b1ccfa397a0 log main NULL
 d309af0b3aa435176298c8225c295492a66bb85c logvis main NULL
 af8a7b08f0aafe4bfc06ba4cfbb0c851747dfcfe ls main NULL
-ccfdeff819d2e2e78c260567209776b791a3f9f6 lsio main NULL
+eb039a1998dde00a27646c2b648a1e353829027d lsio main NULL
 1d630a5720aa21c26ccdc87df26a1f723ab66887 lsof main NULL
 a8f640001ba06d8ea9cfae9fd2a758c68a765575 lua main NULL
 0d30f3c5df1aaf15a7bc243e7e07502301ca15c5 luarocks main NULL
@@ -267,7 +267,7 @@ f18d8cc6f740fc8d3f79db856650e85df3e2284c seq main NULL
 9d0616436281aefc646590cf22c3165a69e9b1c2 shodan main NULL
 6eba1d26614b577b274ffcfe4436886f11bf2ba0 shortcut main NULL
 12374e728a940f698a5ee2e41ac2ff0e835a06ad siliconflow main NULL
-5f88bf3627b26fb6af4cafde95c2e06b4dc74324 skill main NULL
+2f189c79854248477822d5e3912d82b396e411b7 skill main NULL
 3a7f3033ca9e4aaa5915c28986cc12b2023790a4 skopeo main NULL
 73160adc8f2da181e8ebe3ddd050e461b6302a37 slack main NULL
 193a8b8fdcb5f56752fac433986612405ae3898d sleep main NULL
@@ -311,7 +311,7 @@ c146bbc34bddaa472fe143204a839244988b4ddc uninstall main NULL
 4b4a2f0d115ffb5f7e7ed0077ad9ba57cc675b5b url main NULL
 5746198bc5ef17bce1caf6976af66d4920a830c3 user main NULL
 cc899ef04cf4e5dbe1861586e19d965596e86159 val main NULL
-814ba22f8a19071916a5dc63639b389e685bbe43 version main NULL
+faba37fdee3bc93373d142d54db01c84011e87cb version main NULL
 65332d8ea26349e0bf3df358fc98f30ba7c7af6d vim main NULL
 3735c5595eb0b481771548397bcffacf43c8184a wchar main NULL
 aeadb4832dae44fe69de904e210c10ff21057a8f websrc main NULL

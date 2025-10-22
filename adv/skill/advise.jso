@@ -23,7 +23,7 @@ null
 "管理使用 Agent Skills 来改进 LLM 执行特定任务的方式"
 }
 ,
-"ls"
+"ll"
 :
 {
 "#desc"
@@ -31,11 +31,11 @@ null
 {
 "cn"
 :
-"列出所有可用的 Skill 的简短片段"
+"列出所有的 Skill 的简短片段"
 ,
 "en"
 :
-"List short snippets of all available Skills"
+"List short snippets of all Skills"
 }
 }
 ,
@@ -144,6 +144,10 @@ null
 }
 ]
 }
+,
+"prompt"
+:
+null
 ,
 "#tag"
 :

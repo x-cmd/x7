@@ -8,26 +8,4 @@ ___x_cmd_gemini_cli___setup(){
     ___x_cmd_cmds cp -rf "$___X_CMD_ROOT_MOD/gemini/lib/data/commands" "$dir" || return $?
 
     gemini:info "Setup x-cmd complete. You can now use /x command in  Gemini CLI"
-
-    ___x_cmd_gemini_cli___setup___skill
-
-    local x_="$dir/GEMINI.md"
-    ___x_cmd_gemini_cli___setup___getfp
-    local fp=$x_
-
-    gemini:info "Setting up x-cmd skill to Gemini CLI -> $fp"
-    ___x_cmd ensurefp "$fp"         || return $?
-    ___x_cmd skill prompt >> "$fp"  || return $?
-
-    gemini:info "Setup x-cmd complete"
-
-}
-
-___x_cmd_gemini_cli___setup___getfp(){
-    if [ -f "$dir/settings.json" ]; then
-        local fname
-        fname="$(___x_cmd jq -r '.context.fileName.[0]' "$dir/settings.json")"
-        [ "$fname" != "null" ] || return
-        x_="$dir/$fname"
-    fi
 }
