@@ -1,6 +1,6 @@
 # shellcheck shell=dash
 
-___x_cmd_gemini_cli___setup(){
+___x_cmd_gemini_cli_setup(){
     gemini:info "Setting up x-cmd tools to Gemini-Cli"
 
     local dir="$HOME/.gemini"

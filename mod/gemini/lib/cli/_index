@@ -6,10 +6,10 @@ ___x_cmd_gemini_cli(){
     local op="$1";      shift
     case "$op" in
         -h|--help)      ___x_cmd help -m gemini cli         "$@"; return 0 ;;
-        --|--runmain)   ___x_cmd_gemini_cli___runmain      "$@" ;;
+        setup)          ___x_cmd_gemini_cli_setup           "$@" ;;
+        skill)          ___x_cmd_gemini_cli_skill           "$@" ;;
+        --|--runmain)   ___x_cmd_gemini_cli___runmain       "$@" ;;
         --runcmd)       ___x_cmd_gemini_cli___runcmd        "$@" ;;
-        setup)          ___x_cmd_gemini_cli___setup         "$@" ;;
-        skill)          ___x_cmd_gemini_cli___skill         "$@" ;;
         *)              ___x_cmd_gemini_cli___runmain "$op" "$@" ;;
     esac
 }
