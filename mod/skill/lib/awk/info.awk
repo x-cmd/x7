@@ -10,9 +10,6 @@ NR == 1 {
     next
 }
 $1 == id {
-    print c_highlight "=== Skill Details ===" c_reset
-    print ""
-
     # Main info section
     print c_key "ID:" c_reset "          " c_val $1 c_reset
     print c_key "Name:" c_reset "        " c_val $5 c_reset
