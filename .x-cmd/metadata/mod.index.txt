@@ -33,7 +33,7 @@ ce09bd8120645999e35a7edf9b7d9fe836ec1529 cacert main NULL
 e616723ddb8dffa52106f574fcb53e02f5c11c41 ccmd main NULL
 3ca8aa4a0a30969b33cb7c817d33d2f5e6f65107 cd main NULL
 414ffecfc89837743726cb8c5b8e1c26698f397d cfgy main NULL
-7b3167876ba1c0be4a38755127aebd55c77e15ac chat main NULL
+1363138c605ff0dbe67fd92f26b3a06d8f4c560b chat main NULL
 87c98ca9b8dd920c1868440986b4e1d0261e1c8b choco main NULL
 8aedc61fca339913d608255c64e657bba8d0ca5a cht main NULL
 15f6fa7ce2fd4a1f80dac8fbb9ca456369ec76a2 claude main NULL
@@ -313,7 +313,7 @@ c146bbc34bddaa472fe143204a839244988b4ddc uninstall main NULL
 4b4a2f0d115ffb5f7e7ed0077ad9ba57cc675b5b url main NULL
 5746198bc5ef17bce1caf6976af66d4920a830c3 user main NULL
 cc899ef04cf4e5dbe1861586e19d965596e86159 val main NULL
-3cbea761447e141c40a171c4c05b707717964531 version main NULL
+1758f1c09256dfe8d2506ead24d063eb8b2ca1cc version main NULL
 65332d8ea26349e0bf3df358fc98f30ba7c7af6d vim main NULL
 3735c5595eb0b481771548397bcffacf43c8184a wchar main NULL
 33f558eb7eaa8277c64f888a82d2d8cbe2a41381 websrc main NULL

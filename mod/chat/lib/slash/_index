@@ -78,6 +78,7 @@ ___x_cmd_chat_slash_prompt_ls(){
         fi
 
         for i in "$@"; do
+            [ -d "$i" ] || continue
             (
                 for j in "$i"/*.md; do
                     printf "%s\n" "$j"
@@ -87,7 +88,7 @@ ___x_cmd_chat_slash_prompt_ls(){
     } 2>/dev/null | while read -r l; do
         name="${l##*/}"
         name="${name%.md}"
-        x_=; ___x_cmd_chat_slash_prompt_get_desc_from_fp_ "$l"
+        x_=; ___x_cmd_chat_slash_prompt_get_desc_from_fp_ "$l" || continue
         printf "/%s\t%s\n" "${name}" "${x_}"
     done
 }
