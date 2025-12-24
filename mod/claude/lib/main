@@ -17,6 +17,7 @@ ___x_cmd_claude___main(){
         # via, or as, instead of use ...
         via|use)       ___x_cmd_claude_use              "$@" ;;
 
+        or|openrouter)  ___x_cmd_claude_openrouter      "$@" ;;
         ds|deepseek)    ___x_cmd_claude_ds              "$@" ;;
         kimi)           ___x_cmd_claude_kimi            "$@" ;;
         glm|zhipu)      ___x_cmd_claude_zhipu           "$@" ;;
