@@ -29,7 +29,7 @@ ce09bd8120645999e35a7edf9b7d9fe836ec1529 cacert main NULL
 0e6f06b99d0d5ccd007e5dab737a8f0d179cb574 cat main NULL
 570b7803ebced6403f044d96802d9db3b758b3ba cawk main NULL
 95dc9c02ee66ee9934e8411c3df4d169081bf1d0 cb main NULL
-1d4de4b6ad3f5563e877515ff68d752064e1961a ccal main NULL
+8733c57d8e80f3c45d39cb712edb954f9b21536d ccal main NULL
 e616723ddb8dffa52106f574fcb53e02f5c11c41 ccmd main NULL
 3ca8aa4a0a30969b33cb7c817d33d2f5e6f65107 cd main NULL
 414ffecfc89837743726cb8c5b8e1c26698f397d cfgy main NULL
@@ -282,7 +282,7 @@ d8d07966d07d5754ab265af66b530cd04ddd520f smart main NULL
 524571aa4d2af1f5f821dee704c07c7c05ce192a starship main NULL
 3bb1defc2eed56dd1231eb35b5a5f9ece2b4ed1f stat main NULL
 ddc5d6849617cc70120a4e41b260f01c98b06f01 str main NULL
-9002cdcdd26dcabae6f4fb23e6ceef14edcf40a7 sudo main NULL
+ffc6921b86740c19b9d1cea047b2804980f40502 sudo main NULL
 7e7fa8059d0995bd3869bea7763008dd66d6ff7d sysctl main NULL
 0d60b382b2dbccc087497569ca8a458311a78242 tap main NULL
 7e25d6baabc0a41bbf16f08818d3a40bdcadd931 tcsh main NULL
@@ -313,7 +313,7 @@ c146bbc34bddaa472fe143204a839244988b4ddc uninstall main NULL
 4b4a2f0d115ffb5f7e7ed0077ad9ba57cc675b5b url main NULL
 5746198bc5ef17bce1caf6976af66d4920a830c3 user main NULL
 cc899ef04cf4e5dbe1861586e19d965596e86159 val main NULL
-697db8df36e71106c0668ae38127daf4010814c1 version main NULL
+25d1e78d068314ff6c060bce0a78493a82c694a3 version main NULL
 65332d8ea26349e0bf3df358fc98f30ba7c7af6d vim main NULL
 3735c5595eb0b481771548397bcffacf43c8184a wchar main NULL
 33f558eb7eaa8277c64f888a82d2d8cbe2a41381 websrc main NULL
