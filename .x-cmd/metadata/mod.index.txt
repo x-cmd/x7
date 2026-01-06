@@ -36,7 +36,7 @@ ce09bd8120645999e35a7edf9b7d9fe836ec1529 cacert main NULL
 41f25bde180ed796ac69ebd940ddf48d5b05573c chat main NULL
 87c98ca9b8dd920c1868440986b4e1d0261e1c8b choco main NULL
 8aedc61fca339913d608255c64e657bba8d0ca5a cht main NULL
-fadb6721124a38fab25c5e44f5118b0e5416c9be claude main NULL
+2dad2c337683bb7bd9f28b4a5ef2eede8500b9a9 claude main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
 6a88c9eb4607bcb2c0eb235dcf312447fc1deb31 clear main NULL
 8c9c6e30c1af9e7470dd51a6cb5beda309cb8896 cmdnotfound main NULL
@@ -46,7 +46,7 @@ c8245e8d44650c4731c37286371881d6af689f71 co main NULL
 d7c48a38b7568948aa5a0a96b5c366a17c1ae197 codex main NULL
 f8c12a06116b750381f0fe34f4a2b16312c6a7e4 codi main NULL
 16d0e3e937534d9844c89d62a21b0c5c074eae22 coin main NULL
-69226fa648b8a0ffbe24b8eff76f9a85c3657a94 coincap main NULL
+b4b9a4567db83a833812976298c5c9eab501c6b5 coincap main NULL
 d035fafc6b5f93a209548bba52cbe1adc791ea51 colr main NULL
 76ebcc7c32515baa112232a61d316b74c1ee6a42 cosmo main NULL
 746c38cac8e4d2c5447f4c4531239635769c6daa cowrie main NULL
@@ -314,7 +314,7 @@ c146bbc34bddaa472fe143204a839244988b4ddc uninstall main NULL
 4b4a2f0d115ffb5f7e7ed0077ad9ba57cc675b5b url main NULL
 5746198bc5ef17bce1caf6976af66d4920a830c3 user main NULL
 cc899ef04cf4e5dbe1861586e19d965596e86159 val main NULL
-25d1e78d068314ff6c060bce0a78493a82c694a3 version main NULL
+aad8fc18984ad67e8fc8aa419896d9192a90f281 version main NULL
 65332d8ea26349e0bf3df358fc98f30ba7c7af6d vim main NULL
 3735c5595eb0b481771548397bcffacf43c8184a wchar main NULL
 33f558eb7eaa8277c64f888a82d2d8cbe2a41381 websrc main NULL
