@@ -36,6 +36,7 @@ END{
     print last_id " " first_date " " last_date
 }
 '   | while read -r l_id l_last_date l_first_date; do
+        [ -n "$l_id" ] || continue
         stats_file="$dir/$l_id/stats.yml"; topic=""
         content_file="$dir/$l_id/$l_first_date/chat.request/content"
         if [ -f "$stats_file" ]; then

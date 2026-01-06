@@ -1,12 +1,18 @@
 
 ___x_cmd_claude_usage_projects(){
-    local source="${1:-"$HOME/.claude/projects"}"
+    local source="${1:-"$___X_CMD_CLAUDE_CODE_DATA_PATH"}"
     while [ $# -gt 0 ]; do
         case "$1" in
             -h|--help)          ___x_cmd help -m claude usage projects ; return 0 ;;
             *)                  break ;;
         esac
     done
+
+    [ -d "$source" ] ||{
+        claude:error "$source directory not found. Cannot retrieve Claude Code usage logs."
+        return 1
+    }
+
     {
         printf "%s,%s,%s,%s,%s,%s,%s,%s\n" \
             "project" "models" "cost" "input_tokens" \
@@ -20,6 +26,7 @@ ___x_cmd_claude_usage_projects(){
 
 ___x_cmd_claude_usage_project_token_(){
     local project="$1"
+    [ -d "$project" ] || N=claude M="$project directory not found. Cannot retrieve Claude Code usage logs." log:ret:1
     ___x_cmd_cmds find "$project" -maxdepth 2 -type f -exec cat {} + \
         | ___x_cmd jq '
             select(
@@ -113,6 +120,6 @@ ___x_cmd_claude_usage_projects_(){
     local source="${1}"
     local project=
     ___x_cmd fsiter "$source" | while read -r project; do
-        ___x_cmd_claude_usage_project_ "$source/$project"
+        ___x_cmd_claude_usage_project_ "$source/$project" || return $?
     done
 }

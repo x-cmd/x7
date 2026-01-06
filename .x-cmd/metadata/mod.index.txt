@@ -33,10 +33,10 @@ ce09bd8120645999e35a7edf9b7d9fe836ec1529 cacert main NULL
 2beaae645a96ae87c4b09f6dbc542cce7815daee ccmd main NULL
 8f9003fe90ce2c8108774fb7fe4646e75e65ad44 cd main NULL
 414ffecfc89837743726cb8c5b8e1c26698f397d cfgy main NULL
-41f25bde180ed796ac69ebd940ddf48d5b05573c chat main NULL
+51d26cd9fd17f58801e8b5ef5c028c50ab5d1add chat main NULL
 87c98ca9b8dd920c1868440986b4e1d0261e1c8b choco main NULL
 8aedc61fca339913d608255c64e657bba8d0ca5a cht main NULL
-2dad2c337683bb7bd9f28b4a5ef2eede8500b9a9 claude main NULL
+c2ad6411cba96be8155f3cd88420a87a3d25e5ff claude main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
 6a88c9eb4607bcb2c0eb235dcf312447fc1deb31 clear main NULL
 8c9c6e30c1af9e7470dd51a6cb5beda309cb8896 cmdnotfound main NULL
@@ -46,7 +46,7 @@ c8245e8d44650c4731c37286371881d6af689f71 co main NULL
 d7c48a38b7568948aa5a0a96b5c366a17c1ae197 codex main NULL
 f8c12a06116b750381f0fe34f4a2b16312c6a7e4 codi main NULL
 16d0e3e937534d9844c89d62a21b0c5c074eae22 coin main NULL
-b4b9a4567db83a833812976298c5c9eab501c6b5 coincap main NULL
+794381cb45b9459494627f894e1ae21c5961f5ea coincap main NULL
 d035fafc6b5f93a209548bba52cbe1adc791ea51 colr main NULL
 76ebcc7c32515baa112232a61d316b74c1ee6a42 cosmo main NULL
 746c38cac8e4d2c5447f4c4531239635769c6daa cowrie main NULL
@@ -168,7 +168,7 @@ a047f40225fbc7609ccd389386b859a2e17d11a4 link main NULL
 e3cf1ed8538cf85ead6cca18723dc4551945247e list main NULL
 1ec4c9041a3a0c8d080330796920f937886d1431 ll main NULL
 2be4fb9803de5b34702fdbfcea3335c261cdbdc8 llist main NULL
-e39beecf4257dc5a80ab5cb8c8b2ee8f07a83866 llmf main NULL
+3a0eb07167f305099c6d079634653a41bc510b7c llmf main NULL
 ed94156ba8053a52d5884bf62a15f90d7748301b lms main NULL
 cd49fccfc29d8011d6c4789a52d1238143c15cdf locale main NULL
 fdcd8945ae17bfee37d3a8601d7f6b1ccfa397a0 log main NULL
@@ -181,7 +181,7 @@ a8f640001ba06d8ea9cfae9fd2a758c68a765575 lua main NULL
 018e8a8cfb9dbd47bb8db36353d8e87b2e995cb8 lynis main NULL
 9f039bfb5027f0fa2a2683f20c17568292a5665f ma main NULL
 45cb4d1f3df26b8ba5016cc2c89b01ffe3e06a9f mac main NULL
-28199298d54e04b7ff63c12eb4c37286ef24a0da man main NULL
+7c8061d5b22a544a5d3a73632ff05f702bcc23dc man main NULL
 a6af2996b4683eca0d392bb7fe1a2a6160e8737d mankier main NULL
 b92d1e66d21b18dab1dab1f2645d286b480318d4 mawk main NULL
 94f6c6dc57b999f50e8161a5bcf92ebb506ff23e md main NULL
