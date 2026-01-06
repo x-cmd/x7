@@ -1269,11 +1269,11 @@ true
 {
 "cn"
 :
-"管理 Claude Code 的状态栏组件"
+"管理 Claude Code 的状态栏组件（等同于 x theme statusline）"
 ,
 "en"
 :
-"Manage the status line component for Claude Code"
+"Manage the status line component for Claude Code (equivalent to `x theme statusline`)"
 }
 ,
 "setup"
@@ -1406,6 +1406,20 @@ true
 "en"
 :
 "Use Claude Code"
+}
+,
+{
+"cmd"
+:
+"x claude stl setup"
+,
+"cn"
+:
+"设定 Claude Code 状态栏使用 el 主题（默认主题）"
+,
+"en"
+:
+"Set up the Claude Code statusline using the el theme (default)"
 }
 ,
 {
