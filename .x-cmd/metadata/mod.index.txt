@@ -36,7 +36,7 @@ ce09bd8120645999e35a7edf9b7d9fe836ec1529 cacert main NULL
 51d26cd9fd17f58801e8b5ef5c028c50ab5d1add chat main NULL
 87c98ca9b8dd920c1868440986b4e1d0261e1c8b choco main NULL
 8aedc61fca339913d608255c64e657bba8d0ca5a cht main NULL
-c2ad6411cba96be8155f3cd88420a87a3d25e5ff claude main NULL
+eeb4033da4e9cc8053b6ecd3e130240fcfc8fe8a claude main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
 6a88c9eb4607bcb2c0eb235dcf312447fc1deb31 clear main NULL
 8c9c6e30c1af9e7470dd51a6cb5beda309cb8896 cmdnotfound main NULL
@@ -46,7 +46,7 @@ c8245e8d44650c4731c37286371881d6af689f71 co main NULL
 d7c48a38b7568948aa5a0a96b5c366a17c1ae197 codex main NULL
 f8c12a06116b750381f0fe34f4a2b16312c6a7e4 codi main NULL
 16d0e3e937534d9844c89d62a21b0c5c074eae22 coin main NULL
-794381cb45b9459494627f894e1ae21c5961f5ea coincap main NULL
+68cd2756f12c7e4463f40570707292908428bfc0 coincap main NULL
 d035fafc6b5f93a209548bba52cbe1adc791ea51 colr main NULL
 76ebcc7c32515baa112232a61d316b74c1ee6a42 cosmo main NULL
 746c38cac8e4d2c5447f4c4531239635769c6daa cowrie main NULL
@@ -139,7 +139,7 @@ ddb8914d699b08b3c872db6fea0d32ce1329fb26 hub main NULL
 bfff022a0cda02c33d84cc920c309ef9225b991c iconv main NULL
 073462b6f58c9ec58f8b02d48a5eb9689b3a3ea7 id main NULL
 b543d629a647851e7df12b26b7655964d88b1838 ifconfig main NULL
-8075cde39c82fa64ac14ac269517eedcc57869e7 install main NULL
+c02a3f6cc2d0d6ad709dbaead0aa5303757acd0e install main NULL
 afdee276c5b66ce74e7aa07a75d5404f0396bf36 instance main NULL
 90afade1f79ed6c92e6e1d20d4fb76a6e903373b ip main NULL
 5618501da8dc6e1c73414142bb7ad87d87ef9666 is main NULL
@@ -169,7 +169,7 @@ e3cf1ed8538cf85ead6cca18723dc4551945247e list main NULL
 1ec4c9041a3a0c8d080330796920f937886d1431 ll main NULL
 2be4fb9803de5b34702fdbfcea3335c261cdbdc8 llist main NULL
 3a0eb07167f305099c6d079634653a41bc510b7c llmf main NULL
-ed94156ba8053a52d5884bf62a15f90d7748301b lms main NULL
+598b37825c4c3b4661ec8015c39a209c86bbd3de lms main NULL
 cd49fccfc29d8011d6c4789a52d1238143c15cdf locale main NULL
 fdcd8945ae17bfee37d3a8601d7f6b1ccfa397a0 log main NULL
 d309af0b3aa435176298c8225c295492a66bb85c logvis main NULL
@@ -255,7 +255,7 @@ beb8765940986db3735bde402c54999624b97472 root main NULL
 e1371b40d7a42eeca0cf144f3ba929c721a286e7 route main NULL
 cb509b17c1933d817c387ed1851f582cefe9b535 ruby main NULL
 cd490a7ed59de6cfa8deb26d7e7ead8bea5c5986 sb main NULL
-787a6f7fd8b6b9527034d43c293f7bf89fac6dca scoop main NULL
+7097be99d00660ca66f9c5ac6d522d3540f69d83 scoop main NULL
 fb8dd35b1362bea9b88ad9b9a6b6a5988b18290e scorecard main NULL
 ef55ea27085f71646a938b913cf68f6f5bf43878 scotty main NULL
 d64ad733bea3a4a0e413cabb7bf8f7c7973c54d2 screen main NULL

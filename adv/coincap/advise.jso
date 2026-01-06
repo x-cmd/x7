@@ -27,6 +27,20 @@ null
 "CoinCap 是一个提供 1,000 多种加密货币实时行情的平台。\n该模块集成了 CoinCap API，将 CoinCap 丰富的数据源直接带入终端，为用户提供沉浸式的交互体验和灵活的数据查询能力，支持 JSON/CSV 输出，便于脚本开发与自动化分析。\n"
 }
 ,
+"#tip"
+:
+[
+{
+"en"
+:
+"Get CoinCap apikey: https://pro.coincap.io/dashboard"
+,
+"cn"
+:
+"获取 CoinCap apikey: https://pro.coincap.io/dashboard"
+}
+]
+,
 "#tldr"
 :
 [

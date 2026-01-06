@@ -14,6 +14,10 @@ ___x_cmd_claude_usage_monthly(){
         esac
     done
 
+    [ -d "$___X_CMD_CLAUDE_CODE_DATA_PATH" ] ||{
+        claude:error "$___X_CMD_CLAUDE_CODE_DATA_PATH directory not found. Cannot retrieve Claude Code usage logs."
+        return 1
+    }
 
     [ -n "$month_start" ]    || {
         local x_=; ___x_cmd_claude_usage_util_offset_month_ "$month" -6
