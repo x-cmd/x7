@@ -4,7 +4,7 @@
 
 ___x_cmd log init brew
 xrc mirror
-xrc:mod:lib     brew        ls util envfile/_index __xmirror/_index __xproxy analytics/_index install snap
+xrc:mod:lib     brew        ls la util envfile/_index __xmirror/_index __xproxy analytics/_index install snap
 
 ___x_cmd_brew___main(){
     [ $# -gt 0 ]    ||  set - la
@@ -22,7 +22,7 @@ ___x_cmd_brew___main(){
     case "$op" in
         i|install)          ___x_cmd_brew___exec install    "$@" ;;
         ls)                 ___x_cmd_brew_ls                "$@" ;;
-        la)                 ___x_cmd_brew_ls -a             "$@" ;;
+        la)                 ___x_cmd_brew_la                "$@" ;;
 
         mirror|--xmirror)   ___x_cmd_brew___mirror          "$@" ;;
         proxy|--xproxy)     ___x_cmd_brew___xproxy          "$@" ;;
@@ -31,10 +31,9 @@ ___x_cmd_brew___main(){
         # fz)                 ___x_cmd_brew___fz              "$@" ;;
         --fzdata)           ___x_cmd_brew___fz_data         "$@" ;;
 
-        snap|info)          ___x_cmd_brew_"$op"             "$@" ;;
+        snap)               ___x_cmd_brew_"$op"             "$@" ;;
 
         --)                 ___x_cmd_brew___exec            "$@" ;;
-
 
         search|info|update|upgrade|uninstall|list|config|doctor|create|edit|help)
                             ___x_cmd_brew___exec    "$op"   "$@" ;;
@@ -47,11 +46,3 @@ ___x_cmd_brew___exec(){
     ___x_cmd_brew___xproxy run ___x_cmd_cmds brew "$@"
 }
 
-___x_cmd_brew_info(){
-    local software="$1"
-
-    case "$software" in
-        cask/*)     ___x_cmd_brew___exec info "${software#cask/}" ;;
-        *)          ___x_cmd_brew___exec info "$@" ;;
-    esac
-}
