@@ -101,7 +101,7 @@ f8c8680a2467a2b8741cb7dfd6df11474945bcbc gawk main NULL
 afc62654b01403e265ab32efbe00fa9c4deb9a7d gcal main NULL
 c7e7455b4779ad4bf0f3d2ccd97f0a7df86fdb48 gcode main NULL
 dcbbd3beb270e31be94dd3d5a37781fa218bd7ce gddy main NULL
-7100521c53dc9b44c559ad07854e5a9cba435f13 gemini main NULL
+abb6b57290f1dbdc699c781f8acf9398811b2024 gemini main NULL
 85f41d4ec8545720ea86fa4c29178c1c9b467c14 gh main NULL
 3bcdb7a702ddbb99bc13ebc34a821416b940e5a3 git main NULL
 05d93fce44eb99382ff7aa926a6067dfcd0bb805 gitb main NULL
@@ -132,7 +132,7 @@ d08874a20cc01afc642202240ebd5d8c70208bf7 history main NULL
 8d59b9602ecee6da50bff38e9c08e40990425bf5 http main NULL
 880d48088b0c026c57b395ea41729f24eec7a0d3 httpget main NULL
 d3a72bdbf2036326bc8b7d47af2e9fa1f19fab9c hua main NULL
-ddb8914d699b08b3c872db6fea0d32ce1329fb26 hub main NULL
+74fc05a150f74214b0b48d7669defd7b6c60045b hub main NULL
 1aabcce64d874ea553fb78792a5ea46d762cab04 huggingface main NULL
 11e04882ced25e3bbfe58a73d0244b0c814dbfc1 humantime main NULL
 954e6aefed4dde0bd9030dd4658ca71358ca03dc icmd main NULL
@@ -267,7 +267,7 @@ f18d8cc6f740fc8d3f79db856650e85df3e2284c seq main NULL
 9fbba9a9ef264efcaff870de2925902052443b9e set main NULL
 9e9f3dc8b432acf99421cca5e79cb5f0fc6f97b9 shim main NULL
 9d0616436281aefc646590cf22c3165a69e9b1c2 shodan main NULL
-171f6af4d2430704fda111005ead306e88b7e8d8 shortcut main NULL
+f9668d4c4fd5268c1fc330c3500661c8a525af48 shortcut main NULL
 30aa4b12830248424ce2ef08315ce49cbc236151 siliconflow main NULL
 3fc3fb687d381541a91fb16579039ddcc4161eb8 skill main NULL
 3a7f3033ca9e4aaa5915c28986cc12b2023790a4 skopeo main NULL
@@ -314,13 +314,13 @@ c146bbc34bddaa472fe143204a839244988b4ddc uninstall main NULL
 4b4a2f0d115ffb5f7e7ed0077ad9ba57cc675b5b url main NULL
 5746198bc5ef17bce1caf6976af66d4920a830c3 user main NULL
 cc899ef04cf4e5dbe1861586e19d965596e86159 val main NULL
-68cd9d8da92a9fb9ed98e34dc626afbd314b98ef version main NULL
+33c0e6bf9d6170b315ed2e1e2f6e7bca3fad2249 version main NULL
 65332d8ea26349e0bf3df358fc98f30ba7c7af6d vim main NULL
 3735c5595eb0b481771548397bcffacf43c8184a wchar main NULL
 33f558eb7eaa8277c64f888a82d2d8cbe2a41381 websrc main NULL
 379fa72d7832576da53fde8c2dbc864b20f6c00d webtop main NULL
 e24b7a33b7a2441b8589a2b01120627d6055ce0c whisper main NULL
-e600161805b5a87eb133e59e9163d47b06693f03 winget main NULL
+ea45fb33b1b605d455e55ead898e1c2f8a416433 winget main NULL
 4679c81366e1e39c524b396f2810ac5d88fc46d4 wkp main NULL
 54e1ce0310242547e1fff7417ad052e4be85bb3d writer main NULL
 e782453bb556aa486b5caa015b8f644a44e08d3d ws main NULL
