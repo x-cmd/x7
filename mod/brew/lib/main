@@ -20,7 +20,7 @@ ___x_cmd_brew___main(){
     }
 
     case "$op" in
-        i|install)          ___x_cmd_brew___exec install    "$@" ;;
+        i|install)          ___x_cmd_brew_install           "$@" ;;
         ls)                 ___x_cmd_brew_ls                "$@" ;;
         la)                 ___x_cmd_brew_la                "$@" ;;
 
@@ -35,6 +35,8 @@ ___x_cmd_brew___main(){
 
         --)                 ___x_cmd_brew___exec            "$@" ;;
 
+        u|upgrade)          ___x_cmd_brew_upgrade           "$@" ;;
+
         search|info|update|upgrade|uninstall|list|config|doctor|create|edit|help)
                             ___x_cmd_brew___exec    "$op"   "$@" ;;
 
@@ -46,3 +48,34 @@ ___x_cmd_brew___exec(){
     ___x_cmd_brew___xproxy run ___x_cmd_cmds brew "$@"
 }
 
+# If less than 1 seconds, just don't show message.
+___x_cmd_brew_upgrade(){
+    ___x_cmd_brew___exec upgrade "$@"
+    local err=$?
+
+    case "$err" in
+        0)      ___x_cmd notify '✅ brew upgrade success.' ;;
+        1)      ___x_cmd notify "🔍 brew upgrade failure [exitcode=$err]." ;;
+    esac
+
+    return $err
+}
+
+___x_cmd_brew_install(){
+    local IFS=' '
+    local args="$*"
+
+    ___x_cmd_brew___exec install "$@"
+    local err=$?
+
+    case "$#" in
+        0)      ;;
+        *)
+                case "$err" in
+                    0)      ___x_cmd notify "✅ brew install $args" ;;
+                    1)      ___x_cmd notify "🔍 Need help [exitcode=$err]: brew install $args" ;;
+                esac ;;
+    esac
+
+    return $err
+}

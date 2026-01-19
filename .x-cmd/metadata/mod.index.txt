@@ -14,7 +14,7 @@ d3b84be27fe59609815d9de7ba80a4d65e7c2f59 aur main NULL
 e92e7669999376ab1955589d37377e97b153a91a awk main NULL
 551af6ae3114f48ee1da2f1ed91cc3ef93153bc4 bakman main NULL
 386a2f4a1071a643524daa83de8aeb610bbbe76c boot main NULL
-3a772d5dadff349c28486bc8746900f50ff75544 brew main NULL
+ad4a455149ef18a36b142f064428ece2ef527ae5 brew main NULL
 4469dc0c1e6c0cf2ab957231e2e02a357f9bd6b3 browse main NULL
 b66711bb9fccf1e1235c2ec3457bce4b68dbb519 btop main NULL
 ef22d2317805bafed20a3800741c3bf5f81753e5 build main NULL
@@ -36,7 +36,7 @@ ce09bd8120645999e35a7edf9b7d9fe836ec1529 cacert main NULL
 e1ee1081c6304c50c13e06988ee486ffa74093b0 chat main NULL
 87c98ca9b8dd920c1868440986b4e1d0261e1c8b choco main NULL
 8aedc61fca339913d608255c64e657bba8d0ca5a cht main NULL
-f61af54403120d6e2088dac1c54472efe32c996b claude main NULL
+02733f98dd7dc36a4675528ba73e38c363a95213 claude main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
 6a88c9eb4607bcb2c0eb235dcf312447fc1deb31 clear main NULL
 8c9c6e30c1af9e7470dd51a6cb5beda309cb8896 cmdnotfound main NULL
@@ -96,7 +96,7 @@ e3ddc3c59abb290d46bec8d6112a944b89e141ac fkill main NULL
 cc4c5058e05373f5892a9d58eba45b704accbd42 fskv main NULL
 75d99fb5d5059ecb31301b29d4f6cffd94fb72e9 fslock main NULL
 8a68b81fd1ad06e7c95b40a400558e56a543f9f0 functor main NULL
-1b3eed90d5832fede1c95275930371c50219b9e1 fzf main NULL
+08577b70df82120f57b9f9bcd0987536c118cc93 fzf main NULL
 f8c8680a2467a2b8741cb7dfd6df11474945bcbc gawk main NULL
 afc62654b01403e265ab32efbe00fa9c4deb9a7d gcal main NULL
 c7e7455b4779ad4bf0f3d2ccd97f0a7df86fdb48 gcode main NULL
@@ -200,7 +200,7 @@ c92e22acf2c5aa2cea86f00c66f069bbcbf58717 nano main NULL
 e845256a7d35c79b0bb3d644f516d9c15ec9681f ncdu main NULL
 965ee5ef23bd7b8d147ac81e0e581986f4e19617 nets main NULL
 01c3daa748d3d914d4a3388795a402dd8bc2744a node main NULL
-2a09d905e33f6fd6c085cc4405133ee84002c3f9 notify main NULL
+46bb761385ead7eb663e063095aad4107eb74315 notify main NULL
 7f3b254ded8145e8c98cfb6eed7a3bc0e6a3f657 npm main NULL
 7a9c352f956c9d845872f27e3e83632bc98f1ac6 npx main NULL
 834d51ed405a7ffb258161eaf0191329b13f64dd nu main NULL
@@ -314,7 +314,7 @@ c146bbc34bddaa472fe143204a839244988b4ddc uninstall main NULL
 4b4a2f0d115ffb5f7e7ed0077ad9ba57cc675b5b url main NULL
 5746198bc5ef17bce1caf6976af66d4920a830c3 user main NULL
 cc899ef04cf4e5dbe1861586e19d965596e86159 val main NULL
-33c0e6bf9d6170b315ed2e1e2f6e7bca3fad2249 version main NULL
+f9c80f93022aebffa99d9eacbcb90554d9bb29ee version main NULL
 65332d8ea26349e0bf3df358fc98f30ba7c7af6d vim main NULL
 3735c5595eb0b481771548397bcffacf43c8184a wchar main NULL
 33f558eb7eaa8277c64f888a82d2d8cbe2a41381 websrc main NULL
