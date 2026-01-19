@@ -48,7 +48,7 @@ f8c12a06116b750381f0fe34f4a2b16312c6a7e4 codi main NULL
 16d0e3e937534d9844c89d62a21b0c5c074eae22 coin main NULL
 7f7158be084cafe46fd4e0a4b97d6b57014ef54a coincap main NULL
 d035fafc6b5f93a209548bba52cbe1adc791ea51 colr main NULL
-76ebcc7c32515baa112232a61d316b74c1ee6a42 cosmo main NULL
+f4b1517f994d5fb049ed614aa16c28bafb4a47b0 cosmo main NULL
 746c38cac8e4d2c5447f4c4531239635769c6daa cowrie main NULL
 351b35bfba85f8fc6cb81e5435845fc0c93210d4 cowsay main NULL
 1b66a0f7957572bb3d3da4404ab457e982b0c4ed cp main NULL
@@ -180,7 +180,7 @@ a8f640001ba06d8ea9cfae9fd2a758c68a765575 lua main NULL
 0d30f3c5df1aaf15a7bc243e7e07502301ca15c5 luarocks main NULL
 018e8a8cfb9dbd47bb8db36353d8e87b2e995cb8 lynis main NULL
 9f039bfb5027f0fa2a2683f20c17568292a5665f ma main NULL
-800f26e919aa4c24afe1a6255a714c11fd2a71ac mac main NULL
+524737c018da738e5231a68066b4cc7332e5c312 mac main NULL
 7c8061d5b22a544a5d3a73632ff05f702bcc23dc man main NULL
 a6af2996b4683eca0d392bb7fe1a2a6160e8737d mankier main NULL
 b92d1e66d21b18dab1dab1f2645d286b480318d4 mawk main NULL
