@@ -5,7 +5,7 @@ ___x_cmd_codex_skill(){
 
     local op="$1";      shift
     case "$op" in
-        info|ll|ls|add|rm|use|unuse)
+        info|ll|ls|add|rm|use|unuse|suggest)
                         ___x_cmd_codex_skill_"$op"   "$@" ;;
         -h|--help)      ___x_cmd help -m codex skill "$@" ;       return 0 ;;
         *)              N=codex M="skill not such [subcmd=$op]" log:ret:64 ;;
@@ -97,4 +97,12 @@ ___x_cmd_codex_skill_use(){
         -h|--help)              ___x_cmd help -m codex skill use ; return 0 ;;
     esac
     ___x_cmd_codex_skill_add --global "$@"
+}
+
+___x_cmd_codex_skill_suggest(){
+    case "$1" in
+        -h|--help)              ___x_cmd help -m codex skill suggest ; return 0 ;;
+    esac
+
+    ___x_cmd skill suggest --agent codex "$@"
 }

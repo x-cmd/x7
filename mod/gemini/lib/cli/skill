@@ -5,7 +5,7 @@ ___x_cmd_gemini_cli_skill(){
 
     local op="$1";      shift
     case "$op" in
-        info|ll|ls|add|rm|use|unuse)
+        info|ll|ls|add|rm|use|unuse|suggest)
                         ___x_cmd_gemini_cli_skill_"$op"   "$@" ;;
         -h|--help)      ___x_cmd help -m gemini cli skill "$@" ;       return 0 ;;
         *)              N=gemini M="skill not such [subcmd=$op]" log:ret:64 ;;
@@ -94,4 +94,9 @@ ___x_cmd_gemini_cli_skill_unuse(){
 ___x_cmd_gemini_cli_skill_use(){
     local X_help_cmd; X_help_cmd='___x_cmd help -m gemini cli skill use' help:arg:parse
     ___x_cmd_gemini_cli_skill_add --global "$@"
+}
+
+___x_cmd_gemini_cli_skill_suggest(){
+    local X_help_cmd; X_help_cmd='___x_cmd help -m gemini cli skill suggest' help:arg:parse
+    ___x_cmd skill suggest --agent gemini "$@"
 }

@@ -1323,6 +1323,22 @@ true
 }
 }
 ,
+"suggest"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"根据当前项目的上下文文件，生成推荐的 skill 列表"
+,
+"en"
+:
+"Generate recommended skills list based on the current project context files."
+}
+}
+,
 "#tldr"
 :
 [

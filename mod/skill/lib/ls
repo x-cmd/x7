@@ -59,7 +59,8 @@ ___x_cmd_skill_ls___fzapp(){
                 if [ "$x_dir" != "${x_dir#"~"}" ]; then
                     x_dir="${HOME}${x_dir#"~"}"
                 fi
-                ___x_cmd skill rm --skill-dir "$x_id"
+
+                ___x_cmd skill rm --skill-dir "$x_dir" "$x_id"
             done <<A
 $x_
 A
@@ -116,7 +117,8 @@ ___x_cmd_skill_ls___preview_unit(){
             if [ "$x_dir" != "${x_dir#"$HOME"}" ]; then
                 x_dir="~${x_dir#"$HOME"}"
             fi
-            printf "\033[0;33m%-32s\033[0;35m%-20s\033[0;36m\t%s\033[0m\n" "$x_id" "$x_dir" "$x_description"
+            printf "\033[0;33m%s\t\033[0;35m%s\t\033[0;36m\t%s\033[0m\n" "$x_id" "$x_dir" "$x_description"
+            # printf "\033[0;33m%-32s\033[0;35m%-20s\033[0;36m\t%s\033[0m\n" "$x_id" "$x_dir" "$x_description"
         done
     }
 }
