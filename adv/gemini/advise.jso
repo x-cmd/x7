@@ -1247,7 +1247,7 @@ true
 ,
 "#exec:stdout"
 :
-"___x_cmd skill --advise_list_active gemini"
+"___x_cmd skill --advise_list_active \".gemini/skills\" \"$HOME/.gemini/skills\""
 }
 }
 ,
@@ -1319,7 +1319,7 @@ true
 ,
 "#exec:stdout"
 :
-"___x_cmd skill --advise_list_active gemini"
+"___x_cmd skill --advise_list_active \"$HOME/.gemini/skills\""
 }
 }
 ,
