@@ -158,6 +158,7 @@ ___x_cmd_gram_tarrm___whileremove(){
         found="$(command realpath "$found")" || continue
         target="$found"
         [ -d "$target" ] || target="${target%/*}"
+        [ -d "$target" ] || continue
 
         case "$target" in
             /|/bin|/usr/local/bin|"$HOME"|~)
