@@ -30,6 +30,6 @@ ___x_cmd_claude_kimi(){
 
     [ -z "$endpoint" ] || endpoint="https://api.kimi.com/coding/"
 
-    ___x_cmd_claude_other___use "kimi" "$endpoint" "$apikey" "$model" "$fast_model" "$nonessential_traffic" "$@"
+    ANTHROPIC_API_KEY="" ___x_cmd_claude_other___use "kimi" "$endpoint" "$apikey" "$model" "$fast_model" "$nonessential_traffic" "$@"
 }
 

@@ -498,6 +498,82 @@ null
 "Launch claude-code and connect to the doubao model."
 }
 ,
+"#tip"
+:
+[
+{
+"cn"
+:
+"使用 `x doubao --cfg apikey=\"<your api key>\"` 或 `export ANTHROPIC_AUTH_TOKEN=\"<your api key>\"` 来配置 API key，以便 claude-code 能正常访问豆包模型"
+,
+"en"
+:
+"Use `x doubao --cfg apikey=\"<your api key>\"` or `export ANTHROPIC_AUTH_TOKEN=\"<your api key>\"` to configure your API key, allowing claude-code to access the doubao code model properly."
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x claude doubao"
+,
+"cn"
+:
+"启动 claude-code 并接入豆包模型"
+,
+"en"
+:
+"Launch claude-code and connect to the doubao model."
+}
+,
+{
+"cmd"
+:
+"x doubao --cfg"
+,
+"cn"
+:
+"使用交互模式初始化配置"
+,
+"en"
+:
+"Initialize the configuration using interactive mode"
+}
+,
+{
+"cmd"
+:
+"x doubao --cfg model=\"doubao-seed-code-preview-latest\""
+,
+"cn"
+:
+"设置默认使用 doubao-seed-code-preview-latest 模型"
+,
+"en"
+:
+"Set the default model to doubao-seed-code-preview-latest."
+}
+]
+}
+,
+"mt"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"启动 claude-code 并接入摩尔线程模型"
+,
+"en"
+:
+"Launch claude-code and connect to the  MOORE THREADS model."
+}
+,
 "--cfg"
 :
 {
@@ -600,6 +676,7 @@ true
 }
 ]
 }
+}
 ,
 "#tldr"
 :
@@ -607,21 +684,21 @@ true
 {
 "cmd"
 :
-"x claude doubao"
+"x claude mt"
 ,
 "cn"
 :
-"启动 claude-code 并接入豆包模型"
+"启动 claude-code 并接入摩尔线程模型"
 ,
 "en"
 :
-"Launch claude-code and connect to the doubao model."
+"Launch claude-code and connect to the  MOORE THREADS model."
 }
 ,
 {
 "cmd"
 :
-"x claude doubao --cfg"
+"x claude mt --cfg"
 ,
 "cn"
 :
@@ -635,18 +712,17 @@ true
 {
 "cmd"
 :
-"x claude doubao --cfg model=\"doubao-seed-code-preview-latest\""
+"x claude mt --cfg model=\"GLM-4.7\""
 ,
 "cn"
 :
-"设置默认使用 doubao-seed-code-preview-latest 模型"
+"设置默认使用 GLM-4.7 模型"
 ,
 "en"
 :
-"Set the default model to doubao-seed-code-preview-latest."
+"Set the default model to GLM-4.7"
 }
 ]
-}
 }
 ,
 "router"
@@ -2783,6 +2859,8 @@ true
 "siliconflow|sili"
 ,
 "doubao"
+,
+"mt"
 ,
 "router"
 ]

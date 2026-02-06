@@ -51,11 +51,11 @@ null
 {
 "cn"
 :
-"升级 kimi-cli 到最新版本，清除缓存确保获取最新更新"
+"升级 kimi-cli 到最新版本"
 ,
 "en"
 :
-"Upgrade kimi-cli to the latest version with cache clearing for fresh updates"
+"Upgrade kimi-cli to the latest version"
 }
 }
 ,
@@ -553,29 +553,15 @@ true
 {
 "cmd"
 :
-"x kimi --install"
+"x kimi --upgrade"
 ,
 "cn"
 :
-"安装 kimi-cli 工具"
+"升级 kimi-cli 到最新版本"
 ,
 "en"
 :
-"Install kimi-cli tool"
-}
-,
-{
-"cmd"
-:
-"x kimi init"
-,
-"cn"
-:
-"初始化 kimi 配置"
-,
-"en"
-:
-"Initialize kimi configuration"
+"Upgrade kimi-cli to the latest version"
 }
 ]
 ,
