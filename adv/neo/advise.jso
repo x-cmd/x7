@@ -24,11 +24,11 @@ null
 {
 "en"
 :
-"Neo is a system information display tool similar to neofetch.\nIt shows OS, kernel, uptime, packages, shell, desktop environment,\nwindow manager, CPU, GPU, memory and other system information\nalongside distribution ASCII art logos.\n\nThe module supports both standard and large ASCII art logos,\nmultiple display modes (mini/std/all/llm/ui), and customizable\ninformation widgets.\n"
+"Neofetch is an updated version of screenfetch, where \"neo\" means \"new\".\nX-CMD interprets it as Neo (from The Matrix). The default subcommand\n\"fetch\" provides functionality similar to neofetch.\n\nIn the long term, neo will evolve into an AI agent that assists users\nin managing and understanding their OS based on system information.\nWe will soon provide \"x neo chat\" for interactive OS assistance.\n\nCurrently, it shows OS, kernel, uptime, packages, shell, desktop\nenvironment, window manager, CPU, GPU, memory and other system\ninformation alongside distribution ASCII art logos.\nIt supports both standard and large ASCII art logos, multiple\ndisplay modes (mini/std/all/llm/ui), and customizable info widgets.\n"
 ,
 "cn"
 :
-"Neo 是一个类似 neofetch 的系统信息展示工具。\n它显示操作系统、内核、运行时间、软件包、Shell、\n桌面环境、窗口管理器、CPU、GPU、内存等系统信息，\n并配以发行版 ASCII 艺术 Logo。\n\n该模块支持标准和大尺寸 ASCII 艺术 Logo、\n多种显示模式（mini/std/all/llm/ui）以及可定制的信息组件。\n"
+"Neofetch 是 screenfetch 的更新版本，其中 neo 意为 \"new\"。\nX-CMD 将其理解为《黑客帝国》中的 Neo。提供的默认子命令\n\"fetch\" 能够实现类似 neofetch 的功能。\n\n从长远来说，neo 将发展成一个根据系统信息协助用户管理和\n理解操作系统的 AI 智能体。稍后我们将提供 \"x neo chat\"\n以实现交互式的系统协助。\n\n目前，它显示操作系统、内核、运行时间、软件包、Shell、\n桌面环境、窗口管理器、CPU、GPU、内存等系统信息，\n并配以发行版 ASCII 艺术 Logo。支持标准和大尺寸 ASCII 艺术 Logo、\n多种显示模式（mini/std/all/llm/ui）以及可定制的信息组件。\n"
 }
 ,
 "#tip"

@@ -37,7 +37,7 @@ b7883d003c2aabf771653678ccf7cc210d2009f2 cf main NULL
 8598be35947bab4e29c7f96ed4abaafeec6ee139 chat main NULL
 87c98ca9b8dd920c1868440986b4e1d0261e1c8b choco main NULL
 8aedc61fca339913d608255c64e657bba8d0ca5a cht main NULL
-abef7568f0f644f9854a09550bdfeb3170e6f599 claude main NULL
+780885ada55216b36128c179583ba546a553a0ec claude main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
 6a88c9eb4607bcb2c0eb235dcf312447fc1deb31 clear main NULL
 8c9c6e30c1af9e7470dd51a6cb5beda309cb8896 cmdnotfound main NULL
@@ -130,7 +130,7 @@ c31d4af85d132a3210855cb8a5e41f4f586b79f1 hn main NULL
 2dec7daea07626047a970c2f01f0e57fe376a6f2 hok main NULL
 7f6cd5a463a020b3bc0f81f75b45e9d9587701d3 home main NULL
 78f26312bd7e5f7398ae1cc3a104d648a62c9b40 host main NULL
-1f79c548d06bedae869d8c5a36d69b7f06edc22a hotkey main NULL
+edabff02aeca8f21107e5f81d0b423eda733a365 hotkey main NULL
 171b44aa96e9e1ba82db44aa3739e7b39eaa6671 htag main NULL
 45afeb491ee89dba9fed5cb77bc964c52c41a679 html main NULL
 03d2b771de6c2ecc9c6154e7adef67ffef37f9d6 htop main NULL
@@ -161,7 +161,7 @@ df63938ad4ffa05b98a0e5986dca5ca7b4f91f85 jsch main NULL
 ef004ce5936688c9c1c3a7987853640346080cbe jsr main NULL
 46518bfa071260d45fb918c9c335be2b279b3976 kev main NULL
 3887f45653781d2ce7179503dbec3f339419769d kill main NULL
-b5a998f03e9f0202b3b59700b667e66055ad4996 kimi main NULL
+9bdfdc810ecda702971d152fea67bc37c6e1219a kimi main NULL
 c3ce5fc3efdb8c89b6d8371dd45f80032e3e8428 kotlin main NULL
 2a35e1659bd84185a603cfe3b54c634ce5283040 lang main NULL
 72f4f4cd6a90fbcd22af63d4a2bba8b947a6fcd0 last main NULL
@@ -204,7 +204,7 @@ bc45424b87b148ddc340b34491a5a1ccbf896958 moonshot main NULL
 5d8a1c3861df2fa520a64773637b5ebc0e1a1682 nano main NULL
 adea318925c70a2d7c0e74c848f572198a9cddc5 nanorc main NULL
 e845256a7d35c79b0bb3d644f516d9c15ec9681f ncdu main NULL
-b16cbaed7a9a804cfb2867187065996d01e08597 neo main NULL
+4855156f2ed84fef6b51ac6673ec93805449208e neo main NULL
 965ee5ef23bd7b8d147ac81e0e581986f4e19617 nets main NULL
 01c3daa748d3d914d4a3388795a402dd8bc2744a node main NULL
 c4495f126d1a26997bd510cf70984cf98ba8bcc3 notify main NULL

@@ -18,6 +18,10 @@ ___x_cmd_kimi___main(){
         --cur)          ___x_cmd_kimi_cur       "$@" ;;
         init|--init)    ___x_cmd_kimi_init      "$@" ;;
 
+        --install)      ___x_cmd_kimi___install      ;;
+        --upgrade)      ___x_cmd_kimi___upgrade      ;;
+        --uninstall)    ___x_cmd_kimi___uninstall    ;;
+
         --|--runmain)   ___x_cmd_kimi___runmain       "$@" ;;
         --runcmd)       ___x_cmd_kimi___runcmd        "$@" ;;
         *)              ___x_cmd_kimi___runmain "$op" "$@" ;;
