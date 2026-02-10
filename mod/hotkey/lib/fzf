@@ -31,6 +31,7 @@ ___x_cmd_hotkey_fzf___bind(){
     elif [ -n "$BASH_VERSION" ]; then
         fp="$dir/keybind.bash"
     else
+        hotkey:error "This feature is only supported in bash or zsh."
         return 1
     fi
 
