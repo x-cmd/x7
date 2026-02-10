@@ -4,34 +4,13 @@
 ___x_cmd_hotkey_fzf(){
     local op="$1";
     case "$op" in
-        history|file|cd)
-                    shift; ___x_cmd_hotkey_fzf_"$op"    "$@" ;;
-        --exec)     shift; ___x_cmd_hotkey_fzf___exec   "$@" ;;
+        --bind)     shift; ___x_cmd_hotkey_fzf___bind   "$@" ;;
         -h|--help)  ___x_cmd help -m hotkey fzf;            return ;;
         *)          ___x_cmd help -m hotkey fzf >&2;        return 64 ;;
     esac
 }
 
-# history cd file
-___x_cmd_hotkey_fzf_history(){
-    local X_help_cmd; X_help_cmd='___x_cmd help -m hotkey fzf history' help:arg:parse
-    hotkey:info "Binding hotkey fzf-history widget -> Ctrl-r"
-    ___x_cmd_hotkey_fzf___exec --ctrl-r
-}
-
-___x_cmd_hotkey_fzf_file(){
-    local X_help_cmd; X_help_cmd='___x_cmd help -m hotkey fzf file' help:arg:parse
-    hotkey:info "Binding hotkey fzf-file widget -> Ctrl-t"
-    ___x_cmd_hotkey_fzf___exec --ctrl-t
-}
-
-___x_cmd_hotkey_fzf_cd(){
-    local X_help_cmd; X_help_cmd='___x_cmd help -m hotkey fzf cd' help:arg:parse
-    hotkey:info "Binding hotkey fzf-cd widget -> Alt-c"
-    ___x_cmd_hotkey_fzf___exec --alt-c
-}
-
-___x_cmd_hotkey_fzf___exec(){
+___x_cmd_hotkey_fzf___bind(){
     local FZF_CTRL_T_COMMAND=""
     local FZF_CTRL_R_COMMAND=""
     local FZF_ALT_C_COMMAND=""
