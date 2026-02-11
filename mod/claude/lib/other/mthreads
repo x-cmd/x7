@@ -23,12 +23,14 @@ ___x_cmd_claude_mthreads(){
         [ -n "$endpoint" ] || endpoint="https://coding-plan-endpoint.kuaecloud.net"
     else
         apikey_to_request="$ANTHROPIC_AUTH_TOKEN"
-        [ -n "$apikey_to_request" ] || \
-            claude:info \
+        [ -n "$apikey_to_request" ] || {
+            claude:warn \
                 --tip1 'x mthreads --cfg'                       \
                 --tip2 'x mthreads --cfg codingplan_apikey=<YOUR-CODING-PLAN-API-KEY>' \
                 --tip2 'x mthreads --cfg apikey=<YOUR-API-KEY>' \
                 "Please setup MOORE THREADS API-KEY."
+            return 1
+        }
     fi
 
     [ -n "$model" ] || model="GLM-4.7"

@@ -3,11 +3,21 @@
 ___x_cmd_hotkey_boot(){
     local op="$1";
     case "$op" in
-        load|setfile|unsetfile)
+        load|setfile|unsetfile|ls)
                     shift; ___x_cmd_hotkey_boot_"$op" "$@"; return ;;
         -h|--help)  ___x_cmd help -m hotkey boot; return ;;
         *)          ___x_cmd help -m hotkey boot >&2; return 64 ;;
     esac
+}
+
+___x_cmd_hotkey_boot_ls(){
+    local bootfile="$___X_CMD_ROOT_DATA/hotkey/boot"
+    [ -f "$bootfile" ] || {
+        hotkey:info "No hotkey widgets set to boot"
+        return 0
+    }
+
+    ___x_cmd_cmds cat "$bootfile"
 }
 
 ___x_cmd_hotkey_boot_load(){

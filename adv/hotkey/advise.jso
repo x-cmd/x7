@@ -38,11 +38,11 @@ null
 {
 "en"
 :
-"Launch preset hotkey bindings for various widgets in Bash and ZSH environments\n\n  co (Ctrl+X):          A widget that forwards \"unfound commands\" to AI code copilot for intelligent processing (e.g., Git commits, code snippets)\n  fzf-history (Ctrl+R): Fuzzy-search through shell command history and insert the selected command into the current prompt for execution (supports multi-line preview and advanced filtering) using FZF\n  fzf-file (Ctrl+T):    Interactively search for files/directories (including hidden ones) and insert the selected path(s) at the cursor position for quick editing or execution (e.g., `vim`, `cat`) using FZF\n  fzf-cd (Alt+C):       Fuzzy-search for directories and immediately `cd` into the selected path, eliminating manual path typing using FZF\n"
+"Launch preset hotkey bindings for various widgets in Bash and ZSH environments\n\n  co (Ctrl+X):          A widget that forwards \"unfound commands\" to AI code copilot for intelligent processing (e.g., Git commits, code snippets)\n  fzf-history (Ctrl+R): Fuzzy-search through shell command history and insert the selected command into the current prompt for execution (supports multi-line preview and advanced filtering) using FZF\n  fzf-file (Ctrl+T):    Interactively search for files/directories (including hidden ones) and insert the selected path(s) at the cursor position for quick editing or execution (e.g., `vim`, `cat`) using FZF\n  fzf-cd (Alt+C / Esc+C): Fuzzy-search for directories and immediately `cd` into the selected path, eliminating manual path typing using FZF\n"
 ,
 "cn"
 :
-"启动预设快捷键绑定，在 Bash 和 ZSH 环境中使用各种功能部件\n\n  co (Ctrl+X):          功能部件，将\"无法执行的命令\"传给 AI code copilot 进行智能处理（如 Git 提交、代码片段）\n  fzf-history (Ctrl+R): 使用 FZF 在 Shell 历史中模糊搜索并将选中命令插入当前提示符执行，支持多行预览与高级筛选\n  fzf-file (Ctrl+T):    使用 FZF 交互式搜索文件/目录（含隐藏文件），将选中路径插入光标位置，便于快速编辑或执行（如 `vim`、`cat`）\n  fzf-cd (Alt+C):       使用 FZF 模糊搜索目录并切换到选中路径，无需输入完整路径\n"
+"启动预设快捷键绑定，在 Bash 和 ZSH 环境中使用各种功能部件\n\n  co (Ctrl+X):          功能部件，将\"无法执行的命令\"传给 AI code copilot 进行智能处理（如 Git 提交、代码片段）\n  fzf-history (Ctrl+R): 使用 FZF 在 Shell 历史中模糊搜索并将选中命令插入当前提示符执行，支持多行预览与高级筛选\n  fzf-file (Ctrl+T):    使用 FZF 交互式搜索文件/目录（含隐藏文件），将选中路径插入光标位置，便于快速编辑或执行（如 `vim`、`cat`）\n  fzf-cd (Alt+C / Esc+C): 使用 FZF 模糊搜索目录并切换到选中路径，无需输入完整路径\n"
 }
 ,
 "#tldr"
@@ -69,11 +69,11 @@ null
 ,
 "cn"
 :
-"全局启用多个功能部件，分别使用 Ctrl+R、Ctrl+T、Alt+C 触发历史搜索、文件选择、目录跳转"
+"全局启用多个功能部件，分别使用 Ctrl+R、Ctrl+T、Alt+C / Esc+C 触发历史搜索、文件选择、目录跳转"
 ,
 "en"
 :
-"Globally enable multiple widgets. Press Ctrl+R, Ctrl+T, Alt+C to trigger history search, file selection, and directory traversal"
+"Globally enable multiple widgets. Press Ctrl+R, Ctrl+T, Alt+C / Esc+C to trigger history search, file selection, and directory traversal"
 }
 ,
 {
@@ -83,11 +83,11 @@ null
 ,
 "cn"
 :
-"取消全局启用的 fzf-cd 功能部件，重开环境后 Alt+C 不再触发目录跳转"
+"取消全局启用的 fzf-cd 功能部件，重开环境后 Alt+C / Esc+C 不再触发目录跳转"
 ,
 "en"
 :
-"Disable the globally enabled fzf-cd widget. After restart, Alt+C will no longer trigger directory traversal"
+"Disable the globally enabled fzf-cd widget. After restart, Alt+C / Esc+C will no longer trigger directory traversal"
 }
 ]
 ,
@@ -149,6 +149,44 @@ null
 "$ref"
 :
 "x-advise://hotkey/data/widget.jso"
+}
+,
+"boot"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"管理 boot file 中记录的部件列表"
+,
+"en"
+:
+"Manage the list of widgets recorded in the boot file"
+}
+,
+"ls"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示当前 boot file 中记录的部件列表"
+,
+"en"
+:
+"Display the list of widgets recorded in the boot file"
+}
+}
+,
+"#tag"
+:
+[
+"inner"
+]
 }
 ,
 "#subcmd_help_tip"

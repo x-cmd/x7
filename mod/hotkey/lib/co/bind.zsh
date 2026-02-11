@@ -3,9 +3,9 @@
 ___x_cmd_hotkey_co_bind() {
   	local hotkey='\C-x'
 
-	typeset -g ___X_CMD_HOTKEY_CO_MODE_ACTIVE=0
-	typeset -g ___X_CMD_HOTKEY_CO_EXECUTING=0
-	typeset -g ___X_CMD_HOTKEY_CO_HOTKEY="$hotkey"
+	___X_CMD_HOTKEY_CO_MODE_ACTIVE=0
+	___X_CMD_HOTKEY_CO_EXECUTING=0
+	___X_CMD_HOTKEY_CO_HOTKEY="$hotkey"
 
 	___x_cmd_hotkey_co_setup_widgets
 }
@@ -19,6 +19,7 @@ ___x_cmd_hotkey_co_setup_widgets() {
 
 	zle -N zle-line-init ___x_cmd_hotkey_co_line_init 2>/dev/null
 	zle -N zle-line-finish ___x_cmd_hotkey_co_line_finish 2>/dev/null
+	zle -N zle-line-pre-redraw ___x_cmd_hotkey_co_line_pre_redraw 2>/dev/null
 
 	___x_cmd_hotkey_co_register_guard_widgets
 }
@@ -57,6 +58,7 @@ ___x_cmd_hotkey_co_toggle_mode() {
 			emulate -L zsh
 
 			if [ "$___X_CMD_HOTKEY_CO_EXECUTING" = "1" ]; then
+				printf "%s\n" "zsh: command not found: $cmd" >&2
 				return 127
 			fi
 
@@ -117,6 +119,18 @@ ___x_cmd_hotkey_co_line_finish() {
 			if [ "$CURSOR" -ge "$plen" ]; then
 				CURSOR=$(( CURSOR - plen ))
 			fi
+		fi
+	fi
+}
+
+___x_cmd_hotkey_co_line_pre_redraw() {
+	emulate -L zsh
+
+	if [ "$___X_CMD_HOTKEY_CO_MODE_ACTIVE" = 1 ]; then
+		local prefix="${___X_CMD_HOTKEY_CO_EMOJI:-🤖} "
+		if [ "$BUFFER" = "${BUFFER#"$prefix"}" ]; then
+			BUFFER="${prefix}${BUFFER}"
+			CURSOR=$((CURSOR + ${#prefix}))
 		fi
 	fi
 }

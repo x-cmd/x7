@@ -24,12 +24,14 @@ ___x_cmd_claude_minimax(){
         [ -n "$endpoint" ] || endpoint="https://api.minimaxi.com/anthropic"
     else
         apikey_to_request="$ANTHROPIC_AUTH_TOKEN"
-        [ -n "$apikey_to_request" ] || \
+        [ -n "$apikey_to_request" ] || {
             claude:info \
                 --tip1 'x minimax --cfg'                       \
                 --tip2 'x minimax --cfg codingplan_apikey=<YOUR-CODING-PLAN-API-KEY>' \
                 --tip2 'x minimax --cfg apikey=<YOUR-API-KEY>' \
                 "Please setup MINIMAX API-KEY."
+            return 1
+        }
     fi
 
     [ -n "$model" ] || model="MiniMax-M2.1"

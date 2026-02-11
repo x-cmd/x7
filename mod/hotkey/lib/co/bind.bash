@@ -11,6 +11,8 @@ ___x_cmd_hotkey_co_bind() {
 		3.*)
 			hotkey='\C-x\C-x'
 			___X_CMD_HOTKEY_CO_USE_PREEXEC=1
+			x_replhook_feature="hotkey co widget" ___x_cmd replhook_enable || return
+			[ -z "$BASH_VERSION" ] || ___x_cmd_replhook_trapint_init
 			;;
 		*)
 			___X_CMD_HOTKEY_CO_USE_PREEXEC=0
@@ -56,6 +58,12 @@ ___x_cmd_hotkey_co_toggle_mode() {
 
 			command_not_found_handle() {
 				local cmd="$1"
+
+				if [ "$___X_CMD_HOTKEY_CO_EXECUTING" = "1" ]; then
+					printf "%s\n" "bash: $cmd: command not found" >&2
+					return 127
+				fi
+
 				if [ -z "$cmd" ]; then
 					if declare -f ___x_cmd_hotkey_co_orig___command_not_found_handle >/dev/null 2>&1; then
 						___x_cmd_hotkey_co_orig___command_not_found_handle "$@"
@@ -81,7 +89,12 @@ ___x_cmd_hotkey_co_toggle_mode() {
 					return 127
 				fi
 
+				___X_CMD_HOTKEY_CO_EXECUTING=1
 				___x_cmd hotkey co --exec "$*"
+				local ret=$?
+				___X_CMD_HOTKEY_CO_EXECUTING=0
+
+				return $ret
 			}
 		fi
 	fi
