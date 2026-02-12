@@ -203,7 +203,7 @@ bc45424b87b148ddc340b34491a5a1ccbf896958 moonshot main NULL
 2178df4854fcd290d00f35e40bc70de476e3dce4 msys2 main NULL
 6cad9957a5553309bb9b38f0cf04de5e0c897f5c mthreads main NULL
 91865bcefff41e4d13849c1e4949686ca4e141af mv main NULL
-53269d1326dfaeafff9fec894b22ae6bfae5def4 nano main NULL
+a332131307d9866c6132d2426e17e9420a18c902 nano main NULL
 200db7e1c92d82f6101489524f2ed8dc299cf00e nanorc main NULL
 e845256a7d35c79b0bb3d644f516d9c15ec9681f ncdu main NULL
 df53be020c15fda00f484e4a590cebfe63d61d39 neo main NULL
@@ -326,7 +326,7 @@ c146bbc34bddaa472fe143204a839244988b4ddc uninstall main NULL
 4b4a2f0d115ffb5f7e7ed0077ad9ba57cc675b5b url main NULL
 5746198bc5ef17bce1caf6976af66d4920a830c3 user main NULL
 cc899ef04cf4e5dbe1861586e19d965596e86159 val main NULL
-56be63c0ce1e6cce06fb431486d19705d2b1efb9 version main NULL
+03968929a6148cfbfde96bc19f2e3a980989faaa version main NULL
 65332d8ea26349e0bf3df358fc98f30ba7c7af6d vim main NULL
 3735c5595eb0b481771548397bcffacf43c8184a wchar main NULL
 33f558eb7eaa8277c64f888a82d2d8cbe2a41381 websrc main NULL
