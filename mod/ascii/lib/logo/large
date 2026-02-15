@@ -3,7 +3,7 @@
 # Large ASCII art logos for x-cmd neo module
 # These logos are bigger and more detailed than the standard ones
 
-___x_cmd_neo_logo_large_get_(){
+___x_cmd_ascii_logo_large_get_(){
     local e33="$___X_CMD_UNSEENCHAR_033"
 
     local name="${1:-}"; local c1; local c2; local c3; local c4; local c5
@@ -13,25 +13,25 @@ ___x_cmd_neo_logo_large_get_(){
     [ -n "$name" ] || { ___x_cmd os name_; name="$x_"; }
 
     case "$name" in
-        arch)           ___x_cmd_neo_logo_large__arch_     "$c1" "$c2" ;;
-        debian)         ___x_cmd_neo_logo_large__debian_   "$c1" "$c2" ;;
-        ubuntu)         ___x_cmd_neo_logo_large__ubuntu_   "$c1" "$c2" ;;
-        fedora)         ___x_cmd_neo_logo_large__fedora_   "$c1" "$c2" "$c3" ;;
-        gentoo)         ___x_cmd_neo_logo_large__gentoo_   "$c1" "$c2" ;;
-        nixos)          ___x_cmd_neo_logo_large__nixos_    "$c1" "$c2" ;;
-        alpine)         ___x_cmd_neo_logo_large__alpine_   "$c1" "$c2" ;;
-        void)           ___x_cmd_neo_logo_large__void_     "$c1" "$c2" ;;
-        opensuse)       ___x_cmd_neo_logo_large__opensuse_ "$c1" "$c2" ;;
-        manjaro)        ___x_cmd_neo_logo_large__manjaro_  "$c1" "$c2" ;;
-        *)              ___x_cmd_neo_logo_large__linux_    "$c1" "$c2" "$c3" ;;
+        arch)           ___x_cmd_ascii_logo_large__arch_     "$c1" "$c2" ;;
+        debian)         ___x_cmd_ascii_logo_large__debian_   "$c1" "$c2" ;;
+        ubuntu)         ___x_cmd_ascii_logo_large__ubuntu_   "$c1" "$c2" ;;
+        fedora)         ___x_cmd_ascii_logo_large__fedora_   "$c1" "$c2" "$c3" ;;
+        gentoo)         ___x_cmd_ascii_logo_large__gentoo_   "$c1" "$c2" ;;
+        nixos)          ___x_cmd_ascii_logo_large__nixos_    "$c1" "$c2" ;;
+        alpine)         ___x_cmd_ascii_logo_large__alpine_   "$c1" "$c2" ;;
+        void)           ___x_cmd_ascii_logo_large__void_     "$c1" "$c2" ;;
+        opensuse)       ___x_cmd_ascii_logo_large__opensuse_ "$c1" "$c2" ;;
+        manjaro)        ___x_cmd_ascii_logo_large__manjaro_  "$c1" "$c2" ;;
+        *)              ___x_cmd_ascii_logo_large__linux_    "$c1" "$c2" "$c3" ;;
     esac
 }
 
-___x_cmd_neo_logo_large__darwin_(){
+___x_cmd_ascii_logo_large__darwin_(){
     :
 }
 
-___x_cmd_neo_logo_large__linux_(){
+___x_cmd_ascii_logo_large__linux_(){
     local c1; local c2; local c3
     c1="${e33}[3${1:-4}m"; c2="${e33}[3${2:-7}m"; c3="${e33}[3${3:-3}m"
     x_="
@@ -57,7 +57,7 @@ ${c2} /       ${c3}/
 ${e33}[0m"
 }
 
-___x_cmd_neo_logo_large__arch_(){
+___x_cmd_ascii_logo_large__arch_(){
     local c1; local c2
     c1="${e33}[3${1:-6}m"; c2="${e33}[3${2:-4}m"
     x_="
@@ -83,7 +83,7 @@ ${c2} .\`                                 \`/
 ${e33}[0m"
 }
 
-___x_cmd_neo_logo_large__debian_(){
+___x_cmd_ascii_logo_large__debian_(){
     local c1; local c2; local ds; local sq
     c1="${e33}[3${1:-1}m"; c2="${e33}[3${2:-7}m"
     ds='$'; sq="'"
@@ -108,7 +108,7 @@ ${c2}              ${sq}${sq}${sq}
 ${e33}[0m"
 }
 
-___x_cmd_neo_logo_large__ubuntu_(){
+___x_cmd_ascii_logo_large__ubuntu_(){
     local c1; local c2
     c1="${e33}[3${1:-3}m"; c2="${e33}[3${2:-7}m"
     x_="
@@ -132,7 +132,7 @@ ${c2}      .::-::::::::::
 ${e33}[0m"
 }
 
-___x_cmd_neo_logo_large__fedora_(){
+___x_cmd_ascii_logo_large__fedora_(){
     local c1; local c2; local c3
     c1="${e33}[3${1:-4}m"; c2="${e33}[3${2:-7}m"; c3="${e33}[3${3:-1}m"
     x_="
@@ -157,7 +157,7 @@ ${c1}      :--------:
 ${e33}[0m"
 }
 
-___x_cmd_neo_logo_large__gentoo_(){
+___x_cmd_ascii_logo_large__gentoo_(){
     local c1; local c2
     c1="${e33}[3${1:-5}m"; c2="${e33}[3${2:-7}m"
     x_="
@@ -181,7 +181,7 @@ ${c2}        \`-+shdmNNNNNmdhs+-\`
 ${e33}[0m"
 }
 
-___x_cmd_neo_logo_large__nixos_(){
+___x_cmd_ascii_logo_large__nixos_(){
     local c1; local c2
     c1="${e33}[3${1:-4}m"; c2="${e33}[3${2:-7}m"
     x_="
@@ -206,7 +206,7 @@ ${c2}       .:::    :::::  ::::::   ::::::::
 ${e33}[0m"
 }
 
-___x_cmd_neo_logo_large__alpine_(){
+___x_cmd_ascii_logo_large__alpine_(){
     local c1; local c2
     c1="${e33}[3${1:-4}m"; c2="${e33}[3${2:-7}m"
     x_="
@@ -230,7 +230,7 @@ ${c2}      \`:+ssss${c1}shdddddddddddddy+:\`
 ${e33}[0m"
 }
 
-___x_cmd_neo_logo_large__void_(){
+___x_cmd_ascii_logo_large__void_(){
     local c1; local c2
     c1="${e33}[3${1:-2}m"; c2="${e33}[3${2:-7}m"
     x_="
@@ -255,7 +255,7 @@ ${c2}   .\':::::::::::::\'\'\'\'\'::::::::::::
 ${e33}[0m"
 }
 
-___x_cmd_neo_logo_large__opensuse_(){
+___x_cmd_ascii_logo_large__opensuse_(){
     local c1; local c2
     c1="${e33}[3${1:-2}m"; c2="${e33}[3${2:-7}m"
     x_="
@@ -280,7 +280,7 @@ ${c2}      :O0ko:\'                    ${c2};KK
 ${e33}[0m"
 }
 
-___x_cmd_neo_logo_large__manjaro_(){
+___x_cmd_ascii_logo_large__manjaro_(){
     local c1; local c2
     c1="${e33}[3${1:-2}m"; c2="${e33}[3${2:-7}m"
     x_="
