@@ -245,6 +245,7 @@ ___x_cmd_mac_sb___handlev(){
         *)         strategy="x-rwx  $op"    ;;
     esac
 
+    local x_
     local fplist="$fp"
     mac:debug "handle -> [fplist=$fplist]"
 
@@ -261,12 +262,7 @@ ___x_cmd_mac_sb___handlev(){
 
         mac:debug "handle -> [fp=$fp] [fplist=$fplist]"
 
-        case "$fp" in
-            '~'/*)          fp="$HOME/${fp#*/}" ;;
-            ./*)            fp="$PWD/${fp#*/}"  ;;
-        esac
-
-        # TODO: provide a new abspath solution , the original realpath is costy.
+        ___x_cmd realpath_ "$fp"; fp="$x_"
 
         ___x_cmd_mac_sb_addcode_ "( $strategy \"$fp\" )"
     done

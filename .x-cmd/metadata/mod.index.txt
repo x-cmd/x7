@@ -1,4 +1,4 @@
-40c6d8a8bbe5a1167fb15e9da71f2d4e701d7aa3 abox main NULL
+745442ffd4329dbb30adc9ac01316627d739b49e abox main NULL
 e5c9dfb41f9d01a4f2a8c3207b3ce2bcc99cfc27 advise main NULL
 ed3a47049e35c4d8897c0ea8578bdef724a1c7a9 agent main NULL
 567e6c54bef0f14313531f212bdb9ecf9f0d1a76 aider main NULL
@@ -187,7 +187,7 @@ a8f640001ba06d8ea9cfae9fd2a758c68a765575 lua main NULL
 0d30f3c5df1aaf15a7bc243e7e07502301ca15c5 luarocks main NULL
 018e8a8cfb9dbd47bb8db36353d8e87b2e995cb8 lynis main NULL
 9f039bfb5027f0fa2a2683f20c17568292a5665f ma main NULL
-e13ea5ddd7f903d40088426120747d9a0ca15aa9 mac main NULL
+8ed9763412d01fa613603893e54256c3f4bce18d mac main NULL
 12a446ae34622bb1aad980be64c9091c19bfa916 man main NULL
 a6af2996b4683eca0d392bb7fe1a2a6160e8737d mankier main NULL
 b92d1e66d21b18dab1dab1f2645d286b480318d4 mawk main NULL
@@ -340,7 +340,7 @@ e782453bb556aa486b5caa015b8f644a44e08d3d ws main NULL
 315788d9a43c3b03eaf1e673bb516993c5c1303d wsl main NULL
 274a0412171bdbc06967a2b5b4c8e2d1e1ddbe24 wttr main NULL
 a209e0f67c87f56d1a77922f95c206b5db639f29 wx main NULL
-6a7fb033de4a38a21a46e301fbe2259402b811ec x-cmd main NULL
+1f97d5118d23218b7a96aaf74910e25d7e705e61 x-cmd main NULL
 aa4c741c33dcf8e7f252004647f9a14fb52cde65 xgo main NULL
 d3be37edf456887b18d236a19e1103fc1f2dbf85 xq main NULL
 2b27328f4dbc6e8fd5ea8d4417daf041b19812f0 xrc main NULL
