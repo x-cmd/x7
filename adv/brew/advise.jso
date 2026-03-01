@@ -28,7 +28,7 @@ null
 ,
 "ls"
 ,
-"la"
+"lr"
 ]
 ,
 "help"
@@ -163,7 +163,7 @@ null
 }
 }
 ,
-"la"
+"lr"
 :
 {
 "#desc"

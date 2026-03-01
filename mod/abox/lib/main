@@ -4,7 +4,7 @@ ___x_cmd_abox___normalize_name_(){
     local name="${1:-}"
     [ -n "$name" ]  ||  {
         x_="abox-0"
-        abox:info "Using defualt name -> $x_"
+        abox:info "Using default name -> $x_"
         return 0
     }
 
