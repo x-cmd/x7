@@ -2,25 +2,27 @@
 "#name"
 :
 {
-"jq"
+"aur"
 :
 null
 ,
 "cn"
 :
-"为 jq 设计的增强模块"
+"搜索和浏览 AUR 中的应用"
 ,
 "en"
 :
-"Enhanced modules for jq"
+"Search and browse applications in AUR"
 }
 ,
-"#keyword"
+"#synopsis"
 :
 [
-"JSON"
-,
-"JSON data parsing"
+{
+"x aur [subcmd] [options]"
+:
+null
+}
 ]
 ,
 "#desc"
@@ -28,24 +30,74 @@ null
 {
 "cn"
 :
-"jq 是由 Stephen Dolan 于 2012 年开发的轻量级 JSON 处理工具。\n`x jq` 是基于 jq 命令、为提升 jq 使用体验而设计的增强模块，具体的增强性改动如下：\n1. 简化 jq 命令的安装：在确定当前环境中没有 jq 命令的情况下，`x jq` 会通过 x-cmd pkg 体系以一种不影响用户环境的方式下载安装 jq 。\n2. 提供 `repl` 命令：它借助 fzf 为 jq 提供一种以交互模式读取和探索 JSON 数据的方法。\n"
+"x aur 是一个为 Arch Linux 用户设计的 AUR 辅助工具，结合 fzf 提供了一个流畅的交互式 UI，让用户可以直观地筛选和选择软件包。\n此外，它还提供了查看热门软件包排行 (top) 和分析包受欢迎程度 (stat) 的功能，帮助用户快速定位 AUR 中高质量和流行的应用。\n"
 ,
 "en"
 :
-"jq is a lightweight JSON processing tool developed by Stephen Dolan in 2012.\n`x jq` is an enhancement module based on the jq command, designed to improve the jq user experience. The specific enhancements are as follows:\n1. Simplified jq command installation: If jq is not found in the current environment, `x jq` will download and install jq through the x-cmd pkg system in a way that does not affect the user's environment.\n2. Provides the `repl` command: This offers an interactive way to read and explore JSON data using fzf.\n"
+"`x aur` is an AUR helper tool designed for Arch Linux users. It combines with fzf to provide a smooth interactive UI, allowing users to intuitively filter and select packages.\nAdditionally, it offers features to view popular package rankings (top) and analyze package popularity (stat), helping users quickly locate high-quality and popular applications in the AUR.\n"
 }
 ,
-"#subcmd:Enhance"
+"#tldr"
 :
 [
-"open"
+{
+"cmd"
+:
+"x aur"
 ,
-"repl|r"
+"cn"
+:
+"使用 fzf 交互式搜索和查看软件包列表，等同于 'x aur fz'"
 ,
-"--cmd"
+"en"
+:
+"Interactively search and view package lists using fzf, equivalent to 'x aur fz'"
+}
+,
+{
+"cmd"
+:
+"x aur info x-cmd"
+,
+"cn"
+:
+"查看 'x-cmd' 包的详细信息"
+,
+"en"
+:
+"View the details of the 'x-cmd' package"
+}
+,
+{
+"cmd"
+:
+"x aur top 200"
+,
+"cn"
+:
+"查看 AUR 中最受欢迎的前 200 个应用"
+,
+"en"
+:
+"View the top 200 most popular applications in AUR"
+}
+,
+{
+"cmd"
+:
+"x aur ls --csv"
+,
+"cn"
+:
+"以 TSV (制表符分隔值) 格式列出软件包列表"
+,
+"en"
+:
+"List packages in TSV (Tab-Separated Values) format"
+}
 ]
 ,
-"open"
+"fz"
 :
 {
 "#desc"
@@ -53,15 +105,15 @@ null
 {
 "cn"
 :
-"用浏览器打开 jqplay.org 网站"
+"使用 fzf 交互式搜索和查看软件包列表"
 ,
 "en"
 :
-"Open the jqplay.org website in your browser."
+"Interactively search and view package lists using fzf"
 }
 }
 ,
-"repl|r"
+"info"
 :
 {
 "#desc"
@@ -69,11 +121,11 @@ null
 {
 "cn"
 :
-"使用交互式 JSON 查看器读取和探索 JSON 数据"
+"查看软件的详细信息"
 ,
 "en"
 :
-"Read and explore JSON data using an interactive JSON viewer"
+"View detailed information about a package"
 }
 ,
 "#1"
@@ -84,42 +136,29 @@ null
 {
 "cn"
 :
-"JSON 数据文件"
+"软件包名"
 ,
 "en"
 :
-"JSON Data File"
+"Package name"
 }
-,
-"#exec"
-:
-"___x_cmd_advise__file"
 }
 }
 ,
-"--cmd"
+"ls"
 :
 {
-"#subcmd"
-:
-true
-,
 "#desc"
 :
 {
-"en"
-:
-"Run the jq command directly"
-,
 "cn"
 :
-"直接运行 jq 命令"
-}
-}
+"查看软件包列表"
 ,
-"$ref"
+"en"
 :
-"x-cmd-advise://jq/advise.t.jso"
+"View package list"
+}
 ,
 "#tldr"
 :
@@ -127,30 +166,197 @@ true
 {
 "cmd"
 :
-"x ascii --json | x jq r"
+"x aur ls --filter 0.01"
 ,
 "cn"
 :
-"启用交互模式处理 `x ascii --json` 命令的结果"
+"查看受欢迎程度大于 0.01 的软件包"
 ,
 "en"
 :
-"Enable interactive mode to handle the results of the `x ascii --json` command."
-}
-,
-{
-"cmd"
-:
-"x jq r test.json"
-,
-"cn"
-:
-"启用交互模式处理 test.json"
-,
-"en"
-:
-"Enable interactive mode to process test.json"
+"View software packages with popularity greater than 0.01"
 }
 ]
+,
+"--filter|-f"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"根据受欢迎程度过滤"
+,
+"en"
+:
+"Filter by popularity"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"受欢迎值"
+,
+"en"
+:
+"Popularity value"
+}
+}
+}
+,
+"--all|-a"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"列出所有可安装的软件"
+,
+"en"
+:
+"List all installable packages"
+}
+}
+,
+"--tsv"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"以 TSV 格式输出"
+,
+"en"
+:
+"Output in TSV format"
+}
+}
+,
+"--csv"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"以 CSV 格式输出"
+,
+"en"
+:
+"Output in CSV format"
+}
+}
+,
+"--json"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"以 JSON 格式输出"
+,
+"en"
+:
+"Output in JSON format"
+}
+}
+}
+,
+"top"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"列出最受欢迎的软件包（默认显示 1000 个）"
+,
+"en"
+:
+"List the most popular packages (displays 1000 by default)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"要显示的目标数"
+,
+"en"
+:
+"The number of targets to display"
+}
+}
+}
+,
+"update|u"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"更新 AUR 软件包列表"
+,
+"en"
+:
+"Update AUR package list"
+}
+}
+,
+"stat"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"统计并展示 AUR 软件包受欢迎程度的区间分布，包括最受欢迎值和各区间内的包数量"
+,
+"en"
+:
+"Analyze and display the distribution of AUR package popularity by intervals, including the most popular value and the number of packages within each interval"
+}
+}
+,
+"#other"
+:
+{
+"en"
+:
+{
+"Please visit our homepage for more information:"
+:
+"https://x-cmd.com"
+}
+,
+"cn"
+:
+{
+"请访问我们的主页以获取更多信息："
+:
+"https://x-cmd.com"
+}
+}
 }
 

@@ -3,10 +3,10 @@
 
 # license:      AGPLv3
 
-xrc:mod:lib     jq   main
+xrc:mod:lib     aur   main
 
-___x_cmd_jq(){
-    ___x_cmd_jq___main "$@"
+___x_cmd_aur(){
+    ___x_cmd_aur___main "$@"
 }
 
-xrc setmain ___x_cmd_jq
+xrc setmain ___x_cmd_aur

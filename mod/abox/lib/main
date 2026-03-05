@@ -161,6 +161,8 @@ ___x_cmd_abox_tmux(){
         esac
     done
 
+    [ -n "$name" ] || name="$1"
+
     local x_=
     ___x_cmd_abox___normalize_name_ "$name" || return $?
     name="$x_"
