@@ -12,28 +12,41 @@ ___x_cmd_boot_setup(){
     local fp="$1"
     local version="$2"
 
-    case "$fp" in
-        "")
-            ___x_cmd_boot_setup___log "Error. Missing source file path. Usage: . ./setup-x-cmd.sh <source-file-path> [version]"
-            return 1
-            ;;
-        *.tgz|*.tar.gz|*.tar.xz)
-            [ -f "$fp" ] || {
-                ___x_cmd_boot_setup___log "Abort. File not found -> $fp"
-                return 1
-            }
+    if [ -n "$fp" ]; then
+        case "$fp" in
+            *.tgz|*.tar.gz|*.tar.xz)
+                [ -f "$fp" ] || {
+                    ___x_cmd_boot_setup___log "Abort. File not found -> $fp"
+                    return 1
+                }
 
-            ___x_cmd_boot_setup___by_tarz_fp "$fp" "$version"
-            ;;
-        *)
-            [ -d "$fp" ] || {
-                ___x_cmd_boot_setup___log "Abort. Expect to be gzip tarball or folder -> $fp"
-                return 1
-            }
+                ___x_cmd_boot_setup___by_tarz_fp "$fp" "$version"
+                ;;
+            *)
+                [ -d "$fp" ] || {
+                    ___x_cmd_boot_setup___log "Abort. Expect to be gzip tarball or folder -> $fp"
+                    return 1
+                }
 
-            ___x_cmd_boot_setup___by_folder_fp "$fp" "$version"
-            ;;
-    esac
+                ___x_cmd_boot_setup___by_folder_fp "$fp" "$version"
+                ;;
+        esac
+    else
+        case "$0" in
+            */mod/boot/lib/setup-x-cmd.sh)
+                fp="${0%/mod/boot/lib/setup-x-cmd.sh}"
+                ___x_cmd_boot_setup___by_folder_fp "$fp" "$version" || return $?
+                ___x_cmd_boot_setup___log "You can now use x in the newly open posix shells."
+                ___x_cmd_boot_setup___log "Notice, if you want to use x in your current shell, run:  \`. ~/.x-cmd.root/X\`"
+
+                ;;
+            *)
+                ___x_cmd_boot_setup___log "Error. Missing source file path. Usage: . ./setup-x-cmd.sh <source-file-path> [version]"
+                return 1
+                ;;
+        esac
+
+    fi
 }
 
 # For targz

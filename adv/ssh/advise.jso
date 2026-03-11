@@ -34,11 +34,11 @@
 {
 "cn"
 :
-"为 SSH 连接提供增强功能，支持向远程主机注入 x-cmd 工具。\n"
+"为 SSH 连接提供增强功能，支持向远程主机部署 x-cmd 工具。\n"
 ,
 "en"
 :
-"Provides enhanced functionality for SSH connections, including injecting x-cmd tool to remote hosts.\n"
+"Provides enhanced SSH connections with x-cmd tool deployment to remote hosts.\n"
 }
 ,
 "#tldr"
@@ -51,11 +51,11 @@
 ,
 "cn"
 :
-"示例: 向远程主机注入 x-cmd 工具"
+"示例: 向远程主机部署 x-cmd 工具"
 ,
 "en"
 :
-"Example: inject x-cmd tool to remote host"
+"Example: deploy x-cmd tool to remote host"
 }
 ]
 ,
@@ -77,11 +77,11 @@
 {
 "cn"
 :
-"向远程主机注入 x-cmd 工具"
+"向远程主机部署 x-cmd 工具"
 ,
 "en"
 :
-"Inject x-cmd tool to remote host"
+"Deploy x-cmd tool to remote host"
 }
 ,
 "#tip"

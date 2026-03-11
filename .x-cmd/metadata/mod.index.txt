@@ -14,7 +14,7 @@ a1c5a87a2d04589256418ae5939703e25ebdc4d5 asdf main NULL
 7570df4c2c63f1756ef5b48a8d9ae0fca7fe56a9 aur main NULL
 f3d0f50ca30c73c8075f48bccfbd57a739d2098b awk main NULL
 411c2b8724a1dcfd0b97db49287b909ca3d94107 bakman main NULL
-6c61fb2a2de20ec2b20a02d344aa2d874c12aab3 boot main NULL
+ec5299928cad8179aacfb82d09995e5664972417 boot main NULL
 0a59d3b0ee16b763f4c46d07b3c11275c553982c brew main NULL
 75b0f184acbcbda611d648f9eefa1664228d5198 browse main NULL
 d8413191e32bfe5412c8dce167049b7b47f3ee64 btop main NULL
@@ -293,7 +293,7 @@ cdee5ea793f4d95b47c0e62162de8d7fff2d1aca slidev main NULL
 3e4ac0bc4cd3182cb9fff945ca534c86938e481e solo main NULL
 8dd5121eec3b1e3a6d76549eeaa959bef43b7086 speckit main NULL
 94e362aa55d74540fcb9a1172393b6f2fbe6bd0a spf main NULL
-d97d58a39ca3c8639767b17a8dc23b3dab5d3ed7 ssh main NULL
+f56a86c9d0bf615f5e618fa50af499a4ab52a2e7 ssh main NULL
 69b70c801546c8d9450797850d4cec73d0ece12b starship main NULL
 24696fac5869c7853cd0878618c69233b61f1633 stat main NULL
 1b1f461516e368940e32360d58efb0a54ffda9ff str main NULL
