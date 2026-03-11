@@ -222,7 +222,7 @@ ed592fa00ebec6fc1c4cbf8ec15523ecf9b39ec8 ollama main NULL
 821de65754065f7297c38ba9e8f47ddedf6ca852 onsh main NULL
 9e491d7aae2f5fd86edcc8d656ce2683034f861e open main NULL
 b292d75fb5a845470134315ecb79474de27fb51f openai main NULL
-40041e153a60c4c1a45c80c18c35e8200b060843 openclaw main NULL
+bb25bd6917e3bcddd14a0cd092109a1a9dbc7867 openclaw main NULL
 e2f8ea3d2fc3e54d96ab8f948067b3d70a84bbf0 openrouter main NULL
 0a6fdc649e00acb089f7b422b4d9afbdcdf1205f openspec main NULL
 82dc3a99e631a97574ee27bba27962170d8013b2 os main NULL

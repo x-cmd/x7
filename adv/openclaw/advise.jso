@@ -47,6 +47,26 @@ true
 }
 }
 ,
+"--uninstall"
+:
+{
+"#subcmd"
+:
+true
+,
+"#desc"
+:
+{
+"cn"
+:
+"卸载 OpenClaw，包括二进制文件、网关服务、配置文件和工作区。"
+,
+"en"
+:
+"Uninstall OpenClaw, including binary files, gateway service, configuration files, and workspace."
+}
+}
+,
 "--setup"
 :
 {
