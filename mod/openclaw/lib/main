@@ -14,7 +14,7 @@ ___x_cmd_openclaw___main(){
         start|stop|status|log)
                         ___x_cmd_openclaw_service_"$op" "$@" ;;
 
-        setup)
+        --setup)
                         ___x_cmd_openclaw_setup "$@"    ;;
         --install)      ___x_cmd_openclaw___install "$@" ;;
         --|--runmain)   ___x_cmd_openclaw___runmain "$@" ;;

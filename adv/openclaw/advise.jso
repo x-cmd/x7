@@ -47,6 +47,26 @@ true
 }
 }
 ,
+"--setup"
+:
+{
+"#subcmd"
+:
+true
+,
+"#desc"
+:
+{
+"cn"
+:
+"快速配置 OpenClaw 的模型、聊天软件等。"
+,
+"en"
+:
+"Quickly configure OpenClaw's models, chat software, etc."
+}
+}
+,
 "service"
 :
 {
@@ -142,6 +162,20 @@ true
 "en"
 :
 "Install OpenClaw and all required dependencies for the latest version."
+}
+,
+{
+"cmd"
+:
+"x openclaw --setup qywx"
+,
+"cn"
+:
+"配置 OpenClaw 接入企业微信"
+,
+"en"
+:
+"Configure OpenClaw to integrate with WXwork"
 }
 ]
 }
