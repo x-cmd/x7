@@ -5,7 +5,7 @@
 ___x_cmd_openclaw___install(){
     # provide latest git, python, nodejs, himalaya, everything you might need.
     # TODO: git
-    ___x_cmd env use node himalaya
+    ___x_cmd env use node python himalaya
 
     ___x_cmd npm install -g openclaw@latest
     # if in macos

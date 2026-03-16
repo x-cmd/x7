@@ -1,6 +1,6 @@
 a8c4d2db35ab2dc94a1c886a2c918f627ad1c176 abox main NULL
 79af452639ea29d053dc5ae6592916921d1c3ffe advise main NULL
-aea971aec86a7f99346be90f9d2eb4b30325a2fe agent main NULL
+47b3c40cb12409fcbb92f136e2037007ba059fda agent main NULL
 94eb1cb39d13a2ebcddf07a44b8cf63e7ac687cc aider main NULL
 2abe9fc103abe6597b599c5245efc148c44ee948 alias main NULL
 c8dd6182f3d400215d7292cbfe9c65b73722ab7d api main NULL
@@ -128,7 +128,7 @@ cae80ddc46852fec59981cb96b06283cfd5adc13 gx main NULL
 2ebd2717abda0deeaa78869b723c96258b4e25f9 hashdir main NULL
 31695cf9983b60d144869d0a10059295b3a596cc helpapp main NULL
 93c5cd5299296a07e4615cd4894906a06d82a50a history main NULL
-42bc941d44200d4ed6a92c37d99ce81187af8f8b hn main NULL
+e9eb934cbde1715848efce7483ee23e30e94bb58 hn main NULL
 8a1e14a61a8f0fbcd84b2700f9f969addb90628f hok main NULL
 02a5dda76468ddbba26881d33f77621c336d2750 home main NULL
 95b39e8ad814ba8afa08fe51f8979f1b27e87d62 host main NULL
@@ -164,7 +164,7 @@ bc198acec41bd8a30e2239fd55651090bd1d9ac0 jruby main NULL
 8369d976519ce732aa4db0cceeef978581dd296b jsr main NULL
 469362a7b0ed02eb202f7088f524c137aea021dd kev main NULL
 44ad7848f57264890e8551a666f5c4a34d0d4fb9 kill main NULL
-10a6e8ef089641cdbee466876cb09a5b966d82d0 kimi main NULL
+13ecef3460eab49a277ea56252ac6e8fabaeb37a kimi main NULL
 6a4754d4bf28cdc547362b4ec508c7dc125f3265 kotlin main NULL
 cd640e520f09f8c2b14ac3baa2520ff48b41f12a lang main NULL
 ae773fb94a5bded4cff8292eff603fd2c0b7763a last main NULL
@@ -222,7 +222,7 @@ ed592fa00ebec6fc1c4cbf8ec15523ecf9b39ec8 ollama main NULL
 821de65754065f7297c38ba9e8f47ddedf6ca852 onsh main NULL
 9e491d7aae2f5fd86edcc8d656ce2683034f861e open main NULL
 b292d75fb5a845470134315ecb79474de27fb51f openai main NULL
-bb25bd6917e3bcddd14a0cd092109a1a9dbc7867 openclaw main NULL
+aacb9750707fc1fb8944e8b23fdfbda120a3d36d openclaw main NULL
 e2f8ea3d2fc3e54d96ab8f948067b3d70a84bbf0 openrouter main NULL
 0a6fdc649e00acb089f7b422b4d9afbdcdf1205f openspec main NULL
 82dc3a99e631a97574ee27bba27962170d8013b2 os main NULL
@@ -329,7 +329,7 @@ b4be6bffc8bff5cbdfa63d08ddf70ecb9dda2b6d upgrade main NULL
 b915e14122059a10e60889674e69ab9b956cdbd8 url main NULL
 6599405f86a09b09012e6e27f65d47027041cf30 user main NULL
 94d047450144a51f4e23e1d5d4543b8cde397401 val main NULL
-0d886293b131709d2a106378e84c0f7a0f94c24d version main NULL
+af743aa7546deb84d7ba2daed595276b13f50f92 version main NULL
 1d6f764a68a0f3ab2e8fee22d585937be98a9d99 vim main NULL
 6e7e00ca4cdf163177f4cdf3bd6ff30eaffd342b wchar main NULL
 41acfdb5984b29bf4074bfc6a4bc28ca8ff77ee7 websrc main NULL
