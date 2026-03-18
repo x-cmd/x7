@@ -29,13 +29,23 @@ null
 :
 [
 {
-"en"
-:
-"除了使用 x agent setup ， 还可以手动引入如下提示词到你的 AGENT 文件中。\nLoad x-cmd with `. ~/.x-cmd.root/X` (required before using `x`), then `x -h` for help. Docs: https://get.x-cmd.com/llms.txt'\n"
-,
 "cn"
 :
-"除了使用 x agent setup ， 还可以手动引入如下提示词到你的 AGENT 文件中。\nLoad x-cmd with `. ~/.x-cmd.root/X` (required before using `x`), then `x -h` for help. Docs: https://get.x-cmd.com/llms.txt'\n"
+"除了使用 x agent setup ， 还可以手动引入如下提示词到你的 AGENT 文件中。\nLoad x-cmd with `. ~/.x-cmd.root/X` (required before using `x`), then `x -h` for help. Docs: https://x-cmd.com/llms.txt\n"
+,
+"en"
+:
+"Besides using x agent setup, you can also manually add the following prompt to your AGENT file.\nLoad x-cmd with `. ~/.x-cmd.root/X` (required before using `x`), then `x -h` for help. Docs: https://x-cmd.com/llms.txt\n"
+}
+,
+{
+"cn"
+:
+"Harness 指 AI 工具接口/后端（如 kimi-cli、claude、codex、gemini-cli）\n使用 'x agent init' 交互式配置 zero_harness 和 one_harness\n"
+,
+"en"
+:
+"Harness refers to the AI tool interface/backend (e.g., kimi-cli, claude, codex, gemini-cli)\nUse 'x agent init' to configure zero_harness and one_harness interactively\n"
 }
 ]
 ,
@@ -54,6 +64,10 @@ null
 "--setup|setup"
 :
 {
+"#subcmd"
+:
+true
+,
 "#desc"
 :
 {
@@ -64,6 +78,338 @@ null
 "en"
 :
 "Enable Claude, Codex, Opencode, Kimi and other AI tools to use x-cmd prompts and skills"
+}
+}
+,
+"--cfg"
+:
+{
+"#subcmd"
+:
+true
+,
+"#desc"
+:
+{
+"cn"
+:
+"管理 agent 模块配置（如 zero_harness、one_harness）"
+,
+"en"
+:
+"Manage agent module configuration (e.g., zero_harness, one_harness)"
+}
+,
+"#tip:note"
+:
+[
+{
+"en"
+:
+"- zero_harness: Set the default harness for Agent 000 (AI tool interface)\n- one_harness: Set the default harness for Agent 001 (AI tool interface)\n- Available harness: kimi-cli, claude, codex, gemini-cli, x-gpt, x-gemini, etc.\n"
+,
+"cn"
+:
+"- zero_harness: 设置 Agent 000 的默认 harness（AI 工具接口）\n- one_harness: 设置 Agent 001 的默认 harness（AI 工具接口）\n- 可选 harness: kimi-cli, claude, codex, gemini-cli, x-gpt, x-gemini 等\n"
+}
+]
+,
+"clear"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"清除当前会话设置的所有默认值"
+,
+"en"
+:
+"Clear all default settings in the current session"
+}
+}
+,
+"cat"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"获取当前配置的所有默认值"
+,
+"en"
+:
+"List all current configuration values"
+}
+}
+,
+"#n"
+:
+{
+"#cand"
+:
+[
+{
+"zero_harness="
+:
+{
+"#nospace"
+:
+true
+,
+"#desc"
+:
+{
+"cn"
+:
+"Agent 000 的 harness"
+,
+"en"
+:
+"Harness for Agent 000"
+}
+}
+}
+,
+{
+"one_harness="
+:
+{
+"#nospace"
+:
+true
+,
+"#desc"
+:
+{
+"cn"
+:
+"Agent 001 的 harness"
+,
+"en"
+:
+"Harness for Agent 001"
+}
+}
+}
+]
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x agent --cfg zero_harness=kimi-cli"
+,
+"cn"
+:
+"设置 Agent 000 默认使用 kimi-cli"
+,
+"en"
+:
+"Set Agent 000 default harness to kimi-cli"
+}
+,
+{
+"cmd"
+:
+"x agent --cfg cat"
+,
+"cn"
+:
+"输出 agent 模块的当前配置"
+,
+"en"
+:
+"Print the current configuration of the agent module"
+}
+]
+}
+,
+"--cur"
+:
+{
+"#subcmd"
+:
+true
+,
+"#desc"
+:
+{
+"cn"
+:
+"当前会话默认值管理"
+,
+"en"
+:
+"Manage current session default values"
+}
+,
+"#tip:note"
+:
+[
+{
+"en"
+:
+"- zero_harness: Set current session harness for Agent 000\n- one_harness: Set current session harness for Agent 001\n"
+,
+"cn"
+:
+"- zero_harness: 设置当前会话 Agent 000 的 harness\n- one_harness: 设置当前会话 Agent 001 的 harness\n"
+}
+]
+,
+"set"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"设置当前会话的 agent 配置"
+,
+"en"
+:
+"Set agent configuration for current session"
+}
+,
+"zero_harness="
+:
+{
+"#nospace"
+:
+true
+,
+"#desc"
+:
+{
+"cn"
+:
+"Agent 000 的 harness"
+,
+"en"
+:
+"Harness for Agent 000"
+}
+}
+,
+"one_harness="
+:
+{
+"#nospace"
+:
+true
+,
+"#desc"
+:
+{
+"cn"
+:
+"Agent 001 的 harness"
+,
+"en"
+:
+"Harness for Agent 001"
+}
+}
+,
+"#n"
+:
+{
+"#cand"
+:
+[
+{
+"zero_harness="
+:
+{
+"#nospace"
+:
+true
+,
+"#desc"
+:
+{
+"cn"
+:
+"Agent 000 的 harness"
+,
+"en"
+:
+"Harness for Agent 000"
+}
+}
+}
+,
+{
+"one_harness="
+:
+{
+"#nospace"
+:
+true
+,
+"#desc"
+:
+{
+"cn"
+:
+"Agent 001 的 harness"
+,
+"en"
+:
+"Harness for Agent 001"
+}
+}
+}
+]
+}
+}
+}
+,
+"init"
+:
+{
+"#subcmd"
+:
+true
+,
+"#desc"
+:
+{
+"cn"
+:
+"初始化 agent 配置，交互式设置 harness（AI 工具接口，如 kimi-cli、claude）"
+,
+"en"
+:
+"Initialize agent configuration interactively for harness (AI tool interface, e.g., kimi-cli, claude)"
+}
+}
+,
+"unify"
+:
+{
+"#subcmd"
+:
+true
+,
+"#desc"
+:
+{
+"cn"
+:
+"将多个 AI Agent 的配置文件（如 CLAUDE.md、GEMINI.md）统一合并到 ~/AGENTS.md"
+,
+"en"
+:
+"Merge AI Agent config files like CLAUDE.md, GEMINI.md into ~/AGENTS.md"
 }
 }
 ,
@@ -82,6 +428,48 @@ null
 "en"
 :
 "Example: Enable Claude, Codex, Gemini and other AI tools to use x-cmd capabilities"
+}
+,
+{
+"cmd"
+:
+"x agent init"
+,
+"cn"
+:
+"示例: 初始化配置，交互式设置 harness"
+,
+"en"
+:
+"Example: Initialize configuration interactively"
+}
+,
+{
+"cmd"
+:
+"x agent --cfg"
+,
+"cn"
+:
+"示例: 管理 agent 配置"
+,
+"en"
+:
+"Example: Manage agent configuration"
+}
+,
+{
+"cmd"
+:
+"x agent unify"
+,
+"cn"
+:
+"示例: 将 CLAUDE.md、GEMINI.md 等统一合并到 ~/AGENTS.md"
+,
+"en"
+:
+"Example: Merge CLAUDE.md, GEMINI.md into ~/AGENTS.md"
 }
 ]
 ,

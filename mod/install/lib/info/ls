@@ -20,6 +20,16 @@ ___x_cmd_install_ls___raw(){
     ___x_cmd find --cmd "$___X_CMD_INSTALL_DATA" -maxdepth 2 -name "*json" | ___x_cmd_cmds_awk -F/ '{gsub("[.]json", "", $NF); printf("%s\n", $NF)}'
 }
 
+# TODO: This is the default raw data.
+# Data converted to tsv ...
+___x_cmd_install_ls___tsv(){
+    ___x_cmd cat "$___X_CMD_INSTALL_DATA/all.tsv"
+}
+
+___x_cmd_install_ls___csv(){
+    ___x_cmd_install_ls___tsv | ___x_cmd tsv fromcsv
+}
+
 ___x_cmd_install_ls___app(){
     local x_=
     ___X_CMD_PICK_SHBIN_CODE="xrc pkg install" \

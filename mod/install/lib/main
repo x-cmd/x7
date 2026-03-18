@@ -19,7 +19,7 @@ ___x_cmd_install___main(){
 
     local op="$1";      shift
     case "$op" in
-        --cat|--run|--get|--ls|--ll|--nv)
+        --cat|--get|--ls|--ll|--nv)
                             ___x_cmd_install_"${op#--}" "$@" ;;
         --fz|--fzf)         ___x_cmd_install___fzf      "$@" ;;
 
@@ -30,7 +30,7 @@ ___x_cmd_install___main(){
         ls|ll|update|nv|snaplookup_|snaplookup)
                             ___x_cmd_install_"$op"      "$@" ;;
 
-        --)                 ___x_cmd_install_run        "$@" ;;
+        --|--run)           ___x_cmd_install_run        "$@" ;;
         *)                  ___x_cmd_install_run "$op"  "$@" ;;
     esac
 }
