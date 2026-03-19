@@ -19,6 +19,7 @@ function init_colors(NO_COLOR) {
         UI_UNDERLINE = "\033[4m"   # Underline - related columns
         UI_UNDERLINE_OFF = "\033[24m"  # Cancel underline
         UI_RED = "\033[31m"       # Red - used/non-reclaimable memory
+        UI_RED_DIM = "\033[2;31m"   # Dim red - hardware reserved (not OS managed)
         UI_BOLD_RED = "\033[1;31m"  # Bold red - used (emphasized)
         UI_BOLD_GREEN = "\033[1;32m" # Bold green - free (emphasized)
         UI_REVERSE = "\033[7m"      # Reverse video - highlight columns
