@@ -9,21 +9,7 @@ ___x_cmd_agent_unify(){
     local GEMINI_FP="$HOME/.gemini/GEMINI.md"
 
     if [ ! -e "$AGENT_FP" ]; then
-        if [ -e "$CLAUDE_FP" ]; then
-            agent:info "Found CLAUDE.md, migrating to AGENTS.md"
-            ___x_cmd mv "$CLAUDE_FP" "$AGENT_FP"
-            ___x_cmd ln -s "$AGENT_FP" "$CLAUDE_FP"
-        elif [ -e "$CODEX_FP" ]; then
-            agent:info "Found Codex AGENTS.md, migrating to AGENTS.md"
-            ___x_cmd mv "$CODEX_FP" "$AGENT_FP"
-            ___x_cmd ln -s "$AGENT_FP" "$CODEX_FP"
-        elif [ -e "$GEMINI_FP" ]; then
-            agent:info "Found Gemini GEMINI.md, migrating to AGENTS.md"
-            ___x_cmd mv "$GEMINI_FP" "$AGENT_FP"
-            ___x_cmd ln -s "$AGENT_FP" "$GEMINI_FP"
-        else
-            ___x_cmd_agent_setup
-        fi
+        ___x_cmd_agent_setup
     fi
 
     ___x_cmd_agent_unify___try "$CLAUDE_FP" "$GEMINI_FP" "$CODEX_FP"
@@ -47,7 +33,7 @@ ___x_cmd_agent_unify___try(){
                 --tip "x agent init"    \
                 --tip "x llm init"      \
                 "Both 'x agent' or 'x llm' are not ready. Please setup according to the tips. You can also manually incorporated the file $op into $AGENT_FP by yourself."
-            continue
+            return 1
         fi
 
         agent:info "Incorporating file -> $op"
@@ -61,7 +47,7 @@ ___x_cmd_agent_unify___try(){
         case "$errcode" in
             130)        agent:info "RECV SIGINT. EXIT. "; return 130 ;;
             0)          ;;
-            *)          x:info "[ERR=$errcode] Fail to incorporate the file using llm. You can retry later or manually incorporated the file $op into $AGENT_FP by yourself."; continue ;;
+            *)          x:info "[ERR=$errcode] Fail to incorporate the file using llm. You can retry later or manually incorporated the file $op into $AGENT_FP by yourself."; return "$errcode" ;;
         esac
 
         ___x_cmd_cmds rm -f "$op"

@@ -93,75 +93,157 @@ END {
             kernel_kb, compressed_kb, app_kb, purgeable_kb, cache_kb, available_kb,
             swap_total_kb, swap_used_kb, compress_stored_kb, compress_occupied_kb, compress_saved_kb
     } else {
-        # Table format - use fixed-width format for proper alignment
+        # Table format - Linux free style: Mem and Swap at top
+        # Aligned with Phys/Logic rows (8 columns, first column is label)
         
-        # Phys row header
-        printf(UI_HDR "%-8s %10s %10s %10s %10s %10s %10s %10s %10s" UI_END "\n",
-            "", "wired", "occupied", "active", "inactive", "", "spec", "throt", "free")
+        # Calculate "free" as available + purgeable + cache (user requested)
+        est_free_kb = available_kb + purgeable_kb + cache_kb
         
-        # Phys row data - build string with colors embedded
-        phys_str = sprintf("%-8s %10s %10s %10s %10s %10s %10s %10s %10s",
-            "Phys:",
-            fmt_human_val(wired_kb),
-            fmt_human_val(compress_occupied_kb),
-            fmt_human_val(active_kb),
-            fmt_human_val(inactive_kb),
-            "-",
-            fmt_human_val(speculative_kb),
-            fmt_human_val(throttled_kb),
-            fmt_human_val(free_kb))
-        # Apply colors after sprintf to avoid width issues
-        gsub(/Phys:/, UI_KEY "Phys:" UI_END, phys_str)
-        print phys_str
-
-        # Logic row header
-        printf(UI_HDR "%-8s %10s %10s %10s %10s %10s %10s %10s %10s" UI_END "\n",
-            "", "kernel", "compressed", "app", "purgeable", "cache", "", "", "available")
+        # Calculate used = total - free (for Mem)
+        mem_used_kb = total_kb - est_free_kb
         
-        # Logic row data
-        logic_str = sprintf("%-8s %10s %10s %10s %10s %10s %10s %10s %10s",
-            "Logic:",
-            fmt_human_val(kernel_kb),
-            fmt_human_val(compressed_kb),
-            fmt_human_val(app_kb),
-            fmt_human_val(purgeable_kb),
-            fmt_human_val(cache_kb),
-            "",
-            "",
-            fmt_human_val(available_kb))
-        gsub(/Logic:/, UI_KEY "Logic:" UI_END, logic_str)
-        print logic_str
-
-        # Compress (before Swap) - compressed aligns with Logic.compressed (column 2)
-        # Use dim color for secondary info
-        printf(UI_DIM "%-8s %10s %10s %10s %10s %10s %10s %10s %10s" UI_END "\n",
-            "", "", "compressed", "original", "ratio", "saved", "", "", "")
+        # Leading empty line
+        print ""
         
-        # Calculate ratio
-        ratio_str = "0%"
-        if (compress_stored_kb > 0) {
-            ratio = (compress_occupied_kb / compress_stored_kb) * 100
-            ratio_str = sprintf("%.0f%%", ratio)
+        # Header row (aligned with Phys/Logic: 9 columns total) - no bold
+        printf("  " UI_HDR_OFF "%-8s %10s %10s %10s %10s %10s %10s %10s %10s" UI_END "\n",
+            "", "total", "used", "reusable", "", "", "", "", "")
+        
+        # Mem row (aligned columns: label, total, used, free, then 5 empty cols)
+        # After free value, add dim hint: (available + cache + purgeable)
+        if (NO_COLOR == 1) {
+            printf("  %-8s %10s %10s %10s (=purgeable + cache + available)\n",
+                "Mem:",
+                fmt_human_val(total_kb),
+                fmt_human_val(mem_used_kb),
+                fmt_human_val(est_free_kb))
+        } else {
+            # Color Mem: label (cyan), total (bold), used (bold red), free (bold green)
+            printf("  %s%-8s%s %s%10s%s %s%10s%s %s%10s%s" UI_DIM " (=purgeable + cache + available)" UI_END "\n",
+                UI_KEY, "Mem:", UI_END,
+                UI_HDR, fmt_human_val(total_kb), UI_END,
+                UI_BOLD_RED, fmt_human_val(mem_used_kb), UI_END,
+                UI_BOLD_GREEN, fmt_human_val(est_free_kb), UI_END)
         }
         
-        compress_str = sprintf("%-8s %10s %10s %10s %10s %10s %10s %10s %10s",
-            "",
-            "",
-            fmt_human_val(compress_occupied_kb),
-            fmt_human_val(compress_stored_kb),
-            ratio_str,
-            fmt_human_val(compress_saved_kb),
-            "", "", "")
-        # Apply dim color
-        if (NO_COLOR != 1) {
-            compress_str = UI_DIM compress_str UI_END
+        # Swap row (same alignment)
+        swap_str = sprintf("%-8s %10s %10s %10s %10s %10s %10s %10s %10s",
+            "Swap:",
+            fmt_human_val(swap_total_kb),
+            fmt_human_val(swap_used_kb),
+            fmt_human_val(swap_free_kb),
+            "", "", "", "", "")
+        gsub(/Swap:/, UI_KEY "Swap:" UI_END, swap_str)
+        print "  " swap_str
+        
+        # Separator line
+        print ""
+        
+        # Identity: app + purgeable + cache = active + inactive
+        # Logic Layer (primary view) - available aligns with free (column 6)
+        print ""
+        if (NO_COLOR == 1) {
+            printf("  %-8s %10s %10s %10s %10s %10s %10s %10s %10s\n",
+                "", "wired", "compressed", "app", "purgeable", "cache", "available", "", "")
+            printf("  %-8s %10s %10s %10s %10s %10s %10s (=free + spec + throt)\n",
+                "Detail:",
+                fmt_human_val(kernel_kb),
+                fmt_human_val(compressed_kb),
+                fmt_human_val(app_kb),
+                fmt_human_val(purgeable_kb),
+                fmt_human_val(cache_kb),
+                fmt_human_val(available_kb))
+        } else {
+            printf("  %s%-8s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s\n",
+                UI_DIM, "", UI_END,
+                UI_DIM, "wired", UI_END,
+                UI_DIM, "compressed", UI_END,
+                UI_DIM UI_UNDERLINE, "app", UI_UNDERLINE_OFF UI_END,
+                UI_DIM UI_UNDERLINE, "purgeable", UI_UNDERLINE_OFF UI_END,
+                UI_DIM UI_UNDERLINE, "cache", UI_UNDERLINE_OFF UI_END,
+                UI_DIM, "available", UI_END,
+                "", "", UI_END,
+                "", "", UI_END)
+            printf("  %s%-8s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s" UI_DIM " (=free + spec + throt)" UI_END "\n",
+                UI_KEY, "Detail:", UI_END,
+                UI_RED, fmt_human_val(kernel_kb), UI_END,
+                UI_RED, fmt_human_val(compressed_kb), UI_END,
+                UI_RED, fmt_human_val(app_kb), UI_END,
+                UI_GREEN, fmt_human_val(purgeable_kb), UI_END,
+                UI_GREEN, fmt_human_val(cache_kb), UI_END,
+                UI_GREEN, fmt_human_val(available_kb), UI_END)
         }
-        print compress_str
+        
+        # Physical Layer (reference - vm_stat raw counters) - free before spec
+        print ""
+        if (NO_COLOR == 1) {
+            printf("  %-8s %10s %10s %10s %10s %10s %10s %10s %10s\n",
+                "", "wired", "compressed", "active", "inactive", "-", "free", "spec", "throt")
+            printf("  %-8s %10s %10s %10s %10s %10s %10s %10s %10s\n",
+                "vm_stat",
+                fmt_human_val(wired_kb),
+                fmt_human_val(compress_occupied_kb),
+                fmt_human_val(active_kb),
+                fmt_human_val(inactive_kb),
+                "-",
+                fmt_human_val(free_kb),
+                fmt_human_val(speculative_kb),
+                fmt_human_val(throttled_kb))
+        } else {
+            printf("  %s%-8s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s\n",
+                UI_DIM, "", UI_END,
+                UI_DIM, "wired", UI_END,
+                UI_DIM, "compressed", UI_END,
+                UI_DIM UI_UNDERLINE, "active", UI_UNDERLINE_OFF UI_END,
+                UI_DIM UI_UNDERLINE, "inactive", UI_UNDERLINE_OFF UI_END,
+                UI_DIM, "-", UI_END,
+                UI_DIM, "free", UI_END,
+                UI_DIM, "spec", UI_END,
+                UI_DIM, "throt", UI_END)
+            printf("  %s%-8s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s %s%10s%s\n",
+                UI_DIM, "vm_stat", UI_END,
+                UI_DIM, fmt_human_val(wired_kb), UI_END,
+                UI_DIM, fmt_human_val(compress_occupied_kb), UI_END,
+                UI_DIM, fmt_human_val(active_kb), UI_END,
+                UI_DIM, fmt_human_val(inactive_kb), UI_END,
+                UI_DIM, "-", UI_END,
+                UI_GREEN, fmt_human_val(free_kb), UI_END,
+                UI_GREEN, fmt_human_val(speculative_kb), UI_END,
+                UI_GREEN, fmt_human_val(throttled_kb), UI_END)
+        }
 
-        # Swap
-        printf(UI_HDR "%-8s %10s %10s %10s" UI_END "\n",
-            "", "total", "used", "free")
-        print_swap_row("Swap:", swap_total_kb, swap_used_kb, swap_free_kb, human)
+        # Compress info (dimmed)
+        if (NO_COLOR == 1) {
+            printf("  %-8s %10s %10s %10s %10s %10s %10s %10s %10s\n",
+                "", "", "compressed", "original", "ratio", "saved", "", "", "")
+            compress_str = sprintf("%-8s %10s %10s %10s %10s %10s %10s %10s %10s",
+                "",
+                "",
+                fmt_human_val(compress_occupied_kb),
+                fmt_human_val(compress_stored_kb),
+                "0%",
+                fmt_human_val(compress_saved_kb),
+                "", "", "")
+            print "  " compress_str
+        } else {
+            ratio_str = "0%"
+            if (compress_stored_kb > 0) {
+                ratio = (compress_occupied_kb / compress_stored_kb) * 100
+                ratio_str = sprintf("%.0f%%", ratio)
+            }
+            printf("  " UI_DIM "%-8s %10s %10s %10s %10s %10s %10s %10s %10s" UI_END "\n",
+                "", "", "compressed", "original", "ratio", "saved", "", "", "")
+            printf("  " UI_DIM "%-8s %10s %10s %10s %10s %10s %10s %10s %10s" UI_END "\n",
+                "",
+                "",
+                fmt_human_val(compress_occupied_kb),
+                fmt_human_val(compress_stored_kb),
+                ratio_str,
+                fmt_human_val(compress_saved_kb),
+                "", "", "")
+        }
+        # Add empty line for separation in repeat mode (-c)
+        print ""
     }
 }
 

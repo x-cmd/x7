@@ -27,13 +27,14 @@ ___x_cmd_agent_request(){
 
     local harness=""
     local filelist=""
+    local NL="$___X_CMD_UNSEENCHAR_NEWLINE"
 
     while [ $# -gt 0 ]; do
         case "$1" in
             -h|--help)      ___x_cmd help -m agent request "$@" ; return 0 ;;
 
             --harness)      harness="$2"  ;     arg:2:shift ;;
-            --file)         filelist="$2" ;     arg:2:shift ;;
+            --file)         filelist="${filelist}${NL}${2}" ; arg:2:shift ;;
             --output)       output="$2"   ;     arg:2:shift ;;
 
             # --retry)        retry="$2" ; arg:2:shift ;;
@@ -43,28 +44,30 @@ ___x_cmd_agent_request(){
         esac
     done
 
+    local x_=""
+    if [ -z "$harness" ]; then
+        x_=""; ___x_cmd_agent_harness_
+        harness="$x_"
+    fi
+
     local content ;
 
     while read -r f; do
         [ -f "$f" ]  || continue
 
-        content="
+        content="${content}
 === filename -> $f
 $(___x_cmd_cmds cat "$f")
 ===
-
-$content
 "
-
     done <<A
 $filelist
 A
 
-    local x_
-    local IFS=" " ; content="$*"
+    local IFS=" " ; content="${content}${NL}${*}${NL}"
 
     if [ -z "$output" ]; then
-        ___x_cmd_agent_request___run_
+        x_=""; ___x_cmd_agent_request___run_
         case $? in
             130)    return 130 ;;
             0)      printf "%s\n" "$x_"; return 0 ;;
@@ -72,7 +75,7 @@ A
         esac
     fi
 
-    content="
+    content="${content}
 Please output the content between two === as following:
 ===
 <content>

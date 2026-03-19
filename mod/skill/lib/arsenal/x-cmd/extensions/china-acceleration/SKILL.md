@@ -1,10 +1,29 @@
+---
+name: china-acceleration
+description: |
+  Configure x-cmd for optimal network access in China region.
+  Includes channel switching, package manager mirrors, and Docker acceleration.
+
+  **Requires x-cmd**: Use x-cmd skill to install and use x-cmd,
+  see https://x-cmd.com/llms.txt . Note: load x-cmd with `. ~/.x-cmd.root/X` before use.
+
+license: Apache-2.0
+compatibility: POSIX Shell
+
+metadata:
+  author: Li Junhao
+  version: "0.0.1"
+  category: x-cmd-extension
+  tags: [x-cmd, china, network, mirror, acceleration]
+---
+
 # China Region Network Acceleration Guide
 
 > How to configure x-cmd for optimal network access in China region
 
 ---
 
-## Quick Detection & Configuration
+## Quick Start
 
 ```bash
 # 1. Detect if in China region
@@ -189,7 +208,7 @@ Use cases:
 # Detect and configure China acceleration
 if x websrc testcn; then
     x websrc set cn
-    
+
     # System package managers
     x apt mirror set tuna 2>/dev/null || true      # Debian/Ubuntu
     x dnf mirror set tuna 2>/dev/null || true      # Fedora/RHEL
@@ -197,7 +216,7 @@ if x websrc testcn; then
     x apk mirror set ali 2>/dev/null || true       # Alpine
     x pacman mirror set tuna 2>/dev/null || true   # Arch Linux
     x brew mirror set tuna 2>/dev/null || true     # macOS/Linux
-    
+
     # Language package managers
     x npm mirror set ali 2>/dev/null || true       # Node.js
     x pnpm mirror set ali 2>/dev/null || true      # PNPM
@@ -206,7 +225,7 @@ if x websrc testcn; then
     x go mirror set ali 2>/dev/null || true        # Go
     x cargo mirror set tuna 2>/dev/null || true    # Rust
     x gem mirror set ali 2>/dev/null || true       # Ruby
-    
+
     echo "China region acceleration configured"
 fi
 ```

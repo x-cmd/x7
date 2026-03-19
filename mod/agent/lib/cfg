@@ -47,6 +47,13 @@ ___x_cmd_agent_init(){
                             "$___X_CMD_AGENT_MODEL" || return $?
 }
 
+___x_cmd_agent_harness_(){
+    local zero_harness=
+    local one_harness=
+    ___x_cmd_agent_cur zero_harness:=zero_harness one_harness:=one_harness 2>/dev/null
+    x_="${zero_harness:-"$one_harness"}"
+}
+
 ___X_CMD_AGENT_CFG_VARLIST="zero_harness,one_harness"
 ___x_cmd_agent_cfg___invoke(){
     ___x_cmd_cfgy_obj       \
