@@ -20,11 +20,11 @@ null
 {
 "cn"
 :
-"以清晰的层次结构显示内存使用情况。\n支持 macOS（带内存压缩信息）和 Linux。\n默认以人类可读格式显示（GiB/MiB）。\n"
+"为 Linux free 增加 CSV/TSV 格式支持；为缺失 free 的 macOS 提供原生实现（含内存压缩信息）"
 ,
 "en"
 :
-"Display memory usage in clear hierarchical format.\nSupports macOS (with compression info) and Linux.\nDefault to human-readable format (GiB/MiB).\n"
+"Add CSV/TSV to Linux free; provide missing free implementation for macOS (with memory compression info)"
 }
 ,
 "#tip"
@@ -33,21 +33,27 @@ null
 {
 "cn"
 :
-"【Linux 内存计算模型】\n\n各列含义：\n  total     : 总物理内存\n  used      : 已使用内存 (total - free - buff/cache)\n  free      : 完全空闲内存\n  shared    : tmpfs 等共享内存（已包含在 used 中）\n  buff/cache: 缓存和缓冲区 (可被回收)\n  available : 可用内存 (≈ free + 可回收的 buff/cache)\n\n恒等式：\n  total = used + free + buff/cache\n  \n说明：\n  - shared 是 used 的子集（tmpfs 占用的内存）\n  - used 包含：应用程序 + shared + 内核数据（不含 buff/cache）\n  - available 是内核估算值，通常小于 free + buff/cache\n    因为部分缓存是活跃文件页，不能立即丢弃。\n"
+"【Linux 内存计算模型】\n\n各列含义：\n  total     : 总物理内存 (= used + free + buff/cache)\n  used      : 已使用内存 (apps + shared + kernel, 不含 buff/cache)\n  free      : 完全空闲内存\n  shared    : tmpfs 共享内存 (used 的子集)\n  buff/cache: 文件缓存 (可回收，但活跃页不能立即丢弃)\n  available : 可用内存 (≈ free + 部分 buff/cache，内核估算)\n"
 ,
 "en"
 :
-"【Linux Memory Model】\n\nColumn meanings:\n  total     : Total physical memory\n  used      : Used memory (total - free - buff/cache)\n  free      : Completely free memory\n  shared    : Shared memory (tmpfs, etc.) - included in used\n  buff/cache: Cache and buffers (reclaimable)\n  available : Available memory (≈ free + reclaimable buff/cache)\n\nIdentity:\n  total = used + free + buff/cache\n  \nNotes:\n  - shared is a subset of used (tmpfs memory)\n  - used contains: applications + shared + kernel data (excluding buff/cache)\n  - available is kernel's estimate, usually less than free + buff/cache\n    because some cache is active file pages that cannot be dropped immediately.\n"
+"【Linux Memory Model】\n\nColumn meanings:\n  total     : Total physical memory (= used + free + buff/cache)\n  used      : Used memory (apps + shared + kernel, excluding buff/cache)\n  free      : Completely free memory\n  shared    : tmpfs shared memory (subset of used)\n  buff/cache: File cache (reclaimable, active pages cannot drop immediately)\n  available : Available memory (≈ free + part of buff/cache, kernel estimate)\n"
 }
 ,
 {
 "cn"
 :
-"【macOS 内存模型】\n\nDetail 字段，以及与 vm_stat 映射:\n  hardware   : 硬件保留内存 (= hw.memsize - hw.memsize_usable)\n               被固件、GPU、EFI 等硬件永久占用的内存\n               操作系统无法管理或使用这部分内存\n  wired      : 内核保留内存 (= Pages wired down)\n               包含内核代码、驱动、关键数据结构\n               以及被 mlock() 锁定的用户内存\n               这部分内存不能被交换或压缩\n  compressed : 已压缩数据占用 (= Pages occupied by compressor)\n  app        : 应用工作集 (= Anonymous pages - Pages purgeable)\n  purgeable  : 应用标记的可清除缓存 (= Pages purgeable)\n  cache      : 文件缓存 (= File-backed pages)\n  available  : 立即可分配 (= free + throt，不包含 speculative)\n\n恒等式：\n  # Detail 层与 vm_stat 层对应关系\n  app + purgeable + cache = active + inactive + spec\n  \n  # Memory 概览\n  total = hardware + usable\n  used = total - reusable\n  reusable = purgeable + cache + available\n  \n  # Detail 层组成\n  usable ≈ wired + compressed + app + purgeable + cache + available\n  available = free + throt\n  \n  # vm_stat 层组成\n  usable ≈ wired + compressed + active + inactive + free + spec + throt\n\nhardware (硬件保留内存) 详解:\n  - 计算公式: hw.memsize - hw.memsize_usable\n  - 包含: 固件代码、GPU 显存映射、EFI/UEFI 保留区域\n  - 这部分内存在启动时就被硬件占用，操作系统完全无法访问\n  - 在 128GiB 内存的 Mac 上，通常保留约 1.8-1.9 GiB\n\nwired (Pages wired down) 详解:\n  - 被内核\"钉住\"的内存页，不能被交换到磁盘\n  - 不能被内存压缩器压缩\n  - 主要包括：内核代码、驱动程序、内核栈、部分 DMA 缓冲区\n  - 少数情况下包含用户态通过 mlock() 锁定的内存\n  - 系统内存压力时，wired 是唯一完全不可回收的部分\n\n---\nvm_stat 原始计数器映射：\n  hardware   ← hw.memsize - hw.memsize_usable (硬件保留)\n  wired      ← Pages wired down (内核保留内存)\n  compressed ← Pages occupied by compressor (压缩器占用)\n  app        ← Anonymous pages - Pages purgeable (匿名页-可清除)\n  purgeable  ← Pages purgeable (可清除缓存)\n  cache      ← File-backed pages (文件缓存)\n  available  ← Pages free + Pages throttled (不包含 speculative)\n"
+"【macOS 内存模型】\n\nDetail 层字段：\n  hardware   : 硬件保留 (= hw.memsize - hw.memsize_usable)\n  wired      : 内核保留 (= Pages wired down)，不可交换/压缩\n  compressed : 已压缩数据 (= Pages occupied by compressor)\n  app        : 应用工作集 (= Anonymous - purgeable)\n  purgeable  : 可清除缓存 (= Pages purgeable)\n  cache      : 文件缓存 (= File-backed pages)\n  available  : 空闲内存 (= Pages free + throttled，不含 speculative)\n\n关键恒等式（Detail 层 = vm_stat 层）：\n  app + purgeable + cache ≈ active + inactive + spec\n"
 ,
 "en"
 :
-"【macOS Memory Model】\n\nDetail fields and vm_stat mapping:\n  hardware   : Hardware reserved memory (= hw.memsize - hw.memsize_usable)\n               Memory permanently used by firmware, GPU, EFI, etc.\n               This memory is not manageable or usable by the OS\n  wired      : Kernel reserved memory (= Pages wired down)\n               Includes kernel code, drivers, critical data structures\n               and user memory locked via mlock()\n               This memory cannot be swapped or compressed\n  compressed : Compressed data size (= Pages occupied by compressor)\n  app        : Application working set (= Anonymous pages - Pages purgeable)\n  purgeable  : App-marked reclaimable cache (= Pages purgeable)\n  cache      : File cache (= File-backed pages)\n  available  : Immediately allocatable (= free + throt, excluding speculative)\n\nIdentities:\n  # Detail layer to vm_stat layer mapping\n  app + purgeable + cache = active + inactive + spec\n  \n  # Memory overview\n  total = hardware + usable\n  used = total - reusable\n  reusable = purgeable + cache + available\n  \n  # Detail layer composition\n  usable ≈ wired + compressed + app + purgeable + cache + available\n  available = free + throt\n  \n  # vm_stat layer composition\n  usable ≈ wired + compressed + active + inactive + free + spec + throt\n\nhardware (Hardware Reserved Memory) explained:\n  - Calculation: hw.memsize - hw.memsize_usable\n  - Includes: Firmware code, GPU memory mapping, EFI/UEFI reserved regions\n  - This memory is reserved by hardware at boot time, OS cannot access it\n  - On a 128GiB Mac, typically ~1.8-1.9 GiB is reserved\n\nwired (Pages wired down) explained:\n  - Memory pages \"pinned\" by the kernel, cannot be swapped to disk\n  - Cannot be compressed by the memory compressor\n  - Mainly includes: kernel code, drivers, kernel stacks, some DMA buffers\n  - May include user-space memory locked via mlock()\n  - Under memory pressure, wired is the only completely non-reclaimable part\n\n---\nvm_stat raw counters mapping:\n  hardware   ← hw.memsize - hw.memsize_usable (hardware reserved)\n  wired      ← Pages wired down (kernel reserved memory)\n  compressed ← Pages occupied by compressor (compressor overhead)\n  app        ← Anonymous pages - Pages purgeable (anonymous - purgeable)\n  purgeable  ← Pages purgeable (reclaimable cache)\n  cache      ← File-backed pages (file cache)\n  available  ← Pages free + Pages throttled (excluding speculative)\n"
+"【macOS Memory Model】\n\nDetail layer fields:\n  hardware   : Hardware reserved (= hw.memsize - hw.memsize_usable)\n  wired      : Kernel reserved (= Pages wired down), cannot be swapped/compressed\n  compressed : Compressed data (= Pages occupied by compressor)\n  app        : Application working set (= Anonymous - purgeable)\n  purgeable  : Reclaimable cache (= Pages purgeable)\n  cache      : File cache (= File-backed pages)\n  available  : Free memory (= Pages free + throttled, no speculative)\n\nKey identity (Detail layer = vm_stat layer):\n  app + purgeable + cache ≈ active + inactive + spec\n"
+}
+,
+{
+"cn"
+:
+"【相关工具】进程级分析：x btop, x btm, x ps；底层数据：m mem, vm_stat\n"
 }
 ]
 ,

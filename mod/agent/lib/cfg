@@ -18,17 +18,11 @@ ___x_cmd_agent_cur(){
     ___x_cmd_agent_cfg --current "$@"
 }
 
+# TODO: x-minimax-2.5, x-glm5, x-glm4.7, x-kimi-2.5, x-gpt, x-gemini, x-hub
 ___X_CMD_AGENT_MODEL='claude
 codex
 gemini-cli
 kimi-cli
-x-minimax-2.5
-x-glm5
-x-glm4.7
-x-kimi-2.5
-x-gpt
-x-gemini
-x-hub
 '
 
 ___x_cmd_agent_init(){

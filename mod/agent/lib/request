@@ -100,9 +100,12 @@ Please output the content between two === as following:
 }
 
 ___x_cmd_agent_request___run_(){
+    agent:info "Sending request to $harness ..."
     case "$harness" in
-        kimi-cli)       x_="$(___x_cmd kimi     -c "$content")" ;;
-        claude)         x_="$(___x_cmd claude   -p "$content")" ;;
+        kimi-cli)       x_="$(___x_cmd kimi -- -c "$content")" ;;
+        claude)         x_="$(___x_cmd claude -- -p "$content")" ;;
+        codex)          x_="$(___x_cmd codex -- exec "$content" 2>/dev/null)" ;;
+        gemini)         x_="$(___x_cmd gemini cli -- "$content")" ;;
         *)              N=agent M="Unsupported harness -> $harness" log:ret:1 ;;
     esac
 }

@@ -82,10 +82,6 @@ ___x_cmd_bakman_restore_(){
         ___x_cmd_bakman_latest_ "$fp" || return $?
         # fp_clean is set by ___x_cmd_bakman_latest_
         backupfp="$x_"
-        [ -n "$backupfp" ] || {
-            N=bakman M="no backup found for '$fp'" log:ret:1
-            return 1
-        }
     fi
 
     x_="$backupfp"
@@ -218,7 +214,8 @@ ___x_cmd_bakman_latest_(){
     files="$(___x_cmd_bakman___stdout_files "$fp_clean")"
     [ -n "$files" ] || {
         x_=""
-        return 0
+        bakman:info "no backup found for '$1'"
+        return 1
     }
 
     # Get the last line (newest file)
@@ -236,10 +233,6 @@ ___x_cmd_bakman_latest(){
     local X_help_cmd='___x_cmd help -m bakman latest'
     help:arg-null:parse
     local x_
-    ___x_cmd_bakman_latest_ "$@"
-    if [ -z "$x_" ]; then
-        bakman:info "no backup found for '$1'"
-        return 1
-    fi
+    ___x_cmd_bakman_latest_ "$@" || return $?
     printf "%s\n" "$x_"
 }

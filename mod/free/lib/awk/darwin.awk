@@ -89,19 +89,27 @@ END {
     # Colors
     init_colors(NO_COLOR)
 
+    # Calculate derived metrics for CSV/TSV
+    reusable_kb = purgeable_kb + cache_kb + available_kb
+    mem_used_kb = total_kb - reusable_kb
+    
     # Output
     if (format == "csv") {
-        if (header == 1) print "total,wired,occupied,active,inactive,speculative,throttled,free,kernel,compressed,app,purgeable,cache,available,swap_total,swap_used,compress_stored,compress_occupied,compress_saved"
-        printf "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
-            total_kb, wired_kb, compress_occupied_kb, active_kb, inactive_kb, speculative_kb, throttled_kb, free_kb,
-            kernel_kb, compressed_kb, app_kb, purgeable_kb, cache_kb, available_kb,
-            swap_total_kb, swap_used_kb, compress_stored_kb, compress_occupied_kb, compress_saved_kb
+        if (header == 1) print "used,reusable,wired,compressed,app,purgeable,cache,available,vm-wired,vm-compressed,vm-active,vm-inactive,vm-spec,vm-free,vm-throt,swap-total,swap-used,swap-free,compress-stored,compress-occupied,compress-saved"
+        printf "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s\n",
+            mem_used_kb, reusable_kb,
+            wired_kb, compress_occupied_kb, app_kb, purgeable_kb, cache_kb, available_kb,
+            wired_kb, compress_occupied_kb, active_kb, inactive_kb, speculative_kb, free_kb, throttled_kb,
+            swap_total_kb, swap_used_kb, swap_free_kb,
+            compress_stored_kb, compress_occupied_kb, compress_saved_kb
     } else if (format == "tsv") {
-        if (header == 1) print "total\twired\toccupied\tactive\tinactive\tspeculative\tthrottled\tfree\tkernel\tcompressed\tapp\tpurgeable\tcache\tavailable\tswap_total\tswap_used\tcompress_stored\tcompress_occupied\tcompress_saved"
-        printf "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
-            total_kb, wired_kb, compress_occupied_kb, active_kb, inactive_kb, speculative_kb, throttled_kb, free_kb,
-            kernel_kb, compressed_kb, app_kb, purgeable_kb, cache_kb, available_kb,
-            swap_total_kb, swap_used_kb, compress_stored_kb, compress_occupied_kb, compress_saved_kb
+        if (header == 1) print "used\treusable\twired\tcompressed\tapp\tpurgeable\tcache\tavailable\tvm-wired\tvm-compressed\tvm-active\tvm-inactive\tvm-spec\tvm-free\tvm-throt\tswap-total\tswap-used\tswap-free\tcompress-stored\tcompress-occupied\tcompress-saved"
+        printf "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\n",
+            mem_used_kb, reusable_kb,
+            wired_kb, compress_occupied_kb, app_kb, purgeable_kb, cache_kb, available_kb,
+            wired_kb, compress_occupied_kb, active_kb, inactive_kb, speculative_kb, free_kb, throttled_kb,
+            swap_total_kb, swap_used_kb, swap_free_kb,
+            compress_stored_kb, compress_occupied_kb, compress_saved_kb
     } else {
         # Table format - Linux free style: Mem and Swap at top
         # Aligned with Detail (6 columns)
