@@ -6,7 +6,7 @@ ___x_cmd_install_ls(){
     local fmt=auto
     while [ $# -gt 0 ]; do
         case "$1" in
-            -h|--help)      ___x_cmd help -m install ls "$@" ;;
+            -h|--help)      ___x_cmd help -m install ls "$@"; return ;;
             --csv|--tsv|--auto|--json|--yml|--name)
                             fmt="${1#--}" ; shift ;;
             *)              N=install M="Unknown option -> $1" log:ret:64 ;;

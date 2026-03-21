@@ -1,4 +1,5 @@
 
+
 # TODO: If detect "$HOME/.config/x-cmd", then ___X_CMD_ROOT_CFG set.
 
 # chezmoi add $___X_CMD_ROOT_CFG
@@ -32,7 +33,9 @@ ___x_cmd_root_dotconfig_activate(){
     ___x_cmd rmrf "$___X_CMD_ROOT_DOTCONFIG"
 
     # Consider backup ?
-    ___x_cmd mv "$___X_CMD_ROOT_CFG" "$___X_CMD_ROOT_DOTCONFIG"
+    ___x_cmd cp -r -i "$___X_CMD_ROOT_CFG" "$___X_CMD_ROOT_DOTCONFIG"
+
+    ___x_cmd rmrf "$___X_CMD_ROOT_DOTCONFIG"
 
     ___x_cmd mklink -d "$___X_CMD_ROOT_DOTCONFIG" "$___X_CMD_ROOT_CFG"
 }
@@ -50,14 +53,4 @@ ___x_cmd_root_dotconfig_status(){
     fi
 }
 
-___x_cmd_root_dotconfig_apply(){
-    ___x_cmd_root_dotconfig_isactivated || ___x_cmd_root_dotconfig_activate
-    ___x_cmd_hascmd chezmoi || ___x_cmd env use chezmoi || return $?
-    if ___x_cmd_cmds chezmoi git remote -v 2>/dev/null 1>&2;then
-        ___x_cmd_cmds chezmoi apply --interactive "$___X_CMD_ROOT_DOTCONFIG"
-    else
-        x:error "You need to run 'chezmoi init --ssh <user>' and fetch the git repository first."
-        return 1
-    fi
-}
 

@@ -170,22 +170,6 @@ null
 }
 }
 ,
-"apply"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"x-cmd 配置同步"
-,
-"en"
-:
-"x-cmd Configuration Synchronization"
-}
-}
-,
 "#tldr"
 :
 [
