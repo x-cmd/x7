@@ -93,43 +93,43 @@ null
 {
 "cmd"
 :
-"x skill add x-cmd-dev"
+"x skill add --skill-dir .claude/skills anthropics/skill-creator"
 ,
 "cn"
 :
-"示例: 添加 x-cmd-dev skill 到当前项目"
+"示例: 添加 skill-creator skill 到当前项目"
 ,
 "en"
 :
-"Example: add x-cmd-dev skill to current project"
+"Example: add skill-creator skill to current project"
 }
 ,
 {
 "cmd"
 :
-"x skill rm x-cmd-dev"
+"x skill rm --skill-dir .claude/skills anthropics/skill-creator"
 ,
 "cn"
 :
-"示例: 从当前项目移除 x-cmd-dev skill"
+"示例: 从当前项目移除 skill-creator skill"
 ,
 "en"
 :
-"Example: remove x-cmd-dev skill from current project"
+"Example: remove skill-creator skill from current project"
 }
 ,
 {
 "cmd"
 :
-"x skill cat x-cmd-dev"
+"x skill cat anthropics/skill-creator"
 ,
 "cn"
 :
-"示例: 查看 x-cmd-dev skill 的详细内容"
+"示例: 查看 skill-creator skill 的详细内容"
 ,
 "en"
 :
-"Example: display x-cmd-dev skill content"
+"Example: display skill-creator skill content"
 }
 ]
 ,

@@ -14,7 +14,7 @@ ___x_cmd_root_dotconfig(){
     local op="$1" ;     shift
     case "$op" in
         -h|--help)      ___x_cmd help -m root dotconfig "$@" ;;
-        activate|isactivated|status)
+        activate|isactivated|status|apply)
                         ___x_cmd_root_dotconfig_"$op"   "$@" ;;
         *)              N=root M="Unsupported op -> $op" log:ret:64 ;;
     esac
@@ -47,6 +47,17 @@ ___x_cmd_root_dotconfig_status(){
     else
         x:info --tip "x root dotconfig activate" \
             "Link to dotconfig is not activated. You can follow the tip to activate it."
+    fi
+}
+
+___x_cmd_root_dotconfig_apply(){
+    ___x_cmd_root_dotconfig_isactivated || ___x_cmd_root_dotconfig_activate
+    ___x_cmd_hascmd chezmoi || ___x_cmd env use chezmoi || return $?
+    if ___x_cmd_cmds chezmoi git remote -v 2>/dev/null 1>&2;then
+        ___x_cmd_cmds chezmoi apply --interactive "$___X_CMD_ROOT_DOTCONFIG"
+    else
+        x:error "You need to run 'chezmoi init --ssh <user>' and fetch the git repository first."
+        return 1
     fi
 }
 

@@ -23,6 +23,7 @@ ___X_CMD_AGENT_MODEL='claude
 codex
 gemini-cli
 kimi-cli
+opencode
 '
 
 ___x_cmd_agent_init(){

@@ -102,14 +102,28 @@ ___x_cmd_bakman_restore(){
 ___x_cmd_bakman_list_(){
     local fp="$1"
     local searchdir
+    local name_pattern
 
     if [ -n "$fp" ]; then
-        # Remove leading slash to match backup storage structure
-        local fp_clean="${fp#/}"
-        searchdir="$___X_CMD_BAKMAN_DATA/$(dirname "$fp_clean")"
+        # Convert to absolute path first
+        local abs_fp
+        x_=""; ___x_cmd abspath_ "$fp"
+        abs_fp="$x_"; x_=""
+        [ -n "$abs_fp" ] || return 0
+
+        # Match specific file's backups only
+        local fp_clean="${abs_fp#/}"
+        local fp_dirname
+        fp_dirname="$(___x_cmd_cmds dirname "$fp_clean")"
+        local fp_basename
+        fp_basename="$(___x_cmd_cmds basename "$fp_clean")"
+        searchdir="$___X_CMD_BAKMAN_DATA/$fp_dirname"
         searchdir="${searchdir%/}"
+        name_pattern="${fp_basename}.[0-9]*"
     else
+        # List all backups
         searchdir="$___X_CMD_BAKMAN_DATA"
+        name_pattern="*"
     fi
 
     x_=""
@@ -118,24 +132,19 @@ ___x_cmd_bakman_list_(){
     local name
 
     if [ -d "$searchdir" ]; then
-        # Recursively find all backup files
-        # Use process substitution instead of pipe to avoid subshell issues
         while read -r f; do
             [ -n "$f" ] || continue
             count=$((count + 1))
-            # Convert backup path to original path format: /path/to/file.timestamp
             name="${f#$___X_CMD_BAKMAN_DATA}"
             name="${name#/}"
-            name="${name#./}"  # Remove ./ prefix from dirname
             [ -n "$name" ] && name="/$name"
             x_="${x_}${name}${___X_CMD_UNSEENCHAR_NEWLINE}"
         done <<EOF
-$(___x_cmd find "$searchdir" -type f 2>/dev/null | ___x_cmd_cmds sort)
+$(___x_cmd find "$searchdir" -type f -name "$name_pattern" 2>/dev/null | ___x_cmd_cmds sort)
 EOF
     fi
 
     [ "$count" -gt 0 ] || return 0
-    # Remove trailing newline
     x_="${x_%${___X_CMD_UNSEENCHAR_NEWLINE}}"
 }
 

@@ -1,17 +1,7 @@
 # shellcheck shell=dash disable=SC2120
 
 ___x_cmd_agent_setup(){
-
-    while [ $# -gt 0 ]; do
-        case "$1" in
-            -h|--help)  ___x_cmd help -m agent setup "$@" ; return 0 ;;
-            # --all)      mode="all" ; shift ;;
-            # --claude)   mode="$mode claude" ; shift ;;
-            # --codex)    mode="$mode codex"  ; shift ;;
-            # --gemini)   mode="$mode gemini" ; shift ;;
-            *)          break ;;
-        esac
-    done
+    local X_help_cmd=; X_help_cmd='___x_cmd help -m agent setup' help:arg:parse
 
     # local prompt='Load x-cmd with `. ~/.x-cmd.root/X` (required before using `x`), then `x nihao --llmstxt` to explore usage. Docs: https://www.x-cmd.com/llms.txt'
 
@@ -43,11 +33,12 @@ $HOME/.agents
 $HOME/.claude
 $HOME/.codex
 $HOME/.gemini
+$HOME/.config/opencode
 A
 
     agent:info                      \
         --tip   "x agent unify"     \
-        "Consider unifying the ~/CLAUDE.md ~/.codex/AGENTS.md ~/.gemini/GEMINI.md into one file."
+        "Consider unifying the ~/CLAUDE.md ~/.codex/AGENTS.md ~/.gemini/GEMINI.md ~/.config/opencode/AGENTS.md into one file."
 }
 
 ___x_cmd_agent_setup___addskill(){

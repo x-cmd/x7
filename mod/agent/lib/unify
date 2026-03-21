@@ -1,25 +1,28 @@
 
 
 ___x_cmd_agent_unify(){
+    local X_help_cmd=; X_help_cmd='___x_cmd help -m agent unify' help:arg:parse
 
     local AGENT_FP="$HOME/AGENTS.md"
 
     local CLAUDE_FP="$HOME/CLAUDE.md"
     local CODEX_FP="$HOME/.codex/AGENTS.md"
     local GEMINI_FP="$HOME/.gemini/GEMINI.md"
+    local OPENCODE_FP="$HOME/.config/opencode/AGENTS.md"
 
     if [ ! -e "$AGENT_FP" ]; then
         ___x_cmd_agent_setup
     fi
 
-    ___x_cmd_agent_unify___try "$CLAUDE_FP" "$GEMINI_FP" "$CODEX_FP"
+    ___x_cmd_agent_unify___try "$CLAUDE_FP" "$GEMINI_FP" "$CODEX_FP" "$OPENCODE_FP"
 
 }
 
 ___x_cmd_agent_unify___try(){
     local errcode
-
     local op=""
+    local op_hash=""; local agent_fp_hash=""
+
     while [ $# -gt 0 ]; do
         op="$1"; shift
         if [ ! -e "$op" ]; then
@@ -28,11 +31,21 @@ ___x_cmd_agent_unify___try(){
             continue
         fi
 
+        # Check if content is identical using sha512 hash
+        op_hash="$(___x_cmd sha512 "$op")"
+        agent_fp_hash="$(___x_cmd sha512 "$AGENT_FP")"
+
+        if [ "$op_hash" = "$agent_fp_hash" ]; then
+            agent:info "Content identical, skipping merge: $op"
+            ___x_cmd_cmds rm -f "$op"
+            ___x_cmd_cmds ln -s "$AGENT_FP" "$op"
+            continue
+        fi
+
         if ! ___x_cmd agent isready; then
             x:info                      \
                 --tip "x agent init"    \
-                --tip "x llm init"      \
-                "Both 'x agent' or 'x llm' are not ready. Please setup according to the tips. You can also manually incorporated the file $op into $AGENT_FP by yourself."
+                "Agent is not ready. Please setup according to the tip. You can also manually incorporate the file $op into $AGENT_FP by yourself."
             return 1
         fi
 

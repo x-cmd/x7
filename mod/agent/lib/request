@@ -29,6 +29,7 @@ ___x_cmd_agent_request(){
     local filelist=""
     local NL="$___X_CMD_UNSEENCHAR_NEWLINE"
 
+    [ "$#" -gt 0 ] || set -- --help
     while [ $# -gt 0 ]; do
         case "$1" in
             -h|--help)      ___x_cmd help -m agent request "$@" ; return 0 ;;
@@ -105,7 +106,14 @@ ___x_cmd_agent_request___run_(){
         kimi-cli)       x_="$(___x_cmd kimi -- -c "$content")" ;;
         claude)         x_="$(___x_cmd claude -- -p "$content")" ;;
         codex)          x_="$(___x_cmd codex -- exec "$content" 2>/dev/null)" ;;
-        gemini)         x_="$(___x_cmd gemini cli -- "$content")" ;;
+        gemini-cli)     x_="$(___x_cmd gemini cli -- "$content")" ;;
+        opencode)
+                        if ! ___x_cmd_hascmd opencode; then
+                            agent:info "Installing opencode..."
+                            ___x_cmd env use opencode || return $?
+                        fi
+                        x_="$(___x_cmd_cmds opencode run "$content")" ;;
+        "")             N=agent M="Please specify harness" log:ret:64 ;;
         *)              N=agent M="Unsupported harness -> $harness" log:ret:1 ;;
     esac
 }
