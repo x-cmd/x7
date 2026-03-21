@@ -1,6 +1,6 @@
 548d06daf523026531069d978f8f074fe4532f19 abox main NULL
 79af452639ea29d053dc5ae6592916921d1c3ffe advise main NULL
-5e486763283bd92cff0bb839ad8e4db8ee43df34 agent main NULL
+abdf63bc330aaef9b7d24556f5b6e635e05cdf97 agent main NULL
 94eb1cb39d13a2ebcddf07a44b8cf63e7ac687cc aider main NULL
 2abe9fc103abe6597b599c5245efc148c44ee948 alias main NULL
 c8dd6182f3d400215d7292cbfe9c65b73722ab7d api main NULL
@@ -283,7 +283,7 @@ b572c40651b05070b7abbcaaeb567cfa96114e43 seq main NULL
 8a253fe0a6b49b6a1b0974e92f1c5a5621c12fa3 shodan main NULL
 ce1538782d995a5281459a4588590e07d2a20a5e shortcut main NULL
 52056d6c913fdf559be0ce3202dfe4168bb238c1 siliconflow main NULL
-1b4a77be123ccda98605a74918f5259ea826213b skill main NULL
+1ef61947b9cd65cf87cc80db88f704be87ea088f skill main NULL
 2eb4c67f73078cc5183e9cc5b2cfc0486cf57706 skopeo main NULL
 07e5355d427e4ca1112e7e938750e280560dee36 slack main NULL
 3bed8b5af34b0acb703280e6bd91c61bb424f38a sleep main NULL

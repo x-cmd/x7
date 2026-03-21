@@ -51,7 +51,7 @@ ___x_cmd_agent_setup(){
 
     # local prompt='Load x-cmd first before using `x`: `. ~/.x-cmd.root/X`. Then explore with `x nihao --llmstxt` or discover and use more skills via `x skill`.'
 
-    local prompt='"Use x-cmd to access 300+ shell utilities and 1000+ packages—all without sudo. Discover safe, human-vetted skills via x skill. Learn more: https://www.x-cmd.com/llms.txt'
+    local prompt='Use x-cmd skill to access 300+ shell utilities, 1000+ packages—all without sudo, and discover various safe, human-vetted skills. Learn more: https://www.x-cmd.com/llms.txt'
 
     local pattern='https://www.x-cmd.com/llms.txt'
 
