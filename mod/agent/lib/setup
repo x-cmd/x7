@@ -2,14 +2,13 @@
 
 ___x_cmd_agent_setup_addprompt(){
     local dir="$1"
+    local fp="$2"
+    local pattern="$3"
+    local prompt="$4"
     [ -e "${dir}" ]   ||  {
         agent:info "Skip adding prompt into [file=$fp] because [dir=$dir] is not existed."
         return 1
     }
-    
-    local fp="$2" 
-    local pattern="$3"
-    local prompt="$4"
 
     ___x_cmd_agent_setup_addprompt_removeline_then_append_ "$fp" "$pattern" "$prompt"
 }
@@ -23,7 +22,7 @@ ___x_cmd_agent_setup_addprompt_removeline_then_append_(){
     if [ -e "$fp" ]; then
         data="$(___x_cmd_cmds cat "$fp")" 2>/dev/null || N=agent M="Fail to read data from $fp" log:ret:1
     fi
-    
+
     data="$data" prompt="$prompt" pattern="$pattern" ___x_cmd_cmds awk '
         BEGIN{
             data    = ENVIRON["data"]
@@ -73,6 +72,7 @@ ___x_cmd_agent_setup(){
                 --tip-1 "If you want to mkdir if directory unexisted -> x agent setup --all" \
                 --tip-1 "Create folder manually, then run the command againt -> x mkdirp $dir && x agent setup" \
                 "Skip skill link for agent directory doesnot exist -> $dir"
+            continue
         }
         ___x_cmd_agent_setup___addskill_ln "$dir"
     done<<A
