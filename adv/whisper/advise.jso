@@ -99,6 +99,48 @@ null
 :
 "将 srt 字幕嵌入到视频中"
 }
+,
+{
+"cmd"
+:
+"x whisper livekit"
+,
+"en"
+:
+"Start WhisperLiveKit server (default base model)"
+,
+"cn"
+:
+"启动 WhisperLiveKit 服务器（默认 base 模型）"
+}
+,
+{
+"cmd"
+:
+"x whisper livekit run --model medium --diarization --language zh"
+,
+"en"
+:
+"Auto-pull medium model with speaker diarization and Chinese"
+,
+"cn"
+:
+"使用 medium 模型自动拉取，开启说话人识别，识别中文"
+}
+,
+{
+"cmd"
+:
+"x whisper livekit transcribe meeting.wav"
+,
+"en"
+:
+"Transcribe an audio file (no server needed)"
+,
+"cn"
+:
+"转录音频文件（无需启动服务器）"
+}
 ]
 ,
 "-f|--file"
@@ -1379,7 +1421,7 @@ null
 ]
 }
 ,
-"livekit"
+"livekit|lk"
 :
 {
 "#desc"
@@ -1400,43 +1442,71 @@ null
 {
 "cmd"
 :
-"x whisper livekit --model base"
+"x whisper livekit"
 ,
 "en"
 :
-"Start WhisperLiveKit server with base model"
+"Start WhisperLiveKit server (default base model)"
 ,
 "cn"
 :
-"使用 base 模型启动 WhisperLiveKit 服务器"
+"启动 WhisperLiveKit 服务器（默认 base 模型）"
 }
 ,
 {
 "cmd"
 :
-"x whisper livekit --model medium --diarization --language zh"
+"x whisper livekit run"
 ,
 "en"
 :
-"Start server with medium model, speaker diarization, Chinese"
+"Auto-pull model and start server (default: base)"
 ,
 "cn"
 :
-"使用 medium 模型、说话人识别、中文启动服务器"
+"自动拉取模型并启动服务器（默认：base）"
 }
 ,
 {
 "cmd"
 :
-"x whisper livekit --backend faster-whisper --model large-v3"
+"x whisper livekit run --model medium --diarization --language zh"
 ,
 "en"
 :
-"Use faster-whisper backend with large-v3 model"
+"Auto-pull medium model with speaker diarization and Chinese"
 ,
 "cn"
 :
-"使用 faster-whisper 后端和 large-v3 模型"
+"使用 medium 模型自动拉取，开启说话人识别，识别中文"
+}
+,
+{
+"cmd"
+:
+"x whisper livekit transcribe meeting.wav"
+,
+"en"
+:
+"Transcribe an audio file (no server needed)"
+,
+"cn"
+:
+"转录音频文件（无需启动服务器）"
+}
+,
+{
+"cmd"
+:
+"x whisper livekit transcribe --format srt podcast.mp3 -o podcast.srt"
+,
+"en"
+:
+"Generate subtitles in srt format"
+,
+"cn"
+:
+"转录音频并生成 srt 字幕文件"
 }
 ]
 ,
@@ -1458,6 +1528,38 @@ null
 "#exec"
 :
 "___x_cmd_advise__file"
+}
+,
+"--with"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"额外的依赖项，比如 mlx-whisper,voxtral-mlx,translation"
+,
+"en"
+:
+"Additional dependencies, such as mlx-whisper, voxtral-mlx, translation"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"包列表（可多个，逗号分隔）"
+,
+"en"
+:
+"List of packages  (can be multiple, comma-separated)"
+}
+}
 }
 ,
 "-m|--model"
@@ -1539,234 +1641,10 @@ null
 "服务器端口"
 }
 }
-}
 ,
-"lk"
+"$ref"
 :
-{
-"#desc"
-:
-{
-"en"
-:
-"Alias for whisper livekit"
-,
-"cn"
-:
-"whisper livekit 的别名"
-}
-}
-,
-"online"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Real-time streaming with WhisperStreaming"
-,
-"cn"
-:
-"使用 WhisperStreaming 进行实时流式语音转写"
-}
-,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x whisper online --language en --min-chunk-size 1 audio.wav"
-,
-"en"
-:
-"Run WhisperStreaming on audio file with real-time simulation"
-,
-"cn"
-:
-"在音频文件上运行 WhisperStreaming，模拟实时处理"
-}
-,
-{
-"cmd"
-:
-"x whisper online --language zh --model large-v3 --vad audio.wav"
-,
-"en"
-:
-"Use large-v3 model with VAD for Chinese"
-,
-"cn"
-:
-"使用 large-v3 模型和 VAD 进行中文识别"
-}
-]
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"audio file (16kHz mono wav)"
-,
-"cn"
-:
-"音频文件（16kHz 单声道 wav）"
-}
-,
-"#exec"
-:
-"___x_cmd_advise__file"
-}
-,
-"-m|--model"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Whisper model (tiny, base, small, medium, large, large-v2, large-v3, large-v3-turbo)"
-,
-"cn"
-:
-"Whisper 模型"
-}
-}
-,
-"--language|--lan"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Source language code (e.g., en, zh, de)"
-,
-"cn"
-:
-"源语言代码"
-}
-}
-,
-"--task"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"transcribe or translate"
-,
-"cn"
-:
-"转写或翻译"
-}
-}
-,
-"--backend"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Backend to use: faster-whisper, whisper_timestamped, openai-api"
-,
-"cn"
-:
-"使用的后端 faster-whisper, whisper_timestamped, openai-api"
-}
-}
-,
-"--vac"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Use voice activity controller (recommended)"
-,
-"cn"
-:
-"使用语音活动控制器（推荐）"
-}
-}
-,
-"--vad"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Use voice activity detection"
-,
-"cn"
-:
-"使用语音活动检测"
-}
-}
-,
-"--min-chunk-size"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Minimum audio chunk size in seconds"
-,
-"cn"
-:
-"最小音频块大小（秒）"
-}
-}
-,
-"--buffer_trimming"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Buffer trimming: sentence or segment"
-,
-"cn"
-:
-"缓冲区修剪 sentence 或 segment"
-}
-}
-,
-"--offline"
-:
-{
-"#desc"
-:
-{
-"en"
-:
-"Offline mode (process entire file at once)"
-,
-"cn"
-:
-"离线模式（一次性处理整个文件）"
-}
-}
+"x-cmd-advise://whisperlivekit/advise.t.jso"
 }
 }
 

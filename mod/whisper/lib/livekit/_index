@@ -1,52 +1,13 @@
 # shellcheck shell=dash
 
-xrc:mod:lib     whisper
+xrc:mod:lib     whisper             livekit/__install  livekit/__runcmd
 
 ___x_cmd_whisper_livekit(){
-    local X_help_cmd=; X_help_cmd='___x_cmd help -m whisper livekit' help:arg:parse
-
-   
-
-    # Check and install whisperlivekit if needed
-    if ! python3 -c "import whisperlivekit" 2>/dev/null; then
-        whisper:info "Installing whisperlivekit..."
-        python3 -m pip install whisperlivekit --quiet || {
-            whisper:error "Failed to install whisperlivekit"
-            return 1
-        }
-    fi
-
-    # Run whisperlivekit-server with all arguments
-    python3 -m whisperlivekit "$@"
+    case "$1" in
+        -h|--help)      ___x_cmd help -m whisper livekit; return 0 ;;
+        listen)
+                        ___x_cmd_whisper_livekit___runmain --with sounddevice "$@" ;;
+        *)              ___x_cmd_whisper_livekit___runmain "$@" ;;
+    esac
 }
 
-# enforcesetup
-___x_cmd_whisper_livekit___setup(){
-    # Check if whisperlivekit is installed
-    if ! ___x_cmd_hascmd python3; then
-        ___x_cmd env try python
-    fi
-
-    if ! ___x_cmd_hascmd uv; then
-        ___x_cmd env try uv
-    fi
-
-    if ___x_cmd os is darwin; then
-        ___x_cmd_cmds uv sync --extra mlx-whisper
-    else
-        :
-    fi
-
-}
-
-___x_cmd_whisper_livekit___run(){
-    
-    # ffmpeg dependency
-    ___x_cmd_hascmd ffmpeg || ___x_cmd env try ffmpeg    
-
-
-}
-
-___x_cmd_whisper_livekit___setupvoxtral(){
-    ___x_cmd_hascmd uv sync --extra voxtral-mlx
-}
