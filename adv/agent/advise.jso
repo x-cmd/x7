@@ -145,6 +145,12 @@ null
 "request"
 ]
 ,
+"#subcmd:Job"
+:
+[
+"job"
+]
+,
 "request"
 :
 {
@@ -202,23 +208,13 @@ null
 "#1"
 :
 {
-"#cand"
+"$ref"
 :
-[
-"kimi-cli"
-,
-"claude"
-,
-"codex"
-,
-"gemini-cli"
-,
-"opencode"
-]
+"x-advise://agent/data/harness.jso"
 }
 }
 ,
-"--file"
+"-f|--file"
 :
 {
 "#multiple"
@@ -246,7 +242,7 @@ true
 }
 }
 ,
-"--output"
+"-o|--output"
 :
 {
 "#desc"
@@ -267,6 +263,22 @@ true
 "#exec"
 :
 "___x_cmd_advise__file"
+}
+}
+,
+"--json"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"以 JSON 格式输出"
+,
+"en"
+:
+"Output in JSON format"
 }
 }
 ,
@@ -631,6 +643,758 @@ true
 }
 }
 ,
+"job"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"管理长期任务（创建、迭代、调整需求）"
+,
+"en"
+:
+"Manage long-term tasks (create, iterate, adjust requirements)"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x agent job init \"Implement user authentication\""
+,
+"cn"
+:
+"示例: 创建新任务"
+,
+"en"
+:
+"Example: Create a new task"
+}
+,
+{
+"cmd"
+:
+"x agent job iter"
+,
+"cn"
+:
+"示例: 迭代最近创建的任务"
+,
+"en"
+:
+"Example: Iterate the most recently created task"
+}
+,
+{
+"cmd"
+:
+"x agent job adjust"
+,
+"cn"
+:
+"示例: 调整任务需求描述"
+,
+"en"
+:
+"Example: Adjust task requirement description"
+}
+]
+,
+"init"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"创建新的长期任务，通过交互式对话澄清需求并写入 TODO.md"
+,
+"en"
+:
+"Create a new long-term task, clarify requirements via interactive chat and write to TODO.md"
+}
+,
+"#synopsis"
+:
+[
+{
+"x agent job init <description>"
+:
+null
+}
+,
+{
+"x agent job init --dir <path> <description>"
+:
+null
+}
+,
+{
+"x agent job init --harness <harness> <description>"
+:
+null
+}
+]
+,
+"--harness"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定 AI 工具接口"
+,
+"en"
+:
+"Specify AI tool interface"
+}
+,
+"#1"
+:
+{
+"$ref"
+:
+"x-advise://agent/data/harness.jso"
+}
+}
+,
+"--dir"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定任务目录路径"
+,
+"en"
+:
+"Specify task directory path"
+}
+,
+"#1"
+:
+{
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"任务描述"
+,
+"en"
+:
+"Task description"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x agent job init \"Refactor the auth module\""
+,
+"cn"
+:
+"示例: 创建新任务"
+,
+"en"
+:
+"Example: Create a new task"
+}
+,
+{
+"cmd"
+:
+"x agent job init --dir ~/tasks/myjob \"Fix memory leak\""
+,
+"cn"
+:
+"示例: 指定目录创建任务"
+,
+"en"
+:
+"Example: Create task in specific directory"
+}
+]
+}
+,
+"iter"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"迭代执行任务，自动循环直到完成或达到最大迭代次数"
+,
+"en"
+:
+"Iterate task execution, auto-loop until complete or max iterations reached"
+}
+,
+"#synopsis"
+:
+[
+{
+"x agent job iter"
+:
+null
+}
+,
+{
+"x agent job iter --dir <path>"
+:
+null
+}
+,
+{
+"x agent job iter --harness <harness>"
+:
+null
+}
+]
+,
+"--harness"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定 AI 工具接口"
+,
+"en"
+:
+"Specify AI tool interface"
+}
+,
+"#1"
+:
+{
+"$ref"
+:
+"x-advise://agent/data/harness.jso"
+}
+}
+,
+"--dir"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定任务目录路径"
+,
+"en"
+:
+"Specify task directory path"
+}
+,
+"#1"
+:
+{
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+}
+,
+"--max-iterations"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"最大迭代次数（默认 100）"
+,
+"en"
+:
+"Maximum iterations (default 100)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"迭代次数"
+,
+"en"
+:
+"Number of iterations"
+}
+}
+}
+,
+"--inrow"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"连续无修改即完成的阈值（默认 2）"
+,
+"en"
+:
+"Consecutive no-change threshold for completion (default 2)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"连续次数"
+,
+"en"
+:
+"Consecutive count"
+}
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x agent job iter"
+,
+"cn"
+:
+"示例: 迭代最近创建的任务"
+,
+"en"
+:
+"Example: Iterate the most recently created task"
+}
+,
+{
+"cmd"
+:
+"x agent job iter --dir ~/tasks/myjob"
+,
+"cn"
+:
+"示例: 迭代指定目录的任务"
+,
+"en"
+:
+"Example: Iterate task in specific directory"
+}
+,
+{
+"cmd"
+:
+"x agent job iter --max-iterations 50 --inrow 3"
+,
+"cn"
+:
+"示例: 限制迭代次数和无修改阈值"
+,
+"en"
+:
+"Example: Limit iterations and no-change threshold"
+}
+]
+}
+,
+"adjust"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"调整任务需求，通过交互式对话更新 TODO.md"
+,
+"en"
+:
+"Adjust task requirements, update TODO.md via interactive chat"
+}
+,
+"#synopsis"
+:
+[
+{
+"x agent job adjust"
+:
+null
+}
+,
+{
+"x agent job adjust --dir <path>"
+:
+null
+}
+,
+{
+"x agent job adjust --harness <harness>"
+:
+null
+}
+]
+,
+"--harness"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定 AI 工具接口"
+,
+"en"
+:
+"Specify AI tool interface"
+}
+,
+"#1"
+:
+{
+"$ref"
+:
+"x-advise://agent/data/harness.jso"
+}
+}
+,
+"--dir"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定任务目录路径"
+,
+"en"
+:
+"Specify task directory path"
+}
+,
+"#1"
+:
+{
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x agent job adjust"
+,
+"cn"
+:
+"示例: 调整最近任务的描述"
+,
+"en"
+:
+"Example: Adjust the most recent task description"
+}
+,
+{
+"cmd"
+:
+"x agent job adjust --dir ~/tasks/myjob"
+,
+"cn"
+:
+"示例: 调整指定目录的任务"
+,
+"en"
+:
+"Example: Adjust task in specific directory"
+}
+]
+}
+,
+"ls"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"列出所有任务"
+,
+"en"
+:
+"List all tasks"
+}
+,
+"#synopsis"
+:
+[
+{
+"x agent job ls"
+:
+null
+}
+,
+{
+"x agent job ls --active"
+:
+null
+}
+,
+{
+"x agent job ls --completed"
+:
+null
+}
+]
+,
+"--active"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"只显示活跃的任务（有 TODO.md）"
+,
+"en"
+:
+"Show only active jobs (with TODO.md)"
+}
+}
+,
+"--completed"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"只显示已完成的任务（有 DONE.md）"
+,
+"en"
+:
+"Show only completed jobs (with DONE.md)"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x agent job ls"
+,
+"cn"
+:
+"示例: 列出所有任务"
+,
+"en"
+:
+"Example: List all jobs"
+}
+,
+{
+"cmd"
+:
+"x agent job ls --active"
+,
+"cn"
+:
+"示例: 只显示活跃任务"
+,
+"en"
+:
+"Example: Show only active jobs"
+}
+,
+{
+"cmd"
+:
+"x agent job ls --completed"
+,
+"cn"
+:
+"示例: 只显示已完成任务"
+,
+"en"
+:
+"Example: Show only completed jobs"
+}
+]
+}
+}
+,
+"browser"
+:
+{
+"#tag"
+:
+[
+"inner"
+]
+,
+"#desc"
+:
+{
+"cn"
+:
+"浏览器操作（检查可用性、获取网页内容）"
+,
+"en"
+:
+"Browser operations (check availability, fetch web content)"
+}
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"使用 agent-browser 获取网页内容\n需要先安装 agent-browser 并确保其在 PATH 中\n"
+,
+"en"
+:
+"Use agent-browser to fetch web page content\nRequires agent-browser to be installed and in PATH\n"
+}
+]
+,
+"isready"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"检查 agent-browser 命令是否可用"
+,
+"en"
+:
+"Check if agent-browser command is available"
+}
+}
+,
+"webfetch"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"获取网页文本内容"
+,
+"en"
+:
+"Fetch web page text content"
+}
+,
+"#synopsis"
+:
+[
+{
+"x agent browser webfetch <url>"
+:
+null
+}
+]
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"网页 URL"
+,
+"en"
+:
+"Web page URL"
+}
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x agent browser isready || echo \"fail\""
+,
+"cn"
+:
+"示例: 检查浏览器是否就绪"
+,
+"en"
+:
+"Example: Check if browser is ready"
+}
+,
+{
+"cmd"
+:
+"x agent browser webfetch https://example.com"
+,
+"cn"
+:
+"示例: 获取网页文本内容"
+,
+"en"
+:
+"Example: Fetch text content from a web page"
+}
+]
+}
+,
 "#tldr"
 :
 [
@@ -730,6 +1494,20 @@ true
 "en"
 :
 "Example: Merge config files from AI tools"
+}
+,
+{
+"cmd"
+:
+"x agent job init \"Implement user authentication\""
+,
+"cn"
+:
+"示例: 创建新任务"
+,
+"en"
+:
+"Example: Create a new task"
 }
 ]
 ,

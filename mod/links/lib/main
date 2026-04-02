@@ -8,15 +8,12 @@ ___x_cmd_links___main(){
     [ "$#" -gt 0 ] ||       set - --help
     local op="$1"; shift
     case "$op" in
-        dump)               ___x_cmd_links_dump                 "$@" ;;
-        browse)             ___x_cmd_links___exec               "$@" ;;
-        source)             ___x_cmd_links_dump --source        "$@" ;;
-
-        url|url_)
+        url|url_|webfetch|dump|source)
                             ___x_cmd_links___"$op"              "$@" ;;
 
         --exec|--)          ___x_cmd_links___exec               "$@" ;;
-        -h|--help)          ___x_cmd_links___exec --help         ;;
+        browse)             ___x_cmd_links___exec               "$@" ;;
+        -h|--help)          ___x_cmd_links___exec --help ; return 0  ;;
 
         --cfg)              ___x_cmd_links_cfg                  "$@" ;;
 

@@ -6,13 +6,13 @@
 :
 null
 ,
-"en"
-:
-null
-,
 "cn"
 :
-null
+"网页内容获取工具"
+,
+"en"
+:
+"Web content fetcher"
 }
 ,
 "#desc"
@@ -20,39 +20,397 @@ null
 {
 "en"
 :
-null
+"Fetch web content and convert to readable format. Supports readablelink for GitHub/Codeberg, ccmd caching, and custom links options."
 ,
 "cn"
 :
-null
+"获取网页内容并转换为可读格式。支持 readablelink（GitHub/Codeberg）、ccmd 缓存和自定义 links 选项。"
 }
+,
+"#synopsis"
+:
+[
+"x links [subcmd] [options] <url>"
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x links dump https://example.com"
+,
+"cn"
+:
+"示例: 获取网页纯文本内容"
+,
+"en"
+:
+"Example: Fetch web page as plain text"
+}
+,
+{
+"cmd"
+:
+"x links webfetch https://example.com"
+,
+"cn"
+:
+"示例: 获取网页原始源码"
+,
+"en"
+:
+"Example: Fetch raw HTML source"
+}
+,
+{
+"cmd"
+:
+"x links webfetch --readablelink https://github.com/x-cmd/x-cmd/blob/main/README.md"
+,
+"cn"
+:
+"示例: 使用 readablelink 获取 GitHub 文件"
+,
+"en"
+:
+"Example: Use readablelink to fetch GitHub file"
+}
+]
+,
+"#subcmd:Main"
+:
+[
+"dump"
+,
+"webfetch"
+]
+,
+"#subcmd:Other"
+:
+[
+"--help|-h"
+]
 ,
 "dump"
 :
 {
-"-c|--codeurl"
+"#desc"
 :
-null
+{
+"cn"
+:
+"获取网页内容并转换为纯文本（使用 links -dump）"
 ,
-"-l|--llmstxt"
+"en"
 :
-null
+"Fetch web content and convert to plain text (using links -dump)"
+}
 ,
-"-s|--source"
+"#tldr"
 :
-null
+[
+{
+"cmd"
+:
+"x links dump https://example.com"
 ,
-"-r|--readable"
+"cn"
 :
-null
+"获取网页纯文本"
 ,
-"-t|--trafi"
+"en"
 :
-null
+"Get plain text of web page"
+}
 ,
-"-m|--markitdown"
+{
+"cmd"
 :
-null
+"x links dump --readablelink https://github.com/user/repo/blob/main/file.md"
+,
+"cn"
+:
+"使用 readablelink 转换后获取"
+,
+"en"
+:
+"Use readablelink conversion"
+}
+,
+{
+"cmd"
+:
+"x links dump --ccmd 1h https://example.com"
+,
+"cn"
+:
+"设置 ccmd 缓存时间为 1 小时"
+,
+"en"
+:
+"Set ccmd cache duration to 1 hour"
+}
+]
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"要获取的 URL"
+,
+"en"
+:
+"URL to fetch"
+}
+}
+,
+"--readablelink"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"使用 readablelink 模块转换 URL（支持 GitHub/Codeberg/Gitee/GitLab）"
+,
+"en"
+:
+"Use readablelink module to convert URL (supports GitHub/Codeberg/Gitee/GitLab)"
+}
+}
+,
+"--ccmd"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"ccmd 缓存有效期（默认 10m）"
+,
+"en"
+:
+"ccmd cache duration (default 10m)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"缓存时间（如 1h, 30m, 3600）"
+,
+"en"
+:
+"Cache duration (e.g., 1h, 30m, 3600)"
+}
+}
+}
+,
+"--linksopt"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"传递给 links 命令的额外选项"
+,
+"en"
+:
+"Extra options passed to links command"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"links 选项"
+,
+"en"
+:
+"links options"
+}
+}
+}
+}
+,
+"webfetch"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"获取网页原始源码（使用 links -source）"
+,
+"en"
+:
+"Fetch web page source code (using links -source)"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x links webfetch https://example.com"
+,
+"cn"
+:
+"获取网页原始 HTML 源码"
+,
+"en"
+:
+"Get raw HTML source of web page"
+}
+,
+{
+"cmd"
+:
+"x links webfetch --readablelink https://github.com/user/repo/blob/main/file.md"
+,
+"cn"
+:
+"使用 readablelink 转换后获取"
+,
+"en"
+:
+"Use readablelink conversion"
+}
+,
+{
+"cmd"
+:
+"x links webfetch --ccmd 30m https://example.com"
+,
+"cn"
+:
+"设置 ccmd 缓存时间为 30 分钟"
+,
+"en"
+:
+"Set ccmd cache duration to 30 minutes"
+}
+]
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"要获取的 URL"
+,
+"en"
+:
+"URL to fetch"
+}
+}
+,
+"--readablelink"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"使用 readablelink 模块转换 URL"
+,
+"en"
+:
+"Use readablelink module to convert URL"
+}
+}
+,
+"--ccmd"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"ccmd 缓存有效期（默认 10m）"
+,
+"en"
+:
+"ccmd cache duration (default 10m)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"缓存时间"
+,
+"en"
+:
+"Cache duration"
+}
+}
+}
+,
+"--linksopt"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"传递给 links 命令的额外选项"
+,
+"en"
+:
+"Extra options passed to links command"
+}
+}
+}
+,
+"#other"
+:
+{
+"en"
+:
+{
+"Please visit our homepage for more information:"
+:
+"https://x-cmd.com/mod/links"
+}
+,
+"cn"
+:
+{
+"请访问我们的主页以获取更多信息："
+:
+"https://x-cmd.com/mod/links"
+}
 }
 }
 

@@ -1,35 +1,36 @@
 # shellcheck shell=dash
 
 ___x_cmd_links_dump(){
-    # Enable in the future ...
-    local codeurl=""
-    local llmstxt=""
-    local source=""
+    ___x_cmd_links_webfetch --dump "$@"
+}
 
-    local readable=""
-    local trafi=""
-
-    local cachetimeout=10m
+___x_cmd_links_webfetch(){
+    local source=1
+    local ccmd_timeout=10m
+    local readablelink=""
+    local LINKSOPT=""
 
     while [ $# -gt 0 ]; do
         case "$1" in
-            -c|--codeurl)       codeurl=1   ;;
-            -l|--llmstxt)       llmstxt=1   ;;
-            -s|--source)        source=1    ;;
+            -h|--help)          ___x_cmd help -m links dump "$@" ; return 0 ;;
 
-            -r|--readable)      readable=1  ;;
-            -t|--trafi)         trafi=1  ;;
+            --dump)             source=""       ;;
 
-            -m|--markitdown)    markitdown=1  ;;
+            --readablelink)     readablelink=1 ;;
 
-            --cache-timeout)    cachetimeout="$2"; arg:2:shift; continue ;;
+            # --cache-timeout will be deprecated. Use --ccmd. Don't put --cache-timeout in the advise.
+            --cache-timeout|--ccmd)
+                                ccmd_timeout="$2"; arg:2:shift ; continue ;;
+
+            --linksopt)         LINKSOPT="$2" ;  arg:2:shift ;;
 
             *)                  break ;;
         esac
         shift
     done
 
-    local url="$1"
+    [ $# -gt 0 ]    ||          N=links M="Please provide url." log:ret:64
+    local url="$1" ;    shift
 
     local proxy
     local timeout
@@ -38,39 +39,25 @@ ___x_cmd_links_dump(){
 
     if [ -n "$proxy" ]; then
         links:debug "Using proxy -> $proxy"
-        ___x_cmd proxy run "$proxy" -- ___x_cmd_links_dump___run
+        ___x_cmd proxy run "$proxy" -- ___x_cmd_links_webfetch___run
     else
-        ___x_cmd_links_dump___run
+        ___x_cmd_links_webfetch___run
     fi
 }
 
-
-___x_cmd_links_dump___run(){
-    if [ -n "$codeurl" ]; then
-        local x_=""; ___x_cmd_links_codeurl_ "$url"
-
-        local data
-        if data="$(___x_cmd ccmd "$cachetimeout" -- ___x_cmd curl -s -L --fail "$x_")"; then
-            printf "%s\n" "$data"
-            return 0
-        fi
-    fi
-
-    if [ -n "$llmstxt" ]; then
-        local llmstxt_url="$url/llms.txt"
-        local llms_data
-        if llms_data="$(___x_cmd ccmd "$cachetimeout" -- curl -s -L --fail "$llmstxt_url")"; then
-            printf "%s\n" "$llms_data"
-            return 0
-        fi
+___x_cmd_links_webfetch___run(){
+    if [ -n "$readablelink" ]; then
+        ___x_cmd readablelink webfetch "$url"
+        case $? in
+            0|130)      return $? ;;
+        esac
     fi
 
     if [ -z "$source" ]; then
-        set -- -dump "$url"
+        set -- -dump    -codepage utf-8  "$LINKSOPT" "$url"
     else
-        set -- -source "$url"
+        set -- -source  -codepage utf-8  "$LINKSOPT" "$url"
     fi
 
-    ___x_cmd ccmd "$cachetimeout" --  ___x_cmd_links___exec  "$@"
-
+    ___x_cmd ccmd "$ccmd_timeout" --  ___x_cmd_links___exec  "$@"
 }

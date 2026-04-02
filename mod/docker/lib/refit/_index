@@ -379,7 +379,7 @@ ___x_cmd_docker_refit_code_adduser(){
     local user="$3"
     local uid="$4"
     if ___x_cmd docker cmdinfo hascmd "$baseimage" useradd; then
-        ___x_cmd_docker_refit_code_run  "[ -d /home/$user ] || { groupadd $group; useradd -r -u $uid -g $group $user; }"
+        ___x_cmd_docker_refit_code_run  "[ -d /home/$user ] || { groupadd $group; useradd -r -u $uid -g $group -m -d /home/$user $user;  }"
     else
         ___x_cmd_docker_refit_code_run  "[ -d /home/$user ] || adduser -D -u $uid $user"
     fi
