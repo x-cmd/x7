@@ -2,13 +2,15 @@
 
 ___x_cmd log init links
 
-xrc:mod:lib     links       aiget   dump    util    cfg
+xrc:mod:lib     links       aiget   webfetch    util    cfg
 
 ___x_cmd_links___main(){
     [ "$#" -gt 0 ] ||       set - --help
     local op="$1"; shift
     case "$op" in
-        url|url_|webfetch|dump|source)
+        webfetch|dump|source)
+                            ___x_cmd_links_"$op"                "$@" ;;
+        url|url_)
                             ___x_cmd_links___"$op"              "$@" ;;
 
         --exec|--)          ___x_cmd_links___exec               "$@" ;;
@@ -29,6 +31,8 @@ ___x_cmd_links___auto(){
 
 ___x_cmd_links___exec(){
     local proxy=
+    local user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+
     while [ $# -gt 0 ]; do
         case "$1" in
             --http_proxy)   proxy=1; set -- -http-proxy   "${2#*://}" "$@" ; shift 2; ;;
@@ -37,6 +41,9 @@ ___x_cmd_links___exec(){
             *)              break
         esac
     done
+
+    # Prepend user-agent to args
+    set -- -http.fake-user-agent "$user_agent" "$@"
 
     # We can sense the environment also ...
     # cosmox

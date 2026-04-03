@@ -7,6 +7,7 @@ ___x_cmd_agent_request(){
     local filelist=""
     local NL="$___X_CMD_UNSEENCHAR_NEWLINE"
     local output_format="text"
+    local output_file=""
 
     [ "$#" -gt 0 ] || set -- --help
     while [ $# -gt 0 ]; do
@@ -15,7 +16,7 @@ ___x_cmd_agent_request(){
 
             --harness)      harness="$2"  ;     arg:2:shift ;;
             --file|-f)      filelist="${filelist}${NL}${2}" ; arg:2:shift ;;
-            --output|-o)    output="$2"   ;     arg:2:shift ;;
+            --output|-o)    output_file="$2"   ;     arg:2:shift ;;
             --json)         output_format=json; shift ;;
 
             # --retry)        retry="$2" ; arg:2:shift ;;
@@ -45,13 +46,9 @@ A
 
     local IFS=" " ; content="${content}${NL}${*}${NL}"
 
-    if [ -z "$output" ]; then
-        x_=""; ___x_cmd_agent_request___run_
-        case $? in
-            130)    return 130 ;;
-            0)      printf "%s\n" "$x_"; return 0 ;;
-            *)      return $? ;;
-        esac
+    if [ -z "$output_file" ]; then
+        ___x_cmd_agent_request___run
+        return $?
     else
         content="${content}
 Please output the content between two === as following:
@@ -60,11 +57,11 @@ Please output the content between two === as following:
 ===
 "
 
-        if [ -f "$output" ]; then
-            ___x_cmd bakman backup "$output"
+        if [ -f "$output_file" ]; then
+            ___x_cmd bakman backup "$output_file"
         fi
 
-        ___x_cmd_agent_request___run_ || \
+        x_="$( ___x_cmd_agent_request___run )" || \
         case $? in
             130)    return 130 ;;
             0)      ;;
@@ -74,47 +71,48 @@ Please output the content between two === as following:
         x_="${x_#*===}"
         x_="${x_#"$___X_CMD_UNSEENCHAR_NEWLINE"}"
         x_="${x_%===*}"
-        ___x_cmd fprintf "$output" "%s" "$x_"
+        ___x_cmd fprintf "$output_file" "%s" "$x_"
     fi
 
 }
 
-___x_cmd_agent_request___run_(){
+___x_cmd_agent_request___run(){
     agent:info "Sending request to harness '$harness'"
     case "$harness" in
         kimi-cli)
             if [ "$output_format" = "json" ]; then
-                x_="$(___x_cmd kimi -- --print --output-format stream-json --prompt "$content")"
+                ___x_cmd kimi -- --print --output-format stream-json --prompt "$content"
             else
-                x_="$(___x_cmd kimi -- --quiet --prompt "$content")"
+                ___x_cmd kimi -- --quiet --prompt "$content"
             fi
             ;;
         claude)
             if [ "$output_format" = "json" ]; then
-                x_="$(___x_cmd claude -- -p --verbose --output-format stream-json "$content")"
+                ___x_cmd claude -- --allow-dangerously-skip-permissions -p --verbose --output-format stream-json "$content"
             else
-                x_="$(___x_cmd claude -- -p "$content")"
+                # ___x_cmd claude -- --allow-dangerously-skip-permissions -p "$content"
+                ___x_cmd claude -- --allowedTools "Write,Read,Edit,Bash(git add *),Bash(git commit *),Bash(git diff *),Bash(git log *),Bash(git status),Bash(git status *),Bash(git push *),Bash(git pull *),Bash(git fetch *),Bash(git checkout *),Bash(git branch *),Bash(git stash *),Bash(git merge *),Bash(git tag *),Bash(npm *),Bash(pytest)" -p "$content"
             fi
             ;;
         codex)
             if [ "$output_format" = "json" ]; then
-                x_="$(___x_cmd codex -- exec --json "$content")"
+                ___x_cmd codex -- exec --json "$content"
             else
-                x_="$(___x_cmd codex -- exec --json "$content" | ___x_cmd_agent_request___handle_output CODEX)"
+                ___x_cmd codex -- exec --json "$content" | ___x_cmd_agent_request___handle_output CODEX
             fi
             ;;
         gemini-cli)
             if [ "$output_format" = "json" ]; then
-                x_="$(___x_cmd gemini cli -- --yolo --output-format stream-json --prompt "$content")"
+                ___x_cmd gemini cli -- --yolo --output-format stream-json --prompt "$content"
             else
-                x_="$(___x_cmd gemini cli -- --yolo --prompt "$content")"
+                ___x_cmd gemini cli -- --yolo --prompt "$content"
             fi
             ;;
         opencode)
             if [ "$output_format" = "json" ]; then
-                x_="$(___x_cmd opencode run --format json "$content")"
+                ___x_cmd opencode run --format json "$content"
             else
-                x_="$(___x_cmd opencode run "$content")"
+                ___x_cmd opencode run "$content"
             fi
             ;;
         "") N=agent M="Please specify harness using '--harness <name>'" log:ret:64 ;;

@@ -4,7 +4,12 @@
 # Main entry function
 ___x_cmd_agent_job_ls(){
     local filter="all"
-    local format="tsv"
+    local format=""
+    if ___x_cmd_is_stdout2tty && ___x_cmd_runmode_allow_manual ; then
+        format="app"
+    else
+        format="tsv"
+    fi
 
     while [ $# -gt 0 ]; do
         case "$1" in
@@ -13,6 +18,7 @@ ___x_cmd_agent_job_ls(){
             --completed)    filter="completed";     shift ;;
             --csv)          format="csv";           shift ;;
             --tsv)          format="tsv";           shift ;;
+            --app)          format="app";           shift ;;
             *)              break ;;
         esac
     done
@@ -20,6 +26,7 @@ ___x_cmd_agent_job_ls(){
     case "$format" in
         csv)    ___x_cmd_agent_job_ls___csv "$filter" ;;
         tsv)    ___x_cmd_agent_job_ls___tsv "$filter" ;;
+        app)    ___x_cmd_agent_job_ls___app "$filter" ;;
     esac
 }
 
@@ -35,7 +42,7 @@ ___x_cmd_agent_job_ls___csv(){
     local job_id="" job_path=""
 
     # Header
-    printf "job_id,status,progress,iter,time,description\n"
+    printf "job_id,status,progress,iter,harness,time,description\n"
 
     for job_path in "$job_dir"/*; do
         [ -d "$job_path" ] || continue
@@ -80,8 +87,8 @@ ___x_cmd_agent_job_ls___csv(){
                 ;;
         esac
 
-        printf "%s,%s,%s,%s,%s,%s\n" \
-            "$job_id" "$x_job_status" "$x_job_progress" "$x_job_iter" "$time_str" "$csv_desc"
+        printf "%s,%s,%s,%s,%s,%s,%s\n" \
+            "$job_id" "$x_job_status" "$x_job_progress" "$x_job_iter" "$x_job_harness" "$time_str" "$csv_desc"
     done 2>/dev/null | ___x_cmd_cmds sort -r
 }
 
@@ -90,24 +97,66 @@ ___x_cmd_agent_job_ls___tsv(){
     ___x_cmd_agent_job_ls___csv "$1" | ___x_cmd csv totsv
 }
 
+___x_cmd_agent_job_ls___app()(
+    local ___X_CMD_CSV_APP_DATA_job_id=
+    local ___X_CMD_CSV_APP_SHBIN_CODE=
+    ___X_CMD_CSV_APP_SHBIN_CODE="xrc agent" \
+        ___x_cmd csv app --return var --clear ___x_cmd_agent_job_ls___csv "$1" || return $?
+
+    [ -n "$___X_CMD_CSV_APP_DATA_job_id" ] || return 1
+
+    local job_dir="$___X_CMD_AGENT_JOB_DIR/$___X_CMD_CSV_APP_DATA_job_id"
+    agent:info "Selected job dir -> $job_dir"
+
+    local action=""
+    ___x_cmd ui select ,action "Select action for job '$___X_CMD_CSV_APP_DATA_job_id':" \
+        "preview      - Show job details and progress" \
+        "iter         - Continue job iterations (AI processing)" \
+        "adjust       - Adjust task requirements, AI updates TODO.md via interactive chat" \
+        "delete       - Remove this job permanently" \
+        "return       - Go back to job list" || return $?
+
+    case "${action%% *}" in
+        preview)    ___x_cmd_agent_job_preview "$___X_CMD_CSV_APP_DATA_job_id" ;;
+        iter)       ___x_cmd_agent_job_iter --dir "$job_dir" ;;
+        adjust)
+            local adjust_desc=""
+            printf "Enter adjustment description: "
+            read -r adjust_desc
+            [ -n "$adjust_desc" ] || {
+                agent:warn "Adjustment cancelled: no description provided"
+                return 0
+            }
+            ___x_cmd_agent_job_adjust --dir "$job_dir" "$adjust_desc"
+            ;;
+        delete)
+            ___x_cmd ui yesno -r "Delete job dir '$job_dir'?" || return 0
+            ___x_cmd rmrf "$job_dir" && \
+                agent:info "Job '$___X_CMD_CSV_APP_DATA_job_id' deleted"
+            ;;
+        return)     return 0 ;;
+    esac
+)
+
 # Parse job info from a job directory
-# Sets: x_job_status, x_job_progress, x_job_iter, x_job_desc
+# Sets: x_job_status, x_job_progress, x_job_iter, x_job_harness, x_job_desc
 ___x_cmd_agent_job_ls___parse_job_info(){
     local job_path="$1"
 
     x_job_status="unknown"
     x_job_progress="0"
     x_job_iter="0"
+    x_job_harness="-"
     x_job_desc="[no description]"
 
-    # Try to read from status.yml first (new format)
+    # Try to read from status.yml first
     if [ -f "$job_path/status.yml" ]; then
         ___x_cmd_agent_job_ls___parse_status_yml "$job_path/status.yml"
     fi
 
     # Fallback: infer status from files
     if [ "$x_job_status" = "unknown" ]; then
-        if [ -f "$job_path/DONE.md" ] || ___x_cmd_cmds ls "$job_path"/*.DONE.md >/dev/null 2>&1; then
+        if [ -f "$job_path/DONE.md" ]; then
             x_job_status="completed"
             x_job_progress="100"
         elif [ -f "$job_path/TODO.md" ]; then
@@ -123,25 +172,14 @@ ___x_cmd_agent_job_ls___parse_job_info(){
             x_job_desc="${desc_line#Desc: }"
         fi
     fi
-
-    # Count iterations from response files if not in status.yml
-    if [ "$x_job_iter" = "0" ]; then
-        x_job_iter="$(
-            for f in "$job_path"/*.response.md; do
-                [ -f "$f" ] || continue
-                printf "%s\n" "$f"
-            done 2>/dev/null | ___x_cmd_cmds wc -l
-        )"
-        x_job_iter="${x_job_iter# *}"
-    fi
 }
 
 # Parse status.yml
-# Sets: x_job_status, x_job_progress, x_job_iter
+# Sets: x_job_status, x_job_progress, x_job_iter, x_job_harness
 ___x_cmd_agent_job_ls___parse_status_yml(){
     local status_file="$1"
 
-    local iter="" max_iter="" todo_done="" todo_remaining="" done_flag=""
+    local iter="" max_iter="" todo_done="" todo_remaining="" done_flag="" harness=""
 
     while IFS= read -r line; do
         case "$line" in
@@ -150,11 +188,15 @@ ___x_cmd_agent_job_ls___parse_status_yml(){
             "todo_completed:"*) todo_done="${line#*: }" ;;
             "todo_remaining:"*) todo_remaining="${line#*: }" ;;
             "done:"*)           done_flag="${line#*: }" ;;
+            "harness:"*)        harness="${line#*: }" ;;
         esac
     done < "$status_file" 2>/dev/null
 
     # Set iter
     [ -n "$iter" ] && x_job_iter="$iter"
+
+    # Set harness
+    [ -n "$harness" ] && x_job_harness="$harness"
 
     # Calculate progress
     if [ -n "$todo_done" ] && [ -n "$todo_remaining" ]; then

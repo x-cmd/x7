@@ -20,17 +20,17 @@ null
 {
 "en"
 :
-"Fetch web content and convert to readable format. Supports readablelink for GitHub/Codeberg, ccmd caching, and custom links options."
+"Fetch web content using links.\nNEW: webfetch subcommand uses Chrome User-Agent by default for better compatibility.\nOther commands (browse, url, --cfg, etc.) remain unchanged.\n"
 ,
 "cn"
 :
-"获取网页内容并转换为可读格式。支持 readablelink（GitHub/Codeberg）、ccmd 缓存和自定义 links 选项。"
+"使用 links 获取网页内容。\n新增：webfetch 子命令默认使用 Chrome User-Agent 以更好地适配现代网站。\n其他命令（browse、url、--cfg 等）保持不变，照用。\n"
 }
 ,
 "#synopsis"
 :
 [
-"x links [subcmd] [options] <url>"
+"x links webfetch [options] <url>"
 ]
 ,
 "#tldr"
@@ -39,29 +39,15 @@ null
 {
 "cmd"
 :
-"x links dump https://example.com"
-,
-"cn"
-:
-"示例: 获取网页纯文本内容"
-,
-"en"
-:
-"Example: Fetch web page as plain text"
-}
-,
-{
-"cmd"
-:
 "x links webfetch https://example.com"
 ,
 "cn"
 :
-"示例: 获取网页原始源码"
+"使用 Chrome User-Agent 获取网页原始 HTML"
 ,
 "en"
 :
-"Example: Fetch raw HTML source"
+"Fetch raw HTML with Chrome User-Agent"
 }
 ,
 {
@@ -71,20 +57,84 @@ null
 ,
 "cn"
 :
-"示例: 使用 readablelink 获取 GitHub 文件"
+"GitHub 网页版链接→原始文件：自动将 blob 分支链接转为 raw 直链后用 curl 获取纯文本内容"
 ,
 "en"
 :
-"Example: Use readablelink to fetch GitHub file"
+"GitHub web URL→raw file: auto-convert blob/branch path to raw URL, fetch plain text via curl"
+}
+,
+{
+"cmd"
+:
+"x links webfetch --readablelink https://codeberg.org/user/repo/src/branch/main/file.txt"
+,
+"cn"
+:
+"Codeberg 网页版链接→原始文件：自动将 src/branch 路径转为 raw 直链后获取内容"
+,
+"en"
+:
+"Codeberg web URL→raw file: auto-convert src/branch path to raw URL and fetch"
+}
+,
+{
+"cmd"
+:
+"x links webfetch --ccmd 1h https://api.example.com/data"
+,
+"cn"
+:
+"缓存 1 小时，重复请求直接返回缓存"
+,
+"en"
+:
+"Cache for 1 hour, subsequent requests return cached data"
+}
+,
+{
+"cmd"
+:
+"x links webfetch --ccmd 30m https://api.example.com/data.json"
+,
+"cn"
+:
+"缓存 30 分钟获取 API 数据"
+,
+"en"
+:
+"Fetch API data with 30-min cache"
+}
+,
+{
+"cmd"
+:
+"x links webfetch --linksopt \"-width 120\" https://example.com"
+,
+"cn"
+:
+"设置 links 行宽为 120 字符"
+,
+"en"
+:
+"Set links line width to 120 characters"
 }
 ]
 ,
 "#subcmd:Main"
 :
 [
-"dump"
-,
 "webfetch"
+]
+,
+"#subcmd:Existing"
+:
+[
+"browse"
+,
+"url"
+,
+"--cfg"
 ]
 ,
 "#subcmd:Other"
@@ -93,7 +143,7 @@ null
 "--help|-h"
 ]
 ,
-"dump"
+"webfetch"
 :
 {
 "#desc"
@@ -101,11 +151,11 @@ null
 {
 "cn"
 :
-"获取网页内容并转换为纯文本（使用 links -dump）"
+"获取网页原始源码（使用 links -source）。\n默认使用 Chrome User-Agent 模拟现代浏览器访问。\n使用 --readablelink 时：先调用 readablelink 模块将 GitHub/Codeberg/Gitee/GitLab 链接转换为 raw 地址，然后用 curl 获取内容。\n如果 readablelink 失败，回退到 links。\n"
 ,
 "en"
 :
-"Fetch web content and convert to plain text (using links -dump)"
+"Fetch web page source (using links -source).\nUses Chrome User-Agent by default.\nWith --readablelink: convert GitHub/Codeberg/Gitee/GitLab URL to raw address via readablelink module, then fetch with curl.\nFalls back to links if readablelink fails.\n"
 }
 ,
 "#tldr"
@@ -114,43 +164,43 @@ null
 {
 "cmd"
 :
-"x links dump https://example.com"
+"x links webfetch https://example.com"
 ,
 "cn"
 :
-"获取网页纯文本"
+"使用 Chrome User-Agent 获取网页原始 HTML"
 ,
 "en"
 :
-"Get plain text of web page"
+"Get raw HTML with Chrome User-Agent"
 }
 ,
 {
 "cmd"
 :
-"x links dump --readablelink https://github.com/user/repo/blob/main/file.md"
+"x links webfetch --readablelink https://github.com/user/repo/blob/main/file.md"
 ,
 "cn"
 :
-"使用 readablelink 转换后获取"
+"转换 GitHub 链接为 raw 地址后获取（失败则回退 links）"
 ,
 "en"
 :
-"Use readablelink conversion"
+"Convert GitHub to raw URL, then fetch (fallback to links)"
 }
 ,
 {
 "cmd"
 :
-"x links dump --ccmd 1h https://example.com"
+"x links webfetch --readablelink --ccmd 1h https://github.com/..."
 ,
 "cn"
 :
-"设置 ccmd 缓存时间为 1 小时"
+"转换后获取，结果缓存 1 小时"
 ,
 "en"
 :
-"Set ccmd cache duration to 1 hour"
+"Convert and fetch with 1-hour cache"
 }
 ]
 ,
@@ -162,11 +212,11 @@ null
 {
 "cn"
 :
-"要获取的 URL"
+"要获取的 URL（支持 GitHub/Codeberg/Gitee/GitLab 时配合 --readablelink）"
 ,
 "en"
 :
-"URL to fetch"
+"URL to fetch (use with --readablelink for GitHub/Codeberg/Gitee/GitLab)"
 }
 }
 ,
@@ -178,11 +228,11 @@ null
 {
 "cn"
 :
-"使用 readablelink 模块转换 URL（支持 GitHub/Codeberg/Gitee/GitLab）"
+"启用 readablelink 模块处理 URL：\n1. 检测 GitHub/Codeberg/Gitee/GitLab 链接\n2. 转换为 raw 文件地址（如 blob/main/file → raw/branch/main/file）\n3. 使用 curl 获取内容\n4. 失败时回退到 links\n"
 ,
 "en"
 :
-"Use readablelink module to convert URL (supports GitHub/Codeberg/Gitee/GitLab)"
+"Enable readablelink module:\n1. Detect GitHub/Codeberg/Gitee/GitLab URLs\n2. Convert to raw file URL (e.g., blob/main/file → raw/branch/main/file)\n3. Fetch with curl\n4. Fallback to links on failure\n"
 }
 }
 ,
@@ -194,11 +244,11 @@ null
 {
 "cn"
 :
-"ccmd 缓存有效期（默认 10m）"
+"ccmd 缓存有效期（默认 10m）。缓存期间重复请求直接返回结果，不重新下载。"
 ,
 "en"
 :
-"ccmd cache duration (default 10m)"
+"ccmd cache TTL (default 10m). Subsequent requests return cached result without re-downloading."
 }
 ,
 "#1"
@@ -226,11 +276,11 @@ null
 {
 "cn"
 :
-"传递给 links 命令的额外选项"
+"传递给 links 命令的额外选项（如 -width 80）"
 ,
 "en"
 :
-"Extra options passed to links command"
+"Extra options passed to links command (e.g., -width 80)"
 }
 ,
 "#1"
@@ -251,7 +301,7 @@ null
 }
 }
 ,
-"webfetch"
+"--cfg"
 :
 {
 "#desc"
@@ -259,137 +309,11 @@ null
 {
 "cn"
 :
-"获取网页原始源码（使用 links -source）"
+"配置管理"
 ,
 "en"
 :
-"Fetch web page source code (using links -source)"
-}
-,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x links webfetch https://example.com"
-,
-"cn"
-:
-"获取网页原始 HTML 源码"
-,
-"en"
-:
-"Get raw HTML source of web page"
-}
-,
-{
-"cmd"
-:
-"x links webfetch --readablelink https://github.com/user/repo/blob/main/file.md"
-,
-"cn"
-:
-"使用 readablelink 转换后获取"
-,
-"en"
-:
-"Use readablelink conversion"
-}
-,
-{
-"cmd"
-:
-"x links webfetch --ccmd 30m https://example.com"
-,
-"cn"
-:
-"设置 ccmd 缓存时间为 30 分钟"
-,
-"en"
-:
-"Set ccmd cache duration to 30 minutes"
-}
-]
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"要获取的 URL"
-,
-"en"
-:
-"URL to fetch"
-}
-}
-,
-"--readablelink"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"使用 readablelink 模块转换 URL"
-,
-"en"
-:
-"Use readablelink module to convert URL"
-}
-}
-,
-"--ccmd"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"ccmd 缓存有效期（默认 10m）"
-,
-"en"
-:
-"ccmd cache duration (default 10m)"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"缓存时间"
-,
-"en"
-:
-"Cache duration"
-}
-}
-}
-,
-"--linksopt"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"传递给 links 命令的额外选项"
-,
-"en"
-:
-"Extra options passed to links command"
-}
+"Configuration management"
 }
 }
 ,
@@ -398,19 +322,11 @@ null
 {
 "en"
 :
-{
-"Please visit our homepage for more information:"
-:
-"https://x-cmd.com/mod/links"
-}
+"NEW: webfetch subcommand added for fetching raw source with Chrome User-Agent.\nWith --readablelink: auto-converts GitHub/Codeberg/Gitee/GitLab URLs to raw format.\nOther commands (browse, url, --cfg, etc.) remain available and unchanged.\n"
 ,
 "cn"
 :
-{
-"请访问我们的主页以获取更多信息："
-:
-"https://x-cmd.com/mod/links"
-}
+"新增：webfetch 子命令，使用 Chrome User-Agent 获取原始源码。\n使用 --readablelink 时：自动将 GitHub/Codeberg/Gitee/GitLab 链接转为 raw 格式。\n其他命令（browse、url、--cfg 等）仍然可用，保持不变。\n\n\"Please visit our homepage for more information:\": \"https://x-cmd.com/mod/links\"\n"
 }
 }
 

@@ -14,8 +14,8 @@ ___x_cmd_agent_job_iter___eval_response(){
     local donefile="$5"
     local max_iterations="$6"
     local vlid="$7"
-    local no_progress="$8"
-    local harness="$9"
+    # local no_progress="$8"
+    local harness="$8"
 
     local x_status=""
     local x_tasks_completed=0

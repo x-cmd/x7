@@ -18,6 +18,11 @@ ___x_cmd_agent_browser_isready(){
 ___x_cmd_agent_browser_webfetch(){
     local url="$1"; [ -n "$url" ] || N=agent M="Provide a url"     log:ret:64
 
+    if ! ___x_cmd_agent_browser_isready; then
+        agent:error -h 'x install --cat agent-browser' "agent-browser not found"
+        return 1
+    fi
+
     local session="x.tmp.$$"
     ___x_cmd_cmds agent-browser --session "$session" open "$url" || return $?
     ___x_cmd_cmds agent-browser --session "$session" wait --load networkidle >/dev/null 2>&1 \

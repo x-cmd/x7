@@ -1,7 +1,12 @@
 # shellcheck shell=dash
 
+# That will be deprecated. Don't include in advise.
 ___x_cmd_links_dump(){
     ___x_cmd_links_webfetch --dump "$@"
+}
+
+___x_cmd_links_source(){
+    ___x_cmd_links_webfetch "$@"
 }
 
 ___x_cmd_links_webfetch(){
@@ -16,7 +21,8 @@ ___x_cmd_links_webfetch(){
 
             --dump)             source=""       ;;
 
-            --readablelink)     readablelink=1 ;;
+            # Enable readablelink for GitHub/Codeberg/etc
+            --readablelink)     readablelink=1      ;;
 
             # --cache-timeout will be deprecated. Use --ccmd. Don't put --cache-timeout in the advise.
             --cache-timeout|--ccmd)
@@ -46,6 +52,10 @@ ___x_cmd_links_webfetch(){
 }
 
 ___x_cmd_links_webfetch___run(){
+    # Chrome 120 on macOS - Browser disguise
+    local user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+
+    # If --readablelink specified, try to get raw document first
     if [ -n "$readablelink" ]; then
         ___x_cmd readablelink webfetch "$url"
         case $? in
@@ -53,10 +63,13 @@ ___x_cmd_links_webfetch___run(){
         esac
     fi
 
+    # Fallback to links with browser User-Agent
+    # Use -width 8192 to prevent wrapping and preserve original HTML structure
+    # User can override with: --linksopt "-width 80"
     if [ -z "$source" ]; then
-        set -- -dump    -codepage utf-8  "$LINKSOPT" "$url"
+        set -- -dump -width 8192 -codepage utf-8 -user-agent "$user_agent" "$LINKSOPT" "$url"
     else
-        set -- -source  -codepage utf-8  "$LINKSOPT" "$url"
+        set -- -source -codepage utf-8 -user-agent "$user_agent" "$LINKSOPT" "$url"
     fi
 
     ___x_cmd ccmd "$ccmd_timeout" --  ___x_cmd_links___exec  "$@"

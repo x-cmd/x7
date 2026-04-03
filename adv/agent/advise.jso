@@ -61,14 +61,12 @@ null
 }
 ]
 ,
-"#subcmd:Config"
+"#subcmd:Agent"
 :
 [
-"--cfg"
+"request"
 ,
-"--cur"
-,
-"init"
+"job"
 ]
 ,
 "#subcmd:Setup"
@@ -77,6 +75,16 @@ null
 "setup"
 ,
 "unify"
+]
+,
+"#subcmd:Config"
+:
+[
+"--cfg"
+,
+"--cur"
+,
+"init"
 ]
 ,
 "setup"
@@ -139,18 +147,6 @@ null
 ]
 }
 ,
-"#subcmd:Request"
-:
-[
-"request"
-]
-,
-"#subcmd:Job"
-:
-[
-"job"
-]
-,
 "request"
 :
 {
@@ -159,32 +155,18 @@ null
 {
 "cn"
 :
-"向 AI harness 发送请求"
+"非交互式单次调用 AI Agent，发送提示词并获取响应"
 ,
 "en"
 :
-"Send request to AI harness"
+"Non-interactive single-shot AI Agent invocation - send prompt and get response"
 }
-,
-"#tip:note"
-:
-[
-{
-"en"
-:
-"Without --harness, uses configured default from --cfg or --cur\n--file can be used multiple times to attach multiple files\n"
-,
-"cn"
-:
-"不指定 --harness 时使用 --cfg 或 --cur 配置的默认值\n--file 可多次使用以附加多个文件\n"
-}
-]
 ,
 "#synopsis"
 :
 [
 {
-"x agent request --harness <harness> --file <file> --output <file> <prompt>"
+"x agent request [options] <prompt>"
 :
 null
 }
@@ -308,11 +290,11 @@ true
 ,
 "cn"
 :
-"示例: 使用默认 harness 发送请求"
+"示例: 发送单次 AI 请求（解释这段代码），直接获得回复"
 ,
 "en"
 :
-"Example: Send request using default harness"
+"Example: Send a single-turn AI request (explain this code) and get instant reply"
 }
 ,
 {
@@ -322,11 +304,53 @@ true
 ,
 "cn"
 :
-"示例: 指定 harness 并附加文件发送请求"
+"示例: 指定 AI 工具并附加文件后发送请求"
 ,
 "en"
 :
-"Example: Send request with specific harness and attached file"
+"Example: Choose a specific AI harness and attach a file before sending"
+}
+,
+{
+"cmd"
+:
+"x agent request -f file1.py -f file2.py \"Compare these files\""
+,
+"cn"
+:
+"示例: 附加多个文件，让 AI 进行对比分析"
+,
+"en"
+:
+"Example: Attach multiple files and ask AI to compare them"
+}
+,
+{
+"cmd"
+:
+"x agent request --output result.md \"Generate documentation\""
+,
+"cn"
+:
+"示例: 发送请求并将 AI 回复保存到文件"
+,
+"en"
+:
+"Example: Send a request and save the AI reply to a file"
+}
+,
+{
+"cmd"
+:
+"x agent request --json \"List all functions\""
+,
+"cn"
+:
+"示例: 以 JSON 格式获取结构化输出"
+,
+"en"
+:
+"Example: Get a structured JSON response"
 }
 ]
 }
@@ -477,6 +501,20 @@ true
 "en"
 :
 "Example: View current saved configuration"
+}
+,
+{
+"cmd"
+:
+"x agent --cfg clear"
+,
+"cn"
+:
+"示例: 清除所有配置恢复默认"
+,
+"en"
+:
+"Example: Clear all configuration to defaults"
 }
 ]
 }
@@ -651,11 +689,11 @@ true
 {
 "cn"
 :
-"管理长期任务（创建、迭代、调整需求）"
+"管理长期交互式任务（创建、迭代执行、需求调整）"
 ,
 "en"
 :
-"Manage long-term tasks (create, iterate, adjust requirements)"
+"Manage long-term interactive tasks (create, iterate, adjust requirements)"
 }
 ,
 "#tldr"
@@ -664,15 +702,15 @@ true
 {
 "cmd"
 :
-"x agent job init \"Implement user authentication\""
+"x agent job init \"Add unit tests with Jest and set up GitHub Actions CI\""
 ,
 "cn"
 :
-"示例: 创建新任务"
+"示例: 创建新任务（添加单元测试并配置 CI），AI 通过对话澄清需求后生成 TODO.md"
 ,
 "en"
 :
-"Example: Create a new task"
+"Example: Create a new task (add unit tests and set up CI), AI clarifies requirements via chat and generates TODO.md"
 }
 ,
 {
@@ -682,25 +720,39 @@ true
 ,
 "cn"
 :
-"示例: 迭代最近创建的任务"
+"示例: 继续执行最近任务，AI 自动按 TODO 迭代推进"
 ,
 "en"
 :
-"Example: Iterate the most recently created task"
+"Example: Resume the most recent task, AI auto-iterates through TODO"
 }
 ,
 {
 "cmd"
 :
-"x agent job adjust"
+"x agent job adjust \"Add more test cases\""
 ,
 "cn"
 :
-"示例: 调整任务需求描述"
+"示例: 调整最近任务的需求（增加更多测试用例），AI 更新 TODO.md"
 ,
 "en"
 :
-"Example: Adjust task requirement description"
+"Example: Adjust the most recent task requirements (add more test cases), AI updates TODO.md"
+}
+,
+{
+"cmd"
+:
+"x agent job ls"
+,
+"cn"
+:
+"示例: 列出所有任务"
+,
+"en"
+:
+"Example: List all tasks"
 }
 ]
 ,
@@ -712,30 +764,18 @@ true
 {
 "cn"
 :
-"创建新的长期任务，通过交互式对话澄清需求并写入 TODO.md"
+"创建新的长期任务，AI 通过交互式对话澄清需求并生成 TODO.md"
 ,
 "en"
 :
-"Create a new long-term task, clarify requirements via interactive chat and write to TODO.md"
+"Create a new long-term task, AI clarifies requirements via interactive chat and generates TODO.md"
 }
 ,
 "#synopsis"
 :
 [
 {
-"x agent job init <description>"
-:
-null
-}
-,
-{
-"x agent job init --dir <path> <description>"
-:
-null
-}
-,
-{
-"x agent job init --harness <harness> <description>"
+"x agent job init [options] <description>"
 :
 null
 }
@@ -811,15 +851,29 @@ null
 {
 "cmd"
 :
-"x agent job init \"Refactor the auth module\""
+"x agent job init \"Add unit tests with Jest and set up GitHub Actions CI\""
 ,
 "cn"
 :
-"示例: 创建新任务"
+"示例: 创建新任务（添加单元测试并配置 CI），AI 通过对话澄清需求后生成 TODO.md"
 ,
 "en"
 :
-"Example: Create a new task"
+"Example: Create a new task (add unit tests and set up CI), AI clarifies requirements via chat and generates TODO.md"
+}
+,
+{
+"cmd"
+:
+"x agent job init \"Implement OAuth2 login with Google and GitHub providers, including token refresh\""
+,
+"cn"
+:
+"示例: 创建复杂功能开发（实现 OAuth2 多提供商登录），拆分为多个子任务"
+,
+"en"
+:
+"Example: Create a complex feature development (implement OAuth2 multi-provider login), broken into multiple sub-tasks"
 }
 ,
 {
@@ -829,11 +883,25 @@ null
 ,
 "cn"
 :
-"示例: 指定目录创建任务"
+"示例: 在指定目录创建任务（修复内存泄漏）"
 ,
 "en"
 :
-"Example: Create task in specific directory"
+"Example: Create a task in a specific directory (fix memory leak)"
+}
+,
+{
+"cmd"
+:
+"x agent job init --harness claude \"Design a CLI tool for managing Docker containers with autocomplete support\""
+,
+"cn"
+:
+"示例: 使用指定 AI 工具创建设计类任务（设计带自动补全的 Docker CLI 工具）"
+,
+"en"
+:
+"Example: Create a design task with a specific AI harness (design a Docker CLI tool with autocomplete)"
 }
 ]
 }
@@ -846,30 +914,18 @@ null
 {
 "cn"
 :
-"迭代执行任务，自动循环直到完成或达到最大迭代次数"
+"迭代执行任务，AI 自动循环执行 TODO 直到完成或达到最大迭代次数"
 ,
 "en"
 :
-"Iterate task execution, auto-loop until complete or max iterations reached"
+"Iterate task execution, AI auto-loops through TODO until complete or max iterations reached"
 }
 ,
 "#synopsis"
 :
 [
 {
-"x agent job iter"
-:
-null
-}
-,
-{
-"x agent job iter --dir <path>"
-:
-null
-}
-,
-{
-"x agent job iter --harness <harness>"
+"x agent job iter [options]"
 :
 null
 }
@@ -997,11 +1053,11 @@ null
 ,
 "cn"
 :
-"示例: 迭代最近创建的任务"
+"示例: 继续执行最近任务，AI 自动按 TODO 迭代推进"
 ,
 "en"
 :
-"Example: Iterate the most recently created task"
+"Example: Resume the most recent task, AI auto-iterates through TODO"
 }
 ,
 {
@@ -1011,11 +1067,11 @@ null
 ,
 "cn"
 :
-"示例: 迭代指定目录的任务"
+"示例: 继续执行指定目录的任务，AI 自动按 TODO 迭代推进"
 ,
 "en"
 :
-"Example: Iterate task in specific directory"
+"Example: Resume task in a specific directory, AI auto-iterates through TODO"
 }
 ,
 {
@@ -1025,11 +1081,11 @@ null
 ,
 "cn"
 :
-"示例: 限制迭代次数和无修改阈值"
+"示例: 限制最大迭代次数和连续无修改阈值后继续执行任务"
 ,
 "en"
 :
-"Example: Limit iterations and no-change threshold"
+"Example: Resume task with limited max iterations and no-change threshold"
 }
 ]
 }
@@ -1042,30 +1098,18 @@ null
 {
 "cn"
 :
-"调整任务需求，通过交互式对话更新 TODO.md"
+"调整任务需求，AI 通过交互式对话更新 TODO.md"
 ,
 "en"
 :
-"Adjust task requirements, update TODO.md via interactive chat"
+"Adjust task requirements, AI updates TODO.md via interactive chat"
 }
 ,
 "#synopsis"
 :
 [
 {
-"x agent job adjust"
-:
-null
-}
-,
-{
-"x agent job adjust --dir <path>"
-:
-null
-}
-,
-{
-"x agent job adjust --harness <harness>"
+"x agent job adjust [options] <description>"
 :
 null
 }
@@ -1119,35 +1163,51 @@ null
 }
 }
 ,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"新的需求描述或调整说明"
+,
+"en"
+:
+"New requirement description or adjustment details"
+}
+}
+,
 "#tldr"
 :
 [
 {
 "cmd"
 :
-"x agent job adjust"
+"x agent job adjust \"Add error handling to the auth module\""
 ,
 "cn"
 :
-"示例: 调整最近任务的描述"
+"示例: 调整最近任务的需求（为认证模块添加错误处理），AI 更新 TODO.md"
 ,
 "en"
 :
-"Example: Adjust the most recent task description"
+"Example: Adjust the most recent task requirements (add error handling to the auth module), AI updates TODO.md"
 }
 ,
 {
 "cmd"
 :
-"x agent job adjust --dir ~/tasks/myjob"
+"x agent job adjust --dir ~/tasks/myjob \"Change the API endpoint\""
 ,
 "cn"
 :
-"示例: 调整指定目录的任务"
+"示例: 调整指定目录任务的需求（修改 API 端点）"
 ,
 "en"
 :
-"Example: Adjust task in specific directory"
+"Example: Adjust requirements for a task in a specific directory (change the API endpoint)"
 }
 ]
 }
@@ -1171,19 +1231,7 @@ null
 :
 [
 {
-"x agent job ls"
-:
-null
-}
-,
-{
-"x agent job ls --active"
-:
-null
-}
-,
-{
-"x agent job ls --completed"
+"x agent job ls [options]"
 :
 null
 }
@@ -1201,7 +1249,7 @@ null
 ,
 "en"
 :
-"Show only active jobs (with TODO.md)"
+"Show only active tasks (with TODO.md)"
 }
 }
 ,
@@ -1217,7 +1265,55 @@ null
 ,
 "en"
 :
-"Show only completed jobs (with DONE.md)"
+"Show only completed tasks (with DONE.md)"
+}
+}
+,
+"--csv"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"以 CSV 格式输出"
+,
+"en"
+:
+"Output in CSV format"
+}
+}
+,
+"--tsv"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"以 TSV 格式输出（标准输出不是终端时的默认格式）"
+,
+"en"
+:
+"Output in TSV format (default when stdout is not a terminal)"
+}
+}
+,
+"--app"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"启动交互式应用，可选择任务并预览、继续执行、调整或删除"
+,
+"en"
+:
+"Launch interactive app to select, preview, iterate, adjust, or delete tasks"
 }
 }
 ,
@@ -1231,11 +1327,11 @@ null
 ,
 "cn"
 :
-"示例: 列出所有任务"
+"示例: 列出所有任务（终端下进入交互选择，非终端下输出 TSV）"
 ,
 "en"
 :
-"Example: List all jobs"
+"Example: List all tasks (interactive app in terminal, TSV otherwise)"
 }
 ,
 {
@@ -1245,11 +1341,11 @@ null
 ,
 "cn"
 :
-"示例: 只显示活跃任务"
+"示例: 只显示活跃任务（有 TODO.md）"
 ,
 "en"
 :
-"Example: Show only active jobs"
+"Example: Show only active tasks (with TODO.md)"
 }
 ,
 {
@@ -1259,11 +1355,147 @@ null
 ,
 "cn"
 :
-"示例: 只显示已完成任务"
+"示例: 只显示已完成任务（有 DONE.md）"
 ,
 "en"
 :
-"Example: Show only completed jobs"
+"Example: Show only completed tasks (with DONE.md)"
+}
+,
+{
+"cmd"
+:
+"x agent job ls --csv"
+,
+"cn"
+:
+"示例: CSV 格式输出"
+,
+"en"
+:
+"Example: Output in CSV format"
+}
+,
+{
+"cmd"
+:
+"x agent job ls --active --tsv"
+,
+"cn"
+:
+"示例: 活跃任务以 TSV 格式输出"
+,
+"en"
+:
+"Example: Show active tasks in TSV format"
+}
+,
+{
+"cmd"
+:
+"x agent job ls --app"
+,
+"cn"
+:
+"示例: 强制进入交互式应用模式，选择任务后可预览/继续/调整/删除"
+,
+"en"
+:
+"Example: Force interactive app mode to select, preview, iterate, adjust, or delete tasks"
+}
+]
+}
+,
+"preview"
+:
+{
+"#tag"
+:
+[
+"inner"
+]
+,
+"#desc"
+:
+{
+"cn"
+:
+"预览单个任务的详细信息（YAML 格式）"
+,
+"en"
+:
+"Preview detailed info of a single job (YAML format)"
+}
+,
+"#synopsis"
+:
+[
+{
+"x agent job preview [job_id|job_dir]"
+:
+null
+}
+]
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"任务 ID (YYMMDD_HHMMSS) 或任务目录路径"
+,
+"en"
+:
+"Job ID (YYMMDD_HHMMSS) or job directory path"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x agent job preview"
+,
+"cn"
+:
+"示例: 预览最近的任务"
+,
+"en"
+:
+"Example: Preview the most recent job"
+}
+,
+{
+"cmd"
+:
+"x agent job preview 260402_120000"
+,
+"cn"
+:
+"示例: 预览指定 ID 的任务"
+,
+"en"
+:
+"Example: Preview job with specific ID"
+}
+,
+{
+"cmd"
+:
+"x agent job preview ~/myjobs/task1"
+,
+"cn"
+:
+"示例: 预览指定目录的任务"
+,
+"en"
+:
+"Example: Preview job in specific directory"
 }
 ]
 }
@@ -1415,6 +1647,20 @@ null
 {
 "cmd"
 :
+"x agent unify"
+,
+"cn"
+:
+"示例: 合并各 AI 工具配置文件"
+,
+"en"
+:
+"Example: Merge config files from AI tools"
+}
+,
+{
+"cmd"
+:
 "x agent init"
 ,
 "cn"
@@ -1424,48 +1670,6 @@ null
 "en"
 :
 "Example: Interactively select AI tools"
-}
-,
-{
-"cmd"
-:
-"x agent --cfg zero_harness=kimi-cli one_harness=claude"
-,
-"cn"
-:
-"示例: 设置两个 Agent 的默认 harness"
-,
-"en"
-:
-"Example: Set default harness for both Agents"
-}
-,
-{
-"cmd"
-:
-"x agent --cfg cat"
-,
-"cn"
-:
-"示例: 查看已保存的配置"
-,
-"en"
-:
-"Example: View saved configuration"
-}
-,
-{
-"cmd"
-:
-"x agent --cfg clear"
-,
-"cn"
-:
-"示例: 清除所有配置恢复默认"
-,
-"en"
-:
-"Example: Clear all configuration to defaults"
 }
 ,
 {
@@ -1485,29 +1689,29 @@ null
 {
 "cmd"
 :
-"x agent unify"
+"x agent request \"Explain this code\""
 ,
 "cn"
 :
-"示例: 合并各 AI 工具配置文件"
+"示例: 发送单次 AI 请求（解释这段代码），直接获得回复"
 ,
 "en"
 :
-"Example: Merge config files from AI tools"
+"Example: Send a single-turn AI request (explain this code) and get instant reply"
 }
 ,
 {
 "cmd"
 :
-"x agent job init \"Implement user authentication\""
+"x agent job init \"Add unit tests with Jest and set up GitHub Actions CI\""
 ,
 "cn"
 :
-"示例: 创建新任务"
+"示例: 创建新任务（添加单元测试并配置 CI），AI 通过对话澄清需求后生成 TODO.md"
 ,
 "en"
 :
-"Example: Create a new task"
+"Example: Create a new task (add unit tests and set up CI), AI clarifies requirements via chat and generates TODO.md"
 }
 ]
 ,

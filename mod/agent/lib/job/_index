@@ -2,14 +2,14 @@
 # x agent job init "Implement user authentication"     # create job id
 # x agent job iter --max-iterations 100 --inrow 10
 
-xrc:mod:lib agent       job/util job/ls job/prompt
+xrc:mod:lib agent       job/util job/ls job/preview job/prompt
 
 ___x_cmd_agent_job(){
     [ $# -gt 0 ]    ||      set -- --help
 
     local op="$1"
     case "$op" in
-        init|iter|ls|adjust)
+        init|iter|ls|adjust|preview)
                     shift; ___x_cmd_agent_job_${op} "$@"      ;;
         -h|--help)  ___x_cmd help -m agent job; return 0        ;;
         *)          N=agent M="Unknown operation" log:ret:64    ;;
@@ -65,13 +65,9 @@ ___x_cmd_agent_job_iter(){
         harness="$x_"
     fi
 
-    if [ -z "$dir" ]; then
-        dir="$___X_CMD_AGENT_JOB_RECENT"
-    fi
-
-    if [ -z "$dir" ]; then
-        N=agent M="Please specify, or create a new one using 'x agent job init'" log:ret:64
-    fi
+    [ -n "$dir" ] || dir="$___X_CMD_AGENT_JOB_RECENT"
+    [ -n "$dir" ] || dir="$( ___x_cmd_agent_job___get_lastdir )"
+    [ -n "$dir" ] || N=agent M="Please specify, or create a new one using 'x agent job init'" log:ret:64
 
     local todofile="$dir/TODO.md"
     local agentfile="$dir/AGENTS.md"
@@ -80,6 +76,12 @@ ___x_cmd_agent_job_iter(){
     if [ ! -r "$todofile" ]; then
         N=agent M="TODO.md not found" log:ret:1
     fi
+
+    # Display TODO content before starting iterations
+    ___x_cmd ui sep
+    printf "\033[1mTODO Tasks:\033[0m\n"
+    ___x_cmd_cmds cat "$todofile"
+    ___x_cmd ui sep
 
     local iter=0
     local no_progress=0
@@ -100,10 +102,9 @@ ___x_cmd_agent_job_iter(){
         todofile="$todofile" donefile="$donefile" jobdir="$dir" iter="$iter" vlid="$vlid" inrow="$inrow" max_iterations="$max_iterations" loop_context="$loop_context" response_file="$response_file" \
         content="$( ___x_cmd_agent_job___get_prompt job-iter )"
 
-        # Suppress stdout - AI writes complete response to $response_file
-        ___x_cmd agent request --harness "$harness" --file "$agentfile" --file "$todofile" "$content" >/dev/null || return $?
+        ___x_cmd agent request --harness "$harness" --file "$agentfile" --file "$todofile" "$content" || break
 
-        ___x_cmd_agent_job_iter___eval_response "$dir" "$response_file" "$iter" "$inrow" "$donefile" "$max_iterations" "$vlid" "$no_progress" "$harness" || break
+        ___x_cmd_agent_job_iter___eval_response "$dir" "$response_file" "$iter" "$inrow" "$donefile" "$max_iterations" "$vlid" "$harness" || break
     done
 
     if [ "$iter" -ge "$max_iterations" ]; then
@@ -152,6 +153,7 @@ ___x_cmd_agent_job_adjust(){
     else
         # Find from recent
         recentdir="$___X_CMD_AGENT_JOB_RECENT"
+        [ -n "$recentdir" ] || recentdir="$( ___x_cmd_agent_job___get_lastdir )"
         [ -n "$recentdir" ] || {
             agent:error "No recent job found. Specify --dir <path> or run 'x agent job init <description>' to create a new job"
             return 1
