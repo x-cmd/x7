@@ -13,37 +13,36 @@ ___x_cmd_links___main(){
         url|url_)
                             ___x_cmd_links___"$op"              "$@" ;;
 
-        --exec|--)          ___x_cmd_links___exec               "$@" ;;
-        browse)             ___x_cmd_links___exec               "$@" ;;
         -h|--help)          ___x_cmd_links___exec --help ; return 0  ;;
 
         --cfg)              ___x_cmd_links_cfg                  "$@" ;;
 
-        *)                  ___x_cmd_links___auto "$op"         "$@" ;;
+        # browse is DEPRECATED
+        --exec|--|browse)   ___x_cmd_links___exec               "$@" ;;
+        *)                  ___x_cmd_links___exec "$op"         "$@" ;;
     esac
-}
-
-___x_cmd_links___auto(){
-    # links:info "Executing cmd -> x links dump $*"
-    # ___x_cmd_links_dump "$@"
-    ___x_cmd_links___exec "$@"
 }
 
 ___x_cmd_links___exec(){
     local proxy=
-    local user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 
+    local ua="chrome"
     while [ $# -gt 0 ]; do
         case "$1" in
-            --http_proxy)   proxy=1; set -- -http-proxy   "${2#*://}" "$@" ; shift 2; ;;
-            --https_proxy)  proxy=1; set -- -https-proxy  "${2#*://}" "$@" ; shift 2; ;;
-            --socks_proxy)  proxy=1; set -- -socks-proxy  "${2#*://}" "$@" ; shift 2; ;;
-            *)              break
+            --ua)               ua="$2"; shift 2 ;;
+
+            --http_proxy)       proxy=1; set -- -http-proxy   "${2#*://}" "$@" ; shift 2; ;;
+            --https_proxy)      proxy=1; set -- -https-proxy  "${2#*://}" "$@" ; shift 2; ;;
+            --socks_proxy)      proxy=1; set -- -socks-proxy  "${2#*://}" "$@" ; shift 2; ;;
+            *)                  break ;;
         esac
     done
 
-    # Prepend user-agent to args
-    set -- -http.fake-user-agent "$user_agent" "$@"
+    # Resolve UA name to actual string using web ua module
+    local x_
+    ! ___x_cmd web ua get_ "$ua" || ua="$x_"
+
+    [ -z "$ua" ]    ||      set -- "$@" -http.fake-user-agent "$ua"
 
     # We can sense the environment also ...
     # cosmox
@@ -74,7 +73,6 @@ ___x_cmd_links___exec(){
         ___x_cmd_links_cur timeout:= 2>/dev/null
         [ -z "$timeout" ] ||    ___X_CMD_LINKS_TIMEOUT="$timeout"
     fi
-
 
     ___x_cmd_links___hasbin || return 1
 

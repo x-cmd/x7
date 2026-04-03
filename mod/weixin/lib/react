@@ -19,13 +19,23 @@
 # case 2: x weixin react -- eval 'x agent handler --chatid weixin-claw "$MSG" '
 # case 3: ...
 
+# case 7:
+
+# x claw service start
+# x claw chat
+# x claw connect ...
+
 ___x_cmd_weixin_reactor_echo(){
     ___x_cmd weixin bot send text "$MSG_BODY"
 }
 
 # MSG_BODY="hello" ___x_cmd_weixin_reactor_cmd
 ___x_cmd_weixin_reactor_repl(){
-    local resp; resp="$(eval "$MSG_BODY")"
+    local resp; resp="$(eval "$MSG_BODY" 2>&1)"
+    if [ -z "$resp" ]; then
+        weixin:warn "Send message skipped: executed command returned empty output"
+        return $?
+    fi
     ___x_cmd weixin bot send text "$resp"
 }
 
@@ -70,17 +80,12 @@ ___x_cmd_weixin_react(){
         esac
     fi
 
-
-    local MSG_FROM
-    local MSG_TO
-
-    local MSG_BODY
-    local msg_line
-
     while true; do
         {
             ___x_cmd weixin listen poll --json
         } | {
+            local msg_line
+            local MSG_FORM="" MSG_TO="" MSG_TYPE="" MSG_TEXT_TEXT="" MSG_IMG_URL="" MSG_IMG_AESKEY="" MSG_IMG_MEDIA_FULLURL="" MSG_IMG_MEDIA_PARAM="" MSG_IMG_MEDIA_AESKEY="" MSG_IMG_MEDIA_AESKEY_64="" MSG_VIDEO_MEDIA_FULLURL="" MSG_VIDEO_MEDIA_AESKEY_64="" MSG_VOICE_MEDIA_FULLURL="" MSG_VOICE_MEDIA_AESKEY_64="" MSG_FILE_MEDIA_FULLURL="" MSG_FILE_MEDIA_AESKEY_64="" MSG_FILE_MEDIA_AESKEY_name=""
             while read -r msg_line; do
                 ___x_cmd pipevar msg_line   ___x_cmd jo env .1 \
                         MSG_FROM=.from_user_id  \
@@ -101,8 +106,8 @@ ___x_cmd_weixin_react(){
                         MSG_FILE_MEDIA_AESKEY_64=.item_list.1.file_item.media.aes_key  \
                         MSG_FILE_MEDIA_AESKEY_name=.item_list.1.file_item.file_name
 
-                MSG_BODY="$MSG_TEXT_TEXT"
                 ___x_cmd_weixin_item_decrypt___
+                MSG_BODY="${MSG_TEXT_TEXT:-"File save success"}"
                 "$@"
 
             done

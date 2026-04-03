@@ -264,6 +264,22 @@ true
 }
 }
 ,
+"--pipe"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"从标准输入读取内容附加到提示词"
+,
+"en"
+:
+"Read content from stdin to append to prompt"
+}
+}
+,
 "#n"
 :
 {

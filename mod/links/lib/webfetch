@@ -1,76 +1,38 @@
 # shellcheck shell=dash
 
-# That will be deprecated. Don't include in advise.
+# Web fetching functions - Delegated to web module
+# This file is kept for backward compatibility
+
+xrc:mod:lib     web     fetch
+
 ___x_cmd_links_dump(){
-    ___x_cmd_links_webfetch --dump "$@"
+    ___x_cmd_web_fetch___main --linksdump "$@"
 }
 
 ___x_cmd_links_source(){
-    ___x_cmd_links_webfetch "$@"
+    ___x_cmd_web_fetch___main "$@"
 }
 
 ___x_cmd_links_webfetch(){
-    local source=1
-    local ccmd_timeout=10m
-    local readablelink=""
-    local LINKSOPT=""
+    local method="readablelink"
+    local ttl=10m
 
     while [ $# -gt 0 ]; do
         case "$1" in
-            -h|--help)          ___x_cmd help -m links dump "$@" ; return 0 ;;
-
-            --dump)             source=""       ;;
-
-            # Enable readablelink for GitHub/Codeberg/etc
-            --readablelink)     readablelink=1      ;;
-
-            # --cache-timeout will be deprecated. Use --ccmd. Don't put --cache-timeout in the advise.
+            -h|--help)          ___x_cmd help -m links webfetch "$@" ; return 0 ;;
+            --dump)             method="linksdump" ; shift ;;
+            --source)           method="readablelink" ; shift ;;
+            --readablelink)     method="readablelink" ; shift ;;
+            --ua)               shift 2 ; continue ;;
             --cache-timeout|--ccmd)
-                                ccmd_timeout="$2"; arg:2:shift ; continue ;;
-
-            --linksopt)         LINKSOPT="$2" ;  arg:2:shift ;;
-
+                                ttl="$2"; shift 2 ; continue ;;
+            --linksopt)         shift 2 ;;
             *)                  break ;;
         esac
-        shift
     done
 
     [ $# -gt 0 ]    ||          N=links M="Please provide url." log:ret:64
-    local url="$1" ;    shift
 
-    local proxy
-    local timeout
-
-    ___x_cmd_links_cur  proxy:=  timeout:= 2>/dev/null
-
-    if [ -n "$proxy" ]; then
-        links:debug "Using proxy -> $proxy"
-        ___x_cmd proxy run "$proxy" -- ___x_cmd_links_webfetch___run
-    else
-        ___x_cmd_links_webfetch___run
-    fi
-}
-
-___x_cmd_links_webfetch___run(){
-    # Chrome 120 on macOS - Browser disguise
-    local user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-
-    # If --readablelink specified, try to get raw document first
-    if [ -n "$readablelink" ]; then
-        ___x_cmd readablelink webfetch "$url"
-        case $? in
-            0|130)      return $? ;;
-        esac
-    fi
-
-    # Fallback to links with browser User-Agent
-    # Use -width 8192 to prevent wrapping and preserve original HTML structure
-    # User can override with: --linksopt "-width 80"
-    if [ -z "$source" ]; then
-        set -- -dump -width 8192 -codepage utf-8 -user-agent "$user_agent" "$LINKSOPT" "$url"
-    else
-        set -- -source -codepage utf-8 -user-agent "$user_agent" "$LINKSOPT" "$url"
-    fi
-
-    ___x_cmd ccmd "$ccmd_timeout" --  ___x_cmd_links___exec  "$@"
+    # Delegate to web module
+    ___x_cmd_web_fetch___main --"$method" --ttl "$ttl" "$@"
 }

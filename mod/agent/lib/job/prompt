@@ -90,7 +90,7 @@ CRITICAL DIRECTORY DISTINCTION:
 IMPORTANT: All project file operations happen in USER WORKING DIRECTORY. Job folder is only for task coordination, not for project code.
 
 CRITICAL RULES:
-1. **ONE task only then EXIT**. Pick ONE unchecked item from '$todofile', complete it, update '$todofile', write report to '$response_file', and EXIT. This is NOT a continuous session.
+1. **ONE task only then EXIT (just one, not two, not five)**. Pick ONE unchecked item from '$todofile', complete it, update '$todofile', write report to '$response_file', and EXIT. This is NOT a continuous session.
 2. **Search codebase first** before implementing.
 3. **Limit testing to ~20%**. Prioritize: Implementation > Documentation > Tests.
 4. **Use subagents** for expensive operations (file searching, analysis).

@@ -268,6 +268,38 @@ null
 }
 }
 ,
+"--ua"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"设置 User-Agent。支持预设名称或自定义字符串。\n预设: chrome(默认), firefox, safari, edge, curl, wget, iphone, android, googlebot 等。\n使用 'x user agent ls' 查看所有预设。\n"
+,
+"en"
+:
+"Set User-Agent. Supports preset names or custom string.\nPresets: chrome(default), firefox, safari, edge, curl, wget, iphone, android, googlebot, etc.\nUse 'x user agent ls' to list all presets.\n"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"UA 预设名称或自定义字符串"
+,
+"en"
+:
+"UA preset name or custom string"
+}
+}
+}
+,
 "--linksopt"
 :
 {

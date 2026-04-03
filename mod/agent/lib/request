@@ -9,6 +9,8 @@ ___x_cmd_agent_request(){
     local output_format="text"
     local output_file=""
 
+    local pipe=""
+
     [ "$#" -gt 0 ] || set -- --help
     while [ $# -gt 0 ]; do
         case "$1" in
@@ -16,6 +18,8 @@ ___x_cmd_agent_request(){
 
             --harness)      harness="$2"  ;     arg:2:shift ;;
             --file|-f)      filelist="${filelist}${NL}${2}" ; arg:2:shift ;;
+            --pipe)         pipe="$(___x_cmd_cmds cat)" ; shift ;;
+
             --output|-o)    output_file="$2"   ;     arg:2:shift ;;
             --json)         output_format=json; shift ;;
 
@@ -30,6 +34,14 @@ ___x_cmd_agent_request(){
     if [ -z "$harness" ]; then
         x_=""; ___x_cmd_agent_harness_
         harness="$x_"
+    fi
+
+    if [ -n "$pipe" ]; then
+        content="${content}
+=== Content From Pipe
+$pipe
+===
+"
     fi
 
     while read -r f; do
