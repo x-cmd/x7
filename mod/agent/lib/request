@@ -100,10 +100,10 @@ ___x_cmd_agent_request___run(){
             ;;
         claude)
             if [ "$output_format" = "json" ]; then
-                ___x_cmd claude -- --allow-dangerously-skip-permissions -p --verbose --output-format stream-json "$content"
+                ___x_cmd claude -- --dangerously-skip-permissions -p --verbose --output-format stream-json "$content"
             else
-                # ___x_cmd claude -- --allow-dangerously-skip-permissions -p "$content"
-                ___x_cmd claude -- --allowedTools "Write,Read,Edit,Bash(git add *),Bash(git commit *),Bash(git diff *),Bash(git log *),Bash(git status),Bash(git status *),Bash(git push *),Bash(git pull *),Bash(git fetch *),Bash(git checkout *),Bash(git branch *),Bash(git stash *),Bash(git merge *),Bash(git tag *),Bash(npm *),Bash(pytest)" -p "$content"
+                # --allowedTools "Write,Read,Edit,Bash(git add *),Bash(git commit *),Bash(git diff *),Bash(git log *),Bash(git status),Bash(git status *),Bash(git push *),Bash(git pull *),Bash(git fetch *),Bash(git checkout *),Bash(git branch *),Bash(git stash *),Bash(git merge *),Bash(git tag *),Bash(npm *),Bash(pytest)"
+                ___x_cmd claude -- --dangerously-skip-permissions -p "$content"
             fi
             ;;
         codex)
