@@ -90,6 +90,7 @@ ___x_cmd_weixin_react(){
                 ___x_cmd pipevar msg_line   ___x_cmd jo env .1 \
                         MSG_FROM=.from_user_id  \
                         MSG_TO=.to_user_id      \
+                        MSG_DATE=.create_time_ms    \
                         MSG_TYPE=.item_list.1.type \
                         MSG_TEXT_TEXT=.item_list.1.text_item.text   \
                         MSG_IMG_URL=.item_list.1.image_item.url     \
@@ -106,6 +107,7 @@ ___x_cmd_weixin_react(){
                         MSG_FILE_MEDIA_AESKEY_64=.item_list.1.file_item.media.aes_key  \
                         MSG_FILE_MEDIA_AESKEY_name=.item_list.1.file_item.file_name
 
+                ___x_cmd_weixin_reactor_saveraw
                 ___x_cmd_weixin_item_decrypt___
                 MSG_BODY="${MSG_TEXT_TEXT:-"File save success"}"
                 "$@"
@@ -118,4 +120,18 @@ ___x_cmd_weixin_react(){
 
 }
 
+___x_cmd_weixin_reactor_saveraw(){
+    ___X_CMD_WEIXIN_DATA="$___X_CMD_ROOT_DATA/weixin/data"
+    ___x_cmd mkdirp "$___X_CMD_WEIXIN_DATA"
 
+    local INTERVAL_MS="$(( 10 * 60 * 1000 ))"
+
+    local date_start=$(( MSG_DATE / INTERVAL_MS * INTERVAL_MS))
+    local date_end=$(( date_start + INTERVAL_MS))
+
+    local filename
+    filename="${date_start}_${date_end}.json"
+
+    local fp="${___X_CMD_WEIXIN_DATA}/${filename}"
+    printf "%s" "$msg_line" >> "$fp"
+}
