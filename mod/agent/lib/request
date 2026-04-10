@@ -8,6 +8,7 @@ ___x_cmd_agent_request(){
     local NL="$___X_CMD_UNSEENCHAR_NEWLINE"
     local output_format="text"
     local output_file=""
+    local overwrite=""
 
     local pipe=""
     local user_session_id=""
@@ -22,6 +23,7 @@ ___x_cmd_agent_request(){
             --pipe)         pipe="$(___x_cmd_cmds cat)" ;       shift ;;
 
             --output|-o)    output_file="$2"   ;                arg:2:shift ;;
+            --overwrite)    overwrite=1;                        shift ;;
             --json)         output_format=json;                 shift ;;
             --session)      user_session_id="$2";               arg:2:shift ;;
 
@@ -40,19 +42,18 @@ ___x_cmd_agent_request(){
 
     if [ -n "$pipe" ]; then
         content="${content}
-=== Content From Pipe
-$pipe
-===
+<STDIN>
+${pipe}
+</STDIN>
 "
     fi
 
     while read -r f; do
         [ -f "$f" ]  || continue
-
         content="${content}
-=== filename -> $f
+<FILE path=\"${f}\">
 $(___x_cmd_cmds cat "$f")
-===
+</FILE>
 "
     done <<A
 $filelist
@@ -65,13 +66,13 @@ A
         return $?
     else
         content="${content}
-Please output the content between two === as following:
-===
-<content>
-===
+Output your response wrapped with:
+<OUTPUT-CONTENT>
+...
+</OUTPUT-CONTENT>
 "
 
-        if [ -f "$output_file" ]; then
+        if [ -f "$output_file" ] && [ "${overwrite:-}" != "1" ]; then
             ___x_cmd bakman backup "$output_file"
         fi
 
@@ -82,10 +83,11 @@ Please output the content between two === as following:
             *)      return $? ;;
         esac
 
-        x_="${x_#*===}"
-        x_="${x_#"$___X_CMD_UNSEENCHAR_NEWLINE"}"
-        x_="${x_%===*}"
-        ___x_cmd fprintf "$output_file" "%s" "$x_"
+        x_="${x_#*<OUTPUT-CONTENT>}"
+        x_="${x_%</OUTPUT-CONTENT>*}"
+        x_="${x_#"$NL"}"
+        x_="${x_%"$NL"}"
+        printf "%s" "$x_" > "$output_file"
     fi
 
 }

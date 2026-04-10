@@ -248,6 +248,22 @@ true
 }
 }
 ,
+"--overwrite"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"强制覆盖已存在的输出文件（不备份，与 --output 配合使用）"
+,
+"en"
+:
+"Force overwrite existing file without backup (use with --output)"
+}
+}
+,
 "--json"
 :
 {

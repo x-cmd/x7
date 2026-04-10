@@ -37,7 +37,7 @@ ___x_cmd_agent_unify___try(){
 
         if [ "$op_hash" = "$agent_fp_hash" ]; then
             agent:info "Content identical, skipping merge: $op"
-            ___x_cmd_cmds rm -f "$op"
+            ___x_cmd rmrf "$op"
             ___x_cmd_cmds ln -s "$AGENT_FP" "$op"
             continue
         fi
@@ -62,7 +62,8 @@ ___x_cmd_agent_unify___try(){
             *)          x:info "[ERR=$errcode] Fail to incorporate the file using llm. You can retry later or manually incorporated the file $op into $AGENT_FP by yourself."; return "$errcode" ;;
         esac
 
-        ___x_cmd_cmds rm -f "$op"
+        ___x_cmd bakman backup "$op"
+        ___x_cmd rmrf "$op"
         ___x_cmd_cmds ln -s "$AGENT_FP" "$op"
     done
 }
