@@ -109,6 +109,48 @@ null
 :
 "Example: Query pending message count"
 }
+,
+{
+"cmd"
+:
+"x tailer test 10000"
+,
+"cn"
+:
+"示例: 测试 10000 条消息的吞吐量和延迟"
+,
+"en"
+:
+"Example: Test throughput and latency with 10000 messages"
+}
+,
+{
+"cmd"
+:
+"x tailer test --docker 10000"
+,
+"cn"
+:
+"示例: 在 Docker 容器中运行发送端测试"
+,
+"en"
+:
+"Example: Run sender in Docker container for testing"
+}
+,
+{
+"cmd"
+:
+"x tailer test --docker --docker-image alpine --docker-shell sh 5000"
+,
+"cn"
+:
+"示例: 使用 alpine 镜像和 sh shell 测试"
+,
+"en"
+:
+"Example: Test with alpine image and sh shell"
+}
 ]
 ,
 "#subcmd:Command"
@@ -121,6 +163,8 @@ null
 "pending"
 ,
 "service"
+,
+"test"
 ]
 ,
 "run"
@@ -288,6 +332,238 @@ null
 "#exec"
 :
 "___x_cmd_advise__dir"
+}
+}
+,
+"test"
+:
+{
+"#synopsis"
+:
+"[option] [<count>]"
+,
+"#desc"
+:
+{
+"cn"
+:
+"测试 tailer 的吞吐量和延迟性能"
+,
+"en"
+:
+"Test tailer throughput and latency performance"
+}
+,
+"--count"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"发送的消息数量，默认 10000"
+,
+"en"
+:
+"Number of messages to send, default 10000"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"消息数量"
+,
+"en"
+:
+"Message count"
+}
+}
+}
+,
+"--dir"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"测试目录路径，默认 ./.tmp"
+,
+"en"
+:
+"Test directory path, default ./.tmp"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"目录路径"
+,
+"en"
+:
+"Directory path"
+}
+,
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+}
+,
+"--batch-size"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"批量写入文件的批次大小，默认 1000"
+,
+"en"
+:
+"Batch size for writing to latency file, default 1000"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"批次大小"
+,
+"en"
+:
+"Batch size"
+}
+}
+}
+,
+"--gc"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"队列 GC 阈值，处理超过此值后轮换队列文件，默认 10000"
+,
+"en"
+:
+"Queue GC threshold, rotate queue file after processing this many messages, default 10000"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"消息数量阈值"
+,
+"en"
+:
+"Message count threshold"
+}
+}
+}
+,
+"--docker"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"在 Docker 容器中运行发送端"
+,
+"en"
+:
+"Run sender in Docker container"
+}
+}
+,
+"--docker-image"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"Docker 镜像名称，默认 ubuntu"
+,
+"en"
+:
+"Docker image name, default ubuntu"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"镜像名称"
+,
+"en"
+:
+"Image name"
+}
+}
+}
+,
+"--docker-shell"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"Docker 容器内使用的 shell，默认 bash"
+,
+"en"
+:
+"Shell to use in Docker container, default bash"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"shell 名称"
+,
+"en"
+:
+"Shell name"
+}
+}
 }
 }
 ,

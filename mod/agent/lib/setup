@@ -60,6 +60,8 @@ ___x_cmd_agent_setup(){
     ___x_cmd_agent_setup_addprompt "$HOME/.gemini"          "$HOME/.gemini/GEMINI.md"               "$pattern" "$prompt"
     ___x_cmd_agent_setup_addprompt "$HOME/.config/opencode" "$HOME/.config/opencode/AGENTS.md"      "$pattern" "$prompt"
 
+    # ___x_cmd_agent_setup_addprompt "$HOME/.openclaw"        "$HOME/.openclaw/MEMORY.md"             "$pattern" "$prompt"
+
     # Opencode and kimi will read.
 
     agent:info "Add x-cmd skills to ~/.agents and other agent directories"
@@ -79,6 +81,7 @@ $HOME/.agents
 $HOME/.claude
 $HOME/.codex
 $HOME/.config/opencode
+$HOME/.openclaw
 A
 
     # Now inject.

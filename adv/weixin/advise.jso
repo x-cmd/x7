@@ -221,7 +221,7 @@ null
 {
 "cmd"
 :
-"x weixin bot send --text \"Hello from WeChat bot\""
+"x weixin send --text \"Hello from WeChat bot\""
 ,
 "cn"
 :
@@ -235,7 +235,7 @@ null
 {
 "cmd"
 :
-"x weixin bot send --image /path/to/image.jpg"
+"x weixin send --image /path/to/image.jpg"
 ,
 "cn"
 :
@@ -249,7 +249,7 @@ null
 {
 "cmd"
 :
-"x weixin bot send --file /path/to/file.pdf"
+"x weixin send --file /path/to/file.pdf"
 ,
 "cn"
 :

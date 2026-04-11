@@ -79,14 +79,14 @@ BEGIN {
     # --- Compute etime ---
     etime_str = ""
     if (boot_time > 0 && clk_tck > 0) {
-        elapsed_ticks = systime() * clk_tck - starttime
+        elapsed_ticks = (systime() - boot_time) * clk_tck - starttime
         if (elapsed_ticks < 1) elapsed_ticks = 1
         elapsed_s = int(elapsed_ticks / clk_tck)
         ed = int(elapsed_s / 86400)
         eh = int((elapsed_s % 86400) / 3600)
         em = int((elapsed_s % 3600) / 60)
         es = int(elapsed_s % 60)
-        if (ed > 0)       etime_str = sprintf("%d-%02d:%02d:%02d", ed, eh, em, es)
+        if (ed > 0)       etime_str = sprintf("%02d-%02d:%02d:%02d", ed, eh, em, es)
         else if (eh > 0)  etime_str = sprintf("%02d:%02d:%02d", eh, em, es)
         else              etime_str = sprintf("%02d:%02d", em, es)
     }

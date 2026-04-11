@@ -2,7 +2,7 @@
 
 ___x_cmd log init tailer
 
-xrc:mod:lib     tailer  run  pending    service
+xrc:mod:lib     tailer  run  pending    service test
 
 # tailer is msg framework for agents.
 
@@ -17,7 +17,7 @@ ___x_cmd_tailer___main(){
     case "$op" in
         -h|--help)      ___x_cmd help -m tailer "$@" ;      return 0 ;;
 
-        run|send|pending|service)
+        run|send|pending|service|test)
                         ___x_cmd_tailer_"$op"   "$@" ;;
 
         start|stop|restart|status)
