@@ -85,15 +85,15 @@ null
 {
 "cmd"
 :
-"x tailer run --gc 5000 /tmp/mq"
+"x tailer run --gc 20000 /tmp/mq"
 ,
 "cn"
 :
-"示例: 设置 GC 阈值为 5000 条消息"
+"示例: 设置 GC 阈值为 20000 条消息"
 ,
 "en"
 :
-"Example: Set GC threshold to 5000 messages"
+"Example: Set GC threshold to 20000 messages"
 }
 ,
 {
@@ -113,7 +113,7 @@ null
 {
 "cmd"
 :
-"x tailer test 10000"
+"x tailer test --count 10000"
 ,
 "cn"
 :
@@ -141,15 +141,15 @@ null
 {
 "cmd"
 :
-"x tailer test --docker --docker-image alpine --docker-shell sh 5000"
+"x tailer test --docker --docker-image bash:3 --docker-shell sh 20000"
 ,
 "cn"
 :
-"示例: 使用 alpine 镜像和 sh shell 测试"
+"示例: 使用 bash:3 镜像和 sh shell 测试"
 ,
 "en"
 :
-"Example: Test with alpine image and sh shell"
+"Example: Test with bash:3 image and sh shell"
 }
 ]
 ,
@@ -565,6 +565,122 @@ null
 }
 }
 }
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x tailer test"
+,
+"cn"
+:
+"示例: 默认测试 10000 条消息"
+,
+"en"
+:
+"Example: Default test with 10000 messages"
+}
+,
+{
+"cmd"
+:
+"x tailer test --count 50000"
+,
+"cn"
+:
+"示例: 测试 50000 条消息"
+,
+"en"
+:
+"Example: Test 50000 messages"
+}
+,
+{
+"cmd"
+:
+"x tailer test --gc 20000"
+,
+"cn"
+:
+"示例: 设置 GC 阈值为 20000 条消息"
+,
+"en"
+:
+"Example: Set GC threshold to 20000 messages"
+}
+,
+{
+"cmd"
+:
+"x tailer test --batch-size 500"
+,
+"cn"
+:
+"示例: 设置批量写入大小为 500 条"
+,
+"en"
+:
+"Example: Set batch write size to 500 messages"
+}
+,
+{
+"cmd"
+:
+"x tailer test --dir /tmp/tailer_test"
+,
+"cn"
+:
+"示例: 指定测试目录为 /tmp/tailer_test"
+,
+"en"
+:
+"Example: Use /tmp/tailer_test as test directory"
+}
+,
+{
+"cmd"
+:
+"x tailer test --docker"
+,
+"cn"
+:
+"示例: 在 Docker 容器中运行发送端测试"
+,
+"en"
+:
+"Example: Run sender in Docker container"
+}
+,
+{
+"cmd"
+:
+"x tailer test --docker --docker-image bash:3"
+,
+"cn"
+:
+"示例: 使用 bash:3 镜像测试"
+,
+"en"
+:
+"Example: Test with bash:3 image"
+}
+,
+{
+"cmd"
+:
+"x tailer test --docker --docker-image bash:3 --docker-shell bash"
+,
+"cn"
+:
+"示例: 使用 bash:3 镜像和 bash shell 测试"
+,
+"en"
+:
+"Example: Test with bash:3 image and bash shell"
+}
+]
 }
 ,
 "service"

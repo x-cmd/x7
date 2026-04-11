@@ -303,7 +303,7 @@ a055e57e4cfb647cc941441983cf2907b4507540 starship main NULL
 858a2b376642f87316d762f39c04bebd2402777d str main NULL
 d2efd3d7c5afdf12eb99929dff1bb2870745b8c8 sudo main NULL
 a9bc819087f0a909e0f428747c76eec8e749cdae sysctl main NULL
-2e2681acb986e64ce7a53f86317caecbb4c179c2 tailer main NULL
+52c8924ee669a9d783b7c44695102e8406da7820 tailer main NULL
 670f5c8e6d16aee2dcc4f43b6c42eb43e655f43b tap main NULL
 2ec7ad80311d2bd3c8be4ea77d8e419ee1b064ce tcsh main NULL
 0ae142e916262af8e7ff7cb7add683e4b96376b5 tea main NULL

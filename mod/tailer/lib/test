@@ -156,8 +156,8 @@ ___x_cmd_tailer_test_stats(){
         if (index(ts, ".") > 0) {
             split(ts, parts, ".")
             sec = parts[1]
-            # 补齐纳秒到9位 (不足补0, 超出截断)
-            nano = substr(parts[2] "000000000", 1, 9)
+            # 补齐到6位微秒 (不足补0, 超出截断)
+            nano = substr(parts[2] "000000", 1, 6) "000"
         } else {
             sec = ts
             nano = 0
