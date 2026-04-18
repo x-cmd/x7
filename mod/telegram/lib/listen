@@ -10,11 +10,11 @@ ___x_cmd_telegram_listen(){
 
     while [ $# -gt 0 ]; do
         case "$1" in
-            -h|--help)      ___x_cmd help -m weixin listen "$@" ; return 0 ;;
-            --json)         format="json" ; shift ;;
-            --timeout)      timeout="$2" ; arg:2:shift ;;
-            --offset)       offset="$2" ; arg:2:shift ;;
-            --fp)           fp=1 ; shift ;;
+            -h|--help)      ___x_cmd help -m telegram listen "$@" ; return 0 ;;
+            --fp)           fp=1 ;          shift ;;
+            --json)         format="json";  shift ;;
+            --timeout)      timeout="$2" ;  arg:2:shift ;;
+            --offset)       offset="$2"  ;  arg:2:shift ;;
             *)              break ;;
         esac
     done
@@ -34,13 +34,17 @@ ___x_cmd_telegram_listen(){
     while true; do
         local chatid
         local resp
-        resp="$(___x_cmd_telegram_getupdates | ___x_cmd jq -c )"
+        resp="$(___x_cmd_telegram_getupdates | ___x_cmd jq -c )" || {
+            telegram:error "Failed to get updates: $resp"
+            ___x_cmd sleep 1s
+            return 1
+        }
 
         local msg
         ___x_cmd jo env . msg=.result <<A
 $resp
 A
-        # [ "$msg" != "[]" ] || continue
+        [ "$msg" != "[]" ] || continue
 
         offset="$(printf "%s\n" "$resp" | ___x_cmd jq ".result[-1].update_id + 1")"
         printf "%s\n" "$offset" > "$offsetfp"

@@ -28,7 +28,10 @@ ___x_cmd_claw_run___agentwork___heartbeat(){
     # Activity: unread message pending to be processed
     if ___x_cmd claw "$current_im" has-unread "$current_chatid" && ! ___x_cmd worker isalive --ns x-claw-worker --name "${current_im}-${current_chatid}"; then
         printf "%s\n" "0" > "$idle_file"
-        ___x_cmd "$current_im" bot service ensure || return $?
+        case "$current_im" in
+            feishu) ___x_cmd feishu abot service ensure || return $? ;;
+            *)      ___x_cmd "$current_im" bot service ensure || return $? ;;
+        esac
         ___x_cmd_claw_run___agentwork___handlemsg "${current_im}:${current_chatid}"
         return 0
     fi

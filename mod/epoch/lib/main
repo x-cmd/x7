@@ -26,7 +26,7 @@ ___x_cmd_epoch_get(){
         ___x_cmd btime_
         local uptime
         read -r uptime</proc/uptime
-        uptime="${uptime%% *}"
+        uptime="${uptime%%.*}"
         printf "%s\n" "$(( uptime + x_ ))"
     else
         ___x_cmd_cmds date +%s

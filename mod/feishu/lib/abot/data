@@ -20,6 +20,7 @@ ___x_cmd_feishu_abot_data_which_(){
 
 ___x_cmd_feishu_abot_data_which(){
     local chatid="$1"
+    [ -n "$chatid" ] || N=feishu M="Not Found chat id" log:ret:1
     local x_
     ___x_cmd_feishu_abot_data_which_ "$chatid" || return $?
     printf "%s\n" "$x_"

@@ -13,6 +13,10 @@ ___x_cmd_disk___main(){
         stat)                       ___x_cmd_disk_stat "$@" ;;
         ls)                         ___x_cmd_disk_ls "$@" ;;
         eject)                      ___x_cmd_disk_eject "$@" ;;
+        mount)                      ___x_cmd_disk_mount "$@" ;;
+        umount)                     ___x_cmd_disk_umount "$@" ;;
+        remount)                    ___x_cmd_disk_remount "$@" ;;
+        device)                     ___x_cmd_disk_device "$@" ;;
         *)                          N=disk M="Unknown subcmd -> $subcmd" log:ret:64 ;;
     esac
 }
@@ -69,6 +73,8 @@ ___x_cmd_disk_info_linux(){
 
     local found=0
     local blk
+
+    { set +o nomatch; } 2>/dev/null
     for blk in /sys/block/sd* /sys/block/nvme* /sys/block/vd* /sys/block/mmcblk*; do
         [ -d "$blk" ] || continue
         local name="${blk##*/}"
@@ -247,6 +253,7 @@ ___x_cmd_disk_eject_linux(){
         fi
     else
         # Eject all removable devices
+        { set +o nomatch; } 2>/dev/null
         local d
         for d in /sys/block/sd* /sys/block/sr*; do
             [ -d "$d" ] || continue
@@ -270,6 +277,202 @@ ___x_cmd_disk_eject_win(){
         ___x_cmd_cmds powershell -Command "\$drive = Get-WmiObject -Class Win32_Volume -Filter \"DriveLetter='$target'\"; if (\$drive) { \$drive.Dismount(\$false, \$false) }" 2>&1
     else
         ___x_cmd_cmds powershell -Command "Get-WmiObject -Class Win32_Volume | Where-Object { \$_.DriveType -eq 2 } | ForEach-Object { \$_.Dismount(\$false, \$false) }" 2>&1
+    fi
+}
+
+# ── mount: mount a device ────────────────────────────────────────
+___x_cmd_disk_mount(){
+    local device="${1:-}"
+    local mountpoint="${2:-}"
+    local opts=""
+
+    [ "$device" ] || { N=disk M="usage: x disk mount <device> <mountpoint> [--options opts]" log:ret:64; return 1; }
+    [ "$mountpoint" ] || { N=disk M="usage: x disk mount <device> <mountpoint> [--options opts]" log:ret:64; return 1; }
+
+    # Parse --options flag
+    while [ $# -gt 2 ]; do
+        case "$3" in
+            --options|-o) opts="${4:-rw}"; shift 2 ;;
+            *) shift ;;
+        esac
+    done
+    [ "$opts" ] || opts="rw"
+
+    if ___x_cmd os is darwin; then
+        ___x_cmd_disk_mount_macos "$device" "$mountpoint" "$opts"
+    elif ___x_cmd os is win; then
+        ___x_cmd_disk_mount_win "$device"
+    else
+        ___x_cmd_disk_mount_linux "$device" "$mountpoint" "$opts"
+    fi
+}
+
+___x_cmd_disk_mount_linux(){
+    local device="${1:-}"
+    local mountpoint="${2:-}"
+    local opts="${3:-rw}"
+
+    case "$device" in
+        UUID=*) device="UUID=${device#UUID=}" ;;
+        LABEL=*) device="LABEL=${device#LABEL=}" ;;
+        /dev/*) ;;
+        *) device="/dev/$device" ;;
+    esac
+
+    [ -e "$device" ] || { N=disk M="Device not found: $device" log:ret:64; return 1; }
+
+    mkdir -p "$mountpoint"
+
+    if [ "$opts" = "rw" ] || [ "$opts" = "ro" ]; then
+        ___x_cmd_cmds mount -o "$opts" "$device" "$mountpoint" 2>&1
+    else
+        ___x_cmd_cmds mount -o "$opts" "$device" "$mountpoint" 2>&1
+    fi
+}
+
+___x_cmd_disk_mount_macos(){
+    local device="${1:-}"
+    local mountpoint="${2:-}"
+    local opts="${3:-rw}"
+
+    case "$device" in
+        /dev/disk*) ;;
+        /dev/*) device="${device#/dev/}" ;;
+        disk*) ;;
+        *) device="disk${device}" ;;
+    esac
+
+    mkdir -p "$mountpoint"
+
+    if [ "$opts" = "rw" ] || [ "$opts" = "ro" ]; then
+        ___x_cmd_cmds diskutil mount -mountPoint "$mountpoint" "$device" 2>&1
+    else
+        ___x_cmd_cmds diskutil mount -mountPoint "$mountpoint" "$device" 2>&1
+    fi
+}
+
+___x_cmd_disk_mount_win(){
+    N=disk M="Mount operation not applicable on Windows. Drives are letters." log:ret:64
+}
+
+# ── umount: unmount a filesystem ────────────────────────────────
+___x_cmd_disk_umount(){
+    local target="${1:-}"
+    local lazy=""
+    local force=""
+
+    [ "$target" ] || { N=disk M="usage: x disk umount <mountpoint|--lazy|--force>" log:ret:64; return 1; }
+
+    case "$target" in
+        --lazy) lazy=1; target="${2:-}" ;;
+        --force) force=1; target="${2:-}" ;;
+    esac
+
+    [ "$target" ] || { N=disk M="usage: x disk umount <mountpoint>--lazy|--force>" log:ret:64; return 1; }
+
+    if ___x_cmd os is darwin; then
+        ___x_cmd_disk_umount_macos "$target" "$lazy" "$force"
+    elif ___x_cmd os is win; then
+        ___x_cmd_disk_umount_win "$target"
+    else
+        ___x_cmd_disk_umount_linux "$target" "$lazy" "$force"
+    fi
+}
+
+___x_cmd_disk_umount_linux(){
+    local target="${1:-}"
+    local lazy="${2:-}"
+    local force="${3:-}"
+
+    case "$target" in
+        /dev/*) ;;
+        /*) ;;
+        *) target="/dev/$target" ;;
+    esac
+
+    if [ "$force" ]; then
+        ___x_cmd_cmds umount -f "$target" 2>&1
+    elif [ "$lazy" ]; then
+        ___x_cmd_cmds umount -l "$target" 2>&1
+    else
+        ___x_cmd_cmds umount "$target" 2>&1
+    fi
+}
+
+___x_cmd_disk_umount_macos(){
+    local target="${1:-}"
+    local lazy="${2:-}"
+    local force="${3:-}"
+
+    if [ "$force" ]; then
+        ___x_cmd_cmds diskutil unmount force "$target" 2>&1
+    else
+        ___x_cmd_cmds diskutil unmount "$target" 2>&1
+    fi
+}
+
+___x_cmd_disk_umount_win(){
+    local target="${1:-}"
+    ___x_cmd_cmds powershell -Command "\$drive = Get-WmiObject -Class Win32_Volume -Filter \"DriveLetter='$target'\"; if (\$drive) { \$drive.Dismount(\$false, \$true) }" 2>&1
+}
+
+# ── remount: remount with different options ───────────────────────
+___x_cmd_disk_remount(){
+    local mountpoint="${1:-}"
+    local opts="${2:-}"
+
+    [ "$mountpoint" ] || { N=disk M="usage: x disk remount <mountpoint> <options>" log:ret:64; return 1; }
+    [ "$opts" ] || { N=disk M="usage: x disk remount <mountpoint> <options>" log:ret:64; return 1; }
+
+    if ___x_cmd os is win; then
+        N=disk M="Remount not applicable on Windows." log:ret:64
+    elif ___x_cmd os is darwin; then
+        ___x_cmd_disk_umount_macos "$mountpoint"
+        ___x_cmd_disk_mount_macos "$mountpoint" "$mountpoint" "$opts"
+    else
+        ___x_cmd_cmds mount -o remount,"$opts" "$mountpoint" 2>&1
+    fi
+}
+
+# ── device: list or inspect devices ───────────────────────────────
+___x_cmd_disk_device(){
+    local action="${1:-}"
+    shift
+
+    case "$action" in
+        ls|list)    ___x_cmd_disk_device_ls "$@" ;;
+        info)       ___x_cmd_disk_device_info "$@" ;;
+        *)          N=disk M="usage: x disk device [ls|list|info <device>]" log:ret:64 ;;
+    esac
+}
+
+___x_cmd_disk_device_ls(){
+    if ___x_cmd os is darwin; then
+        ___x_cmd_cmds diskutil list 2>&1
+    elif ___x_cmd os is win; then
+        ___x_cmd_cmds wmic diskdrive list brief 2>&1
+    else
+        ___x_cmd_cmds lsblk -o NAME,SIZE,TYPE,MOUNTPOINT,FSTYPE,LABEL,UUID 2>&1
+    fi
+}
+
+___x_cmd_disk_device_info(){
+    local device="${1:-}"
+    [ "$device" ] || { N=disk M="usage: x disk device info <device>" log:ret:64; return 1; }
+
+    case "$device" in
+        /dev/*) ;;
+        *) device="/dev/$device" ;;
+    esac
+
+    if ___x_cmd os is darwin; then
+        ___x_cmd_cmds diskutil info "$device" 2>&1
+    elif ___x_cmd os is win; then
+        ___x_cmd_cmds wmic partition where "DeviceID='${device#\\.\}'" list 2>&1
+    else
+        ___x_cmd_cmds lsblk -o NAME,SIZE,TYPE,MOUNTPOINT,FSTYPE,LABEL,UUID,PARTUUID,MODEL "$device" 2>&1
+        echo "---"
+        ___x_cmd_cmds blkid "$device" 2>&1 || true
     fi
 }
 

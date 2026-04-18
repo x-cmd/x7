@@ -77,6 +77,42 @@ null
 :
 null
 }
+,
+{
+"x disk mount"
+:
+null
+}
+,
+{
+"x disk mount /dev/sdb1 /mnt/usb"
+:
+null
+}
+,
+{
+"x disk umount /mnt/usb"
+:
+null
+}
+,
+{
+"x disk remount /mnt/usb ro"
+:
+null
+}
+,
+{
+"x disk device ls"
+:
+null
+}
+,
+{
+"x disk device info /dev/sdb"
+:
+null
+}
 ]
 ,
 "#desc"
@@ -84,11 +120,11 @@ null
 {
 "en"
 :
-"Disk tool with five modes:\n- \"x disk\" (default = sum): hardware info + filesystem usage table, all in one view\n- \"x disk info\": static disk hardware info (model, capacity, SMART, etc.)\n- \"x disk stat\": compact filesystem usage table, grouped by physical disk,\n  with APFS container deduplication on macOS\n- \"x disk ls\": compact tabular partition listing (diskutil list / lsblk)\n- \"x disk eject [target]\": eject removable media (USB drives, optical discs)\nCross-platform with TTY color support and --tsv output for stat.\n"
+"Disk tool with device management and mount/unmount operations:\n- \"x disk\" (default = sum): hardware info + filesystem usage table, all in one view\n- \"x disk info\": static disk hardware info (model, capacity, SMART, etc.)\n- \"x disk stat\": compact filesystem usage table, grouped by physical disk,\n  with APFS container deduplication on macOS\n- \"x disk ls\": compact tabular partition listing (diskutil list / lsblk)\n- \"x disk eject [target]\": eject removable media (USB drives, optical discs)\n- \"x disk mount <device> <mountpoint>\": mount a device to a directory\n- \"x disk umount <mountpoint>\": unmount a mounted filesystem\n- \"x disk remount <mountpoint> <options>\": remount with different options\n- \"x disk device [ls|info]\": list or inspect available devices\nCross-platform with TTY color support and --tsv output for stat.\n"
 ,
 "cn"
 :
-"磁盘工具五种模式：\n- \"x disk\"（默认 = sum）：硬件信息 + 文件系统使用率表格，一次看全\n- \"x disk info\"：磁盘硬件信息（型号、容量、SMART 等）\n- \"x disk stat\"：紧凑的文件系统使用率表格，按物理磁盘分组，\n  macOS 上自动合并 APFS 容器\n- \"x disk ls\"：紧凑表格分区列表（diskutil list / lsblk）\n- \"x disk eject [target]\"：弹出可移动介质（U盘、光盘等）\n跨平台统一输出格式，支持 TTY 彩色输出和 --tsv 机器可读格式。\n"
+"磁盘工具，包含设备管理和挂载/卸载操作：\n- \"x disk\"（默认 = sum）：硬件信息 + 文件系统使用率表格，一次看全\n- \"x disk info\"：磁盘硬件信息（型号、容量、SMART 等）\n- \"x disk stat\"：紧凑的文件系统使用率表格，按物理磁盘分组，\n  macOS 上自动合并 APFS 容器\n- \"x disk ls\"：紧凑表格分区列表（diskutil list / lsblk）\n- \"x disk eject [target]\"：弹出可移动介质（U盘、光盘等）\n- \"x disk mount <设备> <挂载点>\"：挂载设备到指定目录\n- \"x disk umount <挂载点>\"：卸载已挂载的文件系统\n- \"x disk remount <挂载点> <选项>\"：以不同选项重新挂载\n- \"x disk device [ls|info]\"：列出或检查可用设备\n跨平台统一输出格式，支持 TTY 彩色输出和 --tsv 机器可读格式。\n"
 }
 ,
 "#subcmd:Option"
@@ -196,6 +232,86 @@ null
 "cn"
 :
 "弹出可移动介质（U盘、光盘等）。\n无参数：弹出所有可移动磁盘。\n有参数：接受设备名（/dev/diskN）、短名（diskN）或挂载路径（/Volumes/USB）。\nmacOS：使用 diskutil eject 或 Finder AppleScript。\nLinux：使用 udisksctl（优先）或 eject 命令。\nWindows：使用 PowerShell WMI Dismount。\n"
+}
+}
+,
+"mount"
+:
+{
+"#synopsis"
+:
+"<device> <mountpoint> [--options opts]"
+,
+"#desc"
+:
+{
+"en"
+:
+"Mount a device to a mount point directory.\nAccepts device path (like /dev/sdb1, /dev/disk3s1), UUID, or LABEL.\nCreates mount point if it doesn't exist.\nOptions (Linux): rw, ro, noexec, nosuid, nodev, etc.\nmacOS: uses diskutil mount, options limited (usually rw/ro).\nLinux: uses mount command or udisksctl (user-friendly).\nWindows: mount points are drive letters (C:, D: etc), this subcommand is a no-op.\n"
+,
+"cn"
+:
+"挂载设备到挂载点目录。\n接受设备路径（如 /dev/sdb1, /dev/disk3s1）、UUID 或 LABEL。\n挂载点不存在时会自动创建。\n选项（Linux）：rw、ro、noexec、nosuid、nodev 等。\nmacOS：使用 diskutil mount，选项有限（通常只有 rw/ro）。\nLinux：使用 mount 命令或 udisksctl（对用户更友好）。\nWindows：挂载点是驱动器号（C:、D: 等），此子命令无操作。\n"
+}
+}
+,
+"umount"
+:
+{
+"#synopsis"
+:
+"<mountpoint|--lazy|--force>"
+,
+"#desc"
+:
+{
+"en"
+:
+"Unmount a mounted filesystem.\nAccepts mount point path or device path.\n--lazy: detach even if busy (Linux: -l)\n--force: force unmount (macOS: diskutil unmount force, Linux: umount -f)\nLinux: also accepts device path without mount point.\nmacOS: requires mount point path.\nWindows: uses PowerShell Dismount for drive letters.\n"
+,
+"cn"
+:
+"卸载已挂载的文件系统。\n接受挂载点路径或设备路径。\n--lazy：即使忙碌也强行分离（Linux：-l）\n--force：强制卸载（macOS：diskutil unmount force，Linux：umount -f）\nLinux：也可以接受没有挂载点的设备路径。\nmacOS：需要挂载点路径。\nWindows：为驱动器号使用 PowerShell Dismount。\n"
+}
+}
+,
+"remount"
+:
+{
+"#synopsis"
+:
+"<mountpoint> <options>"
+,
+"#desc"
+:
+{
+"en"
+:
+"Remount a filesystem with different options.\nSyntax: x disk remount /mnt/usb ro  (read-only)\n        x disk remount /mnt/usb rw  (read-write)\nLinux: uses mount -o remount,<options> <mountpoint>\nmacOS: limited options, mostly rw/ro via diskutil\nWindows: not applicable\n"
+,
+"cn"
+:
+"以不同选项重新挂载文件系统。\n语法：x disk remount /mnt/usb ro  (只读)\n      x disk remount /mnt/usb rw  (读写)\nLinux：使用 mount -o remount,<options> <mountpoint>\nmacOS：选项有限，主要通过 diskutil 支持 rw/ro\nWindows：不适用\n"
+}
+}
+,
+"device"
+:
+{
+"#synopsis"
+:
+"ls|info <device>"
+,
+"#desc"
+:
+{
+"en"
+:
+"List or inspect available block devices.\n\"x disk device ls\" or \"x disk device list\": show all devices with their mount status\n\"x disk device info /dev/sdb\": detailed device info (partition table, UUID, LABEL, etc.)\nLinux: uses lsblk and blkid\nmacOS: uses diskutil list and diskutil info\nWindows: uses wmic diskdrive and wmic logicaldisk\n"
+,
+"cn"
+:
+"列出或检查可用块设备。\n\"x disk device ls\" 或 \"x disk device list\"：显示所有设备及其挂载状态\n\"x disk device info /dev/sdb\"：设备详细信息（分区表、UUID、LABEL 等）\nLinux：使用 lsblk 和 blkid\nmacOS：使用 diskutil list 和 diskutil info\nWindows：使用 wmic diskdrive 和 wmic logicaldisk\n"
 }
 }
 ,
@@ -326,6 +442,118 @@ null
 "en"
 :
 "Example: Eject a specific disk device"
+}
+,
+{
+"cmd"
+:
+"x disk mount /dev/sdb1 /mnt/usb"
+,
+"cn"
+:
+"示例: 挂载设备到挂载点"
+,
+"en"
+:
+"Example: Mount device to mount point"
+}
+,
+{
+"cmd"
+:
+"x disk mount /dev/sdb1 /mnt/usb --options rw,noatime"
+,
+"cn"
+:
+"示例: 以指定选项挂载设备"
+,
+"en"
+:
+"Example: Mount device with options"
+}
+,
+{
+"cmd"
+:
+"x disk umount /mnt/usb"
+,
+"cn"
+:
+"示例: 卸载已挂载的文件系统"
+,
+"en"
+:
+"Example: Unmount a mounted filesystem"
+}
+,
+{
+"cmd"
+:
+"x disk umount --lazy /mnt/usb"
+,
+"cn"
+:
+"示例: 懒惰卸载（即使忙碌也运行）"
+,
+"en"
+:
+"Example: Lazy unmount (even if busy)"
+}
+,
+{
+"cmd"
+:
+"x disk remount /mnt/usb ro"
+,
+"cn"
+:
+"示例: 以只读模式重新挂载"
+,
+"en"
+:
+"Example: Remount as read-only"
+}
+,
+{
+"cmd"
+:
+"x disk remount /mnt/usb rw"
+,
+"cn"
+:
+"示例: 以读写模式重新挂载"
+,
+"en"
+:
+"Example: Remount as read-write"
+}
+,
+{
+"cmd"
+:
+"x disk device ls"
+,
+"cn"
+:
+"示例: 列出所有可用设备及其挂载状态"
+,
+"en"
+:
+"Example: List all available devices and mount status"
+}
+,
+{
+"cmd"
+:
+"x disk device info /dev/sdb"
+,
+"cn"
+:
+"示例: 显示设备详细信息"
+,
+"en"
+:
+"Example: Show detailed device info"
 }
 ]
 ,

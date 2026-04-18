@@ -267,7 +267,7 @@ ___x_cmd_service_stop___kill_then_wait(){
 
         [ "$interval" != 0 ] || continue
 
-        ___x_cmd sleep "$interval"
+        ___x_cmd_cmds sleep "$interval"
     done <<A
 0.1
 0.5

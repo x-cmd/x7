@@ -1,7 +1,7 @@
 # shellcheck shell=dash
 
 ___x_cmd log init claw
-xrc:mod:lib     claw   run/_index   weixin/_index telegram/_index
+xrc:mod:lib     claw   run/_index   weixin/_index telegram/_index feishu/_index
 
 ___x_cmd_claw___main(){
     [ "$#" -gt 0 ] ||   set -- --help

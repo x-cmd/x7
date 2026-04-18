@@ -33,6 +33,10 @@ ___x_cmd_claw_run(){
             ___x_cmd tailer sub "$___X_CMD_ROOT_DATA/telegram/sub" x-claw-default "$___X_CMD_CLAW_BOT_MQ" || return $?
             ___x_cmd telegram bot service ensure || return $?
             ;;
+        feishu)
+            ___x_cmd tailer sub "$___X_CMD_ROOT_DATA/feishu/sub" x-claw-default "$___X_CMD_CLAW_BOT_MQ" || return $?
+            ___x_cmd feishu abot service ensure || return $?
+            ;;
         *)  claw:error "Unsupported IM platform: $im"
             return 1
             ;;

@@ -15,11 +15,11 @@ ___x_cmd_feishu_abot_service(){
 }
 
 ___x_cmd_feishu_abot_service_start(){
-    ___x_cmd service start      x-feishu-listener   --   x-cmd feishu bot service run "$@"
+    ___x_cmd service start      x-feishu-listener   --   x-cmd feishu abot service run "$@"
 }
 
 ___x_cmd_feishu_abot_service_ensure(){
-    ___x_cmd service ensure     x-feishu-listener   --   x-cmd feishu bot service run "$@"
+    ___x_cmd service ensure     x-feishu-listener   --   x-cmd feishu abot service run "$@"
 }
 
 ___x_cmd_feishu_abot_service_restart(){
@@ -35,7 +35,14 @@ ___x_cmd_feishu_abot_service_status(){
 }
 
 ___x_cmd_feishu_abot_service_log(){
-    ___X_CMD_FEISHU_BOT_DATA="$___X_CMD_ROOT_DATA/feishu/data.tsv"
+    local chatid="$1"
+    [ -n "$chatid" ] || N=feishu M="Not Found chat id" log:ret:1
+
+    local fp
+    local x_=; ___x_cmd_feishu_abot_data_which_ "$chatid"
+    fp="$x_"
+    [ -n "$fp" ] || N=feishu M="Message data file not found for [chatid=$chatid]" log:ret:1
+
     local ___X_CMD_TAIL_MAIN_OPTS=
 
     while [ $# -gt 0 ]; do
@@ -48,7 +55,7 @@ ___x_cmd_feishu_abot_service_log(){
 
     eval set -- "$___X_CMD_TAIL_MAIN_OPTS" "\"\$@\""
 
-    ___x_cmd_cmds tail "$@" "$___X_CMD_FEISHU_BOT_DATA"
+    ___x_cmd_cmds tail "$@" "$fp"
 }
 
 ___x_cmd_feishu_abot_service_run(){

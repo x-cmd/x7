@@ -1,6 +1,4 @@
-
-___X_CMD_TELEGRAM_BOT_PATH="$___X_CMD_ROOT_DATA/telegram/bot"
-___X_CMD_TELEGRAM_BOT_DATA="${___X_CMD_TELEGRAM_BOT_PATH}/data_${chatid}.tsv"
+# shellcheck shell=dash
 
 ___x_cmd_telegram_bot_data(){
     param:void
@@ -22,6 +20,8 @@ ___x_cmd_telegram_bot_data_which_(){
 
 ___x_cmd_telegram_bot_data_which(){
     local chatid="$1"
+    [ -n "$chatid" ] || N=telegram M="Not Found chat id" log:ret:1
+
     local x_
     ___x_cmd_telegram_bot_data_which_ "$chatid" || return $?
     printf "%s\n" "$x_"

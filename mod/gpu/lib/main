@@ -60,6 +60,8 @@ ___x_cmd_gpu_info_linux(){
     # Try /sys/bus/pci first (always available, no external deps)
     local found=0
     local dir
+    # zsh: disable "no matches found" error when glob expands to nothing
+    { set +o nomatch; } 2>/dev/null
     for dir in /sys/bus/pci/devices/*/class; do
         [ -f "$dir" ] || continue
         local class p vendor="" device="" driver=""
@@ -115,6 +117,8 @@ ___x_cmd_gpu_stat_linux(){
     # Try DRM utilization from sysfs
     local found=0
     local card
+    # zsh: disable "no matches found" error when glob expands to nothing
+    { set +o nomatch; } 2>/dev/null
     for card in /sys/class/drm/card*/device; do
         [ -d "$card" ] || continue
         [ -f "$card/gpu_busy_percent" ] && {
