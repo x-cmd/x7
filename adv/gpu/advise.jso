@@ -1,0 +1,232 @@
+{
+"#name"
+:
+{
+"gpu"
+:
+{
+"en"
+:
+"GPU information, stats, and display details"
+,
+"cn"
+:
+"GPU 信息、负载统计和显示器详情"
+}
+}
+,
+"#synopsis"
+:
+[
+{
+"x gpu [subcommand]"
+:
+null
+}
+,
+{
+"x gpu"
+:
+null
+}
+,
+{
+"x gpu info"
+:
+null
+}
+,
+{
+"x gpu info --simple"
+:
+null
+}
+,
+{
+"x gpu info --fresh"
+:
+null
+}
+,
+{
+"x gpu stat"
+:
+null
+}
+]
+,
+"#desc"
+:
+{
+"en"
+:
+"GPU tool with three modes:\n- \"x gpu\" (default = sum): static info + real-time load, all in one view\n- \"x gpu info\": static GPU/display/Metal capability info only\n- \"x gpu stat\": real-time GPU utilization and memory usage only\nCross-platform with unified output format.\n"
+,
+"cn"
+:
+"GPU 工具三种模式：\n- \"x gpu\"（默认 = sum）：静态信息 + 实时负载，一次看全\n- \"x gpu info\"：仅静态 GPU/显示器/Metal 能力信息\n- \"x gpu stat\"：仅实时 GPU 利用率和内存使用\n跨平台统一输出格式。\n"
+}
+,
+"#subcmd:Option"
+:
+[
+"-h"
+,
+"--help"
+]
+,
+"sum"
+:
+{
+"#synopsis"
+:
+""
+,
+"#desc"
+:
+{
+"en"
+:
+"Default subcommand (same as running bare \"x gpu\").\nCombines \"x gpu info\" and \"x gpu stat\" into a single output — first shows\nall static GPU/display/Metal fields, then appends real-time GPU load.\nThis is the recommended way to get a full GPU overview in one command.\n"
+,
+"cn"
+:
+"默认子命令（等同于直接运行 \"x gpu\"）。\n将 \"x gpu info\" 和 \"x gpu stat\" 合并输出——先显示所有静态 GPU/显示器/Metal 字段，\n再追加实时 GPU 负载统计。\n这是用一条命令获取完整 GPU 概览的推荐方式。\n"
+}
+}
+,
+"info"
+:
+{
+"#synopsis"
+:
+"[-s|--simple] [--fresh]"
+,
+"#desc"
+:
+{
+"en"
+:
+"Show static GPU hardware information only — no utilization stats.\nmacOS data sources are cached via \"x ccmd 1d\" for speed.\nUse --fresh to force a cache refresh (sets cache duration to 0s).\nDefault (without --simple) shows all fields:\n  gpu model, cores, vendor, bus, metal version,\n  display type, resolution, main display, connection type,\n  refresh rate, online status, ambient brightness,\n  metal plugin, memory allocated,\n  Metal API caps (unified memory, max buffer, recommended working set,\n    max threadgroup memory, raytracing, mesh shaders, dynamic libraries,\n    sampler count), IOKit gpu-core-count.\nWith --simple: only gpu, cores, vendor, bus, metal.\nCache: macOS system_profiler/ioreg cached 1d; Linux /sys no cache needed.\nData sources:\n  macOS — system_profiler + ioreg + Python ctypes (Metal + IOKit)\n  Linux — /sys/bus/pci (zero deps) with lspci fallback\n  Windows — wmic win32_videocontroller\n"
+,
+"cn"
+:
+"仅显示静态 GPU 硬件信息——不含利用率统计。\n默认（不加 --simple）显示全部字段：\n  GPU 型号、核心数、供应商、总线、Metal 版本、\n  显示器类型、分辨率、主显示器、连接方式、\n  刷新率、在线状态、环境光亮度、\n  Metal 插件、分配内存、\n  Metal API 能力（统一内存、最大缓冲区、推荐工作集、\n    最大线程组内存、光线追踪、网格着色器、动态库、采样器数）、\n  IOKit GPU 核心数。\n加 --simple：仅显示 GPU、核心数、供应商、总线、Metal 版本。\n数据来源：\n  macOS — system_profiler + ioreg + Python ctypes（Metal + IOKit）\n  Linux — /sys/bus/pci（零依赖），lspci 作为后备\n  Windows — wmic win32_videocontroller\n"
+}
+}
+,
+"stat"
+:
+{
+"#synopsis"
+:
+""
+,
+"#desc"
+:
+{
+"en"
+:
+"Show real-time GPU utilization and memory usage only — no hardware info.\nOutputs GPU utilization %, renderer utilization %, tiler utilization %,\nmemory allocated and memory in use.\nData sources:\n  macOS — IOKit PerformanceStatistics (AGXAccelerator)\n  Linux — /sys/class/drm/card*/device/gpu_busy_percent, mem_busy_percent\n"
+,
+"cn"
+:
+"仅显示实时 GPU 利用率和内存使用——不含硬件信息。\n输出 GPU 利用率%、渲染器利用率%、Tiler 利用率%、分配内存和已用内存。\n数据来源：\n  macOS — IOKit PerformanceStatistics（AGXAccelerator）\n  Linux — /sys/class/drm/card*/device/gpu_busy_percent、mem_busy_percent\n"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x gpu"
+,
+"cn"
+:
+"示例: 显示完整 GPU 概览（info + stat）"
+,
+"en"
+:
+"Example: Display full GPU overview (info + stat)"
+}
+,
+{
+"cmd"
+:
+"x gpu info"
+,
+"cn"
+:
+"示例: 仅显示静态 GPU 硬件信息"
+,
+"en"
+:
+"Example: Show static GPU hardware info only"
+}
+,
+{
+"cmd"
+:
+"x gpu info --simple"
+,
+"cn"
+:
+"示例: 显示基本 GPU 信息"
+,
+"en"
+:
+"Example: Show basic GPU info"
+}
+,
+{
+"cmd"
+:
+"x gpu info --fresh"
+,
+"cn"
+:
+"示例: 强制刷新缓存，重新获取 GPU 信息"
+,
+"en"
+:
+"Example: Force cache refresh, re-fetch GPU info"
+}
+,
+{
+"cmd"
+:
+"x gpu stat"
+,
+"cn"
+:
+"示例: 仅显示实时 GPU 负载"
+,
+"en"
+:
+"Example: Show real-time GPU utilization only"
+}
+]
+,
+"#other"
+:
+{
+"en"
+:
+{
+"Please visit our homepage for more information:"
+:
+"https://x-cmd.com"
+}
+,
+"cn"
+:
+{
+"请访问我们的主页以获取更多信息："
+:
+"https://x-cmd.com"
+}
+}
+}
+

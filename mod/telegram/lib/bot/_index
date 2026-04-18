@@ -1,8 +1,12 @@
 # shellcheck shell=sh disable=SC2154,SC2120,SC3043,SC2034
 
+xrc:mod:lib telegram    bot/service bot/data
+
 # Reference:      https://core.telegram.org/bots/api#sendmessage
 ___x_cmd_telegram_bot(){
     param:subcmd ___x_cmd_telegram_bot    \
+        data    "data"                    \
+        service "service"                 \
         send    "send msg"
 
     param:subcmd:try

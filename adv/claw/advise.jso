@@ -1,0 +1,636 @@
+{
+"#name"
+:
+{
+"claw"
+:
+null
+,
+"cn"
+:
+"x-cmd AI 消息机器人"
+,
+"en"
+:
+"x-cmd AI message bot"
+}
+,
+"#synopsis"
+:
+[
+{
+"x claw <subcmd>"
+:
+null
+}
+]
+,
+"#desc"
+:
+{
+"cn"
+:
+"集成 AI Agent 到微信、飞书、企业微信、Telegram 等即时通讯工具，\n自动监听消息并调用 AI 进行回复。\n"
+,
+"en"
+:
+"Integrate AI Agent into WeChat, Feishu, WeCom, Telegram and other IM tools,\nautomatically listen for messages and invoke AI to reply.\n"
+}
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"使用 'x claw run' 启动消息监听服务（默认微信）。\n使用 'x claw weixin get-msg <range>' 按行号范围读取历史消息。\n"
+,
+"en"
+:
+"Use 'x claw run' to start the message listener (default: WeChat).\nUse 'x claw weixin get-msg <range>' to read historical messages by line range.\n"
+}
+]
+,
+"#subcmd:Service"
+:
+[
+"run"
+]
+,
+"#subcmd:Message"
+:
+[
+"weixin"
+,
+"telegram"
+]
+,
+"#subcmd:inner"
+:
+[
+"agentrequest"
+]
+,
+"run"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"启动消息监听服务"
+,
+"en"
+:
+"Start the message listener service"
+}
+,
+"#synopsis"
+:
+[
+{
+"x claw run [im]"
+:
+null
+}
+]
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"即时通讯平台名称（默认 weixin）"
+,
+"en"
+:
+"IM platform name (default: weixin)"
+}
+,
+"#cand"
+:
+[
+"weixin"
+,
+"telegram"
+,
+"feishu"
+,
+"qywx"
+]
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x claw run"
+,
+"cn"
+:
+"示例: 启动微信消息监听服务"
+,
+"en"
+:
+"Example: Start the WeChat message listener"
+}
+,
+{
+"cmd"
+:
+"x claw run telegram"
+,
+"cn"
+:
+"示例: 启动 Telegram 消息监听服务"
+,
+"en"
+:
+"Example: Start the Telegram message listener"
+}
+,
+{
+"cmd"
+:
+"x claw run feishu"
+,
+"cn"
+:
+"示例: 启动飞书消息监听服务"
+,
+"en"
+:
+"Example: Start the Feishu message listener"
+}
+]
+}
+,
+"agentrequest"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"向 AI Agent 发送消息请求（内部命令）。"
+,
+"en"
+:
+"Send a message request to the AI Agent (internal command)."
+}
+,
+"#synopsis"
+:
+[
+{
+"x claw agentrequest <im> <chatid> <msg>"
+:
+null
+}
+]
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"即时通讯平台名称（如 weixin, telegram）"
+,
+"en"
+:
+"IM platform name (e.g., weixin, telegram)"
+}
+}
+,
+"#2"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"聊天会话 ID"
+,
+"en"
+:
+"Chat session ID"
+}
+}
+,
+"#3"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"要发送的消息内容"
+,
+"en"
+:
+"Message content to send"
+}
+}
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"此命令为内部接口，通常由 IM 服务自动调用。"
+,
+"en"
+:
+"This is an internal interface, usually invoked automatically by the IM service."
+}
+]
+}
+,
+"weixin"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"微信消息查询工具"
+,
+"en"
+:
+"WeChat message query tools"
+}
+,
+"#synopsis"
+:
+[
+{
+"x claw weixin <subcmd>"
+:
+null
+}
+]
+,
+"#subcmd:Query"
+:
+[
+"get-msg"
+,
+"unread-count"
+,
+"recent-msg"
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x claw weixin get-msg 100:200"
+,
+"cn"
+:
+"示例: 获取第 100 到 200 行的消息"
+,
+"en"
+:
+"Example: Get messages from line 100 to 200"
+}
+,
+{
+"cmd"
+:
+"x claw weixin get-msg 50"
+,
+"cn"
+:
+"示例: 从第 50 行开始获取到文件末尾"
+,
+"en"
+:
+"Example: Get messages from line 50 to end of file"
+}
+,
+{
+"cmd"
+:
+"x claw weixin unread-count"
+,
+"cn"
+:
+"示例: 查看微信未读消息数"
+,
+"en"
+:
+"Example: Show WeChat unread message count"
+}
+]
+,
+"get-msg"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"按行号范围获取消息"
+,
+"en"
+:
+"Get messages by line range"
+}
+,
+"#synopsis"
+:
+"<start>[:<end>]"
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"行号范围（如 100:200）或起始行号"
+,
+"en"
+:
+"Line range (e.g., 100:200) or start line"
+}
+}
+,
+"#2"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"结束行号（可选，与起始行号一起使用）"
+,
+"en"
+:
+"End line number (optional, used with start line)"
+}
+}
+}
+,
+"unread-count"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示未读消息数量"
+,
+"en"
+:
+"Show unread message count"
+}
+}
+,
+"recent-msg"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示最新所有未读的消息"
+,
+"en"
+:
+"Show all recent unread messages"
+}
+}
+}
+,
+"telegram"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"Telegram 消息查询工具"
+,
+"en"
+:
+"Telegram message query tools"
+}
+,
+"#synopsis"
+:
+[
+{
+"x claw telegram <subcmd> <chatid>"
+:
+null
+}
+]
+,
+"#subcmd:Query"
+:
+[
+"get-msg"
+,
+"unread-count"
+,
+"recent-msg"
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x claw telegram get-msg mychatid 100:200"
+,
+"cn"
+:
+"示例: 获取 chatid 为 mychatid 的第 100 到 200 行消息"
+,
+"en"
+:
+"Example: Get messages from line 100 to 200 for chatid mychatid"
+}
+,
+{
+"cmd"
+:
+"x claw telegram unread-count mychatid"
+,
+"cn"
+:
+"示例: 查看 Telegram 指定 chatid 的未读消息数"
+,
+"en"
+:
+"Example: Show Telegram unread message count for chatid"
+}
+]
+,
+"get-msg"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"按行号范围获取消息"
+,
+"en"
+:
+"Get messages by line range"
+}
+,
+"#synopsis"
+:
+"<chatid> <start>[:<end>]"
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"Telegram chatid"
+,
+"en"
+:
+"Telegram chatid"
+}
+}
+,
+"#2"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"行号范围（如 100:200）或起始行号"
+,
+"en"
+:
+"Line range (e.g., 100:200) or start line"
+}
+}
+,
+"#3"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"结束行号（可选，与起始行号一起使用）"
+,
+"en"
+:
+"End line number (optional, used with start line)"
+}
+}
+}
+,
+"unread-count"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示未读消息数量"
+,
+"en"
+:
+"Show unread message count"
+}
+,
+"#synopsis"
+:
+"<chatid>"
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"Telegram chatid"
+,
+"en"
+:
+"Telegram chatid"
+}
+}
+}
+,
+"recent-msg"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示最新所有未读的消息"
+,
+"en"
+:
+"Show all recent unread messages"
+}
+,
+"#synopsis"
+:
+"<chatid>"
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"Telegram chatid"
+,
+"en"
+:
+"Telegram chatid"
+}
+}
+}
+}
+}
+

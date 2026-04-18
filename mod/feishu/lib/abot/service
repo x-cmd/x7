@@ -1,0 +1,56 @@
+# shellcheck shell=dash
+
+___x_cmd_feishu_abot_service(){
+    param:void
+
+    [ $# -gt 0 ]    ||      set -- status
+
+    local op="$1";          shift
+    case "$op" in
+        -h|--help)          ___x_cmd help -m feishu abot service "$@" ; return 0 ;;
+        start|stop|restart|status|ensure|log|run)
+                            ___x_cmd_feishu_abot_service_"$op" "$@"      ;;
+        *)                  N=feishu M="Unknown op -> $op" log:ret:64   ;;
+    esac
+}
+
+___x_cmd_feishu_abot_service_start(){
+    ___x_cmd service start      x-feishu-listener   --   x-cmd feishu bot service run "$@"
+}
+
+___x_cmd_feishu_abot_service_ensure(){
+    ___x_cmd service ensure     x-feishu-listener   --   x-cmd feishu bot service run "$@"
+}
+
+___x_cmd_feishu_abot_service_restart(){
+    ___x_cmd service restart    x-feishu-listener
+}
+
+___x_cmd_feishu_abot_service_stop(){
+    ___x_cmd service stop       x-feishu-listener
+}
+
+___x_cmd_feishu_abot_service_status(){
+    ___x_cmd service status     x-feishu-listener
+}
+
+___x_cmd_feishu_abot_service_log(){
+    ___X_CMD_FEISHU_BOT_DATA="$___X_CMD_ROOT_DATA/feishu/data.tsv"
+    local ___X_CMD_TAIL_MAIN_OPTS=
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -n)     ___x_cmd cmdstr ___X_CMD_TAIL_MAIN_OPTS -n "$1";  arg:2:shift   ;;
+            -f)     ___x_cmd cmdstr ___X_CMD_TAIL_MAIN_OPTS "$1";     shift         ;;
+            *)      break       ;;
+        esac
+    done
+
+    eval set -- "$___X_CMD_TAIL_MAIN_OPTS" "\"\$@\""
+
+    ___x_cmd_cmds tail "$@" "$___X_CMD_FEISHU_BOT_DATA"
+}
+
+___x_cmd_feishu_abot_service_run(){
+    ___x_cmd feishu listen --fp || return $?
+}

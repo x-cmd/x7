@@ -1,0 +1,352 @@
+{
+"#name"
+:
+{
+"disk"
+:
+{
+"en"
+:
+"Disk information, filesystem usage, and partition listing"
+,
+"cn"
+:
+"磁盘信息、文件系统使用率和分区列表"
+}
+}
+,
+"#synopsis"
+:
+[
+{
+"x disk [subcommand]"
+:
+null
+}
+,
+{
+"x disk"
+:
+null
+}
+,
+{
+"x disk info"
+:
+null
+}
+,
+{
+"x disk info --simple"
+:
+null
+}
+,
+{
+"x disk info --fresh"
+:
+null
+}
+,
+{
+"x disk stat"
+:
+null
+}
+,
+{
+"x disk stat --tsv"
+:
+null
+}
+,
+{
+"x disk eject"
+:
+null
+}
+,
+{
+"x disk eject /dev/disk3"
+:
+null
+}
+,
+{
+"x disk eject /Volumes/USB"
+:
+null
+}
+]
+,
+"#desc"
+:
+{
+"en"
+:
+"Disk tool with five modes:\n- \"x disk\" (default = sum): hardware info + filesystem usage table, all in one view\n- \"x disk info\": static disk hardware info (model, capacity, SMART, etc.)\n- \"x disk stat\": compact filesystem usage table, grouped by physical disk,\n  with APFS container deduplication on macOS\n- \"x disk ls\": compact tabular partition listing (diskutil list / lsblk)\n- \"x disk eject [target]\": eject removable media (USB drives, optical discs)\nCross-platform with TTY color support and --tsv output for stat.\n"
+,
+"cn"
+:
+"磁盘工具五种模式：\n- \"x disk\"（默认 = sum）：硬件信息 + 文件系统使用率表格，一次看全\n- \"x disk info\"：磁盘硬件信息（型号、容量、SMART 等）\n- \"x disk stat\"：紧凑的文件系统使用率表格，按物理磁盘分组，\n  macOS 上自动合并 APFS 容器\n- \"x disk ls\"：紧凑表格分区列表（diskutil list / lsblk）\n- \"x disk eject [target]\"：弹出可移动介质（U盘、光盘等）\n跨平台统一输出格式，支持 TTY 彩色输出和 --tsv 机器可读格式。\n"
+}
+,
+"#subcmd:Option"
+:
+[
+"-h"
+,
+"--help"
+]
+,
+"sum"
+:
+{
+"#synopsis"
+:
+""
+,
+"#desc"
+:
+{
+"en"
+:
+"Default subcommand (same as running bare \"x disk\").\nShows physical disk hardware info, then a filesystem usage table\ngrouped by physical disk. Clear section headers separate the two.\n"
+,
+"cn"
+:
+"默认子命令（等同于直接运行 \"x disk\"）。\n先显示物理磁盘硬件信息，再显示按物理磁盘分组的文件系统使用率表格。\n有清晰的分段标题。\n"
+}
+}
+,
+"info"
+:
+{
+"#synopsis"
+:
+"[-s|--simple] [--fresh]"
+,
+"#desc"
+:
+{
+"en"
+:
+"Show static disk/volume hardware information only — no usage stats.\nmacOS data sources are cached via \"x ccmd 1d\" for speed.\nUse --fresh to force a cache refresh (sets cache duration to 0s).\nDefault (without --simple) shows all fields:\n  physical disk: device, model, revision, serial, capacity, TRIM support,\n    SMART status, partition map, detachable, removable\nWith --simple: only device, model, revision, capacity.\nCache: macOS system_profiler/diskutil cached 1d; Linux /sys no cache needed.\nData sources:\n  macOS — system_profiler SPNVMeDataType/SPSerialATADataType\n  Linux — /sys/block (zero deps) with lsblk fallback\n  Windows — wmic diskdrive\n"
+,
+"cn"
+:
+"仅显示静态磁盘硬件信息——不含使用率统计。\n默认（不加 --simple）显示全部字段：\n  物理磁盘：设备、型号、固件版本、序列号、容量、TRIM 支持、\n    SMART 状态、分区表、可拆卸、可移动\n加 --simple：仅显示设备、型号、固件版本、容量。\n数据来源：\n  macOS — system_profiler SPNVMeDataType/SPSerialATADataType\n  Linux — /sys/block（零依赖），lsblk 作为后备\n  Windows — wmic diskdrive\n"
+}
+}
+,
+"stat"
+:
+{
+"#synopsis"
+:
+"[--tsv|-t]"
+,
+"#desc"
+:
+{
+"en"
+:
+"Show filesystem usage in compact table format, grouped by physical disk.\nOn macOS: uses diskutil to get APFS container-level data, deduplicates\nvolumes sharing the same container into one row. Picks the best mount\npoint (prefers / then /System/Volumes/Data). Other volumes shown on\nthe next line.\nOn Linux: uses df -Th, merges same-device mounts.\nWith --tsv: outputs tab-separated values for scripting.\n"
+,
+"cn"
+:
+"紧凑表格格式显示文件系统使用率，按物理磁盘分组。\nmacOS：使用 diskutil 获取 APFS 容器级别数据，自动合并同一容器的卷。\n优先选择最佳挂载点（/ 优先，其次 /System/Volumes/Data）。\n其他卷名显示在下一行。\nLinux：使用 df -Th，合并同一设备的多挂载点。\n加 --tsv：输出制表符分隔值，方便脚本处理。\n"
+}
+}
+,
+"ls"
+:
+{
+"#synopsis"
+:
+""
+,
+"#desc"
+:
+{
+"en"
+:
+"Show compact tabular listing of disks and partitions.\nData sources:\n  macOS — diskutil list\n  Linux — lsblk (with fdisk -l fallback)\n  Windows — wmic diskdrive + wmic logicaldisk tables\n"
+,
+"cn"
+:
+"显示磁盘和分区的紧凑表格列表。\n数据来源：\n  macOS — diskutil list\n  Linux — lsblk（fdisk -l 作为后备）\n  Windows — wmic diskdrive + wmic logicaldisk 表格\n"
+}
+}
+,
+"eject"
+:
+{
+"#synopsis"
+:
+"[device-or-mount]"
+,
+"#desc"
+:
+{
+"en"
+:
+"Eject removable media (USB drives, optical discs, etc.).\nWithout argument: ejects all ejectable/removable disks.\nWith argument: accepts device (/dev/diskN), short name (diskN), or mount path (/Volumes/USB).\nmacOS: uses diskutil eject or Finder AppleScript.\nLinux: uses udisksctl (preferred) or eject command.\nWindows: uses PowerShell WMI Dismount.\n"
+,
+"cn"
+:
+"弹出可移动介质（U盘、光盘等）。\n无参数：弹出所有可移动磁盘。\n有参数：接受设备名（/dev/diskN）、短名（diskN）或挂载路径（/Volumes/USB）。\nmacOS：使用 diskutil eject 或 Finder AppleScript。\nLinux：使用 udisksctl（优先）或 eject 命令。\nWindows：使用 PowerShell WMI Dismount。\n"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x disk"
+,
+"cn"
+:
+"示例: 显示完整磁盘概览（info + stat 表格）"
+,
+"en"
+:
+"Example: Display full disk overview (info + stat table)"
+}
+,
+{
+"cmd"
+:
+"x disk info"
+,
+"cn"
+:
+"示例: 仅显示磁盘硬件信息"
+,
+"en"
+:
+"Example: Show disk hardware info only"
+}
+,
+{
+"cmd"
+:
+"x disk info --simple"
+,
+"cn"
+:
+"示例: 显示基本磁盘信息"
+,
+"en"
+:
+"Example: Show basic disk info"
+}
+,
+{
+"cmd"
+:
+"x disk info --fresh"
+,
+"cn"
+:
+"示例: 强制刷新缓存，重新获取磁盘信息"
+,
+"en"
+:
+"Example: Force cache refresh, re-fetch disk info"
+}
+,
+{
+"cmd"
+:
+"x disk stat"
+,
+"cn"
+:
+"示例: 显示文件系统使用率表格"
+,
+"en"
+:
+"Example: Show filesystem usage table"
+}
+,
+{
+"cmd"
+:
+"x disk stat --tsv"
+,
+"cn"
+:
+"示例: TSV 格式输出（脚本友好）"
+,
+"en"
+:
+"Example: TSV output (scripting friendly)"
+}
+,
+{
+"cmd"
+:
+"x disk ls"
+,
+"cn"
+:
+"示例: 列出磁盘和分区"
+,
+"en"
+:
+"Example: List disks and partitions"
+}
+,
+{
+"cmd"
+:
+"x disk eject"
+,
+"cn"
+:
+"示例: 弹出所有可移动磁盘"
+,
+"en"
+:
+"Example: Eject all removable disks"
+}
+,
+{
+"cmd"
+:
+"x disk eject /dev/disk3"
+,
+"cn"
+:
+"示例: 弹出指定磁盘设备"
+,
+"en"
+:
+"Example: Eject a specific disk device"
+}
+]
+,
+"#other"
+:
+{
+"en"
+:
+{
+"Please visit our homepage for more information:"
+:
+"https://x-cmd.com"
+}
+,
+"cn"
+:
+{
+"请访问我们的主页以获取更多信息："
+:
+"https://x-cmd.com"
+}
+}
+}
+
