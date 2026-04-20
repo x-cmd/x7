@@ -36,7 +36,7 @@ ___x_cmd_feishu_abot_service_status(){
 
 ___x_cmd_feishu_abot_service_log(){
     local chatid="$1"
-    [ -n "$chatid" ] || N=feishu M="Not Found chat id" log:ret:1
+    [ -n "$chatid" ] || N=feishu M="Not Found chat id, please use \`x feishu group ls\` to get" log:ret:1
 
     local fp
     local x_=; ___x_cmd_feishu_abot_data_which_ "$chatid"

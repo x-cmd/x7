@@ -48,6 +48,8 @@ function stdout_content(o){
         stdout_content_gemini(o)
     } else if ( HARNESS == "opencode" ){
         stdout_content_opencode(o)
+    } else if ( HARNESS == "kimi-cli" ){
+        stdout_content_kimi(o)
     }
 }
 
@@ -97,6 +99,15 @@ function stdout_content_codex(o,           type, text){
 function stdout_content_gemini(o,           type, role, text){
     type = o[ Q2_1, "\"type\"" ]
     if ( type != "\"message\"" ) return
+    role = o[ Q2_1, "\"role\"" ]
+    if ( role != "\"assistant\"" ) return
+
+    text = o[ Q2_1, "\"content\"" ]
+    printf( "%s", juq(text) )
+    fflush()
+}
+
+function stdout_content_kimi(o,           role, text){
     role = o[ Q2_1, "\"role\"" ]
     if ( role != "\"assistant\"" ) return
 

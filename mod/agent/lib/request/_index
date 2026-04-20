@@ -81,7 +81,7 @@ A
     local IFS=" " ; content="${content}${NL}${*}${NL}"
 
     if [ -z "$output_file" ]; then
-        < "$___X_CMD_DEVTTY_FP" ___x_cmd_agent_request___run
+        ___x_cmd_agent_request___run
         return $?
     else
         content="${content}
@@ -95,7 +95,7 @@ Output your response wrapped with:
             ___x_cmd bakman backup "$output_file"
         fi
 
-        x_="$( < "$___X_CMD_DEVTTY_FP" ___x_cmd_agent_request___run )" || \
+        x_="$( ___x_cmd_agent_request___run )" || \
         case $? in
             130)    return 130 ;;
             0)      ;;
@@ -111,7 +111,32 @@ Output your response wrapped with:
 
 }
 
-___x_cmd_agent_request___run(){(
+____X_CMD_AGENT_ERR_AUTHFAILURE=77
+
+
+___x_cmd_agent_request___run(){
+    ___x_cmd_agent_request___run_inner "$harness" "$content" "$output_format" "$user_session_id" "$workspace"
+
+    # if ___x_cmd_cmds grep "LLM not set" "$tempfile" 2>/dev/null; then
+    #     : try auto login ... with 10 seconds
+    #     ___x_cmd timeout 10 -- ___x_cmd kimi login
+    #     if ___x_cmd kimi --prompt "it is a test. do not reply or record anything." | ___x_cmd_cmds grep "LLM not set" 2>/dev/null; then
+    #         return "$____X_CMD_AGENT_ERR_AUTHFAILURE"
+    #     fi
+    # elif ___x_cmd_cmds grep "Connection error" "$tempfile" 2>/dev/null; then
+    #     :
+    # fi
+
+}
+
+___x_cmd_agent_request___run_inner(){(
+    local harness="$1"
+    local content="$2"
+    local output_format="$3"
+    local user_session_id="$4"
+    local workspace="$5"
+    shift $#
+
     local session_map_file=""
     local real_session_id=""
     local user_session_cwd=""
@@ -141,7 +166,6 @@ ___x_cmd_agent_request___run(){(
     fi
 
     agent:info "Sending request to harness '$harness'"
-    shift $#
 
     case "$harness" in
         kimi-cli)
@@ -153,13 +177,7 @@ ___x_cmd_agent_request___run(){(
                 set -- --session "$real_session_id"
             fi
 
-            if [ "$output_format" = "json" ]; then
-                set -- "$@" --print --output-format stream-json
-            else
-                set -- "$@" --print --output-format text --final-message-only
-            fi
-
-            ___x_cmd kimi -- "$@" --prompt "$content" < /dev/null
+            ___x_cmd kimi -- "$@" --print --output-format stream-json --final-message-only --prompt "$content" < /dev/null | ___x_cmd_agent_request___handle_output kimi-cli "$output_format" "$is_session_first" "$user_session_cwd" "$session_map_file"
             ;;
         claude)
             if [ -n "$user_session_id" ]; then
@@ -176,8 +194,7 @@ ___x_cmd_agent_request___run(){(
                 set -- "$@" --verbose --output-format stream-json
             fi
 
-            # --allowedTools "Write,Read,Edit,Bash(git add *),Bash(git commit *),Bash(git diff *),Bash(git log *),Bash(git status),Bash(git status *),Bash(git push *),Bash(git pull *),Bash(git fetch *),Bash(git checkout *),Bash(git branch *),Bash(git stash *),Bash(git merge *),Bash(git tag *),Bash(npm *),Bash(pytest)"
-            ___x_cmd claude -- "$@" --dangerously-skip-permissions --allowedTools "Write,Read,Edit,Bash(x *),Bash(x-cmd *),Bash(source ~/.x-cmd.root/X *),Bash(git add *),Bash(git commit *),Bash(git diff *),Bash(git log *),Bash(git status),Bash(git status *),Bash(git push *),Bash(git pull *),Bash(git fetch *),Bash(git checkout *),Bash(git branch *),Bash(git stash *),Bash(git merge *),Bash(git tag *),Bash(npm *),Bash(pytest)" --print "$content" < /dev/null
+            IS_SANDBOX=1 ___x_cmd claude -- "$@" --dangerously-skip-permissions --allowedTools "Write,Read,Edit,Bash(x *),Bash(x-cmd *),Bash(source ~/.x-cmd.root/X *),Bash(git add *),Bash(git commit *),Bash(git diff *),Bash(git log *),Bash(git status),Bash(git status *),Bash(git push *),Bash(git pull *),Bash(git fetch *),Bash(git checkout *),Bash(git branch *),Bash(git stash *),Bash(git merge *),Bash(git tag *),Bash(npm *),Bash(pytest)" --print "$content" < /dev/null
             ;;
         codex)
             set -- exec
