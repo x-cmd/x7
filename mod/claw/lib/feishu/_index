@@ -64,14 +64,16 @@ ___x_cmd_claw_feishu_get_unread(){
     fi
 
     printf "%s\n" \
+        "ACTION REQUIRED: After processing the above messages, you MUST run these commands in order:" \
+        "  1. x claw feishu update-offset \"${chatid}\" $end_line" \
+        "  2. x claw feishu unread-count \"${chatid}\"" \
+        "" \
         "Notice: As an AI agent, you can use the following commands to retrieve Feishu messages:" \
         "  x claw feishu -h                                   # Show help" \
         "  x claw feishu get-msg \"${chatid}\" <start>:<end>  # Get messages by line range (e.g. 100:200)" \
         "  x claw feishu recent-msg \"${chatid}\"             # Get recent messages" \
         "  x claw feishu unread-count \"${chatid}\"           # Get unread message count" \
-        "  x claw feishu update-offset \"${chatid}\" <line>   # Mark messages as read up to specified line" \
-        "" \
-        ">>> MANDATORY: After processing messages, run 'x claw feishu update-offset \"${chatid}\" $end_line' to mark them as read. Then run 'x claw feishu unread-count \"${chatid}\"' to verify. <<<"
+        "  x claw feishu update-offset \"${chatid}\" <line>   # Mark messages as read up to specified line"
 }
 
 ___x_cmd_claw_feishu_get_msg(){
@@ -130,8 +132,31 @@ ___x_cmd_claw_feishu_update_offset(){
     local chatid="$1"
     [ -n "$chatid" ] || N=claw M="Please provide feishu chatid" log:ret:64
     local end_line="$2"
-    { [ -n "$end_line" ] && [ "$end_line" -gt 0 ]; } || N=claw M="Invalid line number for update-offset" log:ret:64
     local datadir_offset="$___X_CMD_CLAW_BOT_WS/.x-cmd/data/DATA_OFFSET/feishu-${chatid}"
+
+    local x_=""
+    ___x_cmd feishu abot data which_ "$chatid"
+    local botdata="$x_"
+
+    local total_line=0
+    if [ -f "$botdata" ]; then
+        x_=""; ___x_cmd line count_ "$botdata"
+        total_line="${x_:-0}"
+    fi
+
+    [ -n "$end_line" ] || N=claw M="No line number provided for update-offset" log:ret:64
+
+    case "$end_line" in
+        *[!0-9]*)
+            claw:warn "Invalid line number '$end_line', defaulting to 0"
+            end_line=0
+            ;;
+    esac
+
+    if [ "$end_line" -gt "$total_line" ]; then
+        claw:warn "Line number $end_line exceeds total lines $total_line, setting to $total_line"
+        end_line="$total_line"
+    fi
 
     local offset=0
     [ ! -f "$datadir_offset" ] || read -r offset <"$datadir_offset"

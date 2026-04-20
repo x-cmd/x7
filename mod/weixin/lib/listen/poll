@@ -17,13 +17,14 @@ ___x_cmd_weixin_listen_poll(){
     local sync_buf_file="${___X_CMD_WEIXIN_TMP}/sync_buf"
 
     local sync_buf=""
-    if [ -f "$sync_buf_file" ]; then
-        sync_buf="$(___x_cmd_cmds_cat "$sync_buf_file")"
-    fi
+    read -r sync_buf <"$sync_buf_file"
 
     local bot_token;
     ___x_cmd_weixin_cur bot_token:= 2>/dev/null
-    [ -n "$bot_token" ] || N=weixin M="No login information obtained. Please scan the QR code to log in first. ``x weixin login``" log:ret:1
+    [ -n "$bot_token" ] || {
+        weixin:error --cmd "x weixin login" "No login information obtained. Please scan the QR code to log in first."
+        ___x_cmd weixin login || return $?
+    }
 
     weixin:info "Starting long-poll listener..."
 

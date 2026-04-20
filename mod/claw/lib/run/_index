@@ -51,9 +51,15 @@ ___x_cmd_claw_run(){
 
     ___X_CMD_TAILER_HANDLE="___x_cmd_claw_run___agentwork" \
     ___x_cmd tailer run "$___X_CMD_CLAW_BOT_MQ" || {
+        local exitcode="$?"
+        cron:debug "Interrupted by signal, killing agent process"
+        cron:debug "Killing heartbeat generator process $process_id"
         ___x_cmd kill -r "$process_id"
+        return "$exitcode"
     }
 
+    cron:debug "Killing heartbeat generator process $process_id"
+    ___x_cmd kill -r "$process_id"
 }
 
 ___x_cmd_claw_run___agentwork(){

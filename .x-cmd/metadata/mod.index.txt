@@ -39,7 +39,7 @@ a1d3869eeca8fa3902747f93a3b216505d484e00 cd main NULL
 924c0346c4890512f82ed4f810de599145dd9afb choco main NULL
 437d6bacd65476c80cbc41b2197d69307b8e5f82 cht main NULL
 1fb4196c83648283bf1734e0caf1233bee7564ed claude main NULL
-618221f1137700f0d336e0a10f9ccc284bb4855c claw main NULL
+f77ef02ea43a619817c63e274239592ca04ce5e4 claw main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
 bbf9eb7a630da0d2f607edaf1589df0ddfc9a8ae clear main NULL
 8c9c6e30c1af9e7470dd51a6cb5beda309cb8896 cmdnotfound main NULL
@@ -56,7 +56,7 @@ f4b1517f994d5fb049ed614aa16c28bafb4a47b0 cosmo main NULL
 a6375201180f68c881b0e64644f3654a3fb564a7 cowsay main NULL
 957cc9da79c604a866a947f8136c71d6eef22010 cp main NULL
 80538e88d978bfd86e20e346da1dfa33ac3ad245 cpu main NULL
-85d5fa8b0ebeea10d421667143765ccd3083b72b cron main NULL
+73bf82bf8bf5b42b701042725e21c6c9793dce7b cron main NULL
 9510f34fa52cd2f0b12e7edc0ca588477b799029 crush main NULL
 d03d1501f08d9844ef2f9ad072be7fc73657004c csv main NULL
 372f52564f81c8e6bafa390a1d42e0a4fb048784 curl main NULL
@@ -350,7 +350,7 @@ ca5f122a53dc89a53dd122ecc8ea6544791b1879 web main NULL
 b2870a81e7c455e620831861ce0d5298f85b25af webfetch main NULL
 41acfdb5984b29bf4074bfc6a4bc28ca8ff77ee7 websrc main NULL
 92e8ff7747f39344b6034b01b273deb2dca2ccf8 webtop main NULL
-f1f282364f52ae3ee7dabed1d2112923483a385b weixin main NULL
+f3a4b6a1a86b3ab8954b109707aadba75fe1940d weixin main NULL
 a3ab7cc41efce9810296df54fcbd7e339f5f09e3 whisper main NULL
 617fcc3bca3cb41ed037e8aeb8eac0ed4243d69a wifi main NULL
 f35dd14a9fbcffe4015b46b802d20482c937cf7e winget main NULL

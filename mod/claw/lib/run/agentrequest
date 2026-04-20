@@ -48,8 +48,9 @@ DO NOT use any other scheduling tool (e.g. CronCreate, internal schedule, remind
 Other tools depend on an active session and will NOT execute when this agent exits.
 Only 'x cron' persists and runs independently.
 
-- For help:      x cron --help; x claw agentrequest --help
+- For help:      x cron -h; x cron add -h; x claw agentrequest --help
 - To add:        x cron add --ns \"x-claw-default\" --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
+                   NOTE: <msg> MUST be detailed, specific task content and steps, not a vague summary.
 - To exec:       x cron exec --ns \"x-claw-default\" --name \"<name>\"    (run command immediately, ignore schedule; useful for testing)
 - To remove:     x cron rm --ns \"x-claw-default\" --name \"<name>\"
 
@@ -96,8 +97,9 @@ DO NOT use any other scheduling tool (e.g. CronCreate, internal schedule, remind
 Other tools depend on an active session and will NOT execute when this agent exits.
 Only 'x cron' persists and runs independently.
 
-- For help:      x cron -h
+- For help:      x cron -h; x cron add -h; x claw agentrequest --help
 - To add:        x cron add --ns \"x-claw-default\" --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
+                   NOTE: <msg> MUST be detailed, specific task content and steps, not a vague summary.
 - To exec:       x cron exec --ns \"x-claw-default\" --name \"<name>\"    (run command immediately, ignore schedule; useful for testing)
 - To remove:     x cron rm --ns \"x-claw-default\" --name \"<name>\"
 
@@ -144,8 +146,9 @@ DO NOT use any other scheduling tool (e.g. CronCreate, internal schedule, remind
 Other tools depend on an active session and will NOT execute when this agent exits.
 Only 'x cron' persists and runs independently.
 
-- For help:      x cron -h
+- For help:      x cron -h; x cron add -h; x claw agentrequest --help
 - To add:        x cron add --ns \"x-claw-default\" --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
+                   NOTE: <msg> MUST be detailed, specific task content and steps, not a vague summary.
 - To exec:       x cron exec --ns \"x-claw-default\" --name \"<name>\"    (run command immediately, ignore schedule; useful for testing)
 - To remove:     x cron rm --ns \"x-claw-default\" --name \"<name>\"
 

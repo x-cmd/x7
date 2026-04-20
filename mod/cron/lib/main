@@ -2,6 +2,7 @@
 
 ___X_CMD_CRON="${___X_CMD_ROOT_DATA}/cron"
 
+___x_cmd log init cron
 xrc:mod:lib     cron   match ls service run
 
 ___x_cmd_cron___main(){
