@@ -23,11 +23,13 @@ ___x_cmd_claw_run___agentwork___heartbeat(){
 
     local idle_count=0
     local idle_file="$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
+    local heartbeat_done_file="$___X_CMD_CLAW_BOT_HEARTBEAT/heartbeat_done"
     [ ! -f "$idle_file" ] || read -r idle_count < "$idle_file"
 
     # Activity: unread message pending to be processed
     if ___x_cmd claw "$current_im" has-unread "$current_chatid" && ! ___x_cmd worker isalive --ns x-claw-worker --name "${current_im}-${current_chatid}"; then
         printf "%s\n" "0" > "$idle_file"
+        ___x_cmd rmrf "$heartbeat_done_file"
         case "$current_im" in
             feishu) ___x_cmd feishu abot service ensure || return $? ;;
             *)      ___x_cmd "$current_im" bot service ensure || return $? ;;
@@ -39,12 +41,14 @@ ___x_cmd_claw_run___agentwork___heartbeat(){
     # Activity: message worker still running
     if ___x_cmd worker isalive --ns x-claw-worker --name "${current_im}-${current_chatid}"; then
         printf "%s\n" "0" > "$idle_file"
+        ___x_cmd rmrf "$heartbeat_done_file"
         return 0
     fi
 
     # Activity: heartbeat worker still running
     if ___x_cmd worker isalive --ns x-claw-worker --name x-claw-heartbeat; then
         printf "%s\n" "0" > "$idle_file"
+        ___x_cmd rmrf "$heartbeat_done_file"
         return 0
     fi
 
@@ -52,9 +56,12 @@ ___x_cmd_claw_run___agentwork___heartbeat(){
     idle_count=$(( idle_count + 1 ))
     printf "%s\n" "$idle_count" > "$idle_file"
 
-    # Skip heartbeat agent after 30 consecutive idle cycles (~30 minutes)
-    [ "$idle_count" -lt 30 ] || return 0
+    # Skip heartbeat agent if already confirmed idle by agent itself
+    [ ! -f "$heartbeat_done_file" ] || return 0
 
+    # Skip heartbeat agent during initial observation period (first 3 idle cycles)
+    [ "$idle_count" -ge 3 ] || return 0
+    [ "$idle_count" -lt 30 ] || return 0
     ___x_cmd worker run --ns x-claw-worker --name x-claw-heartbeat -- ___x_cmd_claw_run___agentrequest___handleheartbeat "$current_im" "$current_chatid"
 }
 

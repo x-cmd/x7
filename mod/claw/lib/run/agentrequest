@@ -22,6 +22,8 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
     local im="$1";      [ -n "$im" ] || N=claw M="Please provide IM platform name (e.g., weixin|telegram)" log:ret:64
     local chatid="$2";  [ -n "$chatid" ] || N=claw M="Please provide chatid" log:ret:64
     local msg="$3";     [ -n "$msg" ] || N=claw M="Please provide message" log:ret:64
+
+    ___x_cmd rmrf "$___X_CMD_CLAW_BOT_HEARTBEAT/heartbeat_done"
     case "$im" in
         weixin)
             ___x_cmd agent request  \
@@ -207,6 +209,11 @@ YOUR TASKS:
 4. CORRECT: Identify any recurring mistakes, gaps, or outdated assumptions in your memory or behavior; update your notes accordingly.
 5. PLAN: Formulate a concise next-step plan if there are deferred tasks or follow-ups.
 6. PROACTIVE ENGAGEMENT: If you believe the user would benefit from an update, reminder, or question, send a message proactively using the reply command above.
+
+NO-OP MARKER:
+If after completing ALL tasks above you determine there is truly NOTHING more to do — no pending tasks, no memory to update, no proactive message to send, no corrections needed — create the marker file by running:
+  touch \"$___X_CMD_CLAW_BOT_HEARTBEAT/heartbeat_done\"
+This signals that you are completely idle and prevents unnecessary future heartbeat agent requests until new activity (message or cron task) occurs. Only create this file when you are certain there is absolutely nothing left to act upon.
 
 RULES:
 - Do NOT write to stdout. All your findings, summaries, corrections, and plans must be persisted into memory files under \"$___X_CMD_CLAW_BOT_WS\" (e.g., a heartbeat log or notes file).
