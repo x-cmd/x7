@@ -2,7 +2,7 @@
 
 
 ___x_cmd_skill_use(){
-    ___x_cmd_skill_add --scope user "$@" 
+    ___x_cmd_skill_add --scope user "$@"
 }
 
 ___x_cmd_skill_add(){
@@ -15,6 +15,7 @@ ___x_cmd_skill_add(){
                             dir="$2";   shift 2 ;;
             --scope)        [ -n "$2" ] || N=skill M="Please provide the scope" log:ret:64
                             scope="$2"; shift 2 ;;
+            -p|--project)   scope=project ;;
             *)              break ;;
         esac
     done
@@ -41,7 +42,7 @@ ___x_cmd_skill_add___mcp(){
 
     local name="${mcpid#mcp/*}"
 
-    local config="$(___x_cmd jq -c --arg name "$name" '.[$name]? | (.stdio // .http)' "$___X_CMD_SKILL_FULL_MCP_FILE" )"
+    local config; config="$(___x_cmd jq -c --arg name "$name" '.[$name]? | (.stdio // .http)' "$___X_CMD_SKILL_FULL_MCP_FILE" )"
     [ "$config" != 'null' ] || {
             skill:error "Not found MCP[$mcpid]"
             return 1
@@ -92,3 +93,8 @@ ___x_cmd_skill_add___unit(){
     skill:info "Successfully activated skill[$skillid]"
 }
 
+
+___x_cmd_skill_add___fromgithub(){
+    :
+
+}

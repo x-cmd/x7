@@ -27,10 +27,9 @@ function handle_response_stream_json( s,           o ){
         }
     } else {
         if (s ~ "^ *\\[DONE\\]$") exit(0)
-        if (s !~ "^ *\\{") {
-            handle_error_text(s)
-            return
-        }
+
+        handle_error_text(s)
+        if (s !~ "^ *\\{") return
 
         jiparse_after_tokenize(o, s)
 
@@ -48,7 +47,7 @@ function handle_response_stream_json( s,           o ){
     }
 }
 
-function handle_error_text(s,           obj){
+function handle_error_text(s,           obj, result){
     if ( HARNESS == "kimi-cli" ){
         if ( s ~ "LLM not set" ) {
             log_error( "agent", s )
@@ -63,7 +62,17 @@ function handle_error_text(s,           obj){
             log_error( "agent", s )
             exit( ____X_CMD_AGENT_ERR_AUTHFAILURE )
         }
+
+        if (s !~ "^ *\\{") return
+        jiparse_after_tokenize(obj, s)
+        if (( obj[ Q2_1, "\"type\"" ] == "\"result\"" ) && ( obj[ Q2_1, "\"is_error\"" ] == "true" )) {
+            result = juq( obj[ Q2_1, "\"result\"" ] )
+            if ( result ~ "^API Error" ){
+                exit( 1 )
+            }
+        }
     } else if ( HARNESS == "codex" ){
+        if (s !~ "^ *\\{") return
         jiparse_after_tokenize(obj, s)
         if ( obj[ Q2_1, "\"type\"" ] == "\"turn.failed\"" ){
             log_error( "agent", juq(obj[ Q2_1, "\"error\"", "\"message\"" ] ))

@@ -689,6 +689,162 @@ true
 }
 }
 ,
+"dir"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"总结、列出指定的 Skill 目录"
+,
+"en"
+:
+"Summarize and list specified skill directories"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x skill dir ls --ws /path/to/test"
+,
+"cn"
+:
+"示例: 列出指定目录下的 skills"
+,
+"en"
+:
+"Example: list skills in specified directory"
+}
+,
+{
+"cmd"
+:
+"x skill dir sum --ws /path/to/test"
+,
+"cn"
+:
+"示例: 统计工作区 skill 目录信息"
+,
+"en"
+:
+"Example: sum up workspace skill directory information"
+}
+]
+,
+"ls"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"列出指定目录下的 skills"
+,
+"en"
+:
+"List skills in specified directory"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x skill dir ls --ws /path/to/test"
+,
+"cn"
+:
+"示例: 列出指定目录下的 skills"
+,
+"en"
+:
+"Example: list skills in specified directory"
+}
+]
+,
+"--ws"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"目录路径"
+,
+"en"
+:
+"Directory path"
+}
+,
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+}
+,
+"sum"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"统计 skill 目录信息"
+,
+"en"
+:
+"Sum up skill directory information"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x skill dir sum --ws /path/to/test"
+,
+"cn"
+:
+"示例: 统计工作区 skill 目录信息"
+,
+"en"
+:
+"Example: sum up workspace skill directory information"
+}
+]
+,
+"--ws"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"目录路径"
+,
+"en"
+:
+"Directory path"
+}
+,
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+}
+}
+,
 "prompt"
 :
 {

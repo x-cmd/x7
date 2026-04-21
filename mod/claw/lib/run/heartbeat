@@ -34,27 +34,30 @@ ___x_cmd_claw_run___agentwork___heartbeat(){
             feishu) ___x_cmd feishu abot service ensure || return $? ;;
             *)      ___x_cmd "$current_im" bot service ensure || return $? ;;
         esac
+        claw:debug "Unread message detected, launching agent request"
         ___x_cmd_claw_run___agentwork___handlemsg "${current_im}:${current_chatid}"
         return 0
     fi
 
     # Activity: message worker still running
     if ___x_cmd worker isalive --ns x-claw-worker --name "${current_im}-${current_chatid}"; then
+        claw:debug "Message worker still running, skipping heartbeat"
         printf "%s\n" "0" > "$idle_file"
         ___x_cmd rmrf "$heartbeat_done_file"
         return 0
     fi
 
-    # Activity: heartbeat worker still running
-    if ___x_cmd worker isalive --ns x-claw-worker --name x-claw-heartbeat; then
-        printf "%s\n" "0" > "$idle_file"
-        ___x_cmd rmrf "$heartbeat_done_file"
-        return 0
-    fi
-
-    # No activity: increment idle counter
+    # No external activity detected: increment idle counter
+    # Note: heartbeat worker is internal task, counter keeps growing while it runs
     idle_count=$(( idle_count + 1 ))
     printf "%s\n" "$idle_count" > "$idle_file"
+    claw:debug "Tick ${idle_count} — no external pulse detected"
+
+    # Skip if previous heartbeat worker is still running
+    if ___x_cmd worker isalive --ns x-claw-worker --name x-claw-heartbeat; then
+        claw:debug "Previous heartbeat worker is still running, skipping heartbeat"
+        return 0
+    fi
 
     # Skip heartbeat agent if already confirmed idle by agent itself
     [ ! -f "$heartbeat_done_file" ] || return 0

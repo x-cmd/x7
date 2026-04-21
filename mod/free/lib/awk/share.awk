@@ -55,21 +55,21 @@ function human_readable(kb) {
 
 # Standard table format functions (Linux style)
 function print_header() {
-    printf(UI_HDR "%-10s %10s %10s %10s %10s %10s %10s" UI_END "\n", "", "total", "used", "free", "shared", "buff/cache", "available")
+    printf(UI_HDR "%-6s %9s %9s %9s" UI_DIM "%9s" UI_END UI_HDR "%10s" UI_DIM "%9s" UI_END "\n", "", "total", "used", "free", "shared", "buff/cache", "available")
 }
 
 function print_mem_row(label, total, used, free, shared, buff, avail,   human_readable_mode) {
     if (human_readable_mode) {
-        printf(UI_KEY "%-10s" UI_END " " UI_HDR "%10s" UI_END " " usage_color(used, total) "%10s" UI_END " " usage_color(free, total) "%10s" UI_END " %10s " UI_LOW "%10s" UI_END " " UI_LOW "%10s" UI_END "\n",
+        printf(UI_KEY "%-6s" UI_END " " UI_HDR "%9s" UI_END " " UI_BOLD_RED "%9s" UI_END " " UI_BOLD_GREEN "%9s" UI_END " " UI_DIM "%9s" UI_END " " UI_MED "%10s" UI_END " " UI_DIM "%9s" UI_END "\n",
             label,
             fmt_human_val(total),
             fmt_human_val(used),
             fmt_human_val(free),
-            shared,
+            fmt_human_val(shared),
             fmt_human_val(buff),
             fmt_human_val(avail))
     } else {
-        printf(UI_KEY "%-10s" UI_END " " UI_HDR "%10s" UI_END " " usage_color(used, total) "%10s" UI_END " " usage_color(free, total) "%10s" UI_END " %10s " UI_LOW "%10s" UI_END " " UI_LOW "%10s" UI_END "\n",
+        printf(UI_KEY "%-6s" UI_END " " UI_HDR "%9s" UI_END " " UI_BOLD_RED "%9s" UI_END " " UI_BOLD_GREEN "%9s" UI_END " " UI_DIM "%9s" UI_END " " UI_MED "%10s" UI_END " " UI_DIM "%9s" UI_END "\n",
             label,
             total,
             used,
@@ -82,19 +82,19 @@ function print_mem_row(label, total, used, free, shared, buff, avail,   human_re
 
 function print_swap_row(label, total, used, free,   human_readable_mode) {
     if (human_readable_mode) {
-        printf(UI_KEY "%-8s" UI_END " " UI_HDR "%10s" UI_END " " usage_color(used, total) "%10s" UI_END " " usage_color(free, total) "%10s" UI_END " %10s %10s %10s %10s %10s\n",
+        printf(UI_KEY "%-6s" UI_END " " UI_HDR "%9s" UI_END " " UI_BOLD_RED "%9s" UI_END " " UI_BOLD_GREEN "%9s" UI_END " " UI_DIM "%9s %10s %s" UI_END "\n",
             label,
             fmt_human_val(total),
             fmt_human_val(used),
             fmt_human_val(free),
-            "", "", "", "", "")
+            "", "", "(≈ free + reclaimable)")
     } else {
-        printf(UI_KEY "%-8s" UI_END " " UI_HDR "%10s" UI_END " " usage_color(used, total) "%10s" UI_END " " usage_color(free, total) "%10s" UI_END " %10s %10s %10s %10s %10s\n",
+        printf(UI_KEY "%-6s" UI_END " " UI_HDR "%9s" UI_END " " UI_BOLD_RED "%9s" UI_END " " UI_BOLD_GREEN "%9s" UI_END " " UI_DIM "%9s %10s %s" UI_END "\n",
             label,
             total,
             used,
             free,
-            "", "", "", "", "")
+            "", "", "(≈ free + reclaimable)")
     }
 }
 

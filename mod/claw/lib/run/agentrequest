@@ -1,5 +1,44 @@
 # shellcheck shell=dash
 
+___x_cmd_claw_run___agentrequest___checkunavailable(){
+    local agent_unavailable_file="$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable"
+    [ -f "$agent_unavailable_file" ] || return 0
+
+    local fail_count=0 fail_ts=0
+    read -r fail_count fail_ts < "$agent_unavailable_file"
+
+    local cooldown
+    case "$fail_count" in
+        1) cooldown=120 ;;
+        2) cooldown=240 ;;
+        3) cooldown=480 ;;
+        4) cooldown=960 ;;
+        5) cooldown=1920 ;;
+        *) cooldown=3600 ;;
+    esac
+
+    local x_
+    ___x_cmd date timestamp_
+    if [ "$(( x_ - fail_ts ))" -lt "$cooldown" ]; then
+        return 1
+    fi
+
+    ___x_cmd rmrf "$agent_unavailable_file"
+    return 0
+}
+
+___x_cmd_claw_run___agentrequest___markunavailable(){
+    local agent_unavailable_file="$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable"
+    local fail_count=1; local _=""
+    [ ! -f "$agent_unavailable_file" ] || read -r fail_count _ < "$agent_unavailable_file"
+    fail_count=$(( fail_count + 1 ))
+
+    local x_
+    ___x_cmd date timestamp_
+    ___x_cmd ensurefp "$agent_unavailable_file"
+    printf "%s %s\n" "$fail_count" "$x_" > "$agent_unavailable_file"
+}
+
 ___x_cmd_claw_agentrequest(){
     while [ "$#" -gt 0 ]; do
         case "$1" in
@@ -23,7 +62,11 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
     local chatid="$2";  [ -n "$chatid" ] || N=claw M="Please provide chatid" log:ret:64
     local msg="$3";     [ -n "$msg" ] || N=claw M="Please provide message" log:ret:64
 
+    ___x_cmd_claw_run___agentrequest___checkunavailable || return 0
+
     ___x_cmd rmrf "$___X_CMD_CLAW_BOT_HEARTBEAT/heartbeat_done"
+    ___x_cmd ensurefp "$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
+    printf "%s\n" "0" > "$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
     case "$im" in
         weixin)
             ___x_cmd agent request  \
@@ -52,7 +95,15 @@ Only 'x cron' persists and runs independently.
 
 - For help:      x cron -h; x cron add -h; x claw agentrequest --help
 - To add:        x cron add --ns \"x-claw-default\" --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
-                   NOTE: <msg> MUST be detailed, specific task content and steps, not a vague summary.
+                   CRITICAL: <msg> is the COMPLETE instruction passed to a NEW AI agent at runtime. That agent has ZERO memory of this chat.
+                   <msg> MUST be self-contained and explicitly include:
+                     1. Goal:      What exactly to accomplish.
+                     2. Tools:     Exact commands to use (e.g., 'x ddgo', 'x tldr', 'curl', 'cat', 'x weixin send').
+                     3. Steps:     Precise execution sequence.
+                     4. Output:    What data to collect or generate.
+                     5. Delivery:  How to return results to the user (e.g., 'x weixin send --text \"<result>\"').
+                   BAD:  'Check HN'  -> agent has no idea how or what to report.
+                   GOOD: 'Use x hn top to fetch the top 5 Hacker News posts. Extract title, URL, and score for each. Format as a numbered list, then send via: x weixin send --text \"<formatted_list>\"'
 - To exec:       x cron exec --ns \"x-claw-default\" --name \"<name>\"    (run command immediately, ignore schedule; useful for testing)
 - To remove:     x cron rm --ns \"x-claw-default\" --name \"<name>\"
 
@@ -101,7 +152,15 @@ Only 'x cron' persists and runs independently.
 
 - For help:      x cron -h; x cron add -h; x claw agentrequest --help
 - To add:        x cron add --ns \"x-claw-default\" --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
-                   NOTE: <msg> MUST be detailed, specific task content and steps, not a vague summary.
+                   CRITICAL: <msg> is the COMPLETE instruction passed to a NEW AI agent at runtime. That agent has ZERO memory of this chat.
+                   <msg> MUST be self-contained and explicitly include:
+                     1. Goal:      What exactly to accomplish.
+                     2. Tools:     Exact commands to use (e.g., 'x ddgo', 'x tldr', 'curl', 'cat', 'x telegram send').
+                     3. Steps:     Precise execution sequence.
+                     4. Output:    What data to collect or generate.
+                     5. Delivery:  How to return results to the user (e.g., 'x telegram send --text --chat \"$chatid\" \"<result>\"').
+                   BAD:  'Check HN'  -> agent has no idea how or what to report.
+                   GOOD: 'Use x hn top to fetch the top 5 Hacker News posts. Extract title, URL, and score for each. Format as a numbered list, then send via: x telegram send --text --chat \"$chatid\" \"<formatted_list>\"'
 - To exec:       x cron exec --ns \"x-claw-default\" --name \"<name>\"    (run command immediately, ignore schedule; useful for testing)
 - To remove:     x cron rm --ns \"x-claw-default\" --name \"<name>\"
 
@@ -150,7 +209,15 @@ Only 'x cron' persists and runs independently.
 
 - For help:      x cron -h; x cron add -h; x claw agentrequest --help
 - To add:        x cron add --ns \"x-claw-default\" --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
-                   NOTE: <msg> MUST be detailed, specific task content and steps, not a vague summary.
+                   CRITICAL: <msg> is the COMPLETE instruction passed to a NEW AI agent at runtime. That agent has ZERO memory of this chat.
+                   <msg> MUST be self-contained and explicitly include:
+                     1. Goal:      What exactly to accomplish.
+                     2. Tools:     Exact commands to use (e.g., 'x ddgo', 'x tldr', 'curl', 'cat', 'x feishu abot send').
+                     3. Steps:     Precise execution sequence.
+                     4. Output:    What data to collect or generate.
+                     5. Delivery:  How to return results to the user (e.g., 'x feishu abot send --text --chat \"$chatid\" \"<result>\"').
+                   BAD:  'Check HN'  -> agent has no idea how or what to report.
+                   GOOD: 'Use x hn top to fetch the top 5 Hacker News posts. Extract title, URL, and score for each. Format as a numbered list, then send via: x feishu abot send --text --chat \"$chatid\" \"<formatted_list>\"'
 - To exec:       x cron exec --ns \"x-claw-default\" --name \"<name>\"    (run command immediately, ignore schedule; useful for testing)
 - To remove:     x cron rm --ns \"x-claw-default\" --name \"<name>\"
 
@@ -170,7 +237,10 @@ Current time: $(___x_cmd date iso)
 $msg
 "
             ;;
-    esac
+    esac || {
+        ___x_cmd_claw_run___agentrequest___markunavailable
+        return 1
+    }
 }
 
 ___x_cmd_claw_run___agentrequest___handleheartbeat(){
@@ -180,6 +250,8 @@ ___x_cmd_claw_run___agentrequest___handleheartbeat(){
     if [ -z "$im" ] || [ -z "$chatid" ]; then
         return 0
     fi
+
+    ___x_cmd_claw_run___agentrequest___checkunavailable || return 0
 
     local active_chat_line=""
     local reply_text_hint=""
@@ -208,7 +280,10 @@ YOUR TASKS:
 3. SUMMARIZE: Distill what you found into key points.
 4. CORRECT: Identify any recurring mistakes, gaps, or outdated assumptions in your memory or behavior; update your notes accordingly.
 5. PLAN: Formulate a concise next-step plan if there are deferred tasks or follow-ups.
-6. PROACTIVE ENGAGEMENT: If you believe the user would benefit from an update, reminder, or question, send a message proactively using the reply command above.
+PROACTIVE ENGAGEMENT (STRICT — default is **SILENCE**):
+- DO NOT send \"I'm online\", \"heartbeat received\", \"system nominal\", \"standing by\", \"beep boop\", or ANY status-confirmation message. These are pure noise to the user.
+- ONLY send a message if you have SUBSTANTIVE, TIME-SENSITIVE, or USER-REQUESTED information: e.g., an answer to a previously asked question, an important reminder the user explicitly set, a critical alert, or a follow-up that directly advances a deferred task.
+- If there is nothing genuinely worth the user's attention, STAY SILENT.
 
 NO-OP MARKER:
 If after completing ALL tasks above you determine there is truly NOTHING more to do — no pending tasks, no memory to update, no proactive message to send, no corrections needed — create the marker file by running:
@@ -219,5 +294,8 @@ RULES:
 - Do NOT write to stdout. All your findings, summaries, corrections, and plans must be persisted into memory files under \"$___X_CMD_CLAW_BOT_WS\" (e.g., a heartbeat log or notes file).
 - Keep your output concise.
 - Do not spawn unnecessary long-running background tasks.
-"
+" || {
+        ___x_cmd_claw_run___agentrequest___markunavailable
+        return 1
+    }
 }
