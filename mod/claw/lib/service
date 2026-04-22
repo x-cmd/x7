@@ -19,6 +19,9 @@
 # x claw service start --name 0
 # x qywx bot connect
 
+___X_CMD_CLAW_TMP="$___X_CMD_ROOT_TMP/claw"
+___x_cmd mkdirp "${___X_CMD_CLAW_TMP}"
+
 ___x_cmd_claw_service(){
     [ $# -gt 0 ]    ||      set -- --help
 
@@ -32,6 +35,11 @@ ___x_cmd_claw_service(){
 }
 
 ___x_cmd_claw_service_start(){
+    local op="$1";          shift
+    case "$op" in
+        -h|--help)          ___x_cmd help -m claw service start "$@" ; return 0 ;;
+    esac
+
     local im="${1:-"weixin"}"
     claw:info "Starting claw service"
     ___x_cmd service start      x-claw-service  --  x-cmd claw service run "$@"
@@ -55,10 +63,16 @@ ___x_cmd_claw_service_start(){
     }
 
     printf "%s " "status: "; ___x_cmd_claw_service_status
+    printf "%s\n" "$im" > "${___X_CMD_CLAW_TMP}/listener"
 }
 
 ___x_cmd_claw_service_stop(){
+    local im
+    read -r im < "${___X_CMD_CLAW_TMP}/listener"
+
+    ___x_cmd service stop       "x-$im-listener"
     ___x_cmd service stop       x-claw-service
+    ___x_cmd_cmds pkill -f "claw service run"
 }
 
 ___x_cmd_claw_service_restart(){

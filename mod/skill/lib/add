@@ -152,7 +152,11 @@ ___x_cmd_skill_add___fromgithub(){
     local skill_name; local skill_data;
     if [ -n "$skills" ];then
         while read -r skill_name; do
-            skill_data="$( printf "%s" "$all_skills_data" | ___x_cmd_cmds grep "/$skill_name/" )"
+            skill_data="$( printf "%s" "$all_skills_data" | ___x_cmd_cmds grep "/$skill_name/" 2>/dev/null)"
+            [ -n "$skill_data" ] || {
+                skill:error --run "x skill ll --github $url" "No $skill_name found in ${owner}/${repo}"
+                return 1
+            }
             ___x_cmd_skill_add___fromgithub_copy "$skill_data" "$target_dir"
         done <<A
 $skills
