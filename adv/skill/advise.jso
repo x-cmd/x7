@@ -958,10 +958,6 @@ true
 "add"
 :
 {
-"#synopsis"
-:
-"<skill-id>"
-,
 "#desc"
 :
 {
@@ -1010,7 +1006,7 @@ true
 }
 }
 ,
-"--scope"
+"--agent|-a"
 :
 {
 "#desc"
@@ -1018,11 +1014,11 @@ true
 {
 "cn"
 :
-"指定 MCP 配置作用域（仅适用于 mcp/*）"
+"指定 AI Agent 类型"
 ,
 "en"
 :
-"Specify MCP configuration scope (mcp/* only)"
+"Specify AI agent type"
 }
 ,
 "#1"
@@ -1031,24 +1027,110 @@ true
 "#desc"
 :
 {
-"cn"
-:
-"作用域"
-,
 "en"
 :
-"Scope"
+"Agent type"
+,
+"cn"
+:
+"Agent 类型"
 }
 ,
 "#cand"
 :
 [
-"local"
+"claude"
 ,
-"user"
+"gemini"
 ,
-"project"
+"codex"
+,
+"opencode"
+,
+"kimi"
+,
+"openclaw"
 ]
+}
+}
+,
+"--skill|-s"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定要添加的 skill 名称"
+,
+"en"
+:
+"Specify skill name to add"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Skill name"
+,
+"cn"
+:
+"Skill 名称"
+}
+}
+}
+,
+"--project|-p"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"安装到项目作用域"
+,
+"en"
+:
+"Install to project scope"
+}
+}
+,
+"--global|-g"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"安装到全局作用域"
+,
+"en"
+:
+"Install to global scope"
+}
+}
+,
+"--no-cache"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"跳过缓存，强制重新下载"
+,
+"en"
+:
+"Skip cache, force re-download"
 }
 }
 ,
@@ -1060,26 +1142,82 @@ true
 {
 "cn"
 :
-"Skill ID（支持普通 skill 和 mcp/* 格式）"
+"Skill 来源（skills 或 GitHub URL）"
 ,
 "en"
 :
-"Skill ID (supports regular skills and mcp/* format)"
+"Skill source (skills or GitHub URL)"
 }
 ,
 "#exec:stdout"
 :
 "___x_cmd skill --advise_list_full"
 }
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x skill add anthropics/pptx"
+,
+"cn"
+:
+"示例: 添加 pptx skill"
+,
+"en"
+:
+"Example: add pptx skill"
+}
+,
+{
+"cmd"
+:
+"x skill add anthropics/pptx --agent claude"
+,
+"cn"
+:
+"示例: 为 claude-code agent 添加 pptx skill"
+,
+"en"
+:
+"Example: add pptx skill for claude-code agent"
+}
+,
+{
+"cmd"
+:
+"x skill add https://github.com/google-gemini/gemini-skills --skill gemini-api-dev --skill gemini-interactions-api"
+,
+"cn"
+:
+"示例: 从 GitHub 仓库添加多个 skills"
+,
+"en"
+:
+"Example: add multiple skills from GitHub repo"
+}
+,
+{
+"cmd"
+:
+"x skill add https://github.com/google-gemini/gemini-skills --no-cache"
+,
+"cn"
+:
+"示例: 从 GitHub 添加 skill，跳过缓存强制重新下载"
+,
+"en"
+:
+"Example: add skill from GitHub, skip cache"
+}
+]
 }
 ,
 "rm"
 :
 {
-"#synopsis"
-:
-"<skill-id>"
-,
 "#desc"
 :
 {
@@ -1128,7 +1266,7 @@ true
 }
 }
 ,
-"--scope"
+"--project|-p"
 :
 {
 "#desc"
@@ -1136,11 +1274,43 @@ true
 {
 "cn"
 :
-"指定 MCP 配置作用域（仅适用于 mcp/*）"
+"安装到项目作用域"
 ,
 "en"
 :
-"Specify MCP configuration scope (mcp/* only)"
+"Install to project scope"
+}
+}
+,
+"--global|-g"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"安装到全局作用域"
+,
+"en"
+:
+"Install to global scope"
+}
+}
+,
+"--agent|-a"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定 AI Agent 类型"
+,
+"en"
+:
+"Specify AI agent type"
 }
 ,
 "#1"
@@ -1149,23 +1319,29 @@ true
 "#desc"
 :
 {
-"cn"
-:
-"作用域"
-,
 "en"
 :
-"Scope"
+"Agent type"
+,
+"cn"
+:
+"Agent 类型"
 }
 ,
 "#cand"
 :
 [
-"local"
+"claude"
 ,
-"user"
+"gemini"
 ,
-"project"
+"codex"
+,
+"opencode"
+,
+"kimi"
+,
+"openclaw"
 ]
 }
 }
@@ -1178,11 +1354,11 @@ true
 {
 "cn"
 :
-"Skill ID"
+"Skill"
 ,
 "en"
 :
-"Skill ID"
+"Skill"
 }
 }
 }

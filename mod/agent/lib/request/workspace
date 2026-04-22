@@ -98,55 +98,22 @@ Log entry format for \`${memory_file}\`:
 
 Do not output this log in your text response. Write it to the file directly.
 </WORKSPACE>
-<SKILL-MECHANISM>
-A skill is a structured, reusable reasoning or workflow pattern identified by a unique skill-name. Each skill includes a skill-name, a short description, and a detailed guide accessible via \`cat <skill-file>\`.
+<SKILLS>
+Skills are reusable capability extensions that enhance reasoning and execution for specific task types. Each skill has a unique name, a description, and a detailed guide file.
 
-### Skill Discovery and Initialization
+When processing a user request:
+1. Check if any skill below is relevant to the task.
+2. If relevant, read the full guide with \`cat <SKILL-FILE>\` and follow its methods.
+3. If none match, proceed with normal reasoning.
+4. Do not create or assume skills that are not in the list.
+5. Only refresh the skill list when the user explicitly requests it.
 
-At the start of a reasoning session, if the current skill list is unknown or empty, fetch it automatically by running:
+Available skills in this workspace:
+$( ___x_cmd skill dir ls --ws "${workspace}" 2>/dev/null || true )
 
-\`\`\`
-x skill dir sum --ws ${workspace}
-\`\`\`
-
-Do not re-fetch the skill list frequently. Only refresh when:
-1. The user explicitly requests to view or update available skills, or
-2. No skill list has been loaded yet.
-
-### Accessing Skill Details
-
-To access detailed usage instructions for a skill:
-
-\`\`\`
-cat <SKILL-FILE>
-\`\`\`
-
-Use this command only when a potentially relevant skill has been identified.
-
-### Skill Usage Policy
-
-1. When processing a user request, determine whether a relevant skill exists in the current skill list.
-2. If no skill list is loaded, run \`x skill dir sum --ws ${workspace}\` once to initialize it.
-3. If a relevant skill is found, retrieve its documentation with \`cat <skill-file>\` and follow its guidance.
-4. Only refresh the skill list when the user explicitly requests it.
-5. Do not create or assume skills that are not present in the list.
-6. If no suitable skill applies, proceed with normal reasoning.
-
-### Skill Reasoning Procedure
-
-1. **Interpret intent:** Understand the user's goal and task type.
-2. **Check skill availability:**
-   - If no skill list is known, load it via \`x skill dir sum --ws ${workspace}\`.
-   - Otherwise, compare the user's intent with the known skills.
-3. **Decision:**
-   - If a relevant skill matches, retrieve it using \`cat <skill-file>\` and follow its methods.
-   - If none match, continue without applying a skill.
-4. **Apply reasoning:** Use the selected skill's steps as a structured reasoning framework.
-5. **Transparency:** Clearly indicate when a skill is being applied.
-6. **Skill refresh:** Refresh the list only when explicitly requested by the user.
-</SKILL-MECHANISM>
-<AVAILABLE-SKILLS>
-$( ___x_cmd skill dir sum --ws "${workspace}" 2>/dev/null || true )
-</AVAILABLE-SKILLS>
+Commands:
+- x skill dir sum --ws \"${workspace}\" # Refresh the skill list
+- cat <SKILL-FILE>                      # Read full skill documentation
+</SKILLS>
 "
 }

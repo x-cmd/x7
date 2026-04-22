@@ -20,7 +20,7 @@ ___x_cmd_skill_dir___ls(){
 
     local name
     while read -r name; do
-        # [ "$name" = "${name#.}" ] || continue
+        [ "$name" = "${name#.}" ] || continue
         printf "%s\n" "$folder/$name"
     done <<A
 $x_

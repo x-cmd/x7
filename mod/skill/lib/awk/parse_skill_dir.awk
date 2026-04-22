@@ -41,6 +41,10 @@
     }
     close(skill_md)
 
+    if (description == "") {
+        next
+    }
+
     print "---"
     printf "Name: %s\n", name
     printf "SKILL Path: %s\n", skill_md

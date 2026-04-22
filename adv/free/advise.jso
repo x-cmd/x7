@@ -448,5 +448,21 @@ true
 "Precise mode, call footprint CLI for cross-process dedup on multi-process groups (macOS only, slower)"
 }
 }
+,
+"-e|--expert"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示专家模式详情（内核、LRU、THP、IO、VM、硬件统计）"
+,
+"en"
+:
+"Show expert detail (kernel, LRU, THP, IO, VM, hardware stats)"
+}
+}
 }
 
