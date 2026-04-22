@@ -65,6 +65,7 @@ function handle_error_text(s,           obj, result){
 
         if (s !~ "^ *\\{") return
         jiparse_after_tokenize(obj, s)
+        JITER_LEVEL = JITER_CURLEN = 0
         if (( obj[ Q2_1, "\"type\"" ] == "\"result\"" ) && ( obj[ Q2_1, "\"is_error\"" ] == "true" )) {
             result = juq( obj[ Q2_1, "\"result\"" ] )
             if ( result ~ "^API Error" ){
@@ -74,6 +75,7 @@ function handle_error_text(s,           obj, result){
     } else if ( HARNESS == "codex" ){
         if (s !~ "^ *\\{") return
         jiparse_after_tokenize(obj, s)
+        JITER_LEVEL = JITER_CURLEN = 0
         if ( obj[ Q2_1, "\"type\"" ] == "\"turn.failed\"" ){
             log_error( "agent", juq(obj[ Q2_1, "\"error\"", "\"message\"" ] ))
             exit( 1 )

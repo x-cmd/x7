@@ -39,11 +39,11 @@ function usage_color(used, total,    pct) {
 
 # Format human readable value (returns plain value, color applied separately)
 function fmt_human_val(kb,    val, unit) {
+    if (kb == 0) return "0"
     if (kb >= 1073741824) { val = kb / 1048576 / 1024; unit = "Ti" }
     else if (kb >= 1048576) { val = kb / 1048576; unit = "Gi" }
     else if (kb >= 1024) { val = kb / 1024; unit = "Mi" }
-    else { val = kb; unit = "Ki" }
-    if (unit == "Ki") return sprintf("%.0f %s", val, unit)
+    else { val = kb; unit = "K" }
     return sprintf("%.1f %s", val, unit)
 }
 
