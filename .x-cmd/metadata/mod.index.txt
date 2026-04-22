@@ -1,6 +1,6 @@
 548d06daf523026531069d978f8f074fe4532f19 abox main NULL
 60f9864308a12bfe5e0cad5b138fe4b5a9211fd0 advise main NULL
-e2a5174cbdfdc1bcd7b40faf4629ac5f69bd183e agent main NULL
+ddddc80d307592374a2f5f6dc4bb9ab625419e73 agent main NULL
 94eb1cb39d13a2ebcddf07a44b8cf63e7ac687cc aider main NULL
 2abe9fc103abe6597b599c5245efc148c44ee948 alias main NULL
 c8dd6182f3d400215d7292cbfe9c65b73722ab7d api main NULL
@@ -39,7 +39,7 @@ a1d3869eeca8fa3902747f93a3b216505d484e00 cd main NULL
 924c0346c4890512f82ed4f810de599145dd9afb choco main NULL
 437d6bacd65476c80cbc41b2197d69307b8e5f82 cht main NULL
 60af8b6cbcbebf4ab19a74c0b7ab7ad91ffc2c09 claude main NULL
-07bdbece0ac39deb0d67fa2fcfc54165c87c60dd claw main NULL
+6ffca45b05621e2c8da42f4f273bb6599f588859 claw main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
 bbf9eb7a630da0d2f607edaf1589df0ddfc9a8ae clear main NULL
 8c9c6e30c1af9e7470dd51a6cb5beda309cb8896 cmdnotfound main NULL
@@ -100,7 +100,7 @@ a53c17219b274a1f8d51ec9d2ecaaab3fc05890f find main NULL
 050bf48c5b9c0a173b63c8f048926d105d89d708 fjo main NULL
 7157e736b5cd69b77d33a9397cfb357faee86840 fkill main NULL
 b60e82beb81a55ea921116cd2068b4477429e0d1 font main NULL
-d8e65f40359929890df5a7e662d00f8d4127b355 free main NULL
+8b39b2c3dfa7d5014152b9f30a7993f3314c93b1 free main NULL
 9ab9ba348cef515ec7ff01c570fabd1fc6adb0f5 fsiter main NULL
 c52ff84f0f91c79812c75f72501d85eaa4c4159f fskv main NULL
 b172b77194f082fa27597133360211c75fb5eff9 fslock main NULL
@@ -292,7 +292,7 @@ ee296b09a51e88b6d7ea81a41a9229ccf66a6402 scotty main NULL
 cf31587ff3510f526902bf4c9a1f3e62d9967516 shodan main NULL
 f5793408e9473faab562f026574b0dd723559d59 shortcut main NULL
 52056d6c913fdf559be0ce3202dfe4168bb238c1 siliconflow main NULL
-ac18d50bc73cc038d07b4a1169cd67157f1d88e3 skill main NULL
+0871ffdffcb905c1563ed188053ea74e24df0da6 skill main NULL
 2eb4c67f73078cc5183e9cc5b2cfc0486cf57706 skopeo main NULL
 07e5355d427e4ca1112e7e938750e280560dee36 slack main NULL
 3bed8b5af34b0acb703280e6bd91c61bb424f38a sleep main NULL
@@ -350,7 +350,7 @@ ca5f122a53dc89a53dd122ecc8ea6544791b1879 web main NULL
 b2870a81e7c455e620831861ce0d5298f85b25af webfetch main NULL
 41acfdb5984b29bf4074bfc6a4bc28ca8ff77ee7 websrc main NULL
 92e8ff7747f39344b6034b01b273deb2dca2ccf8 webtop main NULL
-f3a4b6a1a86b3ab8954b109707aadba75fe1940d weixin main NULL
+d87d74fd65ed890f47bc00e733d132e50e0bbfcb weixin main NULL
 a3ab7cc41efce9810296df54fcbd7e339f5f09e3 whisper main NULL
 617fcc3bca3cb41ed037e8aeb8eac0ed4243d69a wifi main NULL
 f35dd14a9fbcffe4015b46b802d20482c937cf7e winget main NULL
@@ -361,7 +361,7 @@ f35dd14a9fbcffe4015b46b802d20482c937cf7e winget main NULL
 8627a76ba3d87db1dd3b9558949f8a79ecba0717 wsl main NULL
 56c595e9e626ed64688912140ae1cc5507e60895 wttr main NULL
 35f606feb4aa4e8ba476d349e8911509ed169f8d wx main NULL
-c143ee3f839c000a532e99732eb75083e8d9e446 x-cmd main NULL
+1c985ce0476fd14a007d25348ac80c0a96455013 x-cmd main NULL
 995828bdefaace2720e93c096f1f7e2b589e9cd8 xgo main NULL
 9e4a40a9a59a5d379bd724c60c06965c5787509c xq main NULL
 91cfc3591a7ace5a0bd6cef8b5141dbe98d9713f xrc main NULL

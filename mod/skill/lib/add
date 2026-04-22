@@ -58,8 +58,9 @@ ___x_cmd_skill_add(){
             local i=
             for i in "$@"; do
                 case "$i" in
-                    mcp/*)  ___x_cmd_skill_add___mcp "$scope" "$i"      || return $?  ;;
-                    *)      ___x_cmd_skill_add___fromxcmd "$dir" "$i"   || return $?  ;;
+                    mcp/*)      ___x_cmd_skill_add___mcp "$scope" "$i"                  || return $?  ;;
+                    clawhub:*)  ___x_cmd_skill_add___fromclawhub "$dir" "$i" "$nocache" || return $?  ;;
+                    *)          ___x_cmd_skill_add___fromxcmd "$dir" "$i"               || return $?  ;;
                 esac
             done
             ;;
@@ -141,29 +142,8 @@ ___x_cmd_skill_add___fromgithub(){
     }
 
     local cache_dir="$___X_CMD_SKILL_DATA_DIR/github/${owner}/${repo}"
-    local tmptar="$___X_CMD_ROOT_TMP/skill/gh/${owner}/${repo}.tar.gz"
-    local unpack_dir="$___X_CMD_ROOT_TMP/skill/gh/${owner}/${repo}"
-
     if [ ! -d "$cache_dir" ] || [ "$nocache" = 1 ] ; then
-        ___x_cmd rmrf "$tmptar"
-        ___x_cmd ensurefp "$tmptar"
-        skill:info --reference "$url" "Downloading skill data from GitHub Repo"
-        ___x_cmd gh repo download "${owner}/${repo}" "$tmptar" || {
-            skill:error "Failed to download GitHub repo: ${owner}/${repo}"
-            ___x_cmd rmrf "$tmptar"
-            return 1
-        }
-
-        ___X_CMD_ZUZ_QUIET=1 ___x_cmd uz "$tmptar" "$unpack_dir" || {
-            skill:error "Fail to unzip $tmptar"
-            ___x_cmd rmrf "$tmptar"
-            return 1
-        }
-        local x_=; ___x_cmd fsiter --dir01_ "$unpack_dir" || return $?
-        skill:debug --target_dir "$cache_dir" "Moving $unpack_dir/$x_"
-        ___x_cmd rmrf "$cache_dir"
-        ___x_cmd mv "$unpack_dir/$x_" "$cache_dir" || return $?
-        ___x_cmd rmrf "$unpack_dir"
+        ___x_cmd_skill___data_fromgithub "$owner" "$repo" "$cache_dir" || return $?
     fi
 
     local all_skills_data; all_skills_data="$(___x_cmd_cmds find "$cache_dir" -mindepth 1 -type f -name 'SKILL.md' 2>/dev/null)"
@@ -198,5 +178,41 @@ ___x_cmd_skill_add___fromgithub_copy(){
         return 1
     }
     skill:info "Successfully activated skill[$name] -> $dst/$name"
+}
+
+___x_cmd_skill_add___fromclawhub(){
+    local target_dir="$1"
+    local name="$2"
+    local nocache="$3"
+
+    name="${name#*clawhub:}"
+    target_dir="$target_dir/$name"
+    local cache_dir="$___X_CMD_SKILL_DATA_DIR/clawhub/${name}"
+    if [ ! -d "$cache_dir" ] || [ "$nocache" = 1 ] ; then
+        local url="https://wry-manatee-359.convex.site/api/v1/download?slug=${name}"
+        local tmptar="$___X_CMD_ROOT_TMP/skill/clawhub/${name}.zip"
+
+        skill:info --reference "$url" "Downloading skill data from web URL"
+        ___x_cmd ensurefp "$tmptar"                || return $?
+        ___x_cmd curl -L -sS --speed-time 5 --speed-limit 100 "$url" > "$tmptar" || {
+            skill:error --url "$url" "Download ${url} failed"
+            ___x_cmd rmrf "$tmptar"
+            return 1
+        }
+
+        ___x_cmd rmrf "$cache_dir"                    || return $?
+        ___x_cmd mkdirp "$cache_dir"                  || return $?
+        ___X_CMD_ZUZ_QUIET=1 ___x_cmd uz "$tmptar" "$cache_dir"
+    fi
+
+    [ -f "$cache_dir/SKILL.md" ] || N=skill M="No SKILL.md found in [$cache_dir]" log:ret:1
+
+    ___x_cmd ensurefp "$target_dir"
+    ___x_cmd rmrf "$target_dir"
+    ___x_cmd_cmds cp -rf "$cache_dir" "$target_dir" || {
+        skill:error "Failed to copy skill[$name] to $target_dir"
+        return 1
+    }
+    skill:info "Successfully activated skill[$name] -> $target_dir"
 }
 

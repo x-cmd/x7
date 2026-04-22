@@ -93,15 +93,43 @@ null
 {
 "cmd"
 :
-"x skill add --skill-dir .claude/skills anthropics/skill-creator"
+"x skill add anthropics/pptx"
 ,
 "cn"
 :
-"示例: 添加 skill-creator skill 到当前项目"
+"示例: 添加 pptx skill"
 ,
 "en"
 :
-"Example: add skill-creator skill to current project"
+"Example: add pptx skill"
+}
+,
+{
+"cmd"
+:
+"x skill add anthropics/pptx --agent claude"
+,
+"cn"
+:
+"示例: 仅为 claude-code agent 添加 pptx skill"
+,
+"en"
+:
+"Example: add pptx skill for claude-code agent only"
+}
+,
+{
+"cmd"
+:
+"x skill add https://github.com/google-gemini/gemini-skills --skill gemini-api-dev --skill gemini-interactions-api"
+,
+"cn"
+:
+"示例: 从 GitHub 仓库添加多个 skills"
+,
+"en"
+:
+"Example: add multiple skills from GitHub repo"
 }
 ,
 {
@@ -116,20 +144,6 @@ null
 "en"
 :
 "Example: remove skill-creator skill from current project"
-}
-,
-{
-"cmd"
-:
-"x skill cat anthropics/skill-creator"
-,
-"cn"
-:
-"示例: 查看 skill-creator skill 的详细内容"
-,
-"en"
-:
-"Example: display skill-creator skill content"
 }
 ]
 ,
@@ -146,42 +160,6 @@ null
 "en"
 :
 "List all available skills from remote repository"
-}
-,
-"-f|--filter"
-:
-{
-"#subcmd"
-:
-true
-,
-"#desc"
-:
-{
-"cn"
-:
-"使用 fzf 非交互式过滤 CSV 输出"
-,
-"en"
-:
-"Filter CSV output non-interactively using fzf"
-}
-,
-"#n"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"过滤字符串"
-,
-"en"
-:
-"Filter string"
-}
-}
 }
 ,
 "--csv"
@@ -215,6 +193,74 @@ true
 "Output in TSV format"
 }
 }
+,
+"--github"
+:
+{
+"#subcmd"
+:
+true
+,
+"#desc"
+:
+{
+"cn"
+:
+"从 GitHub 仓库列出 skills"
+,
+"en"
+:
+"List skills from GitHub repository"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"GitHub 仓库 URL"
+,
+"en"
+:
+"GitHub repository URL"
+}
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x skill ll --tsv"
+,
+"cn"
+:
+"示例: 以 TSV 格式列出所有 skills"
+,
+"en"
+:
+"Example: list all skills in TSV format"
+}
+,
+{
+"cmd"
+:
+"x skill ll --github https://github.com/google-gemini/gemini-skills"
+,
+"cn"
+:
+"示例: 从 GitHub 仓库列出 skills"
+,
+"en"
+:
+"Example: list skills from GitHub repository"
+}
+]
 }
 ,
 "ls"
@@ -1178,11 +1224,25 @@ true
 ,
 "cn"
 :
-"示例: 为 claude-code agent 添加 pptx skill"
+"示例: 仅为 claude-code agent 添加 pptx skill"
 ,
 "en"
 :
-"Example: add pptx skill for claude-code agent"
+"Example: add pptx skill for claude-code agent only"
+}
+,
+{
+"cmd"
+:
+"x skill add clawhub:self-improving-agent"
+,
+"cn"
+:
+"示例: 从 Clawhub 添加 self-improving-agent skill"
+,
+"en"
+:
+"Example: add self-improving-agent skill from Clawhub"
 }
 ,
 {

@@ -17,7 +17,7 @@ ___x_cmd_weixin_listen_poll(){
     local sync_buf_file="${___X_CMD_WEIXIN_TMP}/sync_buf"
 
     local sync_buf=""
-    read -r sync_buf <"$sync_buf_file"
+    [ ! -f "$sync_buf_file" ] || read -r sync_buf <"$sync_buf_file"
 
     local bot_token;
     ___x_cmd_weixin_cur bot_token:= 2>/dev/null
@@ -41,12 +41,19 @@ ___x_cmd_weixin_listen_poll(){
         ___x_cmd jo env . .get_updates_buf .msgs context_token=.msgs.1.context_token  <<A
 $resp
 A
+
+        [ -n "$msgs" ] || {
+            weixin:error "Failed to get message: $resp"
+            return 1
+        }
+
+        [ "$msgs" != "[]" ] || continue
+
         if [ "$get_updates_buf" != "$sync_buf" ]; then
             printf "%s" "$get_updates_buf" > "$sync_buf_file"
             sync_buf="$get_updates_buf"
         fi
 
-        [ "$msgs" != "[]" ] || continue
 
         printf "%s" "$context_token" > "$___X_CMD_WEIXIN_CONTEXT_TOKEN"
 
