@@ -7,7 +7,7 @@ ___x_cmd_skill_lr___awsome(){
 
 ___x_cmd_skill_lr___awsome___raw(){
     ___x_cmd_skill___data_check || return $?
-    ___x_cmd_cmds awk -F'\t' '{print $1, "\t" , $NF}' "$___X_CMD_SKILL_FULL_INDEX_FILE"
+    ___x_cmd_cmds awk -F'\t' 'NR > 1 {print $1, "\t" , $NF}' "$___X_CMD_SKILL_FULL_INDEX_FILE"
 }
 # EndSection
 

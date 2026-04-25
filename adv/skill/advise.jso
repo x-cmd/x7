@@ -230,6 +230,28 @@ true
 }
 }
 ,
+"--prompt"
+:
+{
+"#tag"
+:
+[
+"inner"
+]
+,
+"#desc"
+:
+{
+"cn"
+:
+"输出供 AI 理解的指导 prompt"
+,
+"en"
+:
+"Output guidance prompt for AI to understand skill lr results"
+}
+}
+,
 "#tldr"
 :
 [
