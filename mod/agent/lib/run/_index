@@ -1,0 +1,59 @@
+
+# run with multiple agent.
+
+# x agent run --yolo <folder>/agent.md
+# x agent run --yolo <folder>
+# Basic permission
+
+# allow read, webfetch, websearch = 1
+
+___x_cmd_agent_run(){
+
+    local yolo=""
+    local agent_list=""
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --yolo)     yolo=1 ;    shift ;;
+            --agent)    agent_list="${agent_list} $2" ; arg:2:shift ;;
+                        # Search the home folder, or search the x-cmd registry, or just
+
+            *)          break ;;
+        esac
+    done
+
+    [ $# -gt 0 ]    ||  N=agent M="Please provide agent folder to exec." log:ret:64
+
+    local targetfp="$1" ; shfit
+
+    local entrancefp=""
+
+    if [ -d "$targetfp" ]; then
+        ___x_cmd_agent_run___locate_ "$targetfp"    ||  N=agent M="Cannot locate agent.md in the folder." log:ret:64
+        entrancefp="$x_"
+    elif [ -f "$targetfp" ]; then
+        entrancefp="$targetfp"
+    fi
+
+
+}
+
+___x_cmd_agent_run___locate_(){
+    local targetfp="$1"
+
+    x_="$targetfp/agent.md"
+    [ ! -f "$x_" ]    ||    return 0
+    x_="$targetfp/agent.md"
+    [ ! -f "$x_" ]    ||    return 0
+    x_="$targetfp/agent.md"
+    [ ! -f "$x_" ]    ||    return 0
+    x_="$targetfp/AGENT.md"
+    [ ! -f "$x_" ]    ||    return 0
+    x_="$targetfp/CLAUDE.md"
+    [ ! -f "$x_" ]    ||    return 0
+    x_="$targetfp/CODEX.md"
+    [ ! -f "$x_" ]    ||    return 0
+    x_="$targetfp/GEMINI.md"
+    [ ! -f "$x_" ]    ||    return 0
+
+    return 1
+}
