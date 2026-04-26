@@ -7,15 +7,30 @@
 
 # allow read, webfetch, websearch = 1
 
-___x_cmd_agent_run(){
+# subagent 应该是一种可以观测和控制的底层行为
 
+___x_cmd_agent_run(){
     local yolo=""
-    local agent_list=""
+    local skill_list=""
+    local jobfp=""
+
     while [ $# -gt 0 ]; do
         case "$1" in
-            --yolo)     yolo=1 ;    shift ;;
-            --agent)    agent_list="${agent_list} $2" ; arg:2:shift ;;
+            --yolo)     yolo=1 ;    shift ;;    # -9
+            --skill)    skill_list="${skill_list} $2" ; arg:2:shift ;;
+
+            --jobfp)    jobfp="$2" ; arg:2:shift ;;
+
+            --goal)     goal="$2" ; arg:2:shift ;;
+
+            --prompt)   prompt="$3" ; arg:2:shift ;;
+
+            # gaining experience
+            # pass to the job list.
+            --exp)      experience="$2" ; arg:2:shift ;;
+
                         # Search the home folder, or search the x-cmd registry, or just
+            # --agent)    agent_list="${agent_list} $2" ; arg:2:shift ;;
 
             *)          break ;;
         esac
@@ -24,6 +39,14 @@ ___x_cmd_agent_run(){
     [ $# -gt 0 ]    ||  N=agent M="Please provide agent folder to exec." log:ret:64
 
     local targetfp="$1" ; shfit
+
+    local argument_desc="$1"
+
+    [ $# -eq 0 ]    ||  {
+        # argument capture.
+        :
+        # Consider replace the ARGUMENT in the SKILL.md
+    }
 
     local entrancefp=""
 
@@ -34,6 +57,8 @@ ___x_cmd_agent_run(){
         entrancefp="$targetfp"
     fi
 
+    # create a job like job module.
+    # it could iterate .
 
 }
 
@@ -44,7 +69,9 @@ ___x_cmd_agent_run___locate_(){
     [ ! -f "$x_" ]    ||    return 0
     x_="$targetfp/agent.md"
     [ ! -f "$x_" ]    ||    return 0
-    x_="$targetfp/agent.md"
+    x_="$targetfp/skill.md"
+    [ ! -f "$x_" ]    ||    return 0
+    x_="$targetfp/SKILL.md"
     [ ! -f "$x_" ]    ||    return 0
     x_="$targetfp/AGENT.md"
     [ ! -f "$x_" ]    ||    return 0
