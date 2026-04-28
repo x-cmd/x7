@@ -153,6 +153,14 @@ ___x_cmd_agent_request___run_validate(){
                     return "$____X_CMD_AGENT_ERR_AUTHFAILURE"
                 fi
                 ;;
+        claude-*)
+                local subcmd="${harness#claude-}"
+                local loggedIn=; loggedIn="$( ___x_cmd claude "$subcmd" auth status | ___x_cmd jo .loggedIn )"
+                if [ "$loggedIn" != "true" ]; then
+                    agent:warn "Claude auth status is not logged in"
+                    return "$____X_CMD_AGENT_ERR_AUTHFAILURE"
+                fi
+                ;;
         codex)
                 if [ "$( ___x_cmd codex -- login status )" = "Not logged in" ]; then
                     agent:warn \
@@ -281,7 +289,7 @@ ___x_cmd_agent_request___run_exec(){(
     fi
 
     case "$harness" in
-        claude)
+        claude|claude-*)
             if [ -n "$user_session_id" ]; then
                 if [ "$is_session_first" = "1" ]; then
                     real_session_id="$( ___x_cmd uuid )"
@@ -292,7 +300,12 @@ ___x_cmd_agent_request___run_exec(){(
                 fi
             fi
 
-            IS_SANDBOX=1 ___x_cmd claude -- "$@" \
+            local claude_subcmd="--"
+            case "$harness" in
+                claude-*)   claude_subcmd="${harness#claude-}" ;;
+            esac
+
+            IS_SANDBOX=1 ___x_cmd claude "$claude_subcmd" "$@" \
                 --verbose --output-format stream-json \
                 --dangerously-skip-permissions \
                 --allowedTools "Write,Read,Edit,Bash(x *),Bash(x-cmd *),Bash(source ~/.x-cmd.root/X *),Bash(git add *),Bash(git commit *),Bash(git diff *),Bash(git log *),Bash(git status),Bash(git status *),Bash(git push *),Bash(git pull *),Bash(git fetch *),Bash(git checkout *),Bash(git branch *),Bash(git stash *),Bash(git merge *),Bash(git tag *),Bash(npm *),Bash(pytest)" \

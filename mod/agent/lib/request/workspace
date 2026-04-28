@@ -13,7 +13,7 @@ ___x_cmd_agent_request___workspace_prompt_(){
 
 ## Workspace Structure
 
-Workspace files are located at \`${workspace}\`:
+Workspace files are located at \"${workspace}\":
 
 \`\`\`
 ${workspace}/

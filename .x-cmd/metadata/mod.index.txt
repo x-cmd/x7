@@ -1,6 +1,6 @@
 548d06daf523026531069d978f8f074fe4532f19 abox main NULL
 e11d1277141e3ed968304b7c864f7085c29f3732 advise main NULL
-24de05a308dfa5c4804968e12d499a81993ed453 agent main NULL
+f2b47e36735b17fb504d2f8e4703b8709ce7fa55 agent main NULL
 94eb1cb39d13a2ebcddf07a44b8cf63e7ac687cc aider main NULL
 2abe9fc103abe6597b599c5245efc148c44ee948 alias main NULL
 c8dd6182f3d400215d7292cbfe9c65b73722ab7d api main NULL
@@ -38,8 +38,8 @@ a1d3869eeca8fa3902747f93a3b216505d484e00 cd main NULL
 e2bf25de5ee25c3d31081df2bd515fc9e03be156 chat main NULL
 924c0346c4890512f82ed4f810de599145dd9afb choco main NULL
 437d6bacd65476c80cbc41b2197d69307b8e5f82 cht main NULL
-940be4a67bb7be6c1a053aeb9eab89f91e063c51 claude main NULL
-bb142274ee43aedd953fa5d74b4e73bcae95c167 claw main NULL
+6686ddfdce85ceefefff7579cb1c968bf083d45c claude main NULL
+fa141388b9a734984d62ac15901d91153af2fe19 claw main NULL
 ba2b9f62fce87831dd9efc4589f6ce27d2cc79c4 clawhub main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
 bbf9eb7a630da0d2f607edaf1589df0ddfc9a8ae clear main NULL
@@ -352,7 +352,7 @@ ca5f122a53dc89a53dd122ecc8ea6544791b1879 web main NULL
 b2870a81e7c455e620831861ce0d5298f85b25af webfetch main NULL
 41acfdb5984b29bf4074bfc6a4bc28ca8ff77ee7 websrc main NULL
 92e8ff7747f39344b6034b01b273deb2dca2ccf8 webtop main NULL
-e03e0dd88c304f45a724c031272cdf3157851f15 weixin main NULL
+2253ae7dec7c832eabf153cba50fa380d4f2e349 weixin main NULL
 a3ab7cc41efce9810296df54fcbd7e339f5f09e3 whisper main NULL
 054bcc12ac82c22fd2d748b90c996f2603284198 wifi main NULL
 9f859d9fdc7beb193352714f0aae54c87f654505 winget main NULL

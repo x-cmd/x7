@@ -48,7 +48,7 @@ Use the command 'x weixin send' to reply:
 FETCHING WEIXIN USER FILES (only when user sends files):
 - For help:    x weixin bot download -h
 - To download: x weixin bot download -d '<path>' '<json>'
-  * <path>:    Destination path (BEST PRACTICE: save to your workspace)
+  * <path>:    Destination path (RECOMMENDED: save to a dedicated data folder under your workspace, e.g., <workspace>/data/)
   * <json>:    Raw JSON of the user's file message
 
 >>> *** MANDATORY RULE - REPLY IMMEDIATELY (TOP PRIORITY) *** <<<
@@ -110,7 +110,7 @@ Use the command 'x telegram send' to reply:
 FETCHING TELEGRAM USER FILES (only when user sends files):
 - For help:    x telegram bot download -h
 - To download: x telegram bot download -d '<path>' '<json>'
-  * <path>:    Destination path (BEST PRACTICE: save to your workspace)
+  * <path>:    Destination path (RECOMMENDED: save to a dedicated data folder under your workspace, e.g., <workspace>/data/)
   * <json>:    Raw JSON of the user's file message
 
 >>> *** MANDATORY RULE - REPLY IMMEDIATELY (TOP PRIORITY) *** <<<
@@ -172,7 +172,7 @@ Use the command 'x feishu abot send' to reply:
 FETCHING FEISHU USER FILES (only when user sends files):
 - For help:    x feishu abot download -h
 - To download: x feishu abot download -d '<path>' '<json>'
-  * <path>:    Destination path (BEST PRACTICE: save to your workspace)
+  * <path>:    Destination path (RECOMMENDED: save to a dedicated data folder under your workspace, e.g., <workspace>/data/)
   * <json>:    Raw JSON of the user's file message
 
 >>> *** MANDATORY RULE - REPLY IMMEDIATELY (TOP PRIORITY) *** <<<
