@@ -20,6 +20,9 @@ ___x_cmd_agent_cur(){
 
 # TODO: x-minimax-2.5, x-glm5, x-glm4.7, x-kimi-2.5, x-gpt, x-gemini, x-hub
 ___X_CMD_AGENT_MODEL='claude
+claude/deepseek
+claude/minimax
+claude/glm
 codex
 cursor
 gemini-cli

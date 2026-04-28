@@ -132,6 +132,7 @@ Output your response wrapped with:
 }
 
 ____X_CMD_AGENT_ERR_AUTHFAILURE=77
+____X_CMD_AGENT_ERR_SESSION_INVALID=78
 ____X_CMD_AGENT_ERR_NETWORK_TIMEOUT=124
 
 ___x_cmd_agent_request___run(){
@@ -196,6 +197,19 @@ ___x_cmd_agent_request___run_attempt(){
     ___x_cmd_agent_request___run_exec "$harness" "$content" "$output_format" "$user_session_id" "$workspace" "$is_no_thinking" "$stdoutfile" "$stderrfile" "$reference_workspace"
     local ret=$?
 
+    if [ $ret -eq 0 ]; then
+        agent:debug "Request completed successfully"
+        return 0
+    fi
+
+    if [ -n "$user_session_id" ]; then
+        session_map_file="$___X_CMD_ROOT_TMP/agent/request/session/$harness/$user_session_id"
+        [ ! -f "$session_map_file" ] || {
+            agent:debug "Cleaning up session map file"
+            ___x_cmd rmrf "$session_map_file"
+        }
+    fi
+
     if [ $ret -eq $____X_CMD_AGENT_ERR_AUTHFAILURE ]; then
         case "$harness" in
             kimi-cli)
@@ -221,7 +235,6 @@ ___x_cmd_agent_request___run_attempt(){
         return $ret
     fi
 
-    return $ret
 }
 
 ___x_cmd_agent_request___run_exec(){(

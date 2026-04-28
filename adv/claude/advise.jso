@@ -41,6 +41,22 @@ null
 }
 ]
 ,
+"--yolo"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"自动批准所有操作（--dangerously-skip-permissions 的别名）"
+,
+"en"
+:
+"Automatically approve all operations (alias for --dangerously-skip-permissions)"
+}
+}
+,
 "use"
 :
 {
