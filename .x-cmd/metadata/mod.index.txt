@@ -39,7 +39,7 @@ e2bf25de5ee25c3d31081df2bd515fc9e03be156 chat main NULL
 924c0346c4890512f82ed4f810de599145dd9afb choco main NULL
 437d6bacd65476c80cbc41b2197d69307b8e5f82 cht main NULL
 6686ddfdce85ceefefff7579cb1c968bf083d45c claude main NULL
-fa141388b9a734984d62ac15901d91153af2fe19 claw main NULL
+dd0de54c66ef20e6b5a9c6118a9f1246947965a5 claw main NULL
 ba2b9f62fce87831dd9efc4589f6ce27d2cc79c4 clawhub main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
 bbf9eb7a630da0d2f607edaf1589df0ddfc9a8ae clear main NULL
