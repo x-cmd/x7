@@ -32,10 +32,15 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
     ___x_cmd rmrf "$___X_CMD_CLAW_BOT_HEARTBEAT/heartbeat_done"
     ___x_cmd ensurefp "$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
     printf "%s\n" "0" > "$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
+
+    local workspace_dir=""
     case "$im" in
         weixin)
+            workspace_dir="$___X_CMD_CLAW_BOT_WS/weixin-clawbot"
             ___x_cmd agent request  \
-                --workspace "$___X_CMD_CLAW_BOT_WS/weixin-clawbot"  \
+                --workspace "$workspace_dir"  \
+                --stdout-file "$workspace_dir/.x-cmd/logs/stdout.log" \
+                --stderr-file "$workspace_dir/.x-cmd/logs/stdout.log" \
                 --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
                 "You are X-CLAW, the AI assistant integrated with x-cmd. You have received a message from a user via WeChat.
 
@@ -44,12 +49,6 @@ Use the command 'x weixin send' to reply:
 - For help:        x weixin send -h
 - For text:        x weixin send --text '<msg>'
 - For image/video: x weixin send --image <path>  or  x weixin send --video <path>
-
-FETCHING WEIXIN USER FILES (only when user sends files):
-- For help:    x weixin bot download -h
-- To download: x weixin bot download -d '<path>' '<json>'
-  * <path>:    Destination path (RECOMMENDED: save to a dedicated data folder under your workspace, e.g., <workspace>/data/)
-  * <json>:    Raw JSON of the user's file message
 
 >>> *** MANDATORY RULE - REPLY IMMEDIATELY (TOP PRIORITY) *** <<<
 
@@ -81,7 +80,7 @@ OUTPUT RULE (CRITICAL — NEVER VIOLATE):
 - EVERY piece of text you want the user to read — answers, explanations, summaries, questions, confirmations, results, errors, status updates, code snippets — MUST be sent via: x weixin send --text '<msg>'
 - There are NO exceptions. Do NOT write user-facing content to stdout under any circumstance.
 - stdout is reserved solely for your own internal reasoning, tool invocations, and shell commands.
-- All intermediate analysis, memory updates, plans, and detailed records must be written into files under your workspace \"$___X_CMD_CLAW_BOT_WS/weixin-clawbot\".
+- All intermediate analysis, memory updates, plans, and detailed records must be written into files under your workspace \"$workspace_dir\".
 
 WORKFLOW:
 1. INSTANT FEEDBACK: Immediately send a quick reply to acknowledge or give a brief initial answer via \`x weixin send --text '<msg>'\`. This is MANDATORY and comes FIRST.
@@ -94,8 +93,11 @@ $msg
 "
             ;;
         telegram)
+            workspace_dir="$___X_CMD_CLAW_BOT_WS/telegram-${chatid}"
             ___x_cmd agent request  \
-                --workspace "$___X_CMD_CLAW_BOT_WS/telegram-${chatid}"  \
+                --workspace "$workspace_dir"  \
+                --stdout-file "$workspace_dir/.x-cmd/logs/stdout.log" \
+                --stderr-file "$workspace_dir/.x-cmd/logs/stdout.log" \
                 --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
                 "You are X-CLAW, the AI assistant integrated with x-cmd. You have received a message from a user via Telegram.
 
@@ -106,12 +108,6 @@ Use the command 'x telegram send' to reply:
 - For help:        x telegram send -h
 - For text:        \`x telegram send --text --chat \"$chatid\" '<msg>'\`
 - For image/video: x telegram send --image --chat \"$chatid\" <path>  or  x telegram send --video --chat \"$chatid\" <path>
-
-FETCHING TELEGRAM USER FILES (only when user sends files):
-- For help:    x telegram bot download -h
-- To download: x telegram bot download -d '<path>' '<json>'
-  * <path>:    Destination path (RECOMMENDED: save to a dedicated data folder under your workspace, e.g., <workspace>/data/)
-  * <json>:    Raw JSON of the user's file message
 
 >>> *** MANDATORY RULE - REPLY IMMEDIATELY (TOP PRIORITY) *** <<<
 
@@ -143,7 +139,7 @@ OUTPUT RULE (CRITICAL — NEVER VIOLATE):
 - EVERY piece of text you want the user to read — answers, explanations, summaries, questions, confirmations, results, errors, status updates, code snippets — MUST be sent via: x telegram send --text --chat \"$chatid\" '<msg>'
 - There are NO exceptions. Do NOT write user-facing content to stdout under any circumstance.
 - stdout is reserved solely for your own internal reasoning, tool invocations, and shell commands.
-- All intermediate analysis, memory updates, plans, and detailed records must be written into files under your workspace \"$___X_CMD_CLAW_BOT_WS/telegram-${chatid}\".
+- All intermediate analysis, memory updates, plans, and detailed records must be written into files under your workspace \"$workspace_dir\".
 
 WORKFLOW:
 1. INSTANT FEEDBACK: Immediately send a quick reply to acknowledge or give a brief initial answer via \`x telegram send --text --chat \"$chatid\" '<msg>'\`. This is MANDATORY and comes FIRST.
@@ -156,8 +152,11 @@ $msg
 "
             ;;
         feishu)
+            workspace_dir="$___X_CMD_CLAW_BOT_WS/feishu-${chatid}"
             ___x_cmd agent request  \
-                --workspace "$___X_CMD_CLAW_BOT_WS/feishu-${chatid}"  \
+                --workspace "$workspace_dir"  \
+                --stdout-file "$workspace_dir/.x-cmd/logs/stdout.log" \
+                --stderr-file "$workspace_dir/.x-cmd/logs/stdout.log" \
                 --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
                 "You are X-CLAW, the AI assistant integrated with x-cmd. You have received a message from a user via Feishu.
 
@@ -168,12 +167,6 @@ Use the command 'x feishu abot send' to reply:
 - For help:        x feishu abot send -h
 - For text:        \`x feishu abot send --text --chat \"$chatid\" '<msg>'\`
 - For image/video: x feishu abot send --image --chat \"$chatid\" <path>  or  x feishu abot send --video --chat \"$chatid\" <path>
-
-FETCHING FEISHU USER FILES (only when user sends files):
-- For help:    x feishu abot download -h
-- To download: x feishu abot download -d '<path>' '<json>'
-  * <path>:    Destination path (RECOMMENDED: save to a dedicated data folder under your workspace, e.g., <workspace>/data/)
-  * <json>:    Raw JSON of the user's file message
 
 >>> *** MANDATORY RULE - REPLY IMMEDIATELY (TOP PRIORITY) *** <<<
 
@@ -205,7 +198,7 @@ OUTPUT RULE (CRITICAL — NEVER VIOLATE):
 - EVERY piece of text you want the user to read — answers, explanations, summaries, questions, confirmations, results, errors, status updates, code snippets — MUST be sent via: x feishu abot send --text --chat \"$chatid\" '<msg>'
 - There are NO exceptions. Do NOT write user-facing content to stdout under any circumstance.
 - stdout is reserved solely for your own internal reasoning, tool invocations, and shell commands.
-- All intermediate analysis, memory updates, plans, and detailed records must be written into files under your workspace \"$___X_CMD_CLAW_BOT_WS/feishu-${chatid}\".
+- All intermediate analysis, memory updates, plans, and detailed records must be written into files under your workspace \"$workspace_dir\".
 
 WORKFLOW:
 1. INSTANT FEEDBACK: Immediately send a quick reply to acknowledge or give a brief initial answer via \`x feishu abot send --text --chat \"$chatid\" '<msg>'\`. This is MANDATORY and comes FIRST.
@@ -233,6 +226,7 @@ ___x_cmd_claw_run___agentrequest___handleheartbeat(){
 
     ___x_cmd_claw_run___agentrequest___checkunavailable || return 0
 
+    local workspace_dir="$___X_CMD_CLAW_BOT_WS"
     local active_chat_line=""
     local reply_text_hint=""
     case "$im" in
@@ -244,16 +238,20 @@ ___x_cmd_claw_run___agentrequest___handleheartbeat(){
             reply_text_hint="  * For text:                 x $im send --text --chat \"$chatid\" <msg>" ;;
     esac
 
+    local x_=""; ___x_cmd date timestamp_ || return $?
+    local timestamp="$x_"
     ___x_cmd agent request \
-        --workspace "$___X_CMD_CLAW_BOT_WS"    \
+        --workspace "$workspace_dir"  \
+        --stdout-file "$workspace_dir/.x-cmd/logs/stdout.log" \
+        --stderr-file "$workspace_dir/.x-cmd/logs/stdout.log" \
         --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
-        "You are X-CLAW, running a periodic heartbeat task. Current time: $(___x_cmd date iso).
+        "You are X-CLAW, running a periodic heartbeat task. Current time: '$timestamp'.
 
 $active_chat_line
 - Reply using:                x $im send -h
 $reply_text_hint
-- Your workspace:             \"$___X_CMD_CLAW_BOT_WS\"
-- Chat memory reference:      \"$___X_CMD_CLAW_BOT_WS/$im-$chatid\"
+- Your workspace:             \"$workspace_dir\"
+- Chat memory reference:      \"$workspace_dir/$im-$chatid\"
 
 YOUR TASKS:
 1. RETRIEVE: Search and review the chat memory reference and your own workspace for context, unresolved questions, or pending actions.

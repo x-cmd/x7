@@ -1,0 +1,62 @@
+# shellcheck shell=dash
+
+___x_cmd_qywx_listen(){
+    param:void
+
+    local format=
+    local fp=
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help)      ___x_cmd help -m qywx listen "$@" ; return 0 ;;
+            --fp)           fp=1 ;          shift ;;
+            --json)         format="json";  shift ;;
+            *)              N=qywx M="Unknown op -> $1" log:ret:64   ;;
+        esac
+    done
+
+    while true; do
+        {
+            ___x_cmd_qywx_bot_sub
+        } | {
+            local msg_line
+            while read -r msg_line; do
+                if [ -n "$fp" ]; then
+                    local MSG_CHATID=
+                    ___x_cmd jo env . MSG_CHATID=.body.chatid <<A
+$msg_line
+A
+                    if [ -n "$MSG_CHATID" ]; then
+                        ___X_CMD_QYWX_BOT_DATA="${___X_CMD_QYWX_BOT_PATH}/data_${MSG_CHATID}.tsv"
+                        ___x_cmd ensurefp "$___X_CMD_QYWX_BOT_DATA"
+                        printf "%s\n" "$msg_line" >> "$___X_CMD_QYWX_BOT_DATA"
+                        ___x_cmd tailer pub "$___X_CMD_ROOT_DATA/qywx/sub" "qywx:${MSG_CHATID}"
+                    fi
+                elif [ "$format" = "json" ]; then
+                    printf "%s\n" "$msg_line"
+                else
+                    printf "%s\n" "$msg_line"
+                fi
+            done
+        }
+
+        ___x_cmd sleep 5 || return $?
+    done
+}
+
+___x_cmd_qywx_bot_sub(){
+    local bot_id=
+    local bot_secret=
+    ___x_cmd_qywx_cur bot_id:= bot_secret:= 2>/dev/null
+
+    [ -f "$___X_CMD_QYWX_BOT_WEBSOCKET" ] || {
+        mkfifo "$___X_CMD_QYWX_BOT_WEBSOCKET"
+    }
+
+    tail -f "$___X_CMD_QYWX_BOT_WEBSOCKET" | ___x_cmd websocat -n wss://openws.work.weixin.qq.com &
+    local pid=$!
+
+    local req_id="aibot_subscribe_$$_$(date +%s%3N)"
+    printf '{"cmd":"aibot_subscribe","headers":{"req_id":"%s"},"body":{"bot_id":"%s","secret":"%s"}}\n' \
+        "$req_id" "$bot_id" "$bot_secret" >> "$___X_CMD_QYWX_BOT_WEBSOCKET"
+}

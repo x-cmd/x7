@@ -113,7 +113,12 @@ ___x_cmd_weixin_parse_item_decrypt___(){
         esac
         if [ "$typename" != "Unknown" ]; then
             local filename; filename="$( ___x_cmd sha512 <<A
+$msg_img_media_aeskey
+$msg_img_media_aeskey_64
+$msg_video_media_aeskey_64
+$msg_file_media_aeskey_64
 $msg_voice_media_aeskey_64
+$cdn_url
 A
 )"
             filename="${filename%"${filename#????????????????}"}"

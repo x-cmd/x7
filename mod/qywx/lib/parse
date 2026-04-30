@@ -1,0 +1,86 @@
+
+___x_cmd_qywx_parse(){
+    param:void
+
+    local range="$1"
+    local start_line=""
+    local end_line=""
+
+    case "$range" in
+        --help|-h)
+            ___x_cmd help -m qywx parse "$@"
+            return 0
+            ;;
+        *:*)
+            start_line="${range%%:*}"
+            end_line="${range##*:}"
+            ;;
+        *)
+            start_line="$1"
+            end_line="$2"
+            ;;
+    esac
+
+    local botdata="${___X_CMD_QYWX_BOT_DATA:-}"
+
+    { [ -n "$start_line" ] && [ "$start_line" -gt 0 ]; } || N=qywx M="Invalid start line: '${start_line}'" log:ret:64
+
+    start_line="${start_line}" \
+    end_line="${end_line}" \
+    ___x_cmd awk0 -m j/json -m j/jiter \
+        -f "$___X_CMD_ROOT_MOD/qywx/lib/awk/bot_parse.awk" < "$botdata" | {
+        local msgid="" from_userid="" chatid="" chattype="" msg_type="" msg_text="" msg_img_url="" msg_img_aeskey="" msg_resp_url=""
+        while   read -r msgid && \
+                read -r from_userid && \
+                read -r chatid && \
+                read -r chattype && \
+                read -r msg_type && \
+                read -r msg_text && \
+                read -r msg_img_url && \
+                read -r msg_img_aeskey && \
+                read -r msg_resp_url; do
+            if [ "$msg_type" = "mixed" ] && [ -n "$msg_img_url" ] && [ -n "$msg_img_aeskey" ]; then
+                msg_text="$( ___x_cmd_qywx_parse_decrypt___ "$msg_img_url" "$msg_img_aeskey" )"
+            fi
+            printf "%s\t%s\n" "$msg_type" "$msg_text"
+        done
+    }
+}
+
+___x_cmd_qywx_parse_decrypt___(){
+    local cdn_url="$1"
+    local aes_key="$2"
+
+    local filename; filename="$( ___x_cmd sha512 <<A
+$aes_key
+$cdn_url
+A
+)"
+    filename="${filename%"${filename#????????????????}"}"
+    local output_dir="${___X_CMD_QYWX_BOT_PATH}/media"
+    [ -d "$output_dir" ] || ___x_cmd mkdirp "$output_dir"
+    local out_file="${output_dir}/${filename}.jpg"
+
+    if [ ! -f "$out_file" ]; then
+        if [ -z "$cdn_url" ] || [ -z "$aes_key" ]; then
+            printf "%s" "[Missing URL or AES Key]"
+            return 1
+        fi
+
+        local tmp_bin="${___X_CMD_QYWX_TMP}/qywx_dl_${filename}.bin"
+        ___x_cmd curl -s -L "$cdn_url" -o "$tmp_bin" || {
+            printf "%s" "[Download failed]"
+            return 1
+        }
+
+        ___x_cmd openssl enc -d -aes-128-ecb -K "$aes_key" -nosalt -in "$tmp_bin" -out "$out_file" || {
+            qywx:error "File decryption failed"
+            ___x_cmd rmrf "$out_file"
+            ___x_cmd rmrf "$tmp_bin"
+            printf "%s" "[Decrypt failed]"
+            return 1
+        }
+        ___x_cmd rmrf "$tmp_bin"
+    fi
+    printf "%s" "$out_file"
+}
