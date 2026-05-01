@@ -196,7 +196,7 @@ true
 {
 "cmd"
 :
-"x qywx abot send --text --response_url <response_url> \"Hello\""
+"x qywx abot send --text --chatid <chat_id> \"Hello\""
 ,
 "cn"
 :
@@ -257,7 +257,7 @@ true
 {
 "cmd"
 :
-"x qywx abot send --text --response_url <response_url> \"Hello\""
+"x qywx abot send --text --chatid <chat_id> \"Hello\""
 ,
 "cn"
 :
@@ -271,7 +271,7 @@ true
 {
 "cmd"
 :
-"x qywx abot send --image --response_url <response_url> /path/to/image.png"
+"x qywx abot send --image --chatid <chat_id> /path/to/image.png"
 ,
 "cn"
 :
@@ -285,15 +285,15 @@ true
 {
 "cmd"
 :
-"x qywx abot send --markdown --response_url <response_url> \"**Bold** text\""
+"x qywx abot send --file --chatid <chat_id> /path/to/file.pdf"
 ,
 "cn"
 :
-"发送 Markdown 消息到指定会话"
+"发送文件到指定会话"
 ,
 "en"
 :
-"Send markdown message to specified chat"
+"Send file to specified chat"
 }
 ]
 ,
@@ -301,8 +301,6 @@ true
 :
 [
 "--text"
-,
-"--markdown"
 ,
 "--image"
 ,
@@ -328,23 +326,43 @@ true
 "Send text messages"
 }
 ,
-"--response_url"
+"--chatid"
 :
 {
 "#synopsis"
 :
-"<response_url>"
+"<chatid>"
 ,
 "#desc"
 :
 {
 "cn"
 :
-"响应 URL（来自 WebSocket 回调）"
+"会话 ID"
 ,
 "en"
 :
-"Response URL (from WebSocket callback)"
+"Chat ID"
+}
+}
+,
+"--chat_type"
+:
+{
+"#synopsis"
+:
+"0|1|2"
+,
+"#desc"
+:
+{
+"cn"
+:
+"会话类型。1：单聊（用户 userid）；2：群聊；0 或不填：兼容单聊/群聊类型"
+,
+"en"
+:
+"Chat type. 1: private chat (userid); 2: group chat; 0 or empty: compatible"
 }
 }
 ,
@@ -354,7 +372,7 @@ true
 {
 "cmd"
 :
-"x qywx abot send --text --response_url <response_url> \"Hello\""
+"x qywx abot send --text --chatid <chat_id> --chat_type 2 \"Hello\""
 ,
 "cn"
 :
@@ -363,64 +381,6 @@ true
 "en"
 :
 "Send text message"
-}
-]
-}
-,
-"--markdown"
-:
-{
-"#subcmd"
-:
-true
-,
-"#desc"
-:
-{
-"cn"
-:
-"发送 Markdown 消息"
-,
-"en"
-:
-"Send markdown messages"
-}
-,
-"--response_url"
-:
-{
-"#synopsis"
-:
-"<response_url>"
-,
-"#desc"
-:
-{
-"cn"
-:
-"响应 URL（来自 WebSocket 回调）"
-,
-"en"
-:
-"Response URL (from WebSocket callback)"
-}
-}
-,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x qywx abot send --markdown --response_url <response_url> \"**Bold** text\""
-,
-"cn"
-:
-"发送 Markdown 消息"
-,
-"en"
-:
-"Send markdown message"
 }
 ]
 }
@@ -444,23 +404,43 @@ true
 "Send image messages"
 }
 ,
-"--response_url"
+"--chatid"
 :
 {
 "#synopsis"
 :
-"<response_url>"
+"<chatid>"
 ,
 "#desc"
 :
 {
 "cn"
 :
-"响应 URL（来自 WebSocket 回调）"
+"会话 ID"
 ,
 "en"
 :
-"Response URL (from WebSocket callback)"
+"Chat ID"
+}
+}
+,
+"--chat_type"
+:
+{
+"#synopsis"
+:
+"0|1|2"
+,
+"#desc"
+:
+{
+"cn"
+:
+"会话类型。1：单聊（用户 userid）；2：群聊；0 或不填：兼容单聊/群聊类型"
+,
+"en"
+:
+"Chat type. 1: private chat (userid); 2: group chat; 0 or empty: compatible"
 }
 }
 ,
@@ -470,7 +450,7 @@ true
 {
 "cmd"
 :
-"x qywx abot send --image --response_url <response_url> /path/to/image.png"
+"x qywx abot send --image --chatid <chat_id> /path/to/image.png"
 ,
 "cn"
 :
@@ -502,23 +482,43 @@ true
 "Send files"
 }
 ,
-"--response_url"
+"--chatid"
 :
 {
 "#synopsis"
 :
-"<response_url>"
+"<chatid>"
 ,
 "#desc"
 :
 {
 "cn"
 :
-"响应 URL（来自 WebSocket 回调）"
+"会话 ID"
 ,
 "en"
 :
-"Response URL (from WebSocket callback)"
+"Chat ID"
+}
+}
+,
+"--chat_type"
+:
+{
+"#synopsis"
+:
+"0|1|2"
+,
+"#desc"
+:
+{
+"cn"
+:
+"会话类型。1：单聊（用户 userid）；2：群聊；0 或不填：兼容单聊/群聊类型"
+,
+"en"
+:
+"Chat type. 1: private chat (userid); 2: group chat; 0 or empty: compatible"
 }
 }
 ,
@@ -528,7 +528,7 @@ true
 {
 "cmd"
 :
-"x qywx abot send --file --response_url <response_url> /path/to/file.pdf"
+"x qywx abot send --file --chatid <chat_id> /path/to/file.pdf"
 ,
 "cn"
 :

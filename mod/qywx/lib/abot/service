@@ -39,6 +39,7 @@ ___x_cmd_qywx_abot_service_restart(){
 
 ___x_cmd_qywx_abot_service_stop(){
     ___x_cmd service stop       x-qywx-listener
+    ___x_cmd_cmds pkill -f 'websocat -n wss://openws.work.weixin.qq.com'
 }
 
 ___x_cmd_qywx_abot_service_status(){
@@ -47,7 +48,7 @@ ___x_cmd_qywx_abot_service_status(){
 
 ___x_cmd_qywx_abot_service_log(){
     local chatid="$1"
-    [ -n "$chatid" ] || N=qywx M="Not Found chat id, please use \`x qywx group ls\` to get" log:ret:1
+    [ -n "$chatid" ] || N=qywx M="Not Found chat id" log:ret:1
 
     local fp
     local x_=; ___x_cmd_qywx_abot_data_which_ "$chatid"

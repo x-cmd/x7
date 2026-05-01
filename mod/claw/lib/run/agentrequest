@@ -33,14 +33,16 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
     ___x_cmd ensurefp "$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
     printf "%s\n" "0" > "$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
 
-    local workspace_dir=""
+    local x_=""; ___x_cmd date timestamp_ || return $?
+    local timestamp="$x_";
+    local workspace_dir="$___X_CMD_CLAW_BOT_WS/${im}-${chatid}"
+    local exitcode=0
+
+    claw:info "Processing agent request for $im:$chatid at $timestamp"
     case "$im" in
         weixin)
-            workspace_dir="$___X_CMD_CLAW_BOT_WS/weixin-clawbot"
             ___x_cmd agent request  \
                 --workspace "$workspace_dir"  \
-                --stdout-file "$workspace_dir/.x-cmd/logs/stdout.log" \
-                --stderr-file "$workspace_dir/.x-cmd/logs/stdout.log" \
                 --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
                 "You are X-CLAW, the AI assistant integrated with x-cmd. You have received a message from a user via WeChat.
 
@@ -87,17 +89,14 @@ WORKFLOW:
 2. THEN THINK DEEPER: Only AFTER sending the first message, continue analyzing and send follow-up messages with deeper insights, corrections, or final results.
 3. QUESTIONS: If critical information is missing, ask directly in your instant reply and then EXIT immediately.
 
-Current time: $(___x_cmd date iso)
+Current time: '$timestamp'
 ---
 $msg
 "
             ;;
         telegram)
-            workspace_dir="$___X_CMD_CLAW_BOT_WS/telegram-${chatid}"
             ___x_cmd agent request  \
                 --workspace "$workspace_dir"  \
-                --stdout-file "$workspace_dir/.x-cmd/logs/stdout.log" \
-                --stderr-file "$workspace_dir/.x-cmd/logs/stdout.log" \
                 --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
                 "You are X-CLAW, the AI assistant integrated with x-cmd. You have received a message from a user via Telegram.
 
@@ -146,17 +145,14 @@ WORKFLOW:
 2. THEN THINK DEEPER: Only AFTER sending the first message, continue analyzing and send follow-up messages with deeper insights, corrections, or final results.
 3. QUESTIONS: If critical information is missing, ask directly in your instant reply and then EXIT immediately. A new agent will be triggered automatically when the user replies.
 
-Current time: $(___x_cmd date iso)
+Current time: '$timestamp'
 ---
 $msg
 "
             ;;
         feishu)
-            workspace_dir="$___X_CMD_CLAW_BOT_WS/feishu-${chatid}"
             ___x_cmd agent request  \
                 --workspace "$workspace_dir"  \
-                --stdout-file "$workspace_dir/.x-cmd/logs/stdout.log" \
-                --stderr-file "$workspace_dir/.x-cmd/logs/stdout.log" \
                 --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
                 "You are X-CLAW, the AI assistant integrated with x-cmd. You have received a message from a user via Feishu.
 
@@ -205,15 +201,23 @@ WORKFLOW:
 2. THEN THINK DEEPER: Only AFTER sending the first message, continue analyzing and send follow-up messages with deeper insights, corrections, or final results.
 3. QUESTIONS: If critical information is missing, ask directly in your instant reply and then EXIT immediately. A new agent will be triggered automatically when the user replies.
 
-Current time: $(___x_cmd date iso)
+Current time: '$timestamp'
 ---
 $msg
 "
             ;;
-    esac || {
+    esac || exitcode="$?"
+
+    x_=""; ___x_cmd date timestamp_ || return $?
+    timestamp="$x_";
+    if [ "$exitcode" -eq 0 ]; then
+        claw:info "Successfully processed agent request for $im:$chatid at $timestamp"
+        ___x_cmd rmrf "$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable"
+    else
+        claw:error "Failed to process agent request for $im:$chatid at $timestamp - marking agent as unavailable"
         ___x_cmd_claw_run___agentrequest___markunavailable
-        return 1
-    }
+        return "$exitcode"
+    fi
 }
 
 ___x_cmd_claw_run___agentrequest___handleheartbeat(){
@@ -240,10 +244,11 @@ ___x_cmd_claw_run___agentrequest___handleheartbeat(){
 
     local x_=""; ___x_cmd date timestamp_ || return $?
     local timestamp="$x_"
+    claw:info "Processing heartbeat for $im:$chatid at $timestamp"
+
     ___x_cmd agent request \
+        --timeout 1800 \
         --workspace "$workspace_dir"  \
-        --stdout-file "$workspace_dir/.x-cmd/logs/stdout.log" \
-        --stderr-file "$workspace_dir/.x-cmd/logs/stdout.log" \
         --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
         "You are X-CLAW, running a periodic heartbeat task. Current time: '$timestamp'.
 

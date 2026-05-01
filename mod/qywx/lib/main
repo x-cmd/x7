@@ -12,7 +12,7 @@ ___x_cmd_qywx___main(){
     local ___X_CMD_QYWX_LOCAL_PROFILE="${___X_CMD_QYWX_LOCAL_PROFILE}"
     ___X_CMD_QYWX_BOT_PATH="$___X_CMD_ROOT_DATA/qywx/bot"
     ___X_CMD_QYWX_BOT_WEBSOCKET="$___X_CMD_ROOT_DATA/qywx/bot/websocket"
-
+    ___X_CMD_QYWX_BOT_DATA_MEDIA_DIR="$___X_CMD_ROOT_DATA/qywx/bot/data"
     ___X_CMD_QYWX_TMP="$___X_CMD_ROOT_TMP/qywx"
     ___x_cmd mkdirp "${___X_CMD_QYWX_TMP}" "$___X_CMD_QYWX_BOT_PATH"
 

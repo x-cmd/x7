@@ -39,20 +39,21 @@ ___x_cmd_feishu_parse(){
     end_line="${end_line}"   \
     ___x_cmd awk0 -m j/json -m j/jiter \
             -f "$___X_CMD_ROOT_MOD/feishu/lib/awk/bot_parse.awk" < "$botdata" | {
-        local is_ref="" msg_text="" msg_type="" msg_image_key="" msg_file_key="" msg_file_name="" msg_chat_id="" msg_message_id=""
+        local is_ref="" msg_time="" msg_type="" msg_text="" msg_image_key="" msg_file_key="" msg_file_name="" msg_chat_id="" msg_message_id=""
         local last_ref_str=""
         while   read -r is_ref && \
-                read -r msg_text && \
+                read -r msg_time && \
                 read -r msg_type && \
+                read -r msg_text && \
                 read -r msg_image_key && \
                 read -r msg_file_key && \
                 read -r msg_file_name && \
                 read -r msg_chat_id && \
                 read -r msg_message_id; do
             if [ "$is_ref" = "1" ]; then
-                last_ref_str="$( ___x_cmd_feishu_parse_item___ "$is_ref" "$last_ref_str" "$msg_text" "$msg_type" "$msg_image_key" "$msg_file_key" "$msg_file_name" "$msg_chat_id" "$msg_message_id" ) "
+                last_ref_str="$( ___x_cmd_feishu_parse_item___ "$is_ref" "$last_ref_str" "$msg_time" "$msg_type" "$msg_text" "$msg_image_key" "$msg_file_key" "$msg_file_name" "$msg_chat_id" "$msg_message_id" ) "
             else
-                ___x_cmd_feishu_parse_item___ "$is_ref" "$last_ref_str" "$msg_text" "$msg_type" "$msg_image_key" "$msg_file_key" "$msg_file_name" "$msg_chat_id" "$msg_message_id"
+                ___x_cmd_feishu_parse_item___ "$is_ref" "$last_ref_str" "$msg_time" "$msg_type" "$msg_text" "$msg_image_key" "$msg_file_key" "$msg_file_name" "$msg_chat_id" "$msg_message_id"
                 last_ref_str=""
             fi
         done
@@ -62,13 +63,14 @@ ___x_cmd_feishu_parse(){
 ___x_cmd_feishu_parse_item___(){
     local is_ref="$1"
     local bodystr="$2"
-    local msg_text="$3"
+    local msg_time="$3"
     local msg_type="$4"
-    local msg_image_key="$5"
-    local msg_file_key="$6"
-    local msg_file_name="$7"
-    local msg_chat_id="$8"
-    local msg_message_id="$9"
+    local msg_text="$5"
+    local msg_image_key="$6"
+    local msg_file_key="$7"
+    local msg_file_name="$8"
+    local msg_chat_id="$9"
+    local msg_message_id="${10}"
 
     local typename="Text" file_key="" default_ext="" download_type=""
     case "$msg_type" in
@@ -127,8 +129,8 @@ ___x_cmd_feishu_parse_item___(){
     fi
 
     if [ "$is_ref" = "1" ]; then
-        printf "[REF:%s:%s]\n" "$typename" "$bodystr"
+        printf "[REF:%s:%s] \n" "$typename" "$bodystr"
     else
-        printf "%s\t%s\n" "$typename" "$bodystr"
+        printf "%s\t%s\t%s\n" "$msg_time" "$typename" "$bodystr"
     fi
 }
