@@ -2,7 +2,7 @@
 
 ___x_cmd log init    service
 
-xrc:mod:lib     service     log     util
+xrc:mod:lib     service     log     util     install
 
 ___X_CMD_SERVICE_FP_DATA="$___X_CMD_ROOT_DATA/service/data"
 
@@ -12,7 +12,7 @@ ___x_cmd_service___main(){
     local op="$1";      shift
     case "$op" in
         -h|--help)      ___x_cmd help -m service "$@" ;;
-        start|ensure|stop|restart|log|status|isalive|rm|pause|resume)
+        start|ensure|stop|restart|log|status|isalive|rm|pause|resume|install|uninstall)
                         ___x_cmd_service_"$op" "$@" ;;
         *)              ;;
     esac
