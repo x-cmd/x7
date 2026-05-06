@@ -17,7 +17,7 @@ ___x_cmd_timeout___main(){
 
     while [ $# -gt 0 ]; do
         case "$1" in
-            -h|--help)          ___x_cmd help -m timeout "$@"   ;;
+            -h|--help)          ___x_cmd help -m timeout "$@"; return ;;
 
             -k|--kill-after)    kill=$2;            arg:2:shift ;;
             -s|--signal)        signal="$2";        arg:2:shift ;;

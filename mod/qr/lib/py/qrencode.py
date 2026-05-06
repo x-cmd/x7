@@ -210,6 +210,9 @@ def is_reserved(row, col, size):
     # Col 8: rows 14-20 (vertical format bits 8-14)
     if col == 8 and 14 <= row <= 20:
         return True
+    # Fixed module at (size-8, 8) - used by qrcode
+    if row == size - 8 and col == 8:
+        return True
     return False
 
 def add_finder(matrix, row, col, size):
@@ -239,9 +242,31 @@ def add_timing(matrix, size):
         matrix[i][6] = 1 if i % 2 == 0 else 0
 
 def get_mask_bit(row, col, mask):
+    """Return 1 if bit should be flipped (masked), 0 otherwise."""
     if mask == 0:
-        # Mask 0: flip if (row + col) % 2 == 0
+        # 000: (row + col) % 2 == 0
         return 1 if (row + col) % 2 == 0 else 0
+    elif mask == 1:
+        # 001: row % 2 == 0
+        return 1 if row % 2 == 0 else 0
+    elif mask == 2:
+        # 010: col % 3 == 0
+        return 1 if col % 3 == 0 else 0
+    elif mask == 3:
+        # 011: (row + col) % 3 == 0
+        return 1 if (row + col) % 3 == 0 else 0
+    elif mask == 4:
+        # 100: (row//2 + col//3) % 2 == 0
+        return 1 if (row // 2 + col // 3) % 2 == 0 else 0
+    elif mask == 5:
+        # 101: ((row * col) % 2 + (row * col) % 3) % 2 == 0
+        return 1 if ((row * col) % 2 + (row * col) % 3) % 2 == 0 else 0
+    elif mask == 6:
+        # 110: ((row * col) % 2 + (row * col) % 3) % 2 == 0
+        return 1 if ((row * col) % 2 + (row * col) % 3) % 2 == 0 else 0
+    elif mask == 7:
+        # 111: ((row * col) % 3 + (row + col) % 2) % 2 == 0
+        return 1 if ((row * col) % 3 + (row + col) % 2) % 2 == 0 else 0
     return 0
 
 def get_bit(byte, pos):
@@ -337,6 +362,9 @@ def add_format(matrix, size, format_bits, version):
     for i in range(7):
         matrix[14 + i][8] = int(format_bits[8 + i])
 
+    # Fixed module at (size-8, 8) - always 1
+    matrix[size - 8][8] = 1
+
 def qr_encode(data):
     version = get_version(len(data))
     ec_len = EC_L[version]
@@ -365,8 +393,8 @@ def qr_encode(data):
     add_finder(matrix, 0, size - 7, size)
     add_separators(matrix, size)
     add_timing(matrix, size)
-    add_format(matrix, size, FORMAT_L[0], version)
-    place_data(matrix, size, result, len(result), 0)
+    add_format(matrix, size, FORMAT_L[7], version)
+    place_data(matrix, size, result, len(result), 7)
 
     return matrix
 
@@ -399,13 +427,70 @@ def print_matrix_raw(matrix):
     for row in matrix:
         print(''.join('1' if c else '0' for c in row))
 
+# Debug flag: 0=no debug, 1=raw matrix, 2=verbose
+DEBUG = 0
+
+def qr_encode_debug(data, debug=0):
+    """QR encode with optional debug output."""
+    global DEBUG
+    old_debug = DEBUG
+    DEBUG = debug
+
+    version = get_version(len(data))
+    ec_len = EC_L[version]
+    bits = encode_data(data, version)
+    padded = pad_bits(bits, version)
+
+    if debug >= 1:
+        print(f"DEBUG: data={repr(data)}")
+        print(f"DEBUG: version={version}, ec_len={ec_len}")
+        print(f"DEBUG: bits={bits[:40]}... (len={len(bits)})")
+        print(f"DEBUG: padded={padded[:40]}... (len={len(padded)})")
+
+    n_bytes = CAPACITY[version]
+
+    bytes_arr = []
+    for i in range(n_bytes):
+        pos = 0 + i * 8
+        byte = 0
+        for j in range(8):
+            if padded[pos + j] == '1':
+                byte += pw2(7 - j)
+        bytes_arr.append(byte)
+
+    if debug >= 1:
+        print(f"DEBUG: bytes_arr[:5]={[hex(b) for b in bytes_arr[:5]]}")
+
+    result = rs_encode(bytes_arr, n_bytes, ec_len)
+
+    if debug >= 1:
+        print(f"DEBUG: rs_encode result[:5]={[hex(b) for b in result[:5]]}")
+
+    size = MATRIX_SIZE[version]
+    matrix = [[0] * size for _ in range(size)]
+
+    add_finder(matrix, 0, 0, size)
+    add_finder(matrix, size - 7, 0, size)
+    add_finder(matrix, 0, size - 7, size)
+    add_separators(matrix, size)
+    add_timing(matrix, size)
+    add_format(matrix, size, FORMAT_L[7], version)
+    place_data(matrix, size, result, len(result), 7)
+
+    DEBUG = old_debug
+    return matrix
+
 if __name__ == "__main__":
     import sys
     data = sys.argv[1] if len(sys.argv) > 1 else "HI"
+    debug = int(sys.argv[2]) if len(sys.argv) > 2 else 0
 
-    print(f"=== Python QR Encoder output for '{data}' ===")
-    matrix = qr_encode(data)
-    print_matrix(matrix)
+    if debug > 0:
+        matrix = qr_encode_debug(data, debug)
+    else:
+        matrix = qr_encode(data)
+        print(f"=== Python QR Encoder output for '{data}' ===")
+        print_matrix(matrix)
 
     print("\n=== Raw matrix ===")
     print_matrix_raw(matrix)

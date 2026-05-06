@@ -110,7 +110,6 @@ A
 
         [ "$msgs" = "[]" ] || {
             printf "%s" "$context_token" > "$___X_CMD_WEIXIN_CONTEXT_TOKEN"
-            weixin:info "You can run ``x weixin bot send --text <context>`` to send a message."
             return
         }
     done

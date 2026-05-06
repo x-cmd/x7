@@ -51,25 +51,22 @@ ___x_cmd_kill_byfingerprint(){
 }
 
 ___x_cmd_kill_tree(){
-    [ "$#" -gt 0 ] ||       set  --     --ls
+    [ "$#" -gt 0 ]      ||      set  --     --help
 
-    local KILLARG
+    local signal=TERM #KILL
 
     while [ $# -gt 0 ]; do
-        case "$op" in
-            -h|--help)          ___x_cmd help -m kill tree "$@" ;      return ;;
-            -s|-n)              arg:add KILLARG "$1" "$2" ; arg:2:shift ;;
+        case "$1" in
+            -h|--help)          shift; ___x_cmd help -m kill tree "$@" ; return ;;
+            -s)                 signal="$2"; arg:2:shift ;;
             *)                  break ;;
         esac
     done
 
+    [ $# -gt 0 ]    ||          N=kill M="Please provide target pid." log:ret:64
     local target_pid="$1"
-    [ -n "$target_pid" ] || return 0
 
-    local pids
-
-    pids="$( ___x_cmd ps tree --pid "$target_pid" )"
-
-    local IFS="$___X_CMD_UNSEENCHAR_NEWLINE"
-    eval ___x_cmd kill "$KILLARG" "$pids"
+    local pids; pids="$( ___x_cmd ps tree --pidline --reverse "$target_pid" )"
+    [ -n "$pids" ] || N=kill M="Fail to find pid tree for $target_pid" log:ret:1
+    eval ___x_cmd_kill___cmd  -s "$signal" "$pids"
 }
