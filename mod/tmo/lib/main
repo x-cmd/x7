@@ -54,7 +54,8 @@ ___x_cmd_tmo___main_to_reduce_kill_log(){
         if ___x_cmd ps fingerprint check "$pidofsubshell" "$fingerprint" 1>/dev/null 2>&1; then
             # command kill -s KILL -- "-${pidofsubshell}"
             # TODO: using x kill --tree to kill.
-            pkill -KILL -P "${pidofsubshell}" 2>/dev/null
+            # pkill -KILL -P "${pidofsubshell}" 2>/dev/null
+            ___x_cmd kill tree -s KILL "${pidofsubshell}" 2>/dev/null
             exit 124
         fi
     ) </dev/null  &
