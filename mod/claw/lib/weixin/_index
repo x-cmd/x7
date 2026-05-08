@@ -24,7 +24,7 @@ ___x_cmd_claw_weixin(){
 }
 
 ___x_cmd_claw_weixin_get_unread(){
-    local datadir_offset="$___X_CMD_CLAW_BOT_WS/.x-cmd/data/DATA_OFFSET/weixin-clawbot"
+    local datadir_offset="$___X_CMD_CLAW_BOT_DATA/DATA_OFFSET/weixin-clawbot"
 
     local offset=0
     [ ! -f "$datadir_offset" ] || read -r offset <"$datadir_offset"
@@ -79,7 +79,7 @@ ___x_cmd_claw_weixin_get_msg(){
 }
 
 ___x_cmd_claw_weixin_recent_msg(){
-    local datadir_offset="$___X_CMD_CLAW_BOT_WS/.x-cmd/data/DATA_OFFSET/weixin-clawbot"
+    local datadir_offset="$___X_CMD_CLAW_BOT_DATA/DATA_OFFSET/weixin-clawbot"
 
     local offset=0
     [ ! -f "$datadir_offset" ] || read -r offset <"$datadir_offset"
@@ -88,7 +88,7 @@ ___x_cmd_claw_weixin_recent_msg(){
 
 ___x_cmd_claw_weixin_update_offset(){
     local end_line="${1:-}"
-    local datadir_offset="$___X_CMD_CLAW_BOT_WS/.x-cmd/data/DATA_OFFSET/weixin-clawbot"
+    local datadir_offset="$___X_CMD_CLAW_BOT_DATA/DATA_OFFSET/weixin-clawbot"
 
     local x_=""
     ___x_cmd weixin bot data which_
@@ -127,7 +127,7 @@ ___x_cmd_claw_weixin_has_unread(){
 }
 
 ___x_cmd_claw_weixin_unread_count_(){
-    local datadir_offset="$___X_CMD_CLAW_BOT_WS/.x-cmd/data/DATA_OFFSET/weixin-clawbot"
+    local datadir_offset="$___X_CMD_CLAW_BOT_DATA/DATA_OFFSET/weixin-clawbot"
 
     local offset=0
     [ ! -f "$datadir_offset" ] || read -r offset <"$datadir_offset"

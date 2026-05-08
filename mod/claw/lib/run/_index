@@ -1,13 +1,14 @@
 
 # claw = memory + soul + note + tailer-mq + cron
 
-xrc:mod:lib     claw   run/heartbeat   run/msg  run/agentrequest   run/util
+xrc:mod:lib     claw   run/heartbeat   run/msg  run/agentrequest   run/util run/log
 
 ___X_CMD_CLAW_DIR="$___X_CMD_ROOT_DATA/claw"
 ___X_CMD_CLAW_BOT_WS="$___X_CMD_CLAW_DIR/workspace/default"
 ___X_CMD_CLAW_BOT_MQ="$___X_CMD_CLAW_BOT_WS/.x-cmd/tailer-mq"
-___X_CMD_CLAW_BOT_HEARTBEAT="$___X_CMD_CLAW_BOT_WS/.x-cmd/data/heartbeat"
-___X_CMD_CLAW_BOT_STDOUT_LOG_DIR="$___X_CMD_CLAW_BOT_WS/.x-cmd/logs/stdout"
+___X_CMD_CLAW_BOT_DATA="$___X_CMD_CLAW_BOT_WS/.x-cmd/data"
+___X_CMD_CLAW_BOT_HEARTBEAT="$___X_CMD_CLAW_BOT_DATA/heartbeat"
+___X_CMD_CLAW_BOT_STDOUT_LOG_DIR="$___X_CMD_CLAW_BOT_DATA/logs"
 
 ___x_cmd_claw_run(){
     [ "$#" -gt 0 ] || set -- --help
@@ -21,13 +22,10 @@ ___x_cmd_claw_run(){
 
     local im="${1:-"weixin"}"
     ___x_cmd_claw_run___ensure "$im" || return $?
+    ___x_cmd touch "$___X_CMD_CLAW_BOT_HEARTBEAT/im_activity/$im"
 
     claw:info "X-Claw agent runtime active on $im — awaiting instructions and ready to act"
-
-    # Clean up stale heartbeat state from previous run
-    ___x_cmd rmrf "$___X_CMD_CLAW_BOT_HEARTBEAT/current_im_chatid"
-
-    # claw:info "Use 'x claw log $x_' to view real-time agent logs"
+    # claw:info "Use 'x claw log' to view real-time agent logs"
 
     if ! ___x_cmd worker isalive --ns x-claw-default-worker --name heartbeat-runner; then
         claw:debug "Starting heartbeat worker"
@@ -42,17 +40,26 @@ ___x_cmd_claw_run(){
         ___x_cmd tailer run "$___X_CMD_CLAW_BOT_MQ"
     ) || {
         local exitcode="$?"
-        claw:debug "Interrupted by signal, stopping heartbeat worker"
-        ___x_cmd worker stop --ns x-claw-default-worker --name heartbeat-runner
+        claw:warn "Tailer loop exited with code $exitcode — initiating teardown"
+        ___x_cmd_claw_run___teardown
         return "$exitcode"
     }
 
-    claw:debug "Stopping heartbeat worker"
+    ___x_cmd_claw_run___teardown
+}
+
+___x_cmd_claw_run___teardown(){
+    claw:info "Shutting down X-Claw runtime — stopping services and cleaning up state"
+
+    claw:debug "Removing IM activity state directory: $___X_CMD_CLAW_BOT_HEARTBEAT/im_activity"
+    ___x_cmd rmrf "$___X_CMD_CLAW_BOT_HEARTBEAT/im_activity"
+
+    claw:debug "Stopping heartbeat worker (namespace: x-claw-default-worker, name: heartbeat-runner)"
     ___x_cmd worker stop --ns x-claw-default-worker --name heartbeat-runner
 }
 
 ___x_cmd_claw_run___agentwork(){
-    ___x_cmd log timestamp on
+    ___x_cmd log timestamp epoch
 
     local msg="$1"
     case "$msg" in
@@ -63,37 +70,6 @@ ___x_cmd_claw_run___agentwork(){
 
         # other agents.
     esac
-}
-
-___x_cmd_claw_log(){
-    local isall=0
-    while [ $# -gt 0 ]; do
-        case "$1" in
-            --help|-h)  ___x_cmd help -m claw log "$@" ; return 0 ;;
-            --all)      isall=1; shift ;;
-            *)          break ;;
-        esac
-    done
-
-    local dir="$___X_CMD_CLAW_BOT_STDOUT_LOG_DIR"
-    [ -d "$dir" ] || {
-        claw:error "No logs found for claw bot. Directory '$dir' does not exist."
-        return 1
-    }
-
-    shift $#
-    if [ "$isall" -eq 1 ]; then
-        set -- -n +1
-    fi
-
-    local x_="" l=""
-    ___x_cmd fsiter --file_ "$dir"
-    while read -r l; do
-        set -- "$@" "$dir/$l"
-    done <<A
-$x_
-A
-    ___x_cmd_cmds tail -F -q "$@"
 }
 
 ___x_cmd_claw_run___ensure(){

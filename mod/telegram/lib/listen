@@ -31,13 +31,32 @@ ___x_cmd_telegram_listen(){
     local offsetfp="$___X_CMD_TELEGRAM_TMP/offset"
     [ ! -f "$offsetfp" ] || read -r offset <"$offsetfp"
 
+    local curl_errcode=0
+    local fail_count=0
     while true; do
         local resp=;
         resp="$(___x_cmd_telegram_getupdates | ___x_cmd jq -c )" || {
-            telegram:error "Failed to get updates: $resp"
-            ___x_cmd sleep 1s
-            return 1
+            curl_errcode=$?
+            case "$curl_errcode" in
+                28)
+                    continue ;;
+                130)
+                    telegram:error "Exit because recved Interrupt."
+                    return 1 ;;
+                *)
+                    fail_count=$((fail_count+1))
+                    telegram:error "[fail-count=$fail_count] Failed to get updates: $resp"
+                    ___x_cmd sleep 1s || return $?
+
+                    if [ "$fail_count" -le 5 ]; then
+                        continue
+                    else
+                        return 1
+                    fi
+                    ;;
+            esac
         }
+        fail_count=0
 
         local msg
         ___x_cmd jo env . msg=.result <<A

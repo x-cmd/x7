@@ -53,7 +53,7 @@ ___x_cmd_claw_service_start(){
     }
 
     claw:info "Starting claw service"
-    ___x_cmd service start      x-claw-service  --  x-cmd claw service run "$@"
+    ___x_cmd service start      x-claw-service  --  x-cmd claw service run "$im"
 
     ___x_cmd sleep 2
     ___x_cmd service isalive x-claw-service || {

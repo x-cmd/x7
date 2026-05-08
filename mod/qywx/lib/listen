@@ -61,7 +61,7 @@ ___x_cmd_qywx_bot_sub(){
     ___x_cmd_qywx_gateway_status_
     [ "$x_" != alive ] || {
         qywx:info \
-            --hint1 "If you want to stop original listener -> pkill -f "websocat.*wss://openws.work.weixin.qq.com""  \
+            --hint1 "If you want to stop original listener -> pkill -f 'websocat.*wss://openws.work.weixin.qq.com'"  \
             "Abort starting listen because it is already alive."
         return 1
     }
