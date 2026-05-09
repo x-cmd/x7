@@ -1,7 +1,8 @@
 
 ___x_cmd_ccal_tiaoxiu(){
     local mode=auto
-    local count=100
+    local count=50
+    local exclude=0
 
     while [ $# -gt 0 ]; do
         case "$1" in
@@ -10,6 +11,8 @@ ___x_cmd_ccal_tiaoxiu(){
                                     mode="${1#--}" ;;
             -n|--count)
                                     count="$2"; shift ;;
+            --hide-plain-rest)
+                                    exclude=1 ;;
             *)                      break ;;
         esac
         shift
@@ -22,7 +25,7 @@ ___x_cmd_ccal_tiaoxiu(){
         if ___x_cmd_is_stdout2tty; then
             mode=tty
         else
-            mode=yml
+            mode=tsv
         fi
     fi
 
@@ -49,7 +52,7 @@ ___x_cmd_ccal_tiaoxiu(){
     end_date="$(___x_cmd_ccal_tiaoxiu___add_days "$start_date" "$count")"
 
     # Collect all data from start to end
-    ___x_cmd_ccal_tiaoxiu___collect_data "$start_date" "$end_date" "$mode"
+    ___x_cmd_ccal_tiaoxiu___collect_data "$start_date" "$end_date" "$mode" "$exclude"
 }
 
 ___x_cmd_ccal_tiaoxiu___add_days(){
@@ -86,6 +89,7 @@ ___x_cmd_ccal_tiaoxiu___collect_data(){
     local start_ymd="$1"
     local end_ymd="$2"
     local mode="$3"
+    local exclude="$4"
 
     local start_y="${start_ymd%%-*}"
     local start_m="${start_ymd#*-}"; start_m="${start_m%-*}"
@@ -109,7 +113,7 @@ ___x_cmd_ccal_tiaoxiu___collect_data(){
             sm=1
             sy=$((sy + 1))
         fi
-    done | awk -F'\t' -v "sy=$start_y" -v "sm=$start_m" -v "sd=$start_d" -v "ey=$end_y" -v "em=$end_m" -v "ed=$end_d" -v "mode=$mode" '
+    done | awk -F'\t' -v "sy=$start_y" -v "sm=$start_m" -v "sd=$start_d" -v "ey=$end_y" -v "em=$end_m" -v "ed=$end_d" -v "mode=$mode" -v "exclude=$exclude" '
     function date2int(s, a) {
         split(s, a, "-")
         return a[1]*10000 + a[2]*100 + a[3]
@@ -121,9 +125,17 @@ ___x_cmd_ccal_tiaoxiu___collect_data(){
         ei = date2int(sprintf("%04d-%02d-%02d", ey, em, ed))
         if (di >= si && di <= ei) {
             xiuxi = $10
-            holiday = $9
-            # Include: holidays, weekends with 休, weekdays with 工 (make-up work)
-            if (holiday != "无" || xiuxi == "休" || xiuxi == "工") {
+            weekday = $5
+            reason = $11
+            is_weekend = (weekday == "六" || weekday == "日")
+            # Plain rest = weekend (not 工) AND no reason (not holiday-adjacent)
+            is_plain_rest = is_weekend && xiuxi != "工" && (reason == "" || reason == "无")
+            # If exclude mode and it is a plain rest day
+            if (exclude == 1 && is_plain_rest) {
+                next
+            }
+            # Include if: xiuxi is 休/工, OR (weekend and NOT 休/工 - i.e. regular weekend)
+            if (xiuxi == "休" || xiuxi == "工" || (xiuxi != "休" && xiuxi != "工" && is_weekend)) {
                 print
             }
         }
@@ -131,30 +143,32 @@ ___x_cmd_ccal_tiaoxiu___collect_data(){
     ' | awk -F'\t' -v "mode=$mode" '
     function output_tsv() {
         xiuxi_disp = ($10=="休") ? "假" : ($10=="工" ? "工" : "休")
-        printf "%s\t%s\t%s\t%s\t%s\n", $1, $2, $5, xiuxi_disp, ($11==""?"无":$11)
+        reason_val = ($11=="" || $11=="无") ? "-" : $11
+        printf "%s\t%s\t%s\t%s\n", $1, $5, xiuxi_disp, reason_val
     }
     function output_csv() {
         gsub(/"/, "\"\"", $11)
         xiuxi_disp = ($10=="休") ? "假" : ($10=="工" ? "工" : "休")
-        printf "\"%s\",\"%s\",\"%s\",\"%s\",\"%s\"\n", $1, $2, $5, xiuxi_disp, ($11==""?"无":$11)
+        reason_val = ($11=="" || $11=="无") ? "-" : $11
+        printf "\"%s\",\"%s\",\"%s\",\"%s\"\n", $1, $5, xiuxi_disp, reason_val
     }
     function output_yml() {
         printf "- date: %s\n", $1
-        printf "  lunar_date: %s\n", $2
         printf "  weekday: %s\n", $5
         xiuxi_disp = ($10=="休") ? "假" : ($10=="工" ? "工" : "休")
         printf "  xiuxi: %s\n", xiuxi_disp
-        printf "  reason: %s\n", ($11==""?"无":$11)
+        if ($11!="" && $11!="无") printf "  reason: %s\n", $11
     }
     function output_tty() {
         xiuxi_disp = ($10=="休") ? "假" : ($10=="工" ? "工" : "休")
-        reason = $11; if (reason == "") reason = "-"
+        reason = ($11=="" || $11=="无") ? "-" : $11
         style = "\033[0m"
         if (xiuxi_disp == "假") style = "\033[31m"
         else if (xiuxi_disp == "工") style = "\033[36m"
-        printf "%s%-12s %-10s %-4s %-4s %-18s\033[0m\n", style, $1, $2, $5, xiuxi_disp, reason
+        else if (xiuxi_disp == "休") style = "\033[32m"
+        printf "%s%-14s %-5s %-5s %s\033[0m\n", style, $1, $5, xiuxi_disp, reason
     }
-    BEGIN { if (mode == "tty") printf "%-12s %-10s %-4s %-4s %-18s\n", "Date", "Lunar", "Week", "Xiuxi", "Reason" }
+    BEGIN { if (mode == "tty") printf "%-14s %-5s %-5s %s\n", "Date", "Week", "Xiuxi", "Reason" }
     {
         if (mode == "tsv") output_tsv()
         else if (mode == "csv") output_csv()

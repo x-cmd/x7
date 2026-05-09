@@ -32,7 +32,12 @@ ___x_cmd_ccal_ls(){
             ;;
         *-*-*)
             # Specific date -> show info-like for that day
-            ___x_cmd_ccal_info "$input" "$mode"
+            if [ "$mode" = tty ]; then
+                # TTY mode: show single day in table format (not full month calendar)
+                ___x_cmd_ccal_ls___day "$input" tty
+            else
+                ___x_cmd_ccal_info "$input" "$mode"
+            fi
             ;;
         *-*)
             ___x_cmd_ccal_ls___month "$input" "$mode"
@@ -342,8 +347,8 @@ ___x_cmd_ccal_ls___day(){
                 "Date" "Lunar" "Week" "Jieqi" "Xiuxi" "Yi" "Ji" "Holiday"
 
             ___x_cmd_ccal_ls___day_data "$ymd" "$y" "$m" | \
-            ___x_cmd_cmds awk -F'\t' '
-            {
+            ___x_cmd_cmds awk -F'\t' -v "target=$ymd" '
+            $1 == target {
                 lunar = $2
                 if ($5 != "") lunar = lunar " (闰" $5 ")"
                 xiuxi = $10; if (xiuxi == "") xiuxi = "-"

@@ -440,4 +440,5 @@ ___x_cmd_claw_run___agentrequest___markunavailable(){
     ___x_cmd date timestamp_
     ___x_cmd ensurefp "$agent_unavailable_file"
     printf "%s %s\n" "$fail_count" "$x_" > "$agent_unavailable_file"
+    claw:error "Agent marked unavailable (fail_count=$fail_count) — cooldown starts"
 }

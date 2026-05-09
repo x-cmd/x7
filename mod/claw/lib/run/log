@@ -21,7 +21,7 @@ A
     [ -n "$recent_ts" ] || return 0
     local ht; ht="$( ___x_cmd date iso "$recent_ts" )"
     claw:info "Showing logs from $ht"
-    ___x_cmd_claw_log___watch "$dir/$recent_ts"
+    ___x_cmd_claw_log___recent "$dir/$recent_ts"
 }
 
 ___x_cmd_claw_log___recent(){
@@ -40,7 +40,7 @@ A
     ___x_cmd_cmds tail -F -q -n 0 "$@" | ___x_cmd awk0 -m date -f "$___X_CMD_ROOT_MOD/claw/lib/awk/log_output_realtime.awk"
 }
 
-___x_cmd_claw_log___watch(){
+___x_cmd_claw_log___watch(){(
     local dir="$1"
     [ -d "$dir" ] || return 0
     ___x_cmd_claw_log___output_all "$dir"
@@ -53,7 +53,7 @@ ___x_cmd_claw_log___watch(){
     : > "$pids"
 
     (
-        trap 'while read -r p; do [ -n "$p" ] && kill "$p" 2>/dev/null; done < "$pids"; rm -f "$aggregate" "$tracked" "$pids"; exit' INT TERM
+        trap 'while read -r p; do [ -n "$p" ] && ___x_cmd kill tree "$p" 2>/dev/null; done < "$pids"; ___x_cmd rmrf  "$aggregate" "$tracked" "$pids"; exit' INT TERM
 
         while true; do
             for f in "$dir"/*; do
@@ -61,10 +61,10 @@ ___x_cmd_claw_log___watch(){
                 case "$f" in
                     "$aggregate"|"$tracked"|"$pids") continue ;;
                 esac
-                grep -Fxq "$f" "$tracked" 2>/dev/null && continue
+                ___x_cmd_cmds grep -Fxq "$f" "$tracked" 2>/dev/null && continue
 
                 printf '%s\n' "$f" >> "$tracked"
-                tail -F -q -n 0 "$f" >> "$aggregate" 2>/dev/null &
+                ___x_cmd_cmds tail -F -q -n 0 "$f" >> "$aggregate" 2>/dev/null &
                 printf '%s\n' "$!" >> "$pids"
             done
             sleep 2
@@ -75,10 +75,10 @@ ___x_cmd_claw_log___watch(){
     ___x_cmd_cmds tail -F -q -n 0 "$aggregate" | \
         ___x_cmd awk0 -m date -f "$___X_CMD_ROOT_MOD/claw/lib/awk/log_output_realtime.awk"
 
-    kill "$scanner_pid" 2>/dev/null
+    ___x_cmd kill tree "$scanner_pid" 2>/dev/null
     wait "$scanner_pid" 2>/dev/null
-    rm -f "$aggregate" "$tracked" "$pids"
-}
+    ___x_cmd rmrf "$aggregate" "$tracked" "$pids"
+)}
 
 ___x_cmd_claw_log___output_all(){
     local dir="$1"

@@ -43,11 +43,11 @@ null
 {
 "cn"
 :
-"使用 'x claw run' 启动网关服务，支持多平台同时运行（如 `x claw run --weixin --telegram`）。\n不指定平台时自动检测已登录的 IM 平台，默认回退到 weixin。\n支持的 IM 平台: weixin, telegram, feishu, qywx。\nAI Agent 引擎可通过 'x agent request' 配置切换（如 claude, codex, cursor, gemini-cli, opencode, kimi-cli）。\n"
+"使用 'x claw start' 启动网关服务，支持多平台同时运行（如 `x claw start --weixin --telegram`）。\n不指定平台时自动检测已登录的 IM 平台，默认回退到 weixin。\n支持的 IM 平台: weixin, telegram, feishu, qywx。\nAI Agent 引擎可通过 'x agent request' 配置切换（如 claude, codex, cursor, gemini-cli, opencode, kimi-cli）。\n"
 ,
 "en"
 :
-"Use 'x claw run' to start the gateway, supports multiple platforms simultaneously (e.g., `x claw run --weixin --telegram`).\nAuto-detects logged-in IM platforms when not specified, with weixin as fallback default.\nSupported IM platforms: weixin, telegram, feishu, qywx.\nAI Agent engine can be switched via 'x agent request' config (e.g. claude, codex, cursor, gemini-cli, opencode, kimi-cli).\n"
+"Use 'x claw start' to start the gateway, supports multiple platforms simultaneously (e.g., `x claw start --weixin --telegram`).\nAuto-detects logged-in IM platforms when not specified, with weixin as fallback default.\nSupported IM platforms: weixin, telegram, feishu, qywx.\nAI Agent engine can be switched via 'x agent request' config (e.g. claude, codex, cursor, gemini-cli, opencode, kimi-cli).\n"
 }
 ]
 ,

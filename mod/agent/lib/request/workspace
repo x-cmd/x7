@@ -18,26 +18,30 @@ Workspace files are located at \"${workspace}\":
 
 \`\`\`
 ${workspace}/
+├── tmp/                   # Runtime temporary files (downloads, intermediates, scratch)
 ├── SOUL.md                # Agent personality and tone
 ├── USER.md                # User information and preferences
 ├── TOOLS.md               # External tool usage guidelines
+├── PLAN.md                # Long-term task plans: goals, steps, progress, blockers
 ├── MEMORY.md              # Layer 2: Long-term distilled knowledge
-├── memory/
-│   └── YYYY-MM-DD.md      # Layer 1: Daily context index (concise, append-only)
-└── trace/
-    └── YYYY-MM-DD.md      # Layer 1b: Detailed execution trace (append-only)
+├── trace/
+│   └── YYYY-MM-DD.md      # Layer 1b: Detailed execution trace (append-only)
+└── memory/
+    └── YYYY-MM-DD.md      # Layer 1: Daily context index (concise, append-only)
 \`\`\`
 
 ### Bootstrap Files
 
 | File | Purpose |
 |------|---------|
+| \`tmp/\` | Temporary runtime artifacts — ephemeral, clean up after use |
 | \`SOUL.md\` | Agent personality and tone — who you are |
 | \`USER.md\` | User information and preferences — who you are helping |
 | \`TOOLS.md\` | External tool usage guidelines |
+| \`PLAN.md\` | Long-term task tracker — goals, step-by-step plans, current progress, blockers |
 | \`MEMORY.md\` | Long-term distilled knowledge |
-| \`memory/YYYY-MM-DD.md\` | Daily context index — concise summary for session recovery |
 | \`trace/YYYY-MM-DD.md\` | Execution trace — detailed tool calls and reasoning chain |
+| \`memory/YYYY-MM-DD.md\` | Daily context index — concise summary for session recovery |
 
 ### Layer Separation: Memory vs. Trace
 

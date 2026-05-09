@@ -1,6 +1,6 @@
 548d06daf523026531069d978f8f074fe4532f19 abox main NULL
-1a575721374bf15ee7af8b9de7bc4fe5f7fb89c5 advise main NULL
-916e5277b82021815d2104cd8ca778ee69f96af3 agent main NULL
+11632d3d2bf9d90a90c6f3a3182124fca88992b7 advise main NULL
+16b9fb0b9c515858a16acf815f3bb5a92548a715 agent main NULL
 94eb1cb39d13a2ebcddf07a44b8cf63e7ac687cc aider main NULL
 2abe9fc103abe6597b599c5245efc148c44ee948 alias main NULL
 c8dd6182f3d400215d7292cbfe9c65b73722ab7d api main NULL
@@ -31,7 +31,7 @@ c3b41385fc224cfa351b66e14238e8e467750d8b caddy main NULL
 9283baa7512069121936253fe152c55af1b1f74c cat main NULL
 9e2f636dd725acf0852cd81fddf5132537f9ebeb cawk main NULL
 d09bf34e46d3963b1438c214db43c2b79babc13f cb main NULL
-56fccc06864d210cc90462ea1d94695750341642 ccal main NULL
+870a41662bbf6db6b9c40728bf1bb9581ca29ce6 ccal main NULL
 039017a6f54644fe24e9f887a0841cd07df74bb6 ccmd main NULL
 a1d3869eeca8fa3902747f93a3b216505d484e00 cd main NULL
 56d410eb3918e62c7d91a5566940a7ff95c108f9 cf main NULL
@@ -39,8 +39,8 @@ a1d3869eeca8fa3902747f93a3b216505d484e00 cd main NULL
 e2bf25de5ee25c3d31081df2bd515fc9e03be156 chat main NULL
 924c0346c4890512f82ed4f810de599145dd9afb choco main NULL
 437d6bacd65476c80cbc41b2197d69307b8e5f82 cht main NULL
-170421d26b6ba824a5376fc1833980cc1253562e claude main NULL
-5d5f2c48c82f7c2defb6bff22a869aac3899fa5b claw main NULL
+4f39b160a9a7b6e5be71d1475a039928f270afee claude main NULL
+341b5c90edfd75449baa200f331684f120e4cf30 claw main NULL
 b2697ec6f77d4d8c8f10120c9e0a1d8a93ade8b1 clawhub main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
 bbf9eb7a630da0d2f607edaf1589df0ddfc9a8ae clear main NULL
@@ -236,6 +236,7 @@ b292d75fb5a845470134315ecb79474de27fb51f openai main NULL
 e2f8ea3d2fc3e54d96ab8f948067b3d70a84bbf0 openrouter main NULL
 0a6fdc649e00acb089f7b422b4d9afbdcdf1205f openspec main NULL
 82dc3a99e631a97574ee27bba27962170d8013b2 os main NULL
+bb8a837c9eb56bf3d06edb00251939bae05281fa ossinsight main NULL
 862d6c9138e6297eea5e68598775725774d44514 osv main NULL
 26d0c5b0e4080325e090d9814cd7c02d4ca9da85 ourl main NULL
 cd09a1419a5b27165cfef2a9936561051f1efeb1 outerr main NULL
@@ -341,6 +342,7 @@ d0cc0a39aadf314193e783ee15eaf61b0337b397 tsv main NULL
 d05ab0c5df5f752e75368d4420a5c0dfc637197d tz main NULL
 566036cbc2a4230a946cf26c3601161caba085f9 uhb main NULL
 512af2940157dab4d2eecd063fdf0d65efb19df2 ui main NULL
+ea2cb09141f6a06120ed15eaba941adb63ea984e umami main NULL
 f66285a4abc6cbd4257ad094b732c2c324bec190 uname main NULL
 a234388c4f32be63df7b7513d749fd950c3066e9 uninstall main NULL
 b4be6bffc8bff5cbdfa63d08ddf70ecb9dda2b6d upgrade main NULL

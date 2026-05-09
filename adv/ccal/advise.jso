@@ -18,53 +18,21 @@ null
 "#synopsis"
 :
 [
-{
 "x ccal [subcommand] [options]"
-:
-null
-}
 ,
-{
-"x ccal info --[yml|tsv|csv|tty] [date]"
-:
-null
-}
+"x ccal info [--yml|--tsv|--csv|--tty] [date]"
 ,
-{
-"x ccal ls --[yml|tsv|csv|tty] [date]"
-:
-null
-}
+"x ccal ls [--yml|--tsv|--csv|--tty] [date]"
 ,
-{
-"x ccal around --[yml|tsv|csv|tty] [date]"
-:
-null
-}
+"x ccal around [--yml|--tsv|--csv|--tty] [date]"
 ,
-{
-"x ccal tiaoxiu --[yml|tsv|csv|tty] [date] [-n count]"
-:
-null
-}
+"x ccal tiaoxiu [--yml|--tsv|--csv|--tty] [--hide-plain-rest] [-n count] [date]"
 ,
-{
 "x ccal fz|fzd"
-:
-null
-}
 ,
-{
 "x ccal fzm|fzy"
-:
-null
-}
 ,
-{
 "x ccal --cfg <key=value>"
-:
-null
-}
 ]
 ,
 "#desc"
@@ -72,11 +40,11 @@ null
 {
 "en"
 :
-"The ccal module is a terminal-based calendar tool designed for Chinese users.\nIt provides a clear view of both Gregorian and lunar calendars, including solar terms,\ntraditional Chinese holidays, sexagenary cycle (heavenly stems and earthly branches),\nsix-day cycle, and daily almanac guidance for auspicious and inauspicious activities.\nIdeal for checking Chinese festivals or consulting the traditional calendar for daily planning.\n"
+"The ccal module is a terminal-based calendar tool designed for Chinese users.\nIt provides a clear view of both Gregorian and lunar calendars, including solar terms,\ntraditional Chinese holidays, sexagenary cycle (heavenly stems and earthly branches),\nsix-day cycle, and daily almanac guidance for auspicious and inauspicious activities.\nIdeal for checking Chinese festivals or consulting the traditional calendar for daily planning.\n\nDesigned for AI Agents:\n- Structured output (YML/TSV/CSV) optimized for AI parsing and understanding\n- Rich holiday and tiaoxiu (调休放假) data for schedule planning\n- Offline-first: data bundled locally, no external API dependency\n- Lunar calendar data including leap months for accurate date conversion\n"
 ,
 "cn"
 :
-"ccal 模块是专为中文用户设计的终端日历工具，支持农历、节气和传统节日的显示。\n它以简洁的方式呈现公历与农历对照日历，并提供干支纪年、黄历宜忌、六曜等信息，\n适合查阅每日黄历或节日安排。\n"
+"ccal 模块是专为中文用户设计的终端日历工具，支持农历、节气和传统节日的显示。\n它以简洁的方式呈现公历与农历对照日历，并提供干支纪年、黄历宜忌、六曜等信息，\n适合查阅每日黄历或节日安排。\n\n为 AI Agent 设计：\n- 结构化输出（YML/TSV/CSV），便于 AI 解析和理解\n- 丰富的假期、调休放假数据，支持日程规划\n- 离线优先：数据本地打包，无需外部 API 依赖\n- 农历数据含闰月，支持精确的日期转换\n"
 }
 ,
 "#tip"
@@ -85,11 +53,11 @@ null
 {
 "cn"
 :
-"输出模式自动检测：\n- TTY (终端): 彩色日历或表格输出\n- Pipe/非TTY: YML 格式输出（AI 可解析）\n可通过 --yml|--tsv|--csv|--tty 强制指定格式\n"
+"输出模式自动检测：\n- TTY (终端): 彩色表格输出\n- Pipe/非TTY: YML 或 TSV 格式输出（AI 可解析）\n可通过 --yml|--tsv|--csv|--tty 强制指定格式\n"
 ,
 "en"
 :
-"Output mode auto-detection:\n- TTY (terminal): colorful calendar or table output\n- Pipe/non-TTY: YML format output (AI parseable)\nUse --yml|--tsv|--csv|--tty to force specific format\n"
+"Output mode auto-detection:\n- TTY (terminal): colorful table output\n- Pipe/non-TTY: YML or TSV format output (AI parseable)\nUse --yml|--tsv|--csv|--tty to force specific format\n"
 }
 ]
 ,
@@ -127,6 +95,20 @@ null
 {
 "cmd"
 :
+"x ccal t"
+,
+"en"
+:
+"View today's calendar"
+,
+"cn"
+:
+"查看今天的日历"
+}
+,
+{
+"cmd"
+:
 "x ccal ls --yml 2026-05"
 ,
 "en"
@@ -136,6 +118,20 @@ null
 "cn"
 :
 "列出 2026 年 5 月的月数据"
+}
+,
+{
+"cmd"
+:
+"x ccal ls --yml 2026"
+,
+"en"
+:
+"List year data for 2026"
+,
+"cn"
+:
+"列出 2026 年的年数据"
 }
 ,
 {
@@ -169,6 +165,48 @@ null
 {
 "cmd"
 :
+"x ccal tiaoxiu -n 30"
+,
+"en"
+:
+"View next 30 days of holiday schedule"
+,
+"cn"
+:
+"查看未来30天放假安排"
+}
+,
+{
+"cmd"
+:
+"x ccal tiaoxiu -n 365 2026-01"
+,
+"en"
+:
+"View 2026 full year holidays"
+,
+"cn"
+:
+"查看 2026 年全年放假"
+}
+,
+{
+"cmd"
+:
+"x ccal tiaoxiu --hide-plain-rest -n 30"
+,
+"en"
+:
+"Show holidays and work days only, exclude plain weekend rest"
+,
+"cn"
+:
+"只显示假期和调休日，排除普通周末休息"
+}
+,
+{
+"cmd"
+:
 "x ccal fzm"
 ,
 "en"
@@ -181,7 +219,7 @@ null
 }
 ]
 ,
-"#subcmd:View"
+"#subcmd:AI-Friendly"
 :
 [
 "info"
@@ -191,8 +229,12 @@ null
 "around"
 ,
 "tiaoxiu"
+]
 ,
-"fz"
+"#subcmd:FZ"
+:
+[
+"fz|fzd"
 ,
 "fzm"
 ,
@@ -269,12 +311,26 @@ null
 {
 "en"
 :
-"View ±7 days around a specified date (15 days total), showing day-level calendar data.\n\nExample:\n    x ccal around --yml 2026-05-09\n    x ccal around --tsv t\n\nData provided: date, lunar_date, jianchu (值星), weekday, jieqi, xiuxi (休/工), yi (宜), ji (忌), holiday\n\nOutput mode auto-detection:\n- TTY (terminal): readable table format\n- Pipe/non-TTY: YML list format for AI\n"
+"View ±7 days around a specified date (15 days total), showing day-level calendar data.\n\nData provided: date, lunar_date, jianchu (值星), weekday, jieqi, xiuxi (休/工), yi (宜), ji (忌), holiday\n"
 ,
 "cn"
 :
-"查看指定日期前后7天（共15天）的日历数据。\n\n示例:\n    x ccal around --yml 2026-05-09\n    x ccal around --tsv t\n\n提供数据：日期、农历、值星、星期、节气、休息/工作(休/工)、宜、忌、假日\n\n输出模式自动检测：\n- TTY (终端): 可读的表格格式\n- Pipe/非TTY: YML 列表格式供 AI 使用\n"
+"查看指定日期前后7天（共15天）的日历数据。\n\n提供数据：日期、农历、值星、星期、节气、休息/工作(休/工)、宜、忌、假日\n"
 }
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"TTY 输出表格 / Pipe 输出 YML 列表格式"
+,
+"en"
+:
+"TTY outputs table / Pipe outputs YML list format"
+}
+]
 ,
 "#1"
 :
@@ -365,12 +421,72 @@ null
 {
 "en"
 :
-"View upcoming holidays, weekends (休), and make-up work days (工) from a starting date.\n\nIncludes:\n- Official holidays (劳动节, 清明节, etc.)\n- Weekends marked as 休\n- Make-up work days marked as 工 (调休上班日)\n- Reason field shows the actual holiday causing the day off\n\nExample:\n    x ccal tiaoxiu --yml 2026-05-01\n    x ccal tiaoxiu --tsv -n 30 2026-05-01\n\nOutput fields: date, lunar_date, weekday, xiuxi (休/工), reason\n\nOutput mode auto-detection:\n- TTY (terminal): readable table format with color coding\n- Pipe/non-TTY: YML list format for AI\n"
+"View upcoming holidays, weekends, and make-up work days from a starting date.\n\nOutput fields: date, weekday, xiuxi (假/工/休), reason\n- 假 = 假日 (holiday or holiday-adjacent weekend)\n- 工 = 工作日 (make-up work day)\n- 休 = 休息日 (regular weekend)\n"
 ,
 "cn"
 :
-"查看从指定日期开始的放假安排、周末（休）和调休上班日（工）。\n\n包含：\n- 法定假日（劳动节、清明节等）\n- 标记为\"休\"的周末\n- 标记为\"工\"的调休上班日\n- reason 字段显示实际导致该天休息的假期\n\n示例:\n    x ccal tiaoxiu --yml 2026-05-01\n    x ccal tiaoxiu --tsv -n 30 2026-05-01\n\n输出字段：日期、农历、星期、休息/工作(休/工)、原因（默认100天内）\n\n输出模式自动检测：\n- TTY (终端): 带颜色可读的表格格式\n- Pipe/非TTY: YML 列表格式供 AI 使用\n"
+"查看从指定日期开始的放假安排。\n\n输出字段：日期、星期、休息/工作(假/工/休)、原因\n- 假 = 假日（法定假日或假期相邻周末）\n- 工 = 工作日（调休上班）\n- 休 = 休息日（普通周末）\n"
 }
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"TTY 输出彩色表格 / Pipe 输出 TSV 格式"
+,
+"en"
+:
+"TTY outputs colorful table / Pipe outputs TSV format"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x ccal tiaoxiu -n 30"
+,
+"en"
+:
+"View next 30 days of holidays and weekends"
+,
+"cn"
+:
+"查看未来30天放假安排"
+}
+,
+{
+"cmd"
+:
+"x ccal tiaoxiu -n 365 2026-01"
+,
+"en"
+:
+"View full year holidays and weekends"
+,
+"cn"
+:
+"查看全年放假和周末"
+}
+,
+{
+"cmd"
+:
+"x ccal tiaoxiu --hide-plain-rest -n 30"
+,
+"en"
+:
+"Show holidays and work days only, exclude plain weekend rest"
+,
+"cn"
+:
+"只显示假期和调休日，排除普通周末休息"
+}
+]
 ,
 "#1"
 :
@@ -396,11 +512,27 @@ null
 {
 "en"
 :
-"Number of days to look ahead (default: 100)"
+"Number of days to look ahead (default: 50)"
 ,
 "cn"
 :
-"查看的天数（默认：100天）"
+"向前查看的天数（默认：50天）"
+}
+}
+,
+"--hide-plain-rest"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Exclude normal weekend rest days (休), show only holidays (假) and make-up work days (工)"
+,
+"cn"
+:
+"排除普通周末休息日（休），只显示假期（假）和调休上班日（工）"
 }
 }
 ,
@@ -477,12 +609,26 @@ null
 {
 "en"
 :
-"View detailed calendar information for a specified date, defaulting to the current day.\n\nExample:\n    x ccal info --yml 2026-05-09\n    x ccal info --tsv 2026-05\n    x ccal info --tty 2026-05-09\n\nFields provided: date, lunar_date, lunar_daycount, jianchu (值星), weekday,\nbazi (干支), jieqi (节气), jieqi_next, holiday, xiuxi (休/工), yi (宜), ji (忌)\n\nOutput mode auto-detection:\n- TTY (terminal): uses 'x ccal draw' to render colorful calendar\n- Pipe/non-TTY: outputs YML format for AI agents\n"
+"View detailed calendar information for a specified date, defaulting to the current day.\n\nFields provided: date, lunar_date, lunar_daycount, jianchu (值星), weekday,\nbazi (干支), jieqi (节气), jieqi_next, holiday, xiuxi (休/工), yi (宜), ji (忌)\n"
 ,
 "cn"
 :
-"查看指定日期的详细日历信息，默认为当日。\n\n示例:\n    x ccal info --yml 2026-05-09\n    x ccal info --tsv 2026-05\n    x ccal info --tty 2026-05-09\n\n提供字段：日期、农历、农历月大小、值星、星期、干支、节气、下个节气、假日、休息/工作、宜、忌\n\n输出模式自动检测:\n- TTY (终端): 使用 x ccal draw 绘制彩色日历\n- Pipe/非TTY: 输出 YML 格式供 AI 使用\n"
+"查看指定日期的详细日历信息，默认为当日。\n\n提供字段：日期、农历、农历月大小、值星、星期、干支、节气、下个节气、假日、休息/工作、宜、忌\n"
 }
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"TTY 输出彩色日历 / Pipe 输出 YML 格式"
+,
+"en"
+:
+"TTY outputs colorful calendar / Pipe outputs YML format"
+}
+]
 ,
 "#1"
 :
@@ -573,12 +719,26 @@ null
 {
 "en"
 :
-"List calendar data in various formats (day/week/month/year view).\n\nExample:\n    x ccal ls --yml 2026-05\n    x ccal ls --yml 2026-05 | x ccal info --yml 2026-05-01\n    x ccal ls --tsv 2026\n\nData provided:\n- Day/Month view: date, lunar_date, jianchu (值星), weekday, jieqi, xiuxi (休/工), yi (宜), ji (忌), holiday\n- Month summary: year_month, jieqi_list, tiaoxiu_xiu (放假), tiaoxiu_gong (上班)\n- Year view: year, xuanyuan, shengxiao, leap_months, chunjie, qingming, duanwu, zhongqiu\n\nOutput mode auto-detection:\n- TTY (terminal): readable table format\n- Pipe/non-TTY: YML list format for AI\n"
+"List calendar data in various formats (day/week/month/year view).\n\nData provided:\n- Day/Month view: date, lunar_date, jianchu (值星), weekday, jieqi, xiuxi (休/工), yi (宜), ji (忌), holiday\n- Month summary: year_month, jieqi_list, tiaoxiu_xiu (放假), tiaoxiu_gong (上班)\n- Year view: year, xuanyuan, shengxiao, leap_months, chunjie, qingming, duanwu, zhongqiu\n"
 ,
 "cn"
 :
-"以多种格式列出日历数据（按日/周/月/年查看）。\n\n示例:\n    x ccal ls --yml 2026-05\n    x ccal ls --yml 2026-05 | x ccal info --yml 2026-05-01\n    x ccal ls --tsv 2026\n\n提供的数据：\n- 日/月视图: 日期、农历、值星、星期、节气、休息/工作(休/工)、宜、忌、假日\n- 月汇总: 年月、节气列表、调休放假、调休上班\n- 年视图: 生肖、闰月、春节、清明、端午、中秋\n\n输出模式自动检测:\n- TTY (终端): 可读的表格格式\n- Pipe/非TTY: YML 列表格式供 AI 使用\n"
+"以多种格式列出日历数据（按日/周/月/年查看）。\n\n提供的数据：\n- 日/月视图: 日期、农历、值星、星期、节气、休息/工作(休/工)、宜、忌、假日\n- 月汇总: 年月、节气列表、调休放假、调休上班\n- 年视图: 生肖、闰月、春节、清明、端午、中秋\n"
 }
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"TTY 输出表格 / Pipe 输出 YML 列表格式"
+,
+"en"
+:
+"TTY outputs table / Pipe outputs YML list format"
+}
+]
 ,
 "#1"
 :
