@@ -7,6 +7,8 @@ ___x_cmd_claw_qywx(){
     case "$op" in
         --help|-h)
             ___x_cmd help -m claw qywx ; return 0 ;;
+        send)
+            ___x_cmd qywx abot send "$@" ;;
         get-msg)
             ___x_cmd_claw_qywx_get_msg "$@" ;;
         get-unread)

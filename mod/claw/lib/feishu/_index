@@ -7,6 +7,8 @@ ___x_cmd_claw_feishu(){
     case "$op" in
         --help|-h)
             ___x_cmd help -m claw feishu ; return 0 ;;
+        send)
+            ___x_cmd feishu abot send "$@" ;;
         get-msg)
             ___x_cmd_claw_feishu_get_msg "$@" ;;
         get-unread)

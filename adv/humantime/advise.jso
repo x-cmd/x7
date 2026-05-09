@@ -287,11 +287,11 @@ null
 {
 "cn"
 :
-"将可读时间格式转为秒数（如 2h30m → 9000）"
+"将可读时间格式转为秒数（默认整数，带 --decimal 显示三位小数）"
 ,
 "en"
 :
-"Convert readable format to seconds (e.g., 2h30m → 9000)"
+"Convert readable format to seconds (default integer, use --decimal for float)"
 }
 ,
 "#1"
@@ -320,11 +320,25 @@ null
 ,
 "cn"
 :
-"示例: 2小时30分钟转为 9000秒"
+"示例: 2小时30分钟转为 9000秒（整数）"
 ,
 "en"
 :
-"Example: 2h30m to 9000 seconds"
+"Example: 2h30m to 9000 seconds (integer)"
+}
+,
+{
+"cmd"
+:
+"x humantime tosec --decimal 2h30m"
+,
+"cn"
+:
+"示例: 带小数输出 9000.000"
+,
+"en"
+:
+"Example: with decimal output 9000.000"
 }
 ,
 {
@@ -358,6 +372,22 @@ null
 "en"
 :
 "Show help"
+}
+}
+,
+"--decimal"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示三位小数（如 9000.000）"
+,
+"en"
+:
+"Show 3 decimal places (e.g., 9000.000)"
 }
 }
 }

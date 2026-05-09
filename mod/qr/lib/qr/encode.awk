@@ -3,7 +3,7 @@
 
 BEGIN {
     # GF(256) tables - exp_tbl[i] = 2^i in GF(256), log_tbl[a] = exponent i where exp_tbl[i] = a
-    split("2 4 8 16 32 64 128 29 58 116 232 205 135 19 38 76 152 45 90 180 117 234 201 143 3 6 12 24 48 96 192 157 39 78 156 37 74 148 53 106 212 181 119 238 193 159 35 70 140 5 10 20 40 80 160 93 186 105 210 185 111 222 161 95 190 97 194 153 47 94 188 101 202 137 15 30 60 120 240 253 231 211 187 107 214 177 127 254 225 223 163 91 182 113 226 217 175 67 134 17 34 68 136 13 26 52 104 208 189 103 206 129 31 62 124 248 237 199 147 59 118 236 197 151 51 102 204 133 23 46 92 184 109 218 169 79 158 33 66 132 21 42 84 168 77 154 41 82 164 85 170 73 146 57 114 228 213 183 115 230 209 191 99 198 145 63 126 252 229 215 179 123 246 241 255 227 219 171 75 150 49 98 196 149 55 110 220 165 87 174 65 130 25 50 100 200 141 7 14 28 56 112 224 221 167 83 166 81 162 89 178 121 242 249 239 195 155 43 86 172 69 138 9 18 36 72 144 61 122 244 245 247 243 251 235 203 139 11 22 44 88 176 125 250 233 207 131 27 54 108 216 173 71 142 1", exp_tbl)
+    split("1 2 4 8 16 32 64 128 29 58 116 232 205 135 19 38 76 152 45 90 180 117 234 201 143 3 6 12 24 48 96 192 157 39 78 156 37 74 148 53 106 212 181 119 238 193 159 35 70 140 5 10 20 40 80 160 93 186 105 210 185 111 222 161 95 190 97 194 153 47 94 188 101 202 137 15 30 60 120 240 253 231 211 187 107 214 177 127 254 225 223 163 91 182 113 226 217 175 67 134 17 34 68 136 13 26 52 104 208 189 103 206 129 31 62 124 248 237 199 147 59 118 236 197 151 51 102 204 133 23 46 92 184 109 218 169 79 158 33 66 132 21 42 84 168 77 154 41 82 164 85 170 73 146 57 114 228 213 183 115 230 209 191 99 198 145 63 126 252 229 215 179 123 246 241 255 227 219 171 75 150 49 98 196 149 55 110 220 165 87 174 65 130 25 50 100 200 141 7 14 28 56 112 224 221 167 83 166 81 162 89 178 121 242 249 239 195 155 43 86 172 69 138 9 18 36 72 144 61 122 244 245 247 243 251 235 203 139 11 22 44 88 176 125 250 233 207 131 27 54 108 216 173 71 142 1", exp_tbl)
     split("0 1 25 2 50 26 198 3 223 51 238 27 104 199 75 4 100 224 14 52 141 239 129 28 193 105 248 200 8 76 113 5 138 101 47 225 36 15 33 53 147 142 218 240 18 130 69 29 181 194 125 106 39 249 185 201 154 9 120 77 228 114 166 6 191 139 98 102 221 48 253 226 152 37 179 16 145 34 136 54 208 148 206 143 150 219 189 241 210 19 92 131 56 70 64 30 66 182 163 195 72 126 110 107 58 40 84 250 133 186 61 202 94 155 159 10 21 121 43 78 212 229 172 115 243 167 87 7 112 192 247 140 128 99 13 103 74 222 237 49 197 254 24 227 165 153 119 38 184 180 124 17 68 146 217 35 32 137 46 55 63 209 91 149 188 207 205 144 135 151 178 220 252 190 97 242 86 211 171 20 42 93 158 132 60 57 83 71 109 65 162 31 45 67 216 183 123 164 118 196 23 73 236 127 12 111 246 108 161 59 82 41 157 85 170 251 96 134 177 187 204 62 90 203 89 95 176 156 169 160 81 11 245 22 235 122 117 44 215 79 174 213 233 230 231 173 232 116 214 244 234 168 80 88 175", log_tbl)
     # QR Version 1-15 capacity tables (Byte mode, EC Level L)
     # version -> data codewords (matching Python CAPACITY)
@@ -87,22 +87,29 @@ BEGIN {
     FORMAT_L[7] = "011011101001011"
 }
 
-# Byte XOR using gawk's xor() function
-function gf_xor(a, b) {
-    return xor(a, b)
+# Byte XOR using integer arithmetic (no bitwise operators needed)
+function gf_xor(a, b,    i, r) {
+    r = 0
+    for (i = 0; i < 8; i++) {
+        if ((int(a / 2^i) % 2) != (int(b / 2^i) % 2))
+            r += 2^i
+    }
+    return r
 }
 
 # GF(256) multiplication using lookup tables
-# AWK arrays are 1-indexed, matching the table structure
+# AWK arrays are 1-indexed from split()
+# log_tbl[a] = exponent i where exp_tbl[i+1] = a (AWK 1-indexed)
+# exp_tbl[i] = 2^(i-1) in GF(256) (AWK 1-indexed, so exp_tbl[1] = 2^0 = 1)
 function gf_mul(a, b,    t) {
     if (a == 0 || b == 0) return 0
     t = (log_tbl[a] + log_tbl[b]) % 255
-    return exp_tbl[t]
+    return exp_tbl[t + 1]
 }
 
-# Get bit at position (0=MSB, 7=LSB) from byte using gawk bitwise
+# Get bit at position (0=MSB, 7=LSB) from byte - works on gawk, mawk, nawk
 function get_bit(byte, pos) {
-    return and(rshift(byte, pos), 1)
+    return (int(byte / (2^pos))) % 2
 }
 
 # Determine version needed for data length
@@ -158,7 +165,7 @@ function encode_data(data, version,    bits, i, c, len) {
 }
 
 # Pad bits to fill data capacity
-function pad_bits(bits, version,    padded, rem, pad_byte) {
+function pad_bits(bits, version,    padded, rem, pad_byte, pad_copy) {
     padded = bits
     max_bits = CAPACITY[version] * 8
 
@@ -170,9 +177,10 @@ function pad_bits(bits, version,    padded, rem, pad_byte) {
     pad_byte = 0xEC  # 11101100
     rem = max_bits - length(padded)
     while (rem >= 8) {
+        pad_copy = pad_byte  # Use copy for bit extraction
         for (bit = 7; bit >= 0; bit--) {
-            padded = padded ((pad_byte >= pw2(bit)) ? "1" : "0")
-            if (pad_byte >= pw2(bit)) pad_byte -= pw2(bit)
+            padded = padded ((pad_copy >= pw2(bit)) ? "1" : "0")
+            if (pad_copy >= pw2(bit)) pad_copy -= pw2(bit)
         }
         pad_byte = (pad_byte == 0xEC) ? 0x11 : 0xEC  # alternate
         rem = max_bits - length(padded)
@@ -289,7 +297,7 @@ function init_gen_poly(gen, ec_len,    i) {
 # Build QR matrix
 function build_matrix(result, total_len, version,    matrix, size, i, j, bit_idx, mask) {
     size = MATRIX_SIZE[version]
-    mask = 7  # Use mask 7 to match qrcode's default
+    mask = 7  # Use mask 7 to match Python qrencode.py
 
     # Initialize
     for (i = 0; i < size; i++) {
@@ -454,28 +462,74 @@ function is_reserved(row, col, size) {
     return 0
 }
 
-function place_data(matrix, size, data, data_len, mask,    bit_idx, i, j, k, col, row, byte_idx, bit, byte_val) {
+function place_data(matrix, size, data, data_len, mask,    bit_idx, col, row, inc, byte_idx, bit, byte_val, col_pair, placed, done) {
     bit_idx = 0
-    for (j = size - 1; j >= 1; j -= 2) {
-        if (j == 6) j = 5
-        for (i = 0; i < size; i++) {
-            for (k = 0; k < 2; k++) {
-                col = j - k
-                row = (j % 2 == 0) ? size - 1 - i : i
-                if (is_reserved(row, col, size)) continue
+    row = size - 1
+    inc = -1
+
+    for (col = size - 1; col >= 1; col -= 2) {
+        # Adjust col to skip timing column (col 6)
+        if (col == 6) col = 5
+
+        col_pair = col - 1  # Second column in the pair
+
+        while (1) {
+            placed = 0
+
+            # Process both columns in the pair at current row
+            if (!is_reserved(row, col, size)) {
                 byte_idx = int(bit_idx / 8)
-                if (byte_idx >= data_len) break
-                bit = 7 - (bit_idx % 8)
-                byte_val = data[byte_idx]
-                byte_val = get_bit(byte_val, bit)
-                if (get_mask_bit(row, col, mask))
-                    byte_val = 1 - byte_val
-                matrix[row, col] = byte_val
-                bit_idx++
+                if (byte_idx < data_len) {
+                    bit = 7 - (bit_idx % 8)
+                    byte_val = data[byte_idx]
+                    byte_val = get_bit(byte_val, bit)
+                    if (get_mask_bit(row, col, mask))
+                        byte_val = 1 - byte_val
+                    matrix[row, col] = byte_val
+                    bit_idx++
+                    placed = 1
+                }
             }
-            if (byte_idx >= data_len) break
+
+            if (!is_reserved(row, col_pair, size)) {
+                byte_idx = int(bit_idx / 8)
+                if (byte_idx < data_len) {
+                    bit = 7 - (bit_idx % 8)
+                    byte_val = data[byte_idx]
+                    byte_val = get_bit(byte_val, bit)
+                    if (get_mask_bit(row, col_pair, mask))
+                        byte_val = 1 - byte_val
+                    matrix[row, col_pair] = byte_val
+                    bit_idx++
+                    placed = 1
+                }
+            }
+
+            # Move row in current direction
+            row += inc
+
+            # Check if we hit a boundary and need to reverse
+            if (row < 0 || row >= size) {
+                row -= inc  # Back up
+                inc = -inc  # Reverse direction
+                break
+            }
+
+            # If no data placed in this iteration and we didn't hit boundary,
+            # we must be stuck at reserved areas - continue to next row
+            if (!placed) {
+                continue
+            }
+
+            # Check if data is exhausted
+            byte_idx = int(bit_idx / 8)
+            if (byte_idx >= data_len) {
+                done = 1
+                break
+            }
         }
-        if (byte_idx >= data_len) break
+
+        if (done) break
     }
 }
 

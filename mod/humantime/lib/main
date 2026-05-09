@@ -25,7 +25,7 @@ ___x_cmd_humantime_auto(){
     case "$1" in -h|--help) ___x_cmd help -m humantime auto "$@" ; return 0 ;; esac
 
     if ___x_cmd is int "$1"; then
-        ___x_cmd_humantime_tohuman  "$1"
+        ___x_cmd_humantime_fromsec  "$1"
     else
         ___x_cmd_humantime_tosec    "$1"
     fi

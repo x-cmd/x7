@@ -15,11 +15,7 @@ ___x_cmd_claw_agentrequest(){
     local im="$1";      [ -n "$im" ] || N=claw M="Please provide IM platform name (e.g., weixin|telegram)" log:ret:64
     local chatid="$2";  [ -n "$chatid" ] || N=claw M="Please provide chatid" log:ret:64
 
-    case "$im" in
-        feishu|qywx)
-                ___x_cmd "$im" abot service ensure  || return $? ;;
-        *)      ___x_cmd "$im" bot service ensure   || return $? ;;
-    esac
+    ___x_cmd_claw_run___ensure "$im" || return $?
     ___x_cmd_claw_run___agentrequest___handlemsg "$@"
 }
 
@@ -28,7 +24,7 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
     local chatid="$2";  [ -n "$chatid" ] || N=claw M="Please provide chatid" log:ret:64
     local msg="$3";     [ -n "$msg" ] || N=claw M="Please provide message" log:ret:64
 
-    local logfp="$___X_CMD_CLAW_BOT_STDOUT_LOG_DIR/${im}-${chatid}.log"
+    local logfp="$___X_CMD_CLAW_BOT_RECENT_STDOUT_LOG_DIR/${im}-${chatid}.log"
     ___x_cmd ensurefp "$logfp"
     exec >>"$logfp" 2>&1
 
@@ -282,7 +278,7 @@ $msg
 }
 
 ___x_cmd_claw_run___agentrequest___handleheartbeat(){
-    local logfp="$___X_CMD_CLAW_BOT_STDOUT_LOG_DIR/heartbeat.log"
+    local logfp="$___X_CMD_CLAW_BOT_RECENT_STDOUT_LOG_DIR/heartbeat.log"
     ___x_cmd ensurefp "$logfp"
     exec >>"$logfp" 2>&1
 
@@ -290,7 +286,7 @@ ___x_cmd_claw_run___agentrequest___handleheartbeat(){
 
     local imdir="$___X_CMD_CLAW_BOT_HEARTBEAT/im_activity"
     [ -d "$imdir" ] || {
-        claw:warn "No IM activity directory found. Skipping heartbeat."
+        claw:warn "[HB] No IM activity directory found. Skipping heartbeat."
         return 0
     }
 
@@ -343,13 +339,13 @@ ___x_cmd_claw_run___agentrequest___handleheartbeat(){
     done
 
     [ "$im_count" -gt 0 ] || {
-        claw:warn "No active platforms found. Skipping heartbeat."
+        claw:warn "[HB] No active platforms found. Skipping heartbeat."
         return 0
     }
 
     local workspace_dir="$___X_CMD_CLAW_BOT_WS"
 
-    claw:info "Processing global heartbeat for $im_count platform(s), default reply to $default_reply_im"
+    claw:info "[HB] Processing global heartbeat for $im_count platform(s), default reply to $default_reply_im"
 
     ___x_cmd agent request \
         --timeout 1800 \
@@ -377,8 +373,10 @@ YOUR TASKS:
 4. CORRECT: Identify any recurring mistakes, gaps, or outdated assumptions in your memory or behavior; update your notes accordingly.
 5. PLAN: Formulate a concise next-step plan if there are deferred tasks or follow-ups.
 
-PROACTIVE ENGAGEMENT (STRICT — default is **SILENCE**):
+PROACTIVE ENGAGEMENT (STRICT — DEFAULT IS **SILENCE**):
 - DO NOT send \"I'm online\", \"heartbeat received\", \"system nominal\", \"standing by\", or ANY status-confirmation message.
+- DO NOT greet the user. DO NOT use small talk (\"Good morning\", \"How are you\", \"Hope you're doing well\", etc.).
+- DO NOT apologize for being silent or explain why you have nothing to say.
 - ONLY send a message if you have SUBSTANTIVE, TIME-SENSITIVE, or USER-REQUESTED information.
 - If there is nothing genuinely worth the user's attention, STAY SILENT.
 
