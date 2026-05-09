@@ -148,16 +148,18 @@ function encode_data(data, version,    bits, i, c, len) {
     len = length(data)
     cc_bits = get_char_count_bits(version)
     for (i = cc_bits - 1; i >= 0; i--) {
-        bits = bits ((len >= pw2(i)) ? "1" : "0")
-        if (len >= pw2(i)) len -= pw2(i)
+        p = pw2(i)
+        bits = bits ((len >= p) ? "1" : "0")
+        if (len >= p) len -= p
     }
 
     # Data bytes
     for (i = 1; i <= length(data); i++) {
         c = ord(substr(data, i, 1))
         for (bit = 7; bit >= 0; bit--) {
-            bits = bits ((c >= pw2(bit)) ? "1" : "0")
-            if (c >= pw2(bit)) c -= pw2(bit)
+            p = pw2(bit)
+            bits = bits ((c >= p) ? "1" : "0")
+            if (c >= p) c -= p
         }
     }
 
@@ -174,15 +176,16 @@ function pad_bits(bits, version,    padded, rem, pad_byte, pad_copy) {
     if (rem >= 4) padded = padded "0000"
 
     # Pad with alternating bytes
-    pad_byte = 0xEC  # 11101100
+    pad_byte = 236  # 11101100 in decimal
     rem = max_bits - length(padded)
     while (rem >= 8) {
         pad_copy = pad_byte  # Use copy for bit extraction
         for (bit = 7; bit >= 0; bit--) {
-            padded = padded ((pad_copy >= pw2(bit)) ? "1" : "0")
-            if (pad_copy >= pw2(bit)) pad_copy -= pw2(bit)
+            p = pw2(bit)
+            padded = padded ((pad_copy >= p) ? "1" : "0")
+            if (pad_copy >= p) pad_copy -= p
         }
-        pad_byte = (pad_byte == 0xEC) ? 0x11 : 0xEC  # alternate
+        pad_byte = (pad_byte == 236) ? 17 : 236  # alternate
         rem = max_bits - length(padded)
     }
 

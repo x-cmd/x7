@@ -40,11 +40,11 @@ null
 {
 "en"
 :
-"The ccal module is a terminal-based calendar tool designed for Chinese users.\nIt provides a clear view of both Gregorian and lunar calendars, including solar terms,\ntraditional Chinese holidays, sexagenary cycle (heavenly stems and earthly branches),\nsix-day cycle, and daily almanac guidance for auspicious and inauspicious activities.\nIdeal for checking Chinese festivals or consulting the traditional calendar for daily planning.\n\nDesigned for AI Agents:\n- Structured output (YML/TSV/CSV) optimized for AI parsing and understanding\n- Rich holiday and tiaoxiu (调休放假) data for schedule planning\n- Offline-first: data bundled locally, no external API dependency\n- Lunar calendar data including leap months for accurate date conversion\n"
+"The ccal module is a terminal-based calendar tool designed for Chinese users.\nIt provides a clear view of both Gregorian and lunar calendars, including solar terms,\ntraditional Chinese holidays, sexagenary cycle (heavenly stems and earthly branches),\nsix-day cycle, and daily almanac guidance for auspicious and inauspicious activities.\nIdeal for checking Chinese festivals or consulting the traditional calendar for daily planning.\n\nAI Agent Ready:\n- Structured output (YML/TSV/CSV) designed for AI parsing and tool integration\n- Rich tiaoxiu (调休放假) data: holidays, make-up work days, weekend schedules\n- Offline-first: bundled lunar calendar data, no external API calls needed\n- Accurate lunar date conversion including leap months\n- Full-year holiday planning support for schedule-aware agents\n"
 ,
 "cn"
 :
-"ccal 模块是专为中文用户设计的终端日历工具，支持农历、节气和传统节日的显示。\n它以简洁的方式呈现公历与农历对照日历，并提供干支纪年、黄历宜忌、六曜等信息，\n适合查阅每日黄历或节日安排。\n\n为 AI Agent 设计：\n- 结构化输出（YML/TSV/CSV），便于 AI 解析和理解\n- 丰富的假期、调休放假数据，支持日程规划\n- 离线优先：数据本地打包，无需外部 API 依赖\n- 农历数据含闰月，支持精确的日期转换\n"
+"ccal 模块是专为中文用户设计的终端日历工具，支持农历、节气和传统节日的显示。\n它以简洁的方式呈现公历与农历对照日历，并提供干支纪年、黄历宜忌、六曜等信息，\n适合查阅每日黄历或节日安排。\n\nAI Agent 友好：\n- 结构化输出（YML/TSV/CSV），专为 AI 解析和工具集成设计\n- 丰富的调休放假数据：节假日、调休上班、周末安排\n- 离线优先：农历数据本地打包，无需调用外部 API\n- 精确的农历日期转换，支持闰月\n- 全年放假计划支持，助力日程规划类 Agent\n"
 }
 ,
 "#tip"
