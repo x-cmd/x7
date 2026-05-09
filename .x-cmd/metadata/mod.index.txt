@@ -1,6 +1,6 @@
 548d06daf523026531069d978f8f074fe4532f19 abox main NULL
 1a575721374bf15ee7af8b9de7bc4fe5f7fb89c5 advise main NULL
-1bada40ddda48f4d23311f93549d93c4714fe949 agent main NULL
+916e5277b82021815d2104cd8ca778ee69f96af3 agent main NULL
 94eb1cb39d13a2ebcddf07a44b8cf63e7ac687cc aider main NULL
 2abe9fc103abe6597b599c5245efc148c44ee948 alias main NULL
 c8dd6182f3d400215d7292cbfe9c65b73722ab7d api main NULL
@@ -31,7 +31,7 @@ c3b41385fc224cfa351b66e14238e8e467750d8b caddy main NULL
 9283baa7512069121936253fe152c55af1b1f74c cat main NULL
 9e2f636dd725acf0852cd81fddf5132537f9ebeb cawk main NULL
 d09bf34e46d3963b1438c214db43c2b79babc13f cb main NULL
-3a0481e4e00495569747291b9d395dc61acfe416 ccal main NULL
+56fccc06864d210cc90462ea1d94695750341642 ccal main NULL
 039017a6f54644fe24e9f887a0841cd07df74bb6 ccmd main NULL
 a1d3869eeca8fa3902747f93a3b216505d484e00 cd main NULL
 56d410eb3918e62c7d91a5566940a7ff95c108f9 cf main NULL
@@ -40,7 +40,7 @@ e2bf25de5ee25c3d31081df2bd515fc9e03be156 chat main NULL
 924c0346c4890512f82ed4f810de599145dd9afb choco main NULL
 437d6bacd65476c80cbc41b2197d69307b8e5f82 cht main NULL
 170421d26b6ba824a5376fc1833980cc1253562e claude main NULL
-157e131c82af9f86bc7327d79d41a716f3490519 claw main NULL
+5d5f2c48c82f7c2defb6bff22a869aac3899fa5b claw main NULL
 b2697ec6f77d4d8c8f10120c9e0a1d8a93ade8b1 clawhub main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
 bbf9eb7a630da0d2f607edaf1589df0ddfc9a8ae clear main NULL
@@ -103,7 +103,7 @@ a53c17219b274a1f8d51ec9d2ecaaab3fc05890f find main NULL
 7157e736b5cd69b77d33a9397cfb357faee86840 fkill main NULL
 b60e82beb81a55ea921116cd2068b4477429e0d1 font main NULL
 85ce30ada5ba700d420e1835cb21fa8775a9c144 free main NULL
-9ab9ba348cef515ec7ff01c570fabd1fc6adb0f5 fsiter main NULL
+cee6f0b3e3618cd398d80fac068360cdbfa4ec91 fsiter main NULL
 c52ff84f0f91c79812c75f72501d85eaa4c4159f fskv main NULL
 b172b77194f082fa27597133360211c75fb5eff9 fslock main NULL
 0fa273118ff2a726b03cf8cea4506bb9ded0ee1b functor main NULL

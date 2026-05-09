@@ -24,9 +24,11 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
     local chatid="$2";  [ -n "$chatid" ] || N=claw M="Please provide chatid" log:ret:64
     local msg="$3";     [ -n "$msg" ] || N=claw M="Please provide message" log:ret:64
 
-    local logfp="$___X_CMD_CLAW_BOT_RECENT_STDOUT_LOG_DIR/${im}-${chatid}.log"
-    ___x_cmd ensurefp "$logfp"
-    exec >>"$logfp" 2>&1
+    if [ -n "$___X_CMD_CLAW_BOT_RECENT_STDOUT_LOG_DIR" ]; then
+        local logfp="$___X_CMD_CLAW_BOT_RECENT_STDOUT_LOG_DIR/${im}-${chatid}.log"
+        ___x_cmd ensurefp "$logfp"
+        exec >>"$logfp" 2>&1
+    fi
 
     ___x_cmd_claw_run___agentrequest___checkunavailable || return 0
 
@@ -278,9 +280,11 @@ $msg
 }
 
 ___x_cmd_claw_run___agentrequest___handleheartbeat(){
-    local logfp="$___X_CMD_CLAW_BOT_RECENT_STDOUT_LOG_DIR/heartbeat.log"
-    ___x_cmd ensurefp "$logfp"
-    exec >>"$logfp" 2>&1
+    if [ -n "$___X_CMD_CLAW_BOT_RECENT_STDOUT_LOG_DIR" ]; then
+        local logfp="$___X_CMD_CLAW_BOT_RECENT_STDOUT_LOG_DIR/heartbeat.log"
+        ___x_cmd ensurefp "$logfp"
+        exec >>"$logfp" 2>&1
+    fi
 
     ___x_cmd_claw_run___agentrequest___checkunavailable || return 0
 
@@ -414,10 +418,14 @@ ___x_cmd_claw_run___agentrequest___checkunavailable(){
 
     local x_
     ___x_cmd date timestamp_
-    if [ "$(( x_ - fail_ts ))" -lt "$cooldown" ]; then
+    local elapsed=$(( x_ - fail_ts ))
+    if [ "$elapsed" -lt "$cooldown" ]; then
+        local remaining=$(( cooldown - elapsed ))
+        claw:info "Agent unavailable (fail_count=$fail_count), ${remaining}s cooldown remaining — skipping request"
         return 1
     fi
 
+    claw:info "Agent cooldown expired (fail_count=$fail_count, cooldown=${cooldown}s) — availability restored"
     ___x_cmd rmrf "$agent_unavailable_file"
     return 0
 }

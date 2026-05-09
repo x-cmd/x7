@@ -5,9 +5,11 @@
 # x cron add --ns "x-claw/default" ""
 
 ___x_cmd_claw_run___agentwork___heartbeat(){
-    local logfp="$___X_CMD_CLAW_BOT_RECENT_STDOUT_LOG_DIR/heartbeat.log"
-    ___x_cmd ensurefp "$logfp"
-    exec >>"$logfp" 2>&1
+    if [ -n "$___X_CMD_CLAW_BOT_RECENT_STDOUT_LOG_DIR" ]; then
+        local logfp="$___X_CMD_CLAW_BOT_RECENT_STDOUT_LOG_DIR/heartbeat.log"
+        ___x_cmd ensurefp "$logfp"
+        exec >>"$logfp" 2>&1
+    fi
 
     local current_ts="$1"
     local heartbeat_tsfile="$___X_CMD_CLAW_BOT_HEARTBEAT/lastheartbeat_ts"

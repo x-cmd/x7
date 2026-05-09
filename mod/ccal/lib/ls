@@ -273,7 +273,6 @@ ___x_cmd_ccal_ls___month_daydata(){
             style, $1, lunar, $4, ($7=="无"?"-":$7), xiuxi, yi, ji, holiday
     }
     BEGIN { if (mode == "tty") printf "%-12s %-10s %-6s %-10s %-4s %-20s %-20s %-18s\n", "Date", "Lunar", "Week", "Jieqi", "Xiuxi", "Yi", "Ji", "Holiday" }
-    BEGIN { if (mode == "tty") printf "%-12s %-10s %-6s %-10s %-20s %-20s %-18s\n", "Date", "Lunar", "Week", "Jieqi", "Yi", "Ji", "Holiday" }
     {
         if (mode == "tsv") output_tsv()
         else if (mode == "csv") output_csv()

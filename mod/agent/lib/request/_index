@@ -224,7 +224,7 @@ ___x_cmd_agent_request___run_attempt(){
             agent:debug "Cleaning up session map file"
             local real_session_id="" user_session_cwd=""
             { read -r real_session_id && read -r user_session_cwd; } < "$session_map_file"
-            local x_=""; ___x_cmd data timestamp_
+            local x_=""; ___x_cmd date timestamp_
             printf "timestamp: %s\nuser_session_cwd: %s\nuser_session_id: %s\nreal_session_id: %s\n" "$x_" "$user_session_cwd" "$user_session_id" "$real_session_id" >> "$___X_CMD_ROOT_TMP/agent/request/session/$harness/breakage_session"
             ___x_cmd rmrf "$session_map_file"
         }

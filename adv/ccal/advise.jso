@@ -43,6 +43,12 @@ null
 }
 ,
 {
+"x ccal tiaoxiu --[yml|tsv|csv|tty] [date] [-n count]"
+:
+null
+}
+,
+{
 "x ccal fz|fzd"
 :
 null
@@ -135,20 +141,6 @@ null
 {
 "cmd"
 :
-"x ccal ls --yml 2026-05 | x ccal info --yml 2026-05-01"
-,
-"en"
-:
-"View holidays and schedule for May 2026"
-,
-"cn"
-:
-"查看 2026 年 5 月的放假和时间安排"
-}
-,
-{
-"cmd"
-:
 "x ccal around --yml 2026-05-09"
 ,
 "en"
@@ -158,6 +150,20 @@ null
 "cn"
 :
 "查看 2026 年 5 月 9 号前后7天"
+}
+,
+{
+"cmd"
+:
+"x ccal tiaoxiu --yml 2026-05-01"
+,
+"en"
+:
+"View upcoming holidays and weekends from May 2026"
+,
+"cn"
+:
+"查看 2026 年 5 月起的放假和周末安排"
 }
 ,
 {
@@ -183,6 +189,8 @@ null
 "ls"
 ,
 "around"
+,
+"tiaoxiu"
 ,
 "fz"
 ,
@@ -297,6 +305,118 @@ null
 "cn"
 :
 "以 YML 列表格式输出。每项以 '- ' 开头，形成有效的 YAML 列表"
+}
+}
+,
+"--tsv"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Output in TSV (tab-separated values) format"
+,
+"cn"
+:
+"以 TSV（制表符分隔）格式输出"
+}
+}
+,
+"--csv"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Output in CSV (comma-separated values) format"
+,
+"cn"
+:
+"以 CSV（逗号分隔）格式输出"
+}
+}
+,
+"--tty"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Force TTY mode (table format output)"
+,
+"cn"
+:
+"强制 TTY 模式（表格格式输出）"
+}
+}
+}
+,
+"tiaoxiu"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"View upcoming holidays, weekends (休), and make-up work days (工) from a starting date.\n\nIncludes:\n- Official holidays (劳动节, 清明节, etc.)\n- Weekends marked as 休\n- Make-up work days marked as 工 (调休上班日)\n- Reason field shows the actual holiday causing the day off\n\nExample:\n    x ccal tiaoxiu --yml 2026-05-01\n    x ccal tiaoxiu --tsv -n 30 2026-05-01\n\nOutput fields: date, lunar_date, weekday, xiuxi (休/工), reason\n\nOutput mode auto-detection:\n- TTY (terminal): readable table format with color coding\n- Pipe/non-TTY: YML list format for AI\n"
+,
+"cn"
+:
+"查看从指定日期开始的放假安排、周末（休）和调休上班日（工）。\n\n包含：\n- 法定假日（劳动节、清明节等）\n- 标记为\"休\"的周末\n- 标记为\"工\"的调休上班日\n- reason 字段显示实际导致该天休息的假期\n\n示例:\n    x ccal tiaoxiu --yml 2026-05-01\n    x ccal tiaoxiu --tsv -n 30 2026-05-01\n\n输出字段：日期、农历、星期、休息/工作(休/工)、原因（默认100天内）\n\n输出模式自动检测：\n- TTY (终端): 带颜色可读的表格格式\n- Pipe/非TTY: YML 列表格式供 AI 使用\n"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Start date (YYYY-MM-DD, defaults to today)"
+,
+"cn"
+:
+"开始日期 (YYYY-MM-DD，默认为今日)"
+}
+}
+,
+"-n|--count"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Number of days to look ahead (default: 100)"
+,
+"cn"
+:
+"查看的天数（默认：100天）"
+}
+}
+,
+"--yml"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Output in YML list format."
+,
+"cn"
+:
+"以 YML 列表格式输出"
 }
 }
 ,
