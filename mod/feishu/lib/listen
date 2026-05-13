@@ -5,12 +5,13 @@ ___x_cmd_feishu_listen(){
 
     local format=;
     local fp=;
-
+    local chatid=;
     while [ $# -gt 0 ]; do
         case "$1" in
             -h|--help)      ___x_cmd help -m feishu listen "$@" ; return 0 ;;
             --fp)           fp=1 ;          shift ;;
             --json)         format="json";  shift ;;
+            --chatid)       chatid="$2";    arg:2:shift ;;
             *)              N=feishu M="Unknown op -> $1" log:ret:64   ;;
         esac
     done
@@ -22,10 +23,14 @@ ___x_cmd_feishu_listen(){
 
     local sync_buf_file="${___X_CMD_FEISHU_TMP}/sync_buf"
 
-    # TODO:
     local chats=
-    chats="$(___x_cmd feishu group ls --json | ___x_cmd jq -r '.data.items[].chat_id' 2>/dev/null)"
-    [ -n "$chats" ] || N=feishu M="Failed to start listener: cannot get group list." log:ret:64
+    if [ -n "$chatid" ]; then
+        chats="$chatid"
+    else
+        # TODO:
+        chats="$(___x_cmd feishu group ls --json | ___x_cmd jq -r '.data.items[].chat_id' 2>/dev/null)"
+        [ -n "$chats" ] || N=feishu M="Failed to start listener: cannot get group list." log:ret:64
+    fi
 
     local date=;
     ___x_cmd date timestamp_ ; date="$x_"

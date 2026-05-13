@@ -1,0 +1,37 @@
+
+___x_cmd_install_withtool(){
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help)      ___x_cmd help -m install --withtool "$@" ; return 0 ;;
+            *)              break ;;
+        esac
+        shift
+    done
+
+    [ $# -gt 0 ]    ||      N=install M="Please provide tool" log:ret:64
+    local tool="$1" ;       shift
+
+    local IFS=" "
+    case "$tool" in
+        apk)        ___x_cmd sudo apt install -y    "$@"    ;;
+        pacman)     ___x_cmd sudo pacman install -y "$@"    ;;
+        apt)        ___x_cmd sudo apt update
+                    ___x_cmd sudo apt install -y    "$@"    ;;
+        dnf)        ___x_cmd sudo dnf install -y    "$@"    ;;
+        yum)        ___x_cmd sudo apt install -y    "$@"    ;;
+
+        winget)     ___x_cmd_cmds winget install    "$@"    ;;
+
+        brew)       ___x_cmd_cmds brew install      "$@"    ;;
+        pixi)       ___x_cmd pixi use               "$@"    ;;
+        pkgx)       ___x_cmd pkgx use               "$@"    ;;
+        xpkg|x)     ___x_cmd pkg  use               "$@"    ;;
+
+
+        pip)        ___x_cmd uv install             "$@"    ;;
+        npm)        ___x_cmd uv install             "$@"    ;;
+        go)         ___x_cmd go install             "$@"    ;;
+        cargo)      ___x_cmd cargo install          "$@"    ;;
+    esac
+}
+

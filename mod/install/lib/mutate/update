@@ -12,6 +12,10 @@ ___x_cmd_install_update(){
     local X_help_cmd='x help -m install update'; help:arg:parse
     ___x_cmd_pkg_update___force || return $?
 
-    local num; num="$( ___x_cmd_install --ls | ___x_cmd_cmds wc -l )"
+    [ -f "$___X_CMD_INSTALL_DATA_ALLTSV" ] || {
+        N=install M="Please try it again. Index file expected -> $___X_CMD_INSTALL_DATA_ALLTSV" log:ret:1
+    }
+
+    local num; num="$( ___x_cmd_cmds wc -l <"$___X_CMD_INSTALL_DATA_ALLTSV" )"
     install:info "Metadata of softwares [num=$num] are updated successfully"
 }

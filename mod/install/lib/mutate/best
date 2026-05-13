@@ -1,0 +1,74 @@
+
+___x_cmd_install_best(){
+    [ $# -gt 0 ]    ||  set -- --help
+
+    local priority=""
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help)      ___x_cmd help -m install best "$@" ; return 0 ;;
+            -p|--priroity)  priority="$2" ; arg:2:shift ;;
+            *)              break ;;
+        esac
+    done
+
+    local tool
+    local pkgname
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            winget/*|brew/*|apk/*|apt/*|pacman/*|dnf/*|yum/*|pixi/*|pkgx/*|xpkg/*)
+                    ___x_cmd_install_sys --tool "${1%%/*}" "${1#*/}" ;;
+            x/*)    ___x_cmd_install_sys --tool xpkg "${1#*/}" ; return 0 ;;
+            */*)    N=install M="Unknown provider=${1%%/*} for software=${1#*/}" log:ret:64 ;;
+            *)
+                    local code;
+                    if code="$(___x_cmd_install_getbeset --code --priority "$priority" "$1")"; then
+                        {
+                            read -r tool
+                            read -r pkgname
+                        }<"$code"
+                        ___x_cmd_install_withtool "$tool" "$pkgname"
+                    else
+                        N=install M="Fail to install"
+                    fi
+        esac
+        shift
+    done
+}
+
+
+___x_cmd_install_auto___trybest(){
+    local software="$1"
+
+    # curl
+    # wget
+    # eget  -- eget ( ... )
+
+    # xpkg first
+    # pixi first
+    # brew first
+    # brew first
+    # sys first
+    # asdf
+    ___x_cmd_install_getbeset --best "$1"
+}
+
+
+___x_cmd_install_getbeset(){
+    [ $# -gt 0 ]    ||  set -- --help
+
+    local priority=""
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help)      ___x_cmd help -m install best "$@" ; return 0 ;;
+            -p|--priroity)  priority="$2" ; arg:2:shift ;;
+            *)              break ;;
+        esac
+    done
+
+    local software="$1"
+
+    ___x_cmd_install_showcandidate --best "$1"
+}
+
+

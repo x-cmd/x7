@@ -41,7 +41,10 @@ ___x_cmd_claw_run___heartbeat___orchestrate(){
     local i; for i in "$imdir"/*; do
         [ -f "$i" ] || continue
         active_im="${i##*/}"
-        ___x_cmd_claw_run___ensure "$active_im" || return 130
+        ___x_cmd_claw_run___ensure "$active_im" || {
+            claw:error "[HB] Failed to ensure IM platform $active_im"
+            return 130
+        }
 
         read -r active_chatid active_ts < "$i"
         [ -n "$active_chatid" ] || continue
@@ -49,7 +52,7 @@ ___x_cmd_claw_run___heartbeat___orchestrate(){
     done
 
     local idle_file="$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
-    local heartbeat_done_file="$___X_CMD_CLAW_BOT_HEARTBEAT/heartbeat_done"
+    local heartbeat_done_file="$___X_CMD_CLAW_BOT_WS/HEARTBEAT_DONE"
     # Skip heartbeat agent if already confirmed idle by agent itself
     [ ! -f "$heartbeat_done_file" ] || return 0
 
@@ -66,7 +69,7 @@ ___x_cmd_claw_run___heartbeat___probe(){
     local current_im="$1"
     local current_chatid="$2"
     local idle_file="$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
-    local heartbeat_done_file="$___X_CMD_CLAW_BOT_HEARTBEAT/heartbeat_done"
+    local heartbeat_done_file="$___X_CMD_CLAW_BOT_WS/HEARTBEAT_DONE"
 
     # Activity: unread message pending to be processed — launch agent if not already handling
     if ___x_cmd claw "$current_im" has-unread "$current_chatid" && ! ___x_cmd worker isalive --ns x-claw-default-worker --name "${current_im}-${current_chatid}"; then
@@ -99,12 +102,18 @@ ___x_cmd_claw_run_hearbeatgenerator(){
     local x_
 
     ___x_cmd date timestamp_
-    ___x_cmd_cmds sleep $(( 60 - (x_ % 60) )) || return 130
+    ___x_cmd_cmds sleep $(( 60 - (x_ % 60) )) || {
+        claw:error "[HB] Initial sleep interrupted or failed"
+        return 130
+    }
 
     while true; do
         # TODO: Check if the father process is alive. If not. exit.
         x_=; ___x_cmd date timestamp_
         ___x_cmd tailer send "$mqdir" "HEARTBEAT:$x_"
-        ___x_cmd_cmds sleep $(( 60 - (x_ % 60) )) || return 130
+        ___x_cmd_cmds sleep $(( 60 - (x_ % 60) )) || {
+            claw:error "[HB] Heartbeat sleep interrupted or failed"
+            return 130
+        }
     done
 }

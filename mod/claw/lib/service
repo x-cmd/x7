@@ -155,6 +155,7 @@ ___x_cmd_claw_service_log(){
 }
 
 ___x_cmd_claw_service_run(){
+    ___x_cmd log +claw
     ___x_cmd_claw_runstart
 }
 

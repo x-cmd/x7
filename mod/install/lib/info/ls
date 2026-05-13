@@ -1,13 +1,13 @@
 # shellcheck shell=dash disable=SC2034
 
-
 ___x_cmd_install_ls(){
+    [ $# -gt 0 ]    ||      set --  --auto
 
     local fmt=auto
     while [ $# -gt 0 ]; do
         case "$1" in
             -h|--help)      ___x_cmd help -m install ls "$@"; return ;;
-            --csv|--tsv|--auto|--json|--yml|--name)
+            --csv|--tsv|--auto|--json|--yml|--name|--app|--pick)
                             fmt="${1#--}" ; shift ;;
             *)              N=install M="Unknown option -> $1" log:ret:64 ;;
         esac
@@ -25,7 +25,7 @@ ___x_cmd_install_ls___auto(){
 }
 
 ___x_cmd_install_ls___name(){
-    ___x_cmd_install_ls___tsv | ___x_cmd tsv awk 'NR>1{ print $1; }'
+    ___x_cmd ta 'NR>1{ print $1; }' <"$___X_CMD_INSTALL_DATA_ALLTSV"
 }
 
 ___x_cmd_install_ls___raw(){
@@ -33,20 +33,22 @@ ___x_cmd_install_ls___raw(){
     ___x_cmd_install_ls___name
 }
 
-# TODO: This is the default raw data.
-# Data converted to tsv ...
 ___x_cmd_install_ls___tsv(){
-    ___x_cmd_cmds cat "$___X_CMD_INSTALL_DATA/all.tsv"
-}
-
-___x_cmd_install_ls___csv(){
-    ___x_cmd_install_ls___tsv | ___x_cmd tsv fromcsv
+    ___x_cmd_cmds cat "$___X_CMD_INSTALL_DATA_ALLTSV"
 }
 
 ___x_cmd_install_ls___app(){
+    ___x_cmd csv app    --      x install ls --csv
+}
+
+___x_cmd_install_ls___csv(){
+    ___x_cmd_install_ls___tsv | ___x_cmd tsv tocsv
+}
+
+___x_cmd_install_ls___pick(){
     local x_=
     ___X_CMD_PICK_SHBIN_CODE="xrc pkg install" \
-    ___x_cmd storeread_  x pick  --width - --col 10 ___x_cmd_install_ls___raw
+    ___x_cmd storeread_     ___x_cmd pick  --width - --col 10 ___x_cmd_install_ls___raw
     [ -n "$x_" ] || {
         install:info "Exit because no software is selected."
         return 0

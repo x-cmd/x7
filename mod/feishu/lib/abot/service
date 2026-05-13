@@ -24,7 +24,7 @@ ___x_cmd_feishu_abot_service_start(){
         ___x_cmd service log tail x-feishu-listener
         return 1
     }
-    printf "%s " "status: "; ___x_cmd_feishu_bot_service_status
+    printf "%s " "status: "; ___x_cmd_feishu_abot_service_status
 }
 
 ___x_cmd_feishu_abot_service_ensure(){

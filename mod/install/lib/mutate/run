@@ -1,25 +1,69 @@
 # shellcheck shell=dash disable=2034
 xrc ui
+
+# x install jq yq sys/tq
+
 ___x_cmd_install_run(){
-    local X_help_cmd='x help -m install run';   help:arg-null:parse
+    [ $# -gt 0 ]    ||      set -- --help
+
+    local mode=app
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --auto)     mode=auto ; shift ;;
+            *)          break ;;
+        esac
+    done
 
     local i; for i in "$@"; do
-        ___x_cmd_install_run___inner "$i" || return $?
+        ___x_cmd_install_run_one___"$mode" "$i" || return $?
     done
+}
+
+___x_cmd_install_run_one___auto(){
+    case "$1" in
+        winget/*|brew/*|apk/*|apt/*|pacman/*|dnf/*|yum/*|nix/*|\
+        pixi/*|pkgx/*|xpkg/*|\
+        curl/*|eget/*|\
+        npm/*|pip/*|go/*|cargo/*)
+                ___x_cmd install --withtool "${1%%/*}" "${1#*/}"    ;;
+        x/*)    ___x_cmd install --withtool xpkg "${1#*/}"          ;;
+        sys/*)  ___x_cmd install --sys      "${1#*/}"               ;;
+        best/*) ___x_cmd install --best     "${1#*/}"               ;;
+
+        */*)    N=install M="Unknown provider=${1%%/*} for software=${1#*/}" log:ret:64 ;;
+        *)      ___x_cmd install --best     "${1#*/}" ;;
+    esac
+}
+
+___x_cmd_install_run_one___app(){
+    local software="$1"
+    local x_=; ___x_cmd_install_run_one___app_ "$software" || return $?
+    [ "$x_" != "Exit" ] || return 0
+
+    ___x_cmd ui yesno "Whether to execute the following code: ${___X_CMD_UNSEENCHAR_NEWLINE}$(___x_cmd_ui bold cyan "$x_")" || return $?
+    install:info --code "$x_" "Running the code"
+
+    eval "$x_" || {
+        local exitcode=$?
+        install:error --cmd "$x_" --exitocd "$exitcode" "Fail to execute command"
+        return 1
+    }
 }
 
 ___x_cmd_install_run___app_(){
     [ "$#" -gt 0 ]  ||      N=install M="Please provide sofotware" log:ret:64
 
-    local software="$1";    shift "$#"
-    local data; data="$(___x_cmd_install___showcandidate "$software")" || return $?
+    local software="$1" ;   shift 1
+    local data; data="$( ___x_cmd_install___showcandidate "$software" )" || return $?
 
-    ! x env --xinstall has "$software" || data=" \"x env use ${software}\" ${data}"
+    ! ___x_cmd env --xinstall has "$software" || {
+        data=" \"x env use ${software}\" ${data}"
+    }
 
-    [ -n "$data" ] || return $?
+    [ -n "$data" ] || return 1
     local cmd="";
-    eval x ui select id,cmd "\"Choose the code you want to execute:\"" "$data" || return $?
-    [ -n "$cmd" ] || return $?
+    eval ___x_cmd ui select id,cmd "\"Choose the code you want to execute:\"" "$data" || return $?
+    [ -n "$cmd" ] || return 1
     x_="$cmd"
 }
 
@@ -27,21 +71,7 @@ ___x_cmd_install___showcandidate(){
     ___X_CMD_INSTALL_IS_RUN=1 ___x_cmd_install_cat "$1"
 }
 
-___x_cmd_install_run___inner(){
-    local software="$1"
-    local x_=; ___x_cmd_install_run___app_ "$software" || return $?
-    [ "$x_" != "Exit" ] || return 0
-    x ui yesno "Whether to execute the following code: ${___X_CMD_UNSEENCHAR_NEWLINE}$(___x_cmd_ui bold cyan "$x_")" || return $?
-    install:info --code "$x_" "Running the code"
-    eval "$x_" || {
-        install:error "Execute failed"
-        # x_=; ___x_cmd_install___update_installer_
-        # install:warn "Perhaps you need to use \`$(___x_cmd_ui bold cyan "$x_")\` firstly"
-        return 1
-    }
-    # install:info "Download software[$software] successfully"
-}
-
+# The code below are unused.
 ___x_cmd_install_run___update_installer_(){
     local cmd="$1"
     x_=""

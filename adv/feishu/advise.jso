@@ -12,11 +12,11 @@ null
 ,
 "cn"
 :
-"使用飞书 Webhook 推送群消息"
+"飞书消息发送与监听"
 ,
 "en"
 :
-"Send messages using Feishu Webhook"
+"Send and listen to Feishu messages"
 }
 ,
 "#desc"
@@ -24,11 +24,11 @@ null
 {
 "cn"
 :
-"使用 x feishu 向你的飞书群发送消息。首次使用需要配置 webhook url。"
+"使用 x feishu 发送飞书消息。首次使用需配置 webhook url（群机器人）或 app_id/app_secret（智能机器人）。"
 ,
 "en"
 :
-"Use x feishu send messages to your Feishu. The first use requires configuring webhook url."
+"Send Feishu messages using x feishu. First use requires configuring webhook url (group bot) or app_id/app_secret (intelligent bot)."
 }
 ,
 "#tip"
@@ -43,6 +43,16 @@ null
 :
 "飞书群机器人 webhook url 获取指引: https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot#7a28964d\n- 交互环境中可使用 `x feishu init` 进行初始化配置，配置信息将存放于本地保存\n- 亦可运行命令 `x feishu --cfg webhook=<webhook_url>` 添加 webhook url\n"
 }
+,
+{
+"en"
+:
+"Instructions for creating Feishu intelligent bot and getting app_id and app_secret: https://open.feishu.cn/document/develop-an-echo-bot/introduction\n- The intelligent bot requires app_id and app_secret for authentication.\n- Run command `x feishu --cfg app_id=<app_id> --cfg app_secret=<app_secret>` to configure.\n"
+,
+"cn"
+:
+"飞书智能机器人创建并获取 app_id 和 app_secret 指引: https://open.feishu.cn/document/develop-an-echo-bot/introduction\n- 智能机器人需要 app_id 和 app_secret 进行认证\n- 运行命令 `x feishu --cfg app_id=<app_id> --cfg app_secret=<app_secret>` 进行配置\n"
+}
 ]
 ,
 "#tldr"
@@ -51,15 +61,15 @@ null
 {
 "cmd"
 :
-"x feishu --cfg webhook=<webhook>"
+"x feishu init"
 ,
 "cn"
 :
-"设置 webhook url"
+"交互模式初始化配置"
 ,
 "en"
 :
-"set webhook url"
+"Initialize configuration in interactive mode"
 }
 ,
 {
@@ -79,15 +89,43 @@ null
 {
 "cmd"
 :
-"x feishu send --richtext   \\\n  --title \"Demo of Feishu\" \\\n  --text \"Welcome to x-cmd's website for details:\" \\\n  --url \"website\" \"https://x-cmd.com/mod/feishu\"\n"
+"x feishu listen"
 ,
 "cn"
 :
-"发送一个标题为 \"Demo of Feishu\"，链接到 \"https://x-cmd.com/mod/feishu\" 的消息"
+"启动长轮询监听飞书消息"
 ,
 "en"
 :
-"A message with the title \"Demo of Feishu\" will be sent, linking to \"https://x-cmd.com/mod/feishu"
+"Start long-polling listener for Feishu messages"
+}
+,
+{
+"cmd"
+:
+"x feishu abot send --text --chatid <chat_id> \"Hello\""
+,
+"cn"
+:
+"使用智能机器人发送文本消息"
+,
+"en"
+:
+"Send text messages using intelligent bot"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service start"
+,
+"cn"
+:
+"启动智能机器人监听服务"
+,
+"en"
+:
+"Start the intelligent bot listener service"
 }
 ,
 {
@@ -123,11 +161,11 @@ null
 {
 "cn"
 :
-"使用飞书 Webhook 推送群消息（等同于 x feishu bot send）"
+"使用飞书群机器人（webhook）发送消息（等同于 x feishu bot send）"
 ,
 "en"
 :
-"Send messages using Feishu Webhook (equivalent to `x feishu bot send`)"
+"Send messages using Feishu group bot (webhook) (equivalent to `x feishu bot send`)"
 }
 ,
 "#tldr"
@@ -175,11 +213,11 @@ null
 {
 "cn"
 :
-"使用飞书 Webhook 推送群消息"
+"使用飞书群机器人（webhook）发送消息"
 ,
 "en"
 :
-"Send messages using Feishu Webhook"
+"Send messages using Feishu group bot (webhook)"
 }
 ,
 "send"
@@ -190,11 +228,11 @@ null
 {
 "cn"
 :
-"使用飞书 Webhook 推送群消息"
+"使用飞书群机器人（webhook）发送消息"
 ,
 "en"
 :
-"Send messages using Feishu Webhook"
+"Send messages using Feishu group bot (webhook)"
 }
 ,
 "#tldr"
@@ -232,94 +270,6 @@ null
 "$ref"
 :
 "x-advise://feishu/data/send.jso"
-}
-}
-,
-"parse"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"解析飞书消息数据，自动下载媒体文件"
-,
-"en"
-:
-"Parse Feishu messages, automatically download media files"
-}
-,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x feishu bot parse oc_xxxxx 1:10"
-,
-"cn"
-:
-"解析群 oc_xxxxx 第 1 到 10 行消息记录"
-,
-"en"
-:
-"Parse message records from line 1 to 10 for chat oc_xxxxx"
-}
-,
-{
-"cmd"
-:
-"x feishu bot parse oc_xxxxx 5"
-,
-"cn"
-:
-"解析群 oc_xxxxx 第 5 行起的消息记录"
-,
-"en"
-:
-"Parse message records starting from line 5 for chat oc_xxxxx"
-}
-]
-,
-"#1"
-:
-{
-"#synopsis"
-:
-"<chatid>"
-,
-"#desc"
-:
-{
-"cn"
-:
-"飞书群或会话 ID"
-,
-"en"
-:
-"Feishu chat ID or conversation ID"
-}
-}
-,
-"#2"
-:
-{
-"#synopsis"
-:
-"<range>"
-,
-"#desc"
-:
-{
-"cn"
-:
-"消息行号范围，格式为 start:end 或 start"
-,
-"en"
-:
-"Message line range, format as start:end or start"
-}
 }
 }
 ,
@@ -821,6 +771,78 @@ true
 }
 }
 ,
+"listen"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"长轮询监听飞书消息"
+,
+"en"
+:
+"Long-polling listener for Feishu messages"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x feishu listen"
+,
+"cn"
+:
+"启动长轮询监听飞书消息"
+,
+"en"
+:
+"Start long-polling listener for Feishu messages"
+}
+,
+{
+"cmd"
+:
+"x feishu listen --chatid <chat_id>"
+,
+"cn"
+:
+"监听指定会话的消息"
+,
+"en"
+:
+"Listen for messages in specified chat"
+}
+]
+,
+"--chatid"
+:
+{
+"#synopsis"
+:
+"<chat_id>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"会话 ID，为空则监听所有消息"
+,
+"en"
+:
+"Chat ID, empty for all messages"
+}
+,
+"#1"
+:
+null
+}
+}
+,
 "group"
 :
 {
@@ -829,11 +851,11 @@ true
 {
 "cn"
 :
-"获取飞书群组列表、管理群组"
+"获取飞书群组列表"
 ,
 "en"
 :
-"List and manage Feishu groups"
+"List Feishu groups"
 }
 ,
 "#tldr"
@@ -983,6 +1005,94 @@ true
 :
 "Output in JSON format"
 }
+}
+}
+}
+,
+"parse"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"解析飞书消息数据，自动下载媒体文件"
+,
+"en"
+:
+"Parse Feishu messages, automatically download media files"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x feishu bot parse oc_xxxxx 1:10"
+,
+"cn"
+:
+"解析群 oc_xxxxx 第 1 到 10 行消息记录"
+,
+"en"
+:
+"Parse message records from line 1 to 10 for chat oc_xxxxx"
+}
+,
+{
+"cmd"
+:
+"x feishu bot parse oc_xxxxx 5"
+,
+"cn"
+:
+"解析群 oc_xxxxx 第 5 行起的消息记录"
+,
+"en"
+:
+"Parse message records starting from line 5 for chat oc_xxxxx"
+}
+]
+,
+"#1"
+:
+{
+"#synopsis"
+:
+"<chatid>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"飞书群或会话 ID"
+,
+"en"
+:
+"Feishu chat ID or conversation ID"
+}
+}
+,
+"#2"
+:
+{
+"#synopsis"
+:
+"<range>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"消息行号范围，格式为 start:end 或 start"
+,
+"en"
+:
+"Message line range, format as start:end or start"
 }
 }
 }
@@ -1156,6 +1266,10 @@ null
 "--cur"
 :
 {
+"#subcmd"
+:
+true
+,
 "#desc"
 :
 {
@@ -1204,6 +1318,10 @@ null
 "--cfg"
 :
 {
+"#subcmd"
+:
+true
+,
 "#desc"
 :
 {
