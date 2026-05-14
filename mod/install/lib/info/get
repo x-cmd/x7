@@ -3,7 +3,13 @@
 # x install get /apt
 
 ___x_cmd_install_get(){
-    local X_help_cmd='x help -m install get';   help:arg:parse
+    [ $# -gt 0 ] || set -- --help
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help) ___x_cmd help -m install --get "$@"; return 0 ;;
+            *) break ;;
+        esac
+    done
 
     local release; release=$(x os release | head -n 1)
     local os_and_installer="${1:-${release}}"

@@ -8,9 +8,9 @@ ___x_cmd_install_cat(){
 
     while [ $# -gt 0 ];     do
         case "$1" in
-            -h|--help)      ___x_cmd help -m install cat "$@" ; return 0 ;;
-            --color)        no_color="" ;;
-            --nocolor)      no_color=1  ;;
+            -h|--help)      ___x_cmd help -m install --cat "$@" ; return 0 ;;
+            --color)        no_color=""; shift 1 ;;
+            --nocolor)      no_color=1;  shift 1 ;;
             *)              break ;;
         esac
     done

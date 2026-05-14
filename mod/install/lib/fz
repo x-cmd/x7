@@ -19,7 +19,7 @@ ___x_cmd_install___fz_data(){
             --ansi --reverse --height='80%' --query="$*"                                                    \
             --bind='ctrl-w:toggle-preview-wrap'                                                             \
             --bind='ctrl-r:change-preview-window(right,70%|down,40%,99%,border-horizontal|hidden|right)'    \
-            --preview='___x_cmdexe install --color --cat {1}'                                                                    \
+            --preview='___x_cmdexe install --cat --color {1}'                                                                    \
             --preview-window=right:70%:wrap
 }
 

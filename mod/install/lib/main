@@ -6,7 +6,7 @@ xrc pkg
 xrc:mod:lib     install     util fz snaplookup          \
                 info/_index                             \
                 mutate/update                           \
-                mutate/run  mutate/sys  mutate/auto
+                mutate/run  mutate/sys
 
 if ___x_cmd_is_suitable_advise_env; then
     xrc:mod:lib     install advise
@@ -20,8 +20,9 @@ ___x_cmd_install___main(){
 
     local op="$1";      shift
     case "$op" in
-        --cat)              ___x_cmd_install__cat       "$@" ;;
-        --get)              ___x_cmd_install__get       "$@" ;;
+        -h|--help)          ___x_cmd help -m install "$@" ; return 0 ;;
+        --cat)              ___x_cmd_install_cat       "$@" ;;
+        --get)              ___x_cmd_install_get       "$@" ;;
 
         --ls|--ll|--nv)     ___x_cmd_install_"${op#--}" "$@" ;;
 

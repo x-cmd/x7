@@ -5,7 +5,7 @@ ___x_cmd_install_best(){
     local priority=""
     while [ $# -gt 0 ]; do
         case "$1" in
-            -h|--help)      ___x_cmd help -m install best "$@" ; return 0 ;;
+            -h|--help)      ___x_cmd help -m install --best "$@" ; return 0 ;;
             -p|--priroity)  priority="$2" ; arg:2:shift ;;
             *)              break ;;
         esac
@@ -60,7 +60,7 @@ ___x_cmd_install_getbeset(){
     local priority=""
     while [ $# -gt 0 ]; do
         case "$1" in
-            -h|--help)      ___x_cmd help -m install best "$@" ; return 0 ;;
+            -h|--help)      ___x_cmd help -m install --best "$@" ; return 0 ;;
             -p|--priroity)  priority="$2" ; arg:2:shift ;;
             *)              break ;;
         esac

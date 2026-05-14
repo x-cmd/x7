@@ -9,7 +9,14 @@ ___x_cmd_install_update___check(){
 }
 
 ___x_cmd_install_update(){
-    local X_help_cmd='x help -m install update'; help:arg:parse
+    [ $# -gt 0 ] || set -- --help
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help) ___x_cmd help -m install --update "$@"; return 0 ;;
+            *) break ;;
+        esac
+    done
+
     ___x_cmd_pkg_update___force || return $?
 
     [ -f "$___X_CMD_INSTALL_DATA_ALLTSV" ] || {

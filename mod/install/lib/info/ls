@@ -6,7 +6,7 @@ ___x_cmd_install_ls(){
     local fmt=auto
     while [ $# -gt 0 ]; do
         case "$1" in
-            -h|--help)      ___x_cmd help -m install ls "$@"; return ;;
+            -h|--help)      ___x_cmd help -m install --ls "$@"; return ;;
             --csv|--tsv|--auto|--json|--yml|--name|--app|--pick)
                             fmt="${1#--}" ; shift ;;
             *)              N=install M="Unknown option -> $1" log:ret:64 ;;
@@ -38,7 +38,9 @@ ___x_cmd_install_ls___tsv(){
 }
 
 ___x_cmd_install_ls___app(){
-    ___x_cmd csv app    --      x install ls --csv
+    local ___X_CMD_CSV_APP_SHBIN_CODE=
+    ___X_CMD_CSV_APP_SHBIN_CODE="xrc install"   \
+        ___x_cmd csv app --clear  ___x_cmd_install_ls___csv || return 1
 }
 
 ___x_cmd_install_ls___csv(){

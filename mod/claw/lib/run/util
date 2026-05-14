@@ -66,6 +66,7 @@ ___x_cmd_claw_run___ensure(){
         if ___x_cmd_runmode_allow_manual; then
             claw:info "Agent not initialized — running 'x agent init' automatically"
             ___x_cmd agent init || return $?
+            ___x_cmd agent --is-setup || ___x_cmd agent setup
         else
             claw:error "Agent is not ready. Please run 'x agent init' to setup the agent first."
             return 1

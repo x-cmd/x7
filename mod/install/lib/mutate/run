@@ -50,7 +50,7 @@ ___x_cmd_install_run_one___app(){
     }
 }
 
-___x_cmd_install_run___app_(){
+___x_cmd_install_run_one___app_(){
     [ "$#" -gt 0 ]  ||      N=install M="Please provide sofotware" log:ret:64
 
     local software="$1" ;   shift 1

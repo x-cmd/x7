@@ -6,7 +6,7 @@ ___x_cmd_install_ll(){
     local fmt=auto
     while [ $# -gt 0 ]; do
         case "$1" in
-            -h|--help)      ___x_cmd help -m install ll "$@"; return 0 ;;
+            -h|--help)      ___x_cmd help -m install --ll "$@"; return 0 ;;
             --auto|--app|--tsv0|--raw)
                             fmt="${1#--}" ; shift ;;
             *)              N=install M="Unknown option -> $1" log:ret:64 ;;
