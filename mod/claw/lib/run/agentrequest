@@ -56,7 +56,36 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
         ___x_cmd mkdirp "$workspace_dir/tmp"
     fi
 
-    claw:info "Processing agent request for $im:$chatid"
+    if [ "$workspace_dir/AGENTS.md" -ot "$___X_CMD_ROOT_METADATA/version_sum" ]; then
+        claw:info "Workspace template 可能有更新，检查是否需要优化结构"
+        check_prompt="<workspace_check>
+The workspace template has been updated. Use it as a reference to evaluate whether your current workspace structure needs improvements.
+
+Reference template: $___X_CMD_ROOT_MOD/claw/lib/data/workspace/msg/
+Current workspace:  $workspace_dir
+
+Guidelines:
+- This is a reference only — you decide what to adopt
+- Compare structures and selectively apply beneficial changes
+- Preserve existing user content and customizations
+- Focus on structural gaps or organizational improvements
+</workspace_check>"
+    fi
+
+    local latest_msg
+    case "$im" in
+        weixin)
+            latest_msg="$(___x_cmd claw weixin recent-msg 2>/dev/null)" || {
+                claw:debug "Failed to fetch recent message for weixin"
+                latest_msg="[unavailable]"
+            } ;;
+        *)
+            latest_msg="$(___x_cmd claw "$im" recent-msg "$chatid" 2>/dev/null)" || {
+                claw:debug "Failed to fetch recent message for $im:$chatid"
+                latest_msg="[unavailable]"
+            } ;;
+    esac
+    claw:info --m:latest_msg "$latest_msg" "Processing agent request for $im:$chatid"
     case "$im" in
         weixin)
             ___x_cmd agent request  \
@@ -70,8 +99,13 @@ REPLY METHOD:
 Use the command 'x weixin send' to reply:
 - For help:        x weixin send -h
 - For text:        x weixin send --text '<msg>'
-  NOTE: \\n inside '<msg>' is literal text — it prints as \"\\n\", not a newline.
-  For multi-line text, write real line breaks directly inside the single quotes.
+  IMPORTANT: Do NOT use \\n for line breaks. The text \\n will be printed literally (two characters: backslash + n).
+  CORRECT — press Enter for actual line breaks inside the quotes:
+    '<msg>' becomes 'Line 1
+    Line 2
+    Line 3'
+  WRONG — \\n appears as literal text in the output:
+    'Line 1\\nLine 2\\nLine 3'
 - For image/video: x weixin send --image <path>  or  x weixin send --video <path>
 
 FORMAT:
@@ -88,6 +122,7 @@ Your workspace: \"$workspace_dir\"
 
 Current time: '$(___x_cmd date iso)'
 ---
+${check_prompt}
 $msg
 "
             ;;
@@ -105,8 +140,13 @@ REPLY METHOD:
 Use the command 'x telegram send' to reply:
 - For help:        x telegram send -h
 - For text:        \`x telegram send --text --chatid \"$chatid\" '<msg>'\`
-  NOTE: \\n inside '<msg>' is literal text — it prints as \"\\n\", not a newline.
-  For multi-line text, write real line breaks directly inside the single quotes.
+  IMPORTANT: Do NOT use \\n for line breaks. The text \\n will be printed literally (two characters: backslash + n).
+  CORRECT — press Enter for actual line breaks inside the quotes:
+    '<msg>' becomes 'Line 1
+    Line 2
+    Line 3'
+  WRONG — \\n appears as literal text in the output:
+    'Line 1\\nLine 2\\nLine 3'
 - For image/video: x telegram send --image --chatid \"$chatid\" <path>  or  x telegram send --video --chatid \"$chatid\" <path>
 
 FORMAT:
@@ -140,8 +180,13 @@ REPLY METHOD:
 Use the command 'x feishu abot send' to reply:
 - For help:        x feishu abot send -h
 - For text:        \`x feishu abot send --text --chatid \"$chatid\" '<msg>'\`
-  NOTE: \\n inside '<msg>' is literal text — it prints as \"\\n\", not a newline.
-  For multi-line text, write real line breaks directly inside the single quotes.
+  IMPORTANT: Do NOT use \\n for line breaks. The text \\n will be printed literally (two characters: backslash + n).
+  CORRECT — press Enter for actual line breaks inside the quotes:
+    '<msg>' becomes 'Line 1
+    Line 2
+    Line 3'
+  WRONG — \\n appears as literal text in the output:
+    'Line 1\\nLine 2\\nLine 3'
 - For image/video: x feishu abot send --image --chatid \"$chatid\" <path>  or  x feishu abot send --video --chatid \"$chatid\" <path>
 
 FORMAT:
@@ -175,8 +220,13 @@ REPLY METHOD:
 Use the command 'x qywx abot send' to reply:
 - For help:        x qywx abot send -h
 - For text:        \`x qywx abot send --text --chatid \"$chatid\" '<msg>'\`
-  NOTE: \\n inside '<msg>' is literal text — it prints as \"\\n\", not a newline.
-  For multi-line text, write real line breaks directly inside the single quotes.
+  IMPORTANT: Do NOT use \\n for line breaks. The text \\n will be printed literally (two characters: backslash + n).
+  CORRECT — press Enter for actual line breaks inside the quotes:
+    '<msg>' becomes 'Line 1
+    Line 2
+    Line 3'
+  WRONG — \\n appears as literal text in the output:
+    'Line 1\\nLine 2\\nLine 3'
 - For image/file: x qywx abot send --image --chatid \"$chatid\" <path>  or  x qywx abot send --file --chatid \"$chatid\" <path>
 
 FORMAT:
@@ -292,6 +342,22 @@ ___x_cmd_claw_run___agentrequest___handleheartbeat(){
         ___x_cmd mkdirp "$workspace_dir/tmp"
     fi
 
+    if [ "$workspace_dir/AGENTS.md" -ot "$___X_CMD_ROOT_METADATA/version_sum" ]; then
+        claw:info "[HB] Workspace template 可能有更新，检查是否需要优化结构"
+        check_prompt="<workspace_check>
+The workspace template has been updated. Use it as a reference to evaluate whether your current workspace structure needs improvements.
+
+Reference template: $___X_CMD_ROOT_MOD/claw/lib/data/workspace/hb/
+Current workspace:  $workspace_dir
+
+Guidelines:
+- This is a reference only — you decide what to adopt
+- Compare structures and selectively apply beneficial changes
+- Preserve existing user content and customizations
+- Focus on structural gaps or organizational improvements
+</workspace_check>"
+    fi
+
     claw:info "[HB] Processing global heartbeat for $im_count platform(s), default reply to $default_reply_im"
 
     ___x_cmd agent request \
@@ -313,6 +379,7 @@ FORMAT GUIDE:
 - When unsure or sending to multiple platforms, use plain text with lists and emoji.
 
 - Your workspace:             \"$workspace_dir\"
+$check_prompt
 " || {
         claw:error "[HB] Global heartbeat agent request failed for $im_count platform(s)"
         ___x_cmd_claw_run___agentrequest___markunavailable

@@ -595,6 +595,40 @@ true
 "Manage intelligent bot listener service"
 }
 ,
+"#tip"
+:
+[
+{
+"cn"
+:
+"监听模式有两种：\n1. --admin — 单聊模式（默认）\n2. --group — 群聊模式，不指定 chat_id 则自动获取所有群列表并监听每个群\n"
+,
+"en"
+:
+"There are two listening modes:\n1. --admin — Private chat mode (default)\n2. --group — Group chat mode, automatically fetches all group list and listens to each group if chat_id not provided\n"
+}
+,
+{
+"cn"
+:
+"默认为单聊模式，用于监听机器人创建者与机器人的单聊\n首次启动需配置 chat_id（在机器人聊天页面右上角设置底部获取）\n"
+,
+"en"
+:
+"Default private chat mode, for listening to private chats between the bot creator and the bot\nFirst startup requires configuring chat_id (found at the bottom of settings in the top right corner of the bot chat page)\n"
+}
+,
+{
+"cn"
+:
+"服务名格式：x-feishu-<chat_type>[<chat_id>]-listener\n- 单聊模式：x-feishu-admin-listener\n- 群聊模式：x-feishu-group[<chat_id>]-listener\n"
+,
+"en"
+:
+"Service name format: x-feishu-<chat_type>[<chat_id>]-listener\n- Private chat mode: x-feishu-admin-listener\n- Group chat mode: x-feishu-group[<chat_id>]-listener\n"
+}
+]
+,
 "#tldr"
 :
 [
@@ -605,25 +639,53 @@ true
 ,
 "cn"
 :
-"启动监听服务"
+"启动监听服务（单聊模式）"
 ,
 "en"
 :
-"Start listener service"
+"Start listener service (private chat mode)"
 }
 ,
 {
 "cmd"
 :
-"x feishu abot service start --group 123"
+"x feishu abot service start --admin"
 ,
 "cn"
 :
-"启动指定群的监听服务"
+"以单聊模式启动"
 ,
 "en"
 :
-"Start listener service for specified group"
+"Start in private chat mode"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service start --group"
+,
+"cn"
+:
+"以群聊模式启动，监听所有群"
+,
+"en"
+:
+"Start in group chat mode, listen to all groups"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service start --group <chat_id>"
+,
+"cn"
+:
+"以群聊模式启动，监听指定群的消息"
+,
+"en"
+:
+"Start in group chat mode, listen to messages in specified group"
 }
 ,
 {
@@ -633,11 +695,25 @@ true
 ,
 "cn"
 :
-"停止监听服务"
+"停止监听服务（单聊模式）"
 ,
 "en"
 :
-"Stop listener service"
+"Stop listener service (private chat mode)"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service stop --group"
+,
+"cn"
+:
+"停止群聊模式监听服务"
+,
+"en"
+:
+"Stop group chat mode listener service"
 }
 ,
 {
@@ -647,11 +723,39 @@ true
 ,
 "cn"
 :
-"查看服务状态"
+"查看监听服务状态（单聊模式）"
 ,
 "en"
 :
-"Check service status"
+"Check listener service status (private chat mode)"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service status --group"
+,
+"cn"
+:
+"查看群聊模式服务状态"
+,
+"en"
+:
+"Check group chat mode service status"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service restart"
+,
+"cn"
+:
+"重启监听服务（单聊模式）"
+,
+"en"
+:
+"Restart listener service (private chat mode)"
 }
 ,
 {
@@ -661,11 +765,11 @@ true
 ,
 "cn"
 :
-"查看服务日志"
+"查看指定会话的服务日志"
 ,
 "en"
 :
-"View service logs"
+"View service logs for specified chat"
 }
 ]
 ,
@@ -684,52 +788,112 @@ true
 "Start intelligent bot listener service"
 }
 ,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x feishu abot service start"
+,
+"cn"
+:
+"启动智能机器人监听服务（单聊模式）"
+,
+"en"
+:
+"Start intelligent bot listener service (private chat mode)"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service start --admin"
+,
+"cn"
+:
+"以单聊模式启动"
+,
+"en"
+:
+"Start in private chat mode"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service start --group"
+,
+"cn"
+:
+"以群聊模式启动，监听所有群"
+,
+"en"
+:
+"Start in group chat mode, listen to all groups"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service start --group <chat_id>"
+,
+"cn"
+:
+"以群聊模式启动，监听指定群的消息"
+,
+"en"
+:
+"Start in group chat mode, listen to messages in specified group"
+}
+]
+,
 "--admin"
 :
 {
-"#synopsis"
-:
-null
-,
 "#desc"
 :
 {
 "cn"
 :
-"以管理员身份启动，使用指定 chat_id 或读取保存的管理员 chat_id"
+"以单聊模式启动"
 ,
 "en"
 :
-"Start as admin, use specified chat_id or read saved admin chat_id"
+"Start in private chat mode"
 }
-,
-"#1"
-:
-null
 }
 ,
 "--group"
 :
 {
-"#synopsis"
-:
-null
-,
 "#desc"
 :
 {
 "cn"
 :
-"以群身份启动，监听指定群的消息"
+"以群聊模式启动，不提供 chat_id 则监听所有群"
 ,
 "en"
 :
-"Start as group, listen to messages in specified group"
+"Start in group chat mode, listens to all groups if chat_id not provided"
 }
 ,
 "#1"
 :
-null
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 chat_id（可选，不提供则监听所有群）"
+,
+"en"
+:
+"Group chat_id (optional, listens to all groups if not provided)"
+}
+}
 }
 }
 ,
@@ -748,43 +912,111 @@ null
 "Stop intelligent bot listener service"
 }
 ,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x feishu abot service stop"
+,
+"cn"
+:
+"停止监听服务（单聊模式）"
+,
+"en"
+:
+"Stop listener service (private chat mode)"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service stop --admin"
+,
+"cn"
+:
+"停止单聊模式监听服务"
+,
+"en"
+:
+"Stop private chat mode listener service"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service stop --group"
+,
+"cn"
+:
+"停止群聊模式监听服务"
+,
+"en"
+:
+"Stop group chat mode listener service"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service stop --group <chat_id>"
+,
+"cn"
+:
+"停止指定群的监听服务"
+,
+"en"
+:
+"Stop listener service for specified group"
+}
+]
+,
 "--admin"
 :
 {
-"#synopsis"
-:
-null
-,
 "#desc"
 :
 {
 "cn"
 :
-"停止管理员监听服务"
+"停止单聊模式监听服务"
 ,
 "en"
 :
-"Stop admin listener service"
+"Stop private chat mode listener service"
 }
 }
 ,
 "--group"
 :
 {
-"#synopsis"
-:
-null
-,
 "#desc"
 :
 {
 "cn"
 :
-"停止群监听服务"
+"停止群聊模式监听服务"
 ,
 "en"
 :
-"Stop group listener service"
+"Stop group chat mode listener service"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 chat_id（可选）"
+,
+"en"
+:
+"Group chat_id (optional)"
+}
 }
 }
 }
@@ -803,6 +1035,114 @@ null
 :
 "Restart intelligent bot listener service"
 }
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x feishu abot service restart"
+,
+"cn"
+:
+"重启监听服务（单聊模式）"
+,
+"en"
+:
+"Restart listener service (private chat mode)"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service restart --admin"
+,
+"cn"
+:
+"以单聊模式重启"
+,
+"en"
+:
+"Restart in private chat mode"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service restart --group"
+,
+"cn"
+:
+"以群聊模式重启"
+,
+"en"
+:
+"Restart in group chat mode"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service restart --group <chat_id>"
+,
+"cn"
+:
+"以群聊模式重启，指定群"
+,
+"en"
+:
+"Restart in group chat mode for specified group"
+}
+]
+,
+"--admin"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"以单聊模式重启"
+,
+"en"
+:
+"Restart in private chat mode"
+}
+}
+,
+"--group"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"以群聊模式重启"
+,
+"en"
+:
+"Restart in group chat mode"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 chat_id（可选）"
+,
+"en"
+:
+"Group chat_id (optional)"
+}
+}
+}
 }
 ,
 "status"
@@ -820,43 +1160,111 @@ null
 "Show intelligent bot listener service status"
 }
 ,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x feishu abot service status"
+,
+"cn"
+:
+"查看监听服务状态（单聊模式）"
+,
+"en"
+:
+"Check listener service status (private chat mode)"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service status --admin"
+,
+"cn"
+:
+"查看单聊模式服务状态"
+,
+"en"
+:
+"Check private chat mode service status"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service status --group"
+,
+"cn"
+:
+"查看群聊模式服务状态"
+,
+"en"
+:
+"Check group chat mode service status"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service status --group <chat_id>"
+,
+"cn"
+:
+"查看指定群的监听服务状态"
+,
+"en"
+:
+"Check listener service status for specified group"
+}
+]
+,
 "--admin"
 :
 {
-"#synopsis"
-:
-null
-,
 "#desc"
 :
 {
 "cn"
 :
-"查看管理员服务状态"
+"查看单聊模式服务状态"
 ,
 "en"
 :
-"Check admin service status"
+"Check private chat mode service status"
 }
 }
 ,
 "--group"
 :
 {
-"#synopsis"
-:
-null
-,
 "#desc"
 :
 {
 "cn"
 :
-"查看群服务状态"
+"查看群聊模式服务状态"
 ,
 "en"
 :
-"Check group service status"
+"Check group chat mode service status"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 chat_id（可选）"
+,
+"en"
+:
+"Group chat_id (optional)"
+}
 }
 }
 }
@@ -980,6 +1388,30 @@ null
 "Long-polling listener for Feishu messages"
 }
 ,
+"#tip"
+:
+[
+{
+"cn"
+:
+"监听模式有两种：\n1. --admin — 单聊模式\n2. --group — 群聊模式，不指定 chat_id 则自动获取所有群列表并监听每个群\n"
+,
+"en"
+:
+"There are two listening modes:\n1. --admin — Private chat mode\n2. --group — Group chat mode, automatically fetches all group list and listens to each group if chat_id not provided\n"
+}
+,
+{
+"cn"
+:
+"输出方式有两种：\n1. --fp — 将接收到的消息保存到数据文件（默认路径 ~/.x-cmd-feishu/data_<chat_id>.tsv）\n2. --json — 以 JSON 格式输出消息到标准输出\n"
+,
+"en"
+:
+"There are two output modes:\n1. --fp — Save received messages to data file (default path ~/.x-cmd-feishu/data_<chat_id>.tsv)\n2. --json — Output messages in JSON format to stdout\n"
+}
+]
+,
 "#tldr"
 :
 [
@@ -990,50 +1422,162 @@ null
 ,
 "cn"
 :
-"启动长轮询监听飞书消息"
+"启动长轮询监听飞书消息（单聊模式）"
 ,
 "en"
 :
-"Start long-polling listener for Feishu messages"
+"Start long-polling listener for Feishu messages (private chat mode)"
 }
 ,
 {
 "cmd"
 :
-"x feishu listen --chatid <chat_id>"
+"x feishu listen --admin"
 ,
 "cn"
 :
-"监听指定会话的消息"
+"以单聊模式监听"
 ,
 "en"
 :
-"Listen for messages in specified chat"
+"Listen in private chat mode"
+}
+,
+{
+"cmd"
+:
+"x feishu listen --group"
+,
+"cn"
+:
+"以群聊模式监听所有群的消息"
+,
+"en"
+:
+"Listen in group chat mode for all group messages"
+}
+,
+{
+"cmd"
+:
+"x feishu listen --group <chat_id>"
+,
+"cn"
+:
+"以群聊模式监听指定群的消息"
+,
+"en"
+:
+"Listen in group chat mode for messages in specified group"
+}
+,
+{
+"cmd"
+:
+"x feishu listen --fp"
+,
+"cn"
+:
+"启动监听并保存消息到数据文件"
+,
+"en"
+:
+"Start listener and save messages to data file"
+}
+,
+{
+"cmd"
+:
+"x feishu listen --json"
+,
+"cn"
+:
+"以 JSON 格式输出消息"
+,
+"en"
+:
+"Output messages in JSON format"
 }
 ]
 ,
-"--chatid"
+"--admin"
 :
 {
-"#synopsis"
-:
-"<chat_id>"
-,
 "#desc"
 :
 {
 "cn"
 :
-"会话 ID，为空则监听所有消息"
+"以单聊模式监听"
 ,
 "en"
 :
-"Chat ID, empty for all messages"
+"Listen in private chat mode"
+}
+}
+,
+"--group"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"以群聊模式监听，不提供 chat_id 则自动获取所有群列表并监听每个群"
+,
+"en"
+:
+"Listen in group chat mode, automatically fetches all group list if chat_id not provided"
 }
 ,
 "#1"
 :
-null
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 chat_id（可选，不提供则监听所有群聊）"
+,
+"en"
+:
+"Group chat_id (optional, listens to all groups if not provided)"
+}
+}
+}
+,
+"--fp"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"将接收到的消息保存到数据文件"
+,
+"en"
+:
+"Save received messages to data file"
+}
+}
+,
+"--json"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"以 JSON 格式输出消息"
+,
+"en"
+:
+"Output messages in JSON format"
+}
 }
 }
 ,

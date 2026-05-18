@@ -20,7 +20,7 @@ null
 {
 "default-subcmd"
 :
-"--run"
+"--ssrun"
 }
 ,
 "#synopsis"
@@ -28,7 +28,7 @@ null
 [
 "x time [options] <command> [args...]"
 ,
-"x time --try <command> [args...]"
+"x time --measure <command> [args...]"
 ,
 "x time --run [ -c <count> ] <command> [args...]"
 ,
@@ -55,21 +55,21 @@ null
 {
 "en"
 :
-"Default subcommand is `--run` (auto-estimate run count)"
+"Default subcommand is `--ssrun` (complete statistics with calibration)"
 ,
 "cn"
 :
-"默认子命令是 `--run`（自动估算运行次数）"
+"默认子命令是 `--ssrun`（完整统计，带校准）"
 }
 ,
 {
 "en"
 :
-"Use `--try` for quick single-run timing of a command"
+"Use `--measure` for quick single-run timing of a command"
 ,
 "cn"
 :
-"使用 `--try` 对命令进行快速单次计时"
+"使用 `--measure` 对命令进行快速单次计时"
 }
 ,
 {
@@ -95,16 +95,6 @@ null
 {
 "en"
 :
-"Use `-o` to calibrate offset and subtract shell eval overhead"
-,
-"cn"
-:
-"使用 `-o` 进行 offset 校正，从结果中减去 shell 解析开销"
-}
-,
-{
-"en"
-:
 "Duration format: results are in milliseconds (ms)"
 ,
 "cn"
@@ -123,7 +113,7 @@ null
 ,
 "cn"
 :
-"示例: 测量 echo hello 的执行时间"
+"示例: 使用 ssrun 测量 echo hello 的执行时间"
 ,
 "en"
 :
@@ -133,11 +123,11 @@ null
 {
 "cmd"
 :
-"x time --try sleep 1"
+"x time --measure sleep 1"
 ,
 "cn"
 :
-"示例: 测量 sleep 1 的执行时间"
+"示例: 单次测量 sleep 1 的执行时间"
 ,
 "en"
 :
@@ -161,29 +151,15 @@ null
 {
 "cmd"
 :
-"x time --eval -c 1000 'echo hello'"
+"x time --ssrun -c 10 sleep 0.1"
 ,
 "cn"
 :
-"示例: 以字符串形式运行命令 1000 次"
+"示例: ssrun 完整统计（count/min/max/avg/median/stddev）"
 ,
 "en"
 :
-"Example: Evaluate command string 1000 times"
-}
-,
-{
-"cmd"
-:
-"x time --eval -c 1000 -o 'echo hi;' 'echo world'"
-,
-"cn"
-:
-"示例: 带 offset 校正运行命令"
-,
-"en"
-:
-"Example: Run command with offset calibration"
+"Example: ssrun full statistics (count/min/max/avg/median/stddev)"
 }
 ]
 ,
@@ -197,7 +173,7 @@ null
 :
 null
 ,
-"--try"
+"--measure"
 :
 {
 "#desc"
@@ -218,7 +194,7 @@ null
 {
 "cmd"
 :
-"x time --try sleep 1"
+"x time --measure sleep 1"
 ,
 "cn"
 :
@@ -232,7 +208,7 @@ null
 {
 "cmd"
 :
-"x time --try echo hello"
+"x time --measure echo hello"
 ,
 "cn"
 :

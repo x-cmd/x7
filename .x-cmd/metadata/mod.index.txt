@@ -10,6 +10,7 @@ c8dd6182f3d400215d7292cbfe9c65b73722ab7d api main NULL
 80ecd3964ee062253d2ee75803b9afc12239e562 arp main NULL
 d04623e018092ec373e7621a2a433146b4613c8b ascii main NULL
 a1c5a87a2d04589256418ae5939703e25ebdc4d5 asdf main NULL
+9a8a9f8f69f69c0daf8dbe2dd4d5893d5c794035 ask main NULL
 3204b85d97566f8b11f8256f6942b4188973c5fc assert main NULL
 7570df4c2c63f1756ef5b48a8d9ae0fca7fe56a9 aur main NULL
 0d839141c88aeea6c12f0be9ef3869be0f22b49a awk main NULL
@@ -40,7 +41,7 @@ e2bf25de5ee25c3d31081df2bd515fc9e03be156 chat main NULL
 924c0346c4890512f82ed4f810de599145dd9afb choco main NULL
 437d6bacd65476c80cbc41b2197d69307b8e5f82 cht main NULL
 7ba081cbe833b05a4563786a78e4804f5f40cce5 claude main NULL
-c3533c2f7b1872ca86c80bb2629ded5f7b9ea867 claw main NULL
+e65c5d91e16cee8f33d6c333c1b4acd04a08c39b claw main NULL
 b2697ec6f77d4d8c8f10120c9e0a1d8a93ade8b1 clawhub main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
 bbf9eb7a630da0d2f607edaf1589df0ddfc9a8ae clear main NULL
@@ -92,7 +93,7 @@ eb708ec49e1e0904fe903c73e44a0f70d13b75ea env main NULL
 5de8b0885d624a0306bba9901b325348272e31c3 envy main NULL
 141d9db9cab4aa6deb138c4bcf3b9d59173e7de0 epoch main NULL
 7cbbd1fd16ae398426570c10dab96c532f51ace8 facl main NULL
-b0b73eca2e82e0efafd6f2ec493d145bca148545 feishu main NULL
+a997ce72e0c97c4ff89af1ea7dc6779fbabf9949 feishu main NULL
 d80414f13e755cd18677a5e9267557d1216c6d10 ff main NULL
 f44a5db59e0b8d9479e07cc4b499c62cdf62c959 ffmpeg main NULL
 83326fc5fc699a90bf85763f4277631faf1e9875 fifo main NULL
@@ -116,7 +117,7 @@ e3f7de3ba5a8879976338b96c2981108ba1c6d79 gcode main NULL
 7484ba1523f7fe0fe436815ec9ccf7fef2ba026e gemini main NULL
 403a23190abf81467f68539b092ff4351b591220 gg main NULL
 9691c401c2b5ea293f9af104541f76e9d5e5a85d gh main NULL
-047878dc68dd8ab8e1623f90c9bcd09dacf231ac git main NULL
+f2da7c76fe52dabd775b72f72b93ca2e788e2e9f git main NULL
 84875964e517604dce0ee8dd1bfe586f34623fb8 gitb main NULL
 822e804f828d65c7fc8b47a8a6df6cc4868d0328 gitconfig main NULL
 786246c4ad015e8b8e08ab145454aa194a841ded githook main NULL
@@ -267,7 +268,7 @@ caffaf4823e7936bf9ad53c78d542e83da8255f3 ps main NULL
 c94821faa9ee45940fae24916d99a3184df59fe4 pwd main NULL
 ade22d3d180961ba35c126d791ebaf6a012f348a pwsh main NULL
 81c1a5f8d0b3e26045bc0b363121779c7092cc54 python main NULL
-ff17226d10df7ca8b1ea4e0737327994bc987a38 qr main NULL
+101d8ea33a3c45030a83af9b028f378d06a3702b qr main NULL
 c52529b5009b5a7f221bb93213adbbaee82083e1 qywx main NULL
 31953d3dc0951f5e73418fc0f3ea4582eded5a00 raku main NULL
 9f301797f29885c722d18ec680e08031ff0f1704 rand main NULL
@@ -315,7 +316,7 @@ a055e57e4cfb647cc941441983cf2907b4507540 starship main NULL
 d2efd3d7c5afdf12eb99929dff1bb2870745b8c8 sudo main NULL
 a9bc819087f0a909e0f428747c76eec8e749cdae sysctl main NULL
 52857eb227221c6b3317d0203ad64c4ce4e25f86 ta main NULL
-44ad73f20767a67b4a591b8370fd22654885a134 tailer main NULL
+6bf8ff81bf52e7179672c5fa96e5095df2c49316 tailer main NULL
 670f5c8e6d16aee2dcc4f43b6c42eb43e655f43b tap main NULL
 ab8e27ad6a09152549ebb497ca6487fdcd469c0a task main NULL
 2ec7ad80311d2bd3c8be4ea77d8e419ee1b064ce tcsh main NULL
@@ -326,7 +327,7 @@ ab8e27ad6a09152549ebb497ca6487fdcd469c0a task main NULL
 846b8c87a56c41b8fc5ff7cac815af05c86ac294 term main NULL
 37b875e6636c93d2f013a5b00c6e7f1ef5719dd2 termux main NULL
 c1514da82d4aa4c034d817fc7c9963e8bf8aa7a1 theme main NULL
-f085e93a50a926e0ff840b679234333528deaf2f time main NULL
+a48e5df4e2fd4eaf887e25ea5fba9f7a15104e97 time main NULL
 49b16bf7205afc49a5a3628be130d696fdedfc15 timeout main NULL
 0bf6573b333cb0a918f5a3be440df7318afc46c5 tldr main NULL
 3c7846a9ce243b7e4cd21c6a05537220865bb27f tlfz main NULL

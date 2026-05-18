@@ -4,7 +4,10 @@ ___x_cmd log init time
 
 xrc epoch
 
-xrc:mod:lib     time        util try run  eval   ssrun
+xrc:mod:lib     time        util measure run  eval   stress
+
+# x time <command> [...args]    # calculate the time
+# x time -c 1000                # using ssrun
 
 ___x_cmd_time___main(){
     [ "$#" -gt 0 ] ||   set -- --help
@@ -13,15 +16,35 @@ ___x_cmd_time___main(){
     case "$op" in
         -h|--help)      ___x_cmd help -m time       "$@" ;      return 0 ;;
 
-        --try)          ___x_cmd_time_try           "$@" ;;
+        --try|--measure)
+                        ___x_cmd_time_measure       "$@" ;;
 
         -e|--eval)      ___x_cmd_time_eval          "$@" ;;
-
         --run)          ___x_cmd_time_run           "$@" ;;
-        --ssrun)        ___x_cmd_time_ssrun         "$@" ;;
+
+        --stress)       ___x_cmd_time_ssrun         "$@" ;;
 
         --)             ___x_cmd_time_run           "$@" ;;
         *)              ___x_cmd_time_run "$op"     "$@" ;;
     esac
 }
 
+___x_cmd_time_log(){
+    arg:init time
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help)          ___x_cmd help -m time --measure "$@" ; return 0 ;;
+            *)                  break
+        esac
+    done
+
+    local x_=""
+    ___x_cmd_epoch_ms_;      local begin="$x_"
+    "$@"
+
+    local ret=$?
+    ___x_cmd_epoch_ms_
+
+    time:info --total-ms "$(( x_ - begin))"  --return-code "$ret" "Command finished."
+    return $ret
+}

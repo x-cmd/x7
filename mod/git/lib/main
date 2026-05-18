@@ -12,7 +12,8 @@ xrc:mod:lib git             \
     sp/_index               \
     lfs/_index              \
     meta/_index             \
-    op/_index
+    op/_index               \
+    commit
 
 
 if ___x_cmd_is_suitable_advise_env; then

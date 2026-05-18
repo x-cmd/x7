@@ -1,0 +1,141 @@
+
+___x_cmd_time_stress(){
+    arg:init time
+
+    local count=10
+    local mode=""
+    local testmode=auto
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help)  ___x_cmd help -m time --ssrun "$@" ; return 0 ;;
+            -c)         count="$2";         arg:2:shift ;;
+            --)         shift ; break ;;
+            --avg)      mode=avg ; shift ;;
+
+            --batch10)  testmode=batch10 ;  arg:2:shift ;;
+            --normal)   testmode=normal ;   arg:2:shift ;;
+
+            *)          break
+        esac
+    done
+
+    local offset_avg0
+    offset_avg0="$(OUTPUT=avg OFFSET=0 ___x_cmd_time_stress___main_est 1000 printf "%s")"
+
+    local offset_avg1
+    offset_avg1="$(OUTPUT=avg OFFSET=0 ___x_cmd_time_stress___main_noredirect 1000 printf "%s")"
+
+    local offset_avg2
+    offset_avg2="$(OUTPUT=avg OFFSET=0 ___x_cmd_time_stress___main 1000 printf "%s")"
+
+    time:debug \
+        --offset0 "$offset_avg0" --offset1 "$offset_avg1" --offset2 "$offset_avg2" \
+        "Calibration"
+
+    if [ "$testmode" = batch10 ]; then
+        ___x_cmd_time_stress___main1run10 "$@"
+        return 0
+    fi
+
+    local tryrun
+    tryrun="$(mode=avg ___x_cmd_time_stress___main "$count" "$@")"
+
+    case "$tryrun" in
+        0.*)    ___x_cmd_time_stress___main1run      "$@" ;;
+        *)      ___x_cmd_time_stress___main1run10    "$@" ;;
+    esac
+}
+
+___x_cmd_time_stress___main1run(){
+    ___X_CMD_TIME_OFFSET0="$offset_avg0" \
+    ___X_CMD_TIME_OFFSET1="$offset_avg1" \
+    ___X_CMD_TIME_OFFSET2="$offset_avg2" \
+        OUTPUT="$mode" ___x_cmd_time_stress___main   "$count" "$@"
+}
+
+___x_cmd_time_stress___main1run10(){
+    ___X_CMD_TIME_OFFSET0="$offset_avg0" \
+    ___X_CMD_TIME_OFFSET1="$offset_avg1" \
+    ___X_CMD_TIME_OFFSET2="$offset_avg2" \
+        OUTPUT="$mode" ___x_cmd_time_stress___main10 "$count" "$@"
+}
+
+___x_cmd_time_stress___main(){
+    local count="$1" ;  shift
+    local x_
+    (
+        ___x_cmd_epoch_real_; printf "%s\n" "$x_"
+
+        local i=1
+        while [ "$i" -le "$count" ]; do
+            "$@" 1>/dev/null 2>/dev/null
+            ___x_cmd_epoch_real_; printf "%s\n" "$x_"
+            i=$((i+1))
+        done
+    ) | {
+        ___x_cmd_cmds awk -v "offset=$OFFSET" -v "output=$OUTPUT" -f "${___X_CMD_ROOT_MOD}/time/lib/report.awk"
+    }
+}
+
+___x_cmd_time_stress___main_est(){
+    local count="$1" ;  shift
+    local x_
+    (
+        ___x_cmd_epoch_real_; printf "%s\n" "$x_"
+
+        local i=1
+        while [ "$i" -le "$count" ]; do
+            ___x_cmd_epoch_real_; printf "%s\n" "$x_"
+            i=$((i+1))
+        done
+    ) | {
+        ___x_cmd_cmds awk -v "offset=$OFFSET" -v "output=$OUTPUT" -f "${___X_CMD_ROOT_MOD}/time/lib/report.awk"
+    }
+}
+
+___x_cmd_time_stress___main_noredirect(){
+    local count="$1" ;  shift
+    local x_
+    (
+        ___x_cmd_epoch_real_; printf "%s\n" "$x_"
+
+        local i=1
+        while [ "$i" -le "$count" ]; do
+            "$@"
+            ___x_cmd_epoch_real_; printf "%s\n" "$x_"
+            i=$((i+1))
+        done
+    ) | {
+        ___x_cmd_cmds awk -v "offset=$OFFSET" -v "output=$OUTPUT" -f "${___X_CMD_ROOT_MOD}/time/lib/report.awk"
+    }
+}
+
+
+___x_cmd_time_stress___main10(){
+    local count="$1" ;  shift
+    local x_
+    (
+        ___x_cmd_epoch_real_; printf "%s\n" "$x_"
+
+        local i=1
+        while [ "$i" -le "$count" ]; do
+            {
+                "$@"
+                "$@"
+                "$@"
+                "$@"
+                "$@"
+                "$@"
+                "$@"
+                "$@"
+                "$@"
+                "$@"
+            } 1>/dev/null 2>/dev/null
+            ___x_cmd_epoch_real_; printf "%s\n" "$x_"
+            i=$((i+1))
+        done
+    ) | {
+        ___x_cmd_cmds awk -v "batch=10" -v "offset=$OFFSET" -v "output=$OUTPUT" -f "${___X_CMD_ROOT_MOD}/time/lib/report.awk"
+    }
+}
