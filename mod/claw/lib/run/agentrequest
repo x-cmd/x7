@@ -32,7 +32,7 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
 
     ___x_cmd_claw_run___agentrequest___checkunavailable || return 0
 
-    ___x_cmd rmrf "$___X_CMD_CLAW_BOT_WS/HEARTBEAT_DONE"
+    ___x_cmd rmrf "$___X_CMD_CLAW_BOT_WS/HEARTBEAT_OK"
     ___x_cmd ensurefp "$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
     printf "%s\n" "0" > "$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
 
@@ -43,6 +43,8 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
     if [ ! -d "$workspace_dir" ]; then
         first_contact_prompt="$(___x_cmd_cmds cat "$___X_CMD_ROOT_MOD/claw/lib/data/prompt/first_contact.md" 2>/dev/null)"
         ___x_cmd cp -r "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/msg" "$workspace_dir"
+        ___x_cmd mkdirp "$workspace_dir/memory"
+        ___x_cmd mkdirp "$workspace_dir/tmp"
     else
         # Ensure missing template files are present without overwriting existing ones
         local i; for i in "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/msg"/*; do
@@ -50,6 +52,8 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
             target="$workspace_dir/${i##*/}"
             [ -e "$target" ] || ___x_cmd cp -r "$i" "$target"
         done
+        ___x_cmd mkdirp "$workspace_dir/memory"
+        ___x_cmd mkdirp "$workspace_dir/tmp"
     fi
 
     claw:info "Processing agent request for $im:$chatid"
@@ -66,14 +70,19 @@ REPLY METHOD:
 Use the command 'x weixin send' to reply:
 - For help:        x weixin send -h
 - For text:        x weixin send --text '<msg>'
+  NOTE: \\n inside '<msg>' is literal text — it prints as \"\\n\", not a newline.
+  For multi-line text, write real line breaks directly inside the single quotes.
 - For image/video: x weixin send --image <path>  or  x weixin send --video <path>
 
+FORMAT:
+WeChat has limited formatting support — no tables, no headings, partial markdown. Prefer plain text, bullet lists, and emoji.
+
 CRON EXAMPLES:
-- To add:        x cron add --ns \"x-claw-default\" --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
-                   CRITICAL: <msg> goes to a NEW agent with ZERO memory. Include: Goal, Tools, Steps, Output, and Delivery command.
-                   TIP: Use SINGLE quotes for the message text (e.g. x weixin send --text '<result>').
-                   BAD:  'Check HN' — too vague, agent won't know what to do.
-                   GOOD: 'Use x hn top for top 5 posts. Extract title, URL, score. Send: x weixin send --text '<formatted_list>''
+- x claw cron --help
+- x claw cron add --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
+  Requirements: <msg> is sent to a NEW agent with NO memory. It MUST include Goal, Tools, Steps, Output, and how to deliver results. Use SINGLE quotes.
+  BAD:  'Check HN' (too vague, the agent won't know what to do).
+  GOOD: 'Use x hn top for top 5 posts. Extract title, URL, score. Send: x weixin send --text '<formatted_list>''
 
 Your workspace: \"$workspace_dir\"
 
@@ -96,14 +105,19 @@ REPLY METHOD:
 Use the command 'x telegram send' to reply:
 - For help:        x telegram send -h
 - For text:        \`x telegram send --text --chatid \"$chatid\" '<msg>'\`
+  NOTE: \\n inside '<msg>' is literal text — it prints as \"\\n\", not a newline.
+  For multi-line text, write real line breaks directly inside the single quotes.
 - For image/video: x telegram send --image --chatid \"$chatid\" <path>  or  x telegram send --video --chatid \"$chatid\" <path>
 
+FORMAT:
+Telegram supports full markdown including tables and headings. Max 4096 characters per message.
+
 CRON EXAMPLES:
-- To add:        x cron add --ns \"x-claw-default\" --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
-                   CRITICAL: <msg> goes to a NEW agent with ZERO memory. Include: Goal, Tools, Steps, Output, and Delivery command.
-                   TIP: Use SINGLE quotes for the message text (e.g. x telegram send --text --chatid \"$chatid\" '<result>').
-                   BAD:  'Check HN' — too vague, agent won't know what to do.
-                   GOOD: 'Use x hn top for top 5 posts. Extract title, URL, score. Send: x telegram send --text --chatid \"$chatid\" '<formatted_list>''
+- x claw cron --help
+- x claw cron add --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
+  Requirements: <msg> is sent to a NEW agent with NO memory. It MUST include Goal, Tools, Steps, Output, and how to deliver results. Use SINGLE quotes.
+  BAD:  'Check HN' (too vague, the agent won't know what to do).
+  GOOD: 'Use x hn top for top 5 posts. Extract title, URL, score. Send: x telegram send --text --chatid \"$chatid\" '<formatted_list>''
 
 Your workspace: \"$workspace_dir\"
 
@@ -126,14 +140,19 @@ REPLY METHOD:
 Use the command 'x feishu abot send' to reply:
 - For help:        x feishu abot send -h
 - For text:        \`x feishu abot send --text --chatid \"$chatid\" '<msg>'\`
+  NOTE: \\n inside '<msg>' is literal text — it prints as \"\\n\", not a newline.
+  For multi-line text, write real line breaks directly inside the single quotes.
 - For image/video: x feishu abot send --image --chatid \"$chatid\" <path>  or  x feishu abot send --video --chatid \"$chatid\" <path>
 
+FORMAT:
+Feishu supports full markdown. Card messages need specific JSON; plain markdown works well.
+
 CRON EXAMPLES:
-- To add:        x cron add --ns \"x-claw-default\" --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
-                   CRITICAL: <msg> goes to a NEW agent with ZERO memory. Include: Goal, Tools, Steps, Output, and Delivery command.
-                   TIP: Use SINGLE quotes for the message text (e.g. x feishu abot send --text --chatid \"$chatid\" '<result>').
-                   BAD:  'Check HN' — too vague, agent won't know what to do.
-                   GOOD: 'Use x hn top for top 5 posts. Extract title, URL, score. Send: x feishu abot send --text --chatid \"$chatid\" '<formatted_list>''
+- x claw cron --help
+- x claw cron add --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
+  Requirements: <msg> is sent to a NEW agent with NO memory. It MUST include Goal, Tools, Steps, Output, and how to deliver results. Use SINGLE quotes.
+  BAD:  'Check HN' (too vague, the agent won't know what to do).
+  GOOD: 'Use x hn top for top 5 posts. Extract title, URL, score. Send: x feishu abot send --text --chatid \"$chatid\" '<formatted_list>''
 
 Your workspace: \"$workspace_dir\"
 
@@ -156,14 +175,19 @@ REPLY METHOD:
 Use the command 'x qywx abot send' to reply:
 - For help:        x qywx abot send -h
 - For text:        \`x qywx abot send --text --chatid \"$chatid\" '<msg>'\`
+  NOTE: \\n inside '<msg>' is literal text — it prints as \"\\n\", not a newline.
+  For multi-line text, write real line breaks directly inside the single quotes.
 - For image/file: x qywx abot send --image --chatid \"$chatid\" <path>  or  x qywx abot send --file --chatid \"$chatid\" <path>
 
+FORMAT:
+Enterprise WeChat has limited formatting support — similar to WeChat. Keep it simple: plain text, lists, and emoji. No tables or headings.
+
 CRON EXAMPLES:
-- To add:        x cron add --ns \"x-claw-default\" --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
-                   CRITICAL: <msg> goes to a NEW agent with ZERO memory. Include: Goal, Tools, Steps, Output, and Delivery command.
-                   TIP: Use SINGLE quotes for the message text (e.g. x qywx abot send --text --chatid \"$chatid\" '<result>').
-                   BAD:  'Check HN' — too vague, agent won't know what to do.
-                   GOOD: 'Use x hn top for top 5 posts. Extract title, URL, score. Send: x qywx abot send --text --chatid \"$chatid\" '<formatted_list>''
+- x claw cron --help
+- x claw cron add --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
+  Requirements: <msg> is sent to a NEW agent with NO memory. It MUST include Goal, Tools, Steps, Output, and how to deliver results. Use SINGLE quotes.
+  BAD:  'Check HN' (too vague, the agent won't know what to do).
+  GOOD: 'Use x hn top for top 5 posts. Extract title, URL, score. Send: x qywx abot send --text --chatid \"$chatid\" '<formatted_list>''
 
 Your workspace: \"$workspace_dir\"
 
@@ -178,7 +202,7 @@ $msg
         claw:info "Successfully processed agent request for $im:$chatid"
         ___x_cmd rmrf "$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable"
     else
-        claw:error "Failed to process agent request for $im:$chatid - marking agent as unavailable"
+        claw:error "Failed to process agent request for $im:$chatid exitcode=$exitcode workspace=$workspace_dir - marking agent as unavailable"
         ___x_cmd_claw_run___agentrequest___markunavailable
         return "$exitcode"
     fi
@@ -257,6 +281,7 @@ ___x_cmd_claw_run___agentrequest___handleheartbeat(){
     # Initialize global workspace from heartbeat template if first run
     if [ ! -d "$workspace_dir" ]; then
         ___x_cmd cp -r "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/hb" "$workspace_dir"
+        ___x_cmd mkdirp "$workspace_dir/tmp"
     else
         # Ensure missing template files are present without overwriting existing ones
         local i; for i in "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/hb"/*; do
@@ -264,6 +289,7 @@ ___x_cmd_claw_run___agentrequest___handleheartbeat(){
             target="$workspace_dir/${i##*/}"
             [ -e "$target" ] || ___x_cmd cp -r "$i" "$target"
         done
+        ___x_cmd mkdirp "$workspace_dir/tmp"
     fi
 
     claw:info "[HB] Processing global heartbeat for $im_count platform(s), default reply to $default_reply_im"
@@ -279,6 +305,13 @@ ACTIVE PLATFORMS:$active_platforms
 DEFAULT REPLY TARGET: $default_reply_im (most recent)
 
 REPLY METHODS:$reply_methods
+
+FORMAT GUIDE:
+- WeChat / Enterprise WeChat: Limited formatting. Use plain text, lists, emoji. No tables or headings.
+- Telegram: Full markdown including tables and headings. Max 4096 chars per message.
+- Feishu: Full markdown support. Card messages need JSON; plain markdown works well.
+- When unsure or sending to multiple platforms, use plain text with lists and emoji.
+
 - Your workspace:             \"$workspace_dir\"
 " || {
         claw:error "[HB] Global heartbeat agent request failed for $im_count platform(s)"
@@ -299,11 +332,11 @@ ___x_cmd_claw_run___agentrequest___checkunavailable(){
 
     local cooldown
     case "$fail_count" in
-        1) cooldown=120 ;;
-        2) cooldown=240 ;;
-        3) cooldown=480 ;;
-        4) cooldown=960 ;;
-        5) cooldown=1920 ;;
+        1) cooldown=0 ;;
+        2) cooldown=60 ;;
+        3) cooldown=120 ;;
+        4) cooldown=240 ;;
+        5) cooldown=480 ;;
         *) cooldown=3600 ;;
     esac
 

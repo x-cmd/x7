@@ -1,30 +1,32 @@
 # Plan
 
-> Long-term task tracker: goals, step-by-step plans, current progress, and blockers.
+> Task board for the current session. Only put tasks you actively execute in the current session here.
+>
+> Items that need follow-up but are not suitable for immediate execution should be written to `HEARTBEAT.md`.
 
 ## Current Goals
 
-1. 
-2. 
-3. 
+1.
+2.
+3.
 
-## Active Tasks
+## In Progress Tasks
 
-| Task | Status | Priority | Blockers | Notes |
-|------|--------|----------|----------|-------|
+| Task | Status | Priority | Blocker | Notes |
+|------|--------|----------|---------|-------|
 | | | | | |
 
-## Backlog
+## Todo
 
-- 
-- 
+-
+-
 
 ## Completed
 
-| Task | Completed Date | Summary |
-|------|---------------|---------|
+| Task | Completion Date | Summary |
+|------|-----------------|---------|
 | | | |
 
 ## Blockers
 
-- 
+-

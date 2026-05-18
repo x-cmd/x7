@@ -1,30 +1,35 @@
-# Plan
+# Global Checklist
 
-> Long-term task tracker: goals, step-by-step plans, current progress, and blockers.
+> Cross-platform proactive monitoring tasks. These are items you actively check — not tasks delegated by the user in conversation.
+>
+> User-specific tasks and projects belong in each chat workspace's `PLAN.md`, not here.
+> Your primary information source is each chat workspace's `HEARTBEAT.md`.
 
-## Current Goals
+## Daily Checks (Rotate Through)
 
-1. 
-2. 
-3. 
+- [ ] **Heartbeat tasks** — Any chat workspace `HEARTBEAT.md` has due or overdue items?
+- [ ] **Calendar** — Any events in the next 24 hours that need a reminder?
 
-## Active Tasks
+## Weekly Checks
 
-| Task | Status | Priority | Blockers | Notes |
-|------|--------|----------|----------|-------|
-| | | | | |
+- [ ] **Memory cleanup** — Review chat workspace `memory/` files, suggest archiving old logs
+- [ ] **Temp file cleanup** — Clean up old files in the `tmp/` directory
 
-## Backlog
+## When to Proactively Reach Out
 
-- 
-- 
+- Items in `HEARTBEAT.md` are due or overdue
+- Calendar event is coming up (< 2 hours)
+- Important unread messages have been pending > 1 hour
+- You discovered interesting information the user would want to know
+- No contact for > 8 hours with outstanding items
 
-## Completed
+## When to Stay Silent (HEARTBEAT_OK)
 
-| Task | Completed Date | Summary |
-|------|---------------|---------|
-| | | |
+- No new issues
+- All tasks progressing normally, no blockers
+- Late night (23:00–08:00) unless urgent
+- Nothing truly worth interrupting the user's quiet time
 
 ## Blockers
 
-- 
+-

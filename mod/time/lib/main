@@ -1,0 +1,27 @@
+# shellcheck shell=dash
+
+___x_cmd log init time
+
+xrc epoch
+
+xrc:mod:lib     time        util try run  eval   ssrun
+
+___x_cmd_time___main(){
+    [ "$#" -gt 0 ] ||   set -- --help
+
+    local op="$1";      shift
+    case "$op" in
+        -h|--help)      ___x_cmd help -m time       "$@" ;      return 0 ;;
+
+        --try)          ___x_cmd_time_try           "$@" ;;
+
+        -e|--eval)      ___x_cmd_time_eval          "$@" ;;
+
+        --run)          ___x_cmd_time_run           "$@" ;;
+        --ssrun)        ___x_cmd_time_ssrun         "$@" ;;
+
+        --)             ___x_cmd_time_run           "$@" ;;
+        *)              ___x_cmd_time_run "$op"     "$@" ;;
+    esac
+}
+

@@ -1,0 +1,18 @@
+
+# temporaray used in inner dev.
+
+___x_cmd_git_commit(){
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -m)     msg="$1" ;  shift ;;
+            *)      break ;;
+        esac
+    done
+
+    [ -z "$msg" ] || {
+        msg="$( ___x_cmd agent reqeust \
+            --stdout "Help me to generate the strictly commit message following Conventional Commits conventions.")"
+    }
+
+    ___x_cmd___git_origin commit -m "${msg}"
+}

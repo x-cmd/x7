@@ -52,9 +52,9 @@ ___x_cmd_claw_run___heartbeat___orchestrate(){
     done
 
     local idle_file="$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
-    local heartbeat_done_file="$___X_CMD_CLAW_BOT_WS/HEARTBEAT_DONE"
+    local heartbeat_ok_file="$___X_CMD_CLAW_BOT_WS/HEARTBEAT_OK"
     # Skip heartbeat agent if already confirmed idle by agent itself
-    [ ! -f "$heartbeat_done_file" ] || return 0
+    [ ! -f "$heartbeat_ok_file" ] || return 0
 
     # Skip heartbeat agent during initial observation period [3, 30)
     local idle_count=0
@@ -69,12 +69,12 @@ ___x_cmd_claw_run___heartbeat___probe(){
     local current_im="$1"
     local current_chatid="$2"
     local idle_file="$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
-    local heartbeat_done_file="$___X_CMD_CLAW_BOT_WS/HEARTBEAT_DONE"
+    local heartbeat_ok_file="$___X_CMD_CLAW_BOT_WS/HEARTBEAT_OK"
 
     # Activity: unread message pending to be processed — launch agent if not already handling
     if ___x_cmd claw "$current_im" has-unread "$current_chatid" && ! ___x_cmd worker isalive --ns x-claw-default-worker --name "${current_im}-${current_chatid}"; then
         printf "%s\n" "0" > "$idle_file"
-        ___x_cmd rmrf "$heartbeat_done_file"
+        ___x_cmd rmrf "$heartbeat_ok_file"
         claw:info "[HB] [$current_im:$current_chatid] Unread messages detected — launching message handler"
         ___x_cmd_claw_run___agentwork___handlemsg "${current_im}:${current_chatid}"
         return 0
@@ -84,7 +84,7 @@ ___x_cmd_claw_run___heartbeat___probe(){
     if ___x_cmd worker isalive --ns x-claw-default-worker --name "${current_im}-${current_chatid}"; then
         claw:info "[HB] [$current_im:$current_chatid] Message handler still active — resetting idle counter"
         printf "%s\n" "0" > "$idle_file"
-        ___x_cmd rmrf "$heartbeat_done_file"
+        ___x_cmd rmrf "$heartbeat_ok_file"
         return 0
     fi
 

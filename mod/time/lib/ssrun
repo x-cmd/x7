@@ -1,0 +1,32 @@
+
+
+___x_cmd_time_ssrun(){
+    local count=5
+
+    arg:init time
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help)  ___x_cmd help -m time --ssrun "$@" ; return 0 ;;
+            -c)         count="$2"; arg:2:shift ;;
+            *)          break
+        esac
+    done
+
+    xrc epoch
+
+    local x_=""
+    local start_time=""
+    local timestamps=""
+
+    ___x_cmd_epoch_real_; start_time="$x_"
+
+    local i=1
+    while [ "$i" -le "$count" ]; do
+        "$@" 1>/dev/null 2>/dev/null
+        local t=""
+        ___x_cmd_epoch_real_; t="$x_"; timestamps="${timestamps}${t}"$'\n'
+        i=$((i+1))
+    done
+
+    printf "%s\n%s" "$start_time" "$timestamps" | ___x_cmd_cmds awk -f "${___X_CMD_ROOT_MOD}/time/lib/report.awk"
+}

@@ -15,21 +15,67 @@ ___x_cmd_feishu_abot_service(){
 }
 
 ___x_cmd_feishu_abot_service_start(){
-    ___x_cmd_feishu_ensureinit || return "$?"
-    ___x_cmd service start      x-feishu-listener   --   x-cmd feishu abot service run "$@"
+    local chatid=;
+    local chat_type="admin"
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help)      ___x_cmd help -m feishu abot service start "$@" ; return 0 ;;
+            --admin)        chat_type="admin"; chatid="$2";     arg:2:shift ;;
+            --group)        chat_type="group"; chatid="$2";     arg:2:shift ;;
+        esac
+    done
 
-    ___x_cmd_cmds sleep 1
-    ___x_cmd service isalive x-feishu-listener || {
+    ___x_cmd_feishu_ensureinit || return "$?"
+
+    [ "$chat_type" != "admin" ] || {
+        local chatfp="$___X_CMD_FEISHU_BOT_PATH/admin_chatid"
+        if [ -z "$chatid" ] && [ -r "$chatfp" ]; then
+            read -r chatid < "$chatfp" || return $?
+        fi
+
+        [ -n "$chatid" ] || N=feishu M="Not found chat id" log:ret:1
+        printf "%s\n" "$chatid" > "$chatfp"
+    }
+
+    local sname="x-feishu-${chat_type}-listener"
+    ___x_cmd service start      "$sname"   --   x-cmd feishu abot service run --chatid "$chatid" "$@"
+
+    ___x_cmd_cmds sleep 2
+    ___x_cmd service isalive "$sname" || {
         feishu:error "Failed to start the feishu bot service."
-        ___x_cmd service log tail x-feishu-listener
+        ___x_cmd service log tail "$sname"
         return 1
     }
-    printf "%s " "status: "; ___x_cmd_feishu_abot_service_status
+    printf "%s " "status: "; ___x_cmd_feishu_abot_service_status "$chat_type"
 }
 
 ___x_cmd_feishu_abot_service_ensure(){
+    local chat_type="admin"
+    local op="$1"; shift
+    case "$1" in
+        -h|--help)      ___x_cmd help -m feishu abot service stop "$@" ; return 0 ;;
+        --admin)        chat_type="admin"  ;;
+        --group)        chat_type="group"  ;;
+    esac
+    local sname="x-feishu-${chat_type}-listener"
+
     ___x_cmd_feishu_ensureinit || return "$?"
-    ___x_cmd service ensure     x-feishu-listener   --   x-cmd feishu abot service run "$@"
+
+    ! ___x_cmd_service isalive "$sname" || return 0
+
+    local i=0
+    while [ $((i=i+1)) -le 3 ]; do
+        if [ "$i" -gt 1 ]; then
+            feishu:warn "Failed to start service, retrying"
+        fi
+        ___x_cmd_feishu_abot_service_start "$@"
+        ___x_cmd sleep 2
+        ! ___x_cmd_service isalive "$sname"   || return 0
+    done
+
+    feishu:error "Service cannot started -> $sname"
+    ___x_cmd service log tail "$sname"
+    return 1
 }
 
 ___x_cmd_feishu_abot_service_restart(){
@@ -38,11 +84,27 @@ ___x_cmd_feishu_abot_service_restart(){
 }
 
 ___x_cmd_feishu_abot_service_stop(){
-    ___x_cmd service stop       x-feishu-listener
+    local chat_type="admin"
+    local op="$1"; shift
+    case "$1" in
+        -h|--help)      ___x_cmd help -m feishu abot service stop "$@" ; return 0 ;;
+        --admin)        chat_type="admin"  ;;
+        --group)        chat_type="group"  ;;
+    esac
+    local sname="x-feishu-${chat_type}-listener"
+    ___x_cmd service stop   "$sname"
 }
 
 ___x_cmd_feishu_abot_service_status(){
-    ___x_cmd service status     x-feishu-listener
+    local chat_type="admin"
+    local op="$1"; shift
+    case "$1" in
+        -h|--help)      ___x_cmd help -m feishu abot service stop "$@" ; return 0 ;;
+        --admin)        chat_type="admin"  ;;
+        --group)        chat_type="group"  ;;
+    esac
+    local sname="x-feishu-${chat_type}-listener"
+    ___x_cmd service status   "$sname"
 }
 
 ___x_cmd_feishu_abot_service_log(){
@@ -70,5 +132,5 @@ ___x_cmd_feishu_abot_service_log(){
 }
 
 ___x_cmd_feishu_abot_service_run(){
-    ___x_cmd feishu listen --fp || return $?
+    ___x_cmd feishu listen --fp "$@" || return $?
 }

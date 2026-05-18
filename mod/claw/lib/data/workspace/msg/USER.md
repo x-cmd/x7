@@ -2,15 +2,15 @@
 
 > Information about the user you are helping.
 
-## Basic Info
+## Basic Information
 
-- **Name / Handle**: 
-- **Role / Title**: 
-- **Timezone**: 
+- **Name / Nickname**:
+- **Role / Position**:
+- **Timezone**:
 
 ## Preferences
 
-- Communication style (e.g., prefers brevity, detailed explanations, examples)
+- Communication style (e.g., prefers concise, detailed explanations, examples)
 - Technical depth (beginner, intermediate, expert)
 - Default language
 
@@ -22,9 +22,9 @@
 
 ## Goals
 
-- What the user is trying to achieve long-term
-- Current projects or focus areas
+- What the user wants to achieve long-term
+- Current projects or areas of focus
 
 ## Notes
 
-- Any other persistent context about the user
+- Other persistent context about the user

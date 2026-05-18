@@ -1,0 +1,520 @@
+{
+"#name"
+:
+{
+"time"
+:
+null
+,
+"cn"
+:
+"测量命令执行时间"
+,
+"en"
+:
+"Measure command execution time"
+}
+,
+"#meta"
+:
+{
+"default-subcmd"
+:
+"--run"
+}
+,
+"#synopsis"
+:
+[
+"x time [options] <command> [args...]"
+,
+"x time --try <command> [args...]"
+,
+"x time --run [ -c <count> ] <command> [args...]"
+,
+"x time --eval [ -c <count> ] [ -o <offsetcmd> ] '<shell_command>'"
+,
+"x time --ssrun [ -c <count> ] <command> [args...]"
+]
+,
+"#desc"
+:
+{
+"cn"
+:
+"`time` 模块提供命令执行时间测量功能。\n支持单次计时、批量运行计算平均值、offset 校正等。\n"
+,
+"en"
+:
+"The `time` module provides command execution time measurement.\nSupports single-shot timing, batch run with average calculation, offset calibration, etc.\n"
+}
+,
+"#tip"
+:
+[
+{
+"en"
+:
+"Default subcommand is `--run` (auto-estimate run count)"
+,
+"cn"
+:
+"默认子命令是 `--run`（自动估算运行次数）"
+}
+,
+{
+"en"
+:
+"Use `--try` for quick single-run timing of a command"
+,
+"cn"
+:
+"使用 `--try` 对命令进行快速单次计时"
+}
+,
+{
+"en"
+:
+"Use `--run` to estimate the average time by running multiple times"
+,
+"cn"
+:
+"使用 `--run` 通过多次运行来估算平均时间"
+}
+,
+{
+"en"
+:
+"Use `--eval` to measure shell builtins and ultra-fast commands (faster than echo hi)"
+,
+"cn"
+:
+"使用 `--eval` 测量 shell 内置命令和超快命令（比 echo hi 还快）"
+}
+,
+{
+"en"
+:
+"Use `-o` to calibrate offset and subtract shell eval overhead"
+,
+"cn"
+:
+"使用 `-o` 进行 offset 校正，从结果中减去 shell 解析开销"
+}
+,
+{
+"en"
+:
+"Duration format: results are in milliseconds (ms)"
+,
+"cn"
+:
+"时间格式：结果以毫秒（ms）为单位"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x time echo hello"
+,
+"cn"
+:
+"示例: 测量 echo hello 的执行时间"
+,
+"en"
+:
+"Example: Measure execution time of echo hello"
+}
+,
+{
+"cmd"
+:
+"x time --try sleep 1"
+,
+"cn"
+:
+"示例: 测量 sleep 1 的执行时间"
+,
+"en"
+:
+"Example: Measure execution time of sleep 1"
+}
+,
+{
+"cmd"
+:
+"x time --run -c 10 sleep 0.1"
+,
+"cn"
+:
+"示例: 运行命令 10 次并计算平均时间"
+,
+"en"
+:
+"Example: Run command 10 times and calculate average time"
+}
+,
+{
+"cmd"
+:
+"x time --eval -c 1000 'echo hello'"
+,
+"cn"
+:
+"示例: 以字符串形式运行命令 1000 次"
+,
+"en"
+:
+"Example: Evaluate command string 1000 times"
+}
+,
+{
+"cmd"
+:
+"x time --eval -c 1000 -o 'echo hi;' 'echo world'"
+,
+"cn"
+:
+"示例: 带 offset 校正运行命令"
+,
+"en"
+:
+"Example: Run command with offset calibration"
+}
+]
+,
+"#subcmd:Category"
+:
+[
+"Timing Modes"
+]
+,
+"#subcmd-definitions"
+:
+null
+,
+"--try"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"单次运行命令并计时"
+,
+"en"
+:
+"Run command once and measure execution time"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x time --try sleep 1"
+,
+"cn"
+:
+"示例: 测量 sleep 1 的执行时间"
+,
+"en"
+:
+"Example: Measure execution time of sleep 1"
+}
+,
+{
+"cmd"
+:
+"x time --try echo hello"
+,
+"cn"
+:
+"示例: 测量 echo hello 的执行时间"
+,
+"en"
+:
+"Example: Measure execution time of echo hello"
+}
+]
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"要计时的命令"
+,
+"en"
+:
+"Command to time"
+}
+}
+}
+,
+"--run"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"运行命令多次并计算平均时间"
+,
+"en"
+:
+"Run command multiple times and calculate average time"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x time --run -c 10 sleep 0.1"
+,
+"cn"
+:
+"示例: 运行命令 10 次并计算平均时间"
+,
+"en"
+:
+"Example: Run command 10 times and calculate average time"
+}
+,
+{
+"cmd"
+:
+"x time --run sleep 1"
+,
+"cn"
+:
+"示例: 自动估算合适的运行次数"
+,
+"en"
+:
+"Example: Automatically estimate suitable run count"
+}
+]
+,
+"-c"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"运行次数"
+,
+"en"
+:
+"Number of times to run"
+}
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"要计时的命令"
+,
+"en"
+:
+"Command to time"
+}
+}
+}
+,
+"--eval|-e"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"测量 shell 内置命令和超快命令的执行时间，支持 offset 校正"
+,
+"en"
+:
+"Measure shell builtins and ultra-fast commands with offset calibration"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x time --eval -c 100000 ':'"
+,
+"cn"
+:
+"示例: 测量空命令的执行时间"
+,
+"en"
+:
+"Example: Measure execution time of a no-op command"
+}
+,
+{
+"cmd"
+:
+"x time --eval -c 100000 -o 'echo hi;' ':'"
+,
+"cn"
+:
+"示例: 带 offset 校正，减去 shell 解析开销"
+,
+"en"
+:
+"Example: With offset calibration to subtract shell eval overhead"
+}
+,
+{
+"cmd"
+:
+"x time --eval -c 1000 'echo hello'"
+,
+"cn"
+:
+"示例: 测量普通命令字符串"
+,
+"en"
+:
+"Example: Measure a regular command string"
+}
+]
+,
+"-c"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"运行次数"
+,
+"en"
+:
+"Number of times to run"
+}
+}
+,
+"-o"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"offset 校正命令"
+,
+"en"
+:
+"Offset calibration command"
+}
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"要测量的命令字符串"
+,
+"en"
+:
+"Command string to measure"
+}
+}
+}
+,
+"--ssrun"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"运行命令多次并输出详细统计（min/max/avg/median/stddev）"
+,
+"en"
+:
+"Run command multiple times and output detailed statistics"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x time --ssrun -c 10 sleep 0.1"
+,
+"cn"
+:
+"示例: 运行 10 次并输出统计信息"
+,
+"en"
+:
+"Example: Run 10 times and output statistics"
+}
+]
+,
+"-c"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"运行次数"
+,
+"en"
+:
+"Number of times to run"
+}
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"要计时的命令"
+,
+"en"
+:
+"Command to time"
+}
+}
+}
+}
+

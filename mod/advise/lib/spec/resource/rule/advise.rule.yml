@@ -1,0 +1,325 @@
+# Advise Spec 规则集
+# 用于 x check 检查 adv/index.yml 的编写质量
+# 命名规范: ADV-<类别><序号>
+
+# ============================================================
+# Section: 语法与结构
+# ============================================================
+
+ADV-syntax-010:
+  name: yaml-valid
+  apply: adv/index.yml
+  level: error
+  desc:
+  - YAML 必须语法合法，能通过 `x y2j adv/index.yml` 解析无报错
+  - 常见错误：冒号未加引号、Tab 缩进、特殊字符（! & *）未转义
+
+  tldr:
+  - wrong: en: Backend: faster-whisper, openai-api
+    right: en: "Backend: faster-whisper, openai-api"
+
+ADV-syntax-020:
+  name: no-tab-indent
+  apply: adv/index.yml
+  level: error
+  desc:
+  - 必须使用空格缩进，禁止 Tab 字符
+
+ADV-syntax-030:
+  name: quote-values-with-colon
+  apply: adv/index.yml
+  level: error
+  desc:
+  - 值中包含冒号 `:` 时必须用引号包裹，否则 YAML 解析错误
+  - 这是最常见的 YAML 编写错误
+
+  tldr:
+  - wrong: cn: 示例: 查看主机信息
+    right: cn: "示例: 查看主机信息"
+
+ADV-syntax-040:
+  name: subcmd-defined-at-root-level
+  apply: adv/index.yml
+  level: error
+  desc:
+  - 子命令必须直接在根级别定义，不使用 `<subcmd>:` 包裹
+  - `<subcmd:Category>:` 仅用于 help 显示分类，不定义子命令本身
+
+  tldr:
+  - wrong: |
+      <subcmd>:
+        cat:
+          <desc>: ...
+    right: |
+      cat:
+        <desc>: ...
+
+# ============================================================
+# Section: 必需字段
+# ============================================================
+
+ADV-field-010:
+  name: required-fields-present
+  apply: adv/index.yml
+  level: error
+  desc:
+  - 模块级别必须包含以下字段：<name>、<synopsis>、<desc>、<tldr>
+  - <name> 必须包含 module_name（无 cn/en 后缀）、cn、en
+  - <desc> 必须包含 cn 和 en
+  - <synopsis> 至少有一个用法示例
+  - <tldr> 至少 3 个示例（简单模块）或 8+（复杂模块）
+
+ADV-field-020:
+  name: tldr-has-cmd-cn-en
+  apply: adv/index.yml
+  level: error
+  desc:
+  - 每个 tldr 条目必须包含 cmd、cn、en 三个字段
+  - 缺少任何一个都会导致 help 输出异常
+
+  tldr:
+  - wrong: |
+      - cmd: x host get localhost
+        cn: "查询 IP"
+    right: |
+      - cmd: x host get localhost
+        cn: "查询 IP"
+        en: "Lookup IP"
+
+ADV-field-030:
+  name: subcmd-desc-has-cn-en
+  apply: adv/index.yml
+  level: warn
+  desc:
+  - 每个子命令的 <desc> 应包含 cn 和 en 两种语言描述
+  - 每个选项的 <desc> 应包含 cn 和 en
+
+ADV-field-040:
+  name: synopsis-only-at-module-level
+  apply: adv/index.yml
+  level: error
+  desc:
+  - <synopsis> 只能在模块级别定义，不能出现在子命令或选项级别
+  - 子命令的参数说明应使用 <1>、<2>、<n> 等位置参数字段
+
+  tldr:
+  - wrong: |
+      get:
+        <synopsis>: <hostname>
+        <desc>: ...
+    right: |
+      get:
+        <desc>: ...
+        <1>:
+          <desc>: 主机名
+
+# ============================================================
+# Section: 选项前置
+# ============================================================
+
+ADV-option-010:
+  name: options-before-args-in-tldr
+  apply: adv/index.yml
+  level: error
+  desc:
+  - TLDR 中的命令示例，选项必须放在参数之前
+  - 代码可能支持选项后置，但文档中绝对不要鼓励这种写法
+  - 这是 x-cmd 的设计规范
+
+  tldr:
+  - wrong: x ccal info 2026-05-09 --yml
+    right: x ccal info --yml 2026-05-09
+
+ADV-option-020:
+  name: options-before-args-in-synopsis
+  apply: adv/index.yml
+  level: error
+  desc:
+  - <synopsis> 中的命令示例，选项必须放在参数之前
+
+  tldr:
+  - wrong: x <module> <args> --<option>
+    right: x <module> --<option> <args>
+
+ADV-option-030:
+  name: use-long-help-not-short-h
+  apply: adv/index.yml
+  level: warn
+  desc:
+  - 在 tldr、tip、desc 等所有文档中，引用帮助信息时使用 `--help` 而非 `-h`
+  - 前提是命令确实提供 `--help`
+
+  tldr:
+  - wrong: "详情参见 x mod -h"
+    right: "详情参见 x mod --help"
+
+# ============================================================
+# Section: TLDR 场景化原则
+# ============================================================
+
+ADV-tldr-010:
+  name: first-tldr-simplest
+  apply: adv/index.yml
+  level: warn
+  desc:
+  - 第一个 tldr 应面向最常用、最有吸引力的场景，尽量简单
+  - 不带多余的选项，用最自然的调用方式
+  - 让人一看就知道"这个模块是做什么的"，一用即有结果
+
+  tldr:
+  - wrong: |
+      - cmd: x dbnomics align --csv imf.us.cpi imf.de.cpi
+        cn: "CSV 格式: 对比美/德 CPI"
+    right: |
+      - cmd: x dbnomics align imf.us.cpi imf.de.cpi imf.jp.cpi
+        cn: "对比美/德/日 CPI"
+
+ADV-tldr-020:
+  name: scenario-over-capability-showcase
+  apply: adv/index.yml
+  level: warn
+  desc:
+  - 每个 tldr 面向一个具体场景，不是为了展示参数组合
+  - "展示最强能力"是次要原则，当与场景适用冲突时让位
+  - 优先把功能和场景用法讲清楚，再考虑精简篇幅
+
+ADV-tldr-030:
+  name: format-options-appear-once
+  apply: adv/index.yml
+  level: info
+  desc:
+  - 同类别的格式选项（如 --csv/--tsv/--json）只需各出现一次
+  - 除非某场景确实更适合某种格式组合
+  - 格式选项集中在前几条 tldr 展示，后续条目聚焦场景
+
+  tldr:
+  - wrong: |
+      - cmd: x mod --csv a b
+        cn: "对比 A 和 B"
+      - cmd: x mod --csv c d
+        cn: "对比 C 和 D"
+    right: |
+      - cmd: x mod a b
+        cn: "对比 A 和 B"
+      - cmd: x mod --csv c d
+        cn: "CSV 格式: 对比 C 和 D，适合脚本处理"
+
+ADV-tldr-040:
+  name: format-option-explains-scenario
+  apply: adv/index.yml
+  level: warn
+  desc:
+  - 带 --csv/--tsv/--json 格式选项的 tldr，描述中应说明该格式适合什么场景
+  - 不要只写"CSV 格式: xxx"，应写明用途
+
+  tldr:
+  - wrong: cn: "CSV 格式: 对比美/中 GDP"
+    right: cn: "CSV 格式: 对比美/中 GDP，适合数据库导入、表格软件或脚本处理"
+
+ADV-tldr-050:
+  name: desc-prefix-convention
+  apply: adv/index.yml
+  level: info
+  desc:
+  - tldr 描述前缀应与模块类型匹配
+  - 功能模块用 "示例:" / "Example:"
+  - 测试模块用 "测试:" / "Test:"
+  - 危险操作用 "警告:" / "Warning:"
+
+# ============================================================
+# Section: Tip 原则
+# ============================================================
+
+ADV-tip-010:
+  name: tip-one-point-per-item
+  apply: adv/index.yml
+  level: warn
+  desc:
+  - tip 是列表格式，每项只讲一个要点
+  - 不要把多个不相关的事项塞进同一条 tip
+
+ADV-tip-020:
+  name: keep-desc-lean-move-detail-to-tip
+  apply: adv/index.yml
+  level: warn
+  desc:
+  - 详细的说明应该拆到 tip 中，而不是堆在 desc 里
+  - desc 应简短概括模块/子命令的功能定位
+
+# ============================================================
+# Section: 修改规则
+# ============================================================
+
+ADV-modify-010:
+  name: preserve-subcmd-order
+  apply: adv/index.yml
+  level: error
+  desc:
+  - 修改 advise 时，必须保持原作者的 subcmd 名称和别名顺序
+  - 改变顺序会破坏向后兼容性和用户习惯
+
+  tldr:
+  - wrong: c|copy|cp|--cp|-c
+    right: c|cp|copy|--cp|-c
+
+ADV-modify-020:
+  name: no-delete-or-rename-subcmd
+  apply: adv/index.yml
+  level: error
+  desc:
+  - 不得擅自删除或重命名已有的子命令
+  - 可以添加新子命令，但旧的必须保留
+
+# ============================================================
+# Section: 效率模块
+# ============================================================
+
+ADV-efficiency-010:
+  name: efficiency-module-meta-mark
+  apply: adv/index.yml
+  level: error
+  desc:
+  - 效率模块（assert、is、str、env、path 等）必须标记 `<meta>: subcmd-help: disable`
+  - 效率模块的子命令不支持 help，必须通过 meta 标记声明
+
+ADV-efficiency-020:
+  name: efficiency-tldr-at-root-only
+  apply: adv/index.yml
+  level: error
+  desc:
+  - 效率模块的所有 TLDR 必须在根级别
+  - 效率模块的子命令下禁止出现 <tldr>
+
+  tldr:
+  - wrong: |
+      is-int:
+        <tldr>:
+        - cmd: ...
+    right: |
+      <tldr>:
+      - cmd: x assert is-int 1 2 3
+        cn: "测试: 批量验证"
+      is-int:
+        <desc>:
+          cn: 验证整数
+
+# ============================================================
+# Section: 写作优先级
+# ============================================================
+
+ADV-writing-010:
+  name: clarity-over-brevity
+  apply: adv/index.yml
+  level: warn
+  desc:
+  - 先把功能和场景用法讲清楚，再考虑精简篇幅
+  - 清晰度永远优先于简洁性
+  - 宁可多写两句把场景交代完整，不要为了短而丢信息
+
+ADV-writing-020:
+  name: cn-desc-uses-chinese-terminology
+  apply: adv/index.yml
+  level: info
+  desc:
+  - 中文描述应使用标准中文术语，而非保留英文原名
+  - 例如：Phillips Curve → 菲利普斯曲线，Beveridge Curve → 贝弗里奇曲线

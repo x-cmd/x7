@@ -42,6 +42,9 @@ ___x_cmd_agent_request(){
             --stdout-file)  stdoutfile="$2";                    arg:2:shift ; ___x_cmd ensurefp "$stdoutfile";;
             --stderr-file)  stderrfile="$2";                    arg:2:shift ; ___x_cmd ensurefp "$stderrfile";;
             --timeout)      timeout_secs="$2";                  arg:2:int; arg:2:shift ;;
+
+            --no-thinking)  is_no_thinking=1 ;                  shift ;;
+
             # --retry)        retry="$2" ; arg:2:shift ;;
 
             --)             shift; break ;;
@@ -324,6 +327,10 @@ ___x_cmd_agent_request___run_exec(){(
             case "$harness" in
                 claude-*)   claude_subcmd="${harness#claude-}" ;;
             esac
+
+            if [ -n "$is_no_thinking" ]; then
+                set -- "$@" --settings '{"alwaysThinkingEnabled": false}'
+            fi
 
             {
                 IS_SANDBOX=1 ___x_cmd timeout "$timeout_secs" x-cmd claude "$claude_subcmd" "$@" \

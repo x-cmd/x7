@@ -182,6 +182,13 @@ Advise 与以下三个操作紧密关联：
 - **避免 desc 过于冗长**：详细的说明应该拆到 tip 中，而不是堆在 desc 里
 - **每项只讲一个要点**：tip 是列表，每项聚焦一个点
 - **子命令 tip 放在 subcmd 定义下**：子命令级别的 tip 随 subcmd 定义走
+- **特定行为的提示**：当子命令有非显而易见的行为（如 auto 格式切换）时，应在 tip 中说明。这是模块特定的，不是所有模块都需要：
+  ```yaml
+  # 仅当子命令确实有 auto 格式切换时才写这条 tip
+  <tip>:
+    - cn: "不带格式选项时，交互终端下以 csv app 浏览，管道或重定向则以 TSV 输出。"
+      en: "Without a format flag, interactive terminals open csv app; pipe or redirect outputs TSV."
+  ```
 
 ---
 
@@ -195,9 +202,14 @@ Advise 与以下三个操作紧密关联：
 ```
 
 **核心定位**:
-- TLDR 是 **help 的入口**，人和 AI 共同使用
+- TLDR 是 **help 的入口**，协助 AI agent 和人类用户清晰了解如何使用模块
 - 帮助 AI 快速理解模块能力，建立初步认知
-- 引导 AI 在需要时通过 `x <mod> <subcmd> --help` 获取详细信息
+- 帮助人类用户通过场景化示例快速上手
+- 引导 AI 和人类在需要时通过 `x <mod> <subcmd> --help` 获取详细信息
+
+**写作优先级**:
+1. **先把功能和场景用法讲清楚** — 事情说到位，用户能理解、能用起来
+2. **再考虑精简篇幅** — 清晰度永远优先于简洁性；宁可多写两句把场景交代完整，不要为了短而丢信息
 
 ---
 
@@ -219,32 +231,73 @@ Advise 与以下三个操作紧密关联：
 - 每个模块的 help 顶层 tldr 很重要，应该尽量引导 AI 了解常用功能
 - AI 通过 tldr 建立对模块能力的第一印象
 
-### 2. 第一个 tldr：入门代表命令
-- 第一个 tldr 是人和 AI 共同能用的入门代表命令
-- 应该是最常用、最基础的用法，一用即有结果
-- 让 AI 知道"这个模块是做什么的"
+### 2. 第一个 tldr：最常用、最有吸引力的场景
+- 第一个 tldr 面向**最常用、最有吸引力的场景**
+- 应该**尽量简单**：不带多余的选项，用最自然的调用方式
+- 让人一看就知道"这个模块是做什么的"，一用即有结果
 - 对于工具类模块，第一个 tldr 通常是 `x <mod>`（不带参数）或 `x <mod> info`
 
-### 3. 后续 tldr：让 AI 知道能获得什么工具
+**反例**：第一个 tldr 就带 `--csv` 或 `--json`，增加了不必要的认知负担。
+
+### 3. 场景适用原则（优先于"展示最强能力"）
+- **每个 tldr 面向一个具体场景**，不是为了展示参数组合
+- 同类别选项（如 `--csv`/`--tsv`/`--json`）只需各出现一次，除非某场景确实更适合某种格式
+- 格式选项集中在前几条 tldr 展示，后续条目聚焦功能和场景
+- "展示最强能力"是次要原则，当与场景适用冲突时让位
+
+```yaml
+# ✅ 正确 — 格式选项只在前几条展示，后面聚焦场景
+<tldr>:
+  - cmd: x dbnomics align imf.us.cpi imf.de.cpi imf.jp.cpi
+    cn: "对比美/德/日 CPI，交互终端以 csv app 浏览，管道则以 TSV 输出"
+  - cmd: x dbnomics align --csv imf.us.gdp imf.cn.gdp
+    cn: "CSV 格式: 对比美/中 GDP，适合数据库导入、表格软件或脚本处理"
+  - cmd: x dbnomics align --tsv fed.10y fed.2y fed.3m
+    cn: "TSV 格式: 对比美国国债收益率曲线，适合管道和 awk/grep 处理"
+  - cmd: x dbnomics align imf.us.unemployment imf.de.unemployment
+    cn: "对比美/德失业率"                                     # 后续聚焦场景，除非场景需要否则不带格式选项
+
+# ❌ 错误 — 每个 tldr 都带格式选项，且描述不说明场景差异
+<tldr>:
+  - cmd: x dbnomics align --csv imf.us.cpi imf.de.cpi
+  - cmd: x dbnomics align --csv imf.us.gdp imf.cn.gdp
+  - cmd: x dbnomics align --csv imf.us.unemployment imf.de.unemployment
+```
+
+### 4. 后续 tldr：让 AI 知道能获得什么工具
 - 后续 tldr 主要让 AI 知道能获得什么工具/能力
 - 展示模块的核心功能和适用场景
 - AI 可以反推用 `x <mod> <subcmd> --help` 来看更多细节
 
-### 4. 不怕重复，不同角度多场景描述
+### 5. 不怕重复，不同角度多场景描述
 - **不用担心重复**：上层 subcmd 可能会与重要子 subcmd 的 tldr 重合
 - **多角度描述**：同一功能可以从不同使用场景描述
 - **提供更多选择**：AI 可以根据不同场景选择合适的命令
 
-### 5. 描述前缀规范
+### 6. 描述前缀规范
 | 前缀 | 用途 | 示例 |
 |------|------|------|
 | `"示例: xxx"` | 功能模块 | `"示例: 查看主机信息"` |
 | `"测试: xxx"` | 测试模块 | `"测试: 验证整数类型"` |
 | `"警告: xxx"` | 危险操作 | `"警告: 删除不可恢复"` |
 
-### 6. 展示最强能力
+### 7. 展示最强能力（次要原则）
 - 多值、批量、复杂模式 > 单值简单模式
 - 让 AI 知道模块的上限能力
+- **当与场景适用原则冲突时，让位于场景适用**
+
+### 8. 文档中使用 `--help` 而非 `-h`
+- 在 tldr、tip、desc 等所有文档中，引用帮助信息时使用 `--help` 而非 `-h`
+- 前提是命令确实提供 `--help`
+
+```yaml
+# ✅ 正确
+- cn: "详情参见 x dbnomics align --help"
+- cn: "别名和完整 ID 详见 x dbnomics --help"
+
+# ❌ 错误
+- cn: "详情参见 x dbnomics align -h"
+```
 
 ---
 
@@ -254,7 +307,7 @@ Advise 与以下三个操作紧密关联：
 
 ```yaml
 <tldr>:
-  # 第一个：入门代表命令
+  # 第一个：最简单、最自然的调用
   - cmd: x host
     cn: "示例: 交互式查看 hosts 文件"
     en: "Example: interactive view hosts file"
@@ -275,6 +328,34 @@ Advise 与以下三个操作紧密关联：
   - cmd: x host app
     cn: "示例: 交互式模糊查找主机"
     en: "Example: interactive fuzzy search hosts"
+```
+
+**好的 TLDR 结构（场景化、含格式选项）**：
+
+对于支持多种输出格式的子命令，第一条不带格式选项（最自然的调用），格式选项各出现一次，后续聚焦场景。
+
+> **参考示例**：执行 `x dbnomics align --help` 查看完整输出。
+
+```yaml
+<tldr>:
+  # 第一条：不带格式选项，描述说明默认行为
+  - cmd: x dbnomics align imf.us.cpi imf.de.cpi imf.jp.cpi
+    cn: "对比美/德/日 CPI，交互终端以 csv app 浏览，管道则以 TSV 输出"
+    en: "Compare US/Germany/Japan CPI; interactive terminal opens csv app, pipe outputs TSV"
+
+  # 格式选项各出现一次，描述说明适用场景
+  - cmd: x dbnomics align --csv imf.us.gdp imf.cn.gdp
+    cn: "CSV 格式: 对比美/中 GDP，适合数据库导入、表格软件或脚本处理"
+    en: "CSV format: Compare US/China GDP, suitable for database import, spreadsheets, or scripting"
+
+  - cmd: x dbnomics align --tsv fed.10y fed.2y fed.3m
+    cn: "TSV 格式: 对比美国国债收益率曲线，适合管道和 awk/grep 处理"
+    en: "TSV format: Compare US Treasury yield curve, suitable for piping with awk/grep"
+
+  # 后续聚焦场景，除非场景需要否则不带格式选项
+  - cmd: x dbnomics align imf.us.unemployment imf.de.unemployment
+    cn: "对比美/德失业率"
+    en: "Compare US/Germany unemployment"
 ```
 
 ## 3.6.3 子命令级别的 tldr
@@ -1461,6 +1542,7 @@ x-cmd-spec 中的 advise 相关文档已简化，内容合并到 `x advise spec 
 | **home** | `x-bash/home/adv/index.yml` | 基础模块 |
 | **uuid** | `x-bash/uuid/adv/index.yml` | 清晰的子命令分类 |
 | **tlfz** | `x-bash/tlfz/adv/index.yml` | 独立模块示例 |
+| **dbnomics** | `x-bash/dbnomics/adv/index.yml` | 场景化 tldr、auto 模式、多数据源别名、大量 tip |
 
 ### 13.4 标准模块说明文档
 
@@ -1520,4 +1602,4 @@ v1 将引入 `<option>` 字段：
 
 *本文档版本: v0*
 *创建: 2026-05-04*
-*最后更新: 2026-05-04*
+*最后更新: 2026-05-14*

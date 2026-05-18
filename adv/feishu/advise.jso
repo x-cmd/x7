@@ -615,6 +615,20 @@ true
 {
 "cmd"
 :
+"x feishu abot service start --group 123"
+,
+"cn"
+:
+"启动指定群的监听服务"
+,
+"en"
+:
+"Start listener service for specified group"
+}
+,
+{
+"cmd"
+:
 "x feishu abot service stop"
 ,
 "cn"
@@ -669,6 +683,54 @@ true
 :
 "Start intelligent bot listener service"
 }
+,
+"--admin"
+:
+{
+"#synopsis"
+:
+null
+,
+"#desc"
+:
+{
+"cn"
+:
+"以管理员身份启动，使用指定 chat_id 或读取保存的管理员 chat_id"
+,
+"en"
+:
+"Start as admin, use specified chat_id or read saved admin chat_id"
+}
+,
+"#1"
+:
+null
+}
+,
+"--group"
+:
+{
+"#synopsis"
+:
+null
+,
+"#desc"
+:
+{
+"cn"
+:
+"以群身份启动，监听指定群的消息"
+,
+"en"
+:
+"Start as group, listen to messages in specified group"
+}
+,
+"#1"
+:
+null
+}
 }
 ,
 "stop"
@@ -684,6 +746,46 @@ true
 "en"
 :
 "Stop intelligent bot listener service"
+}
+,
+"--admin"
+:
+{
+"#synopsis"
+:
+null
+,
+"#desc"
+:
+{
+"cn"
+:
+"停止管理员监听服务"
+,
+"en"
+:
+"Stop admin listener service"
+}
+}
+,
+"--group"
+:
+{
+"#synopsis"
+:
+null
+,
+"#desc"
+:
+{
+"cn"
+:
+"停止群监听服务"
+,
+"en"
+:
+"Stop group listener service"
+}
 }
 }
 ,
@@ -717,6 +819,46 @@ true
 :
 "Show intelligent bot listener service status"
 }
+,
+"--admin"
+:
+{
+"#synopsis"
+:
+null
+,
+"#desc"
+:
+{
+"cn"
+:
+"查看管理员服务状态"
+,
+"en"
+:
+"Check admin service status"
+}
+}
+,
+"--group"
+:
+{
+"#synopsis"
+:
+null
+,
+"#desc"
+:
+{
+"cn"
+:
+"查看群服务状态"
+,
+"en"
+:
+"Check group service status"
+}
+}
 }
 ,
 "log"
@@ -732,6 +874,58 @@ true
 "en"
 :
 "Show intelligent bot listener service logs"
+}
+,
+"#1"
+:
+{
+"#synopsis"
+:
+"<chat_id>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"会话 ID，使用 `x feishu group ls` 获取"
+,
+"en"
+:
+"Chat ID, get via `x feishu group ls`"
+}
+}
+,
+"-n"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示最后 n 行"
+,
+"en"
+:
+"Show last n lines"
+}
+}
+,
+"-f"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"实时跟踪日志"
+,
+"en"
+:
+"Follow log output"
+}
 }
 }
 }

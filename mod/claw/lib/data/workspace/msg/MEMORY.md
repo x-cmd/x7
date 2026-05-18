@@ -1,11 +1,13 @@
-# Long-term Memory
+# Long-Term Memory
 
-> Layer 2: Persistent facts, preferences, and conventions that survive across sessions.
+> Layer 2: Facts, preferences, and conventions that persist across sessions.
 > Update this file when you learn something that should be remembered long-term.
+
+> **Security note**: This file contains personal context. Only load it in private sessions. Write carefully — do not include passwords, API keys, or other secrets.
 
 ## User Preferences
 
-- 
+-
 
 ## Important Decisions
 
@@ -15,15 +17,21 @@
 
 - Code style rules
 - Naming conventions
-- Architectural patterns
+- Architecture patterns
 
 ## Knowledge
 
-- Domain facts that are unlikely to change
+- Domain facts unlikely to change
 - Relationships between components
-- Gotchas or pitfalls
+- Traps or pitfalls
 
-## Change Log
+## Lessons Learned
+
+- Mistakes not to repeat
+- Patterns that work
+- Unexpected behavior and why
+
+## Changelog
 
 | Date | Change | Reason |
 |------|--------|--------|
