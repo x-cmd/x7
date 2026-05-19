@@ -2089,6 +2089,54 @@ null
 }
 }
 ,
+"login"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Login to create a Feishu bot via QR code scan"
+,
+"cn"
+:
+"扫描二维码登录创建飞书机器人"
+}
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"飞书机器人登录（x feishu login）\n用途：通过扫描飞书 App 中的二维码，创建并配置智能机器人\n该命令会获取 app_id 和 app_secret 并自动保存到配置\n登录成功后可直接使用智能机器人功能\n"
+,
+"en"
+:
+"Feishu Bot Login (x feishu login)\nUse case: Create a Feishu intelligent bot by scanning a QR code with the Feishu App\nThis command retrieves app_id and app_secret and automatically saves them to the config\nAfter successful login, you can directly use the intelligent bot features\n"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x feishu login"
+,
+"cn"
+:
+"扫描二维码登录创建飞书机器人"
+,
+"en"
+:
+"Scan QR code to login and create Feishu bot"
+}
+]
+}
+,
 "--cur"
 :
 {

@@ -22,8 +22,8 @@ ___x_cmd_install_best(){
 
     local cmd=""
     while [ $# -gt 0 ]; do
-
-        if cmd="$( ___x_cmd_install_best___printcmd --priority "$priority" "$1" )"; then
+        cmd="$( ___x_cmd_install_best___printcmd --priority "$priority" "$1" )"
+        if [ -n "$cmd" ] ; then
             case "$mode" in
                 printcmd)
                     printf '%s\n' "$cmd" ;;

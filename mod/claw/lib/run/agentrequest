@@ -114,6 +114,10 @@ FORMAT:
 WeChat has limited formatting support — no tables, no headings, partial markdown. Prefer plain text, bullet lists, and emoji.
 
 CRON EXAMPLES:
+  In claw context, ONLY \`x claw cron\` is allowed. Do NOT use:
+  - CronCreate/CronDelete (Claude Code built-in, only works in active session)
+  - Any system scheduling tools (cron, at, etc.)
+  - \`x claw cron\` is the ONLY choice — it persists after agent exit.
 - x claw cron --help
 - x claw cron add --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
   Requirements: <msg> is sent to a NEW agent with NO memory. It MUST include Goal, Tools, Steps, Output, and how to deliver results. Use SINGLE quotes.
@@ -156,6 +160,10 @@ FORMAT:
 Telegram supports full markdown including tables and headings. Max 4096 characters per message.
 
 CRON EXAMPLES:
+  In claw context, ONLY x claw cron is allowed. Do NOT use:
+  - CronCreate/CronDelete (Claude Code built-in, only works in active session)
+  - Any system scheduling tools (cron, at, etc.)
+  - x claw cron is the ONLY choice — it persists after agent exit.
 - x claw cron --help
 - x claw cron add --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
   Requirements: <msg> is sent to a NEW agent with NO memory. It MUST include Goal, Tools, Steps, Output, and how to deliver results. Use SINGLE quotes.
@@ -197,6 +205,10 @@ FORMAT:
 Feishu supports full markdown. Card messages need specific JSON; plain markdown works well.
 
 CRON EXAMPLES:
+  In claw context, ONLY x claw cron is allowed. Do NOT use:
+  - CronCreate/CronDelete (Claude Code built-in, only works in active session)
+  - Any system scheduling tools (cron, at, etc.)
+  - x claw cron is the ONLY choice — it persists after agent exit.
 - x claw cron --help
 - x claw cron add --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
   Requirements: <msg> is sent to a NEW agent with NO memory. It MUST include Goal, Tools, Steps, Output, and how to deliver results. Use SINGLE quotes.
@@ -238,6 +250,10 @@ FORMAT:
 Enterprise WeChat has limited formatting support — similar to WeChat. Keep it simple: plain text, lists, and emoji. No tables or headings.
 
 CRON EXAMPLES:
+  In claw context, ONLY x claw cron is allowed. Do NOT use:
+  - CronCreate/CronDelete (Claude Code built-in, only works in active session)
+  - Any system scheduling tools (cron, at, etc.)
+  - x claw cron is the ONLY choice — it persists after agent exit.
 - x claw cron --help
 - x claw cron add --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
   Requirements: <msg> is sent to a NEW agent with NO memory. It MUST include Goal, Tools, Steps, Output, and how to deliver results. Use SINGLE quotes.

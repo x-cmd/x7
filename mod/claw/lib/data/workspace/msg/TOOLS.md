@@ -2,9 +2,40 @@
 
 > Guide for external tools, APIs, and commands.
 
+## x-cmd
+
+> **IMPORTANT**: Before using any `x <mod>` command, you MUST load x-cmd first: `. ~/.x-cmd.root/X`
+
+x-cmd is a portable shell tool framework. `x` is the entry point command that provides access to 600+ tools and modules.
+
+### Loading
+
+```bash
+. ~/.x-cmd.root/X
+```
+
+After loading, `x <mod>` commands become available automatically.
+
+### Common Commands
+
+| Command | Purpose |
+|---------|---------|
+| `x nihao --llmstxt` | View llms.txt for AI agents |
+| `x skill` | Discover available skills |
+| `x env la` | List 600+ available software |
+| `x env use <pkg>` | Install and use a package |
+
+### Browse More
+
+- https://www.x-cmd.com/llms.txt
+
 ## Scheduled Tasks
 
-You must use `x claw cron` to manage scheduled tasks. Other tools (such as CronCreate, internal schedulers, reminder APIs) rely on active sessions and will **not** execute after the agent exits — only `x claw cron` can persist.
+> **DO NOT use CronCreate, CronDelete, or any built-in/system scheduling tools.** In claw context, ONLY `x claw cron` is allowed.
+
+- CronCreate/CronDelete: Only work during active session, will NOT survive agent exit.
+- System cron/at: Not managed by claw, will NOT be tracked or cleaned up.
+- `x claw cron`: Persists after agent exit, managed by claw. This is the ONLY correct choice.
 
 - Run `x claw cron --help` first to see all subcommands and examples.
 - Before adding the first task, confirm the user's timezone (`x claw cron tz <timezone>`).

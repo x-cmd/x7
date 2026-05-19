@@ -2,6 +2,12 @@
 ___x_cmd_feishu_login(){
     param:void
 
+    [ $# -gt 0 ] || set -- help
+    local op="$1" ;
+    case "$op" in
+        -h|--help)      ___x_cmd help -m feishu login "$@" ; return 0 ;;
+    esac
+
     feishu:info "Starting Feishu bot login..."
     feishu:info "Scan the QR code with Feishu App to login."
 
