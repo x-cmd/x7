@@ -71,18 +71,43 @@ END{
 
     min = diff[0]
     max = diff[count-1]
+    second = (count >= 2) ? diff[count-2] : max
+    third = (count >= 3) ? diff[count-3] : second
     median = (count % 2 == 1) ? diff[int(count/2)] : (diff[count/2-1] + diff[count/2]) / 2
 
     if (output == "avg") {
-        printf "%.3f\n", avg
+        printf "%9.3f\n", avg
+    } else if (output == "csv") {
+        printf "count,sum,offset,min,max,second,third,avg,median,stddev\n"
+        printf "%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f\n", count, sum, CALIBRATION_OFFSET, min, max, second, third, avg, median, stddev
+    } else if (output == "csv0") {
+        printf "%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f\n", count, sum, CALIBRATION_OFFSET, min, max, second, third, avg, median, stddev
+    } else if (output == "tsv") {
+        printf "count\tsum\toffset\tmin\tmax\tsecond\tthird\tavg\tmedian\tstddev\n"
+        printf "%d\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\n", count, sum, CALIBRATION_OFFSET, min, max, second, third, avg, median, stddev
+    } else if (output == "tsv0") {
+        printf "%d\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\n", count, sum, CALIBRATION_OFFSET, min, max, second, third, avg, median, stddev
+    } else if (output == "yml") {
+        printf "count: %d\n", count
+        printf "sum: %.3f\n", sum
+        printf "offset: %.3f\n", CALIBRATION_OFFSET
+        printf "min: %.3f\n", min
+        printf "max: %.3f\n", max
+        printf "second: %.3f\n", second
+        printf "third: %.3f\n", third
+        printf "avg: %.3f\n", avg
+        printf "median: %.3f\n", median
+        printf "stddev: %.3f\n", stddev
     } else {
-        printf "count:   %d\n", count
-        printf "total:   %.3f ms\n", sum
-        printf "offset:  %.3f ms\n", CALIBRATION_OFFSET
-        printf "min:     %.3f ms\n", min
-        printf "max:     %.3f ms\n", max
-        printf "avg:     %.3f ms\n", avg
-        printf "median:  %.3f ms\n", median
-        printf "stddev:  %.3f ms\n", stddev
+        printf "count:   %9d\n", count
+        printf "total:   %9.3f ms\n", sum
+        printf "offset:  %9.3f ms\n", CALIBRATION_OFFSET
+        printf "min:     %9.3f ms\n", min
+        printf "max:     %9.3f ms\n", max
+        printf "second:  %9.3f ms\n", second
+        printf "third:   %9.3f ms\n", third
+        printf "avg:     %9.3f ms\n", avg
+        printf "median:  %9.3f ms\n", median
+        printf "stddev:  %9.3f ms\n", stddev
     }
 }

@@ -4,10 +4,7 @@ ___x_cmd log init time
 
 xrc epoch
 
-xrc:mod:lib     time        util measure run  eval   stress
-
-# x time <command> [...args]    # calculate the time
-# x time -c 1000                # using ssrun
+xrc:mod:lib     time        util getms stress cmp
 
 ___x_cmd_time___main(){
     [ "$#" -gt 0 ] ||   set -- --help
@@ -16,16 +13,13 @@ ___x_cmd_time___main(){
     case "$op" in
         -h|--help)      ___x_cmd help -m time       "$@" ;      return 0 ;;
 
-        --try|--measure)
-                        ___x_cmd_time_measure       "$@" ;;
+        comp|stress|log|cmp|\
+        getms|getms_|getreal|getreal_|getrealms|getrealms_)
+                        ___x_cmd_time_"${op}"       "$@" ;;
 
-        -e|--eval)      ___x_cmd_time_eval          "$@" ;;
-        --run)          ___x_cmd_time_run           "$@" ;;
-
-        --stress)       ___x_cmd_time_ssrun         "$@" ;;
-
-        --)             ___x_cmd_time_run           "$@" ;;
-        *)              ___x_cmd_time_run "$op"     "$@" ;;
+        --)             ___x_cmd_time_getreal   "$@" ;;
+        -*)             ___x_cmd_time_stress    "$op" "$@" ;;
+        *)              ___x_cmd_time_getreal   "$op" "$@" ;;
     esac
 }
 
@@ -48,3 +42,44 @@ ___x_cmd_time_log(){
     time:info --total-ms "$(( x_ - begin))"  --return-code "$ret" "Command finished."
     return $ret
 }
+
+___x_cmd_time_getrealms_(){
+    {
+        ___x_cmd_epoch_real_;      local begin="$x_"
+        "$@"
+        ___x_cmd_epoch_real_;      local end="$x_"
+    } 1>/dev/null 2>/dev/null
+
+    if [ "$___X_CMD_SHELL" = zsh ]; then
+        x_=$((  ( end - begin ) * 1000 ))
+    else
+        x_="$( ___x_cmd_cmds awk -v end="$2" -v begin="$1" 'BEGIN{  printf("%-10.3f", (end-begin) * 1000 ) ; }' )"
+    fi
+}
+
+___x_cmd_time_getrealms(){
+    local x_
+    ___x_cmd_time_getrealms_ "$@"
+    printf "%s\n" "$x_"
+}
+
+___x_cmd_time_getreal_(){
+    {
+        ___x_cmd_epoch_real_;      local begin="$x_"
+        "$@"
+        ___x_cmd_epoch_real_;      local end="$x_"
+    } 1>/dev/null 2>/dev/null
+
+    if [ "$___X_CMD_SHELL" = zsh ]; then
+        x_=$((  end - begin  ))
+    else
+        x_="$( ___x_cmd_cmds awk -v end="$2" -v begin="$1" 'BEGIN{  printf("%-10.3f", (end-begin) * 1000 ) ; }' )"
+    fi
+}
+
+___x_cmd_time_getreal(){
+    local x_
+    ___x_cmd_time_getreal_ "$@"
+    printf "%s\n" "$x_"
+}
+

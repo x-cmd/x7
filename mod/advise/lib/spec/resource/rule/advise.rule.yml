@@ -275,12 +275,34 @@ ADV-modify-020:
 # ============================================================
 
 ADV-efficiency-010:
-  name: efficiency-module-meta-mark
+  name: efficiency-module-only-when-explicitly-marked
   apply: adv/index.yml
   level: error
   desc:
-  - 效率模块（assert、is、str、env、path 等）必须标记 `<meta>: subcmd-help: disable`
-  - 效率模块的子命令不支持 help，必须通过 meta 标记声明
+  - 效率模块的判定**完全依赖显式标记** `<meta>: <subcmd-help>: disable`
+  - lint/scan 等检查工具**不应主动推断或认定**某个模块为效率模块
+  - 没有 `<subcmd-help>: disable` 标记 → 一律视为普通模块，不触发任何效率模块规则
+  - 已确认的效率模块仅有：assert、is、str（仅供参考，检查工具不应硬编码此列表来反向推断）
+  - 判定标准：子函数的主体执行时间小于参数判断开销（如解析 -h、显示 help）
+
+ADV-efficiency-012:
+  name: suggest-efficiency-candidate
+  apply: adv/index.yml
+  level: info
+  desc:
+  - 检查工具可以**建议**某些 subcmd 适合标记为效率函数，但仅作为 info 级别的提示
+  - 未经作者许可，检查工具不得自动将 subcmd 变为效率 subcmd
+  - 这是一条**建议性规则**，不会导致 lint 失败
+
+ADV-efficiency-015:
+  name: efficiency-subcmd-inherits-from-parent
+  apply: adv/index.yml
+  level: warn
+  desc:
+  - 一个子命令仅当其上层（父层或祖层，即模块根级别）**显式标记了** `<meta>: <subcmd-help>: disable` 时，才算效率函数
+  - 效率函数的判定是自上而下继承的，不是按单个子命令独立判定
+  - 如果模块层没有标记，即使某个子命令执行很快，它也不算效率函数，应作为普通子命令处理
+  - 检查工具不得主动扫描并推断"这个模块看起来像效率模块"
 
 ADV-efficiency-020:
   name: efficiency-tldr-at-root-only
@@ -302,6 +324,16 @@ ADV-efficiency-020:
       is-int:
         <desc>:
           cn: 验证整数
+
+ADV-subcmd-010:
+  name: underscore-suffix-no-advice-declaration
+  apply: adv/index.yml
+  level: warn
+  desc:
+  - 以 `_` 结尾的子命令（如 `join_`、`split_`、`v4_`）是内部脚本变体，不需要在 advise 中声明为 subcmd
+  - `_` 变体不需要补全支持，其对应的无 `_` 版本已在 subcmd 定义中
+  - `_` 变体的存在只需在模块级别的 `<tip>` 中统一提及即可
+  - 不要在 subcmd 分类列表（如 `<subcmd:xxx>`）中列出 `_` 后缀的子命令
 
 # ============================================================
 # Section: 写作优先级

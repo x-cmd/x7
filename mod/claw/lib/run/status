@@ -61,6 +61,32 @@ ___x_cmd_claw_run_status(){
     printf "  agent_available: %s\n" "$agent_available"
     [ -n "$last_tick" ] && printf "  last_tick: %s\n" "$last_tick"
 
+    printf "workspace: %s\n" "$___X_CMD_CLAW_BOT_WS"
+    printf "log_dir: %s\n" "$___X_CMD_CLAW_BOT_STDOUT_LOG_DIR"
+
+    local mq_pending=0
+    if [ -d "$___X_CMD_CLAW_BOT_MQ" ]; then
+        local f
+        for f in "$___X_CMD_CLAW_BOT_MQ"/*; do
+            [ -f "$f" ] && mq_pending=$((mq_pending + 1))
+        done
+    fi
+    printf "mq_pending: %s\n" "$mq_pending"
+
+    printf "cron:\n"
+    local cron_list=""
+    cron_list="$(___x_cmd cron ls --ns x-claw-default --tsv 2>/dev/null)" || cron_list=""
+    if [ -n "$cron_list" ]; then
+        printf "%s\n" "$cron_list" | while IFS="$___X_CMD_UNSEENCHAR_HT" read -r name expr desc; do
+            [ -n "$name" ] || continue
+            printf "  - name: %s\n" "$name"
+            printf "    expr: %s\n" "$expr"
+            [ -n "$desc" ] && printf "    desc: %s\n" "$desc"
+        done
+    else
+        printf "  []\n"
+    fi
+
     local imdir="$___X_CMD_CLAW_BOT_HEARTBEAT/im_activity"
     printf "im:\n"
     if [ -d "$imdir" ]; then

@@ -186,7 +186,7 @@ ___x_cmd_feishu_appupload_image_(){
     ____x_cmd_tenant_token ; cur_token="$x_"
 
     image_path="$1"
-    [ -f "$image_path" ] || N=feishu M="File not found: $file_path" log:ret:1
+    [ -f "$image_path" ] || N=feishu M="File not found: $image_path" log:ret:1
 
     ___x_cmd curl -s -X POST 'https://open.feishu.cn/open-apis/im/v1/images?image_type=message' \
         -H "Authorization: Bearer $cur_token" \

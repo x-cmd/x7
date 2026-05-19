@@ -1,5 +1,5 @@
 
-___x_cmd_time_measure(){
+___x_cmd_time_getms(){
     arg:init time
     while [ $# -gt 0 ]; do
         case "$1" in
@@ -9,17 +9,18 @@ ___x_cmd_time_measure(){
     done
 
     local x_=""
-    ___x_cmd_time_measure_ "$@"
+    ___x_cmd_time_getms_ "$@"
     [ -n "$x_" ] || return 1
     printf "%s\n" "$x_"
 }
 
-___x_cmd_time_measure_(){
-    local x_=""
+___x_cmd_time_getms_(){
+    {
+        ___x_cmd_epoch_ms_;      local begin="$x_"
+        "$@"
+        ___x_cmd_epoch_ms_
 
-    ___x_cmd_epoch_ms_;      local begin="$x_"
-    "$@"
-    ___x_cmd_epoch_ms_
-
-    x_=$(( x_ - begin ))
+        x_=$(( x_ - begin ))
+    } >/dev/null 2>/dev/null
 }
+

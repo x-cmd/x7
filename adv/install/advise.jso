@@ -20,11 +20,11 @@ null
 {
 "en"
 :
-"Query installation methods and install software — interactively, with auto best-match for CI/CD, or structured output for AI agents"
+"Cross-platform installer — query and install software and skills, with interactive selection, CI/CD auto best-match, or structured output for AI agents"
 ,
 "cn"
 :
-"查询安装方法并安装软件 —— 支持交互式选择、CI/CD 自动最佳匹配、AI Agent 结构化输出"
+"跨平台安装器，查询并安装软件和 skill —— 支持交互式选择、CI/CD 自动最佳匹配、AI Agent 结构化输出"
 }
 ,
 "#synopsis"
@@ -32,6 +32,24 @@ null
 [
 {
 "x install [policy] [software]"
+:
+null
+}
+,
+{
+"x install --best <software>"
+:
+null
+}
+,
+{
+"x install --withtool <tool> <software>"
+:
+null
+}
+,
+{
+"x install --search <keyword>"
 :
 null
 }
@@ -49,13 +67,7 @@ null
 }
 ,
 {
-"x install --best <software>"
-:
-null
-}
-,
-{
-"x install --withtool <tool> <software>"
+"x install --env"
 :
 null
 }
@@ -67,42 +79,102 @@ null
 {
 "cn"
 :
-"支持批量安装多个软件，也支持安装 skill（skill/* 或 clawhub/* 格式）。\n支持前缀格式快速指定安装来源：brew/jq、apt/git、npm/express、sys/bun、best/jq。\n"
+"不知道该用什么方式装软件？直接 x install 加软件名，\n会列出当前系统所有可用的安装方式，选一个就行。\n也支持批量安装和 skill 安装（skill/* 或 clawhub/* 格式）。\n"
 ,
 "en"
 :
-"Supports batch install of multiple software, and skill installation (skill/* or clawhub/* format).\nPrefix format for quick source selection: brew/jq, apt/git, npm/express, sys/fzf, best/jq.\n"
+"Don't know which method to install software? Just run `x install <software>` to see all available methods for your system and pick one.\nAlso supports batch install and skill installation (skill/* or clawhub/* format).\n"
 }
 ,
 {
 "cn"
 :
-"x install 默认进入交互模式，列出当前平台所有可用安装方法供选择。\n"
+"写脚本自动装软件？三种方式按需选择：\n--best 按优先级自动选最佳方法，--withtool 用指定包管理器，--sys 用系统包管理器。\n不确定命令对不对？加 --printcmd 先预览，确认后再执行。\n"
 ,
 "en"
 :
-"x install enters interactive mode by default, listing all available methods for the current platform.\n"
+"Automating software install in scripts? Three ways to choose:\n--best auto-selects by priority, --withtool uses a specified package manager, --sys uses the system package manager.\nNot sure about the command? Add --printcmd to preview before executing.\n"
 }
 ,
 {
 "cn"
 :
-"自动化安装有三种方式，按需选择：\n1. --best — 按优先级自动选择最佳方法并执行，适合 CI/CD。可用 --priority 自定义优先级。\n2. --withtool — 使用指定包管理器。默认查找收录的安装方法，加 --direct 则直接调用包管理器。\n3. --sys — 使用系统包管理器（如 ubuntu 用 apt，macOS 用 brew）。\n"
+"让 AI Agent 帮用户装软件：--search 从多个来源搜索找到合适的软件，\n--printinfo 获取安装方法和元数据，--env 感知当前系统环境，\n三者结合就能给出针对性的安装建议。\n"
 ,
 "en"
 :
-"Three ways for automated install:\n1. --best — auto-select best method by priority and execute, for CI/CD. Use --priority to customize.\n2. --withtool — use specified tool. Looks up recorded methods by default; add --direct to call tool directly.\n3. --sys — use system package manager (apt on Ubuntu, brew on macOS).\n"
+"Help users install software via AI Agent: use --search to discover software across sources,\n--printinfo for install methods and metadata, and --env to understand the system environment —\nthen make informed recommendations.\n"
 }
 ,
 {
 "cn"
 :
-"--printinfo 和 --printcmd 用于只查询不执行，适合 AI Agent 或脚本集成。\n1. --printinfo 输出详细信息和所有安装方法，--printcmd 仅输出安装命令。\n2. 当与 --best 组合时（--best --printcmd），只查询最佳方法的信息而不执行。\n3. --available-tool 查询当前系统支持的包管理器，加 --installed 仅显示已安装的。\n"
+"支持前缀格式快速指定安装来源：brew/jq、apt/git、npm/express、sys/bun、best/jq。\n"
 ,
 "en"
 :
-"--printinfo and --printcmd query without executing, suitable for AI agents or script integration.\n1. --printinfo outputs detailed info and all methods; --printcmd outputs install commands only.\n2. When combined with --best (--best --printcmd), only queries the best method without executing.\n3. --available-tool queries supported package managers; add --installed to show installed only.\n"
+"Prefix format for quick source selection: brew/jq, apt/git, npm/express, sys/bun, best/jq.\n"
 }
+,
+{
+"cn"
+:
+"--printcmd 可与 --best、--withtool、--sys 组合使用，预演而不执行。\n"
+,
+"en"
+:
+"--printcmd can be combined with --best, --withtool, --sys to preview without executing.\n"
+}
+,
+{
+"cn"
+:
+"--available-tool 查询当前系统支持的包管理器，加 --installed 仅显示已安装的。\n"
+,
+"en"
+:
+"--available-tool queries supported package managers; add --installed to show installed only.\n"
+}
+]
+,
+"#subcmd:Install"
+:
+[
+"--run"
+,
+"--best"
+,
+"--sys"
+,
+"--withtool"
+]
+,
+"#subcmd:Info"
+:
+[
+"--ls"
+,
+"--printinfo|--cat"
+,
+"--printcmd|--dry-run"
+,
+"--search"
+,
+"--env"
+,
+"--available-tool"
+]
+,
+"#subcmd:Interactive"
+:
+[
+"--fzf|--fz"
+]
+,
+"#subcmd:Maintenance"
+:
+[
+"--update|-u"
 ]
 ,
 "--ls"
@@ -1083,6 +1155,282 @@ true
 ]
 }
 ,
+"--search"
+:
+{
+"#subcmd"
+:
+true
+,
+"#desc"
+:
+{
+"en"
+:
+"Search for software and skills across multiple package sources and skill platforms"
+,
+"cn"
+:
+"从多个软件源和 skill 平台聚合搜索软件和 skill"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Search keyword"
+,
+"cn"
+:
+"搜索关键词"
+}
+}
+,
+"--package"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Search only in package sources (apt, brew, pixi, npm, etc.)"
+,
+"cn"
+:
+"仅从软件源中搜索（apt、brew、pixi、npm 等）"
+}
+}
+,
+"--skill"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Search only in skill platforms (skills.sh, clawhub.ai, etc.)"
+,
+"cn"
+:
+"仅从 skill 平台中搜索（skills.sh、clawhub.ai 等）"
+}
+}
+,
+"--json"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Output in JSON format (for AI Agent)"
+,
+"cn"
+:
+"以 JSON 格式输出（供 AI Agent 使用）"
+}
+}
+,
+"--tsv"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Output in TSV format"
+,
+"cn"
+:
+"以 TSV 格式输出"
+}
+}
+,
+"--csv"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Output in CSV format"
+,
+"cn"
+:
+"以 CSV 格式输出"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x install --search ppt"
+,
+"en"
+:
+"Search for software and skills matching \"ppt\" across all sources"
+,
+"cn"
+:
+"从所有来源搜索匹配 \"ppt\" 的软件和 skill"
+}
+,
+{
+"cmd"
+:
+"x install --search --package pdf"
+,
+"en"
+:
+"Search for PDF-related software in package sources only"
+,
+"cn"
+:
+"仅从软件源中搜索 PDF 相关软件"
+}
+,
+{
+"cmd"
+:
+"x install --search --skill ppt"
+,
+"en"
+:
+"Search for PPT-related skills in skill platforms only"
+,
+"cn"
+:
+"仅从 skill 平台中搜索 PPT 相关 skill"
+}
+,
+{
+"cmd"
+:
+"x install --search --json ppt"
+,
+"en"
+:
+"Search and output results in JSON format"
+,
+"cn"
+:
+"搜索并以 JSON 格式输出结果"
+}
+]
+}
+,
+"--env"
+:
+{
+"#subcmd"
+:
+true
+,
+"#desc"
+:
+{
+"en"
+:
+"Print current system environment information"
+,
+"cn"
+:
+"打印当前系统环境信息"
+}
+,
+"--json"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Output in JSON format (for AI Agent)"
+,
+"cn"
+:
+"以 JSON 格式输出（供 AI Agent 使用）"
+}
+}
+,
+"--tsv"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Output in TSV format"
+,
+"cn"
+:
+"以 TSV 格式输出"
+}
+}
+,
+"--csv"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Output in CSV format"
+,
+"cn"
+:
+"以 CSV 格式输出"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x install --env"
+,
+"en"
+:
+"Print current system environment (platform, architecture, distro, etc.)"
+,
+"cn"
+:
+"打印当前系统环境（平台、架构、发行版等）"
+}
+,
+{
+"cmd"
+:
+"x install --env --json"
+,
+"en"
+:
+"Output system environment in JSON format"
+,
+"cn"
+:
+"以 JSON 格式输出系统环境信息"
+}
+]
+}
+,
 "--update|-u"
 :
 {
@@ -1113,11 +1461,11 @@ true
 ,
 "en"
 :
-"Open the interactive APP to query and install software"
+"Open interactive UI to search, browse, and install software and skills"
 ,
 "cn"
 :
-"打开交互式 APP 查询并安装软件"
+"打开交互式界面，搜索、浏览并安装软件和 skill"
 }
 ,
 {
@@ -1141,11 +1489,11 @@ true
 ,
 "en"
 :
-"Install a skill"
+"Install skills from skill/* or clawhub/* format"
 ,
 "cn"
 :
-"安装 skill"
+"安装 skill（skill/* 或 clawhub/* 格式）"
 }
 ,
 {
@@ -1179,34 +1527,6 @@ true
 {
 "cmd"
 :
-"x install --printinfo bun"
-,
-"en"
-:
-"Print detailed information and all installation methods for a bun"
-,
-"cn"
-:
-"打印 bun 的详细信息和所有安装方法"
-}
-,
-{
-"cmd"
-:
-"x install --printcmd bun"
-,
-"en"
-:
-"Print installation commands for bun"
-,
-"cn"
-:
-"打印 bun 的所有安装方法"
-}
-,
-{
-"cmd"
-:
 "x install --withtool brew vim bun"
 ,
 "en"
@@ -1221,15 +1541,85 @@ true
 {
 "cmd"
 :
-"x install --withtool brew --printcmd vim bun"
+"x install --best --printcmd bun"
 ,
 "en"
 :
-"Print brew install commands for vim and bun without executing"
+"Preview the best install command for bun without executing"
 ,
 "cn"
 :
-"打印 brew 安装 vim 和 bun 的命令但不执行"
+"预览安装 bun 的最佳命令但不执行"
+}
+,
+{
+"cmd"
+:
+"x install --withtool brew --printcmd bun"
+,
+"en"
+:
+"Preview brew install command for bun without executing"
+,
+"cn"
+:
+"预览 brew 安装 bun 的命令但不执行"
+}
+,
+{
+"cmd"
+:
+"x install --printinfo bun"
+,
+"en"
+:
+"Print detailed information and all installation methods for bun"
+,
+"cn"
+:
+"打印 bun 的详细信息和所有安装方法"
+}
+,
+{
+"cmd"
+:
+"x install --printinfo --json bun"
+,
+"en"
+:
+"Output bun info in JSON format for AI agents"
+,
+"cn"
+:
+"以 JSON 格式输出 bun 信息供 AI Agent 使用"
+}
+,
+{
+"cmd"
+:
+"x install --search ppt"
+,
+"en"
+:
+"Search for software and skills across multiple sources"
+,
+"cn"
+:
+"从多个软件源和 skill 平台搜索"
+}
+,
+{
+"cmd"
+:
+"x install --env"
+,
+"en"
+:
+"Print current system environment info"
+,
+"cn"
+:
+"打印当前系统环境信息"
 }
 ,
 {
@@ -1239,11 +1629,11 @@ true
 ,
 "en"
 :
-"List all supported software"
+"List all software recorded in the install module"
 ,
 "cn"
 :
-"列出所有支持的软件"
+"列出 install 模块收录的所有软件"
 }
 ,
 {
@@ -1253,11 +1643,11 @@ true
 ,
 "en"
 :
-"List all supported package managers"
+"List all package managers supported in current environment"
 ,
 "cn"
 :
-"列出所有支持的包管理器"
+"列出当前环境支持的所有包管理器"
 }
 ,
 {

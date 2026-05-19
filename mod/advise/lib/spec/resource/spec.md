@@ -97,14 +97,14 @@ Advise 与以下三个操作紧密关联：
 <meta>:
   default-subcmd: <subcmd_name>    # 默认子命令
   trailing-option: true|false      # 是否支持后置选项
-  subcmd-help: disable             # 效率模块标记
+  <subcmd-help>: disable             # 效率模块标记
 ```
 
 | 字段 | 类型 | 说明 |
 |------|------|------|
 | `default-subcmd` | string | 当用户只输入模块名时使用的默认子命令 |
 | `trailing-option` | boolean | 是否支持选项出现在位置参数之后 |
-| `subcmd-help` | string | `disable` 表示子命令无 help 支持（效率模块） |
+| `<subcmd-help>` | string | `disable` 表示子命令无 help 支持（效率模块） |
 
 ### 3.3 `<synopsis>` - 命令用法
 
@@ -534,14 +534,78 @@ get:
 
 ### 4.5 效率模块特殊规则
 
-效率模块（assert、is、str、env、path）为高性能设计，**子命令无 help 支持**。
+#### 什么是效率模块
+
+效率模块是 x-cmd 中少数几个为极致性能设计的底层模块。
+
+**判定标准**：如果一个子函数的主体执行时间**小于参数判断的开销**（如解析 `-h`、显示 help），那么它就是效率函数。整个模块如果绝大部分子命令都是效率函数，才标记为效率模块。
+
+**已确认的效率模块**：`assert`、`is`、`str`（仅此三个）
+
+> **⚠️ 判定效率模块要非常小心**：
+> - 效率模块的数目极少，不要轻易将模块标记为效率模块
+> - `env`、`path` 等模块虽有部分效率函数，但不一定是完整的效率模块
+> - 部分效率模块可能存在非效率函数（即有些子命令的执行时间大于参数判断开销）
+> - 不确定时，**不要标记为效率模块**，让它做普通模块即可
+
+#### 效率函数的继承规则
+
+一个子命令（subcmd）**仅当其上层（父层或祖层）被标记为效率模块**时，才算效率函数。
+
+```
+模块层（root）
+  └── <meta>: <subcmd-help>: disable    ← 标记为效率模块
+        ├── subcmd-a                  ← 效率函数（继承自模块层）
+        ├── subcmd-b                  ← 效率函数（继承自模块层）
+        └── subcmd-c                  ← 效率函数（继承自模块层）
+
+模块层（root）
+  └── <meta>: （无 subcmd-help: disable）  ← 普通模块
+        ├── subcmd-a                  ← 普通函数
+        ├── subcmd-b                  ← 普通函数
+        └── subcmd-c                  ← 普通函数
+```
+
+**关键点**：
+- 效率函数的判定是**自上而下继承**的，不是按单个子命令独立判定
+- 只要模块层标记了 `<subcmd-help>: disable`，该模块下**所有**子命令都是效率函数
+- 如果模块层没有标记，即使某个子命令执行很快，它也不算效率函数
+
+> **⚠️ 显式标定原则**：
+> `<subcmd-help>: disable` **必须由开发者显式标定**。lint、scan 等检查工具**不应主动推断或认定**某个模块为效率模块。
+> - 检查工具只负责：如果已标记，则验证标记后的约束是否满足
+> - 检查工具**不负责**：判断某个模块"应该"标记为效率模块
+> - 没有 `<subcmd-help>: disable` 标记 → 一律视为普通模块，不做任何效率模块相关的检查
+> - 检查工具可以**建议**某些 subcmd 适合标记为效率函数（info 级别），但未经作者许可，不得自动变更
+
+#### AI 迭代的边界
+
+> **经验教训**：AI 在迭代修复 story 时，可能反复建议将未标记的模块认定为效率模块，导致方向越走越偏。
+>
+> 这说明有些决策**必须由人类/设计者做出**，不适合交给 AI 自动迭代。效率模块的判定就是典型的例子 —— 它需要开发者对模块性能特征的深入理解，而非模式匹配。
+>
+> 这也是 Unix 小工具哲学的体现：工具的**结果域越小，越容易收敛**。检查工具应聚焦于"已标记的约束是否满足"这一可验证的小问题，而非"这个模块应不应该标记"这一开放性的大问题。
+
+#### `_` 后缀子命令不需要在 advise 中声明
+
+以 `_` 结尾的子命令（如 `join_`、`split_`、`v4_`）是内部脚本变体，**不需要**在 advise 中作为 subcmd 声明，不需要补全支持。
+
+- 其对应的**无 `_` 版本**（如 `join`、`split`、`v4`）已经在 subcmd 定义中
+- `_` 变体的存在只需在 `<tip>` 中提及即可
+- 详见 [12.6 `_` 后缀子命令](#126-_-后缀子命令内部脚本变体)
+
+#### 效率模块的约束
+
+- 标记 `<meta>: <subcmd-help>: disable`，子命令不支持 `-h`/`--help`
+- 所有 TLDR 必须在根级别
+- 子命令下禁止 `<tldr>` 和复杂选项定义
 
 ```yaml
 <meta>:
-  subcmd-help: disable      # 标记为效率模块
+  <subcmd-help>: disable      # 标记为效率模块
 
 # 所有 TLDR 必须在根级别
-tldr:
+<tldr>:
   - cmd: x assert is-int 1 2 3
     cn: "测试: 批量验证"
 
@@ -875,16 +939,19 @@ export ___X_CMD_LANG=zh
 
 | 特性 | 效率模块 | 普通模块 |
 |------|----------|----------|
-| 示例 | assert, is, str, env, path | host, git, bwh |
-| `<meta>: subcmd-help` | `disable` | 不需要或 `enable` |
+| 已确认 | assert, is, str | host, git, bwh, env, path, ... |
+| 判定标准 | 子函数执行时间 < 参数判断开销 | 不满足效率模块标准 |
+| `<meta>: <subcmd-help>` | `disable` | 不需要或 `enable` |
 | TLDR 位置 | **根级别** | 根级别或子命令下 |
 | 子命令 help | **不支持** | 支持 |
 | `_` 变体 | 通常有 | 可选 |
 
+> **注意**：`env`、`path` 等模块虽有部分效率函数，但整体不是效率模块。不确定时不标记。
+
 ```yaml
 # 效率模块
 <meta>:
-  subcmd-help: disable
+  <subcmd-help>: disable
 
 <tldr>:
   - cmd: x assert is-int 1 2 3
@@ -1092,16 +1159,16 @@ cat:
 ### 9.8 忘记 `<meta>` 标记效率模块
 
 ```yaml
-# ❌ 错误 - 效率模块没有标记 subcmd-help: disable
+# ❌ 错误 - 效率模块没有标记 <subcmd-help>: disable
 <name>:
   str:
   cn: 字符串处理
   en: String manipulation
-# 没有 <meta>: subcmd-help: disable
+# 没有 <meta>: <subcmd-help>: disable
 
 # ✅ 正确
 <meta>:
-  subcmd-help: disable
+  <subcmd-help>: disable
 ```
 
 ---
@@ -1203,7 +1270,7 @@ fz:
 
 ```yaml
 <meta>:
-  subcmd-help: disable
+  <subcmd-help>: disable
 
 <name>:
   assert:
@@ -1284,7 +1351,7 @@ is-set:
 
 ```yaml
 <meta>:
-  subcmd-help: disable
+  <subcmd-help>: disable
 
 <name>:
   str:
@@ -1455,7 +1522,8 @@ git diff HEAD -- adv/index.yml | grep -E "^[-+].*|"
 
 ### 12.4 效率模块检查
 
-- [ ] 效率模块标记 `<meta>: subcmd-help: disable`
+- [ ] 仅 assert、is、str 标记为效率模块（判定标准：子函数执行时间 < 参数判断开销）
+- [ ] 效率模块标记 `<meta>: <subcmd-help>: disable`
 - [ ] 所有 TLDR 在根级别
 - [ ] 子命令下无 `<tldr>`
 
@@ -1533,7 +1601,7 @@ x-cmd-spec 中的 advise 相关文档已简化，内容合并到 `x advise spec 
 | **bwh** | `x-bash/bwh/adv/index.yml` | 多段式 advise、`<ref>` 外部引用 |
 | **line** | `x-bash/line/adv/index.yml` | 子命令分类、`<tip>` 模块级别 `_` 变体说明 |
 | **tldr** | `x-bash/tldr/adv/index.yml` | `<web>` 字段、`tlfz` 快捷命令 |
-| **assert** | `x-bash/assert/adv/index.yml` | 效率模块标记（`subcmd-help: disable`） |
+| **assert** | `x-bash/assert/adv/index.yml` | 效率模块标记（`<subcmd-help>: disable`） |
 | **str** | `x-bash/str/adv/index.yml` | 效率模块、TLDR 在根级别 |
 | **timeout** | `x-bash/timeout/adv/index.yml` | 选项模式 |
 | **passwd** | `x-bash/passwd/adv/index.yml` | 纯选项模式 |
@@ -1558,7 +1626,7 @@ x advise spec show --standard-modules
 | 字段 | 类型 | 用途 |
 |------|------|------|
 | `<name>` | object | 模块名称（cn, en） |
-| `<meta>` | object | 元数据（default-subcmd, subcmd-help） |
+| `<meta>` | object | 元数据（default-subcmd, <subcmd-help>） |
 | `<synopsis>` | array | 命令用法示例（仅模块级别） |
 | `<desc>` | object | 描述（cn, en） |
 | `<tip>` | array | 使用提示 |

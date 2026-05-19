@@ -35,6 +35,8 @@ ___x_cmd_feishu_abot_service_start(){
         esac
     done
 
+    local sname="x-feishu-${chat_type}${chatid:+-${chatid}}-listener"
+
     ___x_cmd_feishu_ensureinit || return "$?"
 
     [ "$chat_type" != "admin" ] || {
@@ -50,7 +52,6 @@ ___x_cmd_feishu_abot_service_start(){
         fi
     }
 
-    local sname="x-feishu-${chat_type}${chatid:+-${chatid}}-listener"
     ___x_cmd service start      "$sname"   --   x-cmd feishu abot service run --"${chat_type}" "$chatid" "$@"
 
     ___x_cmd_cmds sleep 2
