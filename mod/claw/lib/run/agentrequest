@@ -57,7 +57,8 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
     fi
 
     if [ "$workspace_dir/AGENTS.md" -ot "$___X_CMD_ROOT_METADATA/version_sum" ]; then
-        claw:info "Workspace template 可能有更新，检查是否需要优化结构"
+        claw:info "Workspace template may have been updated, checking if structure optimization is needed"
+        ___x_cmd_cmds touch "$workspace_dir/AGENTS.md"
         check_prompt="<workspace_check>
 The workspace template has been updated. Use it as a reference to evaluate whether your current workspace structure needs improvements.
 
@@ -90,6 +91,7 @@ Guidelines:
         weixin)
             ___x_cmd agent request  \
                 --timeout 1800 \
+                --debug \
                 --workspace "$workspace_dir"  \
                 --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
                 "You have received a message from a user via WeChat.
@@ -129,6 +131,7 @@ $msg
         telegram)
             ___x_cmd agent request  \
                 --timeout 1800 \
+                --debug \
                 --workspace "$workspace_dir"  \
                 --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
                 "You have received a message from a user via Telegram.
@@ -169,6 +172,7 @@ $msg
         feishu)
             ___x_cmd agent request  \
                 --timeout 1800 \
+                --debug \
                 --workspace "$workspace_dir"  \
                 --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
                 "You have received a message from a user via Feishu.
@@ -209,6 +213,7 @@ $msg
         qywx)
             ___x_cmd agent request  \
                 --timeout 1800 \
+                --debug \
                 --workspace "$workspace_dir"  \
                 --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
                 "You have received a message from a user via Qywx (Enterprise WeChat).
@@ -343,7 +348,8 @@ ___x_cmd_claw_run___agentrequest___handleheartbeat(){
     fi
 
     if [ "$workspace_dir/AGENTS.md" -ot "$___X_CMD_ROOT_METADATA/version_sum" ]; then
-        claw:info "[HB] Workspace template 可能有更新，检查是否需要优化结构"
+        ___x_cmd_cmds touch "$workspace_dir/AGENTS.md"
+        claw:info "[HB] Workspace template may have been updated, checking if structure optimization is needed"
         check_prompt="<workspace_check>
 The workspace template has been updated. Use it as a reference to evaluate whether your current workspace structure needs improvements.
 
@@ -362,6 +368,7 @@ Guidelines:
 
     ___x_cmd agent request \
         --timeout 1800 \
+        --debug \
         --workspace "$workspace_dir"  \
         --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
         "You are a heartbeat agent — a background process that wakes up periodically to check workspace state, review context, and surface anything worth the user's attention. Current time: '$(___x_cmd date iso)'.

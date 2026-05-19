@@ -20,35 +20,19 @@ null
 {
 "default-subcmd"
 :
-"getreal"
+"getms"
 }
 ,
 "#synopsis"
 :
 [
-{
 "x time <command> [args...]"
-:
-null
-}
 ,
-{
 "x time getms <command> [args...]"
-:
-null
-}
 ,
-{
 "x time stress [ -c <count> ] [ -b <budget_sec> ] [ --csv|--csv0|--tsv|--tsv0|--yml|--tty ] <command> [args...]"
-:
-null
-}
 ,
-{
 "x time cmp [ -c <count> ] [ --csv|--csv0|--tsv|--tsv0|--yml|--tty ] <cmd1> <cmd2> [cmd3...]"
-:
-null
-}
 ]
 ,
 "#desc"
@@ -56,11 +40,11 @@ null
 {
 "cn"
 :
-"测量命令执行时间，从单次微秒级计时到多次统计分析。\nstress 子命令提供完整统计（count/min/max/avg/median/stddev），包含三段式自动校准和 batch10 快命令优化。\ncmp 子命令对比多个命令的性能，默认交互终端以 csv app 浏览，管道则以 TSV 输出。\n"
+"测量命令执行时间，从单次微秒级计时到多次统计分析。"
 ,
 "en"
 :
-"Measure command execution time, from single-shot microsecond timing to multi-run statistical analysis.\nThe stress subcommand provides full statistics (count/min/max/avg/median/stddev) with three-phase calibration and batch10 fast-command optimization.\nThe cmp subcommand compares multiple commands' performance, defaulting to csv app on interactive terminal and TSV on pipe.\n"
+"Measure command execution time, from single-shot microsecond timing to multi-run statistical analysis."
 }
 ,
 "#tip"
@@ -69,51 +53,31 @@ null
 {
 "cn"
 :
-"stress 和 cmp 默认行为:\n- 交互终端下，以 csv app 浏览数据（表格形式）\n- 管道或重定向时，以 TSV 格式输出（适合 awk/grep 处理）\n"
+"stress/cmp 默认: 交互终端开 csv app 浏览，管道或重定向出 TSV（适合 awk/grep）。\n无需手动选格式——带格式选项则用指定格式，不带则自动判断终端类型。\n"
 ,
 "en"
 :
-"stress and cmp default behavior:\n- Interactive terminal: opens csv app viewer (spreadsheet-like)\n- Pipe or redirect: outputs TSV format (for awk/grep processing)\n"
+"stress/cmp default: interactive terminal opens csv app viewer; pipe/redirect outputs TSV (for awk/grep).\nNo need to pick a format manually — with a format flag it uses that; without, it auto-detects terminal type.\n"
 }
 ,
 {
 "cn"
 :
-"推荐用法:\n1. x time <cmd> — 交互使用，微秒级精度结果\n2. x time log <cmd> — 脚本使用，打印执行时间与返回码\n3. x time stress <cmd> — 性能分析，交互终端以 csv app 浏览\n4. x time cmp <cmd1> <cmd2> — 性能对比\n"
+"脚本集成:\n- x time getms_ <cmd> — 毫秒写入变量 x_，脚本内判断耗时\n- x time stress --yml <cmd> — 结构化 YAML，适合脚本解析\n- x time cmp --tsv0 <cmd1> <cmd2> — 多命令对比数据，管道处理\n"
 ,
 "en"
 :
-"Recommended usage:\n1. x time <cmd> — interactive use, microsecond precision result\n2. x time log <cmd> — scripting, print execution time and return code\n3. x time stress <cmd> — performance analysis, csv app viewer on interactive terminal\n4. x time cmp <cmd1> <cmd2> — performance comparison\n"
+"Script integration:\n- x time getms_ <cmd> — writes ms to variable x_, for in-script timing decisions\n- x time stress --yml <cmd> — structured YAML, for script parsing\n- x time cmp --tsv0 <cmd1> <cmd2> — comparison data for pipe processing\n"
 }
 ,
 {
 "cn"
 :
-"脚本集成:\n- x time getms_ <cmd> — 将耗时（毫秒）写入变量 x_，适合脚本内部判断\n- x time stress --csv0 <cmd> — 无表头 CSV，适合数据库导入\n- x time stress --tsv0 <cmd> — 无表头 TSV，单行输出，适合捕获到变量\n- x time cmp --tsv0 <cmd1> <cmd2> — 多命令对比数据，适合管道处理\n"
+"统计指标:\n- max — 冷启动最坏情况，最接近真实首次执行\n- avg — 因缓存效应通常低于实际首次运行\n- median — 排除极端值的典型时间\n- stddev — 波动程度，值大说明执行时间不稳定\n- 评估用户体验看 max 而非 avg（缓存效应使 avg 偏低）\n"
 ,
 "en"
 :
-"Script integration:\n- x time getms_ <cmd> — write elapsed time (ms) to variable x_, for in-script decisions\n- x time stress --csv0 <cmd> — headerless CSV, for database import\n- x time stress --tsv0 <cmd> — headerless TSV, single-line output, easy to capture in a variable\n- x time cmp --tsv0 <cmd1> <cmd2> — multi-command comparison data, for pipe processing\n"
-}
-,
-{
-"cn"
-:
-"统计指标解读:\n- max — 冷启动/最坏情况，最接近真实首次执行时间\n- avg — 平均时间，因缓存效应通常低于实际首次运行\n- median — 中位数，排除极端值后的典型时间\n- stddev — 波动程度，值大说明执行时间不稳定\n- second/third — 排除最高值后的第二/第三高值，辅助判断极值是否为异常\n"
-,
-"en"
-:
-"Statistics interpretation:\n- max — cold start / worst case, closest to real first-run time\n- avg — average, usually lower than actual first run due to caching\n- median — middle value, typical time excluding extremes\n- stddev — variability; high values indicate unstable execution time\n- second/third — 2nd/3rd highest excluding the max, helps assess if max is an outlier\n"
-}
-,
-{
-"cn"
-:
-"缓存效应: 多次运行时 avg 通常低于首次真实执行时间（CPU 缓存、磁盘缓存、页缓存等因素）。\n如需评估用户体验，应重点关注 max 而非 avg。\n"
-,
-"en"
-:
-"Cache effects: avg is usually lower than real first-run time due to CPU/disk/page caching.\nFor user-facing performance assessment, focus on max rather than avg.\n"
+"Statistics:\n- max — cold start worst case, closest to real first-run\n- avg — usually lower than actual first run due to caching\n- median — typical time excluding extremes\n- stddev — variability; high values mean unstable execution\n- For user-facing performance, focus on max over avg (caching deflates avg)\n"
 }
 ]
 ,
@@ -127,25 +91,11 @@ null
 ,
 "cn"
 :
-"单次测量 echo hello 的执行时间"
+"单次计时，微秒精度"
 ,
 "en"
 :
-"Single-shot timing of echo hello"
-}
-,
-{
-"cmd"
-:
-"x time sleep 1"
-,
-"cn"
-:
-"测量 sleep 1 的执行时间"
-,
-"en"
-:
-"Measure execution time of sleep 1"
+"Single-shot timing, microsecond precision"
 }
 ,
 {
@@ -155,11 +105,11 @@ null
 ,
 "cn"
 :
-"毫秒精度测量，返回毫秒数"
+"返回毫秒数，适合脚本判断"
 ,
 "en"
 :
-"Millisecond precision timing, returns milliseconds"
+"Returns milliseconds, for script decisions"
 }
 ,
 {
@@ -169,11 +119,11 @@ null
 ,
 "cn"
 :
-"交互终端以 csv app 浏览，管道则以 TSV 输出"
+"多次运行输出统计，交互开 csv app，管道出 TSV"
 ,
 "en"
 :
-"Interactive terminal opens csv app; pipe outputs TSV"
+"Multi-run statistics; interactive opens csv app, pipe outputs TSV"
 }
 ,
 {
@@ -183,11 +133,25 @@ null
 ,
 "cn"
 :
-"指定运行 100 次，交互终端以 csv app 浏览"
+"指定 100 次"
 ,
 "en"
 :
-"Specify 100 runs, interactive terminal opens csv app"
+"Specify 100 runs"
+}
+,
+{
+"cmd"
+:
+"x time stress -b 10 sleep 0.01"
+,
+"cn"
+:
+"10 秒预算内自动决定运行次数"
+,
+"en"
+:
+"Auto-decide run count within 10-second budget"
 }
 ,
 {
@@ -197,39 +161,39 @@ null
 ,
 "cn"
 :
-"CSV 格式输出（带表头），适合数据库导入、表格软件或脚本处理"
+"CSV 带表头，适合数据库或表格软件"
 ,
 "en"
 :
-"CSV output with header, suitable for database import, spreadsheets, or scripting"
+"CSV with header, for database or spreadsheets"
 }
 ,
 {
 "cmd"
 :
-"x time stress --tsv sleep 0.01"
+"x time stress --yml sleep 0.01"
 ,
 "cn"
 :
-"TSV 格式输出（带表头），适合管道和 awk/grep 处理"
+"YAML 结构化输出，适合脚本解析"
 ,
 "en"
 :
-"TSV output with header, suitable for piping with awk/grep"
+"YAML structured output, for script parsing"
 }
 ,
 {
 "cmd"
 :
-"x time stress --tsv0 sleep 0.01"
+"x time stress --tty sleep 0.01"
 ,
 "cn"
 :
-"无表头 TSV，适合程序解析"
+"纯文本统计，avg ± stddev / median / total"
 ,
 "en"
 :
-"Headerless TSV, for programmatic use"
+"Plain text stats: avg ± stddev / median / total"
 }
 ,
 {
@@ -239,11 +203,11 @@ null
 ,
 "cn"
 :
-"对比 echo 和 printf，交互终端以 csv app 浏览，管道则以 TSV 输出"
+"对比两个命令，交互开 csv app，管道出 TSV"
 ,
 "en"
 :
-"Compare echo vs printf; interactive terminal opens csv app, pipe outputs TSV"
+"Compare two commands; interactive opens csv app, pipe outputs TSV"
 }
 ,
 {
@@ -253,39 +217,53 @@ null
 ,
 "cn"
 :
-"CSV 格式对比输出，适合表格软件"
+"CSV 对比，适合表格软件"
 ,
 "en"
 :
-"CSV format comparison, suitable for spreadsheets"
+"CSV comparison, for spreadsheets"
 }
 ,
 {
 "cmd"
 :
-"x time cmp --tty 'find . -maxdepth 1' 'ls' 'ls -la'"
+"x time cmp --tsv0 'sleep 0.01' 'sleep 0.02'"
 ,
 "cn"
 :
-"人类可读格式对比三个命令"
+"无表头 TSV 对比，适合管道处理"
 ,
 "en"
 :
-"Human-readable comparison of three commands"
+"Headerless TSV comparison, for pipe processing"
 }
 ,
 {
 "cmd"
 :
-"x time cmp -c 50 'cat /dev/null' 'true' ':'"
+"x time cmp -c 50 'echo hello' 'printf hello' 'true'"
 ,
 "cn"
 :
-"对比三个命令各运行 50 次"
+"三个命令各 50 次"
 ,
 "en"
 :
-"Compare three commands, 50 runs each"
+"Three commands, 50 runs each"
+}
+,
+{
+"cmd"
+:
+"x time cmp 'find . -maxdepth 1' 'ls' 'ls -la'"
+,
+"cn"
+:
+"对比三种文件列表性能"
+,
+"en"
+:
+"Compare three file listing methods"
 }
 ]
 ,
@@ -369,11 +347,11 @@ null
 {
 "cn"
 :
-"压力测试 — 多次运行命令并输出完整统计。\n自动校准消除 shell 计时开销，batch10 模式优化微秒级命令的测量精度。\n"
+"多次运行命令并输出完整统计。\n自动校准消除 shell 计时开销，batch10 模式优化微秒级命令精度。\n"
 ,
 "en"
 :
-"Stress test — run a command multiple times with full statistics.\nAuto-calibration eliminates shell timing overhead; batch10 mode optimizes measurement precision for microsecond-level commands.\n"
+"Run a command multiple times with full statistics.\nAuto-calibration eliminates shell timing overhead; batch10 mode optimizes precision for microsecond-level commands.\n"
 }
 ,
 "#tip"
@@ -382,41 +360,41 @@ null
 {
 "cn"
 :
-"不带格式选项时，交互终端以 csv app 浏览，管道或重定向则以 TSV 输出。"
+"交互终端开 csv app，管道出 TSV。带格式选项则用指定格式。"
 ,
 "en"
 :
-"Without a format flag, interactive terminals open csv app; pipe or redirect outputs TSV."
+"Interactive terminal opens csv app; pipe outputs TSV. With a format flag, uses that format."
 }
 ,
 {
 "cn"
 :
-"不指定 -c 和 -b 时，默认 5 秒预算自动估算运行次数。"
+"不指定 -c 和 -b 时，默认 5 秒预算自动估算次数。"
 ,
 "en"
 :
-"Without -c or -b, auto-estimates run count within a 5-second budget."
+"Without -c or -b, auto-estimates run count within 5-second budget."
 }
 ,
 {
 "cn"
 :
-"快命令（< 1ms）自动使用 batch10 模式（10 次一批），减少计时误差。"
+"快命令（< 1ms）自动 batch10（10 次一批），减少计时误差。"
 ,
 "en"
 :
-"Fast commands (< 1ms) automatically use batch10 mode (10 per batch) to reduce timing error."
+"Fast commands (< 1ms) auto-use batch10 (10 per batch) to reduce timing error."
 }
 ,
 {
 "cn"
 :
-"offset 值为校准开销，已在统计中扣除。校准过程在每次 stress 开始时自动执行。"
+"offset 为校准开销，已扣除。每次 stress 开始时自动校准。"
 ,
 "en"
 :
-"The offset value is calibration overhead, already subtracted from statistics. Calibration runs automatically at the start of each stress session."
+"offset is calibration overhead, already subtracted. Calibration runs automatically at session start."
 }
 ]
 ,
@@ -430,11 +408,11 @@ null
 ,
 "cn"
 :
-"交互终端以 csv app 浏览，管道则以 TSV 输出"
+"交互开 csv app，管道出 TSV"
 ,
 "en"
 :
-"Interactive terminal opens csv app; pipe outputs TSV"
+"Interactive opens csv app; pipe outputs TSV"
 }
 ,
 {
@@ -444,7 +422,7 @@ null
 ,
 "cn"
 :
-"指定运行 100 次"
+"指定 100 次"
 ,
 "en"
 :
@@ -458,7 +436,7 @@ null
 ,
 "cn"
 :
-"10 秒预算内自动决定运行次数"
+"10 秒预算自动决定次数"
 ,
 "en"
 :
@@ -472,25 +450,11 @@ null
 ,
 "cn"
 :
-"CSV 格式（带表头），适合数据库导入、表格软件或脚本处理"
+"CSV 带表头，适合数据库或表格软件"
 ,
 "en"
 :
-"CSV format with header, suitable for database import, spreadsheets, or scripting"
-}
-,
-{
-"cmd"
-:
-"x time stress --tsv sleep 0.01"
-,
-"cn"
-:
-"TSV 格式（带表头），适合管道和 awk/grep 处理"
-,
-"en"
-:
-"TSV format with header, suitable for piping with awk/grep"
+"CSV with header, for database or spreadsheets"
 }
 ,
 {
@@ -500,11 +464,11 @@ null
 ,
 "cn"
 :
-"无表头 TSV，适合程序解析"
+"无表头 TSV，适合捕获到变量"
 ,
 "en"
 :
-"Headerless TSV, for programmatic use"
+"Headerless TSV, capture to variable"
 }
 ,
 {
@@ -514,11 +478,11 @@ null
 ,
 "cn"
 :
-"人类可读格式输出（纯文本统计）"
+"纯文本统计"
 ,
 "en"
 :
-"Human-readable format (plain text statistics)"
+"Plain text statistics"
 }
 ]
 ,
@@ -546,7 +510,7 @@ null
 {
 "cn"
 :
-"时间预算（秒），默认 5 秒"
+"时间预算（秒），默认 5"
 ,
 "en"
 :
@@ -562,11 +526,11 @@ null
 {
 "cn"
 :
-"CSV 格式输出（带表头）"
+"CSV 带表头"
 ,
 "en"
 :
-"CSV output with header"
+"CSV with header"
 }
 }
 ,
@@ -578,11 +542,11 @@ null
 {
 "cn"
 :
-"CSV 格式输出（无表头）"
+"CSV 无表头"
 ,
 "en"
 :
-"CSV output without header"
+"CSV without header"
 }
 }
 ,
@@ -594,11 +558,11 @@ null
 {
 "cn"
 :
-"TSV 格式输出（带表头）"
+"TSV 带表头"
 ,
 "en"
 :
-"TSV output with header"
+"TSV with header"
 }
 }
 ,
@@ -610,11 +574,11 @@ null
 {
 "cn"
 :
-"TSV 格式输出（无表头）"
+"TSV 无表头"
 ,
 "en"
 :
-"TSV output without header"
+"TSV without header"
 }
 }
 ,
@@ -626,11 +590,11 @@ null
 {
 "cn"
 :
-"人类可读格式输出"
+"纯文本统计"
 ,
 "en"
 :
-"Human-readable format output"
+"Plain text statistics"
 }
 }
 ,
@@ -642,11 +606,11 @@ null
 {
 "cn"
 :
-"YAML 格式输出"
+"YAML"
 ,
 "en"
 :
-"YAML format output"
+"YAML"
 }
 }
 ,
@@ -675,11 +639,11 @@ null
 {
 "cn"
 :
-"对比多个命令的执行时间。\n内部调用 stress --tsv0 获取每个命令的统计数据，合并输出。\n默认: 交互终端以 csv app 浏览，管道则以 TSV 输出。\n"
+"对比多个命令执行时间。\n内部调用 stress --tsv0 获取每个命令统计，合并输出。\n默认: 交互终端开 csv app，管道出 TSV。\n"
 ,
 "en"
 :
-"Compare execution time of multiple commands.\nInternally calls stress --tsv0 for each command's statistics and merges the results.\nDefault: interactive terminal opens csv app; pipe outputs TSV.\n"
+"Compare execution time of multiple commands.\nInternally calls stress --tsv0 per command and merges results.\nDefault: interactive opens csv app; pipe outputs TSV.\n"
 }
 ,
 "#tip"
@@ -688,31 +652,21 @@ null
 {
 "cn"
 :
-"不带格式选项时，交互终端以 csv app 浏览，管道或重定向则以 TSV 输出。"
+"命令以 eval 执行，支持管道: x time cmp 'cat file | wc -l' 'wc -l < file'"
 ,
 "en"
 :
-"Without a format flag, interactive terminals open csv app; pipe or redirect outputs TSV."
+"Commands run via eval, supporting pipes: x time cmp 'cat file | wc -l' 'wc -l < file'"
 }
 ,
 {
 "cn"
 :
-"命令以 eval 方式执行，支持管道和重定向: x time cmp 'cat file | wc -l' 'wc -l < file'"
+"两个或更多命令，不限数量。"
 ,
 "en"
 :
-"Commands are executed via eval, supporting pipes and redirects: x time cmp 'cat file | wc -l' 'wc -l < file'"
-}
-,
-{
-"cn"
-:
-"支持两个或更多命令的对比，不限数量。"
-,
-"en"
-:
-"Supports comparing two or more commands, no limit."
+"Two or more commands, no limit."
 }
 ]
 ,
@@ -726,11 +680,11 @@ null
 ,
 "cn"
 :
-"对比 echo 和 printf，交互终端以 csv app 浏览，管道则以 TSV 输出"
+"对比 echo vs printf，交互开 csv app，管道出 TSV"
 ,
 "en"
 :
-"Compare echo vs printf; interactive terminal opens csv app, pipe outputs TSV"
+"Compare echo vs printf; interactive opens csv app, pipe outputs TSV"
 }
 ,
 {
@@ -740,11 +694,11 @@ null
 ,
 "cn"
 :
-"CSV 格式对比输出，适合数据库导入、表格软件或脚本处理"
+"CSV 对比，适合数据库或表格软件"
 ,
 "en"
 :
-"CSV format comparison, for database import, spreadsheets, or scripting"
+"CSV comparison, for database or spreadsheets"
 }
 ,
 {
@@ -754,25 +708,11 @@ null
 ,
 "cn"
 :
-"TSV 格式对比输出，适合管道和 awk/grep 处理"
+"TSV 对比，适合 awk/grep 管道"
 ,
 "en"
 :
-"TSV format comparison, for piping with awk/grep"
-}
-,
-{
-"cmd"
-:
-"x time cmp --tty 'echo hello' 'printf hello'"
-,
-"cn"
-:
-"人类可读格式，显示 avg ± stddev / median / total"
-,
-"en"
-:
-"Human-readable format, showing avg ± stddev / median / total"
+"TSV comparison, for piping with awk/grep"
 }
 ,
 {
@@ -782,11 +722,25 @@ null
 ,
 "cn"
 :
-"无表头 TSV，适合程序解析和管道处理"
+"无表头 TSV，适合管道处理"
 ,
 "en"
 :
-"Headerless TSV, for programmatic use and pipe processing"
+"Headerless TSV, for pipe processing"
+}
+,
+{
+"cmd"
+:
+"x time cmp --tty 'echo hello' 'printf hello'"
+,
+"cn"
+:
+"纯文本: avg ± stddev / median / total"
+,
+"en"
+:
+"Plain text: avg ± stddev / median / total"
 }
 ,
 {
@@ -796,11 +750,11 @@ null
 ,
 "cn"
 :
-"对比三个命令各运行 50 次"
+"三个命令各 50 次"
 ,
 "en"
 :
-"Compare three commands, 50 runs each"
+"Three commands, 50 runs each"
 }
 ,
 {
@@ -810,11 +764,11 @@ null
 ,
 "cn"
 :
-"对比三种文件列表方式的性能"
+"对比三种文件列表性能"
 ,
 "en"
 :
-"Compare three file listing methods' performance"
+"Compare three file listing methods"
 }
 ]
 ,
@@ -826,7 +780,7 @@ null
 {
 "cn"
 :
-"每个命令运行次数（不指定则按 stress 默认自动估算）"
+"每个命令运行次数（不指定则 stress 自动估算）"
 ,
 "en"
 :
@@ -842,11 +796,11 @@ null
 {
 "cn"
 :
-"CSV 格式输出（带表头）"
+"CSV 带表头"
 ,
 "en"
 :
-"CSV output with header"
+"CSV with header"
 }
 }
 ,
@@ -858,11 +812,11 @@ null
 {
 "cn"
 :
-"CSV 格式输出（无表头）"
+"CSV 无表头"
 ,
 "en"
 :
-"CSV output without header"
+"CSV without header"
 }
 }
 ,
@@ -874,11 +828,11 @@ null
 {
 "cn"
 :
-"TSV 格式输出（带表头）"
+"TSV 带表头"
 ,
 "en"
 :
-"TSV output with header"
+"TSV with header"
 }
 }
 ,
@@ -890,11 +844,11 @@ null
 {
 "cn"
 :
-"TSV 格式输出（无表头）"
+"TSV 无表头"
 ,
 "en"
 :
-"TSV output without header"
+"TSV without header"
 }
 }
 ,
@@ -906,11 +860,11 @@ null
 {
 "cn"
 :
-"人类可读格式输出（avg ± stddev / median / total / runs）"
+"纯文本（avg ± stddev / median / total / runs）"
 ,
 "en"
 :
-"Human-readable format (avg ± stddev / median / total / runs)"
+"Plain text (avg ± stddev / median / total / runs)"
 }
 }
 ,
@@ -922,11 +876,11 @@ null
 {
 "cn"
 :
-"YAML 格式输出"
+"YAML"
 ,
 "en"
 :
-"YAML format output"
+"YAML"
 }
 }
 ,

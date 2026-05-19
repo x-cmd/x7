@@ -21,6 +21,7 @@ ___x_cmd_agent_request(){
     local reference_workspace=""
     local reference_name=""
     local is_no_thinking=""
+    local is_debug=""
     local timeout_secs="3000"
 
     [ "$#" -gt 0 ] || set -- --help
@@ -44,7 +45,7 @@ ___x_cmd_agent_request(){
             --timeout)      timeout_secs="$2";                  arg:2:int; arg:2:shift ;;
 
             --no-thinking)  is_no_thinking=1 ;                  shift ;;
-
+            --debug)        is_debug=1 ;                        shift ;;
             # --retry)        retry="$2" ; arg:2:shift ;;
 
             --)             shift; break ;;
@@ -418,8 +419,13 @@ ___x_cmd_agent_request___run_exec(){(
                 set -- "$@" --no-thinking
             fi
 
+            # IS_DEBUG: remove --final-message-only to get full event stream
+            if [ "$is_debug" != "1" ]; then
+                set -- "$@" --final-message-only
+            fi
+
             {
-                ___x_cmd timeout "$timeout_secs" x-cmd kimi -- "$@" --print --output-format stream-json --final-message-only \
+                ___x_cmd timeout "$timeout_secs" x-cmd kimi -- "$@" --print --output-format stream-json \
                 ${reference_workspace:+--add-dir "$reference_workspace"} \
                 --prompt "$content" < /dev/null
                 printf "%s\n" "[EXITCODE] $?"
@@ -435,6 +441,7 @@ ___x_cmd_agent_request___handle_output(){
     local user_session_cwd="$4"
     local save_session_id_file="$5"
 
+    is_debug="$is_debug" \
     output_format="$output_format" \
     is_session_first="$is_session_first" \
     user_session_cwd="$user_session_cwd" \

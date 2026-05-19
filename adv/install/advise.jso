@@ -89,21 +89,41 @@ null
 {
 "cn"
 :
-"写脚本自动装软件？三种方式按需选择：\n--best 按优先级自动选最佳方法，--withtool 用指定包管理器，--sys 用系统包管理器。\n不确定命令对不对？加 --printcmd 先预览，确认后再执行。\n"
+"写脚本自动装软件？三种方式按需选择：\n--best 按优先级自动选最佳方法，--withtool 用指定包管理器，--sys 用系统包管理器。\n想先看看会执行什么命令？加 --printcmd 预览，确认后再执行。\n"
 ,
 "en"
 :
-"Automating software install in scripts? Three ways to choose:\n--best auto-selects by priority, --withtool uses a specified package manager, --sys uses the system package manager.\nNot sure about the command? Add --printcmd to preview before executing.\n"
+"Automating software install in scripts? Three ways to choose:\n--best auto-selects by priority, --withtool uses a specified package manager, --sys uses the system package manager.\nWant to see what commands will run? Add --printcmd to preview, then execute when ready.\n"
 }
 ,
 {
 "cn"
 :
-"让 AI Agent 帮用户装软件：--search 从多个来源搜索找到合适的软件，\n--printinfo 获取安装方法和元数据，--env 感知当前系统环境，\n三者结合就能给出针对性的安装建议。\n"
+"让 AI Agent 帮用户装软件：--search 从多个来源搜索找到合适的软件，\n--printinfo 获取安装方法和元数据，\n两者结合就能给出针对性的安装建议。\n"
 ,
 "en"
 :
-"Help users install software via AI Agent: use --search to discover software across sources,\n--printinfo for install methods and metadata, and --env to understand the system environment —\nthen make informed recommendations.\n"
+"Help users install software via AI Agent: use --search to discover software across sources,\nand --printinfo for install methods and metadata —\nthen make informed recommendations.\n"
+}
+,
+{
+"cn"
+:
+"--search 跨多个软件源（apt、brew、pixi、npm 等）和 skill 平台（skills.sh、clawhub.ai 等）聚合搜索。\n加 --package 仅搜软件源，加 --skill 仅搜 skill 平台。\n"
+,
+"en"
+:
+"--search aggregates across multiple package sources (apt, brew, pixi, npm, etc.) and skill platforms (skills.sh, clawhub.ai, etc.).\nAdd --package to search only package sources, --skill to search only skill platforms.\n"
+}
+,
+{
+"cn"
+:
+"--env 感知当前系统环境（平台、架构、发行版等），\n--available-tool 查询当前系统支持的包管理器，加 --installed 仅显示已安装的。\n"
+,
+"en"
+:
+"--env detects the current system environment (platform, architecture, distro, etc.),\nand --available-tool lists supported package managers; add --installed to show installed only.\n"
 }
 ,
 {
@@ -129,11 +149,11 @@ null
 {
 "cn"
 :
-"--available-tool 查询当前系统支持的包管理器，加 --installed 仅显示已安装的。\n"
+"skill 默认安装到全局环境中。如需更细致的控制，请使用 x skill（文档：https://x-cmd.com/mod/skill）。\n"
 ,
 "en"
 :
-"--available-tool queries supported package managers; add --installed to show installed only.\n"
+"Skills are installed in the global environment by default. For more fine-grained control, use x skill (docs: https://x-cmd.com/mod/skill).\n"
 }
 ]
 ,

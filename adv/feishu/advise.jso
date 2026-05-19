@@ -3,55 +3,69 @@
 :
 true
 ,
-"#name"
-:
-{
-"x feishu"
-:
-null
-,
-"cn"
-:
-"飞书消息发送与监听"
-,
-"en"
-:
-"Send and listen to Feishu messages"
-}
-,
 "#desc"
 :
 {
 "cn"
 :
-"使用 x feishu 发送飞书消息。首次使用需配置 webhook url（群机器人）或 app_id/app_secret（智能机器人）。"
+"使用 x feishu 发送、监听飞书消息。"
 ,
 "en"
 :
-"Send Feishu messages using x feishu. First use requires configuring webhook url (group bot) or app_id/app_secret (intelligent bot)."
+"Send Feishu messages using x feishu."
 }
 ,
 "#tip"
 :
 [
 {
-"en"
-:
-"Instructions for get the webhook url for Feishu group bot: https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot#7a28964d\n- Interactive env use `x feishu init` to initialize configuration. The configure will be saved locally.\n- Run command `x feishu --cfg webhook=<webhook_url>` to add webhook url.\n"
-,
 "cn"
 :
-"飞书群机器人 webhook url 获取指引: https://open.feishu.cn/document/client-docs/bot-v3/add-custom-bot#7a28964d\n- 交互环境中可使用 `x feishu init` 进行初始化配置，配置信息将存放于本地保存\n- 亦可运行命令 `x feishu --cfg webhook=<webhook_url>` 添加 webhook url\n"
+"飞书群机器人（x feishu bot）\n用途：向飞书群发送单向通知，无需认证，只需 webhook URL，仅支持发送消息\n常见场景：\n  - CI/CD 构建通知（GitHub Actions）\n  - 服务器监控告警（CPU、内存、磁盘使用率）\n获取方式: https://cn.x-cmd.com/mod/feishu/cookbook-1\n"
+,
+"en"
+:
+"Feishu Webhook Bot (x feishu bot send)\nUse case: One-way notifications to Feishu groups. No authentication needed, only webhook URL, send-only.\nCommon scenarios:\n  - CI/CD build notifications (GitHub Actions)\n  - Server monitoring alerts (CPU, memory, disk usage)\nSetup: https://cn.x-cmd.com/mod/feishu/cookbook-1\n"
 }
 ,
 {
-"en"
-:
-"Instructions for creating Feishu intelligent bot and getting app_id and app_secret: https://open.feishu.cn/document/develop-an-echo-bot/introduction\n- The intelligent bot requires app_id and app_secret for authentication.\n- Run command `x feishu --cfg app_id=<app_id> --cfg app_secret=<app_secret>` to configure.\n"
-,
 "cn"
 :
-"飞书智能机器人创建并获取 app_id 和 app_secret 指引: https://open.feishu.cn/document/develop-an-echo-bot/introduction\n- 智能机器人需要 app_id 和 app_secret 进行认证\n- 运行命令 `x feishu --cfg app_id=<app_id> --cfg app_secret=<app_secret>` 进行配置\n"
+"飞书智能机器人（x feishu abot）\n用途：用于发送和接收消息，通过指定模型启动后台监听消息服务，需要配置 app_id 和 app_secret（从飞书开放平台创建应用获取）\n配置命令：x feishu --cfg app_id=<id> app_secret=<secret>\n常见场景：\n  - 接入 x claw 作为私人 AI 助手\n创建指引: https://open.feishu.cn/document/develop-an-echo-bot/introduction\n"
+,
+"en"
+:
+"Feishu Intelligent Bot (x feishu abot)\nUse case: Full-featured bot with bidirectional messaging, can send AND receive/listen to messages.\nRequires: app_id and app_secret from Feishu Open Platform application creation.\nConfiguration command: x feishu --cfg app_id=<id> app_secret=<secret>\nCommon scenarios:\n  - Integrate with x claw as private AI assistant\nSetup: https://open.feishu.cn/document/develop-an-echo-bot/introduction\n"
+}
+,
+{
+"cn"
+:
+"消息监听服务有两种模式（x feishu abot service）：\n1. --admin — 单聊模式（默认）\n    监听机器人创建者与机器人之间的消息，作为私人 AI 助手\n    首次启动需要配置 owner chat_id，服务名：x-feishu-admin-listener\n    配置命令：x feishu --cfg chatid=<chat_id>\n2. --group — 群聊模式\n    不指定 chat_id：自动获取所有群列表并监听每个群，服务名：x-feishu-group-listener\n    指定 chat_id：监听指定群，服务名：x-feishu-group-<chat_id>-listener\n"
+,
+"en"
+:
+"There are two listening modes:\n1. --admin — Private chat mode (default),\n   listens to private chats between the bot creator and the bot\n   First startup requires configuring owner chat_id, service name: x-feishu-admin-listener\n   Configuration command: x feishu --cfg chatid=<chat_id>\n2. --group — Group chat mode\n   Without chat_id: automatically fetches all group list and listens to each group, service name: x-feishu-group-listener\n   With chat_id: listens to the specified group, service name: x-feishu-group-<chat_id>-listener\n"
+}
+,
+{
+"cn"
+:
+"chat_id 获取方式：聊天页面 -> 右上角设置 -> 底部获取\n"
+,
+"en"
+:
+"How to get chat_id: page -> Top right corner settings -> Bottom to find\n"
+}
+,
+{
+"cn"
+:
+"飞书智能机器人接入 claw 作为私人 AI 助手：\n1. 配置 app_id 、app_secret 和 owner chat_id\n2. 启动飞书后台监听消息服务：x feishu abot service start\n3. 启动 x claw 接入飞书: x claw start --feishu\n"
+,
+"en"
+:
+"Integrate Feishu Intelligent Bot with claw as private AI assistant:\n1. Configure app_id, app_secret, and owner chat_id\n2. Start Feishu background listener service: x feishu abot service start\n3. Start x claw to integrate with Feishu: x claw start --feishu\n"
 }
 ]
 ,
@@ -89,20 +103,6 @@ null
 {
 "cmd"
 :
-"x feishu listen"
-,
-"cn"
-:
-"启动长轮询监听飞书消息"
-,
-"en"
-:
-"Start long-polling listener for Feishu messages"
-}
-,
-{
-"cmd"
-:
 "x feishu abot send --text --chatid <chat_id> \"Hello\""
 ,
 "cn"
@@ -121,11 +121,109 @@ null
 ,
 "cn"
 :
-"启动智能机器人监听服务"
+"启动智能机器人监听服务（单聊模式）"
 ,
 "en"
 :
-"Start the intelligent bot listener service"
+"Start intelligent bot listener service (private chat mode)"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service start --group"
+,
+"cn"
+:
+"以群聊模式启动，监听所有群"
+,
+"en"
+:
+"Start in group chat mode, listen to all groups"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service start --group <chat_id>"
+,
+"cn"
+:
+"以群聊模式启动，监听指定群的消息"
+,
+"en"
+:
+"Start in group chat mode, listen to messages in specified group"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service stop"
+,
+"cn"
+:
+"停止监听服务（单聊模式）"
+,
+"en"
+:
+"Stop listener service (private chat mode)"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service stop --group"
+,
+"cn"
+:
+"停止群聊模式监听服务"
+,
+"en"
+:
+"Stop group chat mode listener service"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service restart"
+,
+"cn"
+:
+"重启监听服务（单聊模式）"
+,
+"en"
+:
+"Restart listener service (private chat mode)"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service status"
+,
+"cn"
+:
+"查看监听服务状态（单聊模式）"
+,
+"en"
+:
+"Check listener service status (private chat mode)"
+}
+,
+{
+"cmd"
+:
+"x feishu abot service log <chat_id>"
+,
+"cn"
+:
+"查看指定会话的服务日志"
+,
+"en"
+:
+"View service logs for specified chat"
 }
 ,
 {
@@ -601,31 +699,21 @@ true
 {
 "cn"
 :
-"监听模式有两种：\n1. --admin — 单聊模式（默认）\n2. --group — 群聊模式，不指定 chat_id 则自动获取所有群列表并监听每个群\n"
+"监听模式有两种：\n1. --admin — 单聊模式（默认），监听机器人创建者与机器人的单聊，作为私人 AI 助手\n   首次启动需要配置 owner chat_id，服务名：x-feishu-admin-listener\n   配置命令：x feishu --cfg chatid=<chat_id>\n2. --group — 群聊模式\n   不指定 chat_id：自动获取所有群列表并监听每个群，服务名：x-feishu-group-listener\n   指定 chat_id：监听指定群，服务名：x-feishu-group-<chat_id>-listener\n"
 ,
 "en"
 :
-"There are two listening modes:\n1. --admin — Private chat mode (default)\n2. --group — Group chat mode, automatically fetches all group list and listens to each group if chat_id not provided\n"
+"There are two listening modes:\n1. --admin — Private chat mode (default), listens to private chats between the bot creator and the bot\n   First startup requires configuring owner chat_id, service name: x-feishu-admin-listener\n   Configuration command: x feishu --cfg chatid=<chat_id>\n2. --group — Group chat mode\n   Without chat_id: automatically fetches all group list and listens to each group, service name: x-feishu-group-listener\n   With chat_id: listens to the specified group, service name: x-feishu-group-<chat_id>-listener\n"
 }
 ,
 {
 "cn"
 :
-"默认为单聊模式，用于监听机器人创建者与机器人的单聊\n首次启动需配置 chat_id（在机器人聊天页面右上角设置底部获取）\n"
+"chat_id 获取方式：聊天页面 -> 右上角设置 -> 底部获取\n"
 ,
 "en"
 :
-"Default private chat mode, for listening to private chats between the bot creator and the bot\nFirst startup requires configuring chat_id (found at the bottom of settings in the top right corner of the bot chat page)\n"
-}
-,
-{
-"cn"
-:
-"服务名格式：x-feishu-<chat_type>[<chat_id>]-listener\n- 单聊模式：x-feishu-admin-listener\n- 群聊模式：x-feishu-group[<chat_id>]-listener\n"
-,
-"en"
-:
-"Service name format: x-feishu-<chat_type>[<chat_id>]-listener\n- Private chat mode: x-feishu-admin-listener\n- Group chat mode: x-feishu-group[<chat_id>]-listener\n"
+"How to get chat_id: page -> Top right corner settings -> Bottom to find\n"
 }
 ]
 ,
@@ -1394,11 +1482,11 @@ true
 {
 "cn"
 :
-"监听模式有两种：\n1. --admin — 单聊模式\n2. --group — 群聊模式，不指定 chat_id 则自动获取所有群列表并监听每个群\n"
+"监听模式有两种：\n1. --admin — 单聊模式（默认），监听机器人创建者与机器人之间的单聊\n2. --group — 群聊模式，不指定 chat_id 则自动获取所有群列表并监听每个群\n"
 ,
 "en"
 :
-"There are two listening modes:\n1. --admin — Private chat mode\n2. --group — Group chat mode, automatically fetches all group list and listens to each group if chat_id not provided\n"
+"There are two listening modes:\n1. --admin — Private chat mode (default), listens to private chats between the bot creator and the bot\n2. --group — Group chat mode, automatically fetches all group list and listens to each group if chat_id not provided\n"
 }
 ,
 {
