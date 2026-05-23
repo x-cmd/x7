@@ -100,8 +100,6 @@ null
 "#subcmd:inner"
 :
 [
-"run"
-,
 "service"
 ,
 "weixin"
@@ -671,170 +669,6 @@ null
 ]
 }
 ,
-"run"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"启动 AI Agent 消息网关，连接 IM 平台并实时监听、自动处理消息。"
-,
-"en"
-:
-"Launch the AI Agent message gateway to connect to an IM platform for real-time listening and autonomous message processing."
-}
-,
-"#synopsis"
-:
-[
-{
-"x claw run [FLAG]"
-:
-null
-}
-]
-,
-"--weixin"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"启用微信平台"
-,
-"en"
-:
-"Enable WeChat platform"
-}
-}
-,
-"--telegram"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"启用 Telegram 平台"
-,
-"en"
-:
-"Enable Telegram platform"
-}
-}
-,
-"--feishu"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"启用飞书平台"
-,
-"en"
-:
-"Enable Feishu platform"
-}
-}
-,
-"--qywx"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"启用企业微信平台"
-,
-"en"
-:
-"Enable Qywx (Enterprise WeChat) platform"
-}
-}
-,
-"#tip"
-:
-[
-{
-"cn"
-:
-"该命令在前台运行，保持终端打开以持续监听消息。如需后台运行，请配合 screen/tmux 或使用 service 命令。\n启动前请确保已配置对应的 IM 平台服务（如 `x weixin login`）。\n支持同时启动多个 IM 平台（如 `x claw run --weixin --telegram`）。\n不指定平台时自动检测已登录的 IM 平台，默认回退到 weixin。\n新消息到达时自动分派到独立 worker 处理。\nAI Agent 回复引擎由 `x agent request` 决定，支持 claude, codex, cursor, gemini-cli, opencode, kimi-cli 等。\n内置心跳机制与 x cron 集成，支持定时唤醒和 proactive 任务执行。\n每个 chat 拥有独立 workspace 与持久化上下文记忆，支持多会话并发。\n"
-,
-"en"
-:
-"This command runs in the foreground; keep the terminal open to continue listening. Use screen/tmux or the service command for background execution.\nEnsure the corresponding IM platform service is configured before starting (e.g. `x weixin login`).\nSupports starting multiple IM platforms simultaneously (e.g., `x claw run --weixin --telegram`).\nAuto-detects logged-in IM platforms when not specified, with weixin as fallback default.\nDispatches incoming messages to independent workers for processing.\nThe AI Agent reply engine is determined by `x agent request`, supporting claude, codex, cursor, gemini-cli, opencode, kimi-cli, etc.\nBuilt-in heartbeat mechanism with x cron integration supports scheduled wake-ups and proactive task execution.\nEach chat has an independent workspace with persistent context memory, supporting multi-session concurrency.\n"
-}
-]
-,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x claw run"
-,
-"cn"
-:
-"示例: 启动网关服务（自动检测可用平台）"
-,
-"en"
-:
-"Example: Start gateway service (auto-detect available platform)"
-}
-,
-{
-"cmd"
-:
-"x claw run --weixin --telegram"
-,
-"cn"
-:
-"示例: 启动微信和 Telegram 网关服务"
-,
-"en"
-:
-"Example: Start WeChat and Telegram gateway services"
-}
-,
-{
-"cmd"
-:
-"x claw run --feishu"
-,
-"cn"
-:
-"示例: 启动飞书网关服务"
-,
-"en"
-:
-"Example: Start Feishu gateway service"
-}
-,
-{
-"cmd"
-:
-"x claw run --qywx --feishu --telegram"
-,
-"cn"
-:
-"示例: 同时启动企业微信、飞书和 Telegram 网关服务"
-,
-"en"
-:
-"Example: Start Qywx, Feishu and Telegram gateway services simultaneously"
-}
-]
-}
-,
 "service"
 :
 {
@@ -843,11 +677,11 @@ null
 {
 "cn"
 :
-"后台托管 x claw run 服务（start/stop/status/log）"
+"后台托管 claw 网关服务（start/stop/status/log）"
 ,
 "en"
 :
-"Run x claw run as a background managed gateway (start/stop/status/log)"
+"Run claw gateway as a background managed service (start/stop/status/log)"
 }
 ,
 "#tldr"

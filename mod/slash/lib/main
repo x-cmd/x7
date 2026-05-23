@@ -1,0 +1,156 @@
+# shellcheck shell=dash
+
+___x_cmd log init slash
+
+xrc:mod:lib     slash   ls compile init check cat get
+
+___X_CMD_SLASH_CONFIG="$___X_CMD_ROOT_CFG/slash/config.yml"
+
+___x_cmd_slash___main(){
+    [ "$#" -gt 0 ] ||   set -- --help
+
+    local op="$1";      shift
+    case "$op" in
+        -h|--help)      ___x_cmd help -m slash      "$@" ;      return 0 ;;
+        init|ls|run|compile|runname|check|cat|get)
+                        ___x_cmd_slash_"$op"        "$@" ;;
+        *)
+            local name="${op#/}"
+            local x_
+            ___x_cmd_slash_findfp_ "$name" || {
+                slash:error "Unknown slash command -> $name"
+                return 1
+            }
+            ___x_cmd_slash_run "$x_" "$@"
+            ;;
+    esac
+}
+
+___x_cmd_slash_run(){
+    case "$1" in
+        -h|--help) ___x_cmd help -m slash run; return ;;
+    esac
+
+    local fp="$1"
+    [ -n "$fp" ] || N=slash M="Please provide slash command file path" log:ret:64
+    [ -f "$fp" ] || N=slash M="Not found slash command file -> $fp" log:ret:1
+    shift
+
+    local is_debug=""
+    while [ "$#" -gt 0 ]; do
+        case "$1" in
+            -h|--help) ___x_cmd help -m slash run; return ;;
+            --debug)   is_debug=1 ; shift ;;
+            --quick)   is_quick=1 ; shift ;;
+            *)         break ;;
+        esac
+    done
+
+    local name dir
+    name="${fp##*/}"
+    name="${name%.md}"
+    case "$name" in
+        SKILL)
+            dir="${fp%/*}"
+            name="${dir##*/}"
+            ;;
+    esac
+    local IFS=' '
+    local msg="$*";     shift $#
+
+    if [ -n "$is_debug" ]; then
+        set -- --debug
+    fi
+
+    if [ -n "$is_quick" ]; then
+        set -- --no-thinking
+    fi
+
+    # TDOD: use x service
+    slash:info "Run slash command -> /$name"
+    ___x_cmd agent request --file "$fp" "$@" "
+The file \"$fp\" is the specified skill file or command file. Read and follow its instructions.
+
+## User's message
+$msg"
+}
+
+___x_cmd_slash___filelist(){
+    local type dir_name fp glob tool_dir
+    for type in command skill; do
+        case "$type" in
+            command) dir_name="commands"; glob="*.md" ;;
+            skill)   dir_name="skills"  ; glob="*/SKILL.md" ;;
+        esac
+        for tool_dir in .claude .agents .codex .config/opencode .openclaw; do
+            for dir in "$tool_dir/$dir_name" "$HOME/$tool_dir/$dir_name"; do
+                [ -d "$dir" ] || continue
+                ___x_cmd fsiter --glob "$dir" "$glob" | while read -r fp; do
+                    printf "%s\t%s\n" "$type" "$dir/$fp"
+                done
+            done
+        done
+    done
+}
+
+___x_cmd_slash_findfp_(){
+    x_=""
+    local name="$1"
+    local cfgfp="$___X_CMD_SLASH_CONFIG"
+
+    # 1. try cache first
+    if [ -f "$cfgfp" ]; then
+        local cur_name="" fp="" item_status=""
+        while IFS= read -r line; do
+            case "$line" in
+                [!\ ]*:*)
+                    [ "$cur_name" = "$name" ] && [ "$item_status" = "enable" ] && { x_="$fp"; return 0; }
+                    cur_name="${line%:}"
+                    fp=""; item_status=""
+                    ;;
+                "  fp:"*)
+                    fp="${line#  fp: }"
+                    ;;
+                "  status:"*)
+                    item_status="${line#  status: }"
+                    ;;
+            esac
+        done < "$cfgfp"
+        [ "$cur_name" = "$name" ] && [ "$item_status" = "enable" ] && { x_="$fp"; return 0; }
+    fi
+
+    # 2. fallback to filesystem scan
+    x_="$(
+        ___x_cmd_slash___filelist | \
+            SEARCH_NAME="$name" OUTPUT_MODE=path \
+            ___x_cmd cawk -f "$___X_CMD_ROOT_MOD/slash/lib/awk/scan.awk"
+    )" || return 1
+    [ -n "$x_" ] || return 1
+}
+
+___x_cmd_slash_runname(){
+    local name="$1"
+    local x_
+    ___x_cmd_slash_findfp_ "$name" || {
+        slash:error "Unknown slash command -> $name"
+        return 1
+    }
+    ___x_cmd_slash_run "$x_"
+}
+
+# Shell-specific dispatch function definitions
+case "$___X_CMD_SHELL" in
+    dash)
+        alias /="___x_cmd_slash_runname"
+        # shellcheck disable=SC2139
+        ___x_cmd_slash___def(){
+            local name="$1"
+            alias "/$name=___x_cmd_slash_runname \"$name\""
+        }
+        ;;
+
+    ash|bash|zsh)
+        ___x_cmd_source_invoke "$___X_CMD_ROOT_MOD/slash/lib/main.bash"
+        ;;
+
+esac

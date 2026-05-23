@@ -220,6 +220,7 @@ ___x_cmd_feishu___jqu(){
     text = (text == "") ? $0 : (text "\n" $0)
 }
 END{
+    gsub("\n", "\\\\&", text)
     gsub("\n", "\\n", text)
     gsub("\t", "\\t", text)
     printf("%s", text)

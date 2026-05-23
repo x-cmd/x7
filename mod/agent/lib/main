@@ -1,6 +1,6 @@
 # shellcheck shell=dash
 
-xrc:mod:lib     agent       setup webfetch util unify cfg one service browser request/_index job/_index chat/_index run/_index
+xrc:mod:lib     agent       setup webfetch util unify cfg init one service browser request/_index job/_index chat/_index run/_index
 
 ___x_cmd_agent___main(){
     [ "$#" -gt 0 ] ||       set -- --help

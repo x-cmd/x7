@@ -1,0 +1,34 @@
+# shellcheck shell=dash
+
+___x_cmd_claw_connect(){
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --help|-h)  ___x_cmd help -m claw connect "$@"; return 0 ;;
+            --ls|-l)    ___x_cmd_claw_run___list_activate; return 0 ;;
+            *)          break ;;
+        esac
+    done
+
+    local im="${1:-""}"
+    local chatid="${2:-""}"
+    [ -n "$im" ] || N=claw M="Please provide IM platform name (e.g., weixin|telegram|feishu|qywx)" log:ret:64
+
+    ___x_cmd_claw_run___ensure_im_service "$im" "$chatid" || return $?
+    ___x_cmd_claw_run___activate_im "$im" "$chatid"
+}
+
+___x_cmd_claw_disconnect(){
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --help|-h)  ___x_cmd help -m claw disconnect "$@"; return 0 ;;
+            *)          break ;;
+        esac
+    done
+
+    local im="${1:-""}"
+    local chatid="${2:-""}"
+    [ -n "$im" ] || N=claw M="Please provide IM platform name (e.g., weixin|telegram|feishu|qywx)" log:ret:64
+
+    ___x_cmd_claw_run___deactivate_im "$im" "$chatid" || return $?
+    ___x_cmd_claw_run___stop_im_service "$im" "$chatid"
+}

@@ -12,10 +12,11 @@ ___x_cmd_feishu_listen(){
             --json)         format="json";  shift ;;
             --admin)        chat_type="admin"; chatid="$2";    arg:2:shift ;;
             --group)
-                            if [ -n "$2" ]; then
-                                chat_type="group"; chatid="$2"; shift 2
-                            else
-                                chat_type="group"; shift
+                            shift
+                            chat_type="group";
+                            if [ $# -ge 1 ]; then
+                                chatid="$1"
+                                shift
                             fi
                             ;;
             *)              N=feishu M="Unknown op -> $1" log:ret:64   ;;
@@ -70,8 +71,8 @@ ___x_cmd_feishu_listen(){
                 esac
             }
 
-            local msg="" sender="" last_msg_time="" code=""
-            ___x_cmd jo env .data.items msg=.1 sender=.1.sender.sender_type last_msg_time=.1.create_time code=.code <<A
+            local msg="" sender_type="" sender_id="" last_msg_time="" code=""
+            ___x_cmd jo env .data.items msg=.1 sender_type=.1.sender.sender_type sender_id=.1.sender.id last_msg_time=.1.create_time code=.code <<A
 $resp
 A
 
@@ -88,22 +89,20 @@ A
             # fail_count=0
 
             [ "$msg" != "[]" ]     || continue
-            [ "$sender" = "user" ] || continue
+            [ "$sender_type" = "user" ] || continue
             date="$(( (last_msg_time / 1000) + 1 ))"
             printf "%s" "$date" > "$sync_buf_file"
 
             if [ -n "$fp" ]; then
-                if [ "$chat_type" = "admin" ]; then
-                    chatid="admin"
-                fi
-
                 [ -n "$chatid" ] || {
                     feishu:error "Failed to get chat id, cannot save data to file"
                     continue
                 }
+                [ "$chat_type" = "group" ] || chatid="$sender_id"
                 ___X_CMD_FEISHU_BOT_DATA="${___X_CMD_FEISHU_BOT_PATH}/data_${chatid}.tsv"
                 ___x_cmd ensurefp "$___X_CMD_FEISHU_BOT_DATA"
                 printf "%s\n" "$msg"  >> "$___X_CMD_FEISHU_BOT_DATA"
+
                 ___x_cmd tailer pub "$___X_CMD_ROOT_DATA/feishu/sub" "feishu:${chatid}"
             elif [ "$format" = "json" ]; then
                 printf "%s\n" "$msg"

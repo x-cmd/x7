@@ -114,7 +114,7 @@ ___x_cmd_skill_add___fromawsome(){
     [ -d "$datadir" ] || {
         case "$x_url" in
             x-cmd-skill-data:*)
-                if ! ___x_cmd websrc is cn; then
+                if ___x_cmd websrc is cn; then
                     x_url="https://codeberg.org/x-cmd/skill/releases/download/latest/${x_url##*/}.zip"
                 else
                     x_url="https://github.com/x-cmd/skill/releases/latest/download/${x_url##*/}.zip"

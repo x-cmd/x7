@@ -1,0 +1,5 @@
+# shellcheck shell=dash
+
+___x_cmd_slash_check(){
+    [ -f "$___X_CMD_SLASH_CONFIG" ] || ___x_cmd_slash_compile
+}

@@ -53,11 +53,21 @@ null
 {
 "cn"
 :
-"Harness: AI 工具接口（kimi-cli、claude、codex、cursor、gemini-cli、opencode）\nAgent 000/001: 两个独立的 AI Agent 配置身份\n"
+"Harness: AI 工具接口（claude、codex、cursor、gemini-cli、opencode、kimi-cli）\n"
 ,
 "en"
 :
-"Harness: AI tool interface (kimi-cli, claude, codex, cursor, gemini-cli, opencode)\nAgent 000/001: Two independent AI Agent configuration identities\n"
+"Harness: AI tool interface (claude, codex, cursor, gemini-cli, opencode, kimi-cli)\n"
+}
+,
+{
+"cn"
+:
+"claude-code 需要 2.1.41 或更高版本才支持 `claude auth` 子命令（用于登录状态检测）\n如果版本过低，请运行 `x env use claude-code` 或 `npm install -g @anthropics/claude-code` 升级\n"
+,
+"en"
+:
+"claude-code requires version 2.1.41+ for the `claude auth` subcommand (used for login status check)\nIf your version is older, run `x env use claude-code` or `npm install -g @anthropics/claude-code` to upgrade\n"
 }
 ]
 ,
@@ -492,7 +502,7 @@ true
 }
 }
 ,
-"--reference-name"
+"--no-thinking"
 :
 {
 "#desc"
@@ -500,27 +510,11 @@ true
 {
 "cn"
 :
-"指定参考工作空间的显示名称（覆盖自动推导）"
+"禁用 AI 思考模式（降低 token 消耗，适合简单任务）"
 ,
 "en"
 :
-"Specify display name for reference workspace (overrides auto-detection)"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"名称标识符"
-,
-"en"
-:
-"Name identifier"
-}
+"Disable AI thinking mode (reduce token usage, good for simple tasks)"
 }
 }
 ,
@@ -630,15 +624,15 @@ true
 {
 "cmd"
 :
-"x agent request --reference-workspace ~/.openclaw/workspace --reference-name openclaw \"Summarize memories\""
+"x agent request --no-thinking \"Say hello\""
 ,
 "cn"
 :
-"示例: 引用外部工作空间并指定显示名称为 openclaw"
+"示例: 禁用思考模式发送简单请求（减少 token 消耗）"
 ,
 "en"
 :
-"Example: Reference external workspace with explicit display name openclaw"
+"Example: Send simple request with thinking disabled (reduce token usage)"
 }
 ]
 }
@@ -668,11 +662,11 @@ true
 {
 "en"
 :
-"zero_harness: Default AI tool for Agent 000\none_harness: Default AI tool for Agent 001\nAvailable: kimi-cli, claude, codex, cursor, gemini-cli, opencode\n"
+"zero_harness: Default AI tool\none_harness: Alternative AI tool\nAvailable harnesses:\n  - claude family: claude, claude-openrouter, claude-deepseek, claude-kimi, claude-moonshot, claude-zhipu, claude-siliconflow, claude-doubao, claude-mthreads, claude-minimax, claude-ali, claude-baidu, claude-tencent\n  - others: codex, cursor, gemini-cli, opencode, kimi-cli\n"
 ,
 "cn"
 :
-"zero_harness: Agent 000 默认 AI 工具\none_harness: Agent 001 默认 AI 工具\n可选: kimi-cli, claude, codex, cursor, gemini-cli, opencode\n"
+"zero_harness: 默认 AI 工具\none_harness: 备选 AI 工具\n可选 harness:\n  - claude 系列: claude, claude-openrouter, claude-deepseek, claude-kimi, claude-moonshot, claude-zhipu, claude-siliconflow, claude-doubao, claude-mthreads, claude-minimax, claude-ali, claude-baidu, claude-tencent\n  - 其他: codex, cursor, gemini-cli, opencode, kimi-cli\n"
 }
 ]
 ,
@@ -727,11 +721,11 @@ true
 {
 "cn"
 :
-"Agent 000 的默认 harness"
+"默认 harness"
 ,
 "en"
 :
-"Default harness for Agent 000"
+"Default harness"
 }
 }
 }
@@ -749,11 +743,11 @@ true
 {
 "cn"
 :
-"Agent 001 的默认 harness"
+"备选 harness"
 ,
 "en"
 :
-"Default harness for Agent 001"
+"Alternative harness"
 }
 }
 }
@@ -766,15 +760,15 @@ true
 {
 "cmd"
 :
-"x agent --cfg zero_harness=kimi-cli one_harness=claude"
+"x agent --cfg zero_harness=kimi-cli"
 ,
 "cn"
 :
-"示例: 同时设置两个 Agent 的默认 harness"
+"示例: 设置默认 harness"
 ,
 "en"
 :
-"Example: Set default harness for both Agents"
+"Example: Set default harness"
 }
 ,
 {
@@ -832,11 +826,11 @@ true
 {
 "en"
 :
-"zero_harness: Temporary AI tool for Agent 000\none_harness: Temporary AI tool for Agent 001\nOverrides --cfg for current session only\n"
+"zero_harness: Temporary default AI tool\none_harness: Temporary alternative AI tool\nOverrides --cfg for current session only\n"
 ,
 "cn"
 :
-"zero_harness: Agent 000 临时 AI 工具\none_harness: Agent 001 临时 AI 工具\n仅覆盖当前会话的 --cfg 配置\n"
+"zero_harness: 默认临时 AI 工具\none_harness: 备选临时 AI 工具\n仅覆盖当前会话的 --cfg 配置\n"
 }
 ]
 ,
@@ -867,11 +861,11 @@ true
 {
 "cn"
 :
-"Agent 000 临时 harness"
+"默认临时 harness"
 ,
 "en"
 :
-"Temporary harness for Agent 000"
+"Temporary default harness"
 }
 }
 ,
@@ -887,11 +881,11 @@ true
 {
 "cn"
 :
-"Agent 001 临时 harness"
+"备选临时 harness"
 ,
 "en"
 :
-"Temporary harness for Agent 001"
+"Temporary alternative harness"
 }
 }
 ,
@@ -914,11 +908,11 @@ true
 {
 "cn"
 :
-"Agent 000 临时 harness"
+"默认临时 harness"
 ,
 "en"
 :
-"Temporary harness for Agent 000"
+"Temporary default harness"
 }
 }
 }
@@ -936,11 +930,11 @@ true
 {
 "cn"
 :
-"Agent 001 临时 harness"
+"备选临时 harness"
 ,
 "en"
 :
-"Temporary harness for Agent 001"
+"Temporary alternative harness"
 }
 }
 }
@@ -961,12 +955,44 @@ true
 {
 "cn"
 :
-"交互式初始化配置（选择并设置 zero_harness、one_harness）"
+"交互式初始化配置（选择并设置默认 harness）"
 ,
 "en"
 :
-"Interactive initialization (select and set zero_harness, one_harness)"
+"Interactive initialization (select and set the default harness)"
 }
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"init 默认推荐 Claude Code，选择 Claude 后还会提示选择具体 provider/setup\n交互式设置默认 harness（zero_harness），配置会持久化保存\n等同于执行 x agent --cfg zero_harness=xxx\n"
+,
+"en"
+:
+"init recommends Claude Code by default. If Claude is chosen, you will be prompted to pick a specific provider/setup.\nInteractively sets the default harness (zero_harness). Configuration is persisted.\nEquivalent to running x agent --cfg zero_harness=xxx\n"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x agent init"
+,
+"cn"
+:
+"示例: 交互式初始化配置，选择默认 AI 工具"
+,
+"en"
+:
+"Example: Interactive initialization to select default AI tools"
+}
+]
 }
 ,
 "job"
