@@ -2046,6 +2046,16 @@ null
 :
 "Use agent-browser to fetch web page content\nRequires agent-browser to be installed and in PATH\n"
 }
+,
+{
+"cn"
+:
+"安装 agent-browser 技能（skill）\n  x skill add vercel/agent-browser\n"
+,
+"en"
+:
+"Install the agent-browser skill\n  x skill add vercel/agent-browser\n"
+}
 ]
 ,
 "isready"

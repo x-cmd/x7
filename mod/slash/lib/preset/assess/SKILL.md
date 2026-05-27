@@ -1,132 +1,72 @@
 ---
 name: assess
-description: Multi-phase project assessment with scoring and summary. Use when user says "/assess" to evaluate project health across multiple dimensions, generate a comprehensive report.
+description: Multi-phase project assessment with scoring. Triggered by "/assess" to evaluate project health across dimensions and generate a comprehensive report.
 tools: Bash, Glob, Read
 ---
 
-# Project Assessor (Multi-Phase)
+# Project Assessor
 
-Comprehensive assessment with multiple phases: target discovery, rule scoring, and summary generation.
+## Trigger
 
-## Workflow
+Use when:
+- User says `/assess`
+- User wants overall project health evaluation
+- Multi-dimensional analysis needed
 
-### Phase 1: Discover Targets
+Do NOT use when:
+- User wants quick scan (use `/scan`)
+- User wants rule-by-rule check (use `/check`)
 
-Generate `target.tsv` — maps each file to applicable rules.
+## Steps
 
-**Input**: All rule files + all source files
-**Output**: `target.tsv` (target → rule-to-check mapping)
+### Step 1: Discover Targets
+
+Generate `target.tsv` mapping each file to applicable rules.
 
 ```
 root    target    rule-to-check
-./     src/auth.sh    P06-var-010 P06-var-020
-./     src/config.sh  P06-concept-010
-./     docs/readme.md P06-concept-010
+./      src/auth.sh    P06-var-010 P06-var-020
 ```
 
-Rules apply based on their `apply` field.
+### Step 2: Score Each Pair
 
-### Phase 2: Score Each Pair
-
-Generate `result/<rule-id>.tsv` files.
-
-**Input**: `target.tsv` + all rule files + all source files
-**Output**: `result/*.tsv` (one per rule)
+Generate `result/<rule-id>.tsv` for each rule.
 
 ```
 target    score    hint
-src/auth.sh  90    变量命名不规范
-src/config.sh  100
+src/auth.sh  90    variable naming issue
 ```
 
-**Scoring (0-100)**:
-- 100: Full compliance
-- 81-99: Minor issues
-- 51-80: Marginal, improvement needed
-- 11-50: Significant violations
-- 0-10: Complete disregard
+Scoring: 0-100 (100 = full compliance)
 
-### Phase 3: Summary
+### Step 3: Summarize
 
-Aggregate all result files into a summary report.
+Aggregate into comprehensive report.
 
-**Output**:
+## Output Format
+
 ```markdown
 ## Assessment Summary
 
-### Overall Score: 85/100
+### Overall Score: [N]/100
 
 ### Rules Breakdown
 | Rule | Score | Issues |
 |------|-------|--------|
-| P06-var-010 | 90 | 2 files need fixing |
-| P06-concept-010 | 75 | terminology issues |
+| ... | ... | ... |
 
 ### Top Violations
-1. src/auth.sh:23 — variable naming
-2. src/utils.sh:45 — shellcheck warnings
+1. [file:line — issue]
 
 ### Recommendations
-- Fix variable naming in auth.sh
-- Update terminology in docs/
+- [Action items]
 ```
 
-## Standalone Assessment (No Ruleset)
+If no ruleset available, use general heuristics:
+- Code health, dependencies, documentation, security, complexity, CI/CD
 
-When no ruleset is available, use general heuristics:
+## Constraints
 
-### Dimensions to Check
-
-| Dimension | What to Check |
-|-----------|---------------|
-| **Code Health** | Tests passing? Lint clean? |
-| **Dependencies** | Outdated? Vulnerable? |
-| **Documentation** | README current? |
-| **Security** | Secrets exposed? Input validated? |
-| **Complexity** | Files too large? Deep nesting? |
-| **CI/CD** | Pipelines green? |
-
-### General Assessment Output
-
-```markdown
-## Project Assessment
-
-### Overview
-- Last commit: [date]
-- Commits ahead: N
-- Open PRs: N
-
-### Overall Score: [N]/100
-[N] criteria met, [N] needs attention, [N] critical
-
-### Status by Dimension
-#### ✅ Health
-- Tests: 47/50 passing
-- Lint: Clean
-
-#### ⚠️ Attention
-- 3 packages outdated
-- README 6 months old
-
-#### ❌ Blockers
-- SQL injection in db.py:45
-- Missing DATABASE_URL
-```
-
-### Risk Summary Table
-
-| Risk | Severity | Location | Mitigation |
-|------|----------|----------|------------|
-| SQL injection | High | db.py:45 | Use parameterized queries |
-| Outdated JWT lib | Medium | package.json | Upgrade to v3.0 |
-
-## Report Location
-
-Assessment reports stored at:
-```
-~/.x-cmd.root/v/.repo/data/rule/assess/<timestamp>-<pid>/
-  target.tsv
-  result/
-    *.tsv
-  summary.md
-```
+- Always produce a summary score
+- If ruleset unavailable, fallback to general heuristics
+- Do NOT auto-fix

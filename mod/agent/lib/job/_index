@@ -4,6 +4,19 @@
 
 xrc:mod:lib agent       job/util job/ls job/preview job/prompt
 
+
+# x agent job bootstrap -- guiding users creating a job.
+
+# x agent job init      -- create       -- no adjsut
+# x agent job iter      --addition "..."
+# x agent job status    # running , stopped-to-be-continued, stopped-considered-done
+
+# using ajob to offload missions.
+# using
+
+# File Directory structure.
+
+
 ___x_cmd_agent_job(){
     [ $# -gt 0 ]    ||      set -- --help
 

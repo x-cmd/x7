@@ -1,0 +1,20 @@
+
+___x_cmd_agent_session(){
+    :
+}
+
+___x_cmd_agent_session_init(){
+    :
+}
+
+___x_cmd_agent_session_run(){
+    :
+}
+
+___x_cmd_agent_session_summary(){
+    :
+}
+
+___x_cmd_agent_session_skillpath(){
+    printf "%s\n" "$___X_CMD_ROOT_MOD/agent/lib/session/SKILL.md"
+}

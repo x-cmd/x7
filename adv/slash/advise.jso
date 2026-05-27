@@ -330,6 +330,70 @@ null
 "___x_cmd_slash_ls_word"
 }
 ,
+"--info"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示 slash command 的元信息，不执行命令"
+,
+"en"
+:
+"Show slash command metadata without executing"
+}
+}
+,
+"--cat"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示 slash command 的完整内容，不执行命令"
+,
+"en"
+:
+"Show slash command full content without executing"
+}
+}
+,
+"--debug"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"启用调试模式，实时输出 JSON 解析和事件日志"
+,
+"en"
+:
+"Enable debug mode, output real-time JSON parsing and event logs"
+}
+}
+,
+"--quick"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"尽可能快，减少思考过程"
+,
+"en"
+:
+"As fast as possible, reduce the thinking process"
+}
+}
+,
 "#tldr"
 :
 [
@@ -359,6 +423,34 @@ null
 "en"
 :
 "Example: run directly with / prefix"
+}
+,
+{
+"cmd"
+:
+"/review-pr --info"
+,
+"cn"
+:
+"示例: 查看 review-pr 的元信息"
+,
+"en"
+:
+"Example: show review-pr metadata"
+}
+,
+{
+"cmd"
+:
+"/review-pr --cat"
+,
+"cn"
+:
+"示例: 查看 review-pr 的完整内容"
+,
+"en"
+:
+"Example: show review-pr full content"
 }
 ]
 }
@@ -420,6 +512,20 @@ null
 "en"
 :
 "Example: run a registered slash command directly"
+}
+,
+{
+"cmd"
+:
+"/my-skill --info"
+,
+"cn"
+:
+"示例: 查看已注册命令的元信息"
+,
+"en"
+:
+"Example: show metadata of a registered slash command"
 }
 ]
 ,

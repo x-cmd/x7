@@ -1,84 +1,79 @@
 ---
 name: review
-description: Review pull requests. Use when user says "/review" with a PR link or wants to review pending changes.
+description: Review pull requests or code changes. Triggered by "/review [pr_link]" or when user asks to review pending changes.
+tools: Bash, Read
 ---
 
 # PR Reviewer
 
-Review pull requests with focused analysis of changes, context, and recommendations.
+## Trigger
 
-## Workflow
+Use when:
+- User says `/review` with a PR link
+- User asks to review pending changes
 
-### 1. Parse PR Link
+Do NOT use when:
+- User asks for security-only audit (use `/security-review`)
+- User asks for performance optimization (use `/optimize`)
+- User asks for refactoring/simplification (use `/simplify`)
 
-Accepts:
-- `https://github.com/owner/repo/pull/123`
-- `gh pr view <number>` for current repo
-- Short forms like `#123` or `owner/repo#123`
+## Steps
 
-### 2. Fetch PR Details
+### Step 1: Fetch Changes
 
+If PR link provided:
 ```bash
-# GitHub PR
 gh pr view <pr> --json title,body,state,base,head,files,additions,deletions,changedFiles
-
-# Get diff
 gh pr diff <pr>
-
-# List comments
-gh api repos/:owner/:repo/pulls/:pr/comments
 ```
 
-### 3. Analyze Changes
+If local changes:
+```bash
+git diff main..HEAD
+git diff --name-only main..HEAD
+```
 
-- **Files changed**: Identify key files
-- **Code review**: Read diff line by line
-- **Security check**: Look for secrets, SQL injection, XSS, etc.
-- **Design review**: Evaluate architecture decisions
+### Step 2: Analyze
 
-### 4. Generate Review
+Review dimensions:
+- **Correctness**: Logic errors, edge cases, race conditions
+- **Design**: Architecture fit, abstraction level
+- **Maintainability**: Readability, naming, test coverage
+- **Security**: Surface-level check for secrets and injection risks
+  - If deep security concerns found, flag for `/security-review`
 
-Structure output:
+### Step 3: Generate Report
+
+Use the output format below.
+
+## Output Format
 
 ```markdown
 ## PR Summary
-- Title: ...
-- Author: ...
-- Files: N | Additions: +N | Deletions: -N
+- **Title**: ...
+- **Author**: ...
+- **Scope**: N files | +N/-N lines
 
 ## Changes Overview
-[High-level description]
+[High-level summary of what changed and why]
 
 ## Detailed Review
-### Approved ✓
-[Positive feedback]
+
+### Approved
+[What was done well]
 
 ### Suggestions
-[Improvement recommendations]
+[Specific improvements with file:line references]
 
 ### Concerns
-[Issues that need addressing]
+[Issues that need addressing before merge]
 
 ## Recommendation
 [Approve / Request Changes / Comment]
 ```
 
-### 5. Post Review (optional)
+## Constraints
 
-```bash
-# Post review comments
-gh pr comment <pr> --body "$(cat review.md)"
-
-# Or approve/request changes
-gh pr review <pr> --approve
-gh pr review <pr> --request-changes
-```
-
-## Local PRs
-
-For local branches not yet PR'd:
-
-```bash
-git log main..HEAD --oneline
-git diff main..HEAD --stat
-```
+- Focus on changes, not pre-existing code
+- Do NOT auto-fix; suggest and let user decide
+- Escalate security concerns to `/security-review` if beyond surface level

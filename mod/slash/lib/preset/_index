@@ -25,3 +25,13 @@ ___x_cmd_slash_preset(){
     :
 }
 
+___x_cmd_slash_preset___filelist(){
+    local fp; for fp in "$___X_CMD_ROOT_MOD/slash/lib/preset"/*/SKILL.md; do
+        [ -f "$fp" ] || continue
+        case "$fp" in
+            */loop/SKILL.md) continue ;;
+            *) ;;
+        esac
+        printf "%s\t%s\n" "skill" "$fp"
+    done
+}

@@ -1,91 +1,73 @@
 ---
 name: simplify
-description: Review code for reuse, readability, and simplicity. Use when user says "/simplify" to refactor complex code, extract abstractions, or clean up duplication.
+description: Review code for readability, reuse, and simplicity. Triggered by "/simplify" when user wants to refactor complex code, remove duplication, or improve clarity.
+tools: Bash, Read
 ---
 
 # Code Simplifier
 
-Analyze code for unnecessary complexity, duplication, and missed opportunities for reuse.
+## Trigger
 
-## Workflow
+Use when:
+- User says `/simplify`
+- User asks to refactor, clean up, or make code more readable
+- Complex functions, deep nesting, or duplication detected
 
-### 1. Gather Code Changes
+Do NOT use when:
+- User asks for performance optimization (use `/optimize`)
+- User asks for security audit (use `/security-review`)
+
+## Steps
+
+### Step 1: Gather Code
 
 ```bash
-# For review: diff against base
 git diff main..HEAD --stat
-
-# For specific file
-cat path/to/file
-
-# Check for related files with similar patterns
-find . -name "*.py" -o -name "*.js" -o -name "*.go" | head -20
 ```
 
-### 2. Analyze Quality Issues
+For specific files:
+```bash
+cat path/to/file
+```
 
-### Readability
-- Long functions (>50 lines) → split
-- Deep nesting (>3 levels) → extract
-- Unclear names → rename
-- Magic numbers → constants
+### Step 2: Analyze Issues
 
-### Reuse
-- Duplicated code blocks → extract to helper
-- Similar patterns → abstract to common function
-- Custom implementations → use standard library
+Checklist:
+- **Readability**: Functions >50 lines, nesting >3 levels, unclear names, magic numbers
+- **Reuse**: Duplicated blocks, similar patterns, custom implementations where stdlib exists
+- **Complexity**: Over-engineering, premature optimization, feature envy, shotgun surgery
 
-### Complexity
-- Over-engineering → simplify
-- Premature optimization → defer
-- Feature envy → move data closer to behavior
-- shotgun surgery → consolidate changes
+### Step 3: Generate Report
 
-### 3. Generate Recommendations
+Use the output format below.
+
+## Output Format
 
 ```markdown
 ## Simplification Review
 
 ### Readability Issues
 | File | Line | Issue | Suggestion |
-|------|------|-------|-----------|
-| auth.py | 45 | Function 80 lines | Split by responsibility |
+|------|------|-------|------------|
+| ... | ... | ... | ... |
 
 ### Duplication Found
 ```python
-# auth.py:23 and user.py:67 are identical
-# → Extract to auth_utils.py
+# file1:X and file2:Y are identical
+# → Extract to shared module
 ```
 
 ### Complexity Concerns
-- `RequestHandler` has 5 responsibilities → Consider single responsibility
+- [Specific issues]
 
 ### Suggested Refactors
-1. Extract `validate_token()` from lines 23-45
-2. Replace `for i in range(len(xs))` with `for x in xs`
-3. Move `format_date()` to shared date_utils module
+1. [Action with file:line]
+2. [Action with file:line]
 ```
 
-### 4. Apply Fixes
+## Constraints
 
-- Make edits **only** for clear wins
-- Don't over-abstract
+- Only suggest changes with clear benefit
+- Three similar lines is better than premature abstraction
 - Prefer explicit over clever
-- Keep it simple: 3 similar lines is better than a premature abstraction
-
-## Principles
-
-| Avoid | Prefer |
-|-------|--------|
-| Complex one-liners | Clear multi-line |
-| Premature abstraction | Wait for duplication |
-| Clever shortcuts | Obvious approach |
-| Deep nesting | Early returns |
-
-## Red Flags
-
-- `else` after `return`
-- Comments explaining "why" that should be code
-- Functions with >3 parameters
-- Files >500 lines
-- Classes with >10 methods
+- Do NOT auto-apply changes; present suggestions and wait for user confirmation

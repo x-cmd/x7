@@ -1,87 +1,76 @@
 ---
 name: check
-description: Comprehensive check against all rules. Use when user says "/check" to verify code against project rules, with detailed TSV output of all violations.
+description: Comprehensive rule-based check. Triggered by "/check [target]" to evaluate all source files against project rules and report every violation.
 tools: Bash, Glob, Read
 ---
 
-# Project Health Checker (Rule-Based)
+# Rule Checker
 
-Comprehensive check that evaluates code against all applicable rules, reporting every violation found.
+## Trigger
 
-## Rule Format (YAML)
+Use when:
+- User says `/check`
+- User wants to verify code against project rules
+- Pre-commit or CI validation needed
 
-```yaml
-P06-var-010:
-  name: avoid-define-variable-like-path-shlvl-logname-home
-  apply: all posix shell files
-  desc:
-  - 千万不要用定义 path, user, home 等这种系统级变量
-  tldr:
-  - wrong: local path;
-    right: local path_list;
-```
+Do NOT use when:
+- User wants quick scan of top issues (use `/scan`)
+- User wants multi-dimensional assessment (use `/assess`)
 
-## Workflow
+## Steps
 
-### 1. Parse Arguments
+### Step 1: Parse Arguments
 
 ```
 /check [--ruleset <dir>] [target_root]
 ```
 
-### 2. Load Rules
+Default: current directory.
+
+### Step 2: Load Rules
 
 ```bash
-# Find and read all rule files
 x rule which      # locate ruleset
 ls $ruleset_dir/*.yml
 cat $ruleset_dir/*.yml
 ```
 
-### 3. Check All Files Against All Rules
+### Step 3: Evaluate All Files Against All Rules
 
-For each file under `target_root`:
-1. Determine which rules apply (based on `apply` field)
+For each file under target_root:
+1. Determine applicable rules based on rule `apply` field
 2. Check each applicable rule
-3. Record violations
+3. Record violations (score < 81)
 
-### 4. Output TSV
-
-```
-root    target    ruleid    score    hint
-/path   src/foo.sh  P06-var-010  10    变量命名不规范
-/path   src/config.sh  P06-concept-010  10    术语使用不当
-```
-
-- **score**: 0-80
-  - 0-10: Complete violation
-  - 11-50: Significant issues
-  - 51-80: Minor issues (still reported)
-- Only rows where rule is violated (score < 81)
-- If all files pass all rules: output just header row
-
-## Examples
-
-```bash
-# Check current directory
-x rule check
-
-# Check with specific ruleset
-x rule check -r :po6
-
-# Check specific target
-x rule check ./src
-```
-
-## Rule `apply` Field
-
-Determines which files a rule applies to:
-
+Rule `apply` values:
 | Apply Value | Files Matched |
-|-------------|--------------|
-| `all posix shell files` | `*.sh` files |
+|-------------|---------------|
+| `all posix shell files` | `*.sh` |
 | `all shell files` | `*.sh`, `*.bash`, `*.zsh` |
 | `all yaml files` | `*.yml`, `*.yaml` |
 | `all json files` | `*.json` |
 | `all source files` | source code files |
 | `all files` | any file |
+
+### Step 4: Output Results
+
+## Output Format
+
+TSV with header:
+```
+root    target    ruleid    score    hint
+```
+
+Scoring:
+- 0-10: Complete violation
+- 11-50: Significant issues
+- 51-80: Minor issues (still reported)
+- 81-100: No violation (omitted from output)
+
+If all pass: output header row only.
+
+## Constraints
+
+- Check EVERY file against EVERY applicable rule (exhaustive, not greedy)
+- Do NOT stop early
+- Do NOT auto-fix violations

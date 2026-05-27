@@ -36,17 +36,13 @@ ___x_cmd_feishu_listen(){
     ____x_cmd_tenant_token ; cur_token="$x_"
     local start_time=; ___x_cmd date timestamp_ ; start_time="$x_"
 
-    local date=;
-    local sync_buf_file="${___X_CMD_FEISHU_TMP}/sync_buf"
-    ___x_cmd date timestamp_ ; date="$x_"
-    printf "%s" "$date" > "$sync_buf_file"
-    sleep 1
+    local chat_state_dir="${___X_CMD_FEISHU_TMP}/chat_poll_states"
+    ___x_cmd rmrf   "$chat_state_dir"
+    ___x_cmd mkdirp "$chat_state_dir"
 
     local fail_count=0
     local curl_errcode=0
     while true; do
-        [ ! -f "$sync_buf_file" ] || read -r date <"$sync_buf_file"
-
         # Refresh token every 30 minutes
         local now=; ___x_cmd date timestamp_ ; now="$x_"
         if [ $((now - start_time)) -ge 1800 ]; then
@@ -56,8 +52,36 @@ ___x_cmd_feishu_listen(){
 
         local chatid
         while IFS= read -r chatid; do
+            local state_file="${chat_state_dir}/${chatid}"
+            local msg_time_file="${state_file}.msg_time"
+
+            local last_msg_time="" last_poll_time="" interval=""
+            [ ! -f "$msg_time_file" ] || read -r last_msg_time < "$msg_time_file"
+            [ -n "$last_msg_time" ]   || last_msg_time="$start_time"
+
+            # Calculate poll interval based on activity
+            x_=""; ___x_cmd_feishu_poll_interval "$last_msg_time" "$now"
+            interval="$x_"
+
+            [ ! -f "$state_file" ] || read -r last_poll_time < "$state_file"
+
+            if [ -n "$last_poll_time" ] && [ $((now - last_poll_time)) -lt "$interval" ]; then
+                continue
+            fi
+
+            # Record poll time
+            printf "%s" "$now" > "$state_file"
+
+            # Use last_msg_time as start_time, or current time if first poll or invalid
+            # If poll_start_time < start_time, it means last_msg_time was corrupted, reset to last_poll_time
+            # to avoid skipping messages between last_poll_time and now
+            local poll_start_time="${last_msg_time}"
+            if [ -z "$poll_start_time" ] || [ "$poll_start_time" -lt "$start_time" ]; then
+                poll_start_time="${last_poll_time:-"$now"}"
+            fi
+
             local resp=;
-            resp="$(___x_cmd_feishu_getmessages "$chatid" "$date")" || {
+            resp="$(___x_cmd_feishu_getmessages "$chatid" "$poll_start_time")" || {
                 curl_errcode=$?
                 case "$curl_errcode" in
                     28) continue ;;
@@ -71,8 +95,8 @@ ___x_cmd_feishu_listen(){
                 esac
             }
 
-            local msg="" sender_type="" sender_id="" last_msg_time="" code=""
-            ___x_cmd jo env .data.items msg=.1 sender_type=.1.sender.sender_type sender_id=.1.sender.id last_msg_time=.1.create_time code=.code <<A
+            local msg="" sender_id=""  code=""
+            ___x_cmd jo env . msg=.data.items sender_id=.data.items.1.sender.id code=.code <<A
 $resp
 A
 
@@ -89,10 +113,16 @@ A
             # fail_count=0
 
             [ "$msg" != "[]" ]     || continue
-            [ "$sender_type" = "user" ] || continue
-            date="$(( (last_msg_time / 1000) + 1 ))"
-            printf "%s" "$date" > "$sync_buf_file"
 
+            local oldest_msg_time
+            oldest_msg_time="$(printf "%s" "$resp" | ___x_cmd jq -r '.data.items[-1].create_time')"
+            local new_msg_time=$(( (oldest_msg_time / 1000) + 1 ))
+            # Only update if new_msg_time > poll_start_time (guards against empty or wrong-unit values)
+            if [ "$new_msg_time" -gt "$poll_start_time" ]; then
+                printf "%s" "$new_msg_time" > "$msg_time_file"
+            fi
+
+            msg="$(printf "%s\n" "$msg" | ___x_cmd jq -c '.[]')"
             if [ -n "$fp" ]; then
                 [ -n "$chatid" ] || {
                     feishu:error "Failed to get chat id, cannot save data to file"
@@ -112,7 +142,21 @@ A
         done <<A
 $chats
 A
+        sleep 2
     done
+}
+
+___x_cmd_feishu_poll_interval(){
+    local last_msg_time="$1"
+    local now="$2"
+    local diff=$(( now - last_msg_time ))
+    if [ "$diff" -lt 60 ]; then
+        x_=2
+    elif [ "$diff" -lt 300 ]; then
+        x_=10
+    else
+        x_=30
+    fi
 }
 
 ___x_cmd_feishu_getmessages(){

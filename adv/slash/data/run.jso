@@ -1,4 +1,36 @@
 {
+"--info"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示 slash command 的元信息，不执行命令"
+,
+"en"
+:
+"Show slash command metadata without executing"
+}
+}
+,
+"--cat"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示 slash command 的完整内容，不执行命令"
+,
+"en"
+:
+"Show slash command full content without executing"
+}
+}
+,
 "--debug"
 :
 {

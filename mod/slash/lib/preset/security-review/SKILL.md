@@ -1,56 +1,65 @@
 ---
 name: security-review
-description: Security audit for code changes. Use when user says "/security-review" to review pending changes for vulnerabilities, or when adding/modifying authentication, authorization, cryptography, or input handling.
+description: Security audit for code changes. Triggered by "/security-review" when reviewing auth, crypto, input handling, or when user explicitly requests a security audit.
+tools: Bash, Read
 ---
 
 # Security Reviewer
 
-Analyze code changes for security vulnerabilities following OWASP Top 10 and common security patterns.
+## Trigger
 
-## Workflow
+Use when:
+- User says `/security-review`
+- Changes involve authentication, authorization, cryptography, or input handling
+- User explicitly asks for a security audit
 
-### 1. Gather Context
+Do NOT use when:
+- General code review without security focus (use `/review`)
+- Performance concerns (use `/optimize`)
+
+## Steps
+
+### Step 1: Gather Context
 
 ```bash
-# Get diff of changes
 git diff main..HEAD
-git diff --staged
-
-# List new/modified files
 git diff --name-only main..HEAD
+```
 
-# Check for dependency changes
+Check dependency changes if relevant:
+```bash
 cat package.json  # or pyproject.toml, go.mod, etc.
 ```
 
-### 2. Identify Risk Areas
-
-Scan for common vulnerability patterns:
+### Step 2: Scan for Risk Patterns
 
 | Pattern | Risk |
 |---------|------|
-| User input without validation | Injection attacks |
+| User input without validation | Injection |
 | `eval()`, `exec()`, `shell_exec()` | Command injection |
 | SQL concatenation | SQL injection |
 | `innerHTML`, `dangerouslySetInnerHTML` | XSS |
-| `crypto.*` without TLS | Weak cryptography |
-| Hardcoded secrets, API keys | Secret exposure |
-| File operations with user paths | Path traversal |
-| Auth without rate limiting | Brute force |
+| Weak crypto (MD5, SHA1 for passwords) | Cryptographic failure |
+| Hardcoded secrets | Secret exposure |
+| File ops with user paths | Path traversal |
+| Missing rate limiting | Brute force |
 
-### 3. Security Checklist
+### Step 3: Verify Checklist
 
-- [ ] **Injection**: All user inputs validated/sanitized?
-- [ ] **Authentication**: Proper auth flow, session management?
-- [ ] **Authorization**: Access control checks before actions?
-- [ ] **Cryptography**: No weak algs (MD5, SHA1 for passwords)?
-- [ ] **Secrets**: No hardcoded credentials in code?
-- [ ] **Input Validation**: All external data validated?
-- [ ] **Output Encoding**: XSS prevented in rendered output?
-- [ ] **Rate Limiting**: APIs protected against abuse?
-- [ ] **Logging**: Sensitive data not logged?
+- [ ] All user inputs validated/sanitized
+- [ ] Authentication flow proper
+- [ ] Authorization checks present
+- [ ] No weak cryptography
+- [ ] No hardcoded credentials
+- [ ] Output encoded to prevent XSS
+- [ ] Rate limiting on APIs
+- [ ] Sensitive data not logged
 
-### 4. Generate Report
+### Step 4: Generate Report
+
+Use the output format below.
+
+## Output Format
 
 ```markdown
 ## Security Review
@@ -61,7 +70,7 @@ Files: N | Lines changed: +N/-N
 ### Findings
 
 #### 🔴 Critical
-[Description, location, exploit scenario, recommendation]
+[Description, location, exploit scenario, fix]
 
 #### 🟠 High
 [...]
@@ -80,18 +89,8 @@ Total: N | Critical: N | High: N | Medium: N
 2. [Next steps]
 ```
 
-### 5. Common Fixes
+## Constraints
 
-```markdown
-# SQL Injection → Use parameterized queries
-- Bad:  WHERE id = '$user_input'
-+ Good: WHERE id = $1  [with prepared statements]
-
-# XSS → Escape output
-- Bad:  element.innerHTML = userInput
-+ Good: element.textContent = userInput
-
-# Secrets → Use environment variables
-- Bad:  const apiKey = "sk-123456..."
-+ Good: const apiKey = process.env.API_KEY
-```
+- If no vulnerabilities found, state "No critical or high severity issues found" explicitly
+- Do NOT attempt to exploit; only static analysis
+- Flag for deeper audit if architecture-level security concerns found

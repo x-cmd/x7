@@ -75,20 +75,6 @@ ___x_cmd_claw_run_status(){
     fi
     printf "mq_pending: %s\n" "$mq_pending"
 
-    printf "cron:\n"
-    local cron_list=""
-    cron_list="$(___x_cmd cron ls --ns x-claw-default --tsv 2>/dev/null)" || cron_list=""
-    if [ -n "$cron_list" ]; then
-        printf "%s\n" "$cron_list" | while IFS="$___X_CMD_UNSEENCHAR_HT" read -r name expr desc; do
-            [ -n "$name" ] || continue
-            printf "  - name: %s\n" "$name"
-            printf "    expr: %s\n" "$expr"
-            [ -n "$desc" ] && printf "    desc: %s\n" "$desc"
-        done
-    else
-        printf "  []\n"
-    fi
-
     local imdir="$___X_CMD_CLAW_BOT_CONNECT_DIR"
     local i j im_name chatid active_ts worker_name worker_status has_unread last_active
     printf "im:\n"
@@ -130,5 +116,19 @@ ___x_cmd_claw_run_status(){
                 [ -n "$last_active" ] && printf "    last_active: %s\n" "$last_active"
             done
         done
+    fi
+
+    printf "cron:\n"
+    local cron_list=""
+    cron_list="$(___x_cmd cron ls --ns x-claw-default --tsv 2>/dev/null)" || cron_list=""
+    if [ -n "$cron_list" ]; then
+        printf "%s\n" "$cron_list" | while IFS="$___X_CMD_UNSEENCHAR_HT" read -r name expr desc; do
+            [ -n "$name" ] || continue
+            printf "  - name: %s\n" "$name"
+            printf "    expr: %s\n" "$expr"
+            [ -n "$desc" ] && printf "    desc: %s\n" "$desc"
+        done
+    else
+        printf "  []\n"
     fi
 }

@@ -50,5 +50,16 @@ $data
 A
 
     [ -n "$___X_CMD_CSV_APP_DATA_name" ] || return 1
-    ___x_cmd_slash_run "$___X_CMD_CSV_APP_DATA_fp"
+
+    local idx=""; ___x_cmd ui select idx "Select action for slash command '$___X_CMD_CSV_APP_DATA_name':" \
+        "Run /$___X_CMD_CSV_APP_DATA_name" \
+        "View details" \
+        "Return" \
+        || return $?
+
+    case "$idx" in
+        1)  ___x_cmd_slash_run "$___X_CMD_CSV_APP_DATA_fp" ;;
+        2)  ___x_cmd_slash_run "$___X_CMD_CSV_APP_DATA_fp" --info ;;
+        *)  return 0 ;;
+    esac
 }

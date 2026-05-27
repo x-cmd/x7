@@ -50,6 +50,9 @@ ___x_cmd_claw_run___deactivate_im(){
     if [ -n "$chatid" ]; then
         claw:info "Deactivating IM platform $im:$chatid"
         ___x_cmd rmrf "$___X_CMD_CLAW_BOT_CONNECT_DIR/$im/$chatid"
+    # else
+    #     claw:info "Deactivating IM platform $im"
+    #     ___x_cmd rmrf "$___X_CMD_CLAW_BOT_CONNECT_DIR/$im"
     fi
 }
 

@@ -67,11 +67,11 @@ null
 {
 "en"
 :
-"Agent default skill directories:\nclaude → .claude/skills/    gemini → .gemini/skills/\ncodex  → .codex/skills/     others → .agents/skills/\nGlobal scope: ~/.<agent>/skills/\nOverride with --skill-dir.\n"
+"Agent skill directories (when --agent is specified):\nclaude → .claude/skills/    gemini → .gemini/skills/\ncodex  → .codex/skills/     others → .agents/skills/\nWithout --agent, installs to both .agents/skills/ and .claude/skills/.\nGlobal scope: ~/.<agent>/skills/\nOverride with --skill-dir.\n"
 ,
 "cn"
 :
-"Agent skill 默认目录：\nclaude → .claude/skills/    gemini → .gemini/skills/\ncodex  → .codex/skills/     其他   → .agents/skills/\n全局作用域：~/.<agent>/skills/    使用 --skill-dir 可覆盖。\n"
+"Agent skill 目录（指定 --agent 时）：\nclaude → .claude/skills/    gemini → .gemini/skills/\ncodex  → .codex/skills/     其他   → .agents/skills/\n不指定 --agent 时，默认同时安装到 .agents/skills/ 和 .claude/skills/。\n全局作用域：~/.<agent>/skills/    使用 --skill-dir 可覆盖。\n"
 }
 ]
 ,
@@ -1103,16 +1103,26 @@ true
 {
 "cn"
 :
-"添加 skill 到当前项目"
+"添加 skill 到当前项目（默认安装到 .agents/skills/ 和 .claude/skills/）"
 ,
 "en"
 :
-"Add skill to current project"
+"Add skill to current project (installs to both .agents/skills/ and .claude/skills/ by default)"
 }
 ,
 "#tip"
 :
 [
+{
+"cn"
+:
+"默认同时安装到 .agents/skills/ 和 .claude/skills/ 两个目录。\n使用 --agent 指定 agent 类型可限定只安装到该 agent 的目录。\n"
+,
+"en"
+:
+"By default, installs to both .agents/skills/ and .claude/skills/.\nUse --agent to limit installation to a specific agent's directory.\n"
+}
+,
 {
 "cn"
 :
@@ -1168,11 +1178,11 @@ true
 {
 "cn"
 :
-"指定 AI Agent 类型"
+"指定 AI Agent 类型（限定只安装到该 agent 的 skill 目录）"
 ,
 "en"
 :
-"Specify AI agent type"
+"Specify AI agent type (limits install to that agent's directory only)"
 }
 ,
 "#1"
@@ -1318,11 +1328,11 @@ true
 ,
 "cn"
 :
-"示例: 添加 pptx skill"
+"示例: 添加 pptx skill（默认安装到 .agents/skills/ 和 .claude/skills/）"
 ,
 "en"
 :
-"Example: add pptx skill"
+"Example: add pptx skill (installs to both .agents/skills/ and .claude/skills/ by default)"
 }
 ,
 {

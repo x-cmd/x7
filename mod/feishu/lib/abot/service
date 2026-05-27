@@ -67,7 +67,7 @@ ___x_cmd_feishu_abot_service_start(){
         return 1
     }
 
-    printf "%s " "status: "; ___x_cmd_feishu_abot_service_status "$sname"
+    feishu:info "Feishu bot service started successfully ==> $sname"
 }
 
 ___x_cmd_feishu_abot_service_ensure(){

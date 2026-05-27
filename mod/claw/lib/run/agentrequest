@@ -238,6 +238,16 @@ LARK-CLI (Feishu Official CLI):
   - Run 'lark-cli --help' or 'lark-cli <command> --help' for more options.
   - After creating, share the result with the user via: x feishu abot send --text --chatid \"$chatid\" '<result>'
 
+CLAW CONNECT — ADD MORE FEISHU GROUP CHATS:
+  Users typically start with a single chat with you, then may ask you to connect more Feishu group chats.
+  When a user asks to connect a group chat in Feishu, run:
+  - Connect a specific group: x claw connect feishu:oc_xxx
+    The user will provide the Group ID (oc_xxx) in the chat message.
+  - Connect all groups: x claw connect feishu:groups
+  - Disconnect a specific group: x claw disconnect feishu:oc_xxx
+  - Disconnect all groups: x claw disconnect feishu:groups
+  Note: Each group chat spawns an independent Agent session. Just run the connect command from this current single chat — no need to enter the group chat itself.
+
 CRON EXAMPLES:
   In claw context, ONLY x claw cron is allowed. Do NOT use:
   - CronCreate/CronDelete (Claude Code built-in, only works in active session)

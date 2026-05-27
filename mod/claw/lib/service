@@ -83,7 +83,7 @@ ___x_cmd_claw_service_start(){
             *=*) chatid="${im#*=}"; im="${im%%=*}" ;;
         esac
         [ -n "$im"  ] || continue
-        ___x_cmd_claw_connect "$im" "$chatid" || return $?
+        ___x_cmd_claw_connect "$im${chatid:+":$chatid"}" || return $?
     done <<A
 $imlist
 A
@@ -114,7 +114,7 @@ ___x_cmd_claw_service_stop(){
             *=*) chatid="${im#*=}"; im="${im%%=*}" ;;
         esac
         [ -n "$im"  ] || continue
-        ___x_cmd_claw_disconnect "$im" "$chatid" || return $?
+        ___x_cmd_claw_disconnect "$im${chatid:+":$chatid"}" || return $?
     done <<A
 $imlist
 A

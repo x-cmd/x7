@@ -1,82 +1,59 @@
 ---
 name: work
-description: Handle issue/PR/work items. Creates worktree branches for focused work. Use when user says "/work" with an issue/PR link, or wants to start focused work on a task.
+description: Handle issue/PR work items with worktree isolation. Triggered by "/work [issue_link|description]" to start focused work.
+tools: Bash, Read
 ---
 
 # Work Handler
 
-Start focused work on an issue, PR, or arbitrary task by creating an isolated worktree.
+## Trigger
 
-## Workflow
+Use when:
+- User says `/work` with an issue/PR link or description
+- User wants to start focused, isolated work
 
-### 1. Parse Input
+## Steps
+
+### Step 1: Parse Input
 
 ```
-/work [issue_link or pr_link or natural description]
+/work [issue_link or pr_link or natural_description]
 ```
 
-- **Issue/PR link** (GitHub, GitLab, etc.): Parse issue/PR number, fetch details
-- **Arbitrary task**: Use user's description as branch name
+- Link: Parse number, fetch title/body
+- Description: Use as branch name basis
 
-### 2. Fetch Context (for links)
+### Step 2: Fetch Context (for links)
 
 ```bash
-# For GitHub issues/PRs
-gh issue view <number> --json title,body,labels,assignees
+gh issue view <number> --json title,body,labels
 gh pr view <number> --json title,body,labels,files
-
-# For GitLab issues
-glab issue view <number>
-glab mr view <number>
 ```
 
-### 3. Create Worktree
+### Step 3: Create Worktree
 
 ```bash
-# Extract issue/PR identifier for branch name
-BRANCH_NAME="work/$(date +%Y%m%d)-$(echo "$TITLE" | slugify)"
-
-# Create worktree
-git worktree add -b "$BRANCH_NAME" . ".$x-cmd.root/v/.repo/../worktrees/$BRANCH_NAME"
-
-# Or: Enter existing worktree if already created
+SLUG="$(echo "$TITLE" | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -cd 'a-z0-9_-')"
+BRANCH_NAME="work/$(date +%Y%m%d)-${SLUG}"
+git worktree add -b "$BRANCH_NAME" "$WORKTREE_PATH"
 ```
 
-### 4. Prepare Work Environment
-
-- Checkout relevant files/dirs if needed
-- Copy or link any necessary context
-- Set up branch tracking
-
-### 5. Report to User
+### Step 4: Report
 
 ```
 Created worktree: $BRANCH_NAME
 Location: $WORKTREE_PATH
-Issue: $ISSUE_TITLE (#$NUMBER)
+Issue: $TITLE (#$NUMBER)
 ```
 
----
+### Step 5: Exit Guidance
 
-## External Web Page Flow
-
-If `/work` is followed by a URL (not an issue/PR):
-
-1. **Fetch content**: `WebFetch` the URL
-2. **Summarize**: Present key points to user
-3. **Discuss**: "How should we integrate this?" and wait for user input
-4. **Apply**: User provides guidance → implement accordingly
-
-## Branch Naming
-
-```
-work/YYYYMMDD-short-description
-work/20260523-fix-login-bug
-work/20260523-issue-123
-```
-
-## Exit
-
-When work is done:
+When work done:
 - `git commit` in worktree
-- User can merge via PR or `git worktree remove`
+- Merge via PR or `git worktree remove`
+
+## Constraints
+
+- Use slugified branch names: `work/YYYYMMDD-short-description`
+- If URL provided (not issue/PR), fetch and summarize, then ask user how to proceed
+- Do NOT auto-commit

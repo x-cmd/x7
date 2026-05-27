@@ -1,75 +1,52 @@
 ---
 name: goal
-description: Set and track project goals. Use when user says "/goal" to define objectives, track milestones, or align on project direction.
+description: Set and track project goals. Triggered by "/goal" to define objectives, track milestones, or review progress.
+tools: Bash, Read
 ---
 
 # Goal Tracker
 
-Define, track, and review project goals and milestones.
+## Trigger
 
-## Workflow
+Use when:
+- User says `/goal`
+- User wants to set, update, or review project goals
 
-### 1. Parse Goal Input
+## Steps
+
+### Step 1: Parse Input
 
 Accepts:
-- Natural language description: "Ship feature X by end of month"
-- Structured format: "goal: description, deadline: YYYY-MM-DD"
-- Update format: "/goal update #1 - completed"
+- Natural language: "Ship feature X by end of month"
+- Update: `/goal update #1 - completed`
 
-### 2. Store Goal
+### Step 2: Manage Goals
 
-```bash
-# Store in local goal file or project management tool
-# Example: ~/.goals/current_project.md
-
-# Format
-- id: 1
-  description: Ship user authentication
-  deadline: 2026-05-30
-  status: in_progress
-  created: 2026-05-23
-```
-
-### 3. Track Progress
-
+Operations:
 | Command | Action |
 |---------|--------|
 | `/goal` | List active goals |
-| `/goal #1` | Show goal #1 details |
-| `/goal update #1` | Update goal status |
-| `/goal done #1` | Mark as completed |
-| `/goal delete #1` | Remove goal |
+| `/goal #1` | Show details |
+| `/goal update #1` | Update status |
+| `/goal done #1` | Mark completed |
 
-### 4. Report Status
+### Step 3: Report Status
+
+## Output Format
 
 ```markdown
 ## Active Goals
 
-### #1: Ship user authentication
-- **Status**: In Progress
-- **Deadline**: 2026-05-30 (7 days left)
-- **Progress**: 60%
+### #1: [Title]
+- **Status**: [In Progress / Blocked / Completed]
+- **Deadline**: [YYYY-MM-DD] ([N] days left)
+- **Progress**: [N]%
 - **Milestones**:
-  - [x] Database schema
-  - [x] Login endpoint
-  - [ ] Registration flow
-  - [ ] Password reset
-
-### #2: Fix login bug
-- **Status**: Blocked
-- **Blocking**: Waiting on DB credentials
+  - [x] ...
+  - [ ] ...
 ```
 
-## Integration
+## Constraints
 
-For GitHub integration:
-```bash
-# Link goal to issue
-gh issue comment <issue> --body "Tracked in goal #1"
-```
-
-For team visibility:
-```bash
-# Share goal summary
-cat ~/.goals/project.md
-```
+- Store goals in project-local file (e.g., `.goals.md`) if possible
+- Ask user before creating new goals if ambiguity exists
