@@ -19,7 +19,7 @@ ___x_cmd_version_build_apk(){
 }
 
 ___x_cmd_version_build_apk_docker(){
-    local version="$1"
+    local version="${1}"
     printf "%s\n" "FROM alpine:latest
 
 RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
@@ -44,7 +44,8 @@ cp -rf /home/builder/packages/*/* /apkbuild' || return 1
 
     local distfp="$___X_CMD_VERSION_BUILD_DATA/release/${version}/apk"
     ___x_cmd mkdirp "$distfp"
-    ___x_cmd_cmds cp -rf ".build/apk/x-cmd-${version#v}-r0.apk" "$distfp/x-cmd-${version}-r0.apk"
+    ___x_cmd_cmds cp -rf "$builddir/apk/x-cmd-${version#v}-r0.apk" "$distfp/x-cmd_${version#v}_all.apk"
+
 }
 
 ___x_cmd_version_build_apk_local()(

@@ -32,7 +32,7 @@ WORKDIR /home/builder' > ".build/debian-builder.Dockerfile"
 ' || return "$?"
     local distfp="$___X_CMD_VERSION_BUILD_DATA/release/${version}/deb"
     ___x_cmd mkdirp "$distfp"
-	___x_cmd_cmds cp -rf ".build/deb/x-cmd.deb" "$distfp/x-cmd-${version}.deb"
+	___x_cmd_cmds cp -rf "$builddir/deb/x-cmd.deb" "$distfp/x-cmd_${version#v}_all.deb"
 
 }
 

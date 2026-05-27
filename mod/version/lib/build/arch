@@ -39,7 +39,8 @@ WORKDIR /home/builder' > ".build/arch-builder.Dockerfile"
 
     local distfp="$___X_CMD_VERSION_BUILD_DATA/release/${version}/arch"
     ___x_cmd mkdirp "$distfp"
-    ___x_cmd_cmds cp -rf ".build/arch/x-cmd-${version}-0-any.pkg.tar.zst" "$distfp"
+    ___x_cmd_cmds cp -rf "$builddir/arch/x-cmd-${version}-0-any.pkg.tar.zst" "$distfp/x-cmd_${version#v}_all.pkg.tar.zst"
+
 }
 
 ___x_cmd_version_build_arch_local()(

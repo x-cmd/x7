@@ -31,7 +31,7 @@ RUN dnf install -y rpmdevtools rpmlint' > ".build/fedora-builder.Dockerfile"
 
     local distfp="$___X_CMD_VERSION_BUILD_DATA/release/${version}/rpm"
     ___x_cmd mkdirp "$distfp"
-	___x_cmd_cmds cp -rf ".build/rpm/RPMS/noarch/"* "$distfp"
+	___x_cmd_cmds cp -rf "$builddir/rpm/RPMS/noarch/"* "$distfp/x-cmd_${version#v}_all.rpm"
 }
 
 ___x_cmd_version_build_rpm_local()(
