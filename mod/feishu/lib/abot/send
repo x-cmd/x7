@@ -34,17 +34,17 @@ ___x_cmd_feishu_abot_send_text(){
     fi
 
     local msg="$1"
-    msg="$( ___x_cmd_feishu___jqu "$msg")"
+    # msg="$( ___x_cmd_feishu___jqu "$msg")"
 
     local msg_json
-    msg_json="$(___x_cmd_cmds cat <<A
-{
-    "content": "{\"text\":\"$msg\"}",
-    "msg_type": "text",
-    "receive_id": "$chatid"
-}
-A
-)"
+    msg_json="$(___x_cmd jq -n          \
+            --arg msg "$msg"            \
+            --arg chatid "$chatid"      \
+            '{
+              msg_type: "text",
+              receive_id: $chatid,
+              content: {text: $msg} | tojson
+            }')"
 
     feishu:debug "$(printf "%s" "$msg_json" )"
     local resp; resp="$(printf "%s" "$msg_json" | ___x_cmd_feishu_appsend___ "$chatid")"

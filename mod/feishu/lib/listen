@@ -44,10 +44,10 @@ ___x_cmd_feishu_listen(){
     local curl_errcode=0
     while true; do
         # Refresh token every 30 minutes
-        local now=; ___x_cmd date timestamp_ ; now="$x_"
-        if [ $((now - start_time)) -ge 1800 ]; then
+        local current_time=; ___x_cmd date timestamp_ ; current_time="$x_"
+        if [ $((current_time - start_time)) -ge 1800 ]; then
             ____x_cmd_tenant_token ; cur_token="$x_"
-            start_time="$now"
+            start_time="$current_time"
         fi
 
         local chatid
@@ -60,24 +60,24 @@ ___x_cmd_feishu_listen(){
             [ -n "$last_msg_time" ]   || last_msg_time="$start_time"
 
             # Calculate poll interval based on activity
-            x_=""; ___x_cmd_feishu_poll_interval "$last_msg_time" "$now"
+            x_=""; ___x_cmd_feishu_poll_interval "$last_msg_time" "$current_time"
             interval="$x_"
 
             [ ! -f "$state_file" ] || read -r last_poll_time < "$state_file"
 
-            if [ -n "$last_poll_time" ] && [ $((now - last_poll_time)) -lt "$interval" ]; then
+            if [ -n "$last_poll_time" ] && [ $((current_time - last_poll_time)) -lt "$interval" ]; then
                 continue
             fi
 
             # Record poll time
-            printf "%s" "$now" > "$state_file"
+            printf "%s" "$current_time" > "$state_file"
 
             # Use last_msg_time as start_time, or current time if first poll or invalid
             # If poll_start_time < start_time, it means last_msg_time was corrupted, reset to last_poll_time
-            # to avoid skipping messages between last_poll_time and now
+            # to avoid skipping messages between last_poll_time and current_time
             local poll_start_time="${last_msg_time}"
             if [ -z "$poll_start_time" ] || [ "$poll_start_time" -lt "$start_time" ]; then
-                poll_start_time="${last_poll_time:-"$now"}"
+                poll_start_time="${last_poll_time:-"$current_time"}"
             fi
 
             local resp=;
@@ -122,7 +122,7 @@ A
                 printf "%s" "$new_msg_time" > "$msg_time_file"
             fi
 
-            msg="$(printf "%s\n" "$msg" | ___x_cmd jq -c '.[]')"
+            msg="$(printf "%s\n" "$msg" | ___x_cmd jq -c '.[] | select(.sender.sender_type == "user")')"
             if [ -n "$fp" ]; then
                 [ -n "$chatid" ] || {
                     feishu:error "Failed to get chat id, cannot save data to file"
@@ -148,8 +148,8 @@ A
 
 ___x_cmd_feishu_poll_interval(){
     local last_msg_time="$1"
-    local now="$2"
-    local diff=$(( now - last_msg_time ))
+    local current_time="$2"
+    local diff=$(( current_time - last_msg_time ))
     if [ "$diff" -lt 60 ]; then
         x_=2
     elif [ "$diff" -lt 300 ]; then
