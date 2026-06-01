@@ -9,6 +9,7 @@ BEGIN{
 
     ____X_CMD_AGENT_ERR_AUTHFAILURE = ENVIRON[ "____X_CMD_AGENT_ERR_AUTHFAILURE" ]
     ____X_CMD_AGENT_ERR_NETWORK_TIMEOUT = ENVIRON[ "____X_CMD_AGENT_ERR_NETWORK_TIMEOUT" ]
+    ____X_CMD_AGENT_ERR_RATE_LIMIT = ENVIRON[ "____X_CMD_AGENT_ERR_RATE_LIMIT" ]
     if ( HARNESS == "" ) HARNESS = "UNKNOWN"
     Q2_1 = SUBSEP "\"1\""
     SAVE_SESSION_ID_VAL = ""
@@ -44,7 +45,11 @@ function handle_response_stream_json( s,           o ){
     }
 }
 
-function handle_error_text(s, obj,                  result){
+function is_rate_limit_signal(s) {
+    return s ~ /rate.?limit|too.?many.?requests|throttl|quota.?exceeded|resource.?exhausted|usage.?limit|tokens.?per|model_cooldown|请求过于频繁|调用频率|频率限制|配额不足|配额已用尽|额度不足|额度已用尽|429\b|rate_limit|RATE_LIMIT|THROTTLED|RESOURCE_EXHAUSTED/
+}
+
+function handle_error_text(s, obj,                  result, err_text){
     if (s ~ "^ *\\{"){
         jiparse_after_tokenize(obj, s)
         if ( JITER_LEVEL != 0 ){
@@ -58,17 +63,28 @@ function handle_error_text(s, obj,                  result){
             # claude
             result = juq( obj[ Q2_1, "\"result\"" ] )
             log_error( "agent", result )
+            if ( is_rate_limit_signal(result) ) exit( ____X_CMD_AGENT_ERR_RATE_LIMIT )
             # if ( result ~ "^API Error" ){
             exit( 1 )
         } else if ( obj[ Q2_1, "\"type\"" ] == "\"turn.failed\"" ){
             # codex
-            log_error( "agent", juq(obj[ Q2_1, "\"error\"", "\"message\"" ] ))
+            result = juq(obj[ Q2_1, "\"error\"", "\"message\"" ])
+            log_error( "agent", result )
+            if ( is_rate_limit_signal(result) ) exit( ____X_CMD_AGENT_ERR_RATE_LIMIT )
             exit( 1 )
+        } else if ( obj[ Q2_1, "\"type\"" ] == "\"rate_limit_error\"" ){
+            result = juq(obj[ Q2_1, "\"error\"", "\"message\"" ])
+            log_error( "agent", result )
+            exit( ____X_CMD_AGENT_ERR_RATE_LIMIT )
         } else if ( obj[ Q2_1, "\"type\"" ] == "\"error\"" ){
-            log_error( "agent", jstr(obj, Q2_1))
+            err_text = jstr(obj, Q2_1)
+            log_error( "agent", err_text )
+            if ( is_rate_limit_signal(err_text) ) exit( ____X_CMD_AGENT_ERR_RATE_LIMIT )
             exit( 1 )
         } else if ( obj[ Q2_1, "\"error\"" ] == "{" ){
-            log_error( "agent", jstr(obj, Q2_1 SUBSEP "\"error\""))
+            err_text = jstr(obj, Q2_1 SUBSEP "\"error\"")
+            log_error( "agent", err_text )
+            if ( is_rate_limit_signal(err_text) ) exit( ____X_CMD_AGENT_ERR_RATE_LIMIT )
             exit( 1 )
         }
 
@@ -80,6 +96,9 @@ function handle_error_text(s, obj,                  result){
         } else if ( s ~ "Connection error" ) {
             log_error( "agent", s )
             exit( ____X_CMD_AGENT_ERR_NETWORK_TIMEOUT )
+        } else if ( is_rate_limit_signal(s) ) {
+            log_error( "agent", s )
+            exit( ____X_CMD_AGENT_ERR_RATE_LIMIT )
         } else if ( s ~ "Not logged in · Please run /login" ) {
             log_error( "agent", s )
             exit( ____X_CMD_AGENT_ERR_AUTHFAILURE )

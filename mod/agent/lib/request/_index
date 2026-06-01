@@ -158,6 +158,7 @@ Output your response wrapped with:
 
 ____X_CMD_AGENT_ERR_AUTHFAILURE=77
 ____X_CMD_AGENT_ERR_SESSION_INVALID=78
+____X_CMD_AGENT_ERR_RATE_LIMIT=79
 ____X_CMD_AGENT_ERR_NETWORK_TIMEOUT=124
 
 ___x_cmd_agent_request___run(){
@@ -470,8 +471,9 @@ ___x_cmd_agent_request___handle_output(){
     save_session_id_file="$save_session_id_file" \
     ____X_CMD_AGENT_ERR_AUTHFAILURE="$____X_CMD_AGENT_ERR_AUTHFAILURE" \
     ____X_CMD_AGENT_ERR_NETWORK_TIMEOUT="$____X_CMD_AGENT_ERR_NETWORK_TIMEOUT" \
+    ____X_CMD_AGENT_ERR_RATE_LIMIT="$____X_CMD_AGENT_ERR_RATE_LIMIT" \
     harness="$harness" \
-    ___x_cmd cawk -i -m j/json -m j/jiter \
+    ___x_cmd awk0 -m j/json -m j/jiter \
         -f "$___X_CMD_ROOT_MOD/agent/lib/awk/handle_output.awk"
 }
 

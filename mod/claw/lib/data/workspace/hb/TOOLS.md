@@ -4,31 +4,7 @@
 
 ## x-cmd
 
-> **IMPORTANT**: Before using any `x <mod>` command, you MUST load x-cmd first: `. ~/.x-cmd.root/X`
-
-x-cmd is a portable shell tool framework. `x` is the entry point command (short name for `x-cmd`) that provides access to 600+ tools and modules.
-> If the `x` command is not found, use `x-cmd` instead.
-
-### Loading
-
-```bash
-. ~/.x-cmd.root/X
-```
-
-After loading, `x <mod>` commands become available automatically.
-
-### Common Commands
-
-| Command | Purpose |
-|---------|---------|
-| `x nihao --llmstxt` | View llms.txt for AI agents |
-| `x skill` | Discover available skills |
-| `x env la` | List 600+ available software |
-| `x env use <pkg>` | Install and use a package |
-
-### Browse More
-
-- https://www.x-cmd.com/llms.txt
+Use x-cmd skill to access 300+ shell utilities, 1000+ packages—all without sudo, and discover various safe, human-vetted skills. Learn more: https://www.x-cmd.com/llms.txt
 
 ## Scheduled Tasks
 

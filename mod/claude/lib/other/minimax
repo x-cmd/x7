@@ -47,7 +47,7 @@ ___x_cmd_claude_minimax___fetch_(){
     fi
 
     x_model="$model"
-    [ -n "$x_model" ] || x_model="MiniMax-M2.5"
+    [ -n "$x_model" ] || x_model="MiniMax-M3"
 
     x_fastmodel="$x_model"
     x_effortlevel=auto

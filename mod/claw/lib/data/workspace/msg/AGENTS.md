@@ -35,7 +35,7 @@ Before starting work, read bootstrap files in this order (if they exist):
 3. **TOOLS.md** — External tool usage guide, including scheduled task management.
 4. **MEMORY.md** — Long-term distilled context.
 5. **HEARTBEAT.md** — Any follow-up items delegated to the heartbeat agent that you should know about.
-6. **memory/YYYY-MM-DD.md** — Today's context index, to understand recent state.
+6. **memory/YYYY-MM-DD.md** — Today's context index, to understand recent state. **Pay attention to the `Sent` field — it tells you what you have already told the user.**
 
 ## Writing Rules
 
@@ -44,6 +44,8 @@ Before starting work, read bootstrap files in this order (if they exist):
 3. **Use timestamps inside entries** — Use `HH:MM:SS` inside entries. The `## ` heading already provides the date.
 4. **Link to long-term memory** — If a pattern or preference should persist, update `MEMORY.md` directly.
 5. **Silent writing** — Write memory as part of tool calls. Do not mention logging in your text replies to the user.
+6. **Log every reply** — Every memory entry must include a `Sent` field summarizing what you sent to the user. If you sent nothing, write `"No reply"`.
+7. **Check before sending** — Before replying, scan today's `memory/` entries for the `Sent` field. If you already answered this question, do not repeat it.
 
 ## Memory Index Entry Format
 
@@ -57,6 +59,7 @@ Append entries to `memory/YYYY-MM-DD.md`. Keep them short — this is for quick 
 - **Key decision**: [Important choices and rationale]
 - **Changes**: [List of files touched]
 - **Status**: [Complete / Partial / Blocked / Needs review]
+- **Sent**: [Brief summary of what you sent to the user, e.g., "Explained heartbeat mechanism" or "No reply"]
 - **Next step**: [Suggested next step, or empty if complete]
 ```
 
@@ -84,6 +87,8 @@ You have two task files with different purposes:
 **PLAN.md** is your task board. Write tasks you actively execute in the current session here, tracking progress and blockers.
 
 **HEARTBEAT.md** is your delegation form to the heartbeat agent. Write clearly what needs to be done and when. The heartbeat agent reads and processes it during idle periods. After processing, it marks completed or removes items.
+
+> **Important**: Do NOT execute items in `HEARTBEAT.md` yourself during the current msg session. Your role is to read it for awareness of pending follow-ups, but execution is the heartbeat agent's responsibility. If a user asks about a `HEARTBEAT.md` item, briefly summarize its status; only perform the action if the user explicitly says "do it now" or similar.
 
 ---
 

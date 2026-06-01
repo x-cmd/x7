@@ -30,6 +30,12 @@ null
 ,
 "x time getms <command> [args...]"
 ,
+"x time getreal <command> [args...]"
+,
+"x time getrealms <command> [args...]"
+,
+"x time log <command> [args...]"
+,
 "x time stress [ -c <count> ] [ -b <budget_sec> ] [ --csv|--csv0|--tsv|--tsv0|--yml|--tty ] <command> [args...]"
 ,
 "x time cmp [ -c <count> ] [ --csv|--csv0|--tsv|--tsv0|--yml|--tty ] <cmd1> <cmd2> [cmd3...]"
@@ -110,6 +116,34 @@ null
 "en"
 :
 "Returns milliseconds, for script decisions"
+}
+,
+{
+"cmd"
+:
+"x time log sleep 1"
+,
+"cn"
+:
+"wall-clock 计时，返回码"
+,
+"en"
+:
+"Wall-clock timing, return code"
+}
+,
+{
+"cmd"
+:
+"x time cmd sleep 1"
+,
+"cn"
+:
+"CPU 时间分解（user/sys/real）"
+,
+"en"
+:
+"CPU time breakdown (user/sys/real)"
 }
 ,
 {
@@ -271,6 +305,12 @@ null
 :
 [
 "getms"
+,
+"getreal"
+,
+"getrealms"
+,
+"log"
 ]
 ,
 "#subcmd:Statistics"
@@ -297,11 +337,11 @@ null
 {
 "cn"
 :
-"毫秒级精度单次计时"
+"毫秒级精度单次计时（基于 epoch_ms）"
 ,
 "en"
 :
-"Millisecond precision single-shot timing"
+"Millisecond precision single-shot timing (based on epoch_ms)"
 }
 ,
 "#tldr"
@@ -339,6 +379,156 @@ null
 }
 }
 ,
+"getreal"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"秒级精度单次计时（基于 epoch_real）。\n精度取决于系统：Linux/zsh 可达纳秒级，macOS bash 仅秒级（调用 zsh fallback 恢复纳秒精度）。\n注意：此为 wall-clock 时间，不包含 CPU 时间。\n"
+,
+"en"
+:
+"Second-level precision single-shot timing (based on epoch_real).\nPrecision depends on system: Linux/zsh can reach nanosecond; macOS bash only second-level (falls back to zsh for ns precision).\nNote: This measures wall-clock time, not CPU time.\n"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x time getreal sleep 1"
+,
+"cn"
+:
+"秒精度测量 sleep 1"
+,
+"en"
+:
+"Second precision timing of sleep 1"
+}
+]
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"要计时的命令"
+,
+"en"
+:
+"Command to time"
+}
+}
+}
+,
+"getrealms"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"毫秒级精度单次计时（基于 epoch_real，精度高于 getms）。\n精度取决于系统：Linux/zsh 可达微秒级，macOS bash 仅毫秒级（调用 zsh fallback 恢复更高精度）。\n注意：此为 wall-clock 时间，不包含 CPU 时间。\n"
+,
+"en"
+:
+"Millisecond precision single-shot timing (based on epoch_real, higher precision than getms).\nPrecision depends on system: Linux/zsh can reach microsecond; macOS bash only millisecond (falls back to zsh for higher precision).\nNote: This measures wall-clock time, not CPU time.\n"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x time getrealms sleep 1"
+,
+"cn"
+:
+"毫秒精度测量 sleep 1"
+,
+"en"
+:
+"Millisecond precision timing of sleep 1"
+}
+]
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"要计时的命令"
+,
+"en"
+:
+"Command to time"
+}
+}
+}
+,
+"log"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"wall-clock 计时（毫秒），输出命令返回码"
+,
+"en"
+:
+"Wall-clock timing (ms), outputs command return code"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x time log sleep 1"
+,
+"cn"
+:
+"wall-clock 计时，返回码"
+,
+"en"
+:
+"Wall-clock timing, return code"
+}
+]
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"要计时的命令"
+,
+"en"
+:
+"Command to time"
+}
+}
+}
+,
 "stress"
 :
 {
@@ -347,11 +537,11 @@ null
 {
 "cn"
 :
-"多次运行命令并输出完整统计。\n自动校准消除 shell 计时开销，batch10 模式优化微秒级命令精度。\n"
+"多次运行命令并输出完整统计。\n自动校准消除 shell 计时开销，batch10 模式优化微秒级命令精度。\n同时输出 CPU 时间统计（child_user/child_sys/shell_user/shell_sys 平均值）。\n"
 ,
 "en"
 :
-"Run a command multiple times with full statistics.\nAuto-calibration eliminates shell timing overhead; batch10 mode optimizes precision for microsecond-level commands.\n"
+"Run a command multiple times with full statistics.\nAuto-calibration eliminates shell timing overhead; batch10 mode optimizes precision for microsecond-level commands.\nAlso outputs CPU time statistics (child_user/child_sys/shell_user/shell_sys averages).\n"
 }
 ,
 "#tip"
@@ -395,6 +585,16 @@ null
 "en"
 :
 "offset is calibration overhead, already subtracted. Calibration runs automatically at session start."
+}
+,
+{
+"cn"
+:
+"CPU 时间输出: child_user_avg/child_sys_avg（子进程），shell_user_avg/shell_sys_avg（shell 本身）。"
+,
+"en"
+:
+"CPU time output: child_user_avg/child_sys_avg (child process), shell_user_avg/shell_sys_avg (shell itself)."
 }
 ]
 ,

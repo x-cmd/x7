@@ -20,14 +20,11 @@ ___x_cmd_version_build_deb_docker(){
     local version="$1"
     printf "%s\n" 'FROM debian:latest
 RUN useradd -m builder
-USER builder
 WORKDIR /home/builder' > ".build/debian-builder.Dockerfile"
 
     docker build -f ".build/debian-builder.Dockerfile" --tag debian-builder .
     docker run --rm -v "$PWD/.build/deb:/home/builder/debbuild" debian-builder sh -c '
     cd /home/builder/debbuild
-    chmod 755 x-cmd/DEBIAN/postinst
-    chmod 755 x-cmd/DEBIAN/postrm
     dpkg-deb --root-owner-group --build x-cmd || exit 1
 ' || return "$?"
     local distfp="$___X_CMD_VERSION_BUILD_DATA/release/${version}/deb"
@@ -99,6 +96,9 @@ post_remove() {
 
 post_remove
 ' > "$builddir/DEBIAN/postrm"
+
+    ___x_cmd_cmds chmod 755 "$builddir/DEBIAN/postinst"
+    ___x_cmd_cmds chmod 755 "$builddir/DEBIAN/postrm"
 }
 
 

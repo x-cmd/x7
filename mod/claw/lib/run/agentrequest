@@ -44,7 +44,17 @@ Quick Q&A (you know the answer immediately): reply directly.
 
 Tasks needing thinking/research/time: send a brief acknowledgement FIRST ('Got it, checking...' / 'On it.'), then continue working and send the real answer when ready.
 
-Do not repeat what you already said. If there is nothing new to add, stay silent."
+Do not repeat what you already said. If there is nothing new to add, stay silent.
+
+### Session Awareness
+
+If you do not remember previous turns with this user, read AGENTS.md first to find where the conversation context is stored. Then read those context files to understand what you and the user discussed before, so you can continue without repeating yourself or making wrong assumptions.
+
+### Duplicate Prevention
+
+Before sending any reply, scan today's memory/YYYY-MM-DD.md entries. Look at the \`Sent\` field in each entry — it tells you what you have already told the user. If you have already sent a substantially similar answer to this question, do not send it again. Instead:
+- If the user is re-asking: briefly reference your previous answer
+- If there is nothing new to add: stay silent"
 
     # Initialize workspace from template if first run
     if [ ! -d "$workspace_dir" ]; then
@@ -106,7 +116,7 @@ Guidelines:
                 "You have received a message from a user via WeChat.
 ${first_contact_prompt}
 
-IMPORTANT: Before using any \`x <mod>\` command, you MUST load x-cmd first: \`. ~/.x-cmd.root/X\`
+IMPORTANT: \`x\` is a POSIX shell function (not an external binary). Every new shell process (e.g., a fresh \`bash\` invocation) must load it first: \`. ~/.x-cmd.root/X\`. Without this step, \`x <mod>\` commands will fail with \"command not found\".
 
 REPLY METHOD:
 Use the command 'x weixin send' to reply:
@@ -156,7 +166,7 @@ ${first_contact_prompt}
 
 CURRENT CHAT ID: \"$chatid\" — you MUST include this in every reply command.
 
-IMPORTANT: Before using any \`x <mod>\` command, you MUST load x-cmd first: \`. ~/.x-cmd.root/X\`
+IMPORTANT: \`x\` is a POSIX shell function (not an external binary). Every new shell process (e.g., a fresh \`bash\` invocation) must load it first: \`. ~/.x-cmd.root/X\`. Without this step, \`x <mod>\` commands will fail with \"command not found\".
 
 REPLY METHOD:
 Use the command 'x telegram send' to reply:
@@ -195,6 +205,22 @@ $msg
 "
             ;;
         feishu)
+            local feishu_connect_prompt=""
+            case "$chatid" in
+                ou_*)
+                    feishu_connect_prompt="
+CLAW CONNECT — ADD MORE FEISHU GROUP CHATS:
+  Users typically start with a single chat with you, then may ask you to connect more Feishu group chats.
+  When a user asks to connect a group chat in Feishu, run:
+  - Connect a specific group: x claw connect feishu:oc_xxx
+    The user will provide the Group ID (oc_xxx) in the chat message.
+    List available groups and their IDs: x feishu group ls
+  - Connect all groups: x claw connect feishu:groups
+  - Disconnect a specific group: x claw disconnect feishu:oc_xxx
+  - Disconnect all groups: x claw disconnect feishu:groups
+  Note: Each group chat spawns an independent Agent session. Just run the connect command from this current single chat — no need to enter the group chat itself." ;;
+            esac
+
             ___x_cmd agent request  \
                 --timeout 1800 \
                 --debug \
@@ -205,7 +231,7 @@ ${first_contact_prompt}
 
 CURRENT CHAT ID: \"$chatid\" — you MUST include this in every reply command.
 
-IMPORTANT: Before using any \`x <mod>\` command, you MUST load x-cmd first: \`. ~/.x-cmd.root/X\`
+IMPORTANT: \`x\` is a POSIX shell function (not an external binary). Every new shell process (e.g., a fresh \`bash\` invocation) must load it first: \`. ~/.x-cmd.root/X\`. Without this step, \`x <mod>\` commands will fail with \"command not found\".
 
 REPLY METHOD:
 Use the command 'x feishu abot send' to reply:
@@ -236,17 +262,7 @@ LARK-CLI (Feishu Official CLI):
     * Create calendar:      lark-cli calendar create --title \"<title>\"
     * Create a task:        lark-cli tasks task create --content \"<content>\"
   - Run 'lark-cli --help' or 'lark-cli <command> --help' for more options.
-  - After creating, share the result with the user via: x feishu abot send --text --chatid \"$chatid\" '<result>'
-
-CLAW CONNECT — ADD MORE FEISHU GROUP CHATS:
-  Users typically start with a single chat with you, then may ask you to connect more Feishu group chats.
-  When a user asks to connect a group chat in Feishu, run:
-  - Connect a specific group: x claw connect feishu:oc_xxx
-    The user will provide the Group ID (oc_xxx) in the chat message.
-  - Connect all groups: x claw connect feishu:groups
-  - Disconnect a specific group: x claw disconnect feishu:oc_xxx
-  - Disconnect all groups: x claw disconnect feishu:groups
-  Note: Each group chat spawns an independent Agent session. Just run the connect command from this current single chat — no need to enter the group chat itself.
+  - After creating, share the result with the user via: x feishu abot send --text --chatid \"$chatid\" '<result>'${feishu_connect_prompt}
 
 CRON EXAMPLES:
   In claw context, ONLY x claw cron is allowed. Do NOT use:
@@ -277,7 +293,7 @@ ${first_contact_prompt}
 
 CURRENT CHAT ID: \"$chatid\" — you MUST include this in every reply command.
 
-IMPORTANT: Before using any \`x <mod>\` command, you MUST load x-cmd first: \`. ~/.x-cmd.root/X\`
+IMPORTANT: \`x\` is a POSIX shell function (not an external binary). Every new shell process (e.g., a fresh \`bash\` invocation) must load it first: \`. ~/.x-cmd.root/X\`. Without this step, \`x <mod>\` commands will fail with \"command not found\".
 
 REPLY METHOD:
 Use the command 'x qywx abot send' to reply:
@@ -404,6 +420,19 @@ ___x_cmd_claw_run___agentrequest___handleheartbeat(){
 
     local workspace_dir="$___X_CMD_CLAW_BOT_WS"
 
+    # Check long idle state and add HEARTBEAT_OK guidance if needed
+    local idle_count=0
+    local heartbeat_idle_prompt=""
+    local idle_file="$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
+    [ ! -f "$idle_file" ] || read -r idle_count < "$idle_file"
+    if [ "${idle_count:-0}" -ge 30 ]; then
+        heartbeat_idle_prompt="
+LONG IDLE DETECTED — HEARTBEAT_OK MECHANISM:
+This heartbeat was triggered after $idle_count minutes of inactivity. If you find there is genuinely nothing that requires the user's attention, you can silence further heartbeat agents by creating the marker file:
+  \`touch $___X_CMD_CLAW_BOT_WS/HEARTBEAT_OK\`
+This prevents unnecessary heartbeat wake-ups until the next user message arrives. Only do this if you are confident there are no pending tasks, reminders, or proactive insights to share."
+    fi
+
     # Initialize global workspace from heartbeat template if first run
     if [ ! -d "$workspace_dir" ]; then
         ___x_cmd cp -r "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/hb" "$workspace_dir"
@@ -441,7 +470,22 @@ Guidelines:
         --debug \
         --workspace "$workspace_dir"  \
         --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
-        "You are a heartbeat agent — a background process that wakes up periodically to check workspace state, review context, and surface anything worth the user's attention. Current time: '$(___x_cmd date iso)'.
+        "You are a heartbeat agent — a background process that wakes up periodically to check workspace state, review context, and surface anything worth the user's attention.
+
+CRITICAL — BEFORE DOING ANYTHING ELSE:
+Read your operational manual: $workspace_dir/AGENTS.md
+Follow the workflow and rules described there exactly.
+
+SESSION AWARENESS:
+If you do not remember previous turns with this user, read AGENTS.md first to find where the conversation context is stored. Then read those context files to understand what you and the user discussed before, so you can continue without repeating yourself or making wrong assumptions.
+
+You may proactively identify patterns, risks, or opportunities based on ACTUAL data you find in the workspace. Surprise the user with genuine insights.
+
+RED LINES:
+- NEVER fabricate. Every insight must be traceable to something you actually read.
+- NEVER ask the user about things they never mentioned.
+- NEVER greet the user or make small talk.
+- stdout is invisible. Use reply methods below.
 
 ACTIVE PLATFORMS:$active_platforms
 
@@ -455,8 +499,10 @@ FORMAT GUIDE:
 - Feishu: Full markdown support. Card messages need JSON; plain markdown works well.
 - When unsure or sending to multiple platforms, use plain text with lists and emoji.
 
-- Your workspace:             \"$workspace_dir\"
+Your workspace: \"$workspace_dir\"
+Current time: '$(___x_cmd date iso)'
 $check_prompt
+$heartbeat_idle_prompt
 "   || exitcode="$?"
 
     log:sub:fini
