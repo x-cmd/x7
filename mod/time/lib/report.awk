@@ -27,22 +27,30 @@ BEGIN{
     pair = times_idx % 2  # 0=shell line, 1=child line
 
     if(call == 0){
-        # init
+        # init: store as prev
         if(pair == 0){
-            init_shell_user = parse_time(a[1])
-            init_shell_sys = parse_time(a[2])
+            prev_shell_user = parse_time(a[1])
+            prev_shell_sys = parse_time(a[2])
         } else {
-            init_child_user = parse_time(a[1])
-            init_child_sys = parse_time(a[2])
+            prev_child_user = parse_time(a[1])
+            prev_child_sys = parse_time(a[2])
         }
     } else {
-        # accumulate
+        # compute delta
         if(pair == 0){
-            total_shell_user += parse_time(a[1])
-            total_shell_sys += parse_time(a[2])
+            curr_shell_user = parse_time(a[1])
+            curr_shell_sys = parse_time(a[2])
+            total_shell_user += curr_shell_user - prev_shell_user
+            total_shell_sys += curr_shell_sys - prev_shell_sys
+            prev_shell_user = curr_shell_user
+            prev_shell_sys = curr_shell_sys
         } else {
-            total_child_user += parse_time(a[1])
-            total_child_sys += parse_time(a[2])
+            curr_child_user = parse_time(a[1])
+            curr_child_sys = parse_time(a[2])
+            total_child_user += curr_child_user - prev_child_user
+            total_child_sys += curr_child_sys - prev_child_sys
+            prev_child_user = curr_child_user
+            prev_child_sys = curr_child_sys
         }
     }
     times_idx++

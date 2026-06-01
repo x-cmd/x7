@@ -109,16 +109,13 @@ ___x_cmd_time_log(){
     # Cleanup
     rm -f "$times_before_file" "$times_after_file"
 
-    printf "real:%dms\n" "$wall"
-    # cpu_info format: child_user:child_sys:shell_user:shell_sys (in seconds)
-    # Convert to ms in one awk call
-    local cpu_ms
-    cpu_ms="$(awk -F: '{print $1*1000, $2*1000, $3*1000, $4*1000}' <<EOF
-$cpu_info
-EOF
-)"
-    printf "real:%dms  user:%sms  sys:%sms  child_user:%sms  child_sys:%sms\n" \
-        "$wall" $cpu_ms
+    printf "real:%dms" "$wall"
+    if [ "$cpu_info" != "0.000:0.000:0.000:0.000" ]; then
+        local cpu_ms
+        cpu_ms="$(echo "$cpu_info" | awk -F: '{printf "%.0f %.0f %.0f %.0f", $1*1000, $2*1000, $3*1000, $4*1000}')"
+        printf "  user:%sms  sys:%sms  child_user:%sms  child_sys:%sms" $cpu_ms
+    fi
+    printf "\n"
     return $ret
 }
 
