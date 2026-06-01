@@ -20,7 +20,7 @@ ___x_cmd_agent___main(){
 
         skill)              ___x_cmd skill              "$@" ;;
 
-        run)                ___x_cmd_agent_run          "$@" ;;
+        run)                ___x_cmd_agent_job_run      "$@" ;;
         ps)                 ___x_cmd_agent_job_ps       "$@" ;;
 
         request|chat|job|session|\

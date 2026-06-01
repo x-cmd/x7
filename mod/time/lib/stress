@@ -54,7 +54,8 @@ ___x_cmd_time_stress(){
         if [ "$count" -gt 10 ]; then
             count="$((count / 10 * 10))"
         fi
-        time:debug --count "$count" --budge "$(( budget_ms / 1000 ))" "Automatically decide."
+        time:info --count "$count" --budget "$budget_ms" --single "$x_" \
+            "Automatically decide."
     fi
 
     local offset_avg0
@@ -100,20 +101,24 @@ ___x_cmd_time_stress(){
 
 ___x_cmd_time_stress___main1run(){
     local outputmode="$1" ; local count="$2" ;  shift 2
+    local cpu_data
+    cpu_data="$( ___x_cmd_time_stress___main_cpu_avg "$count" "$@")"
     ___X_CMD_TIME_OFFSET0="$offset_avg0" \
     ___X_CMD_TIME_OFFSET1="$offset_avg1" \
     ___X_CMD_TIME_OFFSET2="$offset_avg2" \
+    ___X_CMD_TIME_CPU_DATA="$cpu_data" \
         ___x_cmd_time_stress___main "$outputmode" "$count" "$@"
-    ___x_cmd_time_stress___main_cpu_avg "$count" "$@"
 }
 
 ___x_cmd_time_stress___main1run10(){
     local outputmode="$1" ; local count="$2" ;  shift 2
+    local cpu_data
+    cpu_data="$( ___x_cmd_time_stress___main_cpu_avg "$count" "$@")"
     ___X_CMD_TIME_OFFSET0="$offset_avg0" \
     ___X_CMD_TIME_OFFSET1="$offset_avg1" \
     ___X_CMD_TIME_OFFSET2="$offset_avg2" \
+    ___X_CMD_TIME_CPU_DATA="$cpu_data" \
         ___x_cmd_time_stress___main10 "$outputmode" "$count" "$@"
-    ___x_cmd_time_stress___main_cpu_avg "$count" "$@"
 }
 
 ___x_cmd_time_stress___main(){
@@ -121,11 +126,13 @@ ___x_cmd_time_stress___main(){
     local x_
     (
         ___x_cmd_epoch_real_; printf "%s\n" "$x_"
+        times
 
         local i=1
         while [ "$i" -le "$count" ]; do
             "$@" 1>/dev/null 2>/dev/null
             ___x_cmd_epoch_real_; printf "%s\n" "$x_"
+            times
             i=$((i+1))
         done
     ) | {
@@ -136,76 +143,56 @@ ___x_cmd_time_stress___main(){
 ___x_cmd_time_stress___main_cpu_avg(){
     # Compute CPU time averages for the command
     local count="$1" ; shift
-    local times_before_file="${TMPDIR:-/tmp}/time_cpu_before.$$"
-    local times_after_file="${TMPDIR:-/tmp}/time_cpu_after.$$"
-    local child_user_sum=0 child_sys_sum=0 shell_user_sum=0 shell_sys_sum=0
+    local times_file="${TMPDIR:-/tmp}/time_cpu.$$"
 
-    times >/dev/null 2>&1  # warm up times
-    times > "$times_before_file"
+    times >/dev/null 2>&1  # warm up
+    times > "$times_file"
 
     local i=1
     while [ "$i" -le "$count" ]; do
         "$@" 1>/dev/null 2>/dev/null
-        times > "$times_after_file"
-
-        # Parse CPU times and accumulate
-        local result
-        result="$(cat "$times_before_file" "$times_after_file" | ___x_cmd_cmds awk '{
-            for(i=1;i<=2;i++){
-                split($i, a, "m")
-                gsub(/s/, "", a[2])
-                split(a[2], b, ".")
-                dec_len = length(b[2])
-                dec_part = b[2] + 0
-                if(dec_len < 6){
-                    dec_part = dec_part * (10^(6 - dec_len))
-                } else if(dec_len > 6){
-                    dec_part = substr(b[2], 1, 6) + 0
-                }
-                val = a[1] * 60 + b[1] + dec_part / 1000000
-                if(NR==1){
-                    if(i==1) before_shell_user=val
-                    else before_shell_sys=val
-                }
-                if(NR==2){
-                    if(i==1) before_child_user=val
-                    else before_child_sys=val
-                }
-                if(NR==3){
-                    if(i==1) after_shell_user=val
-                    else after_shell_sys=val
-                }
-                if(NR==4){
-                    if(i==1) after_child_user=val
-                    else after_child_sys=val
-                }
-            }
-        }
-        END{
-            printf "%.6f:%.6f:%.6f:%.6f\n", after_child_user-before_child_user, after_child_sys-before_child_sys, after_shell_user-before_shell_user, after_shell_sys-before_shell_sys
-        }')"
-
-        # Move after to before for next iteration
-        cat "$times_after_file" > "$times_before_file"
-
-        # Accumulate using awk for precision
-        child_user_sum="$(awk "BEGIN{print $child_user_sum + ${result%%:*}}")"
-        result="${result#*:}"
-        child_sys_sum="$(awk "BEGIN{print $child_sys_sum + ${result%%:*}}")"
-        result="${result#*:}"
-        shell_user_sum="$(awk "BEGIN{print $shell_user_sum + ${result%%:*}}")"
-        result="${result#*:}"
-        shell_sys_sum="$(awk "BEGIN{print $shell_sys_sum + ${result##*:}}")"
-
+        times >> "$times_file"
         i=$((i+1))
     done
 
-    rm -f "$times_before_file" "$times_after_file"
+    # Parse times file: each iteration has 2 lines before, 2 lines after
+    # Lines 1,2: before (shell_user, shell_sys, child_user, child_sys)
+    # Lines 3,4: after
+    # We accumulate the after values, then subtract initial before values
+    awk -v c="$count" '{
+        split($1, a, "m")
+        gsub(/s/, "", a[2])
+        split(a[2], b, ".")
+        dec_len = length(b[2])
+        dec_part = b[2] + 0
+        if(dec_len < 6){
+            dec_part = dec_part * (10^(6 - dec_len))
+        } else if(dec_len > 6){
+            dec_part = substr(b[2], 1, 6) + 0
+        }
+        val = a[1] * 60 + b[1] + dec_part / 1000000
 
-    # Output averages
-    awk -v cu="$child_user_sum" -v cs="$child_sys_sum" -v su="$shell_user_sum" -v ss="$shell_sys_sum" -v c="$count" 'BEGIN{
-        printf "child_user_avg:%.3f  child_sys_avg:%.3f  shell_user_avg:%.3f  shell_sys_avg:%.3f\n", cu/c, cs/c, su/c, ss/c
-    }'
+        # Row 1 = shell_user before, row 2 = shell_sys before, row 3 = child_user after, row 4 = child_sys after
+        # After 4*c lines, we have c iterations
+        if(NR <= 4){
+            init[NR] = val
+        }
+        total[NR % 4] += val
+    }
+    END{
+        # total[1] = sum of shell_user after
+        # total[2] = sum of shell_sys after
+        # total[3] = sum of child_user after
+        # total[4] = sum of child_sys after
+        # init[1], init[2], init[3], init[4] = initial before values
+        child_user = (total[3] - init[3]) / c
+        child_sys = (total[4] - init[4]) / c
+        shell_user = (total[1] - init[1]) / c
+        shell_sys = (total[2] - init[2]) / c
+        printf "cpu_avg:%.3f:%.3f:%.3f:%.3f\n", child_user, child_sys, shell_user, shell_sys
+    }' "$times_file"
+
+    rm -f "$times_file"
 }
 
 ___x_cmd_time_stress___main_est(){

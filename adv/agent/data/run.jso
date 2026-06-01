@@ -5,6 +5,16 @@
 {
 "cn"
 :
+"快捷别名：`x agent run` 是 `x agent job run` 的快捷形式，两者完全等价"
+,
+"en"
+:
+"Shortcut alias: `x agent run` is a shortcut for `x agent job run`, fully equivalent"
+}
+,
+{
+"cn"
+:
 "run vs exec 的区别：\n- run: 需要 agent.md 配置文件，适合标准化、可复用的工作流\n- exec: 直接描述需求，适合一次性、探索性的任务\nrun 支持 exec 的所有参数（--harness, --max-iterations 等）\n"
 ,
 "en"
@@ -53,6 +63,12 @@
 :
 "Auto-confirm dangerous operations without human confirmation"
 }
+,
+"#tag"
+:
+[
+"todo"
+]
 }
 ,
 "--skill"
@@ -257,6 +273,12 @@ true
 :
 "Auto mode (AI makes autonomous decisions, default)"
 }
+,
+"#tag"
+:
+[
+"todo"
+]
 }
 ,
 "-b|--batch"
@@ -273,6 +295,12 @@ true
 :
 "Batch mode (non-interactive, suitable for CI/CD)"
 }
+,
+"#tag"
+:
+[
+"todo"
+]
 }
 ,
 "--harness"

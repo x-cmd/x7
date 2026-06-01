@@ -487,11 +487,11 @@
 {
 "cn"
 :
-"[别名] 等同于 `x agent run`。\n使用预定义 agent 配置运行任务，自动构建提示词并执行。\n"
+"使用预定义 agent 配置运行任务，自动构建提示词并执行。"
 ,
 "en"
 :
-"[Alias] Equivalent to `x agent run`.\nRun task using predefined agent config, auto-build prompt and execute.\n"
+"Run task using predefined agent config, auto-build prompt and execute."
 }
 ,
 "#synopsis"
@@ -506,11 +506,11 @@
 {
 "cn"
 :
-"完整参数和用例请参见 `x agent run --help`"
+"快捷别名：`x agent run` 等同于 `x agent job run`\n完整参数和用例请参见 `x agent run --help`"
 ,
 "en"
 :
-"See `x agent run --help` for full parameters and examples"
+"Shortcut alias: `x agent run` is equivalent to `x agent job run`\nSee `x agent run --help` for full parameters and examples"
 }
 ]
 }

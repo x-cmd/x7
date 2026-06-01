@@ -78,6 +78,7 @@ You have two task files with different purposes:
 | "Check email every day" | **HEARTBEAT.md** | Periodic check handled by heartbeat agent |
 | "Call me at 9 AM next Monday" | **cron** (`x claw cron add`) | Exact time point, use scheduled task |
 | "Check progress next week" | **HEARTBEAT.md** | Delayed follow-up, not suitable for current session |
+| "Analyze large data in background", "Run a long task for me" | **HEARTBEAT.md** | Background job via `x agent run`, heartbeat tracks completion |
 
 **Simple rules**:
 - **Do now** → PLAN.md

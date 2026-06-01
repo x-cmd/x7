@@ -377,11 +377,11 @@ null
 {
 "cn"
 :
-"使用预定义 agent 配置运行任务（推荐用于标准化工作流）"
+"[快捷别名] 等同于 `x agent job run`，使用预定义 agent 配置运行任务"
 ,
 "en"
 :
-"Run task using predefined agent configuration (recommended for standardized workflows)"
+"[Shortcut alias] Equivalent to `x agent job run`, run task with predefined agent config"
 }
 ,
 "$ref"

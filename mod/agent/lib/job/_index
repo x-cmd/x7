@@ -22,9 +22,8 @@ ___x_cmd_agent_job(){
 
     local op="$1"
     case "$op" in
-        ls|status|stop)
-                    shift; ___x_cmd_agent_job_"$op" "$@"      ;;
-        run)        shift; ___x_cmd_agent_run "$@"             ;;
+        ls|status|run|stop)
+                    shift; ___x_cmd_agent_job_"$op" "$@"        ;;
         -h|--help)  ___x_cmd help -m agent job; return 0        ;;
         *)          N=agent M="Unknown operation" log:ret:64    ;;
     esac

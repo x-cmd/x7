@@ -110,17 +110,15 @@ ___x_cmd_time_log(){
     rm -f "$times_before_file" "$times_after_file"
 
     printf "real:%dms\n" "$wall"
-    # cpu_info format: child_user:child_sys:shell_user:shell_sys
-    # Parse it for proper display
-    local child_user child_sys shell_user shell_sys rest
-    child_user="${cpu_info%%:*}"
-    rest="${cpu_info#*:}"
-    child_sys="${rest%%:*}"
-    rest="${rest#*:}"
-    shell_user="${rest%%:*}"
-    shell_sys="${rest##*:}"
-    printf "real:%dms  user:%.3fs  sys:%.3fs  child_user:%.3fs  child_sys:%.3fs\n" \
-        "$wall" "$child_user" "$child_sys" "$shell_user" "$shell_sys"
+    # cpu_info format: child_user:child_sys:shell_user:shell_sys (in seconds)
+    # Convert to ms in one awk call
+    local cpu_ms
+    cpu_ms="$(awk -F: '{print $1*1000, $2*1000, $3*1000, $4*1000}' <<EOF
+$cpu_info
+EOF
+)"
+    printf "real:%dms  user:%sms  sys:%sms  child_user:%sms  child_sys:%sms\n" \
+        "$wall" $cpu_ms
     return $ret
 }
 

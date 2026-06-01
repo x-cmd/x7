@@ -8,6 +8,15 @@
 
 ## In Progress
 
+- **Background Job**: `weixin-user123-loganalysis`
+  - **Display Name**: 日志异常分析
+  - **IM**: weixin
+  - **Chat ID**: user123
+  - **Task**: Analyze last 7 days logs for ERROR patterns
+  - **Created**: 2026-06-01 15:30
+  - **Check command**: `x agent job status --job-id weixin-user123-loganalysis --yml`
+  - **Notify command**: `x claw agentrequest weixin user123 '<summary>'`
+
 -
 
 ## Completed
