@@ -1,6 +1,6 @@
 548d06daf523026531069d978f8f074fe4532f19 abox main NULL
 43d3d2aeede1ec8d45edc7d9d83044d028d2c3aa advise main NULL
-b185ea6b17e155542940dc50eda37dc985abdebb agent main NULL
+4a4bdcf481f7afa5ea77212847a146c5e05c081f agent main NULL
 94eb1cb39d13a2ebcddf07a44b8cf63e7ac687cc aider main NULL
 2abe9fc103abe6597b599c5245efc148c44ee948 alias main NULL
 c8dd6182f3d400215d7292cbfe9c65b73722ab7d api main NULL
@@ -41,7 +41,7 @@ e2bf25de5ee25c3d31081df2bd515fc9e03be156 chat main NULL
 7d81d56bc7c05a11c26e169a2ac8521502810560 choco main NULL
 437d6bacd65476c80cbc41b2197d69307b8e5f82 cht main NULL
 ba53a05c450e6cba56b646cc831cc39a2364d066 claude main NULL
-81f435185a0133438491667b6b8bd248a2f230b3 claw main NULL
+e62a975e50ffdc9ca614594b042c68f55af34ef5 claw main NULL
 4ecbaed5a6c15b0af5b2b2004819e10ad52a69cb clawhub main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
 bbf9eb7a630da0d2f607edaf1589df0ddfc9a8ae clear main NULL
@@ -315,7 +315,7 @@ f56a86c9d0bf615f5e618fa50af499a4ab52a2e7 ssh main NULL
 a055e57e4cfb647cc941441983cf2907b4507540 starship main NULL
 24696fac5869c7853cd0878618c69233b61f1633 stat main NULL
 858a2b376642f87316d762f39c04bebd2402777d str main NULL
-d2efd3d7c5afdf12eb99929dff1bb2870745b8c8 sudo main NULL
+daa74d8104b2913ac8356be019ca64ca3149b093 sudo main NULL
 a9bc819087f0a909e0f428747c76eec8e749cdae sysctl main NULL
 52857eb227221c6b3317d0203ad64c4ce4e25f86 ta main NULL
 6bf8ff81bf52e7179672c5fa96e5095df2c49316 tailer main NULL
@@ -329,7 +329,7 @@ ab8e27ad6a09152549ebb497ca6487fdcd469c0a task main NULL
 846b8c87a56c41b8fc5ff7cac815af05c86ac294 term main NULL
 37b875e6636c93d2f013a5b00c6e7f1ef5719dd2 termux main NULL
 c1514da82d4aa4c034d817fc7c9963e8bf8aa7a1 theme main NULL
-772593ab5efb5fe88cbc26bc10e5aa8710a575d0 time main NULL
+3f5d588376f7cf2c5f8dd2d1599e350abb0cd02d time main NULL
 49b16bf7205afc49a5a3628be130d696fdedfc15 timeout main NULL
 0bf6573b333cb0a918f5a3be440df7318afc46c5 tldr main NULL
 3c7846a9ce243b7e4cd21c6a05537220865bb27f tlfz main NULL

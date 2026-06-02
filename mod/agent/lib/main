@@ -16,7 +16,7 @@ ___x_cmd_agent___main(){
 
         --setup|setup)      ___x_cmd_agent_setup        "$@" ;;
         --is-setup)         ___x_cmd_agent_is_setup     "$@" ;;
-        --cfg|--cur)        ___x_cmd_agent_"${op#--}"   "$@" ;;
+        --cfg|--cur|init)   ___x_cmd_agent_"${op#--}"   "$@" ;;
 
         skill)              ___x_cmd skill              "$@" ;;
 

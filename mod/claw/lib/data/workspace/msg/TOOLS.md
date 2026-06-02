@@ -26,8 +26,8 @@ Use x-cmd skill to access 300+ shell utilities, 1000+ packages—all without sud
 **Rule of thumb**: Multi-step tasks, data analysis, research, or anything estimated >2 minutes.
 
 - `x agent run --job-id "<id>" --max-iterations <n> "<task>"`: Create and start an async job. The AI auto-generates a PLAN.md and iterates until done or max iterations reached.
-- `x agent job status --job-id "<id>" --yml`: Check progress, iteration count, and whether the job is active/completed (YAML output for parsing).
-- `x agent job ls --active --yml`: List all active jobs.
+- `x agent job status --job-id "<id>" --llms`: Check progress, iteration count, and whether the job is active/completed (YAML output for parsing).
+- `x agent job ls --active --llms`: List all active jobs.
 - `x agent job stop --job-id "<id>"`: Stop the background process.
 
 **Job ID convention**: Use `<im>-<chatid>-<brief>` for traceability, e.g., `weixin-user123-loganalysis`.

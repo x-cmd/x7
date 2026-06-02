@@ -78,6 +78,12 @@ ___x_cmd_agent_job_exec(){
         ___X_CMD_AGENT_JOB_RECENT="$jobdir"
     fi
 
+    local x_=""
+    if [ -z "$harness" ]; then
+        x_=""; ___x_cmd_agent_harness_
+        harness="$x_"
+    fi
+
     ___x_cmd_agent_job___init "$jobdir" || return $?
     ___x_cmd_agent_job___iter "$jobdir"
 }

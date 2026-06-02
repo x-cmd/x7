@@ -136,20 +136,22 @@ END{
         child_sys = (total_child_sys / n) * 1000
         shell_user = (total_shell_user / n) * 1000
         shell_sys = (total_shell_sys / n) * 1000
+        user = child_user + shell_user
+        sys = child_sys + shell_sys
     }
 
     if (output == "avg") {
         printf "%9.3f\n", avg
     } else if (output == "csv") {
-        printf "count,sum,offset,min,max,second,third,avg,median,stddev,child_user,child_sys,shell_user,shell_sys\n"
-        printf "%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f\n", count, sum, CALIBRATION_OFFSET, min, max, second, third, avg, median, stddev, child_user, child_sys, shell_user, shell_sys
+        printf "count,sum,offset,min,max,second,third,avg,median,stddev,child_user,child_sys,shell_user,shell_sys,user,sys\n"
+        printf "%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f\n", count, sum, CALIBRATION_OFFSET, min, max, second, third, avg, median, stddev, child_user, child_sys, shell_user, shell_sys, user, sys
     } else if (output == "csv0") {
-        printf "%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f\n", count, sum, CALIBRATION_OFFSET, min, max, second, third, avg, median, stddev, child_user, child_sys, shell_user, shell_sys
+        printf "%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f\n", count, sum, CALIBRATION_OFFSET, min, max, second, third, avg, median, stddev, child_user, child_sys, shell_user, shell_sys, user, sys
     } else if (output == "tsv") {
-        printf "count\tsum\toffset\tmin\tmax\tsecond\tthird\tavg\tmedian\tstddev\tchild_user\tchild_sys\tshell_user\tshell_sys\n"
-        printf "%d\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\n", count, sum, CALIBRATION_OFFSET, min, max, second, third, avg, median, stddev, child_user, child_sys, shell_user, shell_sys
+        printf "count\tsum\toffset\tmin\tmax\tsecond\tthird\tavg\tmedian\tstddev\tchild_user\tchild_sys\tshell_user\tshell_sys\tuser\tsys\n"
+        printf "%d\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\n", count, sum, CALIBRATION_OFFSET, min, max, second, third, avg, median, stddev, child_user, child_sys, shell_user, shell_sys, user, sys
     } else if (output == "tsv0") {
-        printf "%d\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\n", count, sum, CALIBRATION_OFFSET, min, max, second, third, avg, median, stddev, child_user, child_sys, shell_user, shell_sys
+        printf "%d\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\t%.3f\n", count, sum, CALIBRATION_OFFSET, min, max, second, third, avg, median, stddev, child_user, child_sys, shell_user, shell_sys, user, sys
     } else if (output == "yml") {
         printf "count: %d\n", count
         printf "sum: %.3f\n", sum
@@ -165,6 +167,8 @@ END{
         printf "child_sys: %.3f\n", child_sys
         printf "shell_user: %.3f\n", shell_user
         printf "shell_sys: %.3f\n", shell_sys
+        printf "user: %.3f\n", user
+        printf "sys: %.3f\n", sys
     } else {
         printf "count:   %9d\n", count
         printf "total:   %9.3f ms\n", sum
@@ -176,9 +180,11 @@ END{
         printf "avg:     %9.3f ms\n", avg
         printf "median:  %9.3f ms\n", median
         printf "stddev:  %9.3f ms\n", stddev
-        printf "child_user: %.3f s\n", child_user
-        printf "child_sys: %.3f s\n", child_sys
-        printf "shell_user: %.3f s\n", shell_user
-        printf "shell_sys: %.3f s\n", shell_sys
+        printf "child_user: %.3f ms\n", child_user
+        printf "child_sys: %.3f ms\n", child_sys
+        printf "shell_user: %.3f ms\n", shell_user
+        printf "shell_sys: %.3f ms\n", shell_sys
+        printf "user: %.3f ms\n", user
+        printf "sys: %.3f ms\n", sys
     }
 }

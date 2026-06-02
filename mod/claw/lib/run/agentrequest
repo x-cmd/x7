@@ -151,8 +151,8 @@ BACKGROUND JOBS:
   Use \`x agent run\` when a user asks for complex or long-running tasks.
   The job runs asynchronously in the background — the user can keep chatting.
 
-- x agent job ls --active --yml
-- x agent job status --job-id \"<id>\" --yml
+- x agent job ls --active --llms
+- x agent job status --job-id \"<id>\" --llms
 - x agent job stop --job-id \"<id>\"
 
 Creating a job:
@@ -177,13 +177,13 @@ When you create a job:
      - **Chat ID**: <chatid>
      - **Task**: <brief description>
      - **Created**: <timestamp>
-     - **Check command**: \`x agent job status --job-id <job-id> --yml\`
+     - **Check command**: \`x agent job status --job-id <job-id> --llms\`
      - **Notify command**: \`x claw agentrequest <im> <chatid> '<summary>'\`
   3. Immediately tell the user: \"已为您启动后台任务，预计需要几分钟。您可以继续聊天，完成后我会通知您。\"
   4. Do NOT wait for completion in the current reply.
 
 Checking job completion:
-  - Heartbeat will periodically run: x agent job status --job-id \"<id>\" --yml
+  - Heartbeat will periodically run: x agent job status --job-id \"<id>\" --llms
   - Read the output to determine if the job is done, failed, or still running.
   - When done, notify the user with a summary of results via:
     x claw agentrequest weixin <chatid> '<summary>'
@@ -242,8 +242,8 @@ BACKGROUND JOBS:
   Use \`x agent run\` when a user asks for complex or long-running tasks.
   The job runs asynchronously in the background — the user can keep chatting.
 
-- x agent job ls --active --yml
-- x agent job status --job-id \"<id>\" --yml
+- x agent job ls --active --llms
+- x agent job status --job-id \"<id>\" --llms
 - x agent job stop --job-id \"<id>\"
 
 Creating a job:
@@ -268,13 +268,13 @@ When you create a job:
      - **Chat ID**: <chatid>
      - **Task**: <brief description>
      - **Created**: <timestamp>
-     - **Check command**: \`x agent job status --job-id <job-id> --yml\`
+     - **Check command**: \`x agent job status --job-id <job-id> --llms\`
      - **Notify command**: \`x claw agentrequest <im> <chatid> '<summary>'\`
   3. Immediately tell the user: \"已为您启动后台任务，预计需要几分钟。您可以继续聊天，完成后我会通知您。\"
   4. Do NOT wait for completion in the current reply.
 
 Checking job completion:
-  - Heartbeat will periodically run: x agent job status --job-id \"<id>\" --yml
+  - Heartbeat will periodically run: x agent job status --job-id \"<id>\" --llms
   - Read the output to determine if the job is done, failed, or still running.
   - When done, notify the user with a summary of results via:
     x claw agentrequest telegram <chatid> '<summary>'
@@ -361,8 +361,8 @@ BACKGROUND JOBS:
   Use \`x agent run\` when a user asks for complex or long-running tasks.
   The job runs asynchronously in the background — the user can keep chatting.
 
-- x agent job ls --active --yml
-- x agent job status --job-id \"<id>\" --yml
+- x agent job ls --active --llms
+- x agent job status --job-id \"<id>\" --llms
 - x agent job stop --job-id \"<id>\"
 
 Creating a job:
@@ -387,13 +387,13 @@ When you create a job:
      - **Chat ID**: <chatid>
      - **Task**: <brief description>
      - **Created**: <timestamp>
-     - **Check command**: \`x agent job status --job-id <job-id> --yml\`
+     - **Check command**: \`x agent job status --job-id <job-id> --llms\`
      - **Notify command**: \`x claw agentrequest <im> <chatid> '<summary>'\`
   3. Immediately tell the user: \"已为您启动后台任务，预计需要几分钟。您可以继续聊天，完成后我会通知您。\"
   4. Do NOT wait for completion in the current reply.
 
 Checking job completion:
-  - Heartbeat will periodically run: x agent job status --job-id \"<id>\" --yml
+  - Heartbeat will periodically run: x agent job status --job-id \"<id>\" --llms
   - Read the output to determine if the job is done, failed, or still running.
   - When done, notify the user with a summary of results via:
     x claw agentrequest feishu <chatid> '<summary>'
@@ -451,8 +451,8 @@ BACKGROUND JOBS:
   Use \`x agent run\` when a user asks for complex or long-running tasks.
   The job runs asynchronously in the background — the user can keep chatting.
 
-- x agent job ls --active --yml
-- x agent job status --job-id \"<id>\" --yml
+- x agent job ls --active --llms
+- x agent job status --job-id \"<id>\" --llms
 - x agent job stop --job-id \"<id>\"
 
 Creating a job:
@@ -477,13 +477,13 @@ When you create a job:
      - **Chat ID**: <chatid>
      - **Task**: <brief description>
      - **Created**: <timestamp>
-     - **Check command**: \`x agent job status --job-id <job-id> --yml\`
+     - **Check command**: \`x agent job status --job-id <job-id> --llms\`
      - **Notify command**: \`x claw agentrequest <im> <chatid> '<summary>'\`
   3. Immediately tell the user: \"已为您启动后台任务，预计需要几分钟。您可以继续聊天，完成后我会通知您。\"
   4. Do NOT wait for completion in the current reply.
 
 Checking job completion:
-  - Heartbeat will periodically run: x agent job status --job-id \"<id>\" --yml
+  - Heartbeat will periodically run: x agent job status --job-id \"<id>\" --llms
   - Read the output to determine if the job is done, failed, or still running.
   - When done, notify the user with a summary of results via:
     x claw agentrequest qywx <chatid> '<summary>'

@@ -18,6 +18,7 @@ ___x_cmd_agent_job_status(){
             --job-dir)      jobdir="$2" ; shift 2 ;;
             --job-id)       jobid="$2" ; shift 2 ;;
             --yml)          format="yml" ; shift ;;
+            --llms)         format="llms" ; shift ;;
             --)             shift; break ;;
             -*)             N=agent M="Unknown option: $1" log:ret:64 ;;
             *)              [ -z "$jobdir" ] && jobdir="$1"; shift ;;
@@ -26,7 +27,7 @@ ___x_cmd_agent_job_status(){
 
 
     if ! ___x_cmd_is_stdout2tty || ! ___x_cmd_runmode_allow_manual ; then
-        format="yml"
+        [ "$format" = "llms" ] || format="yml"
     fi
 
     if [ -n "$jobid" ]; then
@@ -100,6 +101,11 @@ ___x_cmd_agent_job_status___render(){
 
     if [ "$format" = "yml" ]; then
         ___x_cmd_agent_job_status___render_yml "$job_path" "$job_id"
+        return
+    fi
+
+    if [ "$format" = "llms" ]; then
+        ___x_cmd_agent_job_status___render_llms "$job_path" "$job_id"
         return
     fi
 
@@ -258,6 +264,116 @@ ___x_cmd_agent_job_status___render_yml(){
     done 2>/dev/null
     if [ "$resp_count" -eq 0 ]; then
         printf '  - "(none)"\n'
+    fi
+}
+
+# Render job status in LLM-optimized format
+# Preamble reading guide + YAML data + DONE.md content (if completed)
+___x_cmd_agent_job_status___render_llms(){
+    local job_path="$1"
+    local job_id="$2"
+
+    # --- Preamble: LLM Reading Guide ---
+    printf '# LLM Job Status Report: %s\n\n' "$job_id"
+    printf 'You are analyzing an x-cmd agent job status log.\n'
+    printf 'Read this report in the following priority order:\n\n'
+    printf '1. status + running      -> Is the job alive, completed, or interrupted?\n'
+    printf '2. ai.exit_signal        -> Did the AI explicitly signal stop/continue?\n'
+    printf '3. ai.recommendation     -> The AI assessment of next steps\n'
+    printf '4. progress + todo       -> Quantitative remaining work\n'
+    printf '5. If status=completed:  -> Read the "done_content" section below for final results\n'
+    printf '6. If status=active:     -> Check the "latest_response" file for current context\n'
+    printf '7. response_files        -> Chronological execution history\n\n'
+    printf 'Decision hints:\n'
+    printf -- '- active + running=true  -> Job is executing, monitor or wait\n'
+    printf -- '- active + running=false -> Job interrupted, consider resume\n'
+    printf -- '- completed              -> Review done_content, no further action needed\n'
+    printf -- '- ai.exit_signal != false-> AI signaled completion, check recommendation\n'
+    printf '\n---\n\n'
+
+    # --- YAML Structured Data ---
+    printf 'job: "%s"\n' "$job_id"
+    printf 'jobdir: "%s"\n' "$job_path"
+    printf 'status: "%s"\n' "$p_status"
+
+    local running_text="false"
+    if ___x_cmd worker isalive --ns 'x-agent-job' --name "$job_id" >/dev/null 2>&1; then
+        running_text="true"
+    fi
+    printf 'running: %s\n' "$running_text"
+
+    printf 'progress:\n'
+    printf '  percent: %d\n' "$p_progress"
+    if [ "$p_todo_done" != "0" ] || [ "$p_todo_remaining" != "0" ]; then
+        local total=$((p_todo_done + p_todo_remaining))
+        printf '  todo: "%d/%d done (%d remaining)"\n' "$p_todo_done" "$total" "$p_todo_remaining"
+    fi
+
+    printf 'iteration: "%s/%s"\n' "$p_iter" "$p_max_iter"
+    printf 'harness: "%s"\n' "$p_harness"
+
+    if [ -n "$p_ai_status" ]; then
+        printf 'ai:\n'
+        printf '  status: "%s"\n' "$p_ai_status"
+        if [ -n "$p_work_type" ]; then
+            printf '  work_type: "%s"\n' "$p_work_type"
+        fi
+        printf '  exit_signal: "%s"\n' "$p_exit_signal"
+        if [ -n "$p_recommendation" ]; then
+            printf '  recommendation: "%s"\n' "$p_recommendation"
+        fi
+    fi
+
+    printf 'stats:\n'
+    printf '  files_modified: %d\n' "$p_files_modified"
+    printf '  tests_status: "%s"\n' "$p_tests_status"
+    printf '  response_count: %d\n' "$p_response_count"
+
+    printf 'time:\n'
+    printf '  created: "%s"\n' "$p_time_formatted"
+    if [ -n "$p_updated_at" ]; then
+        local rel_time=""
+        rel_time="$(___x_cmd_agent_job_status___relative_time "$p_updated_at")"
+        printf '  updated: "%s"\n' "$rel_time"
+    fi
+
+    printf 'description: "%s"\n' "$p_desc"
+
+    printf 'core_files:\n'
+    local has_file=0
+    for f in AGENTS.md DESC.md PLAN.md DONE.md status.yml; do
+        if [ -f "$job_path/$f" ]; then
+            printf '  - "%s"\n' "$f"
+            has_file=1
+        fi
+    done
+    if [ "$has_file" -eq 0 ]; then
+        printf '  - "(none)"\n'
+    fi
+
+    printf 'response_files:\n'
+    local resp_count=0
+    local latest_response=""
+    for f in "$job_path"/*.response.md; do
+        [ -f "$f" ] || continue
+        printf '  - "%s"\n' "${f##*/}"
+        latest_response="${f##*/}"
+        resp_count=$((resp_count + 1))
+    done 2>/dev/null
+    if [ "$resp_count" -eq 0 ]; then
+        printf '  - "(none)"\n'
+    fi
+
+    if [ -n "$latest_response" ]; then
+        printf 'latest_response: "%s"\n' "$latest_response"
+    fi
+
+    # --- DONE.md Content (if completed) ---
+    if [ "$p_status" = "completed" ] && [ -f "$job_path/DONE.md" ]; then
+        printf '\n---\n\n'
+        printf '## done_content\n\n'
+        ___x_cmd_cmds cat "$job_path/DONE.md"
+        printf '\n'
     fi
 }
 

@@ -106,6 +106,8 @@ null
 "#subcmd:Setup"
 :
 [
+"init"
+,
 "setup"
 ,
 "unify"
@@ -130,6 +132,20 @@ null
 "#tldr"
 :
 [
+{
+"cmd"
+:
+"x agent init"
+,
+"cn"
+:
+"示例: 初始化并选择默认 AI 工具"
+,
+"en"
+:
+"Example: Initialize and select default AI tool"
+}
+,
 {
 "cmd"
 :
@@ -247,6 +263,26 @@ null
 :
 "https://x-cmd.com"
 }
+}
+,
+"init"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"初始化 agent 配置，交互式选择并设置默认 AI 工具"
+,
+"en"
+:
+"Initialize agent config, interactively select and set default AI tool"
+}
+,
+"$ref"
+:
+"x-advise://agent/data/init.jso"
 }
 ,
 "setup"

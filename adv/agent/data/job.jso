@@ -402,6 +402,22 @@
 }
 }
 ,
+"--llms"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"LLM 优化输出（前置阅读指南 + YAML 数据 + 自动嵌入 DONE.md 内容）"
+,
+"en"
+:
+"LLM-optimized output (reading guide + YAML data + auto-embedded DONE.md)"
+}
+}
+,
 "#1"
 :
 {
@@ -475,6 +491,20 @@
 "en"
 :
 "Example: Get status and summarize via AI"
+}
+,
+{
+"cmd"
+:
+"x agent job status --llms"
+,
+"cn"
+:
+"示例: LLM 优化格式输出（含阅读指南和 DONE.md 内容）"
+,
+"en"
+:
+"Example: LLM-optimized format with reading guide and DONE.md content"
 }
 ]
 }

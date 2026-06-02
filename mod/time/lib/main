@@ -4,7 +4,7 @@ ___x_cmd log init time
 
 xrc epoch
 
-xrc:mod:lib     time        util stress cmp
+xrc:mod:lib     time        util stress log cmp
 
 ___x_cmd_time___main(){
     [ "$#" -gt 0 ] ||   set -- --help
@@ -17,107 +17,12 @@ ___x_cmd_time___main(){
         getms|getms_|getreal|getreal_|getrealms|getrealms_)
                         ___x_cmd_time_"${op}"       "$@" ;;
 
-        --)             ___x_cmd_time_getreal   "$@" ;;
-        -*)             ___x_cmd_time_stress    "$op" "$@" ;;
-        *)              ___x_cmd_time_getreal   "$op" "$@" ;;
+        --)             ___x_cmd_time_log           "$@" ;;
+        -*)             ___x_cmd_time_log    "$op"  "$@" ;;
+        *)              ___x_cmd_time_log    "$op"  "$@" ;;
     esac
 }
 
-___x_cmd_time_log(){
-    arg:init time
-    while [ $# -gt 0 ]; do
-        case "$1" in
-            -h|--help)          ___x_cmd help -m time log "$@" ; return 0 ;;
-            *)                  break
-        esac
-    done
-
-    # Use temp files to capture times (avoids subshell variable capture issues)
-    local times_before_file="${TMPDIR:-/tmp}/time_log_before.$$"
-    local times_after_file="${TMPDIR:-/tmp}/time_log_after.$$"
-
-    # Wall-clock time
-    local x_=""
-    ___x_cmd_epoch_ms_; local begin="$x_"
-
-    # CPU time before (child processes only)
-    times > "$times_before_file"
-
-    # Execute command
-    "$@"
-    local ret=$?
-
-    # CPU time after
-    times > "$times_after_file"
-
-    # Wall-clock after
-    ___x_cmd_epoch_ms_; local end="$x_"
-    local wall=$(( end - begin ))
-
-    # Parse times and calculate deltas
-    # times output (2 lines, 2 fields each):
-    #   Line 1: shell_user shell_sys
-    #   Line 2: child_user child_sys
-    # Before and after are concatenated: 4 lines total
-    # Format: NmF.US for dash, NmF.Fs for zsh (variable decimals)
-    local cpu_info
-    if [ -f "$times_before_file" ] && [ -f "$times_after_file" ]; then
-        cpu_info="$(cat "$times_before_file" "$times_after_file" | ___x_cmd_cmds awk '{
-            for(i=1;i<=2;i++){
-                split($i, a, "m")
-                gsub(/s/, "", a[2])
-                split(a[2], b, ".")
-                # Normalize decimal part to 6 digits
-                dec_len = length(b[2])
-                dec_part = b[2] + 0
-                if(dec_len < 6){
-                    dec_part = dec_part * (10^(6 - dec_len))
-                } else if(dec_len > 6){
-                    dec_part = substr(b[2], 1, 6) + 0
-                }
-                val = a[1] * 60 + b[1] + dec_part / 1000000
-
-                if(NR==1){
-                    if(i==1) before_shell_user=val
-                    else before_shell_sys=val
-                }
-                if(NR==2){
-                    if(i==1) before_child_user=val
-                    else before_child_sys=val
-                }
-                if(NR==3){
-                    if(i==1) after_shell_user=val
-                    else after_shell_sys=val
-                }
-                if(NR==4){
-                    if(i==1) after_child_user=val
-                    else after_child_sys=val
-                }
-            }
-        }
-        END{
-            child_user=after_child_user-before_child_user
-            child_sys=after_child_sys-before_child_sys
-            shell_user=after_shell_user-before_shell_user
-            shell_sys=after_shell_sys-before_shell_sys
-            printf "%.3f:%.3f:%.3f:%.3f", child_user, child_sys, shell_user, shell_sys
-        }')"
-    else
-        cpu_info="0.000:0.000:0.000:0.000"
-    fi
-
-    # Cleanup
-    rm -f "$times_before_file" "$times_after_file"
-
-    printf "real:%dms" "$wall"
-    if [ "$cpu_info" != "0.000:0.000:0.000:0.000" ]; then
-        local cpu_ms
-        cpu_ms="$(echo "$cpu_info" | awk -F: '{printf "%.0f %.0f %.0f %.0f", $1*1000, $2*1000, $3*1000, $4*1000}')"
-        printf "  user:%sms  sys:%sms  child_user:%sms  child_sys:%sms" $cpu_ms
-    fi
-    printf "\n"
-    return $ret
-}
 
 ___x_cmd_time_getms_(){
     {
