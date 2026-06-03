@@ -39,9 +39,10 @@ ___x_cmd_feishu_parse(){
     end_line="${end_line}"   \
     ___x_cmd awk0 -m j/json -m j/jiter \
             -f "$___X_CMD_ROOT_MOD/feishu/lib/awk/bot_parse.awk" < "$botdata" | {
-        local is_ref="" msg_time="" msg_type="" msg_text="" msg_image_key="" msg_file_key="" msg_file_name="" msg_chat_id="" msg_message_id="" msg_parent_id=""
+        local is_ref="" msg_time="" msg_sender_id="" msg_type="" msg_text="" msg_image_key="" msg_file_key="" msg_file_name="" msg_chat_id="" msg_message_id="" msg_parent_id=""
         while   read -r is_ref && \
                 read -r msg_time && \
+                read -r msg_sender_id && \
                 read -r msg_type && \
                 read -r msg_text && \
                 read -r msg_image_key && \
@@ -50,7 +51,7 @@ ___x_cmd_feishu_parse(){
                 read -r msg_chat_id && \
                 read -r msg_message_id && \
                 read -r msg_parent_id; do
-            ___x_cmd_feishu_parse_item___ "$is_ref" "" "$msg_time" "$msg_type" "$msg_text" "$msg_image_key" "$msg_file_key" "$msg_file_name" "$msg_chat_id" "$msg_message_id" "$msg_parent_id"
+            ___x_cmd_feishu_parse_item___ "$is_ref" "" "$msg_time" "$msg_sender_id" "$msg_type" "$msg_text" "$msg_image_key" "$msg_file_key" "$msg_file_name" "$msg_chat_id" "$msg_message_id" "$msg_parent_id"
         done
     }
 }
@@ -92,9 +93,10 @@ ___x_cmd_feishu_parse_ref_content(){
 
     # Read parsed output and call ___x_cmd_feishu_parse_item___ for each message
     # Use temp file to avoid subshell (dash doesn't support here-strings)
-    local ref_content=""
+    local ref_content="" item_body="" item_output=""
     while   read -r is_ref && \
             read -r msg_time && \
+            read -r msg_sender_id && \
             read -r msg_type && \
             read -r msg_text && \
             read -r msg_image_key && \
@@ -114,11 +116,9 @@ ___x_cmd_feishu_parse_ref_content(){
             esac
         fi
         # Call ___x_cmd_feishu_parse_item___ with is_ref="" to get formatted output
-        local item_output
-        item_output="$(___x_cmd_feishu_parse_item___ "" "" "$msg_time" "$msg_type" "$msg_text" "$msg_image_key" "$msg_file_key" "$msg_file_name" "$msg_chat_id" "$msg_message_id" "")"
-        # Extract bodystr (3rd tab-separated field)
-        local item_body
-        item_body="$(printf "%s" "$item_output" | cut -f3)"
+        item_output="$(___x_cmd_feishu_parse_item___ "" "" "$msg_time" "$msg_sender_id" "$msg_type" "$msg_text" "$msg_image_key" "$msg_file_key" "$msg_file_name" "$msg_chat_id" "$msg_message_id" "")"
+        # Extract bodystr (4th tab-separated field)
+        item_body="$(printf "%s" "$item_output" | cut -f4)"
         if [ -n "$ref_content" ]; then
             ref_content="${ref_content} ${item_body}"
         else
@@ -134,14 +134,15 @@ ___x_cmd_feishu_parse_item___(){
     local is_ref="$1"
     local bodystr="$2"
     local msg_time="$3"
-    local msg_type="$4"
-    local msg_text="$5"
-    local msg_image_key="$6"
-    local msg_file_key="$7"
-    local msg_file_name="$8"
-    local msg_chat_id="$9"
-    local msg_message_id="${10}"
-    local msg_parent_id="${11}"
+    local msg_sender_id="$4"
+    local msg_type="$5"
+    local msg_text="$6"
+    local msg_image_key="$7"
+    local msg_file_key="$8"
+    local msg_file_name="$9"
+    local msg_chat_id="${10}"
+    local msg_message_id="${11}"
+    local msg_parent_id="${12}"
 
     local typename="Text" file_key="" default_ext="" download_type=""
     case "$msg_type" in
@@ -223,8 +224,8 @@ ___x_cmd_feishu_parse_item___(){
         ref_result="$(___x_cmd_feishu_parse_ref_content "$ref_json" "$msg_parent_id")"
         ref_type_display="${ref_result%%	*}"
         ref_content="${ref_result#*	}"
-        printf "%s\t%s\t[REF:%s:%s] %s\n" "$msg_time" "$typename" "$ref_type_display" "$ref_content" "$bodystr"
+        printf "%s\t%s\t%s\t[REF:%s:%s] %s\n" "$msg_time" "$msg_sender_id" "$typename" "$ref_type_display" "$ref_content" "$bodystr"
     else
-        printf "%s\t%s\t%s\n" "$msg_time" "$typename" "$bodystr"
+        printf "%s\t%s\t%s\t%s\n" "$msg_time" "$msg_sender_id" "$typename" "$bodystr"
     fi
 }

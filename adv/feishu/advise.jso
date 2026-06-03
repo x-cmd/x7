@@ -430,7 +430,165 @@ true
 :
 "Show data file path for specified chat"
 }
+,
+{
+"cmd"
+:
+"x feishu abot info"
+,
+"cn"
+:
+"获取当前应用的基础信息"
+,
+"en"
+:
+"Get basic information of the current app"
+}
 ]
+,
+"info"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"获取飞书应用的基础信息"
+,
+"en"
+:
+"Get basic information of the Feishu app"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x feishu abot info"
+,
+"cn"
+:
+"获取当前应用的信息（等同于 --appid me）"
+,
+"en"
+:
+"Get current app info (equivalent to --appid me)"
+}
+,
+{
+"cmd"
+:
+"x feishu abot info --appid <app_id>"
+,
+"cn"
+:
+"获取指定应用的信息"
+,
+"en"
+:
+"Get info of a specific app"
+}
+]
+,
+"--appid"
+:
+{
+"#synopsis"
+:
+"<app_id>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"应用 ID（省略则使用 me 查询当前应用）"
+,
+"en"
+:
+"App ID (defaults to me, the current app)"
+}
+,
+"#1"
+:
+{
+"cn"
+:
+"应用 ID"
+,
+"en"
+:
+"App ID"
+}
+}
+,
+"--lang"
+:
+{
+"#synopsis"
+:
+"<lang>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"语言（zh_cn / en_us / ja_jp，默认 zh_cn）"
+,
+"en"
+:
+"Language (zh_cn / en_us / ja_jp, default zh_cn)"
+}
+,
+"#1"
+:
+{
+"cn"
+:
+"语言"
+,
+"en"
+:
+"Language"
+}
+}
+,
+"--id_type"
+:
+{
+"#synopsis"
+:
+"<id_type>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"用户 ID 类型（open_id / union_id / user_id，默认 open_id）"
+,
+"en"
+:
+"User ID type (open_id / union_id / user_id, default open_id)"
+}
+,
+"#1"
+:
+{
+"cn"
+:
+"用户 ID 类型"
+,
+"en"
+:
+"User ID type"
+}
+}
+}
 ,
 "send"
 :

@@ -205,6 +205,16 @@ CLAW CONNECT — ADD MORE FEISHU GROUP CHATS:
   - Disconnect a specific group: x claw disconnect feishu:oc_xxx
   - Disconnect all groups: x claw disconnect feishu:groups
   Note: Each group chat spawns an independent Agent session. Just run the connect command from this current single chat — no need to enter the group chat itself." ;;
+                oc_*)
+                    feishu_group_notice="
+GROUP CHAT GUIDELINES:
+  You are in a Feishu group chat. All members can see your replies.
+  - Privacy: Do not reveal sensitive information (API keys, tokens, passwords, internal URLs).
+  - Relevance: Only reply to messages that are relevant to your purpose. Ignore off-topic chatter.
+  - Mention-aware: If a user @mentions you, prioritize responding to them.
+  - Conciseness: Keep replies brief and to the point in group settings.
+  - No spam: Do not reply to every single message; only engage when useful."
+                    ;;
             esac
 
             local prompt
@@ -219,6 +229,8 @@ CLAW CONNECT — ADD MORE FEISHU GROUP CHATS:
 <variable name='CHATID'>${chatid}
 </variable>
 <variable name='FEISHU_CONNECT_PROMPT'>${feishu_connect_prompt}
+</variable>
+<variable name='FEISHU_GROUP_NOTICE'>${feishu_group_notice}
 </variable>
 <variable name='WORKSPACE_DIR'>${workspace_dir}
 </variable>

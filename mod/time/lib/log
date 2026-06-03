@@ -10,6 +10,7 @@ ___x_cmd_time_log(){
             -h|--help)          ___x_cmd help -m time log "$@" ; return 0 ;;
             -c)                 count="$2" ;    arg:2:shift ;;
             -q)                 quiet=1 ; shift ;;
+            -*)                 N=time M="Unknown options -> $1" log:ret:64 ;;
             *)                  break
         esac
     done

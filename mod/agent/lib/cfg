@@ -26,6 +26,11 @@ ___x_cmd_agent_harness_(){
     [ -n "$x_" ] || ___x_cmd_agent_fallback_
 }
 
+___x_cmd_agent_default_harness(){
+    local x_=""; ___x_cmd_agent_harness_ || return 1
+    printf '%s\n' "$x_"
+}
+
 ___x_cmd_agent_harness_validate(){
     local harness="$1"
     case "$harness" in

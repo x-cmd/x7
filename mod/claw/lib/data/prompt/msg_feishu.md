@@ -30,5 +30,6 @@ LARK-CLI: When users ask about Feishu features (docs, sheets, calendar, etc.), u
 Your workspace: "<WORKSPACE_DIR>"
 Current time: '<CURRENT_TIME>'
 <FEISHU_CONNECT_PROMPT>
+<FEISHU_GROUP_NOTICE>
 <CHECK_PROMPT>
 <MSG>

@@ -1,6 +1,6 @@
 548d06daf523026531069d978f8f074fe4532f19 abox main NULL
 43d3d2aeede1ec8d45edc7d9d83044d028d2c3aa advise main NULL
-d5fef3021d0c5fc527dcb6ba847f4254b0bd9ece agent main NULL
+9d26794034b3bc2b2e1917ea95a74bbaeff6b1f0 agent main NULL
 94eb1cb39d13a2ebcddf07a44b8cf63e7ac687cc aider main NULL
 2abe9fc103abe6597b599c5245efc148c44ee948 alias main NULL
 c8dd6182f3d400215d7292cbfe9c65b73722ab7d api main NULL
@@ -41,7 +41,7 @@ e2bf25de5ee25c3d31081df2bd515fc9e03be156 chat main NULL
 7d81d56bc7c05a11c26e169a2ac8521502810560 choco main NULL
 437d6bacd65476c80cbc41b2197d69307b8e5f82 cht main NULL
 ba53a05c450e6cba56b646cc831cc39a2364d066 claude main NULL
-c12154dcc2d024670133cc6e81dee000c28a80a1 claw main NULL
+55e18f2c3f0ca1271d1e658a8439d8092428cbc4 claw main NULL
 4ecbaed5a6c15b0af5b2b2004819e10ad52a69cb clawhub main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
 bbf9eb7a630da0d2f607edaf1589df0ddfc9a8ae clear main NULL
@@ -94,7 +94,7 @@ b55fc2aef353a3977bd392744704f8ee67038d9c eget main NULL
 5de8b0885d624a0306bba9901b325348272e31c3 envy main NULL
 3222da88ec245218abd1ee61e26e32c5d1fcf181 epoch main NULL
 7cbbd1fd16ae398426570c10dab96c532f51ace8 facl main NULL
-5f8b27a40bd60edde8c84ac481eefaff5cef826f feishu main NULL
+21dcfebe603e4f138bbae13b1bcd4ed8411bf492 feishu main NULL
 d80414f13e755cd18677a5e9267557d1216c6d10 ff main NULL
 f44a5db59e0b8d9479e07cc4b499c62cdf62c959 ffmpeg main NULL
 83326fc5fc699a90bf85763f4277631faf1e9875 fifo main NULL
@@ -330,7 +330,7 @@ ab8e27ad6a09152549ebb497ca6487fdcd469c0a task main NULL
 846b8c87a56c41b8fc5ff7cac815af05c86ac294 term main NULL
 37b875e6636c93d2f013a5b00c6e7f1ef5719dd2 termux main NULL
 c1514da82d4aa4c034d817fc7c9963e8bf8aa7a1 theme main NULL
-a3bd268e6b507518c3b9a9daf621d0f15a0b1cbe time main NULL
+b6ad84e50deddef9f8938997187803a9dc785aa1 time main NULL
 49b16bf7205afc49a5a3628be130d696fdedfc15 timeout main NULL
 0bf6573b333cb0a918f5a3be440df7318afc46c5 tldr main NULL
 3c7846a9ce243b7e4cd21c6a05537220865bb27f tlfz main NULL
@@ -358,7 +358,7 @@ d7ebe877da055a53e26b78c5ee111b9406857d0a usb main NULL
 26d75aa618208e234dd448ca9d337f9f30404e40 user main NULL
 3be97f4eb4318dcc060e8efd710d46886a36759d uuid main NULL
 94d047450144a51f4e23e1d5d4543b8cde397401 val main NULL
-46ffadc0334923f9b8d71aba94ea10f9c5878c5c version main NULL
+40ce3d685504bcaa52fdf1c7840c6adc2ab49110 version main NULL
 1d6f764a68a0f3ab2e8fee22d585937be98a9d99 vim main NULL
 6e7e00ca4cdf163177f4cdf3bd6ff30eaffd342b wchar main NULL
 ca5f122a53dc89a53dd122ecc8ea6544791b1879 web main NULL
@@ -379,7 +379,7 @@ f199658e92f0600bb65216df301ef7e50156c46e worker main NULL
 75fb77f0b96f16afdc399576ca1ee641b5d2740f x-cmd main NULL
 995828bdefaace2720e93c096f1f7e2b589e9cd8 xgo main NULL
 9e4a40a9a59a5d379bd724c60c06965c5787509c xq main NULL
-5877bdf69b59d5eac9dcd0c2e1a9ae2b57e358cc xrc main NULL
+74b7dd1116298cd3ff846c91d99f32f90c7539f9 xrc main NULL
 714e52cc906c93d384a2cce5856de4bb1b8a921f xx main NULL
 29c99efa51369c187c1adaa17eb385a5dd071723 yay main NULL
 e840fd957bca92ac5600f893195f24e275f82a6f yml main NULL

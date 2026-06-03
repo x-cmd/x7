@@ -28,7 +28,7 @@ ___x_cmd_time_stress(){
             --batch10)  testmode=batch10 ;  shift ;;
             --normal)   testmode=normal  ;  shift ;;
 
-            --*)        N=time M="Unknown options -> $1" log:ret:64 ;;
+            -*)         N=time M="Unknown options -> $1" log:ret:64 ;;
 
             *)          break
         esac

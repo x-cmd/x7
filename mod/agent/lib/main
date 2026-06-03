@@ -26,6 +26,7 @@ ___x_cmd_agent___main(){
         request|chat|job|session|\
         unify|isready)
                             ___x_cmd_agent_"$op"        "$@" ;;
+        default_harness)    ___x_cmd_agent_default_harness "$@" ;;
 
         *)                  N=agent M="Unknown subcmd -> $op" log:ret:64 ;;
     esac

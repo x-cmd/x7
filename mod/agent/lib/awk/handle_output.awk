@@ -19,17 +19,19 @@ BEGIN{
 ($0 != ""){ handle_response_stream_json($0); }
 # END{ printf( "%s", "\n" ); }
 
-function record_and_exit( code, stderr_msg ){
+function record_and_exit( code, stderr_msg,    fp ){
     if ( stderr_msg != "" ) {
         log_error( "agent", stderr_msg )
     }
     if ( SESSION_OUTPUT_DIR != "" ) {
         mkdirp( SESSION_OUTPUT_DIR "/metadata" )
-        printf "%s\n", code > SESSION_OUTPUT_DIR "/metadata/status"
-        close( SESSION_OUTPUT_DIR "/metadata/status" )
+        fp = SESSION_OUTPUT_DIR "/metadata/status"
+        printf( "%s\n", code ) > fp
+        close( fp )
         if ( stderr_msg != "" ) {
-            printf "%s\n", stderr_msg > SESSION_OUTPUT_DIR "/metadata/stderr.txt"
-            close( SESSION_OUTPUT_DIR "/metadata/stderr.txt" )
+            fp = SESSION_OUTPUT_DIR "/metadata/stderr.txt"
+            printf( "%s\n", stderr_msg ) > fp
+            close( fp )
         }
     }
     exit( code )
