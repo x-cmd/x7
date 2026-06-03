@@ -76,7 +76,7 @@ ___x_cmd_feishu_listen(){
             # If poll_start_time < start_time, it means last_msg_time was corrupted, reset to last_poll_time
             # to avoid skipping messages between last_poll_time and current_time
             local poll_start_time="${last_msg_time}"
-            if [ -z "$poll_start_time" ] || [ "$poll_start_time" -lt "$start_time" ]; then
+            if [ "$poll_start_time" -lt "$start_time" ]; then
                 poll_start_time="${last_poll_time:-"$current_time"}"
             fi
 
@@ -115,8 +115,7 @@ A
             [ "$msg" != "" ]    || continue
 
             local oldest_msg_time
-            # TODO: null
-            oldest_msg_time="$(printf "%s" "$msg" | ___x_cmd jq -rs '.[-1].create_time')"
+            oldest_msg_time="$(printf "%s" "$msg" | ___x_cmd jq -rs '.[-1].create_time // empty')"
             local new_msg_time=$(( (oldest_msg_time / 1000) + 1 ))
             # Only update if new_msg_time > poll_start_time (guards against empty or wrong-unit values)
             if [ "$new_msg_time" -gt "$poll_start_time" ]; then

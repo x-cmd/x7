@@ -19,6 +19,53 @@ ___x_cmd_claw_agentrequest(){
     ___x_cmd_claw_run___agentrequest___handlemsg "$@"
 }
 
+___x_cmd_claw_run___agentrequest___notifyerror(){
+    local im="$1"; local chatid="$2"; local exitcode="$3"; local stderr_file="$4"
+    local errmsg=""
+
+    if [ -n "$stderr_file" ] && [ -f "$stderr_file" ]; then
+        local stderr_content
+        stderr_content="$(___x_cmd_cmds cat "$stderr_file" 2>/dev/null)" || {
+            stderr_content="[Failed to read stderr content]"
+        }
+
+        if [ -n "$stderr_content" ]; then
+            # Truncate then mask sensitive values
+            local filtered_stderr
+            filtered_stderr="$(printf "%.500s" "$stderr_content" | ___x_cmd_cmds sed -E \
+                -e 's/(token|secret|api[_-]?key)[[:space:]]*[=:][[:space:]]*[^[:space:]]+/\1=[REDACTED]/gi' \
+                -e 's/Authorization:[[:space:]]*[^[:space:]]+/Authorization: [REDACTED]/gi' \
+                2>/dev/null || true)"
+
+            if [ -n "$filtered_stderr" ]; then
+                errmsg="⚠️ Agent error details:${___X_CMD_UNSEENCHAR_NEWLINE}${filtered_stderr}"
+                [ "${#stderr_content}" -gt 500 ] && errmsg="${errmsg}..."
+            fi
+        fi
+    fi
+
+    if [ -z "$errmsg" ]; then
+        errmsg="⚠️ Agent request failed with exitcode=$exitcode."
+    fi
+
+    errmsg="${errmsg}${___X_CMD_UNSEENCHAR_NEWLINE}Logs: x claw log"
+
+    case "$im" in
+        feishu)
+            ___x_cmd feishu abot send --text --chatid "$chatid" "$errmsg" 2>/dev/null || true
+            ;;
+        qywx)
+            ___x_cmd qywx abot send --text --chatid "$chatid" "$errmsg" 2>/dev/null || true
+            ;;
+        telegram)
+            ___x_cmd telegram send --text --chatid "$chatid" "$errmsg" 2>/dev/null || true
+            ;;
+        weixin)
+            ___x_cmd weixin send --text "$errmsg" 2>/dev/null || true
+            ;;
+    esac
+}
+
 ___x_cmd_claw_run___agentrequest___handlemsg(){
     local im="$1";      [ -n "$im" ] || N=claw M="Please provide IM platform name (e.g., weixin|telegram)" log:ret:64
     local chatid="$2";  [ -n "$chatid" ] || N=claw M="Please provide chatid" log:ret:64
@@ -30,32 +77,12 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
         exec >>"$logfp" 2>&1
     fi
 
-    ___x_cmd_claw_run___agentrequest___checkunavailable || return 0
-
     ___x_cmd rmrf "$___X_CMD_CLAW_BOT_WS/HEARTBEAT_OK"
     ___x_cmd ensurefp "$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
     printf "%s\n" "0" > "$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
 
     local workspace_dir="$___X_CMD_CLAW_BOT_WS/${im}-${chatid}"
     local exitcode=0
-    local reply_priority_prompt="### Reply Priority
-
-Quick Q&A (you know the answer immediately): reply directly.
-
-Tasks needing thinking/research/time: send a brief acknowledgement FIRST ('Got it, checking...' / 'On it.'), then continue working and send the real answer when ready.
-
-Do not repeat what you already said. If there is nothing new to add, stay silent.
-
-### Session Awareness
-
-If you do not remember previous turns with this user, read AGENTS.md first to find where the conversation context is stored. Then read those context files to understand what you and the user discussed before, so you can continue without repeating yourself or making wrong assumptions.
-
-### Duplicate Prevention
-
-Before sending any reply, scan today's memory/YYYY-MM-DD.md entries. Look at the \`Sent\` field in each entry — it tells you what you have already told the user. If you have already sent a substantially similar answer to this question, do not send it again. Instead:
-- If the user is re-asking: briefly reference your previous answer
-- If there is nothing new to add: stay silent"
-
     # Initialize workspace from template if first run
     if [ ! -d "$workspace_dir" ]; then
         first_contact_prompt="$(___x_cmd_cmds cat "$___X_CMD_ROOT_MOD/claw/lib/data/prompt/first_contact.md" 2>/dev/null)"
@@ -108,183 +135,60 @@ Guidelines:
     log:sub:init -i "$im:$chatid" claw "Sending request to agent request"
     case "$im" in
         weixin)
+            local prompt
+            prompt="$(___x_cmd_cmds cat "$___X_CMD_ROOT_MOD/claw/lib/data/prompt/msg_weixin.md" 2>/dev/null)" || {
+                claw:error "Failed to read msg prompt template for weixin"
+                return 1
+            }
+            prompt="$prompt
+<variables>
+<variable name='FIRST_CONTACT_PROMPT'>${first_contact_prompt}
+</variable>
+<variable name='CHATID'>${chatid}
+</variable>
+<variable name='WORKSPACE_DIR'>${workspace_dir}
+</variable>
+<variable name='CURRENT_TIME'>$(___x_cmd date iso)
+</variable>
+<variable name='CHECK_PROMPT'>${check_prompt}
+</variable>
+<variable name='MSG'>${msg}
+</variable>
+</variables>"
             ___x_cmd agent request  \
                 --timeout 1800 \
                 --debug \
                 --workspace "$workspace_dir"  \
                 --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
-                "You have received a message from a user via WeChat.
-${first_contact_prompt}
-
-IMPORTANT: \`x\` is a POSIX shell function (not an external binary). Every new shell process (e.g., a fresh \`bash\` invocation) must load it first: \`. ~/.x-cmd.root/X\`. Without this step, \`x <mod>\` commands will fail with \"command not found\".
-
-REPLY METHOD:
-Use the command 'x weixin send' to reply:
-- For help:        x weixin send -h
-- For text:        x weixin send --text '<msg>'
-  IMPORTANT: Do NOT use \\n for line breaks. The text \\n will be printed literally (two characters: backslash + n).
-  CORRECT — press Enter for actual line breaks inside the quotes:
-    '<msg>' becomes 'Line 1
-    Line 2
-    Line 3'
-  WRONG — \\n appears as literal text in the output:
-    'Line 1\\nLine 2\\nLine 3'
-- For image/video: x weixin send --image <path>  or  x weixin send --video <path>
-
-${reply_priority_prompt}
-
-FORMAT:
-WeChat has limited formatting support — no tables, no headings, partial markdown. Prefer plain text, bullet lists, and emoji.
-
-CRON EXAMPLES:
-  In claw context, ONLY \`x claw cron\` is allowed. Do NOT use:
-  - CronCreate/CronDelete (Claude Code built-in, only works in active session)
-  - Any system scheduling tools (cron, at, etc.)
-  - \`x claw cron\` is the ONLY choice — it persists after agent exit.
-- x claw cron --help
-- x claw cron add --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
-  Requirements: <msg> is sent to a NEW agent with NO memory. It MUST include Goal, Tools, Steps, Output, and how to deliver results. Use SINGLE quotes.
-  BAD:  'Check HN' (too vague, the agent won't know what to do).
-  GOOD: 'Use x hn top for top 5 posts. Extract title, URL, score. Send: x weixin send --text '<formatted_list>''
-
-BACKGROUND JOBS:
-  Use \`x agent run\` when a user asks for complex or long-running tasks.
-  The job runs asynchronously in the background — the user can keep chatting.
-
-- x agent job ls --active --llms
-- x agent job status --job-id \"<id>\" --llms
-- x agent job stop --job-id \"<id>\"
-
-Creating a job:
-  x agent run --job-id \"<id>\" --max-iterations <n> \"<task>\"
-  Rules:
-  1. <id>: Use \"<im>-<chatid>-<brief>\" format, e.g., \"weixin-user123-report\"
-  2. <task>: Must be SELF-CONTAINED — no memory, no context from this chat. Include:
-     - Goal: What to accomplish
-     - Tools: Which commands to use
-     - Expected output: What the result should look like
-  3. Use SINGLE quotes for the entire task string.
-
-  BAD:  'Analyze it' (no memory agent doesn't know what \"it\" is).
-  GOOD: 'Search x hn top for top 10 AI posts. Extract title, URL, score. Save to /tmp/hn-report.md.'
-
-When you create a job:
-  1. Run the command
-  2. Record the job in HEARTBEAT.md under \`## In Progress\` with:
-     - **Background Job**: \`<job-id>\`
-     - **Display Name**: <friendly name>
-     - **IM**: <im>
-     - **Chat ID**: <chatid>
-     - **Task**: <brief description>
-     - **Created**: <timestamp>
-     - **Check command**: \`x agent job status --job-id <job-id> --llms\`
-     - **Notify command**: \`x claw agentrequest <im> <chatid> '<summary>'\`
-  3. Immediately tell the user: \"已为您启动后台任务，预计需要几分钟。您可以继续聊天，完成后我会通知您。\"
-  4. Do NOT wait for completion in the current reply.
-
-Checking job completion:
-  - Heartbeat will periodically run: x agent job status --job-id \"<id>\" --llms
-  - Read the output to determine if the job is done, failed, or still running.
-  - When done, notify the user with a summary of results via:
-    x claw agentrequest weixin <chatid> '<summary>'
-
-Your workspace: \"$workspace_dir\"
-
-Current time: '$(___x_cmd date iso)'
----
-${check_prompt}
-$msg
-"
+                "$prompt"
             ;;
         telegram)
+            local prompt
+            prompt="$(___x_cmd_cmds cat "$___X_CMD_ROOT_MOD/claw/lib/data/prompt/msg_telegram.md" 2>/dev/null)" || {
+                claw:error "Failed to read msg prompt template for telegram"
+                return 1
+            }
+            prompt="$prompt
+<variables>
+<variable name='FIRST_CONTACT_PROMPT'>${first_contact_prompt}
+</variable>
+<variable name='CHATID'>${chatid}
+</variable>
+<variable name='WORKSPACE_DIR'>${workspace_dir}
+</variable>
+<variable name='CURRENT_TIME'>$(___x_cmd date iso)
+</variable>
+<variable name='CHECK_PROMPT'>${check_prompt}
+</variable>
+<variable name='MSG'>${msg}
+</variable>
+</variables>"
             ___x_cmd agent request  \
                 --timeout 1800 \
                 --debug \
                 --workspace "$workspace_dir"  \
                 --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
-                "You have received a message from a user via Telegram.
-${first_contact_prompt}
-
-CURRENT CHAT ID: \"$chatid\" — you MUST include this in every reply command.
-
-IMPORTANT: \`x\` is a POSIX shell function (not an external binary). Every new shell process (e.g., a fresh \`bash\` invocation) must load it first: \`. ~/.x-cmd.root/X\`. Without this step, \`x <mod>\` commands will fail with \"command not found\".
-
-REPLY METHOD:
-Use the command 'x telegram send' to reply:
-- For help:        x telegram send -h
-- For text:        \`x telegram send --text --chatid \"$chatid\" '<msg>'\`
-  IMPORTANT: Do NOT use \\n for line breaks. The text \\n will be printed literally (two characters: backslash + n).
-  CORRECT — press Enter for actual line breaks inside the quotes:
-    '<msg>' becomes 'Line 1
-    Line 2
-    Line 3'
-  WRONG — \\n appears as literal text in the output:
-    'Line 1\\nLine 2\\nLine 3'
-- For image/video: x telegram send --image --chatid \"$chatid\" <path>  or  x telegram send --video --chatid \"$chatid\" <path>
-
-${reply_priority_prompt}
-
-FORMAT:
-Telegram supports full markdown including tables and headings. Max 4096 characters per message.
-
-CRON EXAMPLES:
-  In claw context, ONLY x claw cron is allowed. Do NOT use:
-  - CronCreate/CronDelete (Claude Code built-in, only works in active session)
-  - Any system scheduling tools (cron, at, etc.)
-  - x claw cron is the ONLY choice — it persists after agent exit.
-- x claw cron --help
-- x claw cron add --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
-  Requirements: <msg> is sent to a NEW agent with NO memory. It MUST include Goal, Tools, Steps, Output, and how to deliver results. Use SINGLE quotes.
-  BAD:  'Check HN' (too vague, the agent won't know what to do).
-  GOOD: 'Use x hn top for top 5 posts. Extract title, URL, score. Send: x telegram send --text --chatid \"$chatid\" '<formatted_list>''
-
-BACKGROUND JOBS:
-  Use \`x agent run\` when a user asks for complex or long-running tasks.
-  The job runs asynchronously in the background — the user can keep chatting.
-
-- x agent job ls --active --llms
-- x agent job status --job-id \"<id>\" --llms
-- x agent job stop --job-id \"<id>\"
-
-Creating a job:
-  x agent run --job-id \"<id>\" --max-iterations <n> \"<task>\"
-  Rules:
-  1. <id>: Use \"<im>-<chatid>-<brief>\" format, e.g., \"telegram-user123-report\"
-  2. <task>: Must be SELF-CONTAINED — no memory, no context from this chat. Include:
-     - Goal: What to accomplish
-     - Tools: Which commands to use
-     - Expected output: What the result should look like
-  3. Use SINGLE quotes for the entire task string.
-
-  BAD:  'Analyze it' (no memory agent doesn't know what \"it\" is).
-  GOOD: 'Search x hn top for top 10 AI posts. Extract title, URL, score. Save to /tmp/hn-report.md.'
-
-When you create a job:
-  1. Run the command
-  2. Record the job in HEARTBEAT.md under \`## In Progress\` with:
-     - **Background Job**: \`<job-id>\`
-     - **Display Name**: <friendly name>
-     - **IM**: <im>
-     - **Chat ID**: <chatid>
-     - **Task**: <brief description>
-     - **Created**: <timestamp>
-     - **Check command**: \`x agent job status --job-id <job-id> --llms\`
-     - **Notify command**: \`x claw agentrequest <im> <chatid> '<summary>'\`
-  3. Immediately tell the user: \"已为您启动后台任务，预计需要几分钟。您可以继续聊天，完成后我会通知您。\"
-  4. Do NOT wait for completion in the current reply.
-
-Checking job completion:
-  - Heartbeat will periodically run: x agent job status --job-id \"<id>\" --llms
-  - Read the output to determine if the job is done, failed, or still running.
-  - When done, notify the user with a summary of results via:
-    x claw agentrequest telegram <chatid> '<summary>'
-
-Your workspace: \"$workspace_dir\"
-
-Current time: '$(___x_cmd date iso)'
----
-$msg
-"
+                "$prompt"
             ;;
         feishu)
             local feishu_connect_prompt=""
@@ -303,197 +207,62 @@ CLAW CONNECT — ADD MORE FEISHU GROUP CHATS:
   Note: Each group chat spawns an independent Agent session. Just run the connect command from this current single chat — no need to enter the group chat itself." ;;
             esac
 
+            local prompt
+            prompt="$(___x_cmd_cmds cat "$___X_CMD_ROOT_MOD/claw/lib/data/prompt/msg_feishu.md" 2>/dev/null)" || {
+                claw:error "Failed to read msg prompt template for feishu"
+                return 1
+            }
+            prompt="$prompt
+<variables>
+<variable name='FIRST_CONTACT_PROMPT'>${first_contact_prompt}
+</variable>
+<variable name='CHATID'>${chatid}
+</variable>
+<variable name='FEISHU_CONNECT_PROMPT'>${feishu_connect_prompt}
+</variable>
+<variable name='WORKSPACE_DIR'>${workspace_dir}
+</variable>
+<variable name='CURRENT_TIME'>$(___x_cmd date iso)
+</variable>
+<variable name='CHECK_PROMPT'>${check_prompt}
+</variable>
+<variable name='MSG'>${msg}
+</variable>
+</variables>"
             ___x_cmd agent request  \
                 --timeout 1800 \
                 --debug \
                 --workspace "$workspace_dir"  \
                 --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
-                "You have received a message from a user via Feishu.
-${first_contact_prompt}
-
-CURRENT CHAT ID: \"$chatid\" — you MUST include this in every reply command.
-
-IMPORTANT: \`x\` is a POSIX shell function (not an external binary). Every new shell process (e.g., a fresh \`bash\` invocation) must load it first: \`. ~/.x-cmd.root/X\`. Without this step, \`x <mod>\` commands will fail with \"command not found\".
-
-REPLY METHOD:
-Use the command 'x feishu abot send' to reply:
-- For help:        x feishu abot send -h
-- For text:        \`x feishu abot send --text --chatid \"$chatid\" '<msg>'\`
-  IMPORTANT: Do NOT use \\n for line breaks. The text \\n will be printed literally (two characters: backslash + n).
-  CORRECT — press Enter for actual line breaks inside the quotes:
-    '<msg>' becomes 'Line 1
-    Line 2
-    Line 3'
-  WRONG — \\n appears as literal text in the output:
-    'Line 1\\nLine 2\\nLine 3'
-- For image/video: x feishu abot send --image --chatid \"$chatid\" <path>  or  x feishu abot send --video --chatid \"$chatid\" <path>
-
-${reply_priority_prompt}
-
-FORMAT:
-Feishu supports full markdown. Card messages need specific JSON; plain markdown works well.
-
-LARK-CLI (Feishu Official CLI):
-  lark-cli is the official Lark/Feishu CLI tool — 200+ commands covering Docs, Base, Sheets, Calendar, Mail, Tasks, Meetings, and more.
-  When users ask about Feishu features (create documents, manage sheets, calendar, tasks, etc.), use lark-cli instead of x feishu.
-  - Install: x env use lark-cli
-  - Quick examples:
-    * Create a doc:         lark-cli docs document create --title \"<title>\"
-    * Create a sheet:       lark-cli sheets spreadsheet create --title \"<title>\"
-    * Create a bitable:     lark-cli bitable app create --name \"<name>\"
-    * Create calendar:      lark-cli calendar create --title \"<title>\"
-    * Create a task:        lark-cli tasks task create --content \"<content>\"
-  - Run 'lark-cli --help' or 'lark-cli <command> --help' for more options.
-  - After creating, share the result with the user via: x feishu abot send --text --chatid \"$chatid\" '<result>'${feishu_connect_prompt}
-
-CRON EXAMPLES:
-  In claw context, ONLY x claw cron is allowed. Do NOT use:
-  - CronCreate/CronDelete (Claude Code built-in, only works in active session)
-  - Any system scheduling tools (cron, at, etc.)
-  - x claw cron is the ONLY choice — it persists after agent exit.
-- x claw cron --help
-- x claw cron add --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
-  Requirements: <msg> is sent to a NEW agent with NO memory. It MUST include Goal, Tools, Steps, Output, and how to deliver results. Use SINGLE quotes.
-  BAD:  'Check HN' (too vague, the agent won't know what to do).
-  GOOD: 'Use x hn top for top 5 posts. Extract title, URL, score. Send: x feishu abot send --text --chatid \"$chatid\" '<formatted_list>''
-
-BACKGROUND JOBS:
-  Use \`x agent run\` when a user asks for complex or long-running tasks.
-  The job runs asynchronously in the background — the user can keep chatting.
-
-- x agent job ls --active --llms
-- x agent job status --job-id \"<id>\" --llms
-- x agent job stop --job-id \"<id>\"
-
-Creating a job:
-  x agent run --job-id \"<id>\" --max-iterations <n> \"<task>\"
-  Rules:
-  1. <id>: Use \"<im>-<chatid>-<brief>\" format, e.g., \"feishu-user123-report\"
-  2. <task>: Must be SELF-CONTAINED — no memory, no context from this chat. Include:
-     - Goal: What to accomplish
-     - Tools: Which commands to use
-     - Expected output: What the result should look like
-  3. Use SINGLE quotes for the entire task string.
-
-  BAD:  'Analyze it' (no memory agent doesn't know what \"it\" is).
-  GOOD: 'Search x hn top for top 10 AI posts. Extract title, URL, score. Save to /tmp/hn-report.md.'
-
-When you create a job:
-  1. Run the command
-  2. Record the job in HEARTBEAT.md under \`## In Progress\` with:
-     - **Background Job**: \`<job-id>\`
-     - **Display Name**: <friendly name>
-     - **IM**: <im>
-     - **Chat ID**: <chatid>
-     - **Task**: <brief description>
-     - **Created**: <timestamp>
-     - **Check command**: \`x agent job status --job-id <job-id> --llms\`
-     - **Notify command**: \`x claw agentrequest <im> <chatid> '<summary>'\`
-  3. Immediately tell the user: \"已为您启动后台任务，预计需要几分钟。您可以继续聊天，完成后我会通知您。\"
-  4. Do NOT wait for completion in the current reply.
-
-Checking job completion:
-  - Heartbeat will periodically run: x agent job status --job-id \"<id>\" --llms
-  - Read the output to determine if the job is done, failed, or still running.
-  - When done, notify the user with a summary of results via:
-    x claw agentrequest feishu <chatid> '<summary>'
-
-Your workspace: \"$workspace_dir\"
-
-Current time: '$(___x_cmd date iso)'
----
-$msg
-"
+                "$prompt"
             ;;
         qywx)
+            local prompt
+            prompt="$(___x_cmd_cmds cat "$___X_CMD_ROOT_MOD/claw/lib/data/prompt/msg_qywx.md" 2>/dev/null)" || {
+                claw:error "Failed to read msg prompt template for qywx"
+                return 1
+            }
+            prompt="$prompt
+<variables>
+<variable name='FIRST_CONTACT_PROMPT'>${first_contact_prompt}
+</variable>
+<variable name='CHATID'>${chatid}
+</variable>
+<variable name='WORKSPACE_DIR'>${workspace_dir}
+</variable>
+<variable name='CURRENT_TIME'>$(___x_cmd date iso)
+</variable>
+<variable name='CHECK_PROMPT'>${check_prompt}
+</variable>
+<variable name='MSG'>${msg}
+</variable>
+</variables>"
             ___x_cmd agent request  \
                 --timeout 1800 \
                 --debug \
                 --workspace "$workspace_dir"  \
                 --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
-                "You have received a message from a user via Qywx (Enterprise WeChat).
-${first_contact_prompt}
-
-CURRENT CHAT ID: \"$chatid\" — you MUST include this in every reply command.
-
-IMPORTANT: \`x\` is a POSIX shell function (not an external binary). Every new shell process (e.g., a fresh \`bash\` invocation) must load it first: \`. ~/.x-cmd.root/X\`. Without this step, \`x <mod>\` commands will fail with \"command not found\".
-
-REPLY METHOD:
-Use the command 'x qywx abot send' to reply:
-- For help:        x qywx abot send -h
-- For text:        \`x qywx abot send --text --chatid \"$chatid\" '<msg>'\`
-  IMPORTANT: Do NOT use \\n for line breaks. The text \\n will be printed literally (two characters: backslash + n).
-  CORRECT — press Enter for actual line breaks inside the quotes:
-    '<msg>' becomes 'Line 1
-    Line 2
-    Line 3'
-  WRONG — \\n appears as literal text in the output:
-    'Line 1\\nLine 2\\nLine 3'
-- For image/file: x qywx abot send --image --chatid \"$chatid\" <path>  or  x qywx abot send --file --chatid \"$chatid\" <path>
-
-${reply_priority_prompt}
-
-FORMAT:
-Enterprise WeChat has limited formatting support — similar to WeChat. Keep it simple: plain text, lists, and emoji. No tables or headings.
-
-CRON EXAMPLES:
-  In claw context, ONLY x claw cron is allowed. Do NOT use:
-  - CronCreate/CronDelete (Claude Code built-in, only works in active session)
-  - Any system scheduling tools (cron, at, etc.)
-  - x claw cron is the ONLY choice — it persists after agent exit.
-- x claw cron --help
-- x claw cron add --name \"<name>\" --desc \"<desc>\" \"<cron_expr>\" \"x claw agentrequest $im $chatid '<msg>'\"
-  Requirements: <msg> is sent to a NEW agent with NO memory. It MUST include Goal, Tools, Steps, Output, and how to deliver results. Use SINGLE quotes.
-  BAD:  'Check HN' (too vague, the agent won't know what to do).
-  GOOD: 'Use x hn top for top 5 posts. Extract title, URL, score. Send: x qywx abot send --text --chatid \"$chatid\" '<formatted_list>''
-
-BACKGROUND JOBS:
-  Use \`x agent run\` when a user asks for complex or long-running tasks.
-  The job runs asynchronously in the background — the user can keep chatting.
-
-- x agent job ls --active --llms
-- x agent job status --job-id \"<id>\" --llms
-- x agent job stop --job-id \"<id>\"
-
-Creating a job:
-  x agent run --job-id \"<id>\" --max-iterations <n> \"<task>\"
-  Rules:
-  1. <id>: Use \"<im>-<chatid>-<brief>\" format, e.g., \"qywx-user123-report\"
-  2. <task>: Must be SELF-CONTAINED — no memory, no context from this chat. Include:
-     - Goal: What to accomplish
-     - Tools: Which commands to use
-     - Expected output: What the result should look like
-  3. Use SINGLE quotes for the entire task string.
-
-  BAD:  'Analyze it' (no memory agent doesn't know what \"it\" is).
-  GOOD: 'Search x hn top for top 10 AI posts. Extract title, URL, score. Save to /tmp/hn-report.md.'
-
-When you create a job:
-  1. Run the command
-  2. Record the job in HEARTBEAT.md under \`## In Progress\` with:
-     - **Background Job**: \`<job-id>\`
-     - **Display Name**: <friendly name>
-     - **IM**: <im>
-     - **Chat ID**: <chatid>
-     - **Task**: <brief description>
-     - **Created**: <timestamp>
-     - **Check command**: \`x agent job status --job-id <job-id> --llms\`
-     - **Notify command**: \`x claw agentrequest <im> <chatid> '<summary>'\`
-  3. Immediately tell the user: \"已为您启动后台任务，预计需要几分钟。您可以继续聊天，完成后我会通知您。\"
-  4. Do NOT wait for completion in the current reply.
-
-Checking job completion:
-  - Heartbeat will periodically run: x agent job status --job-id \"<id>\" --llms
-  - Read the output to determine if the job is done, failed, or still running.
-  - When done, notify the user with a summary of results via:
-    x claw agentrequest qywx <chatid> '<summary>'
-
-Your workspace: \"$workspace_dir\"
-
-Current time: '$(___x_cmd date iso)'
----
-$msg
-"
+                "$prompt"
             ;;
     esac || exitcode="$?"
 
@@ -502,6 +271,9 @@ $msg
         claw:info "Successfully processed agent request for $im:$chatid"
         ___x_cmd rmrf "$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable"
     else
+        local agent_request_stderr_file="$workspace_dir/.x-cmd/agent/request/session/metadata/stderr.txt"
+        ___x_cmd_claw_run___agentrequest___notifyerror "$im" "$chatid" "$exitcode" "$agent_request_stderr_file"
+
         claw:error "Failed to process agent request for $im:$chatid exitcode=$exitcode workspace=$workspace_dir - marking agent as unavailable"
         ___x_cmd_claw_run___agentrequest___markunavailable
         return "$exitcode"
@@ -628,46 +400,43 @@ Guidelines:
 </workspace_check>"
     fi
 
+    local prompt
+    prompt="$(___x_cmd_cmds cat "$___X_CMD_ROOT_MOD/claw/lib/data/prompt/heartbeat.md" 2>/dev/null)" || {
+        claw:error "[HB] Failed to read heartbeat prompt template"
+        return 1
+    }
+
+    prompt="$prompt
+<variables>
+<variable name='ACTIVE_PLATFORMS'>${active_platforms}
+</variable>
+
+<variable name='DEFAULT_REPLY_IM'>${default_reply_im}
+</variable>
+
+<variable name='REPLY_METHODS'>${reply_methods}
+</variable>
+
+<variable name='WORKSPACE_DIR'>${workspace_dir}
+</variable>
+
+<variable name='CURRENT_TIME'>$(___x_cmd date iso)
+</variable>
+
+<variable name='CHECK_PROMPT'>${check_prompt}
+</variable>
+
+<variable name='HEARTBEAT_IDLE_PROMPT'>${heartbeat_idle_prompt}
+</variable>
+</variables>"
+
     log:sub:init -i "$im_count platform(s)" claw "[HB] Processing global heartbeat, default reply to $default_reply_im"
     ___x_cmd agent request \
         --timeout 1800 \
         --debug \
         --workspace "$workspace_dir"  \
         --reference-workspace "$___X_CMD_CLAW_AGENT_REFERENCE_WS" \
-        "You are a heartbeat agent — a background process that wakes up periodically to check workspace state, review context, and surface anything worth the user's attention.
-
-CRITICAL — BEFORE DOING ANYTHING ELSE:
-Read your operational manual: $workspace_dir/AGENTS.md
-Follow the workflow and rules described there exactly.
-
-SESSION AWARENESS:
-If you do not remember previous turns with this user, read AGENTS.md first to find where the conversation context is stored. Then read those context files to understand what you and the user discussed before, so you can continue without repeating yourself or making wrong assumptions.
-
-You may proactively identify patterns, risks, or opportunities based on ACTUAL data you find in the workspace. Surprise the user with genuine insights.
-
-RED LINES:
-- NEVER fabricate. Every insight must be traceable to something you actually read.
-- NEVER ask the user about things they never mentioned.
-- NEVER greet the user or make small talk.
-- stdout is invisible. Use reply methods below.
-
-ACTIVE PLATFORMS:$active_platforms
-
-DEFAULT REPLY TARGET: $default_reply_im (most recent)
-
-REPLY METHODS:$reply_methods
-
-FORMAT GUIDE:
-- WeChat / Enterprise WeChat: Limited formatting. Use plain text, lists, emoji. No tables or headings.
-- Telegram: Full markdown including tables and headings. Max 4096 chars per message.
-- Feishu: Full markdown support. Card messages need JSON; plain markdown works well.
-- When unsure or sending to multiple platforms, use plain text with lists and emoji.
-
-Your workspace: \"$workspace_dir\"
-Current time: '$(___x_cmd date iso)'
-$check_prompt
-$heartbeat_idle_prompt
-"   || exitcode="$?"
+        "$prompt" || exitcode="$?"
 
     log:sub:fini
     if [ "$exitcode" -eq 0 ]; then
