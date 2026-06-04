@@ -393,6 +393,7 @@ This prevents unnecessary heartbeat wake-ups until the next user message arrives
     # Initialize global workspace from heartbeat template if first run
     ___x_cmd_claw_run_workspace_ensure "$workspace_dir" "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/hb" "$harness"
     ___x_cmd mkdirp "$workspace_dir/tmp"
+    ___x_cmd mkdirp "$workspace_dir/memory"
 
     x_=""; ___x_cmd_claw_run_workspace_check_prompt_ "$workspace_dir" "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/hb" "$harness"
     local check_prompt="$x_"

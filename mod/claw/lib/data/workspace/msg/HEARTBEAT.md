@@ -8,18 +8,20 @@
 
 ## In Progress
 
-- **Background Job**: `weixin-user123-loganalysis`
-  - **Display Name**: 日志异常分析
-  - **IM**: weixin
-  - **Chat ID**: user123
-  - **Task**: Analyze last 7 days logs for ERROR patterns
-  - **Created**: 2026-06-01 15:30
-  - **Check command**: `x agent job status --job-id weixin-user123-loganalysis --yml`
-  - **Notify command**: `x claw agentrequest weixin user123 '<summary>'`
+> One-time follow-ups and background jobs. The heartbeat agent executes and removes them when done.
+
+-
+
+## Recurring
+
+> Periodic checks. The heartbeat agent executes based on Frequency and records the last run in its own memory.
+> These items are NOT removed after execution.
 
 -
 
 ## Completed
+
+> History of finished one-time tasks. Recurring tasks do not appear here.
 
 -
 

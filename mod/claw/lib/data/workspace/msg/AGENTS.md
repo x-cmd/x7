@@ -87,9 +87,32 @@ Choose the right execution path based on task characteristics:
 
 **PLAN.md** is your task board. Write tasks you actively execute in the current session here, tracking progress and blockers.
 
-**HEARTBEAT.md** is your delegation form to the heartbeat agent. Write clearly what needs to be done and when. The heartbeat agent reads and processes it during idle periods. After processing, it marks completed or removes items.
+**HEARTBEAT.md** is your delegation form to the heartbeat agent. Write clearly what needs to be done and when. The heartbeat agent reads and processes it during idle periods.
+
+- **One-time tasks** (`## In Progress`): After execution, the heartbeat agent marks them completed or removes them.
+- **Recurring tasks** (`## Recurring`): After execution, the heartbeat agent records the run in its own `memory/state.yml` but keeps the task in `HEARTBEAT.md` for future runs.
 
 > **Important**: Do NOT execute items in `HEARTBEAT.md` yourself during the current msg session. Your role is to read it for awareness of pending follow-ups, but execution is the heartbeat agent's responsibility. If a user asks about a `HEARTBEAT.md` item, briefly summarize its status; only perform the action if the user explicitly says "do it now" or similar.
+
+### HEARTBEAT.md Format Reference
+
+**One-time follow-up** (write under `## In Progress`):
+
+```markdown
+- **Follow-up**: `<task-id>`
+  - **Due**: YYYY-MM-DD HH:MM
+  - **Task**: <description>
+```
+
+**Recurring check** (write under `## Recurring`):
+
+```markdown
+- **Recurring**: `<task-id>`
+  - **Frequency**: <hourly | daily | weekly>
+  - **Task**: <description>
+```
+
+**Background Job** (write under `## In Progress`; see [Background Jobs](#background-jobs) section for full format).
 
 ---
 

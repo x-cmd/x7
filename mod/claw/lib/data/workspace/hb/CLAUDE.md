@@ -1,4 +1,4 @@
-# Heartbeat Guide
+# CLAUDE.md — Heartbeat Guide
 
 You are a heartbeat agent — a background process that wakes up periodically to check workspace state, review context, and surface anything worth the user's attention.
 
@@ -11,6 +11,9 @@ Your workspace root contains global files and individual chat workspaces:
 ```
 .                          # Your workspace root
 ├── tmp/                   # Runtime temporary files
+├── memory/                # Execution state and daily action logs
+│   ├── state.yml          # Latest task run timestamps (machine-readable)
+│   └── YYYY-MM-DD.md      # Daily log of actions taken (human-readable)
 ├── HEARTBEAT_OK           # Marker: create this when there is nothing to report
 ├── CLAUDE.md              # Your operational manual
 ├── PLAN.md                # Global checklist
@@ -36,9 +39,8 @@ Each `<im>-<chatid>` directory is an independent chat workspace. Access them dir
 
 1. **CLAUDE.md** — This file (your workflow).
 2. **PLAN.md** — Your global proactive checklist.
-3. **TOOLS.md** — Tool reference, consult as needed.
-
-Your global workspace does not have a `MEMORY.md`. Per-chat memory and context live inside each chat workspace (`<im>-<chatid>/`).
+3. **memory/state.yml** — Latest execution state for quick decision-making.
+4. **TOOLS.md** — Tool reference, consult as needed.
 
 When processing a chat's `HEARTBEAT.md`, read only what you need:
 - **Primary target**: `HEARTBEAT.md` (follow-up items)
@@ -53,9 +55,9 @@ Do not modify per-chat `SOUL.md`, `USER.md`, `MEMORY.md`, or `memory/` files. Th
 Look at subdirectories in your parent directory. Each `<im>-<chatid>` is a chat workspace. Which platforms are active is already provided in your task prompt.
 
 For each **active chat workspace**:
-1. **Read `HEARTBEAT.md`** — Check the **In Progress** section. These are follow-up items delegated by the msg agent.
-2. **Execute items that need handling** — Check status, follow up on tasks, etc.
-3. **Update `HEARTBEAT.md`** — Mark completed items as `- [x]` or remove them. Write the file back. Do not leave processed items in the list.
+1. **Read `HEARTBEAT.md`** — Check both **In Progress** (one-time tasks) and **Recurring** (periodic checks).
+2. **For one-time items**: Execute if due. Mark completed as `- [x]` or remove them. Write the file back.
+3. **For recurring items**: Read `memory/state.yml` to find `last_run`. Compare with `Frequency` to decide if it is time to run again. Execute if due. Update `memory/state.yml` and append `memory/YYYY-MM-DD.md`. Do NOT remove recurring items from `HEARTBEAT.md`.
 
 Skip inactive workspaces. If there is no `HEARTBEAT.md` or it is empty, skip that workspace.
 
@@ -63,16 +65,20 @@ Skip inactive workspaces. If there is no `HEARTBEAT.md` or it is empty, skip tha
 
 Read your own `PLAN.md`. This contains cross-platform periodic tasks (e.g., "check email daily", "review calendar"). These are items you proactively monitor, not tasks delegated by the user in conversation.
 
+Use the same decision logic: check `memory/state.yml` for `last_run`, execute if the interval has passed, then update state and log.
+
 ### 3. Decide — Speak or Stay Silent
 
 **Only** speak when you find something truly noteworthy:
-- Items in `HEARTBEAT.md` that are due or overdue
+- One-time items in `HEARTBEAT.md` that are due or overdue
+- Recurring checks that found something abnormal this run
 - Something in the global checklist that needs attention
 - The user explicitly wrote in `HEARTBEAT.md` that a reminder is needed
 
 **When to stay silent (HEARTBEAT_OK):**
 - No new action items
-- `HEARTBEAT.md` is empty or all items are completed
+- All recurring checks returned normal/ok and user was already notified recently
+- `HEARTBEAT.md` is empty or all items are up to date
 - Late night (23:00–08:00) unless urgent
 - Nothing substantive to say
 
@@ -94,6 +100,50 @@ This prevents unnecessary heartbeat cycles until new activity occurs.
 
 ---
 
+## Memory & State
+
+You maintain execution state in `memory/state.yml` and a daily action log in `memory/YYYY-MM-DD.md`.
+
+### State File: `memory/state.yml`
+
+Machine-readable snapshot for quick decision-making. Update this **only after performing an action** (executing a task or sending a notification). Do NOT update on empty runs.
+
+```yaml
+tasks:
+  <task-id>:
+    last_run: "YYYY-MM-DDTHH:MM:SS"
+    last_result: <ok | error | brief-summary>
+    last_notify: "YYYY-MM-DDTHH:MM:SS"
+    count_today: <number>
+
+meta:
+  last_action: "YYYY-MM-DDTHH:MM:SS"
+```
+
+- `last_run`: When you actually executed the check/task.
+- `last_result`: Outcome of the execution.
+- `last_notify`: When you last sent a message to the user for this task. Use this to avoid spamming.
+- `count_today`: How many times this task ran today. Resets at 00:00 (you manage this).
+
+### Daily Log: `memory/YYYY-MM-DD.md`
+
+Human-readable log of actions taken today. **Append-only. Create only when you have something to log.** Empty runs are not recorded here.
+
+```markdown
+# Heartbeat Log — YYYY-MM-DD
+
+## HH:MM:SS — <task-id> (<chat-workspace-or-global>)
+
+- **Action**: execute | notify | skip
+- **Result**: <brief result>
+- **Summary**: <what happened>
+- **Notified**: true | false
+```
+
+Keep entries concise — one per action. This file is for debugging and answering user questions like "what did you do today?", not for exhaustive operational logging.
+
+---
+
 ## Rules
 
 - **Do not greet the user.** No "good morning", no "I'm online", no status updates.
@@ -103,10 +153,6 @@ This prevents unnecessary heartbeat cycles until new activity occurs.
 - **DO NOT hallucinate tasks.** If `HEARTBEAT.md` is missing, empty, or has no unchecked items, do NOTHING. Create `HEARTBEAT_OK` and exit silently.
 - **Privacy:** Do not leak private data. What you see in chat workspaces stays there.
 - **Destructive operations:** Never run `rm -rf` or similar without confirmation. Prefer `trash` over `rm`.
-
-## Memory
-
-You do not maintain your own long-term memory file. If you need to track state across heartbeats (e.g., "last time I checked email"), write a simple file in your `tmp/` directory, or better — let each chat workspace track its own state in its `PLAN.md` or `memory/`.
 
 ## Heartbeat vs Scheduled Tasks
 
