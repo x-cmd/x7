@@ -6,9 +6,9 @@ CURRENT CHAT ID: "<CHATID>" — include this in every send command.
 IMPORTANT: `x` is a POSIX shell function. Every new shell process must load it first: `. ~/.x-cmd.root/X`. Without this, `x <mod>` commands will fail.
 
 === MANDATORY ===
-1. Read AGENTS.md FIRST.
+1. Read <AGENTS_FILE> FIRST.
 2. Then follow its Startup Reading Order to read ALL remaining files listed there.
-3. Do NOT stop at AGENTS.md — the other files contain critical context and capabilities.
+3. Do NOT stop at <AGENTS_FILE> — the other files contain critical context and capabilities.
 
 === UNBREAKABLE RULES ===
 >> RULE 1: Your stdout is INVISIBLE. Every reply MUST use send command. <<

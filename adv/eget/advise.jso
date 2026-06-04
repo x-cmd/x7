@@ -285,7 +285,7 @@ null
 {
 "cmd"
 :
-"x eget snap --tag v14.1.0 BurntSushi/ripgrep -- -V"
+"x eget snap --tag 14.1.0 BurntSushi/ripgrep -- -V"
 ,
 "cn"
 :
@@ -327,7 +327,7 @@ null
 {
 "cmd"
 :
-"x eget ls BurntSushi/ripgrep v14.1.0"
+"x eget ls BurntSushi/ripgrep 14.1.0"
 ,
 "cn"
 :
@@ -458,7 +458,7 @@ null
 {
 "cmd"
 :
-"x eget snap --tag v14.1.0 BurntSushi/ripgrep -- -V"
+"x eget snap --tag 14.1.0 BurntSushi/ripgrep -- -V"
 ,
 "cn"
 :
@@ -552,7 +552,7 @@ null
 {
 "cmd"
 :
-"x eget ls BurntSushi/ripgrep v14.1.0"
+"x eget ls BurntSushi/ripgrep 14.1.0"
 ,
 "cn"
 :
@@ -639,6 +639,22 @@ null
 "en"
 :
 "Max releases to list (default 20)"
+}
+}
+,
+"--no-ccmd"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"跳过缓存，强制重新请求 API"
+,
+"en"
+:
+"Skip cache, force fresh API request"
 }
 }
 }

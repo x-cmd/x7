@@ -27,8 +27,12 @@ ___x_cmd_agent_harness_(){
 }
 
 ___x_cmd_agent_default_harness(){
-    local x_=""; ___x_cmd_agent_harness_ || return 1
+    local x_=""; ___x_cmd_agent_harness_ "$@" || return 1
     printf '%s\n' "$x_"
+}
+
+___x_cmd_agent_default_harness_(){
+    ___x_cmd_agent_harness_ "$@"
 }
 
 ___x_cmd_agent_harness_validate(){

@@ -1,7 +1,7 @@
 
 # claw = memory + soul + note + tailer-mq + cron
 
-xrc:mod:lib     claw   run/heartbeat   run/msg  run/agentrequest   run/util run/log run/status
+xrc:mod:lib     claw   run/heartbeat   run/msg  run/agentrequest   run/util run/log run/status  run/workspace
 
 ___X_CMD_CLAW_DIR="$___X_CMD_ROOT_DATA/claw"
 ___X_CMD_CLAW_BOT_WS="$___X_CMD_CLAW_DIR/workspace/default"

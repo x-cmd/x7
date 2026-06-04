@@ -56,6 +56,11 @@ ___x_cmd_claw_run_status(){
     fi
 
     printf "runtime: %s\n" "$runtime_status"
+
+    local harness=""
+    x_=""; ___x_cmd agent default_harness_ 2>/dev/null && harness="$x_"
+    [ -n "$harness" ] && printf "agent_harness: %s\n" "$harness"
+
     printf "heartbeat:\n"
     printf "  worker: %s\n" "x-claw-heartbeat"
     printf "  worker_status: %s\n" "$heartbeat_worker"
@@ -124,6 +129,11 @@ ___x_cmd_claw_run_status(){
     fi
 
     printf "cron:\n"
+
+    local cron_tz=""
+    cron_tz="$(___x_cmd_claw_cron tz 2>/dev/null)" || cron_tz=""
+    [ -n "$cron_tz" ] && printf "  tz: %s\n" "$cron_tz"
+
     local cron_list=""
     cron_list="$(___x_cmd cron ls --ns x-claw-default --tsv 2>/dev/null)" || cron_list=""
     if [ -n "$cron_list" ]; then

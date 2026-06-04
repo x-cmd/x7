@@ -74,7 +74,7 @@ ___x_cmd_feishu_parse_ref_content(){
     local start_index=0
     local ref_type_display=""
     local first_msg_type
-    first_msg_type="$(printf "%s" "$ref_json" | jq -r '.data.items[0].msg_type // empty' 2>/dev/null)"
+    first_msg_type="$(printf "%s" "$ref_json" | ___x_cmd jq -r '.data.items[0].msg_type // empty' 2>/dev/null)"
     if [ "$first_msg_type" = "merge_forward" ]; then
         start_index=1
         ref_type_display="MergeForward"
@@ -82,7 +82,7 @@ ___x_cmd_feishu_parse_ref_content(){
 
     # Extract items as individual JSON lines, starting from start_index
     local items_jsonl
-    items_jsonl="$(printf "%s" "$ref_json" | jq -c ".data.items[${start_index}:][]" 2>/dev/null)"
+    items_jsonl="$(printf "%s" "$ref_json" | ___x_cmd jq -c ".data.items[${start_index}:][]" 2>/dev/null)"
 
     [ -n "$items_jsonl" ] || return 1
 

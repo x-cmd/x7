@@ -3,21 +3,17 @@ ccal-meta-010:
   name: ensure-all-metadata-is-right
 
   desc:
-  -
-  -
+  - ccal info 应能正常输出指定日期的信息
+  - ccal info 的输出应包含输入的日期
 
-  # running x-test using (bash/zsh/dash with mawk,awk,gawk)
-  x-test:
-    testcase1: |
-      # loading x-cmd
-      x ccal info 260501
+  testcase:
+    ccal_info_exitcode:
+      sh: |
+        x ccal info 260501
+        x assert exit 0
 
-    testcase2: |
-      # loading x-cmd
-
-  x-skill-test:
-    testcase1: |
-      # ...
-      # (1)
-      # (2)
-      # (3)
+    ccal_info:
+      desc: "ccal info output contains date"
+      sh: |
+        x ccal info 260603
+        x assert stdout grep "260603"

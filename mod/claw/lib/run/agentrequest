@@ -71,6 +71,7 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
     local chatid="$2";  [ -n "$chatid" ] || N=claw M="Please provide chatid" log:ret:64
     local msg="$3";     [ -n "$msg" ] || N=claw M="Please provide message" log:ret:64
 
+    local x_=""
     if [ -n "$___X_CMD_CLAW_BOT_RECENT_STDOUT_LOG_DIR" ]; then
         local logfp="$___X_CMD_CLAW_BOT_RECENT_STDOUT_LOG_DIR/${im}-${chatid}.log"
         ___x_cmd ensurefp "$logfp"
@@ -83,40 +84,28 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
 
     local workspace_dir="$___X_CMD_CLAW_BOT_WS/${im}-${chatid}"
     local exitcode=0
-    # Initialize workspace from template if first run
+
+    x_=""; ___x_cmd agent default_harness_ || {
+        claw:error "Failed to get default agent harness"
+        return 1
+    }
+    local harness="$x_"
+
+    local agents_file="AGENTS.md"
+    case "$harness" in
+        claude*)    agents_file="CLAUDE.md" ;;
+    esac
+
+    # Ensure workspace directory exists and sync missing template files
     if [ ! -d "$workspace_dir" ]; then
         first_contact_prompt="$(___x_cmd_cmds cat "$___X_CMD_ROOT_MOD/claw/lib/data/prompt/first_contact.md" 2>/dev/null)"
-        ___x_cmd cp -r "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/msg" "$workspace_dir"
-        ___x_cmd mkdirp "$workspace_dir/memory"
-        ___x_cmd mkdirp "$workspace_dir/tmp"
-    else
-        # Ensure missing template files are present without overwriting existing ones
-        local i
-        for i in "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/msg"/*; do
-            [ -e "$i" ] || continue
-            target="$workspace_dir/${i##*/}"
-            [ -e "$target" ] || ___x_cmd cp -r "$i" "$target"
-        done
-        ___x_cmd mkdirp "$workspace_dir/memory"
-        ___x_cmd mkdirp "$workspace_dir/tmp"
     fi
+    ___x_cmd_claw_run_workspace_ensure "$workspace_dir" "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/msg" "$harness"
+    ___x_cmd mkdirp "$workspace_dir/memory"
+    ___x_cmd mkdirp "$workspace_dir/tmp"
 
-    if [ "$workspace_dir/AGENTS.md" -ot "$___X_CMD_ROOT_METADATA/version_sum" ]; then
-        claw:info "Workspace template may have been updated, checking if structure optimization is needed"
-        ___x_cmd_cmds touch "$workspace_dir/AGENTS.md"
-        check_prompt="<workspace_check>
-The workspace template has been updated. Use it as a reference to evaluate whether your current workspace structure needs improvements.
-
-Reference template: $___X_CMD_ROOT_MOD/claw/lib/data/workspace/msg/
-Current workspace:  $workspace_dir
-
-Guidelines:
-- This is a reference only — you decide what to adopt
-- Compare structures and selectively apply beneficial changes
-- Preserve existing user content and customizations
-- Focus on structural gaps or organizational improvements
-</workspace_check>"
-    fi
+    x_=""; ___x_cmd_claw_run_workspace_check_prompt_ "$workspace_dir" "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/msg" "$harness"
+    local check_prompt="$x_"
 
     local latest_msg
     case "$im" in
@@ -142,6 +131,8 @@ Guidelines:
             }
             prompt="$prompt
 <variables>
+<variable name='AGENTS_FILE'>${agents_file}
+</variable>
 <variable name='FIRST_CONTACT_PROMPT'>${first_contact_prompt}
 </variable>
 <variable name='CHATID'>${chatid}
@@ -170,6 +161,8 @@ Guidelines:
             }
             prompt="$prompt
 <variables>
+<variable name='AGENTS_FILE'>${agents_file}
+</variable>
 <variable name='FIRST_CONTACT_PROMPT'>${first_contact_prompt}
 </variable>
 <variable name='CHATID'>${chatid}
@@ -224,6 +217,8 @@ GROUP CHAT GUIDELINES:
             }
             prompt="$prompt
 <variables>
+<variable name='AGENTS_FILE'>${agents_file}
+</variable>
 <variable name='FIRST_CONTACT_PROMPT'>${first_contact_prompt}
 </variable>
 <variable name='CHATID'>${chatid}
@@ -256,6 +251,8 @@ GROUP CHAT GUIDELINES:
             }
             prompt="$prompt
 <variables>
+<variable name='AGENTS_FILE'>${agents_file}
+</variable>
 <variable name='FIRST_CONTACT_PROMPT'>${first_contact_prompt}
 </variable>
 <variable name='CHATID'>${chatid}
@@ -381,36 +378,24 @@ This heartbeat was triggered after $idle_count minutes of inactivity. If you fin
 This prevents unnecessary heartbeat wake-ups until the next user message arrives. Only do this if you are confident there are no pending tasks, reminders, or proactive insights to share."
     fi
 
+
+    x_=""; ___x_cmd agent default_harness_ || {
+        claw:error "Failed to get default agent harness"
+        return 1
+    }
+    local harness="$x_"
+
+    local agents_file="AGENTS.md"
+    case "$harness" in
+        claude*)    agents_file="CLAUDE.md" ;;
+    esac
+
     # Initialize global workspace from heartbeat template if first run
-    if [ ! -d "$workspace_dir" ]; then
-        ___x_cmd cp -r "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/hb" "$workspace_dir"
-        ___x_cmd mkdirp "$workspace_dir/tmp"
-    else
-        # Ensure missing template files are present without overwriting existing ones
-        for i in "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/hb"/*; do
-            [ -e "$i" ] || continue
-            target="$workspace_dir/${i##*/}"
-            [ -e "$target" ] || ___x_cmd cp -r "$i" "$target"
-        done
-        ___x_cmd mkdirp "$workspace_dir/tmp"
-    fi
+    ___x_cmd_claw_run_workspace_ensure "$workspace_dir" "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/hb" "$harness"
+    ___x_cmd mkdirp "$workspace_dir/tmp"
 
-    if [ "$workspace_dir/AGENTS.md" -ot "$___X_CMD_ROOT_METADATA/version_sum" ]; then
-        ___x_cmd_cmds touch "$workspace_dir/AGENTS.md"
-        claw:info "[HB] Workspace template may have been updated, checking if structure optimization is needed"
-        check_prompt="<workspace_check>
-The workspace template has been updated. Use it as a reference to evaluate whether your current workspace structure needs improvements.
-
-Reference template: $___X_CMD_ROOT_MOD/claw/lib/data/workspace/hb/
-Current workspace:  $workspace_dir
-
-Guidelines:
-- This is a reference only — you decide what to adopt
-- Compare structures and selectively apply beneficial changes
-- Preserve existing user content and customizations
-- Focus on structural gaps or organizational improvements
-</workspace_check>"
-    fi
+    x_=""; ___x_cmd_claw_run_workspace_check_prompt_ "$workspace_dir" "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/hb" "$harness"
+    local check_prompt="$x_"
 
     local prompt
     prompt="$(___x_cmd_cmds cat "$___X_CMD_ROOT_MOD/claw/lib/data/prompt/heartbeat.md" 2>/dev/null)" || {
@@ -420,6 +405,8 @@ Guidelines:
 
     prompt="$prompt
 <variables>
+<variable name='AGENTS_FILE'>${agents_file}
+</variable>
 <variable name='ACTIVE_PLATFORMS'>${active_platforms}
 </variable>
 
