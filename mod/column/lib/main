@@ -1,0 +1,106 @@
+# shellcheck shell=dash
+
+___x_cmd_column___main(){
+    if [ "$#" -eq 0 ] && [ ! -t 0 ]; then
+        set -- -
+    fi
+
+    case "$1" in
+        -h|--help)  ___x_cmd help -m column ; return 0 ;;
+    esac
+
+    local table=0
+    local delim=""
+    local outsep="  "
+    local squeeze=1
+    local width=""
+    local force_color=""
+    local no_color=0
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -t)             table=1 ; shift ;;
+
+            -s)             [ $# -ge 2 ] || N=column M="Missing arg for -s" log:ret:64
+                            delim="$2" ; shift 2 ;;
+
+            -o)             [ $# -ge 2 ] || N=column M="Missing arg for -o" log:ret:64
+                            outsep="$2" ; shift 2 ;;
+
+            -n)             squeeze=0 ; shift ;;
+
+            -c)             [ $# -ge 2 ] || N=column M="Missing arg for -c" log:ret:64
+                            width="$2" ; shift 2 ;;
+
+            --color)        force_color=1 ; shift ;;
+            --no-color)     no_color=1 ; shift ;;
+
+            --)             shift ; break ;;
+
+            -)              break ;;
+
+            -*)             N=column M="Unknown option -> $1" log:ret:64 ;;
+
+            *)              break ;;
+        esac
+    done
+
+    [ "$#" -gt 0 ] || set -- -
+
+    if [ "$table" = 1 ]; then
+        ___x_cmd_column___table "$delim" "$outsep" "$squeeze" \
+                               "$force_color" "$no_color" "$@"
+    else
+        ___x_cmd_column___fill "$outsep" "$squeeze" "$width" "$@"
+    fi
+}
+
+___x_cmd_column___table(){
+    local delim="$1";    local outsep="$2";  local squeeze="$3"
+    local force_color="$4"; local no_color="$5"
+    shift 5
+
+    local delim_re delim_was_set
+    if [ -z "$delim" ]; then
+        delim_re=""
+        delim_was_set=0
+    else
+        local escaped
+        escaped=$(printf '%s' "$delim" | sed 's/[\]\\^]/\\&/g')
+        delim_re="[$escaped]"
+        delim_was_set=1
+    fi
+
+    local color=0
+    if [ "$no_color" = 1 ]; then
+        color=0
+    elif [ "$force_color" = 1 ]; then
+        color=1
+    elif [ -t 1 ] && [ -z "${NO_COLOR:-}" ]; then
+        color=1
+    fi
+
+    ___x_cmd_cmds_awk \
+        -v delim_re="$delim_re" \
+        -v outsep="$outsep" \
+        -v squeeze="$squeeze" \
+        -v delim_was_set="$delim_was_set" \
+        -v color="$color" \
+        -f "$___X_CMD_ROOT_MOD/column/lib/awk/table.awk" \
+        "$@"
+}
+
+___x_cmd_column___fill(){
+    local outsep="$1"; local squeeze="$2"; local width="$3"
+    shift 3
+
+    if [ -z "$width" ]; then
+        ___x_cmd tty update 2>/dev/null || true
+        width="${COLUMNS:-80}"
+    fi
+
+    ___x_cmd_cmds_awk \
+        -v width="$width" \
+        -f "$___X_CMD_ROOT_MOD/column/lib/awk/fill.awk" \
+        "$@"
+}

@@ -8,36 +8,36 @@ null
 ,
 "cn"
 :
-"文件搜索"
+"为 AI agent 设计的 BFS 宽范围文件搜索"
 ,
 "en"
 :
-"Better Find"
+"BFS broad file search designed for AI agents"
 }
 ,
 "#synopsis"
 :
 [
 {
-"x bfind [options] [path]"
+"x bfind [--bfs-mindepth N] [--bfs-maxdepth N] [--all] [--next] [-i NAME]... [--no-ignore] [--no-homeignore] [--prune-hidden] [--verbose|-v] [--] [path] [find-expr]"
 :
 null
 }
 ,
 {
-"x bfind -a [path]"
+"x bfind ."
 :
 null
 }
 ,
 {
-"x bfind -n <num> [path]"
+"x bfind --next --bfs-maxdepth 5 ."
 :
 null
 }
 ,
 {
-"x bfind -d <depth> [path]"
+"x bfind -i vendor -- . -type f"
 :
 null
 }
@@ -48,144 +48,14 @@ null
 {
 "cn"
 :
-"更友好的文件搜索工具，基于 Unix find 命令。\n支持忽略常见目录（如 .git、.DS_Store），限制结果数量。\n"
+"与 x find 共享 ignore 规则的广度优先搜索，浅层优先，适合逐步深入探索"
 ,
 "en"
 :
-"A better file search utility based on Unix find command.\nSupports ignoring common directories (like .git, .DS_Store) and result limiting.\n"
+"Breadth-first search sharing ignore rules with x find, shallow results first, ideal for incremental exploration"
 }
 ,
-"#tip"
-:
-[
-{
-"cn"
-:
-"默认忽略 .DS_Store, .git, .x-cmd.root 目录\n使用 -i 可添加自定义忽略模式\n使用 -a 获取完整结果（无行数限制）\n"
-,
-"en"
-:
-"Default ignores .DS_Store, .git, .x-cmd.root directories\nUse -i to add custom ignore patterns\nUse -a for complete results (no line limit)\n"
-}
-]
-,
-"#tldr"
-:
-[
-{
-"cmd"
-:
-"x bfind"
-,
-"cn"
-:
-"示例: 搜索当前目录（默认100行）"
-,
-"en"
-:
-"Example: Search current directory (default 100 lines)"
-}
-,
-{
-"cmd"
-:
-"x bfind -a"
-,
-"cn"
-:
-"示例: 显示所有匹配文件（无限制）"
-,
-"en"
-:
-"Example: Show all matching files (unlimited)"
-}
-,
-{
-"cmd"
-:
-"x bfind -n 10"
-,
-"cn"
-:
-"示例: 限制输出10行"
-,
-"en"
-:
-"Example: Limit output to 10 lines"
-}
-,
-{
-"cmd"
-:
-"x bfind -d 5"
-,
-"cn"
-:
-"示例: 搜索深度限制为5层"
-,
-"en"
-:
-"Example: Limit search depth to 5 levels"
-}
-,
-{
-"cmd"
-:
-"x bfind -i \"node_modules\" -i \"__pycache__\""
-,
-"cn"
-:
-"示例: 添加多个忽略模式"
-,
-"en"
-:
-"Example: Add multiple ignore patterns"
-}
-,
-{
-"cmd"
-:
-"x bfind --no-ignore"
-,
-"cn"
-:
-"示例: 禁用所有忽略规则"
-,
-"en"
-:
-"Example: Disable all ignore rules"
-}
-,
-{
-"cmd"
-:
-"x bfind . -a -d 3"
-,
-"cn"
-:
-"示例: 在当前目录搜索，深度3层，显示全部"
-,
-"en"
-:
-"Example: Search current dir, depth 3, show all"
-}
-,
-{
-"cmd"
-:
-"x bfind /usr/local -n 20"
-,
-"cn"
-:
-"示例: 搜索指定目录"
-,
-"en"
-:
-"Example: Search in specific directory"
-}
-]
-,
-"-n"
+"-i|--ignore"
 :
 {
 "#desc"
@@ -193,27 +63,11 @@ null
 {
 "cn"
 :
-"限制输出行数（默认1000，-1表示无限制）"
+"添加自定义忽略目录名（可叠加使用）"
 ,
 "en"
 :
-"Limit output lines (default 1000, -1 means unlimited)"
-}
-}
-,
-"-i"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"添加忽略模式（支持多 -i）"
-,
-"en"
-:
-"Add ignore pattern (supports multiple -i)"
+"Add custom ignore directory name (can be stacked)"
 }
 ,
 "#1"
@@ -224,11 +78,11 @@ null
 {
 "cn"
 :
-"忽略的模式"
+"忽略的目录名"
 ,
 "en"
 :
-"Pattern to ignore"
+"Directory name to ignore"
 }
 }
 }
@@ -241,15 +95,15 @@ null
 {
 "cn"
 :
-"禁用所有忽略规则"
+"禁用默认忽略规则"
 ,
 "en"
 :
-"Disable all ignore rules"
+"Disable default ignore rules"
 }
 }
 ,
-"-a|--all"
+"--no-homeignore"
 :
 {
 "#desc"
@@ -257,15 +111,15 @@ null
 {
 "cn"
 :
-"显示所有结果（无行数限制，深度最大）"
+"禁用 $HOME 目录下的额外忽略规则"
 ,
 "en"
 :
-"Show all results (no line limit, max depth)"
+"Disable extra ignore rules for $HOME directory"
 }
 }
 ,
-"-d"
+"--prune-hidden"
 :
 {
 "#desc"
@@ -273,11 +127,59 @@ null
 {
 "cn"
 :
-"设置最大搜索深度（默认10）"
+"排除隐藏目录（. 开头），默认不排除隐藏目录"
 ,
 "en"
 :
-"Set maximum search depth (default 10)"
+"Prune hidden directories (dot-prefixed), off by default"
+}
+}
+,
+"--verbose|-v"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示当前生效的忽略列表"
+,
+"en"
+:
+"Show active ignore lists"
+}
+}
+,
+"--all"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示所有结果（深度最大，自动关闭 --next）"
+,
+"en"
+:
+"Show all results (max depth, auto-disables --next)"
+}
+}
+,
+"--bfs-mindepth"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"设置 BFS 起始深度（默认1）"
+,
+"en"
+:
+"Set BFS starting depth (default 1)"
 }
 ,
 "#1"
@@ -296,5 +198,247 @@ null
 }
 }
 }
+,
+"--bfs-maxdepth"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"设置 BFS 最大深度（默认3）"
+,
+"en"
+:
+"Set BFS maximum depth (default 3)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"深度值"
+,
+"en"
+:
+"Depth value"
+}
+}
+}
+,
+"--next"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"在 maxdepth 边界探测下一层可展开条目数，输出到 stderr"
+,
+"en"
+:
+"Probe expandable entry count at maxdepth boundary, output to stderr"
+}
+}
+,
+"#tip"
+:
+[
+{
+"en"
+:
+"Since v0.9.8: dropped per-layer iteration and streaming in favor of a single find with prune + awk depth sorting. Default depth reduced to 3 for agent use — agents don't need streaming, and limited context benefits from small depth + --next to explore incrementally.\n"
+,
+"cn"
+:
+"v0.9.8 起：因效率考虑和 agent 适用性，放弃逐层搜索和流式输出，改用单次 find + prune + awk 结果重整。默认深度降至 3，配合 --next 下层统计信息，逐步深入探索。\n"
+}
+,
+{
+"en"
+:
+"Shares the same ignore module as `x find`. Default excludes (-name): .git, .svn, .hg, node_modules, __pycache__, .venv, .gradle, .mvn, .build, .cache, .tmp, .DS_Store\n"
+,
+"cn"
+:
+"与 `x find` 共享同一套 ignore 模块。默认排除（-name）: .git, .svn, .hg, node_modules, __pycache__, .venv, .gradle, .mvn, .build, .cache, .tmp, .DS_Store\n"
+}
+,
+{
+"en"
+:
+"Default depth is 3. Use --bfs-maxdepth to go deeper, or --bfs-mindepth with --bfs-maxdepth to explore a specific layer range.\n"
+,
+"cn"
+:
+"默认搜索 3 层。用 --bfs-maxdepth 加深，或配合 --bfs-mindepth 搜索指定层范围。\n"
+}
+,
+{
+"en"
+:
+"--next probes one extra layer and prints next-level (expandable dirs) and next-level-count (total child entries) to stderr. Useful for deciding whether to continue exploring.\n"
+,
+"cn"
+:
+"--next 多遍一层，在 stderr 输出 next-level（可展开目录数）和 next-level-count（子条目总数）。用于判断是否继续深入。\n"
+}
+,
+{
+"en"
+:
+"Common -i values: vendor, target, dist, build, out, venv, Pods, DerivedData\n"
+,
+"cn"
+:
+"常用 -i 值: vendor, target, dist, build, out, venv, Pods, DerivedData\n"
+}
+,
+{
+"en"
+:
+"For git projects, prefer git ls-files and git grep for indexed search. For depth-first search with full find compatibility, use `x find`.\n"
+,
+"cn"
+:
+"在 git 项目中，优先使用 git ls-files 和 git grep 进行索引搜索。如需深度优先搜索且完整兼容 find 参数，使用 `x find`。\n"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x bfind ."
+,
+"cn"
+:
+"BFS 搜索当前目录（默认3层）"
+,
+"en"
+:
+"BFS search current directory (default 3 layers)"
+}
+,
+{
+"cmd"
+:
+"x bfind --next ."
+,
+"cn"
+:
+"搜索并显示下一层可展开条目数（stderr）"
+,
+"en"
+:
+"Search and show next-level expandable count (stderr)"
+}
+,
+{
+"cmd"
+:
+"x bfind --all --bfs-maxdepth 5 ."
+,
+"cn"
+:
+"深度5层，显示全部结果"
+,
+"en"
+:
+"Depth 5 levels, show all results"
+}
+,
+{
+"cmd"
+:
+"x bfind --bfs-mindepth 2 --bfs-maxdepth 4 ."
+,
+"cn"
+:
+"只搜索第2到第4层"
+,
+"en"
+:
+"Search only layers 2 to 4"
+}
+,
+{
+"cmd"
+:
+"x bfind --ignore vendor --ignore target -- . -name \"*.go\""
+,
+"cn"
+:
+"Go 项目排除 vendor 和 target，查找 .go 文件"
+,
+"en"
+:
+"Go project, exclude vendor and target, find .go files"
+}
+,
+{
+"cmd"
+:
+"x bfind --no-ignore --ignore node_modules ."
+,
+"cn"
+:
+"清空默认排除，只忽略 node_modules"
+,
+"en"
+:
+"Clear defaults, only ignore node_modules"
+}
+,
+{
+"cmd"
+:
+"x bfind --no-ignore --no-homeignore ~"
+,
+"cn"
+:
+"禁用所有忽略规则，等同原生 find（BFS 模式）"
+,
+"en"
+:
+"Disable all ignore rules, same as raw find (BFS mode)"
+}
+,
+{
+"cmd"
+:
+"x bfind --prune-hidden ."
+,
+"cn"
+:
+"排除所有隐藏目录"
+,
+"en"
+:
+"Prune all hidden directories"
+}
+,
+{
+"cmd"
+:
+"x bfind --verbose ."
+,
+"cn"
+:
+"显示当前生效的忽略列表"
+,
+"en"
+:
+"Show active ignore lists"
+}
+]
 }
 

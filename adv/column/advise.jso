@@ -1,0 +1,378 @@
+{
+"#name"
+:
+{
+"column"
+:
+null
+,
+"cn"
+:
+"表格对齐工具"
+,
+"en"
+:
+"Column alignment tool"
+}
+,
+"#synopsis"
+:
+[
+{
+"x column [options] [file ...]"
+:
+null
+,
+"cn"
+:
+"选项与文件"
+,
+"en"
+:
+"Options and files"
+}
+]
+,
+"#desc"
+:
+{
+"cn"
+:
+"POSIX shell 实现的 column 替代 — 把分隔文本对齐成表格，或把多行输入排成多列；TTY 自动给标题行反色"
+,
+"en"
+:
+"POSIX-shell re-implementation of `column` — align delimited text into a table, or arrange lines into side-by-side columns; auto reverse-video the title row on tty"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x passwd --tsv | x column -t -s \"$(printf '\t')\""
+,
+"cn"
+:
+"示例: 表格化 /etc/passwd 的 TSV 输出"
+,
+"en"
+:
+"Example: Tabulate the TSV form of /etc/passwd"
+}
+,
+{
+"cmd"
+:
+"ps -eo pid,user,comm | tr ' ' $'\t' | x column -t -s \"$(printf '\t')\""
+,
+"cn"
+:
+"示例: 表格化 ps 输出"
+,
+"en"
+:
+"Example: Tabulate `ps` output"
+}
+,
+{
+"cmd"
+:
+"ls | x column"
+,
+"cn"
+:
+"场景: 不带 -t：把 ls 输出排成多列（按终端宽度）"
+,
+"en"
+:
+"Scenario: Without -t: arrange `ls` output in side-by-side columns (fit terminal width)"
+}
+,
+{
+"cmd"
+:
+"NO_COLOR=1 x column -t -s : file"
+,
+"cn"
+:
+"场景: 强制不要颜色（遵循 NO_COLOR 约定）"
+,
+"en"
+:
+"Scenario: Force plain output (honours the NO_COLOR convention)"
+}
+,
+{
+"cmd"
+:
+"x column -t -s : --color file | less -R"
+,
+"cn"
+:
+"场景: 强制带颜色输出，pipe 给 less -R 翻看"
+,
+"en"
+:
+"Scenario: Force colors on, pipe to `less -R` for paging"
+}
+]
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"直接当 `column` 用：`x column -t -s : file` 就是 GNU `column -t -s : file`，选项在前\n"
+,
+"en"
+:
+"Use it like `column` directly: `x column -t -s : file` is GNU `column -t -s : file`, options first\n"
+}
+,
+{
+"cn"
+:
+"默认分隔符是空白（空格 / Tab），连续空白自动合并（和 GNU column 一样）；想要保留空单元格加 -n\n"
+,
+"en"
+:
+"Default delimiter is whitespace, with consecutive runs collapsed (matches GNU column); pass -n to keep empty cells\n"
+}
+,
+{
+"cn"
+:
+"不带 -t 是填充模式：每行一条记录，按 -c 宽度排成多列（默认读终端宽度，80 兜底），适合 `ls | x column` 这种场景\n"
+,
+"en"
+:
+"Without -t, fill mode kicks in: each line is one entry, arranged in side-by-side columns within `-c <width>` (default: terminal width, 80 fallback); perfect for `ls | x column`\n"
+}
+,
+{
+"cn"
+:
+"着色是 TTY 感知的：stdout 是终端就给标题行（第 1 行）上 `\\033[7m...\\033[0m` 反相高亮，其余行原样，是管道就关色（保证 grep / 二次处理不带乱码）\n"
+,
+"en"
+:
+"Coloring is tty-aware: the title row (row 1) gets wrapped in reverse video (`\\033[7m...\\033[0m`) when stdout is a terminal, plain bytes when piped — so `... | grep` stays clean\n"
+}
+,
+{
+"cn"
+:
+"NO_COLOR=1 关色，--color 强制开，--no-color 强制关\n"
+,
+"en"
+:
+"NO_COLOR=1 to disable, --color to force on, --no-color to force off\n"
+}
+,
+{
+"cn"
+:
+"内部纯 shell + awk：解析在 shell 里做，对齐/反色逻辑在 lib/awk/table.awk 和 lib/awk/fill.awk 里\n"
+,
+"en"
+:
+"Pure shell + awk under the hood: parsing in lib/main, alignment and color in lib/awk/table.awk and lib/awk/fill.awk\n"
+}
+]
+,
+"-t"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"表格模式：按 -s 把每行切分，按列宽对齐"
+,
+"en"
+:
+"Table mode: split each line by -s and pad columns to the widest cell"
+}
+}
+,
+"-s"
+:
+{
+"#synopsis"
+:
+"<delim>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"输入分隔符；留空表示空白（空格 / Tab，连续空白自动合并）"
+,
+"en"
+:
+"Input delimiter; empty means whitespace (space / tab, runs collapsed)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"分隔符"
+,
+"en"
+:
+"delimiter"
+}
+}
+}
+,
+"-o"
+:
+{
+"#synopsis"
+:
+"<sep>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"输出列分隔符，默认两个空格"
+,
+"en"
+:
+"Output column separator, default two spaces"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"分隔符"
+,
+"en"
+:
+"separator"
+}
+}
+}
+,
+"-n"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"不合并连续分隔符（仅在空白分隔下有意义）"
+,
+"en"
+:
+"Do not collapse runs of delimiters (only meaningful with whitespace input)"
+}
+}
+,
+"-c"
+:
+{
+"#synopsis"
+:
+"<width>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"输出宽度（用于填充模式决定横向排多少列；默认读终端宽度）"
+,
+"en"
+:
+"Output width (fill mode uses this to decide how many side-by-side columns; default — terminal width)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"宽度"
+,
+"en"
+:
+"width"
+}
+}
+}
+,
+"--color"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"强制输出 ANSI 颜色（默认在 TTY 自动启用，管道自动关闭）"
+,
+"en"
+:
+"Force ANSI colors on (auto-on for tty, auto-off for pipes)"
+}
+}
+,
+"--no-color"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"强制关闭颜色（也会被 NO_COLOR 环境变量触发）"
+,
+"en"
+:
+"Force ANSI colors off (also triggered by the NO_COLOR env var)"
+}
+}
+,
+"#other"
+:
+{
+"en"
+:
+{
+"Please visit our homepage for more information:"
+:
+"https://x-cmd.com/mod/column"
+}
+,
+"cn"
+:
+{
+"请访问我们的主页以获取更多信息："
+:
+"https://x-cmd.com/mod/column"
+}
+}
+}
+

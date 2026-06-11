@@ -8,36 +8,36 @@ null
 ,
 "cn"
 :
-"为 find 设计的增强模块"
+"为 AI agent 设计的增强 find"
 ,
 "en"
 :
-"Enhanced modules for find"
+"Enhanced find designed for AI agents"
 }
 ,
 "#synopsis"
 :
 [
 {
-"x find [path] [options]"
+"x find [extension-args] [--] [path] [find-expr]"
 :
 null
 }
 ,
 {
-"x find . -name pattern"
+"x find . -name \"*.ts\""
 :
 null
 }
 ,
 {
-"x find . -type f"
+"x find -i vendor . -name \"*.go\""
 :
 null
 }
 ,
 {
-"x find . -type d"
+"x find --no-ignore . -type f"
 :
 null
 }
@@ -48,38 +48,26 @@ null
 {
 "cn"
 :
-"find 是一个强大的文件查找工具，用于在文件系统中查找符合特定条件的文件和目录\n该模块是为提升 find 使用体验而设计的，如借助 fzf 提供一种以交互模式使用 find 命令的方法。\n"
+"用 shell 脚本对系统 find 的轻量增强，100% 兼容原生 find 接口，为 AI agent 自动排除噪音目录以减少误报、节省 token 和上下文、加速搜索"
 ,
 "en"
 :
-"find is a powerful file search tool that is used to locate files and directories within a file system that meet specific criteria.\nThis module is designed to enhance the find user experience, such as providing an interactive way to use the find command with the help of fzf.\n"
+"Lightweight shell wrapper around system find, 100% compatible with native find interface, auto-excludes noise dirs to reduce false positives, save tokens and context, and speed up search for AI agents"
 }
 ,
-"#subcmd:Enhance"
-:
-[
-"--fzfapp"
-,
-"--cmd"
-]
-,
-"--fzfapp"
+"-i|--ignore"
 :
 {
-"#subcmd"
-:
-true
-,
 "#desc"
 :
 {
 "cn"
 :
-"使用 fzf 为 find 提供交互式 APP（在交互式 APP 中默认禁用 -exec ）"
+"添加自定义忽略目录名（可叠加使用）"
 ,
 "en"
 :
-"Use fzf to provide an interactive app for find (disable -exec by default within the interactive app)"
+"Add custom ignore directory name (can be stacked)"
 }
 ,
 "#1"
@@ -88,44 +76,164 @@ true
 "#desc"
 :
 {
-"en"
-:
-"file or directories"
-,
 "cn"
 :
-"文件或目录"
-}
+"忽略的目录名"
 ,
-"#exec"
+"en"
 :
-"___x_cmd_advise__file"
+"Directory name to ignore"
+}
 }
 }
 ,
-"--cmd"
+"--no-ignore"
 :
 {
-"#subcmd"
-:
-true
-,
 "#desc"
 :
 {
 "cn"
 :
-"直接运行 find 命令"
+"禁用默认忽略规则"
 ,
 "en"
 :
-"Run the find command directly"
+"Disable default ignore rules"
 }
 }
 ,
-"$ref"
+"--no-homeignore"
 :
-"x-cmd-advise://find/advise.t.jso"
+{
+"#desc"
+:
+{
+"cn"
+:
+"禁用 $HOME 目录下的额外忽略规则"
+,
+"en"
+:
+"Disable extra ignore rules for $HOME directory"
+}
+}
+,
+"--prune-hidden"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"排除隐藏目录（. 开头），默认不排除隐藏目录"
+,
+"en"
+:
+"Prune hidden directories (dot-prefixed), off by default"
+}
+}
+,
+"--verbose|-v"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示当前生效的忽略列表"
+,
+"en"
+:
+"Show active ignore lists"
+}
+}
+,
+"#tip"
+:
+[
+{
+"en"
+:
+"Two categories of arguments: x find extension args (before --) and raw find args (after --).\nExtension args: -i, --no-ignore, --no-homeignore, --verbose\nFind args: path, -name, -type, -exec, -maxdepth, and all standard find expressions\n"
+,
+"cn"
+:
+"参数分两类：x find 增强参数（-- 之前）和 find 原参数（-- 之后）。\n增强参数: -i, --no-ignore, --no-homeignore, --verbose\nfind 原参数: path, -name, -type, -exec, -maxdepth 及所有标准 find 表达式\n"
+}
+,
+{
+"en"
+:
+"Default excludes (-name, any depth): .git, .svn, .hg, node_modules, __pycache__, .venv, .gradle, .mvn, .build, .cache, .tmp, .DS_Store\nThese are tool-generated directories that are never business files.\n"
+,
+"cn"
+:
+"默认排除（-name，任意深度）: .git, .svn, .hg, node_modules, __pycache__, .venv, .gradle, .mvn, .build, .cache, .tmp, .DS_Store\n均为工具生成的目录，不包含业务文件。\n"
+}
+,
+{
+"en"
+:
+"Default ignore rules exist to filter out auto-generated files from libraries, plugins, and dev tools — these are not user files. If you need to search inside them, target the directory directly: `find ~/.vim` or `x find --no-ignore -i .git -- ~/.vim`\n"
+,
+"cn"
+:
+"默认过滤的目的是排除由库、插件、开发工具自动生成的外部代码文件，这些一般不是用户文件。如果需要对这些目录进行搜索，可以直接指定目录：`find ~/.vim` 或 `x find --no-ignore -i .git -- ~/.vim`\n"
+}
+,
+{
+"en"
+:
+"$HOME extra excludes (-path, only direct children of $HOME):\n  darwin: Applications, Library, .Trash, .localized, Desktop, Documents, Pictures, Movies, Music, Public\n  linux: .dbus, .pki\n  win: AppData, Application Data\n  Common: .x-cmd.root, .codex, .agent, .crush, .cursor, .docker, .claude, .cargo, .bun, .cherrystudio, .npm, .yarn, .pnpm-store, .nvm, .node-gyp, .volta, .deno, .rustup, .pyenv, .conda, .sdkman, .rbenv, .jenv, .n, .config, .local, .vscode, .vscode-server, .vscode-shared, .gradle, .m2, .sbt, .ivy2, .terraform.d, .minikube, .kube, .helm, .ipython, .jupyter, .pandoc, .vim, .oh-my-zsh, .tmux, .emacs.d, .android, .flutter, .electron-gyp, .gnupg, .pixi, .nix-profile, .nix-defexpr, .nix-channels, .xargo, .swiftpm, .copilot, .gemini, .trae, .cline, .cagent, .kimi, .warp, .agent-browser, .thumbnails, .sandboxd\n"
+,
+"cn"
+:
+"$HOME 额外排除（-path，仅匹配 $HOME 直接子目录）:\n  darwin: Applications, Library, .Trash, .localized, Desktop, Documents, Pictures, Movies, Music, Public\n  linux: .dbus, .pki\n  win: AppData, Application Data\n  通用: .x-cmd.root, .codex, .agent, .crush, .cursor, .docker, .claude, .cargo, .bun, .cherrystudio, .npm, .yarn, .pnpm-store, .nvm, .node-gyp, .volta, .deno, .rustup, .pyenv, .conda, .sdkman, .rbenv, .jenv, .n, .config, .local, .vscode, .vscode-server, .vscode-shared, .gradle, .m2, .sbt, .ivy2, .terraform.d, .minikube, .kube, .helm, .ipython, .jupyter, .pandoc, .vim, .oh-my-zsh, .tmux, .emacs.d, .android, .flutter, .electron-gyp, .gnupg, .pixi, .nix-profile, .nix-defexpr, .nix-channels, .xargo, .swiftpm, .copilot, .gemini, .trae, .cline, .cagent, .kimi, .warp, .agent-browser, .thumbnails, .sandboxd\n"
+}
+,
+{
+"en"
+:
+"For git projects, prefer git ls-files and git grep for faster indexed search. For system-wide search, use mdfind (macOS), locate (Linux) or similar indexed tools. Run `x skill0 find-better` to learn more about find/bfind, mdfind, git ls-files, git grep, locate and other file search best practices.\n"
+,
+"cn"
+:
+"在 git 项目中，优先使用 git ls-files 和 git grep 进行更高效的索引搜索。全局搜索可使用 mdfind (macOS)、locate (Linux) 等系统级索引工具。运行 `x skill0 find-better` 了解 find/bfind、mdfind、git ls-files、git grep、locate 等文件搜索最佳实践。\n"
+}
+,
+{
+"en"
+:
+"Common -i values for project-specific exclusions: vendor, target, dist, build, out, venv, Pods, DerivedData\n"
+,
+"cn"
+:
+"常用 -i 值（按需排除）: vendor, target, dist, build, out, venv, Pods, DerivedData\n"
+}
+,
+{
+"en"
+:
+"Use `x bfind` for BFS (breadth-first) search — shares the same ignore rules as `x find`, but results are sorted by depth (shallow first). Ideal for exploring unfamiliar directories layer by layer, getting a broad overview before going deep. Default depth is 3, adjustable with `--bfs-maxdepth`.\n"
+,
+"cn"
+:
+"使用 `x bfind` 进行 BFS（广度优先）搜索 — 与 `x find` 共享同一套忽略规则，但结果按深度排序（浅层优先）。适合逐层递进地探索陌生目录，先看全貌再深入。默认搜索 3 层，可用 `--bfs-maxdepth` 调整。\n"
+}
+,
+{
+"en"
+:
+"Security: ignore name quoting via `___x_cmd_shq1_` (shell-style single-quote escape) prevents command injection via `-i`. See [x-bash/xrc#34](https://github.com/x-bash/xrc/issues/34) for safety verification.\n"
+,
+"cn"
+:
+"安全：使用 `___x_cmd_shq1_`（shell-style single-quote 转义）对 ignore 名加引号，防止通过 `-i` 注入命令。安全验证见 [x-bash/xrc#34](https://github.com/x-bash/xrc/issues/34)。\n"
+}
+]
 ,
 "#tldr"
 :
@@ -133,71 +241,113 @@ true
 {
 "cmd"
 :
-"x find"
+"x find . -name \"*.ts\""
 ,
 "cn"
 :
-"Example: 使用 fzf 交互式查找文件或目录"
+"Example: 搜索 .ts 文件（自动排除噪音目录）"
 ,
 "en"
 :
-"Example: Find files or directories interactively using fzf"
+"Example: Search .ts files (auto-excludes noise dirs)"
 }
 ,
 {
 "cmd"
 :
-"x find . -name \"*.txt\""
+"x find --ignore vendor --ignore target -- . -name \"*.go\""
 ,
 "cn"
 :
-"Example: 查找当前目录下所有 .txt 文件"
+"Example: Go 项目排除 vendor 和 target"
 ,
 "en"
 :
-"Example: Find all .txt files in current directory"
+"Example: Go project, exclude vendor and target"
 }
 ,
 {
 "cmd"
 :
-"x find . -type f"
+"x find --ignore node_modules -- . -maxdepth 3 -name \"*.yml\""
 ,
 "cn"
 :
-"Example: 查找当前目录下的所有文件"
+"Example: 限制搜索深度，查找配置文件"
 ,
 "en"
 :
-"Example: Find all files in current directory"
+"Example: Limit search depth, find config files"
 }
 ,
 {
 "cmd"
 :
-"x find . -type d"
+"x find . -type f -name \"*.log\" -mtime +7"
 ,
 "cn"
 :
-"Example: 查找当前目录下的所有目录"
+"Example: 查找 7 天前的旧日志文件"
 ,
 "en"
 :
-"Example: Find all directories in current directory"
+"Example: Find log files older than 7 days"
 }
 ,
 {
 "cmd"
 :
-"x find /home -size +100M"
+"x find --no-ignore --ignore node_modules -- . -name \"*.ts\""
 ,
 "cn"
 :
-"Example: 查找 /home 目录下大于 100M 的文件"
+"Example: 清空默认排除，只忽略自定义目录"
 ,
 "en"
 :
-"Example: Find files larger than 100MB in /home"
+"Example: Clear defaults, only ignore custom dirs"
+}
+,
+{
+"cmd"
+:
+"x find --no-ignore --no-homeignore -- . -type d"
+,
+"cn"
+:
+"Example: 禁用所有忽略规则，等同原生 find"
+,
+"en"
+:
+"Example: Disable all ignore rules, same as raw find"
+}
+,
+{
+"cmd"
+:
+"x find . -type f -executable"
+,
+"cn"
+:
+"Example: 查找可执行文件（使用 -- 可显式分隔增强参数与 find 参数，可选）"
+,
+"en"
+:
+"Example: Find executable files (use -- to explicitly separate extension and find args, optional)"
+}
+,
+{
+"cmd"
+:
+"x find . -name \"*.tmp\" -delete"
+,
+"cn"
+:
+"Example: 删除所有临时文件"
+,
+"en"
+:
+"Example: Delete all temporary files"
 }
 ]
 }
