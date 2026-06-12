@@ -80,3 +80,38 @@ $_val
 A
     eval "$varname=\"\$filtered\""
 }
+
+___X_CMD_FIND_WHITELIST=""
+
+___x_cmd_find_whitelist_add_(){
+    while [ $# -gt 0 ]; do
+        ___X_CMD_FIND_WHITELIST="${___X_CMD_FIND_WHITELIST}${1}${___X_CMD_UNSEENCHAR_NEWLINE}"
+        shift
+    done
+}
+
+___x_cmd_find_in_whitelist_(){
+    case "${___X_CMD_UNSEENCHAR_NEWLINE}${___X_CMD_FIND_WHITELIST}" in
+        *"
+${1}
+"*) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
+___x_cmd_find_whitelist_filter_(){
+    [ -n "$___X_CMD_FIND_WHITELIST" ] || return 0
+
+    local varname _val filtered
+    for varname in ___X_CMD_FIND_IGNORE ___X_CMD_FIND_HOMEIGNORE; do
+        eval "_val=\"\${$varname}\""
+        filtered=""
+        while IFS= read -r name; do
+            [ -n "$name" ] || continue
+            ___x_cmd_find_in_whitelist_ "$name" || filtered="${filtered}${name}${___X_CMD_UNSEENCHAR_NEWLINE}"
+        done <<A
+$_val
+A
+        eval "$varname=\"\$filtered\""
+    done
+}

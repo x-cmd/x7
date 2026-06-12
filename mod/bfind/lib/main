@@ -8,6 +8,7 @@ ___x_cmd_bfind___main(){
 
     local ___X_CMD_FIND_IGNORE="${___X_CMD_FIND_IGNORE}"
     local ___X_CMD_FIND_HOMEIGNORE="${___X_CMD_FIND_HOMEIGNORE}"
+    local ___X_CMD_FIND_WHITELIST="${___X_CMD_FIND_WHITELIST}"
 
     local homeignore=1
     local hint=""
@@ -29,7 +30,11 @@ ___x_cmd_bfind___main(){
 
             # x find options
             -i|--ignore)        ___x_cmd_find_ignore_add_ "$2" ;        shift 2     ;;
-            --no-ignore)        ___X_CMD_FIND_IGNORE="" ;               shift       ;;
+            -I|--include)       ___x_cmd_find_whitelist_add_ "$2" ;     shift 2     ;;
+            --no-ignore)        ___X_CMD_FIND_IGNORE=""
+                                ___X_CMD_FIND_HOMEIGNORE=""
+                                ___X_CMD_FIND_WHITELIST=""
+                                shift ;;
             --no-homeignore)    homeignore="" ;                         shift       ;;
             --prune-hidden)     prune_hidden=1 ;                        shift       ;;
             --verbose|-v)       hint=1 ;                                shift       ;;
@@ -50,6 +55,7 @@ ___x_cmd_bfind___main(){
 
     [ -n "$prune_hidden" ] && ___x_cmd_find_ignore_strip_hidden_ ___X_CMD_FIND_IGNORE
     [ -z "$homeignore" ] || ___x_cmd_find_ignore_home "$rootfp" "$prune_hidden"
+    ___x_cmd_find_whitelist_filter_
 
     local has_user_args=$#
     local x_

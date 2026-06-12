@@ -38,11 +38,11 @@ null
 {
 "cn"
 :
-"POSIX shell 实现的 column 替代 — 把分隔文本对齐成表格，或把多行输入排成多列；TTY 自动给标题行反色"
+"GNU `column` 的 awk 重新实现，100% 兼容 — 把分隔文本对齐成表格，或把多行输入排成多列；TTY 自动给标题行反色，table 模式支持每列独立配色 + 每 N 行下划线"
 ,
 "en"
 :
-"POSIX-shell re-implementation of `column` — align delimited text into a table, or arrange lines into side-by-side columns; auto reverse-video the title row on tty"
+"awk re-implementation of GNU `column`, 100% compatible — align delimited text into a table, or arrange lines into side-by-side columns; auto reverse-video the title row on tty; table mode supports per-column color and per-N-row underline"
 }
 ,
 "#tldr"
@@ -51,7 +51,7 @@ null
 {
 "cmd"
 :
-"x passwd --tsv | x column -t -s \"$(printf '\t')\""
+"x passwd --tsv | x column -t -s \"$(printf '\\t')\""
 ,
 "cn"
 :
@@ -65,15 +65,15 @@ null
 {
 "cmd"
 :
-"ps -eo pid,user,comm | tr ' ' $'\t' | x column -t -s \"$(printf '\t')\""
+"ps -eo pid,user,comm | x column -t"
 ,
 "cn"
 :
-"示例: 表格化 ps 输出"
+"示例: 表格化 ps 输出（默认空白分隔，连续空白自动合并）"
 ,
 "en"
 :
-"Example: Tabulate `ps` output"
+"Example: Tabulate `ps` output (default whitespace, runs collapsed)"
 }
 ,
 {
@@ -180,6 +180,16 @@ null
 "en"
 :
 "Pure shell + awk under the hood: parsing in lib/main, alignment and color in lib/awk/table.awk and lib/awk/fill.awk\n"
+}
+,
+{
+"cn"
+:
+"适用于无 column 的环境（busybox 容器、Alpine 镜像、最小化 rootfs）：只要有 dash + awk 就能跑，零额外依赖\n"
+,
+"en"
+:
+"Drop-in for environments that lack `column` (busybox containers, Alpine images, minimal rootfs): runs as long as dash + awk are available, no extra deps\n"
 }
 ]
 ,
@@ -331,11 +341,11 @@ null
 {
 "cn"
 :
-"强制输出 ANSI 颜色（默认在 TTY 自动启用，管道自动关闭）"
+"强制输出 ANSI 颜色（table 模式：标题行反色 + 每列循环配色；fill 模式：每列循环配色 + 第一行反色；默认在 TTY 自动启用，管道自动关闭）"
 ,
 "en"
 :
-"Force ANSI colors on (auto-on for tty, auto-off for pipes)"
+"Force ANSI colors on (table mode: title reverse + per-column cycle; fill mode: per-column cycle + first-row reverse; auto-on for tty, auto-off for pipes)"
 }
 }
 ,
@@ -347,11 +357,83 @@ null
 {
 "cn"
 :
-"强制关闭颜色（也会被 NO_COLOR 环境变量触发）"
+"强制关闭颜色（也受 NO_COLOR 环境变量影响）"
 ,
 "en"
 :
-"Force ANSI colors off (also triggered by the NO_COLOR env var)"
+"Force ANSI colors off (also respects the NO_COLOR env var)"
+}
+}
+,
+"--color-per-column"
+:
+{
+"#synopsis"
+:
+"<spec>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"自定义每列颜色，冒号分隔 ANSI SGR 码（仅 -t 模式有效）；如 \"31:32:34\" 表示第 1 列红、2 列绿、3 列蓝"
+,
+"en"
+:
+"Custom per-column colors as colon-separated ANSI SGR codes (table mode only); e.g. \"31:32:34\" = red/green/blue for columns 1/2/3"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"颜色规格"
+,
+"en"
+:
+"color spec"
+}
+}
+}
+,
+"--underline-every"
+:
+{
+"#synopsis"
+:
+"<n>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"每 N 行加一道下划线（仅 -t 模式有效）；N=1 表示每行都加"
+,
+"en"
+:
+"Underline every Nth line (table mode only); N=1 underlines every line"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"间隔行数"
+,
+"en"
+:
+"interval rows"
+}
 }
 }
 ,

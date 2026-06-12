@@ -6,6 +6,7 @@ ___x_cmd_find_better(){
 
     local ___X_CMD_FIND_IGNORE="${___X_CMD_FIND_IGNORE}"
     local ___X_CMD_FIND_HOMEIGNORE="${___X_CMD_FIND_HOMEIGNORE}"
+    local ___X_CMD_FIND_WHITELIST="${___X_CMD_FIND_WHITELIST}"
 
     local homeignore=1
     local hint=""
@@ -15,8 +16,13 @@ ___x_cmd_find_better(){
         case "$1" in
             -h|--help)          ___x_cmd help -m find better "$@" ;     return 0    ;;
 
-            --no-ignore)        ___X_CMD_FIND_IGNORE="" ;               shift ;;
+            --no-ignore)        ___X_CMD_FIND_IGNORE=""
+                                ___X_CMD_FIND_HOMEIGNORE=""
+                                ___X_CMD_FIND_WHITELIST=""
+                                shift ;;
             -i|--ignore)        ___x_cmd_find_ignore_add_ "$2" ;        arg:2:shift ;;
+
+            -I|--include)       ___x_cmd_find_whitelist_add_ "$2" ;     arg:2:shift ;;
 
             --no-homeignore)    homeignore="" ; shift ;;
             --verbose|-v)       hint=1 ; shift ;;
@@ -38,6 +44,7 @@ ___x_cmd_find_better(){
 
     [ -z "$prune_hidden" ]  || ___x_cmd_find_ignore_strip_hidden_ ___X_CMD_FIND_IGNORE
     [ -z "$homeignore" ]    || ___x_cmd_find_ignore_home "$rootfp" "$prune_hidden"
+    ___x_cmd_find_whitelist_filter_
 
     if [ -z "${___X_CMD_FIND_IGNORE}${___X_CMD_FIND_HOMEIGNORE}" ]; then
         ___x_cmd_find___cmd "$rootfp" "$@"
@@ -76,11 +83,15 @@ ___x_cmd_find_ignore_prune_(){
     local prune=""
     local sep=""
 
+    local rootfp_q
+    ___x_cmd_shq1_ "$rootfp"
+    rootfp_q="$x_"
+
     if [ -n "$___X_CMD_FIND_IGNORE" ]; then
         while read -r ignore_name; do
             [ -n "$ignore_name" ] || continue
             ___x_cmd_shq1_ "${ignore_name}"
-            prune="${prune}${sep}-name ${x_} -prune"
+            prune="${prune}${sep}! -path ${rootfp_q} -name ${x_} -prune"
             sep=" -o "
         done <<A
 $___X_CMD_FIND_IGNORE
@@ -91,7 +102,7 @@ A
         while read -r ignore_name; do
             [ -n "$ignore_name" ] || continue
             ___x_cmd_shq1_ "${rootfp%/}/${ignore_name}"
-            prune="${prune}${sep}-path ${x_} -prune"
+            prune="${prune}${sep}! -path ${rootfp_q} -path ${x_} -prune"
             sep=" -o "
         done <<A
 $___X_CMD_FIND_HOMEIGNORE
@@ -99,8 +110,12 @@ A
     fi
 
     if [ -n "$prune_hidden" ]; then
-        prune="${prune}${sep}\\( -name \".?*\" ! -name \"..\" \\) -prune"
+        prune="${prune}${sep}! -path ${rootfp_q} \\( -name \".?*\" ! -name \"..\" \\) -prune"
     fi
 
-    [ -z "$prune" ] || x_="! '(' ${prune} ')' -a"
+    if [ -n "$prune" ]; then
+        x_="! '(' ${prune} ')' -a"
+    else
+        x_=""
+    fi
 }
