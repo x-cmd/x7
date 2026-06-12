@@ -20,6 +20,6 @@ ___x_cmd_claw___main(){
         agentrequest)           ___x_cmd_claw_agentrequest "$@" ;;
         connect|disconnect)     ___x_cmd_claw_"$op" "$@" ;;
         cron|log|manager)       ___x_cmd_claw_"$op" "$@" ;;
-        *)                      N=claw M="Unknown subcmd -> $op" log:ret:64 ;;
+        *)                      ___x_cmd_claw_manager "$op" "$@" ;;
     esac
 }
