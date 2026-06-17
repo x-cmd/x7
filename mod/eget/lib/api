@@ -86,7 +86,7 @@ ___x_cmd_eget_api_curl(){
 
     # Cache API responses for 10 minutes
     if [ "$___X_CMD_EGET_UPDATE" != "1" ] && [ "$___X_CMD_EGET_NO_CCMD" != "1" ]; then
-        eval "x ccmd 10m -- curl -sS -L -f $ssl_opts $auth_opts \"$url\"" 2>/dev/null && return
+        eval "x ccmd 10m -- curl -sS -L -f $ssl_opts $auth_opts \"$url\"" 2>/dev/null && return $?
     fi
 
     eval "___x_cmd_cmds curl -sS -L -f $ssl_opts $auth_opts \"$url\""
@@ -102,14 +102,14 @@ ___x_cmd_eget_api___ghproxy_(){
     local endpoint="${___X_CMD_GHPROXY_ENDPOINT:-}"
     x_="$url"
 
-    [ -z "$endpoint" ] && return
+    [ -z "$endpoint" ] && return 1
     case "$url" in
         https://github.com/*|http://github.com/*) ;;
-        *) return ;;
+        *) return 1 ;;
     esac
 
     local ep="${endpoint%/}"
-    [ -z "$ep" ] && return
+    [ -z "$ep" ] && return 1
 
     case "$ep" in
         */github.com)

@@ -68,8 +68,8 @@ ___x_cmd_eget_upgrade(){
     }
 
     local x_=""
-    ___x_cmd_os_name_;  local _osname="$x_"
-    ___x_cmd_os_arch_;  local _osarch="$x_"
+    ___x_cmd os name_;  local _osname="$x_"
+    ___x_cmd os arch_;  local _osarch="$x_"
     local _system="${_osname}/${_osarch}"
 
     local _checked=0 _upgraded=0 _up_to_date=0 _failed=0 _skipped=0

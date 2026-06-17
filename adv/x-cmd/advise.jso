@@ -38,6 +38,8 @@ null
 ,
 "ask"
 ,
+"repo"
+,
 "openclaw"
 ,
 "clawhub"
@@ -437,6 +439,8 @@ null
 "rg"
 ,
 "find"
+,
+"bfind"
 ,
 "csv"
 ,

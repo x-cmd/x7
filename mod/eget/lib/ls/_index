@@ -88,7 +88,7 @@ ___x_cmd_eget_ls(){
 ___x_cmd_eget_ls_releases(){
     local forge="$1" owner="$2" repo="$3" limit="$4"
 
-    log:info "Listing releases for $owner/$repo ..."
+    eget:info "Listing releases for $owner/$repo ..."
     local releases_json
     if [ -n "$___X_CMD_EGET_LS_CCMD" ]; then
         releases_json="$( ___x_cmd ccmd 10m -- ___x_cmd_eget_api_list_releases "$forge" "$owner" "$repo" "$limit" )" || {
@@ -110,7 +110,7 @@ ___x_cmd_eget_ls_releases(){
 ___x_cmd_eget_ls_assets(){
     local forge="$1" owner="$2" repo="$3" tag="$4"
 
-    log:info "Listing assets for $owner/$repo $tag ..."
+    eget:info "Listing assets for $owner/$repo $tag ..."
     local release_json
     if [ -n "$___X_CMD_EGET_LS_CCMD" ]; then
         release_json="$( ___x_cmd ccmd 10m -- ___x_cmd_eget_api_release "$forge" "$owner" "$repo" "$tag" "0" "0" )" || {

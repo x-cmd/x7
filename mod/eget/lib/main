@@ -62,8 +62,8 @@ ___x_cmd_eget_subcmd_detect_test(){
 
     [ -z "$_system" ] && {
         local x_=""
-        ___x_cmd_os_name_;  local osname="$x_"
-        ___x_cmd_os_arch_;  local osarch="$x_"
+        ___x_cmd os name_;  local osname="$x_"
+        ___x_cmd os arch_;  local osarch="$x_"
         _system="${osname}/${osarch}"
     }
 
@@ -92,8 +92,8 @@ ___x_cmd_eget_subcmd_detect_orig(){
 
     [ -z "$_system" ] && {
         local x_=""
-        ___x_cmd_os_name_;  local osname="$x_"
-        ___x_cmd_os_arch_;  local osarch="$x_"
+        ___x_cmd os name_;  local osname="$x_"
+        ___x_cmd os arch_;  local osarch="$x_"
         _system="${osname}/${osarch}"
     }
 

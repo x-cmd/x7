@@ -97,8 +97,8 @@ ___x_cmd_eget_use(){
         ___X_CMD_EGET_QUIET="0"
         ___X_CMD_EGET_UPDATE="0"
         local x_=""
-        ___x_cmd_os_name_;  local osname="$x_"
-        ___x_cmd_os_arch_;  local osarch="$x_"
+        ___x_cmd os name_;  local osname="$x_"
+        ___x_cmd os arch_;  local osarch="$x_"
         local _system="${osname}/${osarch}"
 
         ___x_cmd_eget_snap_cache_ "$owner" "$repo" "$_tag" "$_system" "" "$_forge" "" || {

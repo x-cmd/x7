@@ -1170,6 +1170,22 @@ null
 }
 ]
 ,
+"--all"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"移除所有 use 安装的 binary"
+,
+"en"
+:
+"Remove every use-installed binary"
+}
+}
+,
 "#tldr"
 :
 [

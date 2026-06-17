@@ -165,8 +165,8 @@ ___x_cmd_eget_resolve_(){
     local repo="${target#*/}"
 
     if [ -z "$system" ]; then
-        ___x_cmd_os_name_;  _osname="$x_"
-        ___x_cmd_os_arch_;  _osarch="$x_"
+        ___x_cmd os name_;  _osname="$x_"
+        ___x_cmd os arch_;  _osarch="$x_"
         system="${_osname}/${_osarch}"
     fi
 
@@ -330,8 +330,8 @@ ___x_cmd_eget_download(){
     # Default system detection
     if [ -z "$_system" ]; then
         local x_=""
-        ___x_cmd_os_name_;  local osname="$x_"
-        ___x_cmd_os_arch_;  local osarch="$x_"
+        ___x_cmd os name_;  local osname="$x_"
+        ___x_cmd os arch_;  local osarch="$x_"
         _system="${osname}/${osarch}"
     fi
 

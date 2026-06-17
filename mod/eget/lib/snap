@@ -208,8 +208,8 @@ ___x_cmd_eget_snap(){
 
     if [ -z "$_system" ]; then
         local x_=""
-        ___x_cmd_os_name_;  local osname="$x_"
-        ___x_cmd_os_arch_;  local osarch="$x_"
+        ___x_cmd os name_;  local osname="$x_"
+        ___x_cmd os arch_;  local osarch="$x_"
         _system="${osname}/${osarch}"
     fi
 
