@@ -48,9 +48,9 @@ ___x_cmd_repo_fresh(){
 
     local id="$1"
     local x_
-    ___x_cmd_repo_resolve_ "$id"
+    ___x_cmd_repo_resolve_ "$id" || return $?
 
-    ___x_cmd fresh "$x_"
+    ___x_cmd eget snap sinelaw/fresh "$x_"
 }
 
 ___x_cmd_repo_update(){
@@ -85,7 +85,7 @@ ___x_cmd_repo_edit(){
     local x_
     ___x_cmd_repo_resolve_ "$id"
 
-    [ -d "$x_" ] || ___x_cmd_repo_update "$id" "$x_"
+    [ -d "$x_" ] || ___x_cmd_repo_update "$id"
 
     cd "$x_" || return $?
     ___x_cmd_repo_open "$x_" || {
@@ -104,9 +104,9 @@ ___x_cmd_repo_cd(){
 
     local id="$1"
     local x_
-    ___x_cmd_repo_resolve_ "$id"
+    ___x_cmd_repo_resolve_ "$id" || return $?
 
-    [ -d "$x_" ] || ___x_cmd_repo_update "$id" "$x_"
+    [ -d "$x_" ] || ___x_cmd_repo_update "$id"
 
     ___x_cmd_cmds cd "$x_" || return $?
 }
@@ -120,7 +120,7 @@ ___x_cmd_repo_code(){
     local x_
     ___x_cmd_repo_resolve_ "$id"
 
-    [ -d "$x_" ] || ___x_cmd_repo_update "$id" "$x_"
+    [ -d "$x_" ] || ___x_cmd_repo_update "$id"
 
     ___x_cmd code "$x_"
 }

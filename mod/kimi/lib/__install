@@ -1,6 +1,6 @@
 
 ___x_cmd_kimi___install(){
-    ! ___x_cmd hascmd kimi || return 0
+    ! ___x_cmd hascmd kimi-cli || return 0
 
     kimi:info "Installing kimi-cli using uv with Python 3.13..."
     ___x_cmd uv tool install --python 3.13 kimi-cli || {

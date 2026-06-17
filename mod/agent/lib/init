@@ -39,7 +39,7 @@ ___x_cmd_agent_init___default_claude_(){
     while :; do
         agent:info "Selecting a Claude model provider"
 
-        default_harness="$( ___x_cmd pick --ask "Select a Claude model provider" --datafile "$___X_CMD_ROOT_MOD/agent/lib/data/claude_provider.$___X_CMD_LANG" )"
+        default_harness="$( ___x_cmd pick --ask "Select a Claude model provider" --datafile "$___X_CMD_ROOT_MOD/agent/lib/data/claude_provider_$___X_CMD_LANG" )"
         [ -n "$default_harness" ] || {
             agent:error "No Claude provider selected"
             return 1
@@ -74,7 +74,7 @@ ___x_cmd_agent_init___default_other_(){
 
         agent:info "Selecting an agent tool"
 
-        default_harness="$( ___x_cmd pick --ask "Select an agent tool" --datafile "$___X_CMD_ROOT_MOD/agent/lib/data/agent_tool.$___X_CMD_LANG" )"
+        default_harness="$( ___x_cmd pick --ask "Select an agent tool" --datafile "$___X_CMD_ROOT_MOD/agent/lib/data/agent_tool_$___X_CMD_LANG" )"
         [ -n "$default_harness" ] || {
             agent:error "No agent tool selected"
             return 1
