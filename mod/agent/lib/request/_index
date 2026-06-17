@@ -238,7 +238,7 @@ ___x_cmd_agent_request___run_validate(){
                 }
                 ;;
         kimi-cli)
-                ___x_cmd hascmd kimi || ___x_cmd kimi --install  || {
+                ___x_cmd hascmd kimi-cli || ___x_cmd kimi --install  || {
                     agent:error "Not found kimi command"
                     return 1
                 }

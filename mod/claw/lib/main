@@ -3,7 +3,8 @@
 ___x_cmd log init claw
 
 xrc:mod:lib     claw   run/_index   manager/_index \
-    service cron connect weixin/_index telegram/_index feishu/_index qywx/_index
+    service cron connect weixin/_index telegram/_index feishu/_index qywx/_index \
+    dispatch
 
 ___x_cmd_claw___main(){
     [ "$#" -gt 0 ] ||   set -- manager
@@ -19,7 +20,14 @@ ___x_cmd_claw___main(){
                                 ___x_cmd_claw_service "$op" "$@" ;;
         agentrequest)           ___x_cmd_claw_agentrequest "$@" ;;
         connect|disconnect)     ___x_cmd_claw_"$op" "$@" ;;
-        cron|log|manager|workspace) ___x_cmd_claw_"$op" "$@" ;;
-        *)                      ___x_cmd_claw_manager "$op" "$@" ;;
+        cron|log|manager|workspace)
+                                ___x_cmd_claw_"$op" "$@" ;;
+        *)
+                                if [ "$#" -eq 0 ]; then
+                                    ___x_cmd_claw___main___dispatch "$op" "$@"
+                                else
+                                    ___x_cmd_claw_manager "$op" "$@"
+                                fi
+                                ;;
     esac
 }
