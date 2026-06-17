@@ -12,7 +12,7 @@ ___x_cmd_slash___main(){
     local op="$1";      shift
     case "$op" in
         -h|--help)      ___x_cmd help -m slash      "$@" ;      return 0 ;;
-        init|ls|run|compile|runname|ensure|cat|get|enable|disable)
+        init|ls|run|compile|runname|check|cat|get|enable|disable)
                         ___x_cmd_slash_"$op"        "$@" ;;
         *)              ___x_cmd_slash_runname "$op" "$@" ;;
     esac
@@ -47,21 +47,29 @@ ___x_cmd_slash___set_status(){
     done < "$cfgfp"
 
     if [ "$found" -eq 0 ]; then
-        rm -f "$tmpfp"
+        ___x_cmd rmrf "$tmpfp"
         slash:warn "Slash command not found: $name"
         return 1
     elif [ "$found" -eq 2 ]; then
-        rm -f "$tmpfp"
+        ___x_cmd rmrf "$tmpfp"
         slash:info "Already $new_status: $name"
         return 1
     fi
 
-    mv "$tmpfp" "$cfgfp"
+    ___x_cmd_cmds mv "$tmpfp" "$cfgfp"
     slash:info "$new_status: $name"
     return 0
 }
 
-___x_cmd_slash_ensure(){
+___x_cmd_slash_check(){
+    [ ! -f "$___X_CMD_SLASH_CONFIG" ] || {
+        slash:info "Config file exists, skipping compilation"
+        return 0
+    }
+    ___x_cmd_slash_compile
+}
+
+___x_cmd_slash_check___inner(){
     [ -f "$___X_CMD_SLASH_CONFIG" ] || ___x_cmd_slash_compile
 }
 

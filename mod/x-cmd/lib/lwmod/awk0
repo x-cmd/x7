@@ -60,7 +60,13 @@ ___x_cmd_awk0(){
 
     if [ "$locale" = auto ]; then
         case "$___X_CMD_AWK0_IMPL" in
-            gawk)       locale=C.UTF-8 ;;
+            gawk)
+                        if ___x_cmd os is win; then
+                            locale=C
+                        else
+                            locale=C.UTF-8
+                        fi
+                        ;;
             *)          locale=C ;;
         esac
     fi

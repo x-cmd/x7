@@ -6,10 +6,11 @@ xrc fsiter
 ___x_cmd log init eget
 
 xrc:mod:lib     eget            \
-    api         detect          \
+    api         cache   detect  \
     extract     verify          \
     manifest    snap    which   \
-    ls          resolve use download
+    ls/_index   ls/ls_install   \
+    resolve use upgrade download
 
 ___X_CMD_EGET_TMP="$___X_CMD_ROOT_TMP/eget"
 ___X_CMD_EGET_DATA="$___X_CMD_ROOT_DATA/eget"
@@ -31,11 +32,12 @@ ___x_cmd_eget___main(){
         use)                ___x_cmd_eget_use "$@"; return ;;
         unuse)              ___x_cmd_eget_unuse "$@"; return ;;
         usels)              ___x_cmd_eget_usels "$@"; return ;;
+        upgrade)            ___x_cmd_eget_upgrade "$@"; return ;;
         cache)              ___x_cmd_eget_cache "$@"; return ;;
         extract)            ___x_cmd_eget_subcmd_extract "$@"; return ;;
         verify)             ___x_cmd_eget_subcmd_verify "$@"; return ;;
-        --rate)             ___x_cmd_eget_api_rate "$@"; return ;;
-        --remove|-r)        ___x_cmd_eget___remove "$@"; return ;;
+        rate)               ___x_cmd_eget_api_rate "$@"; return ;;
+        remove)             ___x_cmd_eget___remove "$@"; return ;;
         download|run|get)   ___x_cmd_eget_download "$@"; return ;;
         *)                  ___x_cmd_eget_download "$op" "$@" ;;
     esac
@@ -106,9 +108,10 @@ ___x_cmd_eget_subcmd_detect_orig(){
 }
 
 ___x_cmd_eget___remove(){
+    case "${1:-}" in -h|--help) ___x_cmd help -m eget remove; return 0 ;; esac
     local target_dir="${EGET_BIN:-.}"
     local file="$1"
-    [ -n "$file" ] || { N=eget M="Missing file name for --remove" log:ret:64; return; }
+    [ -n "$file" ] || { N=eget M="Missing file name for remove" log:ret:64; return; }
     local path="$target_dir/$file"
     [ -f "$path" ] || { N=eget M="File not found: $path" log:ret:1; return; }
     ___x_cmd rmrf "$path"
@@ -142,40 +145,4 @@ ___x_cmd_eget_subcmd_verify(){
     [ "$#" -ge 2 ] || { N=eget M="verify: usage: x eget verify <file> <expected_hash>" log:ret:64; return; }
     local filepath="$1" expected="$2"
     ___x_cmd_eget_verify "$filepath" "$expected"
-}
-
-___x_cmd_eget_cache(){
-    local op="${1:-list}"; shift 2>/dev/null
-    local cache_dir="$___X_CMD_EGET_DATA/cache"
-    case "$op" in
-        list|ls)
-            [ -d "$cache_dir" ] || return 0
-            find "$cache_dir" -type f 2>/dev/null | while IFS= read -r f; do
-                local rel="${f#$cache_dir/}"
-                local size; size="$(wc -c < "$f" 2>/dev/null)" || size=0
-                printf "%s\t%s\n" "$rel" "$size"
-            done
-            ;;
-        clean|clear)
-            local keep="${1:-5}"
-            [ -d "$cache_dir" ] || return 0
-            # Remove oldest version dirs, keep N per repo
-            find "$cache_dir" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | while IFS= read -r repo_dir; do
-                local count; count="$(find "$repo_dir" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l)"
-                if [ "$count" -gt "$keep" ]; then
-                    find "$repo_dir" -mindepth 1 -maxdepth 1 -type d -maxdepth 1 2>/dev/null | sort | head -n -$keep | while IFS= read -r d; do
-                        ___x_cmd rmrf "$d"
-                    done
-                fi
-            done
-            eget:info "Cache cleaned (kept $keep versions per repo)"
-            ;;
-        purge)
-            ___x_cmd rmrf "$cache_dir"
-            eget:info "Cache purged"
-            ;;
-        *)
-            N=eget M="Usage: x eget cache [list|clean [N]|purge]" log:ret:64
-            ;;
-    esac
 }

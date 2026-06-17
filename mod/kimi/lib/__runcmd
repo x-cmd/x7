@@ -9,10 +9,10 @@ ___x_cmd_kimi___runmain(){
 }
 
 ___x_cmd_kimi___runcmd(){
-    if ___x_cmd_hascmd kimi;then
-        ___x_cmd_kimi___runcmd(){  ___x_cmd_cmds kimi "$@"; }
+    if ___x_cmd_hascmd kimi-cli;then
+        ___x_cmd_kimi___runcmd(){  ___x_cmd_cmds kimi-cli "$@"; }
     else
         ___x_cmd_kimi___install "$@" || return $?
-        ___x_cmd_kimi___runcmd(){  ___x_cmd uv tool run --from kimi-cli kimi "$@"; }
+        ___x_cmd_kimi___runcmd(){  ___x_cmd uv tool run --from kimi-cli kimi-cli "$@"; }
     fi && ___x_cmd_kimi___runcmd "$@"
 }

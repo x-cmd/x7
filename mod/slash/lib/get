@@ -8,7 +8,7 @@ ___x_cmd_slash_get(){
     local name="$1"
     [ -n "$name" ] || N=slash M="Please provide slash command name" log:ret:64
 
-    ___x_cmd_slash_check || return $?
+    ___x_cmd_slash_check___inner || return $?
 
     local cfgfp="$___X_CMD_SLASH_CONFIG"
     [ -f "$cfgfp" ] || N=slash M="Not found config file" log:ret:1

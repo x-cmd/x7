@@ -160,6 +160,8 @@ null
 ,
 "sleep"
 ,
+"notify"
+,
 "fsiter"
 ,
 "seq"
@@ -167,6 +169,8 @@ null
 "cutt"
 ,
 "line"
+,
+"column"
 ,
 "bakman"
 ,
@@ -181,8 +185,6 @@ null
 "lang"
 ,
 "update"
-,
-"bfind"
 ]
 ,
 "#subcmd:tui"
@@ -862,19 +864,13 @@ null
 ,
 "jj"
 ,
-"realpath"
-,
 "cat"
 ,
 "cleanup"
 ,
 "dos2unix"
 ,
-"epoch"
-,
 "fslock"
-,
-"notify"
 ,
 "sync"
 ,

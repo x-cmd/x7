@@ -41,9 +41,10 @@ function colorize_line(line,    level, c_level, mstart, mlen) {
 }
 
 {
-    if (match($0, /^- [0-9]+ /)) {
-        ts = substr($0, 3, RLENGTH - 3)
-        entry = colorize_entry(date_timestamp_to_iso(ts), substr($0, RLENGTH + 1))
+    if (match($0, /^(  - |- )[0-9]+ /)) {
+        match($0, /[0-9]+/)
+        ts = substr($0, RSTART, RLENGTH)
+        entry = colorize_entry(date_timestamp_to_iso(ts), substr($0, RSTART + RLENGTH + 1))
         printf("%s\n", entry)
     } else {
         printf("%s\n", colorize_line($0))

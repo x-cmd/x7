@@ -355,6 +355,54 @@ true
 "inner"
 ]
 }
+,
+"gitbash"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"获取 Git Bash 的 bash.exe 路径"
+,
+"en"
+:
+"Get the bash.exe path of Git Bash"
+}
+,
+"--unix"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"以 Unix 样式输出路径"
+,
+"en"
+:
+"Output path in Unix style"
+}
+}
+,
+"--windows"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"以 Windows 样式输出路径（默认）"
+,
+"en"
+:
+"Output path in Windows style (default)"
+}
+}
+}
 }
 ,
 "ps"

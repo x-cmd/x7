@@ -308,6 +308,18 @@
 "#n"
 :
 {
+"#desc"
+:
+{
+"en"
+:
+"user login path"
+,
+"cn"
+:
+"用户空间地址"
+}
+,
 "#exec"
 :
 "xrc gh && ___x_cmd_gh___advise_ls_avatar_usename"
@@ -534,6 +546,18 @@
 "#n"
 :
 {
+"#desc"
+:
+{
+"en"
+:
+"user login path"
+,
+"cn"
+:
+"用户空间地址"
+}
+,
 "#exec"
 :
 "xrc gh && ___x_cmd_gh___advise_ls_avatar_usename"

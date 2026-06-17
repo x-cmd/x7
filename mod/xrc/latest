@@ -10,6 +10,21 @@
     return 0
 }
 
+# Claude Code init-phase guard.
+if [ -n "$CLAUDECODE" ]; then
+    if [ -z "$___X_CMD_CLAUDECODE_READY" ] \
+        && [ -z "$___X_CMD_ROOTBIN_X_XINVOKECOUNTER" ] \
+        && [ -z "$___X_CMDEXE_MODE" ] && ! command -v ___x_cmd_claudecode_ready 1>/dev/null 2>/dev/null; then
+
+        ___x_cmd_claudecode_ready(){
+            printf "%s\n" "claudecode is ready to load x-cmd." >&2
+        }
+
+        printf "%s\n" "Stop loading X-CMD: CLAUDECODE detected; refuse to load in Claude Code init phase to avoid corrupting the snapshot. If you are a bash-tool call (env is in fact ready), retry with: ___X_CMD_CLAUDECODE_READY=1 . ~/.x-cmd.root/X" >&2
+        return 0
+    fi
+fi
+
 ___X_CMD_XRC_LOADED="$((___X_CMD_XRC_LOADED+1))"
 
 # GEMINI_CLI=1 means inside gemini-cli environment
@@ -442,6 +457,8 @@ ___x_cmd___bootfast(){
     ! ___x_cmd_is_suitable_pkg || ___x_cmd_pkgbootfast
     [ ! -f "$___X_CMD_ROOT_BOOT/pixi" ]     ||      PATH="${PATH}:$HOME/.pixi/bin"      # ___x_cmd pixi --addpath
     # TODO: pkgx, asdf, mise ...
+
+    PATH="$HOME/.local/bin:${PATH}"
 }
 
 ___x_cmd___bootfast

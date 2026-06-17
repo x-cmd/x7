@@ -52,6 +52,9 @@ ___x_cmd_claw_run___agentwork___handlemsg___weixin(){
     local chatid="clawbot"
     ___x_cmd_claw_run___activate_im "weixin" "$chatid" || return $?
 
+    # User activity refreshes the session; clear any pending reminder marker.
+    ___x_cmd rmrf "$___X_CMD_CLAW_WEIXIN_REMIND_MARKER" 2>/dev/null || true
+
     ___x_cmd_claw_weixin_has_unread || return 0
     claw:info "Weixin unread messages detected, launching agent request"
     ___x_cmd_claw_run___agentrequest___handlemsg "weixin" "$chatid" "$( ___x_cmd_claw_weixin_get_unread )"

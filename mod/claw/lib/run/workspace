@@ -1,0 +1,62 @@
+# shellcheck shell=dash
+
+___x_cmd_claw_run___workspace___check(){
+    local report=""
+    local workspace_dir im_chatid im template_dir agents_file
+
+    for workspace_dir in "$___X_CMD_CLAW_BOT_WS"/*; do
+        [ -d "$workspace_dir" ] || continue
+        im_chatid="${workspace_dir##*/}"
+
+        # Skip the manager workspace itself; it is handled separately.
+        case "$im_chatid" in
+            manager-clawbot) continue ;;
+        esac
+
+        im="${im_chatid%%-*}"
+
+        case "$im" in
+            manager) template_dir="$___X_CMD_ROOT_MOD/claw/lib/data/workspace/manager" ;;
+            *)       template_dir="$___X_CMD_ROOT_MOD/claw/lib/data/workspace/msg" ;;
+        esac
+
+        agents_file="AGENTS.md"
+        [ -e "$workspace_dir/CLAUDE.md" ] && agents_file="CLAUDE.md"
+
+        [ -e "$workspace_dir/$agents_file" ] || continue
+        [ "$workspace_dir/$agents_file" -ot "$___X_CMD_ROOT_METADATA/version_sum" ] || continue
+
+        report="$report
+- $im_chatid (workspace: $workspace_dir, template: $template_dir, agents: $agents_file)"
+    done
+
+    local msg
+    if [ -z "$report" ]; then
+        msg="Workspace template check complete: all chat workspaces are up to date."
+        printf "%s\n" "$msg"
+        return 0
+    fi
+
+    msg="Workspace template update check complete.
+
+The following chat workspaces have outdated AGENTS files:
+$report
+
+For each workspace:
+- If its AGENTS file already mentions RUNONCE.md, the system will create a RUNONCE.md automatically on the next message.
+- If its AGENTS file is old-style, please compare it with the reference template and ask the user whether to update it. Back up the old file before copying the template.
+
+Do not update any file without explicit user confirmation."
+
+    printf "%s\n" "$msg"
+    ___x_cmd claw manager "$msg" >/dev/null 2>&1 || true
+}
+
+___x_cmd_claw_workspace(){
+    local op="${1:-check}"
+    case "$op" in
+        -h|--help)              ___x_cmd help -m claw workspace "$@"; return 0 ;;
+        check)                  ___x_cmd_claw_run___workspace___check ;;
+        *)                      N=claw M="Unknown workspace subcommand: $op" log:ret:64 ;;
+    esac
+}

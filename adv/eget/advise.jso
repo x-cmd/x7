@@ -20,11 +20,11 @@ null
 {
 "en"
 :
-"Download and install pre-built binaries from GitHub/GitLab/Codeberg Releases (Inspired by zyedidia/eget)"
+"Download and install pre-built binaries from GitHub/GitLab/Codeberg Releases (Inspired by zyedidia/eget); `x eget use <name>` installs to ~/.local/bin in one step, and for well-known projects a bare name (e.g. `x eget use jq`) is auto-completed to the source repo via the x install database; supports GHPROXY for accelerating GitHub downloads."
 ,
 "cn"
 :
-"从 GitHub/GitLab/Codeberg Release 下载并安装预编译二进制文件（Inspired by zyedidia/eget）"
+"从 GitHub/GitLab/Codeberg Release 下载并安装预编译二进制文件（Inspired by zyedidia/eget）；`x eget use <name>` 一键安装到 ~/.local/bin，对知名项目支持裸名（如 `x eget use jq`），由 x install 数据库补全源作者仓库；支持通过 GHPROXY 加速 GitHub 下载。"
 }
 ,
 "#tip"
@@ -43,11 +43,21 @@ null
 {
 "cn"
 :
-"推荐用法：x eget --to ~/.local/bin user/repo。x-cmd 会自动将 ~/.local/bin 加入 PATH。\n"
+"推荐用法：`x eget use [owner/]<repo>` —— 从官方 Release 下载并安装到 ~/.local/bin（x-cmd 会自动把 ~/.local/bin 加入 PATH）。\n"
 ,
 "en"
 :
-"Recommended: x eget --to ~/.local/bin user/repo. x-cmd automatically adds ~/.local/bin to PATH.\n"
+"Recommended: `x eget use [owner/]<repo>` — downloads from the official Release and installs to ~/.local/bin (x-cmd automatically adds ~/.local/bin to PATH).\n"
+}
+,
+{
+"cn"
+:
+"裸名补全（如 `x eget use jq` → jqlang/jq）的数据来自 x install 数据库。\n这个数据库只为方便把常用项目名映射到源作者仓库而存在，**不构成对项目本身的推荐或安全审查** —— 安装前请自行判断可信度。\n详见 https://x-cmd.com/install，或 `x i` 交互查看。\n如果你是项目作者，想让自己的项目进入数据库，可参考 https://x-cmd.com/install/submit。\n"
+,
+"en"
+:
+"Bare-name completion (e.g. `x eget use jq` → jqlang/jq) is powered by the x install database.\nThe database exists purely to map common project names to their source repos for convenience — it is **NOT a recommendation or security vetting** of the projects themselves. Judge trustworthiness before installing.\nSee https://x-cmd.com/install, or run `x i` for interactive browsing.\nIf you are the project author and want your project included in the database, see https://x-cmd.com/install/submit.\n"
 }
 ,
 {
@@ -83,11 +93,11 @@ null
 {
 "cn"
 :
-"自动 SHA-256 校验：下载后利用 GitHub Release API 的 digest 字段验证文件完整性。即使用户通过 GHPROXY 下载，校验数据仍来自 GitHub API，防止中间篡改。可通过 --no-verify 跳过。\n"
+"GitHub 下载默认带 SHA-256 校验（hash 来自 api.github.com Release asset 的 digest 字段，直连取得）。\n使用 GHPROXY 时尤为重要 —— 代理只截获 github.com 上的二进制下载，无法影响 api.github.com 上的 digest 值，篡改会被立刻发现。\nGitLab / Codeberg release API 无 digest 字段，这两条链路静默跳过校验。可用 --no-verify 关闭。\n"
 ,
 "en"
 :
-"Auto SHA-256 verification: after download, verifies file integrity using GitHub Release API digest. Even with GHPROXY, verification data comes from GitHub API directly, preventing tampering. Skip with --no-verify.\n"
+"GitHub downloads are integrity-checked by default (hash from the api.github.com Release asset digest field, fetched directly).\nEspecially important with GHPROXY — the proxy can only intercept github.com binary downloads, never the digest value on api.github.com, so tampering is detected immediately.\nGitLab / Codeberg release APIs have no digest field, so verification is silently skipped for those forges. Disable with --no-verify.\n"
 }
 ]
 ,
@@ -119,7 +129,7 @@ null
 "which"
 ]
 ,
-"#subcmd:install"
+"#subcmd:use"
 :
 [
 "use"
@@ -127,6 +137,8 @@ null
 "unuse"
 ,
 "usels"
+,
+"upgrade"
 ]
 ,
 "#subcmd:query"
@@ -136,42 +148,36 @@ null
 ,
 "resolve"
 ,
-"--rate"
+"rate"
 ]
 ,
 "#subcmd:util"
 :
 [
 "extract"
+]
 ,
-"verify"
+"#subcmd:cache"
+:
+[
+"cache"
 ,
-"--remove"
+"cache-ls"
+,
+"cache-info"
+,
+"cache-clear"
+,
+"cache-purge"
+,
+"cache-rm"
 ]
 ,
 "#synopsis"
 :
 [
 {
-"x eget [OPTIONS] user/repo"
-:
-null
-}
-,
-{
-"x eget [OPTIONS] gh:user/repo"
-:
-null
-}
-,
-{
-"x eget [OPTIONS] gl:user/repo"
-:
-null
-}
-,
-{
-"x eget [OPTIONS] cb:user/repo"
+"x eget [OPTIONS] [owner/]<repo>"
 :
 null
 }
@@ -183,19 +189,13 @@ null
 }
 ,
 {
-"x eget snap <repo> [-- args...]"
+"x eget use [OPTIONS] [owner/]<repo>"
 :
 null
 }
 ,
 {
-"x eget use <repo> [--to DIR]"
-:
-null
-}
-,
-{
-"x eget unuse <bin>"
+"x eget unuse <bin|owner/repo>"
 :
 null
 }
@@ -207,49 +207,55 @@ null
 }
 ,
 {
+"x eget upgrade [OPTIONS] <name>"
+:
+null
+}
+,
+{
+"x eget upgrade --all"
+:
+null
+}
+,
+{
+"x eget snap [OPTIONS] <repo> [-- args...]"
+:
+null
+}
+,
+{
 "x eget usels"
 :
 null
 }
 ,
 {
-"x eget which <repo>"
+"x eget which [owner/]<repo>"
 :
 null
 }
 ,
 {
-"x eget ls <repo> [<release>]"
+"x eget ls [OPTIONS] <repo> [<release>]"
 :
 null
 }
 ,
 {
-"x eget resolve <repo>"
+"x eget resolve [OPTIONS] <repo>"
 :
 null
 }
 ,
 {
-"x eget extract <archive> [--to DIR]"
+"x eget extract [OPTIONS] <archive>"
 :
 null
 }
 ,
 {
-"x eget verify <file> <hash>"
-:
-null
-}
-,
-{
-"x eget --rate"
-:
-null
-}
-,
-{
-"x eget --remove <file>"
+"x eget rate"
 :
 null
 }
@@ -261,57 +267,212 @@ null
 {
 "cmd"
 :
+"x eget use fzf"
+,
+"cn"
+:
+"安装到 ~/.local/bin（推荐用法）"
+,
+"en"
+:
+"Install to ~/.local/bin (recommended)"
+}
+,
+{
+"cmd"
+:
+"x eget unuse fzf"
+,
+"cn"
+:
+"移除 use 安装的 binary"
+,
+"en"
+:
+"Remove a use-installed binary"
+}
+,
+{
+"cmd"
+:
+"x eget snap fzf -- --version"
+,
+"cn"
+:
+"即下即运行，不安装到 PATH（类似 npx）"
+,
+"en"
+:
+"Download and run instantly, no PATH install (like npx)"
+}
+,
+{
+"cmd"
+:
+"x eget ls"
+,
+"cn"
+:
+"浏览 x install 收录的所有可 eget 安装的包（约 800+）"
+,
+"en"
+:
+"Browse all eget-installable packages indexed by x install (~800+)"
+}
+,
+{
+"cmd"
+:
+"x eget ls fzf"
+,
+"cn"
+:
+"列出某仓库的所有 release 版本"
+,
+"en"
+:
+"List all releases of a repo"
+}
+,
+{
+"cmd"
+:
+"x eget BurntSushi/ripgrep"
+,
+"cn"
+:
+"原始 eget — 下载默认 binary 到当前目录"
+,
+"en"
+:
+"Original eget: download default binary to current directory"
+}
+,
+{
+"cmd"
+:
 "x eget --to ~/.local/bin BurntSushi/ripgrep"
 ,
 "cn"
 :
-"安装 ripgrep 到 ~/.local/bin"
+"原始 eget — 下载到指定目录"
 ,
 "en"
 :
-"Install ripgrep to ~/.local/bin"
+"Original eget: download to a specific directory"
 }
 ,
 {
 "cmd"
 :
-"x eget --to ~/.local/bin cli/cli"
+"x eget --tag v2.42.1 cli/cli"
 ,
 "cn"
 :
-"安装 GitHub CLI (gh)"
+"原始 eget — 下载指定版本"
 ,
 "en"
 :
-"Install GitHub CLI (gh)"
+"Original eget: download a specific version"
 }
 ,
 {
 "cmd"
 :
-"x eget --to ~/.local/bin sharkdp/fd"
+"x eget --system linux/amd64 cli/cli"
 ,
 "cn"
 :
-"安装 fd"
+"原始 eget — 交叉下载其他平台"
 ,
 "en"
 :
-"Install fd"
+"Original eget: cross-platform download"
 }
 ,
 {
 "cmd"
 :
-"x eget --to ~/.local/bin junegunn/fzf"
+"x eget https://github.com/x-cmd-build/rumdl/releases/tag/0.1.25"
 ,
 "cn"
 :
-"安装 fzf"
+"原始 eget — 通过 URL 下载"
 ,
 "en"
 :
-"Install fzf"
+"Original eget: download via URL"
+}
+,
+{
+"cmd"
+:
+"x eget gl:owner/repo"
+,
+"cn"
+:
+"原始 eget — 使用短名从 GitLab 下载"
+,
+"en"
+:
+"Original eget: download from GitLab using short name"
+}
+]
+,
+"download"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"下载并安装 binary —— 这是 x eget 的默认行为，可省略子命令直接 `x eget <repo>`"
+,
+"en"
+:
+"Download and install binary — the default behavior; the subcmd can be omitted (`x eget <repo>`)"
+}
+,
+"#synopsis"
+:
+[
+{
+"x eget [OPTIONS] [owner/]<repo>"
+:
+null
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget BurntSushi/ripgrep"
+,
+"cn"
+:
+"下载默认 binary 到当前目录"
+,
+"en"
+:
+"Download the default binary to the current directory"
+}
+,
+{
+"cmd"
+:
+"x eget --to ~/.local/bin BurntSushi/ripgrep"
+,
+"cn"
+:
+"下载到指定目录"
+,
+"en"
+:
+"Download to a specific directory"
 }
 ,
 {
@@ -331,20 +492,6 @@ null
 {
 "cmd"
 :
-"x eget https://github.com/x-cmd-build/rumdl/releases/tag/0.1.25"
-,
-"cn"
-:
-"通过 URL 下载"
-,
-"en"
-:
-"Download via URL"
-}
-,
-{
-"cmd"
-:
 "x eget --system linux/amd64 cli/cli"
 ,
 "cn"
@@ -359,243 +506,19 @@ null
 {
 "cmd"
 :
-"x eget gl:user/repo"
+"x eget --download-only cli/cli"
 ,
 "cn"
 :
-"使用短名从 GitLab 下载"
+"仅下载到 tmp，不解压安装"
 ,
 "en"
 :
-"Download from GitLab using short name"
-}
-,
-{
-"cmd"
-:
-"x eget snap BurntSushi/ripgrep --version"
-,
-"cn"
-:
-"直接运行（使用缓存，不安装到 PATH）"
-,
-"en"
-:
-"Run directly (uses cache, no PATH install)"
-}
-,
-{
-"cmd"
-:
-"x eget snap --auto-check-update 1d BurntSushi/ripgrep --version"
-,
-"cn"
-:
-"直接运行并每天检查更新"
-,
-"en"
-:
-"Run and check for updates daily"
-}
-,
-{
-"cmd"
-:
-"x eget snap --tag 14.1.0 BurntSushi/ripgrep -- -V"
-,
-"cn"
-:
-"运行指定版本"
-,
-"en"
-:
-"Run a specific version"
-}
-,
-{
-"cmd"
-:
-"x eget use BurntSushi/ripgrep"
-,
-"cn"
-:
-"安装到 ~/.local/bin"
-,
-"en"
-:
-"Install to ~/.local/bin"
-}
-,
-{
-"cmd"
-:
-"x eget unuse rg"
-,
-"cn"
-:
-"移除 use 安装的 binary"
-,
-"en"
-:
-"Remove a use-installed binary"
-}
-,
-{
-"cmd"
-:
-"x eget unuse --all"
-,
-"cn"
-:
-"移除所有 use 安装的 binary"
-,
-"en"
-:
-"Remove all use-installed binaries"
-}
-,
-{
-"cmd"
-:
-"x eget usels"
-,
-"cn"
-:
-"列出所有 use 安装记录"
-,
-"en"
-:
-"List all use-tracked installations"
-}
-,
-{
-"cmd"
-:
-"x eget which BurntSushi/ripgrep"
-,
-"cn"
-:
-"查找缓存路径"
-,
-"en"
-:
-"Find cached path"
-}
-,
-{
-"cmd"
-:
-"x eget ls BurntSushi/ripgrep"
-,
-"cn"
-:
-"列出所有 release 版本"
-,
-"en"
-:
-"List all releases"
-}
-,
-{
-"cmd"
-:
-"x eget ls BurntSushi/ripgrep 14.1.0"
-,
-"cn"
-:
-"列出指定 release 的 artifact"
-,
-"en"
-:
-"List artifacts in a release"
-}
-,
-{
-"cmd"
-:
-"x eget resolve BurntSushi/ripgrep"
-,
-"cn"
-:
-"预览匹配结果（不下载）"
-,
-"en"
-:
-"Preview match result (no download)"
-}
-,
-{
-"cmd"
-:
-"x eget resolve --system linux/amd64 cli/cli"
-,
-"cn"
-:
-"预览指定平台的匹配结果"
-,
-"en"
-:
-"Preview match for a specific platform"
-}
-,
-{
-"cmd"
-:
-"x eget extract ./downloaded.tar.gz --to /usr/local/bin"
-,
-"cn"
-:
-"从本地压缩包提取 binary"
-,
-"en"
-:
-"Extract binary from local archive"
-}
-,
-{
-"cmd"
-:
-"x eget verify ./rg abc123def456..."
-,
-"cn"
-:
-"校验 SHA-256"
-,
-"en"
-:
-"Verify SHA-256"
-}
-,
-{
-"cmd"
-:
-"x eget --rate"
-,
-"cn"
-:
-"查看 API 速率限制"
-,
-"en"
-:
-"Show API rate limit"
-}
-,
-{
-"cmd"
-:
-"x eget --remove rg"
-,
-"cn"
-:
-"删除已安装的 binary"
-,
-"en"
-:
-"Remove installed binary"
+"Download only, skip extraction"
 }
 ]
 ,
-"download"
+"--to"
 :
 {
 "#desc"
@@ -603,11 +526,188 @@ null
 {
 "cn"
 :
-"下载并安装 binary（默认行为）"
+"安装目录（默认当前目录）"
 ,
 "en"
 :
-"Download and install binary (default subcmd)"
+"Install directory (default: current directory)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"目录路径"
+,
+"en"
+:
+"Directory path"
+}
+}
+}
+,
+"-t|--tag"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定版本标签"
+,
+"en"
+:
+"Specify version tag"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"版本标签"
+,
+"en"
+:
+"Version tag"
+}
+}
+}
+,
+"-s|--system"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定目标平台（如 linux/amd64、darwin/arm64）"
+,
+"en"
+:
+"Specify target platform (e.g., linux/amd64, darwin/arm64)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"平台标识"
+,
+"en"
+:
+"Platform identifier"
+}
+}
+}
+,
+"--download-only"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"仅下载压缩包到 tmp，不解压"
+,
+"en"
+:
+"Download the archive to tmp only, no extraction"
+}
+}
+,
+"--source"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"下载源码 tarball 而非预编译 binary"
+,
+"en"
+:
+"Download source tarball instead of pre-built binary"
+}
+}
+,
+"--pre-release"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"允许预发布版本"
+,
+"en"
+:
+"Allow pre-release versions"
+}
+}
+,
+"--forge"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定 forge（github / gitlab / codeberg）"
+,
+"en"
+:
+"Specify forge (github / gitlab / codeberg)"
+}
+}
+,
+"-q|--quiet"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"静默模式"
+,
+"en"
+:
+"Quiet mode"
+}
+}
+,
+"--no-verify"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"跳过 SHA-256 校验"
+,
+"en"
+:
+"Skip SHA-256 verification"
+}
 }
 }
 ,
@@ -864,7 +964,7 @@ null
 :
 [
 {
-"x eget use <repo> [--to DIR] [--force]"
+"x eget use [OPTIONS] <repo>"
 :
 null
 }
@@ -890,21 +990,49 @@ null
 {
 "cmd"
 :
-"x eget use BurntSushi/ripgrep"
+"x eget use jq"
 ,
 "cn"
 :
-"安装到 ~/.local/bin"
+"用裸名安装（自动反查 jqlang/jq）"
 ,
 "en"
 :
-"Install to ~/.local/bin"
+"Install by bare name (auto-resolves to jqlang/jq)"
 }
 ,
 {
 "cmd"
 :
-"x eget use cli/cli --to /usr/local/bin"
+"x eget use BurntSushi/ripgrep"
+,
+"cn"
+:
+"用 owner/repo 安装"
+,
+"en"
+:
+"Install by owner/repo"
+}
+,
+{
+"cmd"
+:
+"x eget use --tag 0.55.0 junegunn/fzf"
+,
+"cn"
+:
+"安装指定版本"
+,
+"en"
+:
+"Install a specific version"
+}
+,
+{
+"cmd"
+:
+"x eget use --to /usr/local/bin cli/cli"
 ,
 "cn"
 :
@@ -913,6 +1041,20 @@ null
 "en"
 :
 "Install to a custom directory"
+}
+,
+{
+"cmd"
+:
+"x eget use --force fzf"
+,
+"cn"
+:
+"覆盖已存在的同名 binary"
+,
+"en"
+:
+"Overwrite an existing binary"
 }
 ]
 ,
@@ -944,6 +1086,38 @@ null
 "en"
 :
 "Directory path"
+}
+}
+}
+,
+"-t|--tag"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定 release 版本标签"
+,
+"en"
+:
+"Specify a release version tag"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"版本标签（如 v1.0.0、0.55.0）"
+,
+"en"
+:
+"Version tag (e.g., v1.0.0, 0.55.0)"
 }
 }
 }
@@ -1051,11 +1225,11 @@ null
 {
 "cn"
 :
-"列出所有 use 安装记录"
+"列出所有 use 安装的记录（owner/repo 与 binary 名），TSV 格式带表头"
 ,
 "en"
 :
-"List all use-tracked installations"
+"List all use-installed records (owner/repo and binary name), TSV with header"
 }
 ,
 "#tldr"
@@ -1068,13 +1242,187 @@ null
 ,
 "cn"
 :
-"列出安装记录"
+"列出全部安装记录"
 ,
 "en"
 :
-"List installations"
+"List all installation records"
+}
+,
+{
+"cmd"
+:
+"x eget usels | tail -n +2 | wc -l"
+,
+"cn"
+:
+"统计安装条数（跳过表头）"
+,
+"en"
+:
+"Count installations (skip header)"
+}
+,
+{
+"cmd"
+:
+"x eget usels | grep ripgrep"
+,
+"cn"
+:
+"过滤特定仓库"
+,
+"en"
+:
+"Filter to a specific repo"
 }
 ]
+}
+,
+"upgrade"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"把 use 装的 binary 刷新到最新 release（默认走 snap cache，重复 use 是不会自动升级的）"
+,
+"en"
+:
+"Refresh use-installed binaries to their latest release (snap cache means repeated 'use' won't auto-upgrade)"
+}
+,
+"#synopsis"
+:
+[
+{
+"x eget upgrade <name>"
+:
+null
+}
+,
+{
+"x eget upgrade --all"
+:
+null
+}
+,
+{
+"x eget upgrade --dry-run [--all | <name>]"
+:
+null
+}
+]
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"`x eget use <name>` 不会自动检查升级 —— 首次安装后，重复调用永远走 snap cache，0 网络。\n想拿到最新版本必须显式调用 `x eget upgrade`。\n裸 `x eget upgrade`（无参数、无 --all）会报错以避免误触 —— 要么指定名字，要么显式 --all。\n"
+,
+"en"
+:
+"`x eget use <name>` does NOT auto-check for upgrades — after the first install, repeated calls always hit the snap cache with zero network.\nTo get the latest release you must explicitly run `x eget upgrade`.\nBare `x eget upgrade` (no args, no --all) errors out to avoid footguns — pass either a name or --all.\n"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget upgrade --dry-run --all"
+,
+"cn"
+:
+"预览所有可升级的 binary（不改文件）"
+,
+"en"
+:
+"Preview all upgradable binaries (no filesystem changes)"
+}
+,
+{
+"cmd"
+:
+"x eget upgrade --all"
+,
+"cn"
+:
+"升级所有 use 装的 binary"
+,
+"en"
+:
+"Upgrade every use-tracked binary"
+}
+,
+{
+"cmd"
+:
+"x eget upgrade fzf"
+,
+"cn"
+:
+"只升级匹配名字或 owner/repo 的 binary"
+,
+"en"
+:
+"Upgrade only entries matching by binname or owner/repo"
+}
+]
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"名字或 owner/repo（按 binname 精确匹配，否则按 owner/repo 子串匹配）"
+,
+"en"
+:
+"Name or owner/repo (exact match on binname, otherwise substring match on owner/repo)"
+}
+}
+,
+"--all"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"升级 use 跟踪的所有 binary"
+,
+"en"
+:
+"Upgrade every use-tracked binary"
+}
+}
+,
+"--dry-run"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"只打印 current→latest 对比，不下载、不替换文件"
+,
+"en"
+:
+"Print current→latest comparison only; do not download or replace files"
+}
+}
 }
 ,
 "which"
@@ -1085,40 +1433,24 @@ null
 {
 "cn"
 :
-"查找 snap 缓存的 binary 路径"
+"查找 snap 缓存的 binary 完整路径（不解压、不下载，仅返回已缓存版本）"
 ,
 "en"
 :
-"Find cached binary path from snap"
-}
-}
-,
-"ls"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"列出仓库的 release 版本或指定版本的 artifact"
-,
-"en"
-:
-"List releases or artifacts for a repository"
+"Find the full path of a snap-cached binary (no extract, no download — just returns the cached path)"
 }
 ,
 "#synopsis"
 :
 [
 {
-"x eget ls [OPTIONS] <repo>"
+"x eget which [owner/]<repo>"
 :
 null
 }
 ,
 {
-"x eget ls <repo> <release>"
+"x eget which [owner/]<repo>"
 :
 null
 }
@@ -1130,15 +1462,177 @@ null
 {
 "cmd"
 :
+"x eget which BurntSushi/ripgrep"
+,
+"cn"
+:
+"按 owner/repo 查找缓存路径"
+,
+"en"
+:
+"Look up cache path by owner/repo"
+}
+,
+{
+"cmd"
+:
+"x eget which rg"
+,
+"cn"
+:
+"按裸名查找（自动通过 x install 反查 owner）"
+,
+"en"
+:
+"Look up by bare name (owner auto-resolved via x install)"
+}
+,
+{
+"cmd"
+:
+"x eget which gh:cli/cli"
+,
+"cn"
+:
+"用短名指定 forge"
+,
+"en"
+:
+"Specify forge with short prefix"
+}
+,
+{
+"cmd"
+:
+"x eget which BurntSushi/ripgrep"
+,
+"cn"
+:
+"按 owner/repo 查找缓存路径"
+,
+"en"
+:
+"Look up cache path by owner/repo"
+}
+,
+{
+"cmd"
+:
+"x eget which rg"
+,
+"cn"
+:
+"按裸名查找（自动通过 x install 反查 owner）"
+,
+"en"
+:
+"Look up by bare name (owner auto-resolved via x install)"
+}
+,
+{
+"cmd"
+:
+"x eget which gh:cli/cli"
+,
+"cn"
+:
+"用短名指定 forge"
+,
+"en"
+:
+"Specify forge with short prefix"
+}
+]
+}
+,
+"ls"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"不带参数时，列出 x install 数据库中所有可用 eget 安装的包；带参数时，列出仓库的 release 版本或指定版本的 artifact"
+,
+"en"
+:
+"Without args, list all eget-installable packages from the x install database; with a repo, list its releases or a specific release's artifacts"
+}
+,
+"#synopsis"
+:
+[
+{
+"x eget ls [OPTIONS]"
+:
+null
+}
+,
+{
+"x eget ls [OPTIONS] <repo> [<release>]"
+:
+null
+}
+]
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"无参数调用 `x eget ls` 会从 `x install --ls --tsv` 中筛选 rule 列含 `/eget` 的条目，输出 NAME / REPO / DESCRIPTION 三列 TSV。\n数据量较大（约 800+ 行），适合管道处理：`x eget ls | grep ripgrep`、`x eget ls | head`、`x eget ls | fzf`。\n"
+,
+"en"
+:
+"Calling `x eget ls` with no args filters the x install TSV for rows whose rule column contains `/eget`, emitting a 3-column TSV: NAME / REPO / DESCRIPTION.\nThe list is large (~800 entries) and pipe-friendly: `x eget ls | grep ripgrep`, `x eget ls | head`, `x eget ls | fzf`.\n"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget ls"
+,
+"cn"
+:
+"列出所有可用 eget 安装的包（来自 x install）"
+,
+"en"
+:
+"List all eget-installable packages (from x install)"
+}
+,
+{
+"cmd"
+:
+"x eget ls | grep ripgrep"
+,
+"cn"
+:
+"过滤特定关键词"
+,
+"en"
+:
+"Filter by keyword"
+}
+,
+{
+"cmd"
+:
 "x eget ls BurntSushi/ripgrep"
 ,
 "cn"
 :
-"列出所有 release 版本"
+"列出仓库的所有 release 版本"
 ,
 "en"
 :
-"List all releases"
+"List all releases of a repo"
 }
 ,
 {
@@ -1152,7 +1646,7 @@ null
 ,
 "en"
 :
-"List artifacts in a release"
+"List artifacts in a specific release"
 }
 ,
 {
@@ -1313,9 +1807,79 @@ null
 :
 "Extract binary from a local archive"
 }
+,
+"#synopsis"
+:
+[
+{
+"x eget extract [OPTIONS] <archive>"
+:
+null
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget extract ./rg-14.1.0.tar.gz"
+,
+"cn"
+:
+"解压到当前目录"
+,
+"en"
+:
+"Extract to the current directory"
 }
 ,
-"verify"
+{
+"cmd"
+:
+"x eget extract --to /usr/local/bin ./rg-14.1.0.tar.gz"
+,
+"cn"
+:
+"解压到指定目录"
+,
+"en"
+:
+"Extract to a specific directory"
+}
+,
+{
+"cmd"
+:
+"x eget extract -f 'rg*' ./archive.tar.gz"
+,
+"cn"
+:
+"按文件名 glob 提取某个文件"
+,
+"en"
+:
+"Extract a specific file via name glob"
+}
+,
+{
+"cmd"
+:
+"x eget extract --all ./archive.tar.gz"
+,
+"cn"
+:
+"解压全部内容"
+,
+"en"
+:
+"Extract everything in the archive"
+}
+]
+}
+,
+"cache"
 :
 {
 "#desc"
@@ -1323,12 +1887,468 @@ null
 {
 "cn"
 :
-"校验文件的 SHA-256 哈希值"
+"统一管理 eget 缓存（原始归档 + 抽取后的 snap binary）"
 ,
 "en"
 :
-"Verify a file's SHA-256 hash"
+"Unified management of eget caches (raw archives + extracted snap binaries)"
 }
+,
+"#synopsis"
+:
+[
+{
+"x eget cache [OPERATION]"
+:
+null
+}
+]
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"eget 维护两套缓存：\n  - `cache/<owner>--<repo>/<version>/<asset>` —— 原始下载的归档包，带 SHA-256 校验。\n  - `snap/<owner>--<repo>/<version>/bin/<binary>` —— 抽取后可直接执行的 binary。\n`snap` / `use` / `upgrade` 全部走 snap 缓存；`download` 默认归档。\n"
+,
+"en"
+:
+"eget keeps two caches:\n  - `cache/<owner>--<repo>/<version>/<asset>` — raw downloaded archive, SHA-256 verified.\n  - `snap/<owner>--<repo>/<version>/bin/<binary>` — extracted ready-to-run binary.\n`snap` / `use` / `upgrade` all share the snap cache; `download` defaults to the archive cache.\n"
+}
+,
+{
+"cn"
+:
+"`clear` 对两类缓存采用不同策略：归档每仓库保留 N 个版本（默认 5）；snap 只保留 `.default-version`（当前 active 版本），其它版本视为过期。\nsnap 默认版本被 `clear` 保护 —— 想彻底清掉需要 `rm <owner/repo>` 或 `purge`。\n"
+,
+"en"
+:
+"`clear` uses different policies: archive keeps N versions per repo (default 5); snap keeps only `.default-version` (the active binary).\nThe snap default version is protected by `clear` — to wipe it, use `rm <owner/repo>` or `purge`.\n"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget cache ls"
+,
+"cn"
+:
+"列出所有缓存条目（带 KIND / REPO / VERSION / BYTES 列）"
+,
+"en"
+:
+"List all cache entries (with KIND / REPO / VERSION / BYTES columns)"
+}
+,
+{
+"cmd"
+:
+"x eget cache info"
+,
+"cn"
+:
+"显示三类缓存（归档 / snap / use 列表）的路径与占用"
+,
+"en"
+:
+"Show path and size of the three caches (archive / snap / use list)"
+}
+,
+{
+"cmd"
+:
+"x eget cache clear 5"
+,
+"cn"
+:
+"清理：归档每仓库保留 5 个版本，snap 仅保留 .default-version"
+,
+"en"
+:
+"Clear: archive keeps 5 versions per repo; snap keeps .default-version only"
+}
+,
+{
+"cmd"
+:
+"x eget cache rm jqlang/jq"
+,
+"cn"
+:
+"删除某仓库的归档 + snap 缓存"
+,
+"en"
+:
+"Remove a repo's archive + snap cache"
+}
+,
+{
+"cmd"
+:
+"x eget cache rm https://github.com/jqlang/jq"
+,
+"cn"
+:
+"用 URL 删除（与 owner/repo 等价）"
+,
+"en"
+:
+"Remove by URL (equivalent to owner/repo)"
+}
+,
+{
+"cmd"
+:
+"x eget cache purge"
+,
+"cn"
+:
+"全部清空（不可恢复）"
+,
+"en"
+:
+"Purge everything (irreversible)"
+}
+]
+}
+,
+"cache-ls"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"列出 archive + snap 缓存条目（TSV：KIND / REPO / VERSION / BYTES / PATH）"
+,
+"en"
+:
+"List archive + snap cache entries (TSV: KIND / REPO / VERSION / BYTES / PATH)"
+}
+,
+"#synopsis"
+:
+[
+{
+"x eget cache ls"
+:
+null
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget cache ls"
+,
+"cn"
+:
+"列出所有缓存条目"
+,
+"en"
+:
+"List all cache entries"
+}
+,
+{
+"cmd"
+:
+"x eget cache ls | head"
+,
+"cn"
+:
+"只看前面几条"
+,
+"en"
+:
+"Show first few entries"
+}
+]
+}
+,
+"cache-info"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"显示三类缓存的路径与大小"
+,
+"en"
+:
+"Show path and size of the three caches"
+}
+,
+"#synopsis"
+:
+[
+{
+"x eget cache info"
+:
+null
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget cache info"
+,
+"cn"
+:
+"显示 archive / snap / use 列表的路径与占用"
+,
+"en"
+:
+"Show path and size of archive / snap / use list"
+}
+]
+}
+,
+"cache-clear"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"清理旧版本（归档每仓库保留 N 个，默认 5；snap 保留 .default-version）"
+,
+"en"
+:
+"Prune old versions (archive keeps N per repo, default 5; snap keeps .default-version)"
+}
+,
+"#synopsis"
+:
+[
+{
+"x eget cache clear [N]"
+:
+null
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget cache clear 5"
+,
+"cn"
+:
+"清理：归档每仓库保留 5 个版本，snap 仅保留 .default-version"
+,
+"en"
+:
+"Clear: archive keeps 5 versions per repo; snap keeps .default-version only"
+}
+,
+{
+"cmd"
+:
+"x eget cache clear 0"
+,
+"cn"
+:
+"移除所有归档，snap 仅保留 .default-version"
+,
+"en"
+:
+"Remove all archives, snap keeps .default-version only"
+}
+]
+}
+,
+"cache-purge"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"清空全部缓存（不可恢复）"
+,
+"en"
+:
+"Wipe both caches (irreversible)"
+}
+,
+"#synopsis"
+:
+[
+{
+"x eget cache purge"
+:
+null
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget cache purge"
+,
+"cn"
+:
+"全部清空（不可恢复，下次 use/snap 会重新下载）"
+,
+"en"
+:
+"Purge everything (irreversible; next use/snap re-downloads)"
+}
+]
+}
+,
+"cache-rm"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"删除某仓库的归档 + snap 缓存"
+,
+"en"
+:
+"Remove a single repo from both caches"
+}
+,
+"#synopsis"
+:
+[
+{
+"x eget cache rm <target>"
+:
+null
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget cache rm jqlang/jq"
+,
+"cn"
+:
+"用 owner/repo 删除"
+,
+"en"
+:
+"Remove by owner/repo"
+}
+,
+{
+"cmd"
+:
+"x eget cache rm https://github.com/jqlang/jq"
+,
+"cn"
+:
+"用 URL 删除（与 owner/repo 等价）"
+,
+"en"
+:
+"Remove by URL (equivalent to owner/repo)"
+}
+]
+}
+,
+"rate"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看 GitHub API 速率限制"
+,
+"en"
+:
+"Show GitHub API rate limit"
+}
+,
+"#synopsis"
+:
+[
+{
+"x eget rate"
+:
+null
+}
+]
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"目前只支持 GitHub —— api.github.com 提供 /rate_limit 端点返回剩余配额。\nGitLab / Codeberg 只在每个 API 响应头里报告 rate limit，没有可独立查询的端点，因此暂不支持。\n速率数据基于 EGET_GITHUB_TOKEN / GITHUB_TOKEN 鉴权。\n"
+,
+"en"
+:
+"Only GitHub is supported — api.github.com provides a /rate_limit endpoint returning remaining quota.\nGitLab / Codeberg only report rate limit via per-response HTTP headers, with no standalone query endpoint, so they are unsupported.\nAuthenticated via EGET_GITHUB_TOKEN / GITHUB_TOKEN.\n"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget rate"
+,
+"cn"
+:
+"查看 GitHub API 速率限制（剩余 / 上限 / 重置时间）"
+,
+"en"
+:
+"Show GitHub API rate limit (remaining / limit / reset time)"
+}
+,
+{
+"cmd"
+:
+"x eget rate gh"
+,
+"cn"
+:
+"短名等价于默认 github"
+,
+"en"
+:
+"Short name equivalent to the default github"
+}
+]
 }
 }
 

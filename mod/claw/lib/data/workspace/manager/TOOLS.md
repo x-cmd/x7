@@ -17,6 +17,8 @@ As the Manager, you have full control over the claw system. Always use `--help` 
 - `x claw service start` — Start claw services
 - `x claw service stop` — Stop claw services
 - `x claw service restart` — Restart claw services
+- `x claw service install` — Register claw as a startup service
+- `x claw service uninstall` — Remove claw from startup services
 - `x claw service status` — Check service status
 
 **Troubleshooting**: When claw has issues, always run `x claw service status` first. If problems persist, `x claw service restart` is the go-to fix.

@@ -15,7 +15,7 @@ ___x_cmd_hub_file_parse_stream(){
     local compress=
     local keyname=
 
-    while IFS= read -r line; do
+    while IFS= read -r line || [ -n "$line" ]; do
         case "$line" in
             srctype:\ *)    srctype="${line#*": "}" ;;
             compress:\ *)   compress="${line#*": "}"    ;;

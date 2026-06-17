@@ -47,21 +47,12 @@ ___x_cmd_claw_manager___chat(){
     local im='manager' chatid='clawbot'
     local workspace_dir="$___X_CMD_CLAW_BOT_WS/${im}-${chatid}"
 
-    # Ensure workspace exists and template files are synced
+    # Ensure workspace exists and template files are synced.
+    # prepareworkspace will create RUNONCE.md if the workspace template was updated.
     ___x_cmd_claw_run___agentrequest___prepareworkspace "$im" "$chatid" || return $?
 
-    # Check if workspace template was updated — only then supply a prompt
-    local x_=""
-    ___x_cmd agent default_harness_ || {
-        claw:error "Failed to get default agent harness"
-        return 1
-    }
-    local harness="$x_"
-    local template_dir="$___X_CMD_ROOT_MOD/claw/lib/data/workspace/manager"
-
-    x_=""
-    ___x_cmd_claw_run___agentrequest___workspaceupdateprompt_ "$workspace_dir" "$template_dir" "$harness"
-    local prompt="$x_"
+    # The Agent reads AGENTS.md on startup and handles any pending RUNONCE.md.
+    local prompt=""
 
     ___x_cmd agent chat \
         --workspace "$workspace_dir" \

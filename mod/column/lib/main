@@ -57,6 +57,15 @@ ___x_cmd_column___main(){
 
     [ "$#" -gt 0 ] || set -- -
 
+    # Validate file args: GNU `column` reports each missing file by
+    # name ("column: X: No such file or directory") rather than letting
+    # awk emit its generic "can't open file". Mirror that.
+    for ___x_cmd_column_arg in "$@"; do
+        if [ "$___x_cmd_column_arg" != "-" ] && [ ! -r "$___x_cmd_column_arg" ]; then
+            N=column M="$___x_cmd_column_arg: No such file or directory" log:ret:64
+        fi
+    done
+
     if [ "$table" = 1 ]; then
         ___x_cmd_column___table "$delim" "$outsep" "$squeeze" \
                                "$force_color" "$no_color" \

@@ -25,5 +25,4 @@ Format: Plain text, bullet lists, and emoji. No tables, no headings.
 
 Your workspace: "<WORKSPACE_DIR>"
 Current time: '<CURRENT_TIME>'
-<CHECK_PROMPT>
 <MSG>

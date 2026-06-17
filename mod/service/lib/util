@@ -33,13 +33,22 @@ ___x_cmd_service_status_(){
         read -r x_timestamp
     } <"$pidpath"
 
-    ___x_cmd ps fingerprint check "$x_pid" "$x_timestamp"
+    # On Cygwin/Windows, exec changes the process starttime (a Cygwin quirk where
+    # exec is implemented via fork+exec), so the fingerprint captured at launch
+    # time never matches the one seen at check time, even for a perfectly healthy
+    # process. Fall back to a simple PID-alive (rough) check on those systems.
+    ___x_cmd os name_
+    if [ "$x_" = "win" ]; then
+        ___x_cmd ps fingerprint check "$x_pid"
+    else
+        ___x_cmd ps fingerprint check "$x_pid" "$x_timestamp"
+    fi
 
     case $? in
         130)        x_=""; return 130 ;;
         0)          x_=alive ;;
         1)          x_=stop ;;
-        *)          service:error "Unexpected return code from 'x ps fingerprint check $pid $x_timestamp'"; return 1 ;;
+        *)          service:error "Unexpected return code from 'x ps fingerprint check $x_pid $x_timestamp'"; return 1 ;;
     esac
 }
 

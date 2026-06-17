@@ -24,6 +24,11 @@ ___x_cmd_eget_snap_cache_(){
     if [ "$___X_CMD_EGET_UPDATE" = "0" ] && [ -f "$snap_base/.default-version" ]; then
         local cached_ver
         cached_ver="$( cat "$snap_base/.default-version" 2>/dev/null )" || cached_ver=""
+        # If user requested a specific tag, only honor cache when it matches.
+        # Otherwise we'd silently return the default version and ignore --tag.
+        if [ -n "$_tag" ] && [ "$cached_ver" != "$_tag" ]; then
+            cached_ver=""
+        fi
         if [ -n "$cached_ver" ] && [ -d "$snap_base/$cached_ver/bin" ]; then
             local cached_bin=""
             for f in "$snap_base/$cached_ver/bin/"*; do
@@ -97,15 +102,14 @@ ___x_cmd_eget_snap_cache_(){
     local version="${_fetch#*
 }"
 
-    ___x_cmd_eget_snap_extract_to_cache "$snap_base" "$version" "$tmpfile" "$repo" || return 1
+    ___x_cmd_eget_snap_extract_to_cache "$owner" "$repo" "$version" "$tmpfile" || return 1
     [ "$___X_CMD_EGET_QUIET" = "0" ] && eget:info "Cached $owner/$repo ($version)"
 }
 
 # Extract archive and populate snap cache dir, return binary path in x_
 ___x_cmd_eget_snap_extract_to_cache(){
-    local snap_base="$1" version="$2" archive="$3" repo="$4"
+    local owner="$1" repo="$2" version="$3" archive="$4"
 
-    local snap_dir="$snap_base/${version}"
     local tmpdir="$___X_CMD_EGET_TMP/snap_$$"
     ___x_cmd mkdirp "$tmpdir"
     ___x_cmd_eget_extract "$archive" "" "0" "$tmpdir" "$repo" || {
@@ -118,16 +122,13 @@ ___x_cmd_eget_snap_extract_to_cache(){
         N=eget M="No executable found after extraction" log:ret:1; return 1;
     }
 
-    ___x_cmd mkdirp "$snap_dir/bin"
     local bin_name; bin_name="$( basename "$found_bin" )"
-    cp "$found_bin" "$snap_dir/bin/$bin_name" && chmod +x "$snap_dir/bin/$bin_name"
-    printf "%s" "$version" > "$snap_base/.default-version"
-    x epoch get > "$snap_base/.lastupdate" 2>/dev/null
-    x epoch get > "$snap_base/.lastcheck" 2>/dev/null
+    # Delegate the cache write to lib/cache so cache introspects the same layout.
+    ___x_cmd_eget_cache_snap_write_ "$owner" "$repo" "$version" "$bin_name" "$found_bin" || {
+        ___x_cmd rmrf "$tmpdir"; return 1;
+    }
     ___x_cmd rmrf "$tmpdir"
-
-    [ "$___X_CMD_EGET_QUIET" = "0" ] && eget:info "Using cached $owner/$repo ($version)"
-    x_="$snap_dir/bin/$bin_name"
+    # x_ is set by ___x_cmd_eget_cache_snap_write_
 }
 
 ___x_cmd_eget_snap(){

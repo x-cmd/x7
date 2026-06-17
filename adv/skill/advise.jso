@@ -1541,6 +1541,288 @@ true
 }
 }
 ,
+"use"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"将 skill 安装到家目录（全局），并记录在 use.list.tsv"
+,
+"en"
+:
+"Install skill to home directory (global) and record in use.list.tsv"
+}
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"与 `x skill add` 的区别：`add` 默认安装到当前项目，`use` 始终安装到家目录，\n等价于 `x skill add --global`，并把安装记录写入 ${HOME}/.local/data/x-skill/use.list.tsv，\n以便后续用 `unuse` 撤销、用 `usels` 查看。\n"
+,
+"en"
+:
+"Differs from `x skill add`: `add` defaults to project scope; `use` always targets the home\ndirectory (equivalent to `x skill add --global`) and records the install at\n${HOME}/.local/data/x-skill/use.list.tsv so it can be reverted with `unuse` and listed\nwith `usels`.\n"
+}
+]
+,
+"--agent|-a"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定 AI Agent 类型"
+,
+"en"
+:
+"Specify AI agent type"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"en"
+:
+"Agent type"
+,
+"cn"
+:
+"Agent 类型"
+}
+,
+"#cand"
+:
+[
+"claude"
+,
+"gemini"
+,
+"codex"
+,
+"opencode"
+,
+"kimi"
+,
+"openclaw"
+]
+}
+}
+,
+"--skill-dir"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"覆盖默认的 skills 存放目录"
+,
+"en"
+:
+"Override the default skills install directory"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"目录路径"
+,
+"en"
+:
+"Directory path"
+}
+,
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"Skill 来源（可一次指定多个）"
+,
+"en"
+:
+"Skill source (one or more)"
+}
+,
+"#exec:stdout"
+:
+"___x_cmd skill --advise_list_full"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x skill use anthropics/pptx"
+,
+"cn"
+:
+"示例: 把 pptx skill 安装到家目录"
+,
+"en"
+:
+"Example: install pptx skill into the home directory"
+}
+,
+{
+"cmd"
+:
+"x skill use --agent claude anthropics/pptx"
+,
+"cn"
+:
+"示例: 把 pptx skill 安装到 claude 的 home 目录"
+,
+"en"
+:
+"Example: install pptx skill into claude's home directory"
+}
+,
+{
+"cmd"
+:
+"x skill use anthropics/pptx anthropics/pdf"
+,
+"cn"
+:
+"示例: 一次安装多个 skill 到家目录"
+,
+"en"
+:
+"Example: install several skills into the home directory at once"
+}
+]
+}
+,
+"unuse"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"撤销一次 use 操作（从家目录移除 skill 并从 use.list.tsv 抹掉）"
+,
+"en"
+:
+"Undo a previous use (remove the skill from the home dir and TSV)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"Skill id 或 skill 名称（也支持 --all 全部撤销）"
+,
+"en"
+:
+"Skill id or name (or --all to clear everything)"
+}
+,
+"#exec:stdout"
+:
+"___x_cmd skill usels"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x skill unuse anthropics/pptx"
+,
+"cn"
+:
+"示例: 撤销 pptx skill 的 use 操作"
+,
+"en"
+:
+"Example: undo the use of pptx skill"
+}
+,
+{
+"cmd"
+:
+"x skill unuse --all"
+,
+"cn"
+:
+"示例: 撤销全部 use 操作"
+,
+"en"
+:
+"Example: undo all use operations"
+}
+]
+}
+,
+"usels"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"列出所有 use 过的 skill（即 use.list.tsv 里的记录）"
+,
+"en"
+:
+"List all skills previously installed via `use` (i.e. use.list.tsv)"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x skill usels"
+,
+"cn"
+:
+"示例: 列出所有 use 过的 skills"
+,
+"en"
+:
+"Example: list all skills installed via use"
+}
+]
+}
+,
 "#subcmd:Management"
 :
 [
@@ -1551,6 +1833,12 @@ true
 "ls"
 ,
 "ll"
+,
+"use"
+,
+"unuse"
+,
+"usels"
 ]
 ,
 "#subcmd:AI"

@@ -461,6 +461,30 @@ true
 "Get basic information of the Feishu app"
 }
 ,
+"#tip"
+:
+[
+{
+"cn"
+:
+"app_id 是飞书应用的唯一标识（形如 cli_xxxxx），在飞书开放平台创建应用时获得\n省略 --appid 时使用 me，等同于查询当前已配置的应用\n查询其他应用的信息需额外申请「获取应用信息」权限（admin:app.info:readonly）\n"
+,
+"en"
+:
+"app_id is the unique identifier of a Feishu app (format: cli_xxxxx), obtained when creating the app on the Feishu Open Platform\nOmit --appid to use me, equivalent to querying the currently configured app\nQuerying other apps requires the \"Get app info\" scope (admin:app.info:readonly)\n"
+}
+,
+{
+"cn"
+:
+"--id_type 用于指定返回信息中用户字段（creator_id、owner_id 等）的 ID 类型\nopen_id（默认）— 标识用户在当前应用中的身份，同一用户在不同应用中 open_id 不同\nunion_id — 标识用户在应用开发商下的身份，可跨同一开发商的多个应用关联同一用户\nuser_id — 标识用户在租户内的身份，同一租户内所有应用共享，需额外申请 contact:user.employee_id:readonly 权限\n一般情况下保持默认 open_id 即可；需要跨应用或跨租户打通用户数据时才需要切换\n"
+,
+"en"
+:
+"--id_type specifies the ID type for user fields in the response (e.g. creator_id, owner_id)\nopen_id (default) — identifies a user within the current app; same user has different open_ids across apps\nunion_id — identifies a user within the app vendor's apps, useful for correlating the same user across apps from the same vendor\nuser_id — identifies a user within a tenant; shared across all apps in the tenant (requires the contact:user.employee_id:readonly scope)\nKeep the default open_id in most cases; only switch when you need to correlate users across apps or tenants\n"
+}
+]
+,
 "#tldr"
 :
 [
@@ -505,7 +529,7 @@ true
 {
 "cn"
 :
-"应用 ID（省略则使用 me 查询当前应用）"
+"应用的 app id（省略则使用 me 查询当前应用）"
 ,
 "en"
 :
@@ -515,6 +539,9 @@ true
 "#1"
 :
 {
+"#desc"
+:
+{
 "cn"
 :
 "应用 ID"
@@ -522,6 +549,7 @@ true
 "en"
 :
 "App ID"
+}
 }
 }
 ,
@@ -537,7 +565,7 @@ true
 {
 "cn"
 :
-"语言（zh_cn / en_us / ja_jp，默认 zh_cn）"
+"指定获取应用在该语言下的信息（zh_cn / en_us / ja_jp，默认 zh_cn）"
 ,
 "en"
 :
@@ -547,6 +575,9 @@ true
 "#1"
 :
 {
+"#desc"
+:
+{
 "cn"
 :
 "语言"
@@ -554,6 +585,7 @@ true
 "en"
 :
 "Language"
+}
 }
 }
 ,
@@ -579,6 +611,9 @@ true
 "#1"
 :
 {
+"#desc"
+:
+{
 "cn"
 :
 "用户 ID 类型"
@@ -586,6 +621,7 @@ true
 "en"
 :
 "User ID type"
+}
 }
 }
 }
@@ -2211,11 +2247,11 @@ true
 {
 "cn"
 :
-"获取飞书群组列表"
+"获取飞书群组列表、群信息、群成员"
 ,
 "en"
 :
-"List Feishu groups"
+"List Feishu groups, get group info and members"
 }
 ,
 "#tldr"
@@ -2238,6 +2274,20 @@ true
 {
 "cmd"
 :
+"x feishu group info --chatid <chat_id>"
+,
+"cn"
+:
+"获取指定群的信息"
+,
+"en"
+:
+"Get info of the specified group"
+}
+,
+{
+"cmd"
+:
 "x feishu group ls --json"
 ,
 "cn"
@@ -2247,6 +2297,20 @@ true
 "en"
 :
 "List groups in JSON format"
+}
+,
+{
+"cmd"
+:
+"x feishu group member ls --chatid <chat_id>"
+,
+"cn"
+:
+"列出指定群的成员"
+,
+"en"
+:
+"List members of the specified group"
 }
 ]
 ,
@@ -2364,6 +2428,312 @@ true
 "en"
 :
 "Output in JSON format"
+}
+}
+}
+,
+"info"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"获取指定群的基本信息"
+,
+"en"
+:
+"Get basic info of the specified group"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x feishu group info --chatid <chat_id>"
+,
+"cn"
+:
+"获取指定群的信息"
+,
+"en"
+:
+"Get info of the specified group"
+}
+,
+{
+"cmd"
+:
+"x feishu group info --chatid <chat_id> --json"
+,
+"cn"
+:
+"以 JSON 格式获取群信息"
+,
+"en"
+:
+"Get group info in JSON format"
+}
+]
+,
+"--chatid"
+:
+{
+"#synopsis"
+:
+"<chat_id>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"群 chat_id（可通过 `x feishu group ls` 获取）"
+,
+"en"
+:
+"Group chat_id (can be obtained via `x feishu group ls`)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 chat_id"
+,
+"en"
+:
+"Group chat_id"
+}
+}
+}
+,
+"--json"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"以 JSON 格式输出"
+,
+"en"
+:
+"Output in JSON format"
+}
+}
+}
+,
+"member"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"列出指定群的成员"
+,
+"en"
+:
+"List members of the specified group"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x feishu group member ls --chatid <chat_id>"
+,
+"cn"
+:
+"列出指定群的成员"
+,
+"en"
+:
+"List members of the specified group"
+}
+]
+,
+"ls"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"列出指定群的成员"
+,
+"en"
+:
+"List members of the specified group"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x feishu group member ls --chatid <chat_id>"
+,
+"cn"
+:
+"列出指定群 chat_id 的成员"
+,
+"en"
+:
+"List members of the specified group chat_id"
+}
+,
+{
+"cmd"
+:
+"x feishu group member ls --chatid <chat_id> --json"
+,
+"cn"
+:
+"以 JSON 格式列出群成员"
+,
+"en"
+:
+"List group members in JSON format"
+}
+]
+,
+"--chatid"
+:
+{
+"#synopsis"
+:
+"<chat_id>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"群 chat_id（可通过 `x feishu group ls` 获取）"
+,
+"en"
+:
+"Group chat_id (can be obtained via `x feishu group ls`)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"群 chat_id"
+,
+"en"
+:
+"Group chat_id"
+}
+}
+}
+,
+"--page"
+:
+{
+"#synopsis"
+:
+"<size>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"每页数量（最大 100）"
+,
+"en"
+:
+"Page size (max 100)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"每页数量"
+,
+"en"
+:
+"Page size"
+}
+}
+}
+,
+"--id-type"
+:
+{
+"#synopsis"
+:
+"<type>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"成员 ID 类型（open_id / union_id / user_id，默认 open_id）"
+,
+"en"
+:
+"Member ID type (open_id / union_id / user_id, default open_id)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"成员 ID 类型"
+,
+"en"
+:
+"Member ID type"
+}
+}
+}
+,
+"--json"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"以 JSON 格式输出"
+,
+"en"
+:
+"Output in JSON format"
+}
 }
 }
 }
@@ -2644,11 +3014,11 @@ null
 {
 "cn"
 :
-"飞书机器人登录（x feishu login）\n用途：通过扫描飞书 App 中的二维码，创建并配置智能机器人\n该命令会获取 app_id 和 app_secret 并自动保存到配置\n登录成功后可直接使用智能机器人功能\n"
+"飞书机器人登录（x feishu login）\n用途：通过扫描飞书 App 中的二维码，创建并配置智能机器人\n该命令会获取 app_id 和 app_secret 并自动保存到配置\n登录成功后可直接使用智能机器人功能\n\n自动检测运行环境：\n  终端交互环境 - 自动进入阻塞模式，等待用户扫码后保存配置\n  非终端环境（Agent/管道） - 自动进入非阻塞模式，返回二维码和 session 后退出\n\nAgent 使用流程：\n  1. x feishu login         - 获取二维码\n  2. x feishu login --check  - 查询登录状态，扫码成功后自动保存配置\n"
 ,
 "en"
 :
-"Feishu Bot Login (x feishu login)\nUse case: Create a Feishu intelligent bot by scanning a QR code with the Feishu App\nThis command retrieves app_id and app_secret and automatically saves them to the config\nAfter successful login, you can directly use the intelligent bot features\n"
+"Feishu Bot Login (x feishu login)\nUse case: Create a Feishu intelligent bot by scanning a QR code with the Feishu App\nThis command retrieves app_id and app_secret and automatically saves them to the config\nAfter successful login, you can directly use the intelligent bot features\n\nAuto-detect runtime environment:\n  Interactive terminal - Blocking mode, waits for QR scan and saves config\n  Non-terminal (Agent/piped) - Non-blocking mode, returns QR code and session immediately\n\nAgent workflow:\n  1. x feishu login          - Get QR code\n  2. x feishu login --check   - Check status, saves config on successful scan\n"
 }
 ]
 ,
@@ -2667,6 +3037,20 @@ null
 "en"
 :
 "Scan QR code to login and create Feishu bot"
+}
+,
+{
+"cmd"
+:
+"x feishu login --check"
+,
+"cn"
+:
+"查询登录状态（Agent 模式）"
+,
+"en"
+:
+"Check login status (agent mode)"
 }
 ]
 }

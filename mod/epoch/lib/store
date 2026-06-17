@@ -124,16 +124,36 @@ ___x_cmd_epoch_store_read_(){
     [ -n "$x_" ] || N=epoch M="File is empty -> $fp" log:ret:64
 }
 
+___x_cmd_epoch_store_exist(){
+    local store="" fp=""
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --store)  store="$2" ;      arg:2:shift ;;
+            --fp)     fp="$2" ;         arg:2:shift ;;
+            --)       shift ;           break ;;
+            *)        break ;;
+        esac
+    done
+
+    [ -n "$fp" ] || [ $# -gt 0 ] || N=epoch M="Please provide <key> (or --fp <path>)" log:ret:64
+    local key=""
+    local x_
+    [ $# -eq 0 ] || key="$1"
+    ___x_cmd_epoch_store_resolve_ "$key" "$store" "$fp"
+
+    [ -e "$x_" ]
+}
+
 ___x_cmd_epoch_store_is(){
     local le="" ge=""
     local store="" fp=""
     while [ $# -gt 0 ]; do
         case "$1" in
-            --le|--in)  le="$2" ;   arg:2:shift ;;
-            --ge)       ge="$2" ;   arg:2:shift ;;
-            --store)    store="$2" ; arg:2:shift ;;
-            --fp)       fp="$2" ; arg:2:shift ;;
-            --)         shift ; break ;;
+            --le|--in)  le="$2" ;       arg:2:shift ;;
+            --ge)       ge="$2" ;       arg:2:shift ;;
+            --store)    store="$2" ;    arg:2:shift ;;
+            --fp)       fp="$2" ;       arg:2:shift ;;
+            --)         shift ;         break ;;
             *)          break ;;
         esac
     done
@@ -152,9 +172,9 @@ ___x_cmd_epoch_store_rm(){
     local store="" fp=""
     while [ $# -gt 0 ]; do
         case "$1" in
-            --store)  store="$2" ; arg:2:shift ;;
-            --fp)     fp="$2" ; arg:2:shift ;;
-            --)       shift ; break ;;
+            --store)  store="$2" ;  arg:2:shift ;;
+            --fp)     fp="$2" ;     arg:2:shift ;;
+            --)       shift ;       break ;;
             *)        break ;;
         esac
     done

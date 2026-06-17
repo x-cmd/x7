@@ -2,92 +2,8 @@
 "#synopsis"
 :
 [
-{
-"x claw start [FLAG]"
-:
-null
-}
+"x claw start"
 ]
-,
-"--no-im"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"仅启动 x-claw-service，不启动任何 IM 平台连接"
-,
-"en"
-:
-"Start x-claw-service only, without connecting any IM platform"
-}
-}
-,
-"--weixin"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"启用微信平台"
-,
-"en"
-:
-"Enable WeChat platform"
-}
-}
-,
-"--telegram"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"启用 Telegram 平台"
-,
-"en"
-:
-"Enable Telegram platform"
-}
-}
-,
-"--feishu"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"启用飞书平台"
-,
-"en"
-:
-"Enable Feishu platform"
-}
-}
-,
-"--qywx"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"启用企业微信平台"
-,
-"en"
-:
-"Enable Qywx (Enterprise WeChat) platform"
-}
-}
 ,
 "#tip"
 :
@@ -95,11 +11,11 @@ null
 {
 "cn"
 :
-"启动时若不指定平台，自动检测已配置并登录的 IM 平台，默认回退到 weixin。\n使用 `--no-im` 可仅启动服务而不连接任何 IM 平台。\n飞书用户通常先启动单聊: `x claw start --feishu`，然后在飞书中让 Agent 按需连接更多群聊。\n连接指定群聊: `x claw connect feishu:oc_xxx` (群 ID 可通过 `x feishu group ls` 查看)\n连接所有群聊: `x claw connect feishu:groups`\n"
+"仅启动 x-claw-service 后台服务，不会自动连接任何 IM 平台。\n启动后可通过 `x claw connect <im>` 连接指定平台，例如：\n  x claw connect weixin\n  x claw connect telegram\n  x claw connect qywx\n  x claw connect feishu:groups\n  x claw connect feishu:oc_xxx\n如果启动时检测到有已激活的 IM 聊天，服务心跳会自动保持其连接；\n如果没有，会提示一个推荐的可连接平台。\n"
 ,
 "en"
 :
-"If no platform is specified, auto-detects configured and logged-in IM platforms, falling back to weixin by default.\nUse `--no-im` to start the service only without connecting any IM platform.\nFeishu users typically start with single chat first: `x claw start --feishu`, then ask the Agent in Feishu to connect more groups on demand.\nConnect a specific group: `x claw connect feishu:oc_xxx` (group ID via `x feishu group ls`)\nConnect all groups: `x claw connect feishu:groups`\n"
+"Start only the x-claw-service daemon; no IM platform is connected automatically.\nAfter startup, connect a platform with `x claw connect <im>`, e.g.:\n  x claw connect weixin\n  x claw connect telegram\n  x claw connect qywx\n  x claw connect feishu:groups\n  x claw connect feishu:oc_xxx\nIf active IM chats exist, the service heartbeat will keep them alive.\nOtherwise, a recommended ready platform will be logged.\n"
 }
 ]
 ,
@@ -113,67 +29,39 @@ null
 ,
 "cn"
 :
-"场景: 首次启动网关服务，自动检测已登录的 IM 平台"
+"场景: 启动 claw 后台服务"
 ,
 "en"
 :
-"Scenario: First-time gateway startup, auto-detect logged-in IM platforms"
+"Scenario: Start the claw background service"
 }
 ,
 {
 "cmd"
 :
-"x claw start --no-im"
+"x claw connect weixin"
 ,
 "cn"
 :
-"场景: 仅启动后台服务，后续通过 connect 按需连接 IM"
+"场景: 启动后手动连接微信"
 ,
 "en"
 :
-"Scenario: Start background service only; connect IM platforms on demand later"
+"Scenario: Manually connect WeChat after starting the service"
 }
 ,
 {
 "cmd"
 :
-"x claw start --weixin --telegram"
+"x claw connect feishu:groups"
 ,
 "cn"
 :
-"场景: 同时启动微信和 Telegram，适合多平台运营"
+"场景: 启动后手动连接飞书所有群聊"
 ,
 "en"
 :
-"Scenario: Start WeChat and Telegram simultaneously for multi-platform operation"
-}
-,
-{
-"cmd"
-:
-"x claw start --feishu"
-,
-"cn"
-:
-"场景: 启动飞书单聊，后续在飞书中让 Agent 按需连接更多群聊"
-,
-"en"
-:
-"Scenario: Start Feishu single chat, then let Agent connect more groups on demand"
-}
-,
-{
-"cmd"
-:
-"x claw start --qywx --telegram"
-,
-"cn"
-:
-"场景: 同时启动企业微信和 Telegram，覆盖内外部沟通"
-,
-"en"
-:
-"Scenario: Start Qywx and Telegram together for internal and external communication"
+"Scenario: Manually connect all Feishu groups after starting the service"
 }
 ]
 }

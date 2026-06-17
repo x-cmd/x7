@@ -202,7 +202,7 @@ ___x_cmd_cron_run___execute_async(){
         if [ -f "$jobdir/desc" ]; then
             read -r cron_desc < "$jobdir/desc"
         fi
-        cron:info ${cron_desc:+"--description"} ${cron_desc:+"$cron_desc"} "Cron job $name triggered (pid=$pid)"
+        cron:info ${cron_desc:+"--description"} ${cron_desc:+"$cron_desc"} "Cron job name=$name triggered (pid=$pid)"
 
         if ___x_cmd os is darwin; then
             # The darwin will use ps to get fingerprint, while the linux just readfile, so in darwin, use &

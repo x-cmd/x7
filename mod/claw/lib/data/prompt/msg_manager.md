@@ -17,5 +17,4 @@ IMPORTANT: `x` is a POSIX shell function. Every new shell process must load it f
 
 Your workspace: "<WORKSPACE_DIR>"
 Current time: '<CURRENT_TIME>'
-<CHECK_PROMPT>
 <MSG>

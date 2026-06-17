@@ -21,12 +21,9 @@ ____x_cmd_tenant_token() {
     local cur_app_id=
     local cur_app_secret=
 
-    if [ -f "$(___x_cmd_feishu_cur --get config)" ]; then
-        ___x_cmd_feishu_cur cur_app_id:=app_id cur_app_secret:=app_secret 2>/dev/null
-    else
-        feishu:info "Please use x feishu init to configure the Feishu bot's app_id and app_secret."
-        return 1
-    fi
+    ___x_cmd_feishu_cur cur_app_id:=app_id cur_app_secret:=app_secret 2>/dev/null
+
+    [ -n "$cur_app_id" ] || N=feishu M="Please use 'x feishu login' to configure the Feishu bot's app_id and app_secret." log:ret:1
 
     x_="$(___x_cmd curl -s -X POST \
         "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal/" \

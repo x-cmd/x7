@@ -161,9 +161,7 @@ This prevents unnecessary heartbeat wake-ups until the next user message arrives
 
     # Initialize global workspace from heartbeat template if first run
     ___x_cmd_claw_run___agentrequest___syncworkspace "$workspace_dir" "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/hb" "$harness"
-
-    x_=""; ___x_cmd_claw_run___agentrequest___workspaceupdateprompt_ "$workspace_dir" "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/hb" "$harness"
-    local check_prompt="$x_"
+    ___x_cmd_claw_run___agentrequest___checkworkspaceupdate "$workspace_dir" "$___X_CMD_ROOT_MOD/claw/lib/data/workspace/hb" "$harness"
 
     local prompt
     prompt="$(___x_cmd_cmds cat "$___X_CMD_ROOT_MOD/claw/lib/data/prompt/heartbeat.md" 2>/dev/null)" || {
@@ -187,12 +185,8 @@ This prevents unnecessary heartbeat wake-ups until the next user message arrives
 <variable name='WORKSPACE_DIR'>${workspace_dir}
 </variable>
 
-<variable name='CURRENT_TIME'>$(___x_cmd date iso)
+<variable name='CURRENT_TIME'>$(___x_cmd_claw_run___agentrequest___current_time)
 </variable>
-
-<variable name='CHECK_PROMPT'>${check_prompt}
-</variable>
-
 <variable name='HEARTBEAT_IDLE_PROMPT'>${heartbeat_idle_prompt}
 </variable>
 </variables>"

@@ -478,7 +478,7 @@ ___x_cmd_agent_request___run_exec(){(
             fi
 
             {
-                ___x_cmd timeout "$timeout_secs" x-cmd kimi -- "$@" --print --output-format stream-json \
+                ___x_cmd timeout "$timeout_secs" x-cmd kimi -- "$@" --yolo --print --output-format stream-json \
                 ${reference_workspace:+--add-dir "$reference_workspace"} \
                 --prompt "$content" < /dev/null
                 printf "%s\n" "[EXITCODE] $?"

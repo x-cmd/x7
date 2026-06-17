@@ -44,7 +44,23 @@ ___x_cmd_claw_run___agentrequest___syncworkspace(){
     ___x_cmd mkdirp "$workspace_dir/tmp"
 }
 
-___x_cmd_claw_run___agentrequest___workspaceupdateprompt_(){
+___x_cmd_claw_run___agentrequest___createrunonce(){
+    local workspace_dir="$1"
+    local source_dir="$2"
+    local harness="$3"
+
+    local runonce_template="$___X_CMD_ROOT_MOD/claw/lib/data/prompt/runonce_workspace_check.md"
+    local current_time
+    current_time="$(___x_cmd_claw_run___agentrequest___current_time)"
+
+    {
+        ___x_cmd_cmds cat "$runonce_template"
+        printf "\n<variables>\n<variable name='SOURCE'>%s\n</variable>\n<variable name='TARGET'>%s\n</variable>\n<variable name='HARNESS'>%s\n</variable>\n<variable name='CREATED_AT'>%s\n</variable>\n</variables>\n" \
+            "$source_dir" "$workspace_dir" "$harness" "$current_time"
+    } > "$workspace_dir/RUNONCE.md"
+}
+
+___x_cmd_claw_run___agentrequest___checkworkspaceupdate(){
     local workspace_dir="$1"
     local source_dir="$2"
     local harness="$3"
@@ -54,23 +70,22 @@ ___x_cmd_claw_run___agentrequest___workspaceupdateprompt_(){
         claude*)    agents_file="CLAUDE.md" ;;
     esac
 
-    x_=""
-    if [ "$workspace_dir/$agents_file" -ot "$___X_CMD_ROOT_METADATA/version_sum" ]; then
-        claw:info "Workspace template may have been updated, checking if structure optimization is needed"
-        ___x_cmd_cmds touch "$workspace_dir/$agents_file"
-        x_="<workspace_check>
-The workspace template has been updated. Offload this evaluation to a background job via \`x agent run\` — do NOT evaluate or apply changes in the current session.
+    [ "$workspace_dir/$agents_file" -ot "$___X_CMD_ROOT_METADATA/version_sum" ] || return 0
 
-Reference template: $source_dir/
-Current workspace:  $workspace_dir
+    claw:info "Workspace template may have been updated: $workspace_dir"
+    ___x_cmd_cmds touch "$workspace_dir/$agents_file"
 
-Guidelines for the background job:
-- Compare structures and selectively apply beneficial changes
-- Preserve existing user content and customizations
-- Focus on structural gaps or organizational improvements
-- After starting the background job, STOP immediately. Heartbeat will monitor progress.
-</workspace_check>"
-    fi
+    ___x_cmd_claw_run___agentrequest___createrunonce "$workspace_dir" "$source_dir" "$harness"
+    ! ___x_cmd_cmds grep -q "RUNONCE.md" "$workspace_dir/$agents_file" 2>/dev/null || return 0
+
+    claw:info "Appending RUNONCE.md rule to $workspace_dir/$agents_file"
+    {
+        printf "\n\n"
+        printf "## System One-Time Tasks (RUNONCE.md)\n\n"
+        printf "Immediately after reading this file, check whether \`RUNONCE.md\` exists in the workspace root.\n\n"
+        printf "%s\n" "- If it exists: read it, follow its instructions, then delete it."
+        printf "%s\n" "- If it does not exist: proceed with the normal startup reading order."
+    } >> "$workspace_dir/$agents_file"
 }
 
 ___x_cmd_claw_run___agentrequest___prepareworkspace(){
@@ -79,6 +94,11 @@ ___x_cmd_claw_run___agentrequest___prepareworkspace(){
     local msg="${3:-}"
 
     ___x_cmd rmrf "$___X_CMD_CLAW_BOT_WS/HEARTBEAT_OK"
+
+    # A new user message resets any agent failure/disabled state
+    ___x_cmd rmrf "$___X_CMD_CLAW_BOT_WS/AGENT_DISABLED"
+    ___x_cmd rmrf "$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable"
+
     ___x_cmd ensurefp "$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
     printf "%s\n" "0" > "$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
 
@@ -101,6 +121,7 @@ ___x_cmd_claw_run___agentrequest___prepareworkspace(){
         manager)    template_dir="$___X_CMD_ROOT_MOD/claw/lib/data/workspace/manager" ;;
     esac
     ___x_cmd_claw_run___agentrequest___syncworkspace "$workspace_dir" "$template_dir" "$harness"
+    ___x_cmd_claw_run___agentrequest___checkworkspaceupdate "$workspace_dir" "$template_dir" "$harness"
 }
 
 ___x_cmd_claw_run___agentrequest___buildprompt_(){
@@ -142,9 +163,6 @@ ___x_cmd_claw_run___agentrequest___buildprompt_(){
         esac
     fi
 
-    x_=""; ___x_cmd_claw_run___agentrequest___workspaceupdateprompt_ "$workspace_dir" "$template_dir" "$harness" || return $?
-    local check_prompt="$x_"
-
     local prompt=""
     case "$im" in
         manager)
@@ -162,9 +180,7 @@ ___x_cmd_claw_run___agentrequest___buildprompt_(){
 </variable>
 <variable name='WORKSPACE_DIR'>${workspace_dir}
 </variable>
-<variable name='CURRENT_TIME'>$(___x_cmd date iso)
-</variable>
-<variable name='CHECK_PROMPT'>${check_prompt}
+<variable name='CURRENT_TIME'>$(___x_cmd_claw_run___agentrequest___current_time)
 </variable>
 <variable name='MSG'>${msg}
 </variable>
@@ -185,9 +201,7 @@ ___x_cmd_claw_run___agentrequest___buildprompt_(){
 </variable>
 <variable name='WORKSPACE_DIR'>${workspace_dir}
 </variable>
-<variable name='CURRENT_TIME'>$(___x_cmd date iso)
-</variable>
-<variable name='CHECK_PROMPT'>${check_prompt}
+<variable name='CURRENT_TIME'>$(___x_cmd_claw_run___agentrequest___current_time)
 </variable>
 <variable name='MSG'>${msg}
 </variable>
@@ -208,9 +222,7 @@ ___x_cmd_claw_run___agentrequest___buildprompt_(){
 </variable>
 <variable name='WORKSPACE_DIR'>${workspace_dir}
 </variable>
-<variable name='CURRENT_TIME'>$(___x_cmd date iso)
-</variable>
-<variable name='CHECK_PROMPT'>${check_prompt}
+<variable name='CURRENT_TIME'>$(___x_cmd_claw_run___agentrequest___current_time)
 </variable>
 <variable name='MSG'>${msg}
 </variable>
@@ -239,7 +251,14 @@ GROUP CHAT GUIDELINES:
   - Relevance: Only reply to messages that are relevant to your purpose. Ignore off-topic chatter.
   - Mention-aware: If a user @mentions you, prioritize responding to them.
   - Conciseness: Keep replies brief and to the point in group settings.
-  - No spam: Do not reply to every single message; only engage when useful."
+  - No spam: Do not reply to every single message; only engage when useful.
+
+=== GROUP CHAT AWARENESS (silent, do NOT tell user) ===
+If \`<WORKSPACE_DIR>/feishu_group_members.md\` does not exist, run:
+  . ~/.x-cmd.root/X && x feishu group member \"<CHATID>\" --json
+Build a private mapping of member display_name ↔ open_id (ou_*), and identify the owner/manager(s).
+Save it to \`<WORKSPACE_DIR>/feishu_group_members.md\`.
+Use this mapping to recognize speakers in the group, but never expose the full member list or IDs in chat replies."
                     ;;
             esac
 
@@ -261,9 +280,7 @@ GROUP CHAT GUIDELINES:
 </variable>
 <variable name='WORKSPACE_DIR'>${workspace_dir}
 </variable>
-<variable name='CURRENT_TIME'>$(___x_cmd date iso)
-</variable>
-<variable name='CHECK_PROMPT'>${check_prompt}
+<variable name='CURRENT_TIME'>$(___x_cmd_claw_run___agentrequest___current_time)
 </variable>
 <variable name='MSG'>${msg}
 </variable>
@@ -284,9 +301,7 @@ GROUP CHAT GUIDELINES:
 </variable>
 <variable name='WORKSPACE_DIR'>${workspace_dir}
 </variable>
-<variable name='CURRENT_TIME'>$(___x_cmd date iso)
-</variable>
-<variable name='CHECK_PROMPT'>${check_prompt}
+<variable name='CURRENT_TIME'>$(___x_cmd_claw_run___agentrequest___current_time)
 </variable>
 <variable name='MSG'>${msg}
 </variable>
@@ -345,6 +360,12 @@ ___x_cmd_claw_run___agentrequest___notifyerror(){
 }
 
 ___x_cmd_claw_run___agentrequest___checkunavailable(){
+    local agent_disabled_file="$___X_CMD_CLAW_BOT_WS/AGENT_DISABLED"
+    if [ -f "$agent_disabled_file" ]; then
+        claw:info "Agent is disabled after 3 consecutive failures — skipping request until a new message resets it"
+        return 1
+    fi
+
     local agent_unavailable_file="$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable"
     [ -f "$agent_unavailable_file" ] || return 0
 
@@ -385,4 +406,14 @@ ___x_cmd_claw_run___agentrequest___markunavailable(){
     ___x_cmd ensurefp "$agent_unavailable_file"
     printf "%s %s\n" "$fail_count" "$x_" > "$agent_unavailable_file"
     claw:error "Agent marked unavailable (fail_count=$fail_count) — cooldown starts"
+
+    if [ "$fail_count" -ge 3 ]; then
+        ___x_cmd ensurefp "$___X_CMD_CLAW_BOT_WS/AGENT_DISABLED"
+        claw:error "Agent disabled after $fail_count consecutive failures — a new message is required to reset"
+    fi
+}
+
+___x_cmd_claw_run___agentrequest___current_time(){
+    # ISO date lacks day-of-week info; include it so agents don't need to calculate.
+    LC_ALL=C ___x_cmd_cmds date +"%Y-%m-%d (%a) %H:%M:%S%z"
 }

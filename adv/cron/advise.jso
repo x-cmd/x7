@@ -505,11 +505,11 @@ null
 {
 "cn"
 :
-"列出当前命名空间下的所有任务（TSV 格式：名称 表达式 描述）"
+"列出当前命名空间下的所有任务（TSV 格式：名称 表达式 描述 一次性 上次开始 上次结束 上次状态 上次退出码 命令）"
 ,
 "en"
 :
-"List all jobs in the current namespace (TSV: name pattern description)"
+"List all jobs in the current namespace (TSV: name pattern desc once last_start last_end last_status last_exit_code cmd)"
 }
 ,
 "#tip"

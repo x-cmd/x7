@@ -27,6 +27,23 @@ ___x_cmd_eget_resolve(){
 
     [ -z "$target" ] && { N=eget M="resolve: missing target (user/repo)" log:ret:64; return; }
 
+    # Bare name (no slash, no colon) — try resolving via x install --ls --tsv.
+    # Mirrors the check in lib/download.
+    case "$target" in
+        */*|*:*)
+            ;;  # owner/repo, gh:prefix, or url — skip bare lookup
+        *)
+            local _resolved
+            if _resolved="$( ___x_cmd_eget_resolve_bare "$target" )" && [ -n "$_resolved" ]; then
+                eget:info "Resolved $target → $_resolved"
+                target="$_resolved"
+            else
+                N=eget M="resolve: '$target' not found in x install database. Use 'x install --search $target' to find similar packages, or pass owner/repo directly." log:ret:64
+                return
+            fi
+            ;;
+    esac
+
     ___X_CMD_EGET_QUIET="$_quiet"
 
     local x_=""

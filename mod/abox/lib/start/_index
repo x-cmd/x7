@@ -9,6 +9,14 @@ ___x_cmd_abox_prepare(){
             --utf8  --to abox
 }
 
+# ___x_cmd_abox_prepare(){
+#     ___x_cmd_abox_preparebase || return $?
+#     ___x_cmd docker image exist abox-xfce4 ||           \
+#         ___x_cmd docker refit --userai --from abox      \
+#             --apt "xfce4 xfce4-goodies tightvncserver websockify novnc python3"  \
+#             --utf8  --to abox-xfce4
+# }
+
 # Use ubuntu as the the base image. Using
 ___x_cmd_abox_dockercp(){
     abox:debug "Log --> $*"
@@ -59,7 +67,7 @@ ___x_cmd_abox_start(){
 
     ___x_cmd_abox_prepare ||    N=abox M="Fail to prepare abox" log:ret:1
 
-    local agent_home="$HOME/.x-cmd.root/home/$name"
+    local agent_home="$___X_CMD_ABOX_HOME/$name"
     ___x_cmd mkdirp "$agent_home"
 
     set --  -d -v "${agent_home}:/home/ai"  \
@@ -69,21 +77,33 @@ ___x_cmd_abox_start(){
         set -- "$@" -p "${port}:22"
     fi
 
+    ___x_cmd mkdirp "$HOME/.x-repo"
+    set -- "$@" -v "$HOME/.x-repo:/home/ai/.x-repo"
+
+    local _uid ; _uid=$(id -u)
+    local _gid ; _gid=$(id -g)
+
     ___x_cmd docker run "$@"    abox  foreversleep.sh || return $?
 
     # TODO: add more specific subcmd, like update, install, purge. Notice install ./dangerous.apt will be a problem. We should have a wrapper for apt.
 
     ___x_cmd_abox_dockercp "$___X_CMD_ROOT_MOD/abox/lib/start/apt"          "$name:/usr/local/bin"
-    ___x_cmd docker exec --user root "$name" sh -c '
+    ___x_cmd docker exec --user root "$name" sh -c "
+sed -i \"/^ai:/s/:[0-9]*:[0-9]*:/:$_uid:$_gid:/\" /etc/passwd
+sed -i \"/^ai:/s/:[0-9]*:/:$_gid:/\" /etc/group
+
 chsh -s /bin/bash root
 chsh -s /bin/bash ai
-echo "permit nopass ai cmd /usr/bin/apt" > "/etc/doas.conf"
+echo \"permit nopass ai cmd /usr/bin/apt\" >\"/etc/doas.conf\"
 
 chmod +x /usr/local/bin/apt
 chmod -R go+x /usr/local/bin/
 
-chown -R ai /home/ai
-'
+find /home/ai -path /home/ai/.x-repo -prune -o -exec chown ai {} \+
+
+locale-gen en_US.UTF-8
+update-locale
+"
 
     if [ -n "$port" ]; then
         ___x_cmd_abox_start___ssh

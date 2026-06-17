@@ -145,7 +145,7 @@ ___x_cmd_agent_chat___run_kimi(){(
         ___x_cmd_cmds cd "$workspace" || return $?
     fi
 
-    set -- -S "$session_id"
+    set -- -S "$session_id" --yolo
     [ "$is_no_thinking" != "1" ] || set -- "$@" --no-thinking
     [ -z "$reference_workspace" ] || set -- "$@" --add-dir "$reference_workspace"
 

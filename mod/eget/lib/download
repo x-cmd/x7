@@ -249,7 +249,12 @@ $version"
                 rm -f "$tmpfile"
                 N=eget M="SHA-256 mismatch: expected $expected, got $actual" log:ret:1; return
             fi
+            # Always print the actual hash so the user can verify / compare
+            # manually. Mirrors the spirit of `eget --sha256` (which prints
+            # the hash of the freshly downloaded asset) but is unconditional
+            # here because the user just waited for a download.
             [ "$___X_CMD_EGET_QUIET" = "0" ] && eget:info "SHA-256 verified"
+            printf "SHA-256: %s\n" "$actual"
         fi
     fi
 
@@ -393,15 +398,15 @@ ___x_cmd_eget___run_repo(){
     local version="${_fetch#*
 }"
 
-    # Verify checksum
+    # Verify checksum (--verify-sha256 <hash>).
     if [ -n "$verify_sha256" ]; then
         ___x_cmd_eget_verify "$tmpfile" "$verify_sha256" || return
     fi
-    if [ "$sha256" = "1" ]; then
-        local hash
-        hash="$( ___x_cmd_eget_hash "256" "$tmpfile" )" || true
-        printf "SHA-256: %s\n" "$hash"
-    fi
+    # Note: --sha256 used to print the hash here, but ___x_cmd_eget___fetch now
+    # always prints the actual SHA-256 on successful verification, so the flag
+    # is effectively a no-op for output. Kept for backward compatibility
+    # (callers / scripts that pass it) and to remain the only path for
+    # URL downloads (which skip the fetch verification block).
 
     # Extract or download-only
     if [ "$download_only" = "1" ]; then

@@ -18,6 +18,9 @@ ___x_cmd_abox(){
         t|tmux)         ___x_cmd_abox_tmux          "$@" ;;
 
         :*)             ___x_cmd_abox_tmux "$op"    "$@" ;;
+        *:*)            ___x_cmd_abox_tmux "$op"    "$@" ;;
+
+        --)             ___x_cmd_abox_cmdi          "$@" ;;
         *)              ___x_cmd_abox_cmdi "$op"    "$@" ;;
     esac
 }

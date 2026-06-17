@@ -25,24 +25,17 @@ ___x_cmd_claw_service(){
     local op="$1";          shift
     case "$op" in
         -h|--help)          ___x_cmd help -m claw service "$@" ; return 0 ;;
-        start|stop|restart|status|log|run)
+        start|stop|restart|install|uninstall|status|log|run)
                             ___x_cmd_claw_service_"$op" "$@"      ;;
         *)                  N=claw M="Unknown op -> $op" log:ret:64   ;;
     esac
 }
 
 ___x_cmd_claw_service_start(){
-    local imlist="" no_im=""
     while [ "$#" -gt 0 ]; do
         case "$1" in
             -h|--help)
                         shift; ___x_cmd help -m claw start "$@" ; return 0 ;;
-            --no-im)    no_im="1"; shift ;;
-            --weixin|--feishu|--feishu=groups|--feishu=*|--telegram|--qywx)
-                        imlist="${imlist}${1#--}
-"
-                        shift ;;
-            --imlist)   imlist="$2"; arg:2:shift ;;
             *)          claw:error "Unsupported option -> $1"
                         return 1
                         ;;
@@ -51,8 +44,9 @@ ___x_cmd_claw_service_start(){
 
     if ___x_cmd service isalive x-claw-service; then
         claw:info "claw service is already running. Use 'x claw log' to view logs"
+        return 0
     else
-        claw:info "Starting claw service"
+        log:sub:init -i "x-claw-service" claw "Starting claw service"
         ___x_cmd service start      x-claw-service  --  x-cmd claw service run || return $?
 
         ___x_cmd sleep 2
@@ -66,30 +60,20 @@ ___x_cmd_claw_service_start(){
         fi
     fi
 
-    [ -z "$no_im" ] || return 0
+    local active_list=""
+    active_list="$( ___x_cmd_claw_run___list_activate )"
 
-    local x_=""
-    [ -n "$imlist" ] || {
-        imlist="$( ___x_cmd_claw_run___list_activate )"
-        [ -n "$imlist" ] || {
-            ___x_cmd_claw_run___detect_im_ || {
-                claw:warn "No ready IM platform found, falling back to weixin"
-                x_="weixin"
-            }
-            imlist="$x_"
-        }
-    }
-    local im="" chatid=""
-    while read -r im; do
-        chatid=""
-        case "$im" in
-            *=*) chatid="${im#*=}"; im="${im%%=*}" ;;
-        esac
-        [ -n "$im"  ] || continue
-        ___x_cmd_claw_connect "$im${chatid:+":$chatid"}" || return $?
-    done <<A
-$imlist
-A
+    if [ -n "$active_list" ]; then
+        claw:info "Activated IM platforms found. Use 'x claw status' to view details."
+    else
+        local x_=""
+        if ___x_cmd_claw_run___detect_im_; then
+            claw:info "No active IM chat detected. Recommended: x claw connect $x_"
+        else
+            claw:warn "No active IM chat and no ready IM platform. Use 'x claw connect <weixin|telegram|qywx|feishu...>' when ready."
+        fi
+    fi
+    log:sub:fini
 }
 
 ___x_cmd_claw_service_stop(){
@@ -104,35 +88,53 @@ ___x_cmd_claw_service_stop(){
     done
 
     if ___x_cmd service isalive x-claw-service; then
-        claw:info "Stopping claw service"
+        log:sub:init -i "x-claw-service" claw "Stopping claw service"
         ___x_cmd service stop       x-claw-service
     else
-        claw:info "claw service is not running"
+        log:sub:init -i "x-claw-service" claw "claw service is not running"
     fi
 
     ___x_cmd_claw_run___teardown
+    log:sub:fini
 }
 
 ___x_cmd_claw_service_restart(){
-    local imlist="" no_im=""
     while [ "$#" -gt 0 ]; do
         case "$1" in
             -h|--help)
                         shift; ___x_cmd help -m claw restart "$@" ; return 0 ;;
-            --no-im)    no_im="1"; shift ;;
-            --feishu|--feishu=groups|--feishu=*|--weixin|--telegram|--qywx)
-                        imlist="${imlist}${1#--}
-"
-                        shift ;;
             *)          claw:error "Unsupported option -> $1"
                         return 1
                         ;;
         esac
     done
 
-    [ -n "$no_im" ] || [ -n "$imlist" ] || imlist="$( ___x_cmd_claw_run___list_activate )"
-    ___x_cmd_claw_service_stop || return $?
-    ___x_cmd_claw_service_start ${no_im:+"--no-im"} ${imlist:+"--imlist" "$imlist"}
+    local active_list=""
+    active_list="$( ___x_cmd_claw_run___list_activate )"
+
+    ___x_cmd_claw_service_stop  || return $?
+    ___x_cmd_claw_service_start || return $?
+
+    if [ -z "$active_list" ]; then
+        claw:debug "No active IM chat to restore after restart."
+        return 0
+    fi
+
+    log:sub:init -i "connect" claw "Restoring active IM connections after restart"
+
+    local im="" chatid=""
+    while read -r im; do
+        chatid=""
+        case "$im" in
+            *=*) chatid="${im#*=}"; im="${im%%=*}" ;;
+        esac
+        [ -n "$im"  ] || continue
+        ___x_cmd_claw_connect "$im${chatid:+":$chatid"}" || return $?
+    done <<A
+$active_list
+A
+
+    log:sub:fini
 }
 
 ___x_cmd_claw_service_status(){
@@ -145,7 +147,8 @@ ___x_cmd_claw_service_status(){
 }
 
 ___x_cmd_claw_service_log(){
-    ___x_cmd service log tail     x-claw-service
+    # ___x_cmd service log tail     x-claw-service
+    ___x_cmd_claw_log "$@"
 }
 
 ___x_cmd_claw_service_run(){
@@ -154,6 +157,20 @@ ___x_cmd_claw_service_run(){
     local x_=""; ___x_cmd epoch get_
     ___X_CMD_CLAW_BOT_RECENT_STDOUT_LOG_DIR="$___X_CMD_CLAW_BOT_STDOUT_LOG_DIR/$x_"
     ___x_cmd_claw_runstart
+}
+
+___x_cmd_claw_service_install(){
+    if ! ___x_cmd service isalive x-claw-service; then
+        ___x_cmd claw service start || return $?
+    fi
+
+    claw:info "Installing claw service"
+    ___x_cmd service install x-claw-service
+}
+
+___x_cmd_claw_service_uninstall(){
+    claw:info "Uninstalling claw service"
+    ___x_cmd service uninstall x-claw-service
 }
 
 # Fetch msg from the msgloop

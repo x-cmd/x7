@@ -1,0 +1,41 @@
+# shellcheck shell=dash
+
+# `x repo which <id>` — print the local path. <id> is either an exact
+# address (github.com/owner/repo, gh/owner/repo, provider/owner/repo,
+# owner/repo) or a fuzzy query when prefixed with `/` (owner/name
+# substrings, route through fuzzywhich).
+___x_cmd_repo_which(){
+    case "${1-}" in
+        -h|--help)  ___x_cmd help -m repo which "$@" ; return 0 ;;
+    esac
+
+    local x_
+    ___x_cmd_repo_which_ "$@" || return $?
+    printf "%s\n" "$x_"
+}
+
+___x_cmd_repo_which_(){
+    local addr="$1"
+    case "$addr" in
+        /*)
+            x_=$(___x_cmd_repo_fuzzywhich "${addr#/}" 2>/dev/null) || return $?
+            return 0
+            ;;
+        github.com/*/*)
+            x_="$___X_CMD_REPO_ROOT/github.com/${addr#*/}"
+            ;;
+        gh/*/*)
+            x_="$___X_CMD_REPO_ROOT/github.com/${addr#*/}"
+            ;;
+
+        # TODO: codeberg(cb) gitee(gt) gitlab(gl) bitbucket(bb)
+
+        */*/*)
+            x_="$___X_CMD_REPO_ROOT/${addr#/}"
+            ;;
+        */*)
+            x_="$___X_CMD_REPO_ROOT/github.com/${addr}"
+            ;;
+
+    esac
+}

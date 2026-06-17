@@ -2,92 +2,22 @@
 "#synopsis"
 :
 [
-{
-"x claw restart [FLAG]"
-:
-null
-}
+"x claw restart"
 ]
 ,
-"--no-im"
+"#tip"
 :
-{
-"#desc"
-:
+[
 {
 "cn"
 :
-"仅重启 x-claw-service，不启动任何 IM 平台连接"
+"重启 x-claw-service 后台服务，并自动恢复所有已激活的 IM 连接。\n如果没有已激活的 IM 聊天，重启后不会自动连接任何平台。\n连接/断开 IM 请使用 `x claw connect <im>` / `x claw disconnect <im>`。\n"
 ,
 "en"
 :
-"Restart x-claw-service only, without connecting any IM platform"
+"Restart the x-claw-service daemon and restore all active IM connections.\nIf no IM chat is active, no platform will be connected automatically.\nUse `x claw connect <im>` / `x claw disconnect <im>` to manage connections.\n"
 }
-}
-,
-"--weixin"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"重启微信平台"
-,
-"en"
-:
-"Restart WeChat platform"
-}
-}
-,
-"--telegram"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"重启 Telegram 平台"
-,
-"en"
-:
-"Restart Telegram platform"
-}
-}
-,
-"--feishu"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"重启飞书平台"
-,
-"en"
-:
-"Restart Feishu platform"
-}
-}
-,
-"--qywx"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"重启企业微信平台"
-,
-"en"
-:
-"Restart Qywx (Enterprise WeChat) platform"
-}
-}
+]
 ,
 "#tldr"
 :
@@ -99,53 +29,25 @@ null
 ,
 "cn"
 :
-"场景: 修改配置后重启整个网关服务，恢复所有 IM 连接"
+"场景: 重启服务并恢复已激活的 IM 连接"
 ,
 "en"
 :
-"Scenario: Restart the entire gateway after config changes, restoring all IM connections"
+"Scenario: Restart service and restore active IM connections"
 }
 ,
 {
 "cmd"
 :
-"x claw restart --no-im"
+"x claw restart"
 ,
 "cn"
 :
-"场景: 仅重启后台服务本身，不重建 IM 连接（适合调试服务核心）"
+"场景: 修改配置后重启整个网关"
 ,
 "en"
 :
-"Scenario: Restart only the background service without reconnecting IMs (good for core debugging)"
-}
-,
-{
-"cmd"
-:
-"x claw restart --weixin --telegram"
-,
-"cn"
-:
-"场景: 重启时仅恢复微信和 Telegram 连接"
-,
-"en"
-:
-"Scenario: Restart and restore only WeChat and Telegram connections"
-}
-,
-{
-"cmd"
-:
-"x claw restart --feishu --qywx"
-,
-"cn"
-:
-"场景: 重启时仅恢复飞书和企业微信连接"
-,
-"en"
-:
-"Scenario: Restart and restore only Feishu and Qywx connections"
+"Scenario: Restart the gateway after configuration changes"
 }
 ]
 }

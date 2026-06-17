@@ -249,7 +249,7 @@ function substitute_mentions(text, s,    mpos, rest, arr_end, arr_content,
         key  = extract_json_string(obj_content, "\"key\":\"")
         name = extract_json_string(obj_content, "\"name\":\"")
         if (key != "" && name != "") {
-            replacement = key "=" name
+            replacement = "@" name
             # gsub treats & and \ specially in the replacement string.
             # Escape them so they appear literally in the output.
             gsub(/\\/, "\\\\", replacement)

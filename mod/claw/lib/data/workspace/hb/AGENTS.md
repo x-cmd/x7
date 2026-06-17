@@ -37,10 +37,11 @@ Each `<im>-<chatid>` directory is an independent chat workspace. Access them dir
 
 ## Startup Reading Order
 
-1. **Your operational manual** — This file (your workflow).
-2. **PLAN.md** — Your global proactive checklist.
-3. **memory/state.yml** — Latest execution state for quick decision-making.
-4. **TOOLS.md** — Tool reference, consult as needed.
+1. **RUNONCE.md** — If this file exists in your workspace root, read it, follow its instructions, then delete it. Check this FIRST.
+2. **Your operational manual** — This file (your workflow).
+3. **PLAN.md** — Your global proactive checklist.
+4. **memory/state.yml** — Latest execution state for quick decision-making.
+5. **TOOLS.md** — Tool reference, consult as needed.
 
 When processing a chat's `HEARTBEAT.md`, read only what you need:
 - **Primary target**: `HEARTBEAT.md` (follow-up items)

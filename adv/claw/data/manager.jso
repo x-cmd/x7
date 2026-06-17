@@ -47,85 +47,71 @@ null
 {
 "cmd"
 :
-"x claw\n"
+"x claw\n> \"我刚装好，帮我连上微信和飞书群\"\n"
 ,
 "cn"
 :
-"场景：首次使用，懒得看文档，直接问：'怎么连上微信'、'飞书群也帮我接一下'"
+"首次使用，一句话让 AI 把 IM 接好"
 ,
 "en"
 :
-"Fresh install — too lazy for docs, just ask: 'how to connect WeChat', 'hook up my Feishu group too'"
+"First-time setup — one sentence and AI connects your IM platforms"
 }
 ,
 {
 "cmd"
 :
-"x claw\n# 进入交互模式后，直接描述需求：\n> 汇总飞书群和 telegram 群今天的重要消息\n> 整理成一份日报，发到企业微信群\n"
+"x claw\n> \"每天早上 8 点帮我扫一遍 Hacker News 和 GitHub Trending，有 AI 相关的推给我\"\n"
 ,
 "cn"
 :
-"场景：让 AI 汇总多群消息整理成日报，自动发到指定群"
+"让 AI 每天自动盯资讯，有价值的内容直接推给你"
 ,
 "en"
 :
-"Let AI aggregate messages from multiple groups into a daily report and auto-send to the target group"
+"Let AI monitor news daily and push relevant content to you"
 }
 ,
 {
 "cmd"
 :
-"x claw\n# 进入交互模式后，直接描述需求：\n> 飞书群这周敲定的技术方案，帮我写成正式公告\n> 保存到桌面，然后发到所有相关群\n"
+"x claw\n> \"帮我重构这个模块，不用等我，搞完通知我\"\n> \"issue #123 那个功能，帮我实现一下，后台跑，搞完通知我\"\n"
 ,
 "cn"
 :
-"场景：群里的方案定了，让 AI 写成公告存桌面，同时推送到各群"
+"Vibe Coding：把开发任务丢给 AI，后台跑完直接通知你"
 ,
 "en"
 :
-"The decision is made in the group — let AI draft the announcement, save it to desktop, and push it to all relevant groups"
+"Vibe coding: hand off dev tasks to AI and get notified when done"
 }
 ,
 {
 "cmd"
 :
-"x claw\n# 进入交互模式后，直接描述需求：\n> 帮我跟踪 x-cmd 的 GitHub issue，有新进展通知我\n> 把今天解决的 issue 整理一份简报发到企业微信群\n"
+"x claw\n> \"把飞书群今天的重要讨论整理成公告，发到企业微信和 Telegram\"\n"
 ,
 "cn"
 :
-"场景：跟踪 x-cmd GitHub issue，新进展自动推送到企业微信群"
+"跨平台联动：A 群汇总，B/C 群自动推送"
 ,
 "en"
 :
-"Track x-cmd GitHub issues and auto-push updates to your Enterprise WeChat group"
+"Cross-platform: summarize from one group and push to others"
 }
 ,
 {
 "cmd"
 :
-"x claw 'telegram 群有人分享了重要链接，帮我存一下'"
+"x claw '总结一下飞书群今天的讨论，把待办事项列出来'"
 ,
 "cn"
 :
-"telegram 群甩了个重要链接，一句话让 AI 帮你存到本地"
+"临时查办：一句话总结讨论并提取 action items"
 ,
 "en"
 :
-"Someone shared an important link in Telegram — one sentence and AI saves it locally"
-}
-,
-{
-"cmd"
-:
-"x claw 'telegram 群那个重要 deadline 帮我记一下'"
-,
-"cn"
-:
-"telegram 群里甩了个 deadline，一句话让 AI 帮你记下来别忘"
-,
-"en"
-:
-"Someone dropped a deadline in the Telegram group — one sentence and AI remembers it for you"
+"Quick task: summarize discussions and extract action items in one sentence"
 }
 ]
 }

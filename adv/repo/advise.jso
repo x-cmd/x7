@@ -1,0 +1,704 @@
+{
+"#name"
+:
+{
+"repo"
+:
+null
+,
+"cn"
+:
+"代码仓库管理器（agent 共享）"
+,
+"en"
+:
+"Code Repository Manager (agent-shared)"
+}
+,
+"#synopsis"
+:
+[
+{
+"x repo <name>"
+:
+null
+}
+,
+{
+"x repo ls [options]"
+:
+null
+}
+,
+{
+"x repo which owner/name"
+:
+null
+}
+,
+{
+"x repo which /owner/name"
+:
+null
+}
+,
+{
+"x repo cd owner/name"
+:
+null
+}
+,
+{
+"x repo fe owner/name"
+:
+null
+}
+,
+{
+"x repo c  owner/name"
+:
+null
+}
+,
+{
+"x repo t  owner/name"
+:
+null
+}
+,
+{
+"x repo update <id>..."
+:
+null
+}
+]
+,
+"#desc"
+:
+{
+"cn"
+:
+"为 AI agent 统一管理代码仓库克隆路径（默认 ~/.x-repo/<provider>/<owner>/<name>，跨 agent 共享）"
+,
+"en"
+:
+"Unify code repository clone paths for AI agents (default ~/.x-repo/<provider>/<owner>/<name>, shared across agents)"
+}
+,
+"#meta"
+:
+{
+"default-subcmd"
+:
+"ls"
+}
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"除非用户另行指定或已有惯例，新克隆均按默认布局放置——便于多 agent 复用、`x repo` 发现，以及后续同步与共享缓存加速。\n"
+,
+"en"
+:
+"Unless the user specifies otherwise or an existing convention applies, place new clones under the default layout — enabling cross-agent reuse, `x repo` discoverability, and future sync / shared cache acceleration.\n"
+}
+,
+{
+"cn"
+:
+"不带格式选项时，交互终端以 csv app 浏览，管道或重定向则以 TSV 输出。"
+,
+"en"
+:
+"Without format flag, interactive terminal opens csv app; pipe or redirect outputs TSV."
+}
+,
+{
+"cn"
+:
+"打开 tmux：`x repo t <id>` 或 `x tmux repo <id>`，session 名按 `<provider>/<owner>/<name>` 命名（github.com→gh, codeberg.org→cb, gitlab.com→gl, gitee.com→gt, bitbucket.org→bb）。\n"
+,
+"en"
+:
+"Open in tmux: `x repo t <id>` or `x tmux repo <id>`. The session is named `<provider>/<owner>/<name>` (github.com→gh, codeberg.org→cb, gitlab.com→gl, gitee.com→gt, bitbucket.org→bb).\n"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x repo x-bash/repo"
+,
+"cn"
+:
+"默认: 解析后 cd 进本地仓库；不存在则 update 克隆"
+,
+"en"
+:
+"Default: resolve then cd into the local repo; update-clones if missing"
+}
+,
+{
+"cmd"
+:
+"x repo ls"
+,
+"cn"
+:
+"示例: 列出所有已克隆的仓库"
+,
+"en"
+:
+"Example: list all cloned repositories"
+}
+,
+{
+"cmd"
+:
+"x repo ls --raw"
+,
+"cn"
+:
+"原始路径: provider/org/repo 格式，适合脚本处理"
+,
+"en"
+:
+"Raw paths: provider/org/repo format, suitable for scripting"
+}
+,
+{
+"cmd"
+:
+"x repo ls --tsv"
+,
+"cn"
+:
+"TSV 格式: 带表头，适合管道和 awk 处理"
+,
+"en"
+:
+"TSV format: with headers, suitable for piping and awk"
+}
+,
+{
+"cmd"
+:
+"x repo ls --csv"
+,
+"cn"
+:
+"CSV 格式: 适合表格软件和数据库导入"
+,
+"en"
+:
+"CSV format: suitable for spreadsheets and database import"
+}
+,
+{
+"cmd"
+:
+"x repo which sh/re"
+,
+"cn"
+:
+"解析 owner/name 为本地路径 (owner 含 sh, name 含 re)"
+,
+"en"
+:
+"Resolve owner/name to the local path (owner contains sh, name contains re)"
+}
+,
+{
+"cmd"
+:
+"x repo which /sh/re"
+,
+"cn"
+:
+"which 的模糊模式: 前缀 / 走 fuzzywhich 解析"
+,
+"en"
+:
+"which in fuzzy mode: a leading / routes through fuzzywhich"
+}
+,
+{
+"cmd"
+:
+"x repo cd x-bash/repo"
+,
+"cn"
+:
+"显式 cd: 与默认 x repo <name> 等价"
+,
+"en"
+:
+"Explicit cd: equivalent to the default x repo <name>"
+}
+,
+{
+"cmd"
+:
+"x repo fe x-bash/repo"
+,
+"cn"
+:
+"fresh 简写 (fe): 解析后用 fresh 编辑器打开"
+,
+"en"
+:
+"shortcut for fresh: resolve then open in the fresh editor"
+}
+,
+{
+"cmd"
+:
+"x repo c x-bash/repo"
+,
+"cn"
+:
+"code 简写 (c): 解析后用 vscode 打开; 不存在则 update 克隆"
+,
+"en"
+:
+"shortcut for code: resolve then open in vscode; update-clones if missing"
+}
+,
+{
+"cmd"
+:
+"x repo t x-bash/repo"
+,
+"cn"
+:
+"tmux 简写 (t): 打开（或新建）session :gh/x-bash/repo"
+,
+"en"
+:
+"shortcut for tmux: open (or create) session :gh/x-bash/repo"
+}
+,
+{
+"cmd"
+:
+"x repo update x-bash/repo x-bash/brew"
+,
+"cn"
+:
+"批量: 对每个 id 解析后 clone 或 update 一次"
+,
+"en"
+:
+"Batch: resolve each id and clone-or-update in turn"
+}
+]
+,
+"#subcmd:common"
+:
+[
+"ls"
+,
+"which"
+,
+"cd"
+,
+"fresh"
+,
+"code"
+,
+"tmux"
+,
+"update"
+]
+,
+"ls"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"列出所有已克隆的代码仓库"
+,
+"en"
+:
+"List all cloned code repositories"
+}
+,
+"--raw"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"原始路径输出（provider/org/repo）"
+,
+"en"
+:
+"Raw path output (provider/org/repo)"
+}
+}
+,
+"--tsv"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"TSV 表格格式输出（provider, owner, name, filepath）"
+,
+"en"
+:
+"TSV table format output (provider, owner, name, filepath)"
+}
+}
+,
+"--csv"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"CSV 表格格式输出"
+,
+"en"
+:
+"CSV table format output"
+}
+}
+,
+"--app"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"交互式 csv app 浏览"
+,
+"en"
+:
+"Interactive csv app browser"
+}
+}
+,
+"--auto"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"自动模式（TTY→app, 管道→tsv）"
+,
+"en"
+:
+"Auto mode (TTY→app, pipe→tsv)"
+}
+}
+}
+,
+"which"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"将 owner/name 解析为本地克隆路径（前缀 / 走 fuzzywhich 模糊匹配）"
+,
+"en"
+:
+"Resolve owner/name to a local clone path (a leading / uses fuzzywhich for fuzzy matching)"
+}
+,
+"owner/name"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"owner 与 name 可分别给出子串；任一为空视为通配。例如 which sh/re 命中 x-bash/re"
+,
+"en"
+:
+"owner and name are independent substrings; an empty part is a wildcard. e.g. which sh/re matches x-bash/re"
+}
+}
+,
+"-h"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看 which 帮助"
+,
+"en"
+:
+"Show which help"
+}
+}
+}
+,
+"cd"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"解析后 cd 进本地仓库路径（不存在则 update 克隆再 cd）"
+,
+"en"
+:
+"Resolve then cd into the local repo path (update-clones if missing)"
+}
+,
+"owner/name"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"接受 / 前缀的模糊解析，例如 cd /x-bash/re"
+,
+"en"
+:
+"Accepts a /-prefixed fuzzy query, e.g. cd /x-bash/re"
+}
+}
+,
+"-h"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看 cd 帮助"
+,
+"en"
+:
+"Show cd help"
+}
+}
+}
+,
+"fresh"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"解析后用 fresh 编辑器打开本地仓库"
+,
+"en"
+:
+"Resolve then open the local repo in the fresh editor"
+}
+,
+"owner/name"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"解析失败则报错；调用方负责先 update 克隆（参见 x repo update）"
+,
+"en"
+:
+"Fails if the repo can't be resolved; caller is responsible for cloning first (see x repo update)"
+}
+}
+,
+"-h"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看 fresh 帮助"
+,
+"en"
+:
+"Show fresh help"
+}
+}
+}
+,
+"code"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"解析后用 vscode 打开本地仓库（不存在则 update 克隆再打开）"
+,
+"en"
+:
+"Resolve then open the local repo in vscode (update-clones if missing)"
+}
+,
+"owner/name"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"支持 / 前缀的模糊解析，例如 code /x-bash/re"
+,
+"en"
+:
+"Accepts a /-prefixed fuzzy query, e.g. code /x-bash/re"
+}
+}
+,
+"-h"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看 code 帮助"
+,
+"en"
+:
+"Show code help"
+}
+}
+}
+,
+"tmux"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"解析后打开 tmux session（命名规则与 x tmux repo 一致，见 tip）"
+,
+"en"
+:
+"Resolve then open a tmux session (naming follows x tmux repo; see tip)"
+}
+,
+"owner/name"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"浅包装：等价于 x tmux repo <id>；session 名由 tmux 模块决定"
+,
+"en"
+:
+"Shallow wrapper: equivalent to x tmux repo <id>; the tmux module owns the session name"
+}
+}
+,
+"-h"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看 tmux 帮助"
+,
+"en"
+:
+"Show tmux help"
+}
+}
+}
+,
+"update"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"解析每个 id；本地存在则 update，不存在则 clone；接受多个 id"
+,
+"en"
+:
+"Resolve each id; update if a local clone exists, otherwise clone; accepts multiple ids"
+}
+,
+"id..."
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"可一次给多个 id（如 update x-bash/repo x-bash/brew），逐个处理"
+,
+"en"
+:
+"Pass multiple ids at once (e.g. update x-bash/repo x-bash/brew) to process them in order"
+}
+}
+,
+"-h"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看 update 帮助"
+,
+"en"
+:
+"Show update help"
+}
+}
+}
+}
+

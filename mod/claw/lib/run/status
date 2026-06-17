@@ -1,4 +1,4 @@
-# shellcheck shell=dash
+# shellcheck shell=dash disable=SC2016
 
 
 ___x_cmd_claw_run_ls(){
@@ -125,6 +125,22 @@ ___x_cmd_claw_run_status(){
 
                     printf "  - name: %s\n" "$im_name"
                     printf "    chatid: %s\n" "$chatid"
+
+                    local chat_type="" app_name="" group_name=""
+                    case "$im_name" in
+                        feishu)
+                            case "$chatid" in
+                                oc_*)   chat_type="group"
+                                        group_name="$( ___x_cmd feishu group info --json --chatid "$chatid" 2>/dev/null | ___x_cmd jo .data.name )"
+                                        printf "    group_name: %s\n" "$group_name" ;;
+
+                                *)      chat_type="single"
+                                        app_name="$( ___x_cmd feishu abot info --appid me 2>/dev/null | ___x_cmd jo .data.app.app_name )"
+                                        printf "    app_name: %s\n" "$app_name" ;;
+                            esac
+                            ;;
+                    esac
+                    printf "    type: %s\n" "$chat_type"
                     printf "    worker: %s\n" "$worker_name"
                     printf "    worker_status: %s\n" "$worker_status"
                     printf "    service_status: %s\n" "$service_status"
@@ -142,14 +158,38 @@ ___x_cmd_claw_run_status(){
     [ -n "$cron_tz" ] && printf "  tz: %s\n" "$cron_tz"
 
     local cron_list=""
-    cron_list="$(___x_cmd cron ls --ns x-claw-default --tsv 2>/dev/null)" || cron_list=""
+    cron_list="$(___x_cmd_claw_cron_ls --tsv 2>/dev/null)" || cron_list=""
     if [ -n "$cron_list" ]; then
-        printf "%s\n" "$cron_list" | while IFS="$___X_CMD_UNSEENCHAR_HT" read -r name expr desc; do
-            [ -n "$name" ] || continue
-            printf "  - name: %s\n" "$name"
-            printf "    expr: %s\n" "$expr"
-            [ -n "$desc" ] && printf "    desc: %s\n" "$desc"
-        done
+        printf "%s" "$cron_list" | ___x_cmd awk0 -m date -v FS="$___X_CMD_UNSEENCHAR_HT" '
+BEGIN { first = 1 }
+{
+    if (first) { first = 0; next }
+    name = $1
+    if (name == "") next
+
+    print "  - name: " name
+    print "    expr: " $2
+    if ($3 != "") print "    desc: " $3
+    if ($4 != "") print "    once: " $4
+
+    last_start = $5
+    if (last_start != "" && last_start > 0) {
+        last_start_iso = date_timestamp_to_iso(last_start)
+        if (last_start_iso != "") {
+            print "    last_start: " last_start_iso
+
+            last_end = $6
+            if (last_end != "" && last_end > 0) {
+                last_end_iso = date_timestamp_to_iso(last_end)
+                if (last_end_iso != "") print "    last_end: " last_end_iso
+            }
+
+            if ($7 != "") print "    last_status: " $7
+            if ($8 != "") print "    last_exit_code: " $8
+        }
+    }
+}
+'
     else
         printf "  []\n"
     fi

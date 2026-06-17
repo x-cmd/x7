@@ -30,11 +30,11 @@ null
 {
 "cn"
 :
-"把你的 AI（Claude、Kimi、Codex 等）接入微信、飞书、Telegram。\n在群里 @机器人即可对话，AI 会自主查资料、写代码、处理数据，并把结果发回群里。\n直接输入 x claw 即可和 AI 管理员对话，管理所有平台、查看聊天记录、设置定时任务。\n"
+"把你的 AI（Claude、Kimi、Codex 等）接入微信、企业微信、飞书、Telegram。\n在群里 @机器人即可对话，AI 会自主查资料、写代码、处理数据，并把结果发回群里。\n直接输入 x claw 即可和 AI 管理员对话，管理所有平台、查看聊天记录、设置定时任务。\n"
 ,
 "en"
 :
-"Connect your AI (Claude, Kimi, Codex, etc.) to WeChat, Feishu, Telegram.\nMention the bot in a group chat and the AI will search, code, and process data autonomously, sending results back.\nJust type x claw to talk to the AI admin — manage platforms, browse chat history, and set up scheduled tasks.\n"
+"Connect your AI (Claude, Kimi, Codex, etc.) to WeChat, Qywx, Feishu, Telegram.\nMention the bot in a group chat and the AI will search, code, and process data autonomously, sending results back.\nJust type x claw to talk to the AI admin — manage platforms, browse chat history, and set up scheduled tasks.\n"
 }
 ,
 "#tip"
@@ -43,11 +43,11 @@ null
 {
 "cn"
 :
-"直接输入 x claw，和 AI 管理员对话，管理所有 IM 平台、查看聊天记录、设置定时任务。\nx claw start 启动后台服务，机器人开始在群里接收和回复消息。\nx claw 'msg' 单条处理，不用进交互模式也能快速查询或执行一次性任务。\n"
+"直接输入 x claw，和 AI 管理员对话，管理所有 IM 平台、查看聊天记录、设置定时任务。\nx claw start 启动后台服务，然后通过 x claw connect <im> 连接具体平台。\nx claw 'msg' 单条处理，不用进交互模式也能快速查询或执行一次性任务。\n"
 ,
 "en"
 :
-"Type x claw to talk to the AI admin — manage IM platforms, browse chat history, and set up scheduled tasks.\nx claw start starts the background service so the bot begins receiving and replying in groups.\nx claw 'msg' for quick queries or one-off tasks without entering interactive mode.\n"
+"Type x claw to talk to the AI admin — manage IM platforms, browse chat history, and set up scheduled tasks.\nx claw start starts the background service; then use x claw connect <im> to connect a platform.\nx claw 'msg' for quick queries or one-off tasks without entering interactive mode.\n"
 }
 ]
 ,
@@ -75,11 +75,25 @@ null
 ,
 "cn"
 :
-"示例: 启动机器人，开始在群里接收消息"
+"示例: 启动 claw 后台服务"
 ,
 "en"
 :
-"Example: Start the bot to begin receiving messages in groups"
+"Example: Start the claw background service"
+}
+,
+{
+"cmd"
+:
+"x claw connect weixin"
+,
+"cn"
+:
+"示例: 启动服务后连接微信"
+,
+"en"
+:
+"Example: Connect WeChat after starting the service"
 }
 ,
 {
@@ -95,12 +109,70 @@ null
 :
 "Example: Quick chat history query for a summary"
 }
+,
+{
+"cmd"
+:
+"x claw '总结一下飞书群今天的讨论，把待办事项列出来'"
+,
+"cn"
+:
+"示例: 一句话总结讨论并提取 action items"
+,
+"en"
+:
+"Example: Summarize a discussion and extract action items in one sentence"
+}
+,
+{
+"cmd"
+:
+"x claw start && x claw connect feishu:groups"
+,
+"cn"
+:
+"示例: 启动服务并连接飞书所有群聊"
+,
+"en"
+:
+"Example: Start the service and connect all Feishu groups"
+}
+,
+{
+"cmd"
+:
+"x claw status"
+,
+"cn"
+:
+"示例: 查看服务、IM 连接和定时任务状态"
+,
+"en"
+:
+"Example: Check service, IM connections, and scheduled task status"
+}
+,
+{
+"cmd"
+:
+"x claw log"
+,
+"cn"
+:
+"示例: 查看 claw 服务实时日志"
+,
+"en"
+:
+"Example: View claw service logs"
+}
 ]
 ,
 "#subcmd:Admin"
 :
 [
 "manager"
+,
+"workspace"
 ]
 ,
 "#subcmd:Service"
@@ -153,11 +225,11 @@ null
 {
 "cn"
 :
-"启动 x claw 后台服务，让机器人开始在 IM 群里接收和回复消息"
+"启动 x claw 后台服务"
 ,
 "en"
 :
-"Start the x claw background service so the bot begins receiving and replying in IM groups"
+"Start the x claw background service"
 }
 ,
 "$ref"
@@ -203,6 +275,26 @@ null
 "$ref"
 :
 "x-advise://claw/data/restart.jso"
+}
+,
+"service"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"管理 x claw 后台服务"
+,
+"en"
+:
+"Manage the x claw background service"
+}
+,
+"$ref"
+:
+"x-advise://claw/data/service.jso"
 }
 ,
 "status"
@@ -403,6 +495,26 @@ null
 "$ref"
 :
 "x-advise://claw/data/manager.jso"
+}
+,
+"workspace"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"手动检查并更新 workspace 模板"
+,
+"en"
+:
+"Manually check and update workspace templates"
+}
+,
+"$ref"
+:
+"x-advise://claw/data/workspace.jso"
 }
 ,
 "qywx"

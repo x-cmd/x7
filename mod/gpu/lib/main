@@ -14,11 +14,17 @@ ___x_cmd_gpu___main(){
 }
 
 ___x_cmd_gpu_sum(){
+    case "${1-}" in
+        -h|--help)  ___x_cmd help -m gpu sum "$@";  return 0 ;;
+    esac
     ___x_cmd_gpu_info "$@"
     ___x_cmd_gpu_stat "$@"
 }
 
 ___x_cmd_gpu_info(){
+    case "${1-}" in
+        -h|--help)  ___x_cmd help -m gpu info "$@"; return 0 ;;
+    esac
     local simple="" fresh=""
     while [ $# -gt 0 ]; do
         case "$1" in --simple|-s) simple=1; shift ;; --fresh) fresh=1; shift ;; *) break ;; esac
@@ -98,6 +104,9 @@ ___x_cmd_gpu_info_win(){
 }
 
 ___x_cmd_gpu_stat(){
+    case "${1-}" in
+        -h|--help)  ___x_cmd help -m gpu stat "$@"; return 0 ;;
+    esac
     if ___x_cmd os is darwin; then
         ___x_cmd_gpu_stat_macos
     elif ___x_cmd os is win; then

@@ -1,7 +1,7 @@
 
 # claw = memory + soul + note + tailer-mq + cron
 
-xrc:mod:lib     claw   run/heartbeat   run/msg  run/agentrequest run/agentrequest_util   run/util run/log run/status
+xrc:mod:lib     claw   run/heartbeat   run/msg  run/agentrequest run/agentrequest_util   run/util run/log run/status run/workspace
 
 ___X_CMD_CLAW_DIR="$___X_CMD_ROOT_DATA/claw"
 ___X_CMD_CLAW_BOT_WS="$___X_CMD_CLAW_DIR/workspace/default"
@@ -10,6 +10,10 @@ ___X_CMD_CLAW_BOT_DATA="$___X_CMD_CLAW_BOT_WS/.x-cmd/data"
 ___X_CMD_CLAW_BOT_HEARTBEAT="$___X_CMD_CLAW_BOT_DATA/heartbeat"
 ___X_CMD_CLAW_BOT_CONNECT_DIR="$___X_CMD_CLAW_BOT_DATA/connect"
 ___X_CMD_CLAW_BOT_STDOUT_LOG_DIR="$___X_CMD_CLAW_BOT_DATA/logs"
+
+___X_CMD_CLAW_WEIXIN_SESSION_TIMEOUT=86400
+___X_CMD_CLAW_WEIXIN_REMIND_BEFORE=1800
+___X_CMD_CLAW_WEIXIN_REMIND_MARKER="$___X_CMD_CLAW_BOT_DATA/weixin_remind_sent"
 
 ___x_cmd_claw_runstart(){(
     export ___X_CMD_LOG_C_TF="$___X_CMD_LOG_C_TF"

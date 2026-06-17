@@ -19,7 +19,7 @@ ___x_cmd_claw___main(){
                                 ___x_cmd_claw_service "$op" "$@" ;;
         agentrequest)           ___x_cmd_claw_agentrequest "$@" ;;
         connect|disconnect)     ___x_cmd_claw_"$op" "$@" ;;
-        cron|log|manager)       ___x_cmd_claw_"$op" "$@" ;;
+        cron|log|manager|workspace) ___x_cmd_claw_"$op" "$@" ;;
         *)                      ___x_cmd_claw_manager "$op" "$@" ;;
     esac
 }

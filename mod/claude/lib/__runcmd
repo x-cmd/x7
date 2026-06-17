@@ -1,3 +1,8 @@
+if ___x_cmd os is win; then
+    ___X_CMD_CLAUDE_CODE_GIT_BASH_PATH="$CLAUDE_CODE_GIT_BASH_PATH"
+    [ -n "$___X_CMD_CLAUDE_CODE_GIT_BASH_PATH" ] || \
+        ___X_CMD_CLAUDE_CODE_GIT_BASH_PATH="$( ___x_cmd pwsh path gitbash --windows )"
+fi
 
 ___x_cmd_claude___runmain(){
     local claudearg
@@ -14,12 +19,14 @@ ___x_cmd_claude___runmain(){
 ___x_cmd_claude___runcmd(){
     if ___x_cmd_hascmd claude; then
         ___x_cmd_claude___runcmd(){
-            ___x_cmd_cmds claude "$@"
+            CLAUDE_CODE_GIT_BASH_PATH="$___X_CMD_CLAUDE_CODE_GIT_BASH_PATH" \
+                ___x_cmd_cmds claude "$@"
         }
     else
         ___x_cmd env use claude-code >&2 || return $?
         ___x_cmd_claude___runcmd(){
-            ___x_cmd snap --run claude "$@"
+            CLAUDE_CODE_GIT_BASH_PATH="$___X_CMD_CLAUDE_CODE_GIT_BASH_PATH" \
+                ___x_cmd snap --run claude "$@"
         }
     fi && ___x_cmd_claude___runcmd "$@"
 }

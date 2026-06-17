@@ -26,7 +26,31 @@ ___x_cmd_eget_ls(){
         shift
     done
 
-    [ -z "$target" ] && { N=eget M="ls: missing target (user/repo)" log:ret:64; return; }
+    [ -z "$target" ] && {
+        # No target — browse eget-installable packages from the x install DB.
+        # Dispatch is TTY-aware: interactive fzf on a terminal, raw TSV through
+        # a pipe. See lib/ls/ls_install.
+        ___X_CMD_EGET_QUIET="$_quiet"
+        ___x_cmd_eget_ls_installdb_auto
+        return
+    }
+
+    # Bare name (no slash, no colon) — try resolving via x install --ls --tsv.
+    # Mirrors the check in lib/download / lib/resolve.
+    case "$target" in
+        */*|*:*)
+            ;;  # owner/repo, gh:prefix, or url — skip bare lookup
+        *)
+            local _resolved
+            if _resolved="$( ___x_cmd_eget_resolve_bare "$target" )" && [ -n "$_resolved" ]; then
+                eget:info "Resolved $target → $_resolved"
+                target="$_resolved"
+            else
+                N=eget M="ls: '$target' not found in x install database. Use 'x install --search $target' to find similar packages, or pass owner/repo directly." log:ret:64
+                return
+            fi
+            ;;
+    esac
 
     ___x_cmd_eget_normalize_ "$target" "$_forge" ""
     local _norm="$x_"
@@ -36,11 +60,15 @@ ___x_cmd_eget_ls(){
     _forge="${_rest%%
 *}"
 
+    case "$target" in
+        */*) ;;  # owner/repo — proceed
+        *)
+            N=eget M="Invalid target: $target (expected user/repo)" log:ret:64
+            return
+            ;;
+    esac
     local owner="${target%%/*}"
     local repo="${target#*/}"
-    [ -n "$owner" ] && [ -n "$repo" ] || {
-        N=eget M="Invalid target: $target (expected user/repo)" log:ret:64; return;
-    }
 
     ___X_CMD_EGET_QUIET="$_quiet"
 
@@ -112,3 +140,4 @@ ___x_cmd_eget_ls_assets(){
         printf "%-50s %8s  %s\n" "$name" "$size_hr" "$url"
     done
 }
+

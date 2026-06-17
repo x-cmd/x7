@@ -61,21 +61,22 @@ function read_entry(idx,    line, first) {
     if (pending[idx] != "") {
         first = pending[idx]
         pending[idx] = ""
-    } else if ((getline line < file[idx]) <= 0) {
+    } else if ((getline first < file[idx]) <= 0) {
         return 0
-    } else {
-        first = line
     }
 
-    if (match(first, /^- ([0-9]+) /) == 0) {
-        return read_entry(idx)
+    while (match(first, /^(  - |- )[0-9]+ /) == 0) {
+        if ((getline first < file[idx]) <= 0) {
+            return 0
+        }
     }
 
-    ts[idx] = substr(first, 3, RLENGTH - 3) + 0
-    entries[idx] = colorize_entry(date_timestamp_to_iso(ts[idx]), substr(first, RLENGTH + 1))
+    match(first, /[0-9]+/)
+    ts[idx] = substr(first, RSTART, RLENGTH) + 0
+    entries[idx] = colorize_entry(date_timestamp_to_iso(ts[idx]), substr(first, RSTART + RLENGTH + 1))
 
     while ((getline line < file[idx]) > 0) {
-        if (match(line, /^- [0-9]+ /) > 0) {
+        if (match(line, /^(  - |- )[0-9]+ /) > 0) {
             pending[idx] = line
             break
         }

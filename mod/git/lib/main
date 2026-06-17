@@ -64,6 +64,8 @@ ___x_cmd_git___main(){
 
         wt|worktree)        ___x_cmd_git_worktree   "$@" ;;
 
+        g|grep)             ___x_cmd_git_grep       "$@" ;;
+
         log)                ___x_cmd_git_log        "$@" ;;
         si|submit)          ___x_cmd_git_submit     "$@" ;;
         ci|commit)          ___x_cmd_git_commit     "$@" ;;
@@ -187,4 +189,9 @@ ___x_cmd_git_lz(){
 
 ___x_cmd_git_worktree(){
     ___x_cmd___git_origin worktree "$@"
+}
+
+# Provide a better tui.
+___x_cmd_git_grep(){
+    ___x_cmd___git_origin grep "$@"
 }

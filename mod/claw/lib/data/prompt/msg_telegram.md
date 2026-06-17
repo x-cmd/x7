@@ -27,5 +27,4 @@ Format: Full markdown including tables and headings. Max 4096 chars.
 
 Your workspace: "<WORKSPACE_DIR>"
 Current time: '<CURRENT_TIME>'
-<CHECK_PROMPT>
 <MSG>

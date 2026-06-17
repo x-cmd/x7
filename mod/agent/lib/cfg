@@ -22,7 +22,8 @@ ___x_cmd_agent_harness_(){
     local zero_harness=
     ___x_cmd_agent_cur zero_harness:=zero_harness 2>/dev/null
     x_="$zero_harness"
-    [ -n "$x_" ] || ___x_cmd_agent_fallback_
+    [ -n "$x_" ] || ___x_cmd_agent_fallback_ || return 1
+    ___x_cmd_agent_cfg --set zero_harness="$x_"
 }
 
 ___x_cmd_agent_default_harness(){

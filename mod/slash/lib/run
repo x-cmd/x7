@@ -11,6 +11,7 @@ ___x_cmd_slash_run(){
     shift
 
     local is_debug=""
+    local is_quick=""
     while [ "$#" -gt 0 ]; do
         case "$1" in
             -h|--help)      ___x_cmd help -m slash run; return ;;
@@ -34,15 +35,11 @@ ___x_cmd_slash_run(){
     local IFS=' '
     local msg="$*";     shift $#
 
-    if [ -n "$is_debug" ]; then
-        set -- --debug
-    fi
+    set --
+    [ -n "$is_debug" ] && set -- "$@" --debug
+    [ -n "$is_quick" ] && set -- "$@" --no-thinking
 
-    if [ -n "$is_quick" ]; then
-        set -- --no-thinking
-    fi
-
-    # TDOD: use x service
+    # TODO: use x service
     slash:info "Run slash command -> /$name"
     ___x_cmd agent request --file "$fp" "$@" "
 The file \"$fp\" is the specified skill file or command file. Read and follow its instructions.

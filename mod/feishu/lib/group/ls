@@ -15,9 +15,9 @@ ___x_cmd_feishu_group_ls(){
         esac
     done
 
-    local x_
-    local cur_token
-    ____x_cmd_tenant_token ; cur_token="$x_"
+    local x_=""  cur_token=""
+    ____x_cmd_tenant_token || return $?
+    cur_token="$x_"
 
     local resp
     resp="$(___x_cmd curl -s "https://open.feishu.cn/open-apis/im/v1/chats?page_size=${page}&sort_type=${sort}" \

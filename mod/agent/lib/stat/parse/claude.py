@@ -30,7 +30,7 @@ import json
 import os
 import sys
 from datetime import datetime, timezone
-from typing import Any, Dict, Iterable, List, Optional, TextIO
+from typing import Any, Dict, Iterable, List, Optional
 
 
 # ---------- helpers ----------
@@ -87,6 +87,25 @@ def _is_real_user_text(rec: Dict[str, Any]) -> bool:
     return not _is_tool_result_user(rec)
 
 
+def _user_text(rec: Dict[str, Any]) -> str:
+    """Extract the plain-text content of a real user record (the semantic anchor).
+
+    Per plan: `content` may be a string (taken verbatim) or a list (concatenate
+    the ``text`` field of ``type == "text"`` blocks; image / other non-text
+    blocks are dropped). Returns "" when there is no text content.
+    """
+    content = _user_content(rec)
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        return "".join(
+            c.get("text") or ""
+            for c in content
+            if isinstance(c, dict) and c.get("type") == "text"
+        )
+    return ""
+
+
 def _is_synthetic_assistant(rec: Dict[str, Any]) -> bool:
     if not _is_assistant_record(rec):
         return False
@@ -137,6 +156,7 @@ TSV_COLUMNS: List[str] = [
     "human_input_tokens",
     "human_duration",
     "human_ratio",
+    "human_message",
 ]
 
 
@@ -152,6 +172,7 @@ def _new_turn(start_ts: Optional[int]) -> Dict[str, Any]:
         "api_call_count": 0,
         "synthetic_count": 0,
         "human_input_tokens": None,
+        "human_message": "",
     }
 
 
@@ -188,6 +209,7 @@ def _flush_turn(turn: Optional[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
         "human_input_tokens": int(human_in) if human_in is not None else None,
         "human_duration": dur,
         "human_ratio": round(ratio, 4) if ratio is not None else None,
+        "human_message": turn["human_message"],
     }
 
 
@@ -220,6 +242,7 @@ def _process(lines: Iterable[str]) -> List[Dict[str, Any]]:
             if _is_real_user_text(rec):
                 flush()
                 cur = _new_turn(_record_ts(rec))
+                cur["human_message"] = _user_text(rec)
             else:
                 if cur is not None:
                     ts = _record_ts(rec)
@@ -260,10 +283,26 @@ def _process(lines: Iterable[str]) -> List[Dict[str, Any]]:
 
 # ---------- formatters ----------
 
+def _tsv_escape(s: str) -> str:
+    """Escape characters that would break TSV structure (tab/newline/CR/backslash).
+
+    Numeric columns never contain these, so applying it uniformly is a no-op
+    there; only the ``human_message`` text column carries them in practice.
+    """
+    return (
+        s.replace("\\", "\\\\")
+         .replace("\t", "\\t")
+         .replace("\n", "\\n")
+         .replace("\r", "\\r")
+    )
+
+
 def _format_tsv(turns: List[Dict[str, Any]]) -> str:
     out_lines = ["\t".join(TSV_COLUMNS)]
     for t in turns:
-        out_lines.append("\t".join("" if t[c] is None else str(t[c]) for c in TSV_COLUMNS))
+        out_lines.append("\t".join(
+            _tsv_escape("" if t[c] is None else str(t[c])) for c in TSV_COLUMNS
+        ))
     return "\n".join(out_lines) + "\n"
 
 
@@ -1035,6 +1074,29 @@ def _resolve_session_id(session_id: str) -> str:
     )
 
 
+# ---------- public API (used by cross subcommand) ----------
+
+def parse_session(
+    file_path: str,
+    offset: int = 0,
+    no_human_message: bool = False,
+) -> List[Dict[str, Any]]:
+    """Parse a single Claude Code session JSONL file, return per-turn dicts.
+
+    This is the importable entry-point used by ``x agent stat cross claude``.
+    """
+    with open(file_path, "r", encoding="utf-8", errors="replace") as f:
+        if offset:
+            f.seek(offset)
+        turns = _process(f)
+
+    if no_human_message:
+        for t in turns:
+            t["human_message"] = None
+
+    return turns
+
+
 # ---------- CLI ----------
 
 def main(argv: Optional[List[str]] = None) -> int:
@@ -1069,6 +1131,14 @@ def main(argv: Optional[List[str]] = None) -> int:
         help="In text format, also show housekeeping turns "
              "(slash commands / system events with no AI response).",
     )
+    ap.add_argument(
+        "--no-human-message",
+        dest="no_human_message",
+        action="store_true",
+        help="Suppress the human_message field (tsv: empty cell, json: null) "
+             "when sharing/exporting output. Human prompts may contain code, "
+             "secrets, or internal business text.",
+    )
     args = ap.parse_args(argv)
 
     if args.offset < 0:
@@ -1080,10 +1150,8 @@ def main(argv: Optional[List[str]] = None) -> int:
         except FileNotFoundError as e:
             ap.error(str(e))
 
-    with open(args.file, "r", encoding="utf-8", errors="replace") as f:
-        if args.offset:
-            f.seek(args.offset)
-        turns = _process(f)
+    turns = parse_session(args.file, offset=args.offset,
+                          no_human_message=args.no_human_message)
 
     if args.format == "tsv":
         out = _format_tsv(turns)

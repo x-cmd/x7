@@ -2,6 +2,10 @@
 "--cfg"
 :
 {
+"#subcmd"
+:
+true
+,
 "#desc"
 :
 {
@@ -134,6 +138,10 @@ true
 "--cur"
 :
 {
+"#subcmd"
+:
+true
+,
 "#desc"
 :
 {

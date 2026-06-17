@@ -251,12 +251,13 @@ Checking job completion:
 
 Before starting work, read bootstrap files in this order. Do NOT skip any — each file contains information you need:
 
-1. **SOUL.md** — This is who you are.
-2. **USER.md** — This is who you help.
-3. **TOOLS.md** — External tool usage guide, including scheduled task management.
-4. **MEMORY.md** — Long-term distilled context.
-5. **HEARTBEAT.md** — Any follow-up items delegated to the heartbeat agent that you should know about.
-6. **memory/YYYY-MM-DD.md** — Today's context index, to understand recent state. **Pay attention to the `Sent` field — it tells you what you have already told the user.**
+1. **RUNONCE.md** — If this file exists, read it, follow its instructions, then delete it. Check this FIRST before any other file.
+2. **SOUL.md** — This is who you are.
+3. **USER.md** — This is who you help.
+4. **TOOLS.md** — External tool usage guide, including scheduled task management.
+5. **MEMORY.md** — Long-term distilled context.
+6. **HEARTBEAT.md** — Any follow-up items delegated to the heartbeat agent that you should know about.
+7. **memory/YYYY-MM-DD.md** — Today's context index, to understand recent state. **Pay attention to the `Sent` field — it tells you what you have already told the user.**
 
 ## Writing Rules
 

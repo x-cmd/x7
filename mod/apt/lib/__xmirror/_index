@@ -26,11 +26,20 @@ ___x_cmd_apt___xmirror___ensure(){
     case "$___X_CMD_OS_RELEASE" in
         *Ubuntu*|*ubuntu*)
             ___X_CMD_OS_RELEASE="ubuntu"
-            ___X_CMD_APT_MIRROR_SOURCES="/etc/apt/sources.list"
+            if [ -f "/etc/apt/sources.list.d/ubuntu.sources" ]; then
+                ___X_CMD_APT_MIRROR_SOURCES="/etc/apt/sources.list.d/ubuntu.sources"
+            else
+                ___X_CMD_APT_MIRROR_SOURCES="/etc/apt/sources.list"
+            fi
             ;;
         *Kali*|*kali*)
+            # kali dust does't works.
             ___X_CMD_OS_RELEASE="kali"
-            ___X_CMD_APT_MIRROR_SOURCES="/etc/apt/sources.list"
+            if [ -f "/etc/apt/sources.list.d/kali.sources" ]; then
+                ___X_CMD_APT_MIRROR_SOURCES="/etc/apt/sources.list.d/kali.sources"
+            else
+                ___X_CMD_APT_MIRROR_SOURCES="/etc/apt/sources.list"
+            fi
             ;;
         *Debian*|*debian*)
             case "$(uname -a)" in

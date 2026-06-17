@@ -24,23 +24,47 @@ ___x_cmd_eget_use_fullname_(){
 ___x_cmd_eget_use(){
     case "${1:-}" in -h|--help) ___x_cmd help -m eget use; return 0 ;; esac
 
-    local target="${1:-}"
-    [ -n "$target" ] || { N=eget M="use: missing target (user/repo)" log:ret:64; return; }
-    shift
-
+    local target=""
     local _to="${HOME}/.local/bin"
     local _force=0
+    local _user_tag=""
     while [ $# -gt 0 ]; do
         case "$1" in
             --to)    shift; _to="$1" ;;
             --force) _force=1 ;;
-            *)       N=eget M="use: unknown option: $1" log:ret:64; return ;;
+            -t|--tag) shift; _user_tag="$1" ;;
+            -*)      N=eget M="use: unknown option: $1" log:ret:64; return ;;
+            *)
+                [ -z "$target" ] || { N=eget M="use: unexpected argument: $1" log:ret:64; return; }
+                target="$1"
+                ;;
         esac
         shift
     done
 
+    [ -n "$target" ] || { N=eget M="use: missing target (user/repo)" log:ret:64; return; }
+
     # Normalize to full name and extract parts
-    ___x_cmd_eget_normalize_ "$target" "github" ""
+    # Bare name (no slash, no colon) — try resolving via x install --ls --tsv.
+    # Mirrors the check in lib/download / lib/resolve.
+    case "$target" in
+        */*|*:*)
+            ;;  # owner/repo, gh:prefix, or url — skip bare lookup
+        *)
+            local _resolved
+            if _resolved="$( ___x_cmd_eget_resolve_bare "$target" )" && [ -n "$_resolved" ]; then
+                eget:info "Resolved $target → $_resolved"
+                target="$_resolved"
+            else
+                N=eget M="use: '$target' not found in x install database. Use 'x install --search $target' to find similar packages, or pass owner/repo directly." log:ret:64
+                return
+            fi
+            ;;
+    esac
+
+    # 3rd arg is tag — normalize will only override it from URL if empty,
+    # so a user-supplied --tag wins.
+    ___x_cmd_eget_normalize_ "$target" "github" "$_user_tag"
     local _norm="$x_"
     target="${_norm%%
 *}"; local _rest="${_norm#*
@@ -49,11 +73,15 @@ ___x_cmd_eget_use(){
 *}"; local _tag="${_rest#*
 }"
 
+    case "$target" in
+        */*) ;;  # owner/repo — proceed
+        *)
+            N=eget M="Invalid target: $target (expected user/repo)" log:ret:64
+            return
+            ;;
+    esac
     local owner="${target%%/*}"
     local repo="${target#*/}"
-    [ -n "$owner" ] && [ -n "$repo" ] || {
-        N=eget M="Invalid target: $target (expected user/repo)" log:ret:64; return;
-    }
 
     # Get full name for TSV
     local _full_name

@@ -33,7 +33,7 @@ ___x_cmd_docker_mirror_pull(){
     [ -n "$mirror" ] || {
         case "$name" in
             ubuntu:*|debian:*|alpine:*)
-                ___x_cmd_cmds docker ecpull --tag "$name" "$name"
+                ___x_cmd docker ecpull --tag "$name" "$name"
                 ;;
             *)
                 ___x_cmd_cmds docker pull "$name"

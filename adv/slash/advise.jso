@@ -61,11 +61,11 @@ null
 {
 "cn"
 :
-"扫描所有 Agent 工具目录并注册 slash command"
+"在 shell 启动时加载已编译的 slash command"
 ,
 "en"
 :
-"Scan all agent tool directories and register slash commands"
+"Load compiled slash commands during shell startup"
 }
 ,
 "#tldr"
@@ -78,11 +78,11 @@ null
 ,
 "cn"
 :
-"初始化当前项目的 slash command"
+"加载已编译的 slash command"
 ,
 "en"
 :
-"Initialize slash commands for current project"
+"Load compiled slash commands"
 }
 ]
 }
@@ -277,6 +277,24 @@ null
 :
 "Check and auto-restore configuration"
 }
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x slash check"
+,
+"cn"
+:
+"检查并自动恢复 slash command 配置"
+,
+"en"
+:
+"Check and restore slash command configuration"
+}
+]
 }
 ,
 "get"
@@ -356,15 +374,15 @@ null
 {
 "cmd"
 :
-"x slash enable review-pr"
+"x slash enable review"
 ,
 "cn"
 :
-"启用 review-pr 命令"
+"启用 review 命令"
 ,
 "en"
 :
-"Enable the review-pr command"
+"Enable the review command"
 }
 ]
 }
@@ -410,15 +428,15 @@ null
 {
 "cmd"
 :
-"x slash disable review-pr"
+"x slash disable review"
 ,
 "cn"
 :
-"禁用 review-pr 命令"
+"禁用 review 命令"
 ,
 "en"
 :
-"Disable the review-pr command"
+"Disable the review command"
 }
 ]
 }
@@ -528,57 +546,57 @@ null
 {
 "cmd"
 :
-"x slash run review-pr"
+"x slash run review \"Check the changes in this PR\""
 ,
 "cn"
 :
-"示例: 运行 review-pr 命令"
+"示例: 运行 review 并传入描述"
 ,
 "en"
 :
-"Example: run the review-pr command"
+"Example: run review with a description"
 }
 ,
 {
 "cmd"
 :
-"/review-pr"
+"/review \"Check the changes in this PR\""
 ,
 "cn"
 :
-"示例: 直接通过 / 前缀运行"
+"示例: 直接运行并附带描述语句"
 ,
 "en"
 :
-"Example: run directly with / prefix"
+"Example: run directly with a descriptive statement"
 }
 ,
 {
 "cmd"
 :
-"/review-pr --info"
+"/review --info"
 ,
 "cn"
 :
-"示例: 查看 review-pr 的元信息"
+"示例: 查看 review 的元信息"
 ,
 "en"
 :
-"Example: show review-pr metadata"
+"Example: show review metadata"
 }
 ,
 {
 "cmd"
 :
-"/review-pr --cat"
+"/review --cat"
 ,
 "cn"
 :
-"示例: 查看 review-pr 的完整内容"
+"示例: 查看 review 的完整内容"
 ,
 "en"
 :
-"Example: show review-pr full content"
+"Example: show review full content"
 }
 ]
 }
@@ -593,11 +611,11 @@ null
 ,
 "cn"
 :
-"扫描所有 Agent 目录并注册 slash command"
+"加载已编译的 slash command"
 ,
 "en"
 :
-"Scan all agent directories and register slash commands"
+"Load compiled slash commands"
 }
 ,
 {
@@ -617,43 +635,113 @@ null
 {
 "cmd"
 :
-"x slash run my-skill"
+"x slash get review"
 ,
 "cn"
 :
-"示例: 通过 x agent request 运行 slash command"
+"查看 review 命令的注册配置"
 ,
 "en"
 :
-"Example: run slash command via x agent request"
+"Show registration config for the review command"
 }
 ,
 {
 "cmd"
 :
-"/my-skill"
+"x slash enable review"
 ,
 "cn"
 :
-"示例: 直接运行已注册的 slash command"
+"启用 review 命令"
 ,
 "en"
 :
-"Example: run a registered slash command directly"
+"Enable the review command"
 }
 ,
 {
 "cmd"
 :
-"/my-skill --info"
+"x slash disable review"
 ,
 "cn"
 :
-"示例: 查看已注册命令的元信息"
+"禁用 review 命令"
 ,
 "en"
 :
-"Example: show metadata of a registered slash command"
+"Disable the review command"
+}
+,
+{
+"cmd"
+:
+"x slash check"
+,
+"cn"
+:
+"检查并自动恢复配置"
+,
+"en"
+:
+"Check and auto-restore configuration"
+}
+,
+{
+"cmd"
+:
+"x slash run review \"Check the changes in this PR\""
+,
+"cn"
+:
+"通过 x slash run 运行 slash command"
+,
+"en"
+:
+"Run a slash command via x slash run"
+}
+,
+{
+"cmd"
+:
+"/review \"Check the changes in this PR\""
+,
+"cn"
+:
+"示例: 审查当前代码改动"
+,
+"en"
+:
+"Example: review current code changes"
+}
+,
+{
+"cmd"
+:
+"/simplify \"This logic is too complex\""
+,
+"cn"
+:
+"示例: 简化并重构复杂代码"
+,
+"en"
+:
+"Example: simplify and refactor complex code"
+}
+,
+{
+"cmd"
+:
+"/security-review \"Audit the authentication module\""
+,
+"cn"
+:
+"示例: 进行安全审计"
+,
+"en"
+:
+"Example: run a security audit"
 }
 ]
 ,

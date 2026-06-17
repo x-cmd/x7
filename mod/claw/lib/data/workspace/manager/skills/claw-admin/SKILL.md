@@ -11,7 +11,7 @@ description: |
 ## When to Use
 
 Use this skill when the user asks about or needs to:
-- Start, stop, restart, or check claw services
+- Start, stop, restart, install, uninstall, or check claw services
 - Connect or disconnect IM platforms (weixin, telegram, feishu, qywx)
 - View or analyze claw logs
 - Manage scheduled tasks (cron)
@@ -25,6 +25,8 @@ x claw service --help        # Discover all service commands
 x claw service start         # Start claw services
 x claw service stop          # Stop claw services
 x claw service restart       # Restart claw services
+x claw service install       # Register claw as a startup service
+x claw service uninstall     # Remove claw from startup services
 x claw service status        # Check current service status
 ```
 

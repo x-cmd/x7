@@ -6,6 +6,8 @@
 # structured turn-level data from a session log file (see plan.md).
 
 xrc:mod:lib     agent       stat/parse/_index
+xrc:mod:lib     agent       stat/cross/_index
+xrc:mod:lib     agent       stat/pricing/_index
 
 ___x_cmd_agent_stat(){
     [ "$#" -gt 0 ] ||       set -- --help
@@ -14,6 +16,8 @@ ___x_cmd_agent_stat(){
     case "$op" in
         -h|--help)          ___x_cmd help -m agent stat       "$@" ;      return 0 ;;
         parse)              ___x_cmd_agent_stat_parse         "$@" ;;
+        cross)              ___x_cmd_agent_stat_cross         "$@" ;;
+        pricing)            ___x_cmd_agent_stat_pricing       "$@" ;;
 
         *)                  N=agent M="Unknown stat subcmd -> $op" log:ret:64 ;;
     esac
