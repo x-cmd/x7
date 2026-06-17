@@ -1,0 +1,192 @@
+# shellcheck shell=dash
+
+# Section: Run a command or read stdin, capture to cache, show head/tail + metadata
+#
+# Public entry: ___x_cmd_teeshot_run [opts] [--] <cmd>...
+#   --head N      first N lines (default 50)
+#   --tail M      last M lines (default 50)
+#   --no-cache    skip cache write, only display
+#   --            end of options, rest is the command
+# Reads from stdin if no cmd (or if stdin is a pipe and no cmd given).
+#
+# On success: echoes nothing extra; returns 0.
+# On cmd failure: returns the cmd's exit code, but still caches the partial output.
+
+___x_cmd_teeshot_run(){
+    ___x_cmd_teeshot_util_init
+
+    local head_n=50
+    local tail_n=50
+    local use_cache=1
+    local cmd=()
+
+    # Section: Parse options
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --head)
+                head_n="${2:-50}"
+                [ $# -ge 2 ] && shift
+                ;;
+            --head=*)
+                head_n="${1#--head=}"
+                ;;
+            --tail)
+                tail_n="${2:-50}"
+                [ $# -ge 2 ] && shift
+                ;;
+            --tail=*)
+                tail_n="${1#--tail=}"
+                ;;
+            --no-cache)
+                use_cache=0
+                ;;
+            --)
+                shift
+                cmd=("$@")
+                break
+                ;;
+            -h|--help)
+                ___x_cmd help -m teeshot
+                return 0
+                ;;
+            --*)
+                N=teeshot M="Unknown option: $1" log:ret:64
+                ;;
+            *)
+                cmd=("$@")
+                break
+                ;;
+        esac
+        shift
+    done
+
+    # Section: Decide capture mode
+    # If stdin is a pipe AND no cmd given → stdin mode
+    # If stdin is a pipe AND cmd given → cmd is the cmd, stdin passes through (we don't consume)
+    # If stdin is tty AND no cmd given → error
+    # If stdin is tty AND cmd given → run cmd
+
+    local capture_mode
+    local cmd_str
+    local stdin_hash=""
+
+    if [ "${#cmd[@]}" -eq 0 ]; then
+        # No cmd given — must read stdin
+        if [ -t 0 ]; then
+            N=teeshot M="No command and stdin is a terminal" log:ret:64
+        fi
+        capture_mode=stdin
+        cmd_str="(stdin)"
+    else
+        capture_mode=cmd
+        # Join cmd array back to string for hashing/display
+        cmd_str="${cmd[*]}"
+    fi
+
+    # Section: Capture output to a temp file, run cmd if needed
+    local tmp_out
+    tmp_out="$(mktemp "${TMPDIR:-/tmp}/teeshot.XXXXXX")" || {
+        N=teeshot M="Fail to create temp file" log:ret:1
+    }
+    # Ensure cleanup on exit
+    # shellcheck disable=SC2064
+    trap "rm -f '$tmp_out'" EXIT
+
+    local exit_code=0
+    if [ "$capture_mode" = "cmd" ]; then
+        # Run the cmd, capture stdout to tmp_out
+        "$@" > "$tmp_out" 2>/dev/null
+        exit_code=$?
+    else
+        # Read all stdin into tmp_out
+        cat > "$tmp_out"
+    fi
+
+    # Section: Compute cache id
+    if [ "$capture_mode" = "stdin" ]; then
+        if ___x_cmd hascmd sha256sum; then
+            stdin_hash="$(sha256sum "$tmp_out" | awk '{print substr($1, 1, 16)}')"
+        elif ___x_cmd hascmd shasum; then
+            stdin_hash="$(shasum -a 256 "$tmp_out" | awk '{print substr($1, 1, 16)}')"
+        else
+            stdin_hash="$(wc -c < "$tmp_out" 2>/dev/null | tr -d ' ')"
+        fi
+    fi
+
+    local id
+    id="$(___x_cmd_teeshot_id "$cmd_str" "$stdin_hash")"
+
+    # Section: Stats
+    local lines
+    lines="$(wc -l < "$tmp_out" | tr -d ' ')"
+    local bytes
+    bytes="$(wc -c < "$tmp_out" | tr -d ' ')"
+    local mtime
+    mtime="$(date '+%Y-%m-%d %H:%M:%S' 2>/dev/null || echo unknown)"
+
+    # Section: Commit to cache (unless --no-cache)
+    # Day-bucketed: write to <cache_root>/<day>/<id>.{out,meta}
+    local cache_out="$___X_CMD_TEESHOT_TODAY_DIR/$id.out"
+    local cache_meta="$___X_CMD_TEESHOT_TODAY_DIR/$id.meta"
+
+    if [ "$use_cache" = "1" ]; then
+        cp "$tmp_out" "$cache_out"
+        {
+            printf 'cmd=%s\n' "$cmd_str"
+            printf 'exit=%s\n' "$exit_code"
+            printf 'lines=%s\n' "$lines"
+            printf 'bytes=%s\n' "$bytes"
+            printf 'mtime=%s\n' "$mtime"
+            printf 'day=%s\n' "$___X_CMD_TEESHOT_TODAY"
+            printf 'host=%s\n' "${HOSTNAME:-$(uname -n 2>/dev/null || echo unknown)}"
+            printf 'cwd=%s\n' "${PWD:-unknown}"
+            printf 'capture=%s\n' "$capture_mode"
+            if [ -n "$stdin_hash" ]; then
+                printf 'stdin_sha=%s\n' "$stdin_hash"
+            fi
+        } > "$cache_meta"
+    fi
+
+    # Section: Display
+    local size_human
+    size_human="$(___x_cmd_teeshot_fmt_bytes "$bytes")"
+
+    # Block 1: cache path + size (if cached)
+    if [ "$use_cache" = "1" ]; then
+        printf '[1] cache: %s (%s)\n' "$cache_out" "$size_human"
+    else
+        printf '[1] (not cached)\n'
+    fi
+    printf '    cmd:    %s\n' "$cmd_str"
+    if [ "$capture_mode" = "cmd" ]; then
+        printf '    exit:   %s\n' "$exit_code"
+    else
+        printf '    source: stdin\n'
+    fi
+    printf '    lines:  %s  bytes: %s  mtime: %s\n' "$lines" "$bytes" "$mtime"
+
+    # Section: head + tail
+    # If total lines <= head_n + tail_n, just show all
+    local total="$lines"
+    local show_threshold=$((head_n + tail_n))
+
+    printf '\n'
+
+    if [ "$total" -le "$show_threshold" ] 2>/dev/null; then
+        # Show everything, no head/tail markers
+        cat "$tmp_out"
+    else
+        # Show head
+        printf '[2] --- first %s ---\n' "$head_n"
+        head -n "$head_n" "$tmp_out"
+        printf '...\n'
+        # Show tail
+        printf '\n[3] --- last %s ---\n' "$tail_n"
+        tail -n "$tail_n" "$tmp_out"
+    fi
+
+    # Section: cleanup & return
+    rm -f "$tmp_out"
+    trap - EXIT
+    return "$exit_code"
+}

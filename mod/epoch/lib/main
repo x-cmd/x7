@@ -9,7 +9,7 @@ ___x_cmd_epoch___main(){
     case "$op" in
         -h|--help)      ___x_cmd help -m epoch "$@";    return 0 ;;
 
-        get|get_|ms|ms_|real|real_|real3|real3_|minus|minus_|now)
+        get|get_|ms|ms_|real|real_|real3|real3_|minus|minus_|now|day|day_)
                         ___x_cmd_epoch_"$op" "$@" ;;
 
         river|store)    ___x_cmd hascmd ___x_cmd_epoch_"$op" || xrc:mod:lib epoch "$op"
@@ -115,4 +115,20 @@ ___x_cmd_epoch_real3(){
 ___x_cmd_epoch_real3_(){
     ___x_cmd_epoch_real_ || return $?
     x_="${x_%???????}"
+}
+
+# Section: day subcmd
+# Returns the current integer day number (epoch seconds / 86400, floored).
+# Same value for all calls within the same UTC day.
+# day_ is the internal efficiency variant (sets x_ without printing).
+
+___x_cmd_epoch_day(){
+    local x_
+    ___x_cmd_epoch_day_ || return 1
+    printf "%s\n" "$x_"
+}
+
+___x_cmd_epoch_day_(){
+    ___x_cmd_epoch_get_ || return $?
+    x_=$(( x_ / 86400 ))
 }

@@ -26,6 +26,15 @@ ___x_cmd_column___main(){
             -s)             [ $# -ge 2 ] || N=column M="Missing arg for -s" log:ret:64
                             delim="$2" ; shift 2 ;;
 
+            # --tsv: short alias for -s $'\t' (tab-separated).
+            #   If both -s and --tsv given, -s takes precedence.
+            --tsv)          [ -z "$delim" ] && delim=$'\t' ; shift ;;
+
+            # --csv: short alias for -s ','. Simple split on comma only —
+            #   does NOT understand quoted fields ("a,b",c stays as one
+            #   column). For quoted-CSV support, pipe through `x csv` first.
+            --csv)          [ -z "$delim" ] && delim=',' ; shift ;;
+
             -o)             [ $# -ge 2 ] || N=column M="Missing arg for -o" log:ret:64
                             outsep="$2" ; shift 2 ;;
 

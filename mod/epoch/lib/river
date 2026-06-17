@@ -69,5 +69,16 @@ ___x_cmd_epoch_river___tsv(){
 }
 
 ___x_cmd_epoch_river___app(){
-    ___x_cmd_epoch_river___tsv "$@" | ___x_cmd_cmds column -t -s "$(printf '\t')"
+    # tty: behave as if the user ran `x epoch river | x column --color -t --tsv`
+    #      (raw TSV piped through column for a pretty colored table).
+    # pipe: emit raw TSV so downstream tools can consume it.
+    # Same convention as `ls` (color only on tty).
+    # --color is explicit because inside the pipe column's own [ -t 1 ]
+    # check is false (it writes to a pipe, not the original tty); we
+    # already know the user's stdout is a tty, so we force it on.
+    if [ -t 1 ]; then
+        ___x_cmd_epoch_river___tsv "$@" | x column --color -t --tsv
+    else
+        ___x_cmd_epoch_river___tsv "$@"
+    fi
 }

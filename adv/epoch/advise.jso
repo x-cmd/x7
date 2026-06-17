@@ -305,6 +305,54 @@ null
 }
 }
 ,
+"day|day_"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"获取当前整数日序号（epoch/86400，同一日内多次调用结果一致）"
+,
+"en"
+:
+"Current integer day number (epoch/86400, stable within the same day)"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x epoch day"
+,
+"cn"
+:
+"示例: 当前日序号(整数)"
+,
+"en"
+:
+"Example: current integer day number"
+}
+,
+{
+"cmd"
+:
+"mkdir -p \"$HOME/data/$(x epoch day)\""
+,
+"cn"
+:
+"示例: 用日序号做路径分段(适合按天归档)"
+,
+"en"
+:
+"Example: use day number as a path segment (good for day-bucketed archives)"
+}
+]
+}
+,
 "river"
 :
 {
@@ -330,25 +378,25 @@ null
 ,
 "cn"
 :
-"示例: 打印参考年份的 epoch 列表（TSV）"
+"示例: 打印参考年份的 epoch 列表（TSV，pipe 时自动；TTY 自动对齐）"
 ,
 "en"
 :
-"Example: Print reference years with their epoch values (TSV)"
+"Example: Print reference years with their epoch values (TSV when piped, auto-aligned on tty)"
 }
 ,
 {
 "cmd"
 :
-"x epoch river | column -t -s \"$(printf '\\t')\""
+"x epoch river | x column -t --tsv"
 ,
 "cn"
 :
-"示例: 用 column 对齐输出（更易读）"
+"示例: pipe 给 column 出表（--tsv 等价于 -s $'\\t'）"
 ,
 "en"
 :
-"Example: Align the output with column for readability"
+"Example: pipe to column for a table (--tsv = -s $'\\t')"
 }
 ]
 }
@@ -987,6 +1035,20 @@ null
 :
 "Example: Use --fp to check 1-day TTL on user cache dir"
 }
+,
+{
+"cmd"
+:
+"x epoch store is --ge 1h build-artifacts"
+,
+"cn"
+:
+"示例: 缓存存在但超过 1 小时，需要重新生成"
+,
+"en"
+:
+"Example: Cache exists but is over 1 hour old — needs regeneration"
+}
 ]
 ,
 "#option:Required"
@@ -1084,6 +1146,108 @@ null
 "en"
 :
 "Use an explicit full file path (overrides --store + <key>)"
+}
+}
+}
+,
+"exist"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"检查 store 下的 <key> 文件是否存在（走 store 解析，返回 0/1，无输出）"
+,
+"en"
+:
+"Check whether <store>/<key> exists (via store resolve; exit 0/1, no output)"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x epoch store exist build-artifacts"
+,
+"cn"
+:
+"示例: 缓存文件存在则继续"
+,
+"en"
+:
+"Example: Continue only if the cache file exists"
+}
+,
+{
+"cmd"
+:
+"x epoch store exist build-artifacts && x epoch store is --ge 1h build-artifacts"
+,
+"cn"
+:
+"示例: 缓存存在且超过 1 小时——需要重新生成"
+,
+"en"
+:
+"Example: Cache exists and is over 1 hour old — needs regeneration"
+}
+]
+,
+"#option:Required"
+:
+[
+"<key>"
+]
+,
+"#option:Optional"
+:
+[
+"--store"
+,
+"--fp"
+]
+,
+"--store"
+:
+{
+"#synopsis"
+:
+"<dir>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"覆盖 store 目录"
+,
+"en"
+:
+"Override the store dir"
+}
+}
+,
+"--fp"
+:
+{
+"#synopsis"
+:
+"<path>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"显式指定完整文件路径"
+,
+"en"
+:
+"Use an explicit full file path"
 }
 }
 }

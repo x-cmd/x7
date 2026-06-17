@@ -51,7 +51,7 @@ null
 {
 "cmd"
 :
-"x passwd --tsv | x column -t -s \"$(printf '\\t')\""
+"x passwd --tsv | x column -t --tsv"
 ,
 "cn"
 :
@@ -60,6 +60,34 @@ null
 "en"
 :
 "Example: Tabulate the TSV form of /etc/passwd"
+}
+,
+{
+"cmd"
+:
+"x epoch river | x column -t --tsv"
+,
+"cn"
+:
+"示例: 表格化 epoch river 输出（pipe 时自动 TSV）"
+,
+"en"
+:
+"Example: Tabulate epoch river output (auto-TSV when piped)"
+}
+,
+{
+"cmd"
+:
+"x csv file.csv | x column -t --csv"
+,
+"cn"
+:
+"示例: 表格化 CSV 输出（先过 x csv 处理引号包裹的字段）"
+,
+"en"
+:
+"Example: Tabulate CSV output (run through x csv first for quoted fields)"
 }
 ,
 {
@@ -242,6 +270,38 @@ null
 :
 "delimiter"
 }
+}
+}
+,
+"--tsv"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"Tab 分隔（等价于 -s $'\\\\t'，x epoch river pipe 时自动输出 TSV）"
+,
+"en"
+:
+"Tab-separated (equivalent to -s $'\\\\t'; `x epoch river` auto-outputs TSV when piped)"
+}
+}
+,
+"--csv"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"简单逗号分隔（等价于 -s ,；不处理引号包裹的字段，需要引号支持请先 pipe 给 x csv）"
+,
+"en"
+:
+"Simple comma-separated (equivalent to -s ,; does NOT handle quoted fields — pipe through `x csv` first for that)"
 }
 }
 ,
