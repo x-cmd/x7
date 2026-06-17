@@ -4,6 +4,7 @@ ___x_cmd_claude_openrouter(){
     local op="$1"
     case "$op" in
         -h|--help)      ___x_cmd help -m claude openrouter; return 0 ;;
+        --cfg)          ___x_cmd openrouter --cfg "$@";     return 0 ;;
         --)             shift ;;
     esac
 

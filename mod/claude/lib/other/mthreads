@@ -4,6 +4,7 @@ ___x_cmd_claude_mthreads(){
     local op="$1"
     case "$op" in
         -h|--help)      ___x_cmd help -m claude mthreads; return 0 ;;
+        --cfg)          ___x_cmd mthreads --cfg "$@";     return 0 ;;
         --)             shift ;;
     esac
 

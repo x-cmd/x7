@@ -5,6 +5,7 @@ ___x_cmd_claude_moonshot(){
     local op="$1"
     case "$op" in
         -h|--help)      ___x_cmd help -m claude moonshot; return 0 ;;
+        --cfg)          ___x_cmd moonshot --cfg "$@";     return 0 ;;
         --)             shift ;;
     esac
 

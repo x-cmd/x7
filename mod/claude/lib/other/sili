@@ -4,6 +4,7 @@ ___x_cmd_claude_siliconflow(){
     local op="$1"
     case "$op" in
         -h|--help)      ___x_cmd help -m claude siliconflow; return 0 ;;
+        --cfg)          ___x_cmd siliconflow --cfg "$@";     return 0 ;;
         --)             shift ;;
     esac
 
