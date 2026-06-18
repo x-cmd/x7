@@ -1,7 +1,9 @@
 # shellcheck shell=dash
 
-# Note: `x skill use` lives in lib/use. It wraps this function with --global
-# semantics and TSV tracking at ${HOME}/.local/data/x-skill/use.list.tsv.
+
+___x_cmd_skill_use(){
+    ___x_cmd_skill_add --global "$@"
+}
 
 ___x_cmd_skill_add(){
     local dir=""

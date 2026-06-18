@@ -74,17 +74,17 @@ ___x_cmd_eget_normalize_(){
         */releases/download/*)
             [ -z "$tag" ] && tag="${target#*/releases/download/}"; tag="${tag%%/*}"
             target="${target%%/releases/*}" ;;
-        */releases/*)
-            target="${target%%/releases/*}" ;;
         */-/releases/*)
             [ -z "$tag" ] && tag="${target##*/-/releases/}"
             target="${target%%/-/releases/*}" ;;
-        */tree/*)
-            [ -z "$tag" ] && tag="${target##*/tree/}"
-            target="${target%%/tree/*}" ;;
+        */releases/*)
+            target="${target%%/releases/*}" ;;
         */-/tree/*)
             [ -z "$tag" ] && tag="${target##*/-/tree/}"
             target="${target%%/-/tree/*}" ;;
+        */tree/*)
+            [ -z "$tag" ] && tag="${target##*/tree/}"
+            target="${target%%/tree/*}" ;;
         */-/tags/*)
             [ -z "$tag" ] && tag="${target##*/-/tags/}"
             target="${target%%/-/tags/*}" ;;
@@ -235,7 +235,37 @@ $version"
 
     local tmpfile="$___X_CMD_EGET_TMP/$asset_name"
     ___x_cmd_eget_api_download "$download_url" "$tmpfile" || {
-        N=eget M="Download failed: $download_url" log:ret:1; return;
+        # Capture curl exit code + declare as local in one shot. The `$?`
+        # expansion happens before `local` runs, so this captures the curl
+        # exit (not the test exit of any later `if`). Safe here because
+        # this block runs at most once — no loop, no zsh split-form issue
+        # (see AGENTS.md / issue #28).
+        local _dl_rc=$? _reason=""
+        # Mirror fallback — only for github.com asset downloads, only when
+        # mirror is enabled. API metadata calls (api.github.com) stay direct
+        # by design — mirror is asset-only, like ghproxy usage.
+        if [ "$___X_CMD_EGET_NO_MIRROR" != "1" ] && \
+           [ -n "$version" ] && \
+           case "$download_url" in https://github.com/*) true ;; *) false ;; esac; then
+            # Map curl exit code to a human-readable reason for the log note
+            case "$_dl_rc" in
+                28) _reason="stalled (connection too slow)" ;;
+                7|6) _reason="unreachable (network error)" ;;
+                22) _reason="blocked (HTTP error)" ;;
+                5)  _reason="SSL error" ;;
+                *)  _reason="failed" ;;
+            esac
+
+            local mirror_url
+            mirror_url="$( ___x_cmd_eget_api___mirror_ "$owner" "$repo" "$version" "$asset_name" )"
+            [ "$___X_CMD_EGET_QUIET" = "0" ] && \
+                eget:info "github.com direct download $_reason — switching to eget mirror ($asset_name)"
+            ___x_cmd_eget_api_download "$mirror_url" "$tmpfile" || {
+                N=eget M="Download failed (primary and mirror): $download_url" log:ret:1; return;
+            }
+        else
+            N=eget M="Download failed: $download_url" log:ret:1; return;
+        fi
     }
 
     # Verify digest from API (sha256:<hex>)
@@ -247,14 +277,14 @@ $version"
             actual="$( x hash sha256 "$tmpfile" 2>/dev/null )" || actual=""
             if [ -n "$actual" ] && [ "$actual" != "$expected" ]; then
                 rm -f "$tmpfile"
-                N=eget M="SHA-256 mismatch: expected $expected, got $actual" log:ret:1; return
+                eget:warn --expect "$expected" --actual "$actual" "SHA-256 mismatch !"
+                return 1
             fi
             # Always print the actual hash so the user can verify / compare
             # manually. Mirrors the spirit of `eget --sha256` (which prints
             # the hash of the freshly downloaded asset) but is unconditional
             # here because the user just waited for a download.
-            [ "$___X_CMD_EGET_QUIET" = "0" ] && eget:info "SHA-256 verified"
-            printf "SHA-256: %s\n" "$actual"
+            [ "$___X_CMD_EGET_QUIET" = "0" ] && eget:info --sha256 "$actual" "SHA-256 verified."
         fi
     fi
 
@@ -282,6 +312,8 @@ ___x_cmd_eget_download(){
     local _no_ccmd=0
     local _force=0
     local _no_verify=0
+    local _speed_limit="" _speed_time=""
+    local _no_mirror=0
 
     while [ $# -gt 0 ]; do
         case "$1" in
@@ -306,6 +338,9 @@ ___x_cmd_eget_download(){
             --force)              _force=1 ;;
             --no-verify)          _no_verify=1 ;;
             --no-ccmd)           _no_ccmd=1 ;;
+            --speed-limit)       shift; _speed_limit="$1" ;;
+            --speed-time)        shift; _speed_time="$1" ;;
+            --no-mirror)         _no_mirror=1 ;;
             -*)                  N=eget M="Unknown option: $1" log:ret:64; return ;;
             *)                   _target="$1" ;;
         esac
@@ -343,6 +378,11 @@ ___x_cmd_eget_download(){
     ___X_CMD_EGET_SUDO="$_sudo"
     ___X_CMD_EGET_FORCE="$_force"
     ___X_CMD_EGET_NO_VERIFY="$_no_verify"
+    ___X_CMD_EGET_NO_MIRROR="$_no_mirror"
+    # Export speed thresholds to env so ___x_cmd_eget_api_download picks
+    # them up via EGET_SPEED_LIMIT / EGET_SPEED_TIME
+    [ -n "$_speed_limit" ] && EGET_SPEED_LIMIT="$_speed_limit" && export EGET_SPEED_LIMIT
+    [ -n "$_speed_time" ] && EGET_SPEED_TIME="$_speed_time" && export EGET_SPEED_TIME
 
     # Determine target type: local file first, then URL, then user/repo
     if [ -f "$_target" ]; then

@@ -125,7 +125,7 @@ ___x_cmd_eget_cache_ls_snap_cb(){
 
 # x eget cache ls — list archive + snap entries (TSV).
 ___x_cmd_eget_cache_ls(){
-    case "${1:-}" in -h|--help) ___x_cmd help -m eget cache-ls; return 0 ;; esac
+    case "${1:-}" in -h|--help) ___x_cmd help -m eget cache ls; return 0 ;; esac
 
     printf "KIND\tREPO\tVERSION\tBYTES\tPATH\n"
 
@@ -143,7 +143,7 @@ ___x_cmd_eget_cache_ls(){
 
 # x eget cache info — show paths + sizes
 ___x_cmd_eget_cache_info(){
-    case "${1:-}" in -h|--help) ___x_cmd help -m eget cache-info; return 0 ;; esac
+    case "${1:-}" in -h|--help) ___x_cmd help -m eget cache info; return 0 ;; esac
 
     local archive_dir="$___X_CMD_EGET_DATA/cache"
     local snap_dir="$___X_CMD_EGET_DATA/snap"
@@ -161,7 +161,7 @@ ___x_cmd_eget_cache_info(){
 
 # x eget cache clear [N]
 ___x_cmd_eget_cache_clear(){
-    case "${1:-}" in -h|--help) ___x_cmd help -m eget cache-clear; return 0 ;; esac
+    case "${1:-}" in -h|--help) ___x_cmd help -m eget cache clear; return 0 ;; esac
 
     local keep="${1:-5}"
     case "$keep" in ''|*[!0-9]*) N=eget M="cache clear: N must be a non-negative integer (got: $1)" log:ret:64; return ;; esac
@@ -211,7 +211,7 @@ ___x_cmd_eget_cache_clear(){
 
 # x eget cache purge — wipe both caches
 ___x_cmd_eget_cache_purge(){
-    case "${1:-}" in -h|--help) ___x_cmd help -m eget cache-purge; return 0 ;; esac
+    case "${1:-}" in -h|--help) ___x_cmd help -m eget cache purge; return 0 ;; esac
 
     ___x_cmd rmrf "$___X_CMD_EGET_DATA/cache" "$___X_CMD_EGET_DATA/snap"
     eget:info "All caches purged"
@@ -219,7 +219,7 @@ ___x_cmd_eget_cache_purge(){
 
 # x eget cache rm <target> — drop a single repo from both caches
 ___x_cmd_eget_cache_rm(){
-    case "${1:-}" in -h|--help) ___x_cmd help -m eget cache-rm; return 0 ;; esac
+    case "${1:-}" in -h|--help) ___x_cmd help -m eget cache rm; return 0 ;; esac
 
     local _arg="${1:?usage: x eget cache rm <owner/repo | URL>}"
     # Accept owner/repo or full URL/short prefix

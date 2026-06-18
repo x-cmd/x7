@@ -1,3 +1,6 @@
+# shellcheck shell=dash disable=SC2120
+
+xrc:mod:lib claw manager/first
 
 ___x_cmd_claw_manager(){
     while [ $# -gt 0 ]; do
@@ -10,11 +13,18 @@ ___x_cmd_claw_manager(){
     local IFS=" "
     local msg="$*"
 
+    local im='manager' chatid='clawbot'
+    local workspace_dir="$___X_CMD_CLAW_BOT_WS/${im}-${chatid}"
+
+    local first_prompt=""
+    if [ ! -d "$workspace_dir" ]; then
+        first_prompt="$(___x_cmd_claw_manager_first "$msg")" || return $?
+    fi
+
     ___x_cmd_claw_run___ensureagent || return $?
 
-
     if [ -z "$msg" ]; then
-        ___x_cmd_claw_manager___chat
+        ___x_cmd_claw_manager___chat "$first_prompt"
     else
         ___x_cmd_claw_manager___handle "$msg"
     fi
@@ -28,7 +38,7 @@ ___x_cmd_claw_manager___chat(){
         return 0
     }
 
-    if [ "$(___x_cmd lang get)" = zh ]; then
+    if [ "$___X_CMD_LANG" = zh ]; then
         claw:info \
             --tip-1 "已加载 claw 核心管理技能，可按需扩展" \
             --tip-2 "可管理所有 IM 连接、服务、定时任务、日志等" \
@@ -44,15 +54,13 @@ ___x_cmd_claw_manager___chat(){
         claw:info "You can find help via 'x claw -h'."
     fi
 
-    local im='manager' chatid='clawbot'
-    local workspace_dir="$___X_CMD_CLAW_BOT_WS/${im}-${chatid}"
-
     # Ensure workspace exists and template files are synced.
     # prepareworkspace will create RUNONCE.md if the workspace template was updated.
     ___x_cmd_claw_run___agentrequest___prepareworkspace "$im" "$chatid" || return $?
 
     # The Agent reads AGENTS.md on startup and handles any pending RUNONCE.md.
-    local prompt=""
+    local IFS=" "
+    local prompt="$*"
 
     ___x_cmd agent chat \
         --workspace "$workspace_dir" \

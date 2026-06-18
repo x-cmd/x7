@@ -6,7 +6,7 @@ ___X_CMD_SKILL_FULL_MCP_FILE="$___X_CMD_SKILL_DATA_DIR/full/mcp.json"
 ___X_CMD_SKILL_FULL_INDEX_FILE="$___X_CMD_SKILL_DATA_DIR/full/index.tsv"
 
 ___x_cmd log init skill
-xrc:mod:lib     skill   util install prompt ls add rm use suggest dir/_index lr/_index
+xrc:mod:lib     skill   util install prompt ls add rm suggest dir/_index lr/_index
 
 ___x_cmd_skill___main(){
     [ "$#" -gt 0 ] ||   set -- lr
@@ -23,7 +23,7 @@ ___x_cmd_skill___main(){
         lr|ls-remote|ll)
                         ___x_cmd_skill_lr           "$@" ;;
         ls|cat|which|update|\
-        info|add|rm|use|unuse|usels|prompt|suggest|dir)
+        info|add|rm|prompt|suggest|dir)
                         ___x_cmd_skill_"$op" "$@" ;;
         *)              N=skill M="Unknown subcmd -> $op" log:ret:64 ;;
     esac

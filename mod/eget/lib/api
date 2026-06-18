@@ -123,6 +123,24 @@ ___x_cmd_eget_api___ghproxy_(){
     esac
 }
 
+# Build a mirror URL from owner/repo/tag/asset components. The URL is
+# constructed at call time — no full mirror URL is hardcoded in user-visible
+# code, logs, or advise. The default host is eget.ljh.sh (eget's own
+# hosted fallback), the default path prefix is /gh so the resulting URL
+# mirrors the github.com path structure.
+___x_cmd_eget_api___mirror_(){
+    local owner="$1" repo="$2" tag="$3" asset="$4"
+    local host="${EGET_MIRROR_HOST:-eget.ljh.sh}"
+    local prefix="${EGET_MIRROR_PATH:-gh}"
+    # Strip leading slash from prefix so concatenation is well-defined
+    case "$prefix" in
+        /*) prefix="${prefix#/}" ;;
+    esac
+    [ -z "$prefix" ] && prefix="gh"
+    printf "https://%s/%s/%s/%s/releases/download/%s/%s" \
+        "$host" "$prefix" "$owner" "$repo" "$tag" "$asset"
+}
+
 ___x_cmd_eget_api_download(){
     local url="$1" outfile="$2"
     local ssl_opts=""
@@ -140,6 +158,14 @@ ___x_cmd_eget_api_download(){
         auth_opts="-H \"Authorization: Bearer $token\""
     fi
 
+    # Speed-based stall detection: if average speed drops below
+    # EGET_SPEED_LIMIT bytes/sec for EGET_SPEED_TIME seconds, curl aborts
+    # with exit 28. Caller catches this and retries via eget mirror.
+    # Defaults are tuned to catch genuinely stalled downloads (not slow
+    # but progressing ones).
+    local speed_limit="${EGET_SPEED_LIMIT:-50000}"
+    local speed_time="${EGET_SPEED_TIME:-30}"
+
     local fetch_url="$url"
     ___x_cmd_eget_api___ghproxy_ "$url"
     if [ "$x_" != "$url" ]; then
@@ -149,7 +175,7 @@ ___x_cmd_eget_api_download(){
 
     ___x_cmd mkdirp "$(dirname "$outfile")"
     [ "$___X_CMD_EGET_QUIET" = "0" ] && eget:info --url "$fetch_url" "Downloading $(basename "$outfile")"
-    eval "___x_cmd_cmds curl -sS -L -f $ssl_opts -o \"$outfile\" $auth_opts \"$fetch_url\""
+    eval "___x_cmd_cmds curl -sS -L -f $ssl_opts --speed-limit $speed_limit --speed-time $speed_time -o \"$outfile\" $auth_opts \"$fetch_url\""
 }
 
 ___x_cmd_eget_api_list_releases(){

@@ -1,0 +1,71 @@
+# shellcheck shell=dash
+
+# First-time onboarding wizard for claw manager.
+# Interacts with the user to choose an initial action and prints a
+# corresponding prompt to stdout for the manager agent to handle.
+___x_cmd_claw_manager_first(){
+    local msg="$1"
+    # Non-interactive environments cannot show a menu; return empty prompt.
+    ___x_cmd_runmode_allow_manual || return 0
+
+    # Gather current state.
+    local service_running=0
+    ___x_cmd service isalive x-claw-service 2>/dev/null && service_running=1
+
+    local ready_ims=""
+    local im
+    for im in weixin telegram qywx feishu; do
+        ___x_cmd "$im" --isready 2>/dev/null && ready_ims="${ready_ims:+$ready_ims, }$im"
+    done
+
+    claw:info "Welcome to claw! This is your first time."
+    claw:info "claw is an AI message bot manager for WeChat, Telegram, Feishu, and WeCom."
+
+    local status_line="Service: "
+    if [ "$service_running" -eq 1 ]; then
+        status_line="${status_line}running"
+    else
+        status_line="${status_line}not running"
+    fi
+
+    status_line="${status_line}; Ready platforms:"
+    if [ -n "$ready_ims" ]; then
+        status_line="${status_line} $ready_ims"
+    else
+        status_line="${status_line} none"
+    fi
+    claw:info "$status_line"
+
+    local state_summary="Current claw state: $status_line"
+
+    # Build option list as positional parameters to avoid eval.
+    set -- "Quick start - check status and recommend next steps"
+    if [ "$service_running" -eq 0 ]; then
+        set -- "$@" "Start claw service"
+    fi
+    set -- "$@" "Connect an IM platform" "Chat with claw manager"
+
+    if [ -n "$msg" ]; then
+        set -- "$@" "Handle request: $msg"
+    fi
+
+    local idx=0 val=""
+    ___x_cmd ui select idx,val "What would you like to do?" "$@" || return $?
+
+    case "$val" in
+        "Quick start - check status and recommend next steps")
+            printf "%s" "Please run a quick start check for claw: show service status, ready IM platforms, active connections, and recommend the next step." ;;
+        "Start claw service")
+            printf "%s Please start the claw service for me." "$state_summary" ;;
+        "Connect an IM platform")
+            printf "%s Please help me connect an IM platform to claw." "$state_summary" ;;
+        "Chat with claw manager")
+            # Share the current state so the agent can greet contextually.
+            printf "%s" "$state_summary" ;;
+        *)
+            # Handle request option (matches labels prefixed with "Handle request:").
+            printf "%s Please handle this request: %s" "$state_summary" "$msg" ;;
+    esac
+
+    return 0
+}

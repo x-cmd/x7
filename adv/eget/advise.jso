@@ -8,11 +8,11 @@ null
 ,
 "en"
 :
-"Download and install binaries from GitHub/GitLab/Codeberg Releases"
+"Pull first-hand, ready-to-run binaries straight from the project's official repo, any version latest to legacy; plus bare-name one-step install — no sudo, with built-in hosted acceleration for the China region"
 ,
 "cn"
 :
-"从 GitHub/GitLab/Codeberg Release 下载并安装二进制文件"
+"直连项目官仓取一手可运行二进制、新旧版本随取；新增裸名一键安装、免 sudo，为中国区内置托管加速"
 }
 ,
 "#desc"
@@ -20,11 +20,11 @@ null
 {
 "en"
 :
-"Download and install pre-built binaries from GitHub/GitLab/Codeberg Releases (Inspired by zyedidia/eget); `x eget use <name>` installs to ~/.local/bin in one step, and for well-known projects a bare name (e.g. `x eget use jq`) is auto-completed to the source repo via the x install database; supports GHPROXY for accelerating GitHub downloads."
+"Download and install pre-built binaries from GitHub/GitLab/Codeberg Releases (Inspired by zyedidia/eget); `x eget use <name>` installs to ~/.local/bin in one step, and for well-known projects a bare name (e.g. `x eget use jq`) is auto-completed to the source repo via the x install database; supports GHPROXY for accelerating GitHub downloads; on slow downloads, automatically reroutes through x-cmd's eget hosting (keeps it working in the China region)."
 ,
 "cn"
 :
-"从 GitHub/GitLab/Codeberg Release 下载并安装预编译二进制文件（Inspired by zyedidia/eget）；`x eget use <name>` 一键安装到 ~/.local/bin，对知名项目支持裸名（如 `x eget use jq`），由 x install 数据库补全源作者仓库；支持通过 GHPROXY 加速 GitHub 下载。"
+"从 GitHub/GitLab/Codeberg Release 下载并安装预编译二进制文件（Inspired by zyedidia/eget）；`x eget use <name>` 一键安装到 ~/.local/bin，对知名项目支持裸名（如 `x eget use jq`），由 x install 数据库补全源作者仓库；支持通过 GHPROXY 加速 GitHub 下载；下载遇网速问题时，自动改走 x-cmd 的 eget 加速托管（保证中国区可用）。"
 }
 ,
 "#tip"
@@ -93,11 +93,21 @@ null
 {
 "cn"
 :
-"GitHub 下载默认带 SHA-256 校验（hash 来自 api.github.com Release asset 的 digest 字段，直连取得）。\n使用 GHPROXY 时尤为重要 —— 代理只截获 github.com 上的二进制下载，无法影响 api.github.com 上的 digest 值，篡改会被立刻发现。\nGitLab / Codeberg release API 无 digest 字段，这两条链路静默跳过校验。可用 --no-verify 关闭。\n"
+"下载遇到网速问题时（中国区尤为常见），x-cmd 会自动改走 eget 加速托管来完成下载 —— 这是 x-cmd 的一个特色，\n无需用户配置，任何网络环境下 `x eget` 都装得上。日志会写明切换原因（如 `stalled (connection too slow)`）；\n不需要可用 `--no-mirror` 关闭。\n"
 ,
 "en"
 :
-"GitHub downloads are integrity-checked by default (hash from the api.github.com Release asset digest field, fetched directly).\nEspecially important with GHPROXY — the proxy can only intercept github.com binary downloads, never the digest value on api.github.com, so tampering is detected immediately.\nGitLab / Codeberg release APIs have no digest field, so verification is silently skipped for those forges. Disable with --no-verify.\n"
+"When a download hits speed issues (notably in the China region), x-cmd automatically reroutes through\nits eget hosting to finish the download — a feature, not a config, with nothing to set up, so `x eget`\njust works on any network. The switch reason is named in the log (e.g., `stalled (connection too slow)`);\ndisable with --no-mirror.\n"
+}
+,
+{
+"cn"
+:
+"不管是你自己的 ghproxy，还是上面的 eget 加速托管，都只作用于 asset 的下载；api.github.com 始终保持直连。\nGitHub 下载默认带 SHA-256 校验，digest 直接从 api.github.com 取得、不经过任何托管 —— 因此校验值始终可信，\n能用来验证托管下回来的 asset，保证下载的完整与安全。GitLab / Codeberg release API 无 digest 字段，这两条链路\n静默跳过校验；可用 --no-verify 关闭。\n"
+,
+"en"
+:
+"Whether you use your own ghproxy or x-cmd's eget hosting above, only the asset download is rerouted —\napi.github.com always stays direct. GitHub downloads are SHA-256 verified by default, with the digest\nfetched straight from api.github.com and never through any hosting, so the checksum stays trustworthy and\ncan verify the hosted asset, guaranteeing download integrity and security. GitLab / Codeberg release APIs\nhave no digest field, so those links skip verification silently; use --no-verify to disable.\n"
 }
 ]
 ,
@@ -161,16 +171,6 @@ null
 :
 [
 "cache"
-,
-"cache-ls"
-,
-"cache-info"
-,
-"cache-clear"
-,
-"cache-purge"
-,
-"cache-rm"
 ]
 ,
 "#synopsis"
@@ -707,6 +707,86 @@ null
 "en"
 :
 "Skip SHA-256 verification"
+}
+}
+,
+"--speed-limit"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"速度兜底阈值（字节/秒），低于此速度持续 N 秒则断开走 mirror（默认 50000）"
+,
+"en"
+:
+"Stall threshold (bytes/sec); below this for N seconds, abort and retry via mirror (default 50000)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"字节/秒阈值"
+,
+"en"
+:
+"Bytes-per-second threshold"
+}
+}
+}
+,
+"--speed-time"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"持续低速多少秒后断开走 mirror（默认 30）"
+,
+"en"
+:
+"Seconds of sustained slow speed before aborting to mirror (default 30)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"秒数"
+,
+"en"
+:
+"Seconds"
+}
+}
+}
+,
+"--no-mirror"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"禁用 eget 加速托管，下载全程直连"
+,
+"en"
+:
+"Disable eget hosting; download directly throughout"
 }
 }
 }
@@ -2031,9 +2111,8 @@ null
 "Purge everything (irreversible)"
 }
 ]
-}
 ,
-"cache-ls"
+"ls"
 :
 {
 "#desc"
@@ -2091,7 +2170,7 @@ null
 ]
 }
 ,
-"cache-info"
+"info"
 :
 {
 "#desc"
@@ -2135,7 +2214,7 @@ null
 ]
 }
 ,
-"cache-clear"
+"clear"
 :
 {
 "#desc"
@@ -2193,7 +2272,7 @@ null
 ]
 }
 ,
-"cache-purge"
+"purge"
 :
 {
 "#desc"
@@ -2237,7 +2316,7 @@ null
 ]
 }
 ,
-"cache-rm"
+"rm"
 :
 {
 "#desc"
@@ -2293,6 +2372,7 @@ null
 "Remove by URL (equivalent to owner/repo)"
 }
 ]
+}
 }
 ,
 "rate"
