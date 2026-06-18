@@ -58,6 +58,9 @@ ___x_cmd_claw_run___teardown(){
 
     claw:debug "[HB] Stopping heartbeat worker (namespace: x-claw-default-worker, name: heartbeat-runner)"
     ___x_cmd worker stop --ns x-claw-default-worker --name heartbeat-runner
+
+    claw:debug "[HB] Stopping tailer"
+    ___x_cmd tailer stop "$___X_CMD_CLAW_BOT_MQ"
 }
 
 ___x_cmd_claw_run___agentwork(){

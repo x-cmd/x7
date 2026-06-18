@@ -155,7 +155,7 @@ ___x_cmd_worker_stop(){
     } < "$runnerfile_pid"
 
     if ___x_cmd ps fingerprint check "$process_id" "$fingerprint"; then
-        if ! ___x_cmd kill -r "$process_id" 2>/dev/null; then
+        if ! ___x_cmd kill tree "$process_id" 2>/dev/null; then
             ___x_cmd ps fingerprint check "$process_id" "$fingerprint" || return 0
             return 1
         fi
@@ -168,7 +168,7 @@ ___x_cmd_worker_stop(){
         done
 
         if ___x_cmd ps fingerprint check "$process_id" "$fingerprint"; then
-            ___x_cmd kill -r -s -9 "$process_id" 2>/dev/null || return 1
+            ___x_cmd kill tree -s -9 "$process_id" 2>/dev/null || return 1
         fi
     fi
 

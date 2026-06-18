@@ -2,7 +2,7 @@
 # x claude session export -p . -s ... -o XXX.tar.gz
 # x claude session import XXX.tar.gz
 
-# miltiple folder-name:
+# multiple folder-name:
 
 # level1: x-cmd-datastore-session
 # level2: claude, codex, gemini

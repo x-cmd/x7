@@ -32,13 +32,15 @@ ___x_cmd_feishu_login(){
     feishu:info "Starting Feishu bot login..."
     feishu:info "Scan the QR code with Feishu App to login."
 
-    # Non-TTY (agent/piped): non-blocking mode
-    if ! [ -t 1 ]; then
+    if ___x_cmd_runmode_allow_manual && ___x_cmd_is_stdout2tty ; then
+        ___x_cmd_feishu_login_tty
+    else
         ___x_cmd_feishu_login_nowait
-        return $?
     fi
+}
 
-    # TTY (human user): blocking mode
+# Interactive TTY login: blocking, streams QR + waits for scan result
+___x_cmd_feishu_login_tty(){
     local event_name="" payload="" line=""
     ___x_cmd curl -s -N "https://hub.x-cmd.net/api/v0/feishu/bot/create?feishu" | while IFS= read -r line; do
         case "${line}" in

@@ -72,11 +72,15 @@ ___x_cmd_claw_run___list_activate(){
 ___x_cmd_claw_run___ensureagent(){
     ___x_cmd agent isready || {
         if ___x_cmd_runmode_allow_manual; then
-            claw:info "Agent not initialized -- running 'x agent init' automatically"
-            ___x_cmd agent init || return $?
+            local tipstr; tipstr="$(___x_cmd ui style yellow)'x claw init'$(___x_cmd ui style end)"
+            claw:info "Agent not initialized -- running $tipstr automatically"
+            ___x_cmd claw init || {
+                claw:error "Failed to initialize claw agent automatically. Run $tipstr to setup the agent first."
+                return 1
+            }
             ___x_cmd agent --is-setup || ___x_cmd agent setup
         else
-            claw:error "Agent is not ready. Please run 'x agent init' to setup the agent first."
+            claw:error "Agent is not ready. Please run 'x claw init' to setup the agent first."
             return 1
         fi
     }

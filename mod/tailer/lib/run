@@ -32,12 +32,16 @@ ___x_cmd_tailer_run(){
     local mq_fp_previous_data="$mq_fp_previous/data.tsv"
     local mq_fp_previous_index="$mq_fp_previous/index.txt"
 
+    local mq_fp_pid="$mq_folder/run.pid"
+
     [ -n "$___X_CMD_TAILER_HANDLE" ] || ___X_CMD_TAILER_HANDLE="___x_cmd_tailer_defaulthandler"
 
     local mq_previous_last_index=0
     local mq_current_last_index=0
 
     while true; do
+        ___x_cmd rmrf "$mq_fp_pid"
+
         mq_previous_last_index=0
         mq_current_last_index=0
 
@@ -74,6 +78,7 @@ ___x_cmd_tailer_run(){
             # Notice, we don't need to handle 130 in the following code.
             # Because if it exits here, the "--" output will fail to pipe. The upstream will exit immediately.
             local PID_OF_UPSTREAM;  read -r PID_OF_UPSTREAM || return 130  # Forcibly return 130.
+            printf "%s\n" "$PID_OF_UPSTREAM" >"$mq_fp_pid"
 
             local MQ_TYPE=PREVIOUS
             local MQ_MSG_IDX="$mq_previous_last_index"
@@ -107,7 +112,8 @@ ___x_cmd_tailer_run(){
         )}
 
         case $? in
-            130)        tailer:info "Got SIGINT, exit"
+            130)        ___x_cmd rmrf "$mq_fp_pid"
+                        tailer:info "Got SIGINT, exit"
                         return 130 ;;
             *)
                         local err=$?
@@ -119,3 +125,46 @@ ___x_cmd_tailer_run(){
     done
 }
 
+___x_cmd_tailer_stop(){
+    [ $# -gt 0 ]    ||  set -- --help
+
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help)      ___x_cmd help -m tailer stop "$@" ; return 0 ;;
+            *)              break ;;
+        esac
+    done
+
+    local mq_folder="$1"
+
+    [ -n "$mq_folder" ]             ||  N=tailer M="Please provide folder for mq."          log:ret:64
+
+    local mq_fp_pid="$mq_folder/run.pid"
+
+    [ -e "$mq_fp_pid" ]             ||  {
+        tailer:info "No running tailer -> $mq_folder, already stopped"
+        return 0
+    }
+
+    local pid
+    read -r pid <"$mq_fp_pid" 2>/dev/null || {
+        ___x_cmd rmrf "$mq_fp_pid"
+        tailer:info "No valid pid file -> $mq_folder, already stopped"
+        return 0
+    }
+
+    [ -n "$pid" ]                   ||  {
+        ___x_cmd rmrf "$mq_fp_pid"
+        tailer:info "Empty pid -> $mq_folder, already stopped"
+        return 0
+    }
+
+    if ! ___x_cmd_cmds kill -s 0 "$pid" 2>/dev/null; then
+        ___x_cmd rmrf "$mq_fp_pid"
+        tailer:info "Tailer pid=$pid not running -> $mq_folder, already stopped"
+        return 0
+    fi
+
+    tailer:info "Stopping tailer pid=$pid for $mq_folder"
+    ___x_cmd kill tree "$pid"
+}

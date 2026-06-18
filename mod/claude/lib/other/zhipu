@@ -4,7 +4,7 @@ ___x_cmd_claude_zhipu(){
     local op="$1"
     case "$op" in
         -h|--help)      ___x_cmd help -m claude zhipu; return 0 ;;
-        --cfg)          ___x_cmd zhipu --cfg "$@";     return 0 ;;
+        --cfg)          ___x_cmd zhipu "$@";     return 0 ;;
         --)             shift ;;
     esac
 

@@ -170,6 +170,8 @@ null
 "#subcmd:Admin"
 :
 [
+"init"
+,
 "manager"
 ,
 "workspace"
@@ -515,6 +517,26 @@ null
 "$ref"
 :
 "x-advise://claw/data/workspace.jso"
+}
+,
+"init"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"初始化 claw 所需的 AI Agent 配置"
+,
+"en"
+:
+"Initialize the AI Agent configuration required by claw"
+}
+,
+"$ref"
+:
+"x-advise://claw/data/init.jso"
 }
 ,
 "qywx"

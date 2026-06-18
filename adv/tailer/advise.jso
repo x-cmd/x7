@@ -232,6 +232,8 @@ null
 ,
 "pending"
 ,
+"stop"
+,
 "service"
 ,
 "test"
@@ -415,6 +417,64 @@ null
 :
 "___x_cmd_advise__dir"
 }
+}
+,
+"stop"
+:
+{
+"#synopsis"
+:
+"<folder>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"停止正在运行的消息队列监听"
+,
+"en"
+:
+"Stop a running message queue listener"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"消息队列文件夹路径"
+,
+"en"
+:
+"Message queue folder path"
+}
+,
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x tailer stop /tmp/mq"
+,
+"cn"
+:
+"示例: 停止 /tmp/mq 的监听进程"
+,
+"en"
+:
+"Example: Stop listener for /tmp/mq"
+}
+]
 }
 ,
 "sub"

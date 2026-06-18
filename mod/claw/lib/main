@@ -22,6 +22,7 @@ ___x_cmd_claw___main(){
         connect|disconnect)     ___x_cmd_claw_"$op" "$@" ;;
         cron|log|manager|workspace)
                                 ___x_cmd_claw_"$op" "$@" ;;
+        init)                   ___x_cmd_claw_init "$@" ;;
         *)
                                 if [ "$#" -eq 0 ]; then
                                     ___x_cmd_claw___main___dispatch "$op" "$@"
@@ -30,4 +31,12 @@ ___x_cmd_claw___main(){
                                 fi
                                 ;;
     esac
+}
+
+___x_cmd_claw_init(){
+    claw:info "Initializing claw agent configuration via 'x agent init'"
+    ___x_cmd agent init || {
+        claw:error "Failed to initialize claw agent. Run 'x claw init' to retry."
+        return 1
+    }
 }

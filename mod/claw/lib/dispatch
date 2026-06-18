@@ -75,7 +75,7 @@ ___x_cmd_claw___main___suggest_(){
         best_cmd="$cmd"
     done
 
-    if [ "$best_dist" -le 2 ] && [ "${#best_cmd}" -ge 3 ] && [ "$best_common" -ge 2 ]; then
+    if [ "$best_dist" -le 3 ] && [ "${#best_cmd}" -ge 3 ] && [ "$best_common" -ge 2 ]; then
         x_="$best_cmd"
     else
         x_=""
@@ -87,7 +87,7 @@ ___x_cmd_claw___main___suggest_(){
 ___x_cmd_claw___main___levenshtein(){
     local a="$1"
     local b="$2"
-    awk -v a="$a" -v b="$b" '
+    ___x_cmd_cmds awk -v a="$a" -v b="$b" '
     BEGIN {
         m = length(a); n = length(b)
         min_len = m < n ? m : n
