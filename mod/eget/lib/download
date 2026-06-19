@@ -277,7 +277,7 @@ $version"
             actual="$( x hash sha256 "$tmpfile" 2>/dev/null )" || actual=""
             if [ -n "$actual" ] && [ "$actual" != "$expected" ]; then
                 rm -f "$tmpfile"
-                eget:warn --expect "$expected" --actual "$actual" "SHA-256 mismatch !"
+                eget:warn --expect "$expected" --actual "$actual" "SHA-256 mismatch."
                 return 1
             fi
             # Always print the actual hash so the user can verify / compare
