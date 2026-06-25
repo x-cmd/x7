@@ -259,58 +259,6 @@ true
 }
 }
 ,
-"--session"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"复用已有会话 ID，保留对话历史"
-,
-"en"
-:
-"Reuse existing session ID to preserve conversation history"
-}
-,
-"#1"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"UUID 格式会话标识符"
-,
-"en"
-:
-"UUID format session identifier"
-}
-,
-"#regex"
-:
-{
-"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"有效的 UUID 格式"
-,
-"en"
-:
-"Valid UUID format"
-}
-}
-}
-}
-}
-,
 "--workspace"
 :
 {
@@ -335,7 +283,7 @@ true
 }
 }
 ,
-"--no-workspace-session"
+"--new-workspace-session"
 :
 {
 "#desc"
@@ -343,11 +291,43 @@ true
 {
 "cn"
 :
-"绑定 workspace 但不自动复用 session，每次 request 都新建 session"
+"绑定 workspace 但每次 request 都新建 session"
 ,
 "en"
 :
-"Bind workspace without auto-reusing session; create a new session per request"
+"Bind workspace but create a new session per request"
+}
+}
+,
+"--session-desc"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"自定义当前 session 的描述"
+,
+"en"
+:
+"Custom description for the current session"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"描述文本"
+,
+"en"
+:
+"Description text"
+}
 }
 }
 ,

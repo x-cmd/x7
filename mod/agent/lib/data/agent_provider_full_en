@@ -1,0 +1,19 @@
+claude                  # Anthropic official - OAuth login (uses ~/.claude/settings.json)
+claude-openrouter       # OpenRouter - API key
+claude-deepseek         # DeepSeek - API key
+claude-kimi             # Moonshot Kimi - API key
+claude-moonshot         # Moonshot AI - API key
+claude-zhipu            # Zhipu GLM - API key
+claude-siliconflow      # SiliconFlow - API key
+claude-doubao           # Doubao - API key
+claude-mthreads         # MThreads - API key
+claude-minimax          # MiniMax - API key
+claude-ali              # Alibaba Cloud Bailian - API key
+claude-baidu            # Baidu Qianfan - API key
+claude-tencent          # Tencent Cloud - API key
+claude-router           # Claude Code Router - API key
+codex                   # OpenAI Codex CLI
+cursor                  # Cursor Agent
+gemini-cli              # Google Gemini CLI
+opencode                # Opencode
+kimi-cli                # Kimi Code CLI

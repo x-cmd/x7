@@ -7,6 +7,7 @@ ___x_cmd_claude_baidu(){
     local op="$1"
     case "$op" in
         -h|--help)      ___x_cmd help -m claude baidu; return 0 ;;
+        --minimal-init) ___x_cmd_claude_baidu_minimal_init "$@" ; return $? ;;
         --cfg)          shift;
                         ___x_cmd_claude_baidu_cfg "$@"; return $? ;;
         --)             shift ;;
@@ -78,6 +79,21 @@ ___x_cmd_claude_baidu_cfg(){
 ___x_cmd_claude_baidu_cur(){
     local X_help_cmd=; X_help_cmd='___x_cmd help -m claude baidu --cur' help:arg:parse
     ___x_cmd_claude_baidu_cfg --current "$@"
+}
+
+___x_cmd_claude_baidu_minimal_init(){
+    local cur_apikey=""
+    if [ -f "$(___x_cmd_claude_baidu_cur --get config)" ]; then
+        ___x_cmd_claude_baidu_cur cur_apikey:=apikey
+    fi
+
+    claude:info "To get baidu coding plan API key -> https://console.bce.baidu.com/qianfan/resource/subscribe"
+
+    ___x_cmd_claude_baidu_cfg___invoke --init ${cur_apikey:+"--ctrl_exit_strategy"} \
+        apikey      "Set up the baidu coding plan API key"                               \
+                    "$cur_apikey"   '=~*' "^[A-Za-z0-9-]+$"
+
+    ___x_cmd_claude_baidu_has_apikey 2>/dev/null >&2
 }
 
 ___x_cmd_claude_baidu_init(){

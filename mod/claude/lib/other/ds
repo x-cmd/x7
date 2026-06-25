@@ -4,7 +4,7 @@ ___x_cmd_claude_ds(){
     local op="$1"
     case "$op" in
         -h|--help)      ___x_cmd help -m claude ds;     return 0 ;;
-        --cfg)          ___x_cmd deepseek "$@";   return 0 ;;
+        --cfg)          ___x_cmd deepseek "$@";   return $? ;;
         --)             shift ;;
     esac
 

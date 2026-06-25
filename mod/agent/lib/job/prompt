@@ -10,9 +10,10 @@ ___x_cmd_agent_job___prompt_mappings(){
     local agentfile="${4}"
     local response_file="${5}"
     local donefile="${6}"
-    local iter="${7}"
-    local vlid="${8}"
-    local loop_context="${9}"
+    local summaryfile="${7}"
+    local iter="${8}"
+    local vlid="${9}"
+    local loop_context="${10}"
 
     local user_pwd=""
     if [ -r "$jobdir/DESC.md" ]; then
@@ -28,6 +29,7 @@ ___x_cmd_agent_job___prompt_mappings(){
     [ -n "$user_pwd" ]     && printf "USER-PWD %s\n" "$user_pwd"
     [ -n "$response_file" ] && printf "RESPONSE-FILE %s\n" "$response_file"
     [ -n "$donefile" ]     && printf "DONE-FILE %s\n" "$donefile"
+    [ -n "$summaryfile" ]  && printf "SUMMARY-FILE %s\n" "$summaryfile"
     [ -n "$iter" ]         && printf "ITER %s\n" "$iter"
     [ -n "$vlid" ]         && printf "VLID %s\n" "$vlid"
     [ -n "$loop_context" ] && printf "LOOP-CONTEXT %s\n" "$loop_context"
@@ -53,5 +55,5 @@ ___x_cmd_agent_job___get_prompt(){
     printf "\n"
     ___x_cmd_agent_job___prompt_mappings \
         "$jobdir" "$descfile" "$planfile" "$agentfile" \
-        "$response_file" "$donefile" "$iter" "$vlid" "$loop_context"
+        "$response_file" "$donefile" "$summaryfile" "$iter" "$vlid" "$loop_context"
 }

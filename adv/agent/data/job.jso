@@ -5,7 +5,7 @@
 {
 "cn"
 :
-"job 工作流详解：\n1. run 创建任务，AI 自动生成执行计划并迭代执行\n2. 每次迭代 AI 执行一个子任务，更新进度\n3. 当所有子任务完成或达到 max-iterations 时停止，生成 DONE.md\n4. 可随时用 status 查看进度，用 stop 强制终止\n\ninit、iter、exec 均为内部实现，用户统一通过 run 创建任务。\n"
+"job 工作流详解：\n1. run 创建任务，AI 自动生成执行计划并迭代执行\n2. 每次迭代 AI 执行一个子任务，更新进度\n3. 当所有子任务完成或达到 max-iterations 时停止，生成 DONE.md\n4. 可随时用 status 查看进度，用 stop 强制终止\n5. 用 retry 重新执行已存在任务，用 rm 删除已停止/完成的任务\n\ninit、iter、exec 均为内部实现，用户统一通过 run 创建任务。\n"
 ,
 "en"
 :
@@ -170,6 +170,22 @@
 }
 }
 ,
+"--failed"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"只显示失败任务（存在 ERROR.md 或退出码非 0）"
+,
+"en"
+:
+"Show only failed tasks (ERROR.md exists or non-zero exit code)"
+}
+}
+,
 "--csv"
 :
 {
@@ -282,6 +298,20 @@
 {
 "cmd"
 :
+"x agent job ls --failed --yml"
+,
+"cn"
+:
+"示例: YAML 格式列出失败任务"
+,
+"en"
+:
+"Example: YAML list of failed tasks"
+}
+,
+{
+"cmd"
+:
 "x agent job ls --job-dir ~/custom-jobs"
 ,
 "cn"
@@ -316,11 +346,11 @@
 {
 "cn"
 :
-"status 输出字段说明：\n- job/jobdir: 任务 ID 和完整目录路径\n- status: 任务状态（active/completed/unknown）\n- running: 后台进程是否存活（通过 worker isalive 检测）\n- progress: 完成百分比和 TODO 进度\n- iteration: 当前迭代 / 最大迭代\n- ai: AI 状态、工作类型、退出信号、建议\n- stats: 修改文件数、测试状态、响应数\n- time: 创建和更新时间\n- core_files: 核心文件列表（AGENTS.md, PLAN.md 等）\n- response_files: 历次迭代的响应文件列表\n"
+"status 输出字段说明：\n- job/jobdir: 任务 ID 和完整目录路径\n- status: 任务状态（active/completed/failed/interrupted/unknown）\n- running: 后台进程是否存活（通过 worker isalive 检测）\n- progress: 完成百分比和 TODO 进度\n- iteration: 当前迭代 / 最大迭代\n- ai: AI 状态、工作类型、退出信号、建议\n- stats: 修改文件数、测试状态、响应数\n- time: 创建和更新时间\n- core_files: 核心文件列表（AGENTS.md, PLAN.md, DONE.md, SUMMARY.md, ERROR.md 等）\n- response_files: 历次迭代的响应文件列表\n--yml 稳定字段: job_id, job_dir, status, exit_code, done, error_type, error_summary, summary_file, done_file, error_file, iter, max_iterations, progress, started_at, updated_at, completed_at, description status 取值: COMPLETE | FAILED | RUNNING | INTERRUPTED | PENDING\n"
 ,
 "en"
 :
-"Status output fields:\n- job/jobdir: Task ID and full directory path\n- status: Task state (active/completed/unknown)\n- running: Whether background process is alive (via worker isalive)\n- progress: Completion percentage and TODO progress\n- iteration: Current / maximum iterations\n- ai: AI status, work type, exit signal, recommendation\n- stats: Files modified, test status, response count\n- time: Creation and update timestamps\n- core_files: Core file list (AGENTS.md, PLAN.md, etc.)\n- response_files: Historical iteration response files\n"
+"Status output fields:\n- job/jobdir: Task ID and full directory path\n- status: Task state (active/completed/failed/interrupted/unknown)\n- running: Whether background process is alive (via worker isalive)\n- progress: Completion percentage and TODO progress\n- iteration: Current / maximum iterations\n- ai: AI status, work type, exit signal, recommendation\n- stats: Files modified, test status, response count\n- time: Creation and update timestamps\n- core_files: Core file list (AGENTS.md, PLAN.md, DONE.md, SUMMARY.md, ERROR.md, etc.)\n- response_files: Historical iteration response files\n--yml stable fields: job_id, job_dir, status, exit_code, done, error_type, error_summary, summary_file, done_file, error_file, iter, max_iterations, progress, started_at, updated_at, completed_at, description status values: COMPLETE | FAILED | RUNNING | INTERRUPTED | PENDING\n"
 }
 ]
 ,
@@ -627,6 +657,260 @@
 "en"
 :
 "Example: Stop first running job"
+}
+]
+}
+,
+"retry"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"重新执行一个已存在的任务，保留描述和配置，清除旧执行状态"
+,
+"en"
+:
+"Re-run an existing job, preserve description/config, clear old execution state"
+}
+,
+"#synopsis"
+:
+[
+"x agent job retry [options]"
+]
+,
+"--job-id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"要重新执行的任务 ID（必须已存在）"
+,
+"en"
+:
+"Job ID to retry (must already exist)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"任务标识符"
+,
+"en"
+:
+"Job identifier"
+}
+}
+}
+,
+"--job-dir"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定任务父目录"
+,
+"en"
+:
+"Specify parent directory for jobs"
+}
+,
+"#1"
+:
+{
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+}
+,
+"--keep-plan"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"保留现有 PLAN.md，不重新生成"
+,
+"en"
+:
+"Keep existing PLAN.md, do not regenerate"
+}
+}
+,
+"--max-iterations"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"重新执行时的最大迭代次数"
+,
+"en"
+:
+"Maximum iterations for the retry"
+}
+}
+,
+"--harness"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定 AI harness"
+,
+"en"
+:
+"Specify AI harness"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x agent job retry --job-id my-task"
+,
+"cn"
+:
+"示例: 重新执行已有任务 my-task"
+,
+"en"
+:
+"Example: Retry existing job my-task"
+}
+,
+{
+"cmd"
+:
+"x agent job retry --job-id my-task --keep-plan"
+,
+"cn"
+:
+"示例: 保留原 PLAN.md 重新执行"
+,
+"en"
+:
+"Example: Retry while keeping the existing plan"
+}
+]
+}
+,
+"rm"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"删除指定的任务目录（运行中的任务需先 stop）"
+,
+"en"
+:
+"Remove the specified job directory (running jobs must be stopped first)"
+}
+,
+"#synopsis"
+:
+[
+"x agent job rm [options]"
+]
+,
+"--job-id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"要删除的任务 ID"
+,
+"en"
+:
+"Job ID to remove"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"任务标识符"
+,
+"en"
+:
+"Job identifier"
+}
+}
+}
+,
+"--job-dir"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定任务父目录"
+,
+"en"
+:
+"Specify parent directory for jobs"
+}
+,
+"#1"
+:
+{
+"#exec"
+:
+"___x_cmd_advise__dir"
+}
+}
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x agent job rm --job-id my-task"
+,
+"cn"
+:
+"示例: 删除任务 my-task"
+,
+"en"
+:
+"Example: Remove job my-task"
 }
 ]
 }

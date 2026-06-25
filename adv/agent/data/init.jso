@@ -27,6 +27,8 @@
 :
 [
 "x agent init"
+,
+"x agent init --full"
 ]
 ,
 "#tldr"
@@ -39,11 +41,25 @@
 ,
 "cn"
 :
-"示例: 初始化配置，交互式选择默认 AI 工具"
+"示例: 初始化配置，交互式选择默认 AI 工具（最小化模式）"
 ,
 "en"
 :
-"Example: Initialize config, interactively select default AI tool"
+"Example: Initialize config, interactively select default AI tool (minimal mode)"
+}
+,
+{
+"cmd"
+:
+"x agent init --full"
+,
+"cn"
+:
+"示例: 完整配置模式，显示所有支持的 AI 工具"
+,
+"en"
+:
+"Example: Full configuration mode, show all supported AI tools"
 }
 ]
 }

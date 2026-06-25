@@ -35,6 +35,7 @@ STOP CONDITIONS (set EXIT_SIGNAL: true):
 WHEN STOPPING (EXIT_SIGNAL: true):
 1. **FIRST**: Complete ONE task, update '<PLAN-FILE>', write report to '<RESPONSE-FILE>' as usual (same as normal iterations)
 2. **THEN**: Write final summary to '<DONE-FILE>' for human readers
+3. **ALSO**: Write a short, user-facing '<SUMMARY-FILE>' (SUMMARY.md) suitable for IM notifications. Include: Job ID, Status=completed, Completion Time, Description, a brief Result bullet list, and Key Outputs.
 
 NOTE: Stopping is NOT a shortcut. Always complete the current iteration normally (task + plan update + response), then create donefile.
 

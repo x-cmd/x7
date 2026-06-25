@@ -31,6 +31,8 @@
 - Late night (23:00–08:00) unless urgent
 - Nothing truly worth interrupting the user's quiet time
 
+If all conditions above are met, you may create `HEARTBEAT_OK` to skip the next check. The marker expires automatically after `<HEARTBEAT_OK_TTL>` (default 4 hours); heartbeat will resume after that even without new user messages.
+
 ## Blockers
 
 -

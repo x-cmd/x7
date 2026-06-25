@@ -26,7 +26,7 @@ ___x_cmd_agent_unify___try(){
     while [ $# -gt 0 ]; do
         op="$1"; shift
         if [ ! -e "$op" ]; then
-            agent:info "Creating symlink: $op -> $AGENT_FP"
+            agent:info "Creating symlink - $op -> $AGENT_FP"
             ___x_cmd_cmds ln -s "$AGENT_FP" "$op"
             continue
         fi
@@ -36,7 +36,7 @@ ___x_cmd_agent_unify___try(){
         agent_fp_hash="$(___x_cmd sha512 "$AGENT_FP")"
 
         if [ "$op_hash" = "$agent_fp_hash" ]; then
-            agent:info "Content identical, skipping merge: $op"
+            agent:info "Content identical, skipping merge - $op"
             ___x_cmd rmrf "$op"
             ___x_cmd_cmds ln -s "$AGENT_FP" "$op"
             continue

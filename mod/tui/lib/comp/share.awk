@@ -222,7 +222,7 @@ function exit_with_elegant(command){
 
 function exit_is_with_cmd(){
     if ( FINALCMD != "" ) {
-        if (( FINALCMD != "CTRL-C" ) && ( FINALCMD != "CTRL-D" )) {
+        if (( FINALCMD != "CTRL-C" ) && ( FINALCMD != "CTRL-D" ) && ( FINALCMD != "ESC" ) ) {
             return true
         }
     }

@@ -10,6 +10,7 @@ ___x_cmd_zhipu_cfg(){
     local op="$1"; shift
     case "$op" in
         -h|--help)      x help -m zhipu --cfg ;;
+        --minimal-init) ___x_cmd_zhipu_minimal_init "$@" ;;
         apikey=*)       ___x_cmd_zhipu_cfg___invoke "$op" "$@"
                         ! ___x_cmd_zhipu_has_apikey 2>/dev/null >&2 || ___x_cmd chat --setalias zhipu glm
                         ;;
@@ -30,6 +31,21 @@ ___x_cmd_zhipu_def_(){
 ___x_cmd_zhipu_cur(){
     local X_help_cmd=; X_help_cmd='x help -m zhipu --cur' help:arg:parse
     ___x_cmd_zhipu_cfg --current "$@"
+}
+
+___x_cmd_zhipu_minimal_init(){
+    local cur_apikey=""
+    if [ -f "$(___x_cmd_zhipu_cur --get config)" ]; then
+        ___x_cmd_zhipu_cur cur_apikey:=apikey
+    fi
+
+    zhipu:info "To get Zhipu API key -> https://bigmodel.cn/usercenter/proj-mgmt/apikeys"
+
+    ___x_cmd_zhipu_cfg___invoke --init ${cur_apikey:+"--ctrl_exit_strategy"} \
+        apikey      "Set up the Zhipu API key"                               \
+                    "$cur_apikey"   '*'
+
+    ___x_cmd_zhipu_has_apikey 2>/dev/null >&2
 }
 
 ___x_cmd_zhipu_init(){

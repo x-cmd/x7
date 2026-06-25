@@ -113,13 +113,18 @@ ___x_cmd_pwsh_path___gitbash(){
     local bash_fp
     bash_fp="$(
         ___x_cmd_pwsh_bin -NoProfile -NonInteractive -Command '
-            $gitPaths = where.exe git 2>$null
-            foreach ($gitPath in $gitPaths) {
-                $dir = Split-Path -Parent $gitPath
-                $bashPath = Join-Path $dir "bash.exe"
-                if (Test-Path $bashPath) {
-                    Write-Output $bashPath
-                    break
+            $preferred = Join-Path $HOME ".x-cmd.root" "data" "git-for-windows" "bin" "bash.exe"
+            if (Test-Path $preferred) {
+                Write-Output $preferred
+            } else {
+                $gitPaths = where.exe git 2>$null
+                foreach ($gitPath in $gitPaths) {
+                    $dir = Split-Path -Parent $gitPath
+                    $bashPath = Join-Path $dir "bash.exe"
+                    if (Test-Path $bashPath) {
+                        Write-Output $bashPath
+                        break
+                    }
                 }
             }
         '

@@ -53,8 +53,16 @@ ___x_cmd_claw_run___teardown(){
     # claw:debug "[HB] Removing connect directory: $___X_CMD_CLAW_BOT_CONNECT_DIR"
     # ___x_cmd rmrf "$___X_CMD_CLAW_BOT_CONNECT_DIR"
 
-    claw:debug "[HB] Removing agent unavailable state file: $___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable"
-    ___x_cmd rmrf "$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable"
+    claw:debug "[HB] Removing agent unavailable state files from $___X_CMD_CLAW_BOT_HEARTBEAT"
+    local teardown_statefile
+    for teardown_statefile in "$___X_CMD_CLAW_BOT_HEARTBEAT"/agent_unavailable.*; do
+        [ -e "$teardown_statefile" ] || continue
+        ___x_cmd rmrf "$teardown_statefile"
+    done
+    for teardown_statefile in "$___X_CMD_CLAW_BOT_HEARTBEAT"/error_notify.*; do
+        [ -e "$teardown_statefile" ] || continue
+        ___x_cmd rmrf "$teardown_statefile"
+    done
 
     claw:debug "[HB] Stopping heartbeat worker (namespace: x-claw-default-worker, name: heartbeat-runner)"
     ___x_cmd worker stop --ns x-claw-default-worker --name heartbeat-runner
@@ -69,7 +77,7 @@ ___x_cmd_claw_run___agentwork(){
         HEARTBEAT:*)
             ___x_cmd_claw_run___agentwork___heartbeat "${msg#*:}"   ;;
         weixin:*|qywx:*|feishu:*|telegram:*)
-            ___x_cmd_claw_run___agentwork___handlemsg "$msg"        ;;
+            ___x_cmd_claw_run___agentwork___handlemsg "$msg" "1"        ;;
 
         # other agents.
     esac

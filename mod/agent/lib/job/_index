@@ -2,7 +2,7 @@
 # x agent job init "Implement user authentication"     # create job id
 # x agent job iter --max-iterations 100 --inrow 10
 
-xrc:mod:lib agent       job/util job/ls job/status job/prompt job/run job/stop
+xrc:mod:lib agent       job/util job/ls job/status job/prompt job/iter job/run job/stop job/retry job/rm
 
 
 # x agent job bootstrap -- guiding users creating a job.
@@ -22,7 +22,7 @@ ___x_cmd_agent_job(){
 
     local op="$1"
     case "$op" in
-        ls|status|run|stop)
+        ls|status|run|stop|retry|rm)
                     shift; ___x_cmd_agent_job_"$op" "$@"        ;;
         -h|--help)  ___x_cmd help -m agent job; return 0        ;;
         *)          N=agent M="Unknown operation" log:ret:64    ;;
@@ -34,6 +34,7 @@ ___X_CMD_AGENT_JOB_DIR="$___X_CMD_ROOT_DATA/agent/job"
 
 # Writes user's description to DESC.md, then calls AI to generate/update PLAN.md and AGENTS.md.
 # Run a complete job: initialize then iterate until completion.
+# When --retry is set, the job directory is assumed to exist and only the iteration loop runs.
 ___x_cmd_agent_job_exec(){
     [ $# -gt 0 ]    ||      set -- --help
 
@@ -45,11 +46,13 @@ ___x_cmd_agent_job_exec(){
     local max_iterations=100
     local inrow=2
     local continuous=""
+    local retry=""
+    local reinit=""
     while [ $# -gt 0 ]; do
         case "$1" in
             -h|--help)              ___x_cmd help -m agent job init; return 0 ;;
             --auto)                 mode=auto ;     shift ;;
-            -b|--batch)             mode=batch ;    shift ;;
+            -b|--batch)             mode="batch" ;  shift ;;
             --job-dir)              jobdir="$2" ;   arg:2:shift ;;
             --job-id)               jobid="$2" ;    arg:2:shift ;;
             --harness)              harness="$2" ;  arg:2:shift ;;
@@ -57,13 +60,17 @@ ___x_cmd_agent_job_exec(){
             --max-iterations)       max_iterations="$2" ;       arg:2:int; arg:2:shift ;;
             --inrow)                inrow="$2" ;                arg:2:int; arg:2:shift ;;
             --continuous)           continuous=1;               shift ;;
+            --retry)                retry=1;                    shift ;;
+            --reinit)               reinit=1;                   shift ;;
             --)                     shift ; break ;;
             *)                      break ;;
         esac
     done
 
     local desc="$*"
-    [ -n "$desc" ] || N=agent M="Please specify the job description" log:ret:64
+    if [ -z "$retry" ]; then
+        [ -n "$desc" ] || N=agent M="Please specify the job description" log:ret:64
+    fi
 
     if [ -z "$jobid" ] && [ -z "$jobdir" ] && [ -n "$___X_CMD_AGENT_JOB_RECENT" ]; then
         jobdir="$___X_CMD_AGENT_JOB_RECENT"
@@ -84,18 +91,31 @@ ___x_cmd_agent_job_exec(){
         harness="$x_"
     fi
 
+    if [ -n "$retry" ]; then
+        # Retry mode: reuse existing directory, optionally reinit plan, then iterate.
+        if [ -n "$reinit" ]; then
+            ___x_cmd_agent_job___reinit_plan "$jobdir" "$harness" "$debug" || return $?
+        fi
+        ___x_cmd_agent_job___iter "$jobdir"
+        return $?
+    fi
+
     ___x_cmd_agent_job___init "$jobdir" || return $?
     ___x_cmd_agent_job___iter "$jobdir"
 }
 
 # Initialize or re-initialize a job.
+# Optional second argument: if non-empty, do not append a new description entry to DESC.md.
 ___x_cmd_agent_job___init(){
     local jobdir="$1"
+    local no_desc_append="${2:-}"
     local is_init=0
     local vlid; vlid="$(___x_cmd date vlid)"
     if [ -d "$jobdir" ]; then
-        # Re-init existing job: append to DESC.md
-        printf "Timestamp: %s\nAdjust Desc: %s\n---\n" "$vlid" "$desc" >> "$jobdir/DESC.md"
+        # Re-init existing job: append to DESC.md unless suppressed
+        if [ -z "$no_desc_append" ]; then
+            printf "Timestamp: %s\nAdjust Desc: %s\n---\n" "$vlid" "$desc" >> "$jobdir/DESC.md"
+        fi
     else
         # Init new job
         is_init=1
@@ -140,87 +160,60 @@ ___x_cmd_agent_job___init(){
     agent:info "PLAN.md and AGENTS.md updated"
 }
 
-# Continue job iterations
-___x_cmd_agent_job___iter(){
+# Regenerate PLAN.md for an existing job while preserving AGENTS.md.
+___x_cmd_agent_job___reinit_plan(){
     local jobdir="$1"
-    if [ -z "$jobdir" ]; then
-        N=agent M="No job directory found" log:ret:64
-    fi
+    local harness="${2:-}"
+    local debug="${3:-}"
 
-    if [ ! -d "$jobdir" ]; then
+    [ -d "$jobdir" ] || {
         N=agent M="Job directory not found: $jobdir" log:ret:1
-    fi
+        return 1
+    }
 
-    local descfile="$jobdir/DESC.md"
-    local planfile="$jobdir/PLAN.md"
     local agentfile="$jobdir/AGENTS.md"
-    local donefile="$jobdir/DONE.md"
+    local planfile="$jobdir/PLAN.md"
+    local descfile="$jobdir/DESC.md"
 
-    if [ ! -r "$agentfile" ]; then
+    [ -f "$agentfile" ] || {
         N=agent M="AGENTS.md not found in $jobdir" log:ret:1
+        return 1
+    }
+
+    local backup_agent=""
+    backup_agent="$jobdir/.AGENTS.md.retry.bak"
+    ___x_cmd_cmds cp "$agentfile" "$backup_agent" || return $?
+
+    local content
+    descfile="$descfile" planfile="$planfile" agentfile="$agentfile" jobdir="$jobdir" \
+    content="$( ___x_cmd_agent_job___get_prompt init )"
+
+    [ -n "$content" ] || {
+        agent:error "Failed to load init prompt template"
+        ___x_cmd rmrf "$backup_agent"
+        return 1
+    }
+
+    local debug_opt=""
+    [ -z "$debug" ] || debug_opt="--debug"
+    if ! ___x_cmd agent request --harness "$harness" $debug_opt -f "$descfile" -f "$planfile" -f "$agentfile" "$content"; then
+        ___x_cmd rmrf "$backup_agent"
+        return $?
     fi
 
-    if [ ! -r "$planfile" ]; then
-        N=agent M="PLAN.md not found in $jobdir" log:ret:1
-    fi
+    # Preserve the original AGENTS.md as required by retry semantics.
+    ___x_cmd_cmds mv "$backup_agent" "$agentfile"
 
-    if ___x_cmd_is_stdout2tty && ___x_cmd_runmode_allow_manual; then
-        # Display PLAN content before starting iterations
-        ___x_cmd ui sep
-        printf "\033[1mPlan:\033[0m\n"
-        ___x_cmd_cmds cat "$planfile"
-        ___x_cmd ui sep
-    fi
+    [ -r "$planfile" ] || {
+        agent:error "Failed to read PLAN.md after re-init. The AI may not have created the task plan properly"
+        return 1
+    }
 
-    local iter=0
-    local no_progress=0
-    local content=""
-    local vlid=""
-    local response_file=""
-    local loop_context=""
-    local session_id=""
-
-    # Generate a session ID for continuous mode
-    if [ -n "$continuous" ]; then
-        session_id="$(___x_cmd rand uuid)"
-        agent:info "Continuous mode enabled, using session: $session_id"
-    fi
-
-    while [ "$iter" -lt "$max_iterations" ] && [ ! -f "$donefile" ]; do
-        iter="$((iter + 1))"
-        agent:info "Starting iteration $iter (max: $max_iterations)"
-
-        vlid="$(___x_cmd date vlid)"
-        response_file="$jobdir/$vlid.response.md"
-
-        loop_context="$(___x_cmd_agent_job___build_loop_context "$jobdir" "$iter" "$max_iterations" "$no_progress" "$inrow")"
-
-        descfile="$descfile" planfile="$planfile" agentfile="$agentfile" donefile="$donefile" jobdir="$jobdir" iter="$iter" vlid="$vlid" inrow="$inrow" max_iterations="$max_iterations" loop_context="$loop_context" response_file="$response_file" \
-        content="$( ___x_cmd_agent_job___get_prompt iter )"
-
-        [ -n "$content" ] || {
-            agent:error "Failed to load iter prompt template"
-            break
-        }
-
-        local debug_opt=""
-        [ -z "$debug" ] || debug_opt="--debug"
-        if [ -n "$session_id" ]; then
-            ___x_cmd agent request --harness "$harness" $debug_opt --session "$session_id" --file "$agentfile" --file "$planfile" "$content" || break
-        else
-            ___x_cmd agent request --harness "$harness" $debug_opt --file "$agentfile" --file "$planfile" "$content" || break
-        fi
-
-        ___x_cmd_agent_job_iter___eval_response "$jobdir" "$response_file" "$iter" "$inrow" "$donefile" "$max_iterations" "$vlid" "$harness" || break
+    # Remove stale completion artifacts
+    for f in DONE.md SUMMARY.md ERROR.md; do
+        [ ! -f "$jobdir/$f" ] || ___x_cmd rmrf "$jobdir/$f"
     done
 
-    if [ "$iter" -ge "$max_iterations" ]; then
-        N=agent M="Maximum iterations reached" log:ret:1
-    fi
-
-    if [ -f "$donefile" ]; then
-        agent:info "Job completed successfully. Final report: $donefile"
-    else
-        agent:info "Job stopped (incomplete). Iteration responses saved in $jobdir/*.response.md"
-    fi
+    agent:info "PLAN.md regenerated at $jobdir (AGENTS.md preserved)"
 }
+

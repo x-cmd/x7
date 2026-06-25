@@ -88,16 +88,29 @@ ___x_cmd_claw_run___agentrequest___checkworkspaceupdate(){
     } >> "$workspace_dir/$agents_file"
 }
 
+# Reset unavailable state for a specific session.
+# Called when user activity is detected for the given chat, or on explicit reset.
+___x_cmd_claw_run___agentrequest___resetunavailable(){
+    local im="${1:-}"; local chatid="${2:-}"
+    [ -n "$im" ] && [ -n "$chatid" ] || return 0
+
+    local x_="" source
+    for source in msg hb; do
+        x_=""
+        ___x_cmd_claw_run___agentrequest___statefile_ "$im" "$chatid" "$source"
+        ___x_cmd rmrf "$x_"
+    done
+    x_=""
+    ___x_cmd_claw_run___agentrequest___notifylog_ "$im" "$chatid"
+    ___x_cmd rmrf "$x_"
+}
+
 ___x_cmd_claw_run___agentrequest___prepareworkspace(){
     local im="$1";      [ -n "$im" ] || N=claw M="Please provide IM platform name (e.g., weixin|telegram)" log:ret:64
     local chatid="$2";  [ -n "$chatid" ] || N=claw M="Please provide chatid" log:ret:64
     local msg="${3:-}"
 
     ___x_cmd rmrf "$___X_CMD_CLAW_BOT_WS/HEARTBEAT_OK"
-
-    # A new user message resets any agent failure/disabled state
-    ___x_cmd rmrf "$___X_CMD_CLAW_BOT_WS/AGENT_DISABLED"
-    ___x_cmd rmrf "$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable"
 
     ___x_cmd ensurefp "$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
     printf "%s\n" "0" > "$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
@@ -313,107 +326,288 @@ Use this mapping to recognize speakers in the group, but never expose the full m
 }
 
 ___x_cmd_claw_run___agentrequest___notifyerror(){
-    local im="$1"; local chatid="$2"; local exitcode="$3"; local stderr_file="$4"
+    local im="$1"; local chatid="$2"; local exitcode="$3"; local stderr_file="$4"; local source="${5:-msg}"
     local errmsg=""
+    local raw_stderr=""
 
     if [ -n "$stderr_file" ] && [ -f "$stderr_file" ]; then
-        local stderr_content
-        stderr_content="$(___x_cmd_cmds cat "$stderr_file" 2>/dev/null)" || {
-            stderr_content="[Failed to read stderr content]"
+        raw_stderr="$(___x_cmd_cmds cat "$stderr_file" 2>/dev/null)" || {
+            raw_stderr="[Failed to read stderr content]"
         }
 
-        if [ -n "$stderr_content" ]; then
+        if [ -n "$raw_stderr" ]; then
             # Truncate then mask sensitive values
             local filtered_stderr
-            filtered_stderr="$(printf "%.500s" "$stderr_content" | ___x_cmd_cmds sed -E \
+            filtered_stderr="$(printf "%.500s" "$raw_stderr" | ___x_cmd_cmds sed -E \
                 -e 's/(token|secret|api[_-]?key)[[:space:]]*[=:][[:space:]]*[^[:space:]]+/\1=[REDACTED]/gi' \
                 -e 's/Authorization:[[:space:]]*[^[:space:]]+/Authorization: [REDACTED]/gi' \
                 2>/dev/null || true)"
 
             if [ -n "$filtered_stderr" ]; then
                 errmsg="⚠️ Agent error details:${___X_CMD_UNSEENCHAR_NEWLINE}${filtered_stderr}"
-                [ "${#stderr_content}" -gt 500 ] && errmsg="${errmsg}..."
+                [ "${#raw_stderr}" -gt 500 ] && errmsg="${errmsg}..."
             fi
         fi
     fi
 
     if [ -z "$errmsg" ]; then
-        errmsg="⚠️ Agent request failed with exitcode=$exitcode."
+        case "$exitcode" in
+            "${____X_CMD_AGENT_ERR_AUTHFAILURE:-77}")
+                errmsg="⚠️ Agent authentication failed (exitcode=$exitcode). Please run the login command for your harness (e.g., x claw init)." ;;
+            "${____X_CMD_AGENT_ERR_SESSION_INVALID:-78}")
+                errmsg="⚠️ Agent session invalid (exitcode=$exitcode). The session may have expired; try again or re-authenticate." ;;
+            "${____X_CMD_AGENT_ERR_RATE_LIMIT:-79}")
+                errmsg="⚠️ Agent rate limit hit (exitcode=$exitcode). Please wait a moment before retrying." ;;
+            "${____X_CMD_AGENT_ERR_NETWORK_TIMEOUT:-124}")
+                errmsg="⚠️ Agent network timeout (exitcode=$exitcode). Please check your network connection and try again." ;;
+            "${____X_CMD_AGENT_ERR_SIGINT:-130}")
+                errmsg="⚠️ Agent interrupted by user (exitcode=$exitcode)." ;;
+            *)
+                errmsg="⚠️ Agent request failed with exitcode=$exitcode." ;;
+        esac
     fi
 
     errmsg="${errmsg}${___X_CMD_UNSEENCHAR_NEWLINE}Logs: x claw log"
 
+    local x_=""
+    ___x_cmd_claw_run___agentrequest___fingerprint_ "${raw_stderr:-$errmsg}"
+    local fingerprint="$x_"
+    local fingerprint_short
+    fingerprint_short="$(printf "%.8s" "$fingerprint")"
+
+    if ! ___x_cmd_claw_run___agentrequest___notifyallowed "$im" "$chatid" "$fingerprint" "$source"; then
+        claw:debug "[$source] Error notification suppressed for $im:$chatid (fingerprint=${fingerprint_short}...) — already notified or rate limited"
+        return 0
+    fi
+
+    local send_ok=0
     case "$im" in
         feishu)
-            ___x_cmd feishu abot send --text --chatid "$chatid" "$errmsg" 2>/dev/null || true
+            if ___x_cmd feishu abot send --text --chatid "$chatid" "$errmsg"; then
+                send_ok=1
+            fi
             ;;
         qywx)
-            ___x_cmd qywx abot send --text --chatid "$chatid" "$errmsg" 2>/dev/null || true
+            if ___x_cmd qywx abot send --text --chatid "$chatid" "$errmsg"; then
+                send_ok=1
+            fi
             ;;
         telegram)
-            ___x_cmd telegram send --text --chatid "$chatid" "$errmsg" 2>/dev/null || true
+            if ___x_cmd telegram send --text --chatid "$chatid" "$errmsg"; then
+                send_ok=1
+            fi
             ;;
         weixin)
-            ___x_cmd weixin send --text "$errmsg" 2>/dev/null || true
+            if ___x_cmd weixin send --text "$errmsg"; then
+                send_ok=1
+            fi
+            ;;
+        *)
+            claw:warn "[$source] Unknown IM '$im' for error notification to $chatid — skipping"
             ;;
     esac
+
+    if [ "$send_ok" -eq 1 ]; then
+        ___x_cmd_claw_run___agentrequest___notifyrecord "$im" "$chatid" "$fingerprint" "exitcode=${exitcode}"
+    else
+        claw:warn "[$source] Failed to deliver error notification to $im:$chatid (exitcode=${exitcode}) — fingerprint=${fingerprint_short}... not recorded"
+    fi
 }
 
 ___x_cmd_claw_run___agentrequest___checkunavailable(){
-    local agent_disabled_file="$___X_CMD_CLAW_BOT_WS/AGENT_DISABLED"
-    if [ -f "$agent_disabled_file" ]; then
-        claw:info "Agent is disabled after 3 consecutive failures — skipping request until a new message resets it"
-        return 1
-    fi
+    local im="${1:-}"; local chatid="${2:-}"; local source="${3:-msg}"
+    [ -n "$im" ] || { N=claw M="checkunavailable: im is required" log:ret:64; }
+    [ -n "$chatid" ] || { N=claw M="checkunavailable: chatid is required" log:ret:64; }
 
-    local agent_unavailable_file="$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable"
-    [ -f "$agent_unavailable_file" ] || return 0
+    local x_=""
+    ___x_cmd_claw_run___agentrequest___statefile_ "$im" "$chatid" "$source"
+    local state_file="$x_"
+
+    [ -f "$state_file" ] || return 0
 
     local fail_count=0 fail_ts=0
-    read -r fail_count fail_ts < "$agent_unavailable_file"
+    read -r fail_count fail_ts < "$state_file"
+    fail_count="${fail_count:-0}"
+    fail_ts="${fail_ts:-0}"
 
-    local cooldown remaining
-    case "$fail_count" in
-        1) cooldown=0 ;;
-        2) cooldown=60 ;;
-        3) cooldown=120 ;;
-        4) cooldown=240 ;;
-        5) cooldown=480 ;;
-        *) cooldown=3600 ;;
-    esac
+    x_=""
+    ___x_cmd_claw_run___agentrequest___cooldown_ "$fail_count"
+    local cooldown="$x_" remaining
 
-    local x_
     ___x_cmd date timestamp_
     local elapsed=$(( x_ - fail_ts ))
     if [ "$elapsed" -lt "$cooldown" ]; then
         remaining=$(( cooldown - elapsed ))
-        claw:info "Agent unavailable (fail_count=$fail_count), ${remaining}s cooldown remaining — skipping request"
+        claw:debug "[$source] Agent unavailable for $im:$chatid (fail_count=$fail_count), ${remaining}s cooldown remaining — skipping request"
         return 1
     fi
 
-    claw:info "Agent cooldown expired (fail_count=$fail_count, cooldown=${cooldown}s) — availability restored"
+    claw:info "[$source] Agent cooldown expired for $im:$chatid (fail_count=$fail_count, cooldown=${cooldown}s) — availability restored"
     return 0
 }
 
 ___x_cmd_claw_run___agentrequest___markunavailable(){
-    local agent_unavailable_file="$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable"
-    local fail_count=0 _=""
-    [ ! -f "$agent_unavailable_file" ] || read -r fail_count _ < "$agent_unavailable_file"
+    local im="${1:-}"; local chatid="${2:-}"; local source="${3:-msg}"
+    [ -n "$im" ] || { N=claw M="markunavailable: im is required" log:ret:64; }
+    [ -n "$chatid" ] || { N=claw M="markunavailable: chatid is required" log:ret:64; }
+
+    local x_=""
+    ___x_cmd_claw_run___agentrequest___statefile_ "$im" "$chatid" "$source"
+    local state_file="$x_"
+
+    local fail_count=0 fail_ts=0
+    if [ -f "$state_file" ]; then
+        read -r fail_count fail_ts < "$state_file"
+    fi
+    fail_count="${fail_count:-0}"
     fail_count=$(( fail_count + 1 ))
 
-    local x_
     ___x_cmd date timestamp_
-    ___x_cmd ensurefp "$agent_unavailable_file"
-    printf "%s %s\n" "$fail_count" "$x_" > "$agent_unavailable_file"
-    claw:error "Agent marked unavailable (fail_count=$fail_count) — cooldown starts"
+    ___x_cmd ensurefp "$state_file"
+    printf "%s %s\n" "$fail_count" "$x_" > "$state_file"
 
-    if [ "$fail_count" -ge 3 ]; then
-        ___x_cmd ensurefp "$___X_CMD_CLAW_BOT_WS/AGENT_DISABLED"
-        claw:error "Agent disabled after $fail_count consecutive failures — a new message is required to reset"
-    fi
+    x_=""
+    ___x_cmd_claw_run___agentrequest___cooldown_ "$fail_count"
+    local cooldown="$x_"
+    claw:error "[$source] Agent marked unavailable for $im:$chatid (fail_count=$fail_count, cooldown=${cooldown}s)"
 }
 
 ___x_cmd_claw_run___agentrequest___current_time(){
     # ISO date lacks day-of-week info; include it so agents don't need to calculate.
     LC_ALL=C ___x_cmd_cmds date +"%Y-%m-%d (%a) %H:%M:%S%z"
 }
+
+
+# ---------------------------------------------------------------------------
+# Session-scoped agent failure state management
+# ---------------------------------------------------------------------------
+
+# Set x_ to the state file path for a given (im, chatid, source) tuple.
+# source is "msg" for message agents or "hb" for heartbeat agents.
+___x_cmd_claw_run___agentrequest___statefile_(){
+    local im="${1:-}"; local chatid="${2:-}"; local source="${3:-}"
+    x_="$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable.${source}.${im}-${chatid}"
+}
+
+# Set x_ to the cooldown period (seconds) for a given fail_count.
+___x_cmd_claw_run___agentrequest___cooldown_(){
+    local fail_count="${1:-0}"
+    case "$fail_count" in
+        0|1)    x_="0"    ;;
+        2)      x_="60"   ;;
+        3)      x_="120"  ;;
+        4)      x_="240"  ;;
+        5)      x_="480"  ;;
+        6)      x_="900"  ;;
+        *)      x_="3600" ;;
+    esac
+}
+
+# ---------------------------------------------------------------------------
+# Error notification deduplication and rate limiting
+# ---------------------------------------------------------------------------
+
+# Set x_ to the notification log path for a chat.
+___x_cmd_claw_run___agentrequest___notifylog_(){
+    local im="$1"; local chatid="$2"
+    x_="$___X_CMD_CLAW_BOT_HEARTBEAT/error_notify.${im}-${chatid}"
+}
+
+# Compute a fingerprint for an error message and store it in x_.
+# Strips common variable tokens (timestamps, paths, ids) before hashing.
+___x_cmd_claw_run___agentrequest___fingerprint_(){
+    local text="$1"
+    x_="$(printf "%s" "$text" \
+    | ___x_cmd_cmds sed -E \
+        -e 's/[0-9]{4}-[0-9]{2}-[0-9]{2}[ T][0-9]{2}:[0-9]{2}:[0-9]{2}//g' \
+        -e 's/[0-9]{10,}//g' \
+        -e 's/\b[a-f0-9]{16,}\b//g' \
+        -e 's/[[:space:]]+/ /g' \
+    | ___x_cmd hash sha512)"
+}
+
+# Check whether a notification should be sent, respecting:
+#   - global enable switch: ___X_CMD_CLAW_NOTIFY_ERROR
+#   - per-fingerprint dedup window: ___X_CMD_CLAW_NOTIFY_ERROR_DEDUP_SEC
+#   - per-chat daily cap: ___X_CMD_CLAW_NOTIFY_ERROR_DAILY_CAP
+# Returns 0 if sending is allowed, 1 otherwise.
+___x_cmd_claw_run___agentrequest___notifyallowed(){
+    local im="$1"; local chatid="$2"; local fingerprint="$3"; local source="$4"
+
+    if [ "${___X_CMD_CLAW_NOTIFY_ERROR:-1}" = "0" ]; then
+        return 1
+    fi
+
+    # Heartbeat failures are suppressed by default unless explicitly enabled.
+    if [ "$source" = "hb" ] && [ "${___X_CMD_CLAW_NOTIFY_HB_ERROR:-0}" != "1" ]; then
+        return 1
+    fi
+
+    local x_=""
+    ___x_cmd date timestamp_
+    local now="$x_"
+
+    x_=""
+    ___x_cmd_claw_run___agentrequest___notifylog_ "$im" "$chatid"
+    local log_file="$x_"
+
+    local dedup_window="${___X_CMD_CLAW_NOTIFY_ERROR_DEDUP_SEC:-86400}"
+    local daily_cap="${___X_CMD_CLAW_NOTIFY_ERROR_DAILY_CAP:-3}"
+    local window_start=$(( now - dedup_window ))
+
+    local line_ts="" line_fp="" line_sum=""
+    local same_fp_count=0 total_count=0
+
+    if [ -f "$log_file" ]; then
+        while IFS=' ' read -r line_ts line_fp line_sum _; do
+            [ -n "$line_ts" ] || continue
+            case "$line_ts" in *[!0-9]*) continue ;; esac
+            [ "$line_ts" -ge "$window_start" ] || continue
+            total_count=$(( total_count + 1 ))
+            [ "$line_fp" = "$fingerprint" ] && same_fp_count=$(( same_fp_count + 1 ))
+        done < "$log_file"
+    fi
+
+    if [ "$same_fp_count" -ge 1 ]; then
+        return 1
+    fi
+
+    if [ "$total_count" -ge "$daily_cap" ]; then
+        return 1
+    fi
+
+    return 0
+}
+
+# Record that a notification was sent.
+___x_cmd_claw_run___agentrequest___notifyrecord(){
+    local im="$1"; local chatid="$2"; local fingerprint="$3"; local summary="$4"
+    local x_=""
+    ___x_cmd_claw_run___agentrequest___notifylog_ "$im" "$chatid"
+    local log_file="$x_"
+
+    x_=""
+    ___x_cmd date timestamp_
+    local now="$x_"
+
+    ___x_cmd ensurefp "$log_file"
+    printf "%s %s %s\n" "$now" "$fingerprint" "$summary" >> "$log_file"
+
+    # Trim entries older than the dedup window to prevent unbounded growth.
+    local dedup_window="${___X_CMD_CLAW_NOTIFY_ERROR_DEDUP_SEC:-86400}"
+    local window_start=$(( now - dedup_window ))
+    local tmp_file="${log_file}.tmp"
+
+    : > "$tmp_file"
+    if [ -s "$log_file" ]; then
+        local line_ts="" line_fp="" line_sum=""
+        while IFS=' ' read -r line_ts line_fp line_sum _; do
+            [ -n "$line_ts" ] || continue
+            case "$line_ts" in *[!0-9]*) continue ;; esac
+            [ "$line_ts" -ge "$window_start" ] || continue
+            printf "%s %s %s\n" "$line_ts" "$line_fp" "$line_sum" >> "$tmp_file"
+        done < "$log_file"
+    fi
+    ___x_cmd mv "$tmp_file" "$log_file"
+}
+

@@ -10,6 +10,7 @@ ___x_cmd_doubao_cfg(){
     local op="$1"; shift
     case "$op" in
         -h|--help)      ___x_cmd help -m doubao --cfg ;;
+        --minimal-init) ___x_cmd_doubao_minimal_init "$@" ;;
         apikey=*)       ___x_cmd_doubao_cfg___invoke "$op" "$@"
                         ! ___x_cmd_doubao_has_apikey 2>/dev/null >&2 || ___x_cmd chat --setalias doubao ds
                         ;;
@@ -30,6 +31,21 @@ ___x_cmd_doubao_def_(){
 ___x_cmd_doubao_cur(){
     local X_help_cmd=; X_help_cmd='___x_cmd help -m doubao --cur' help:arg:parse
     ___x_cmd_doubao_cfg --current "$@"
+}
+
+___x_cmd_doubao_minimal_init(){
+    local cur_apikey=""
+    if [ -f "$(___x_cmd_doubao_cur --get config)" ]; then
+        ___x_cmd_doubao_cur cur_apikey:=apikey
+    fi
+
+    doubao:info "To get Doubao API key -> https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey"
+
+    ___x_cmd_doubao_cfg___invoke --init ${cur_apikey:+"--ctrl_exit_strategy"} \
+        apikey      "Set up the Doubao API key"                               \
+                    "$cur_apikey"   '=~*' "^[A-Za-z0-9-]+$"
+
+    ___x_cmd_doubao_has_apikey 2>/dev/null >&2
 }
 
 ___x_cmd_doubao_init(){

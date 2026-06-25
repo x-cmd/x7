@@ -1,4 +1,6 @@
 
+xrc:mod:lib agent cfg/init
+
 xrc cfgy
 ___x_cmd_agent_cfg(){
     [ "$#" -gt 0 ] || {
@@ -71,7 +73,7 @@ ___x_cmd_agent_fallback_(){
             *)          ___x_cmd_hascmd "$i" || continue ;;
         esac
 
-        ___x_cmd_agent_init___check_harness "$i" || continue
+        ___x_cmd_agent_init___harness_isready "$i" || continue
         x_="$i"
         return 0
     done

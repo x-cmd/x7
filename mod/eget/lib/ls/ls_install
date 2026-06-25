@@ -115,7 +115,7 @@ ___x_cmd_eget_ls_installdb_fz(){
     [ -n "$selection" ] || return 0
     selection="$( printf "%s\n" "$selection" \
         | sed $'s/\033\\[[0-9;]*m//g' \
-        | awk -F'\t' '{ print $1 }' )"
+        | awk -F'\t' '{ gsub(/[ \t]+$/, "", $1); print $1 }' )"
 
     # Hand off to the post-select menu (TTY → ui select, pipe → reference).
     ___x_cmd_eget_ls_installdb_postselect "$selection"

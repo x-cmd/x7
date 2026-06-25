@@ -92,6 +92,33 @@ ___x_cmd_eget_api_curl(){
     eval "___x_cmd_cmds curl -sS -L -f $ssl_opts $auth_opts \"$url\""
 }
 
+# Detect GitHub unauthenticated rate-limiting and report when it resets.
+# The /rate_limit endpoint is free (does not count against the quota) and
+# still answers while limited, so we can use it to tell a 403 rate-limit apart
+# from a genuine fetch failure.
+# Sets ___X_CMD_EGET_RATE_WAIT to e.g. "; resets in ~12 min" when limited.
+# Returns 0 (true) if the core quota is exhausted. Non-github forges: false.
+___x_cmd_eget_api_is_ratelimited(){
+    [ "${1:-github}" = "github" ] || return 1
+    ___X_CMD_EGET_RATE_WAIT=""
+    local _j
+    _j="$( ___x_cmd_cmds curl -sS "https://api.github.com/rate_limit" 2>/dev/null )" || return 1
+    # `___x_cmd jo env` assigns JSON paths straight into shell vars (and
+    # auto-provisions jq). Heredoc, not a pipe, so it runs in this shell.
+    local _rem="" _reset=""
+    ___x_cmd jo env . _rem=.resources.core.remaining _reset=.resources.core.reset <<EOF
+$_j
+EOF
+    [ "$_rem" = "0" ] || return 1
+    if [ -n "$_reset" ]; then
+        local _now _delta
+        _now="$( ___x_cmd_cmds date +%s 2>/dev/null || printf '%s' "$_reset" )"
+        _delta=$(( _reset - _now ))
+        [ "${_delta:-0}" -gt 0 ] 2>/dev/null && ___X_CMD_EGET_RATE_WAIT="; resets in ~$(( ( _delta + 59 ) / 60 )) min"
+    fi
+    return 0
+}
+
 # Apply ___X_CMD_GHPROXY_ENDPOINT to a github.com download URL.
 # Auto-detects two endpoint shapes:
 #   - prefix mode:  ENDPOINT="https://ghproxy.com"        -> https://ghproxy.com/https://github.com/...

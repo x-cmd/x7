@@ -10,6 +10,7 @@ ___x_cmd_siliconflow_cfg(){
     local op="$1"; shift
     case "$op" in
         -h|--help)      ___x_cmd help -m siliconflow --cfg ;;
+        --minimal-init) ___x_cmd_siliconflow_minimal_init "$@" ;;
         apikey=*)       ___x_cmd_siliconflow_cfg___invoke "$op" "$@"
                         ! ___x_cmd_siliconflow_has_apikey 2>/dev/null >&2 || ___x_cmd chat --setalias siliconflow sili
                         ;;
@@ -30,6 +31,21 @@ ___x_cmd_siliconflow_def_(){
 ___x_cmd_siliconflow_cur(){
     local X_help_cmd=; X_help_cmd='___x_cmd help -m siliconflow --cur' help:arg:parse
     ___x_cmd_siliconflow_cfg --current "$@"
+}
+
+___x_cmd_siliconflow_minimal_init(){
+    local cur_apikey=""
+    if [ -f "$(___x_cmd_siliconflow_cur --get config)" ]; then
+        ___x_cmd_siliconflow_cur cur_apikey:=apikey
+    fi
+
+    siliconflow:info "To get SiliconCloud API key -> https://cloud.siliconflow.cn/me/account/ak"
+
+    ___x_cmd_siliconflow_cfg___invoke --init ${cur_apikey:+"--ctrl_exit_strategy"} \
+        apikey      "Set up the SiliconCloud API key"                               \
+                    "$cur_apikey"   '=~*' "^[A-Za-z0-9-]+$"
+
+    ___x_cmd_siliconflow_has_apikey 2>/dev/null >&2
 }
 
 ___x_cmd_siliconflow_init(){

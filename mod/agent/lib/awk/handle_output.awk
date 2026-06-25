@@ -14,10 +14,26 @@ BEGIN{
     if ( HARNESS == "" ) HARNESS = "UNKNOWN"
     Q2_1 = SUBSEP "\"1\""
     SAVE_SESSION_ID_VAL = ""
+    STDOUT_ENDS_WITH_NEWLINE = 1
+}
+
+function stdout_print(text){
+    printf( "%s", text )
+    STDOUT_ENDS_WITH_NEWLINE = (text ~ /\n$/)
+}
+
+function stdout_println(text){
+    printf( "%s\n", text )
+    STDOUT_ENDS_WITH_NEWLINE = 1
 }
 
 ($0 != ""){ handle_response_stream_json($0); }
-# END{ printf( "%s", "\n" ); }
+
+END{
+    if (( OUTPUT_FORMAT != "json" ) && ( STDOUT_ENDS_WITH_NEWLINE != 1 )) {
+        printf( "%s", "\n" )
+    }
+}
 
 function record_and_exit( code, stderr_msg,    fp ){
     if ( stderr_msg != "" ) {
@@ -161,7 +177,7 @@ function save_session_id(o,           type, session_id){
         if ( type != "\"thread.started\"" ) return
         session_id = juq(o[ Q2_1, "\"thread_id\"" ])
         if ( session_id != "" ) {
-            printf("%s\n%s\n", session_id, USER_SESSION_CWD) > SAVE_SESSION_ID_FILE
+            printf("%s\n", session_id) > SAVE_SESSION_ID_FILE
             SAVE_SESSION_ID_VAL = session_id
         }
 
@@ -170,7 +186,7 @@ function save_session_id(o,           type, session_id){
         if ( type != "\"init\"" ) return
         session_id = juq(o[ Q2_1, "\"session_id\"" ])
         if ( session_id != "" ) {
-            printf("%s\n%s\n", session_id, USER_SESSION_CWD) > SAVE_SESSION_ID_FILE
+            printf("%s\n", session_id) > SAVE_SESSION_ID_FILE
             SAVE_SESSION_ID_VAL = session_id
         }
 
@@ -180,7 +196,7 @@ function save_session_id(o,           type, session_id){
 
         session_id = juq(o[ Q2_1, "\"sessionID\"" ])
         if ( session_id != "" ) {
-            printf("%s\n%s\n", session_id, USER_SESSION_CWD) > SAVE_SESSION_ID_FILE
+            printf("%s\n", session_id) > SAVE_SESSION_ID_FILE
             SAVE_SESSION_ID_VAL = session_id
         }
     }
@@ -194,7 +210,7 @@ function stdout_content_codex(o,           type, item_type, text, command, outpu
         item_type = o[ Q2_1, "\"item\"", "\"type\"" ]
         if ( item_type != "\"agent_message\"" ) return
         text = o[ Q2_1, "\"item\"", "\"text\"" ]
-        printf( "%s", juq(text) )
+        stdout_print( juq(text) )
         return
     }
 
@@ -206,7 +222,7 @@ function stdout_content_codex(o,           type, item_type, text, command, outpu
 
         if ( item_type == "\"agent_message\"" ) {
             text = o[ Q2_1, "\"item\"", "\"text\"" ]
-            printf( "%s\n", juq(text) )
+            stdout_println( juq(text) )
         } else if ( item_type == "\"reasoning\"" ) {
             text = o[ Q2_1, "\"item\"", "\"text\"" ]
             log_debug( "agent", "[codex:reasoning] " log_truncate(juq(text)) )
@@ -241,7 +257,7 @@ function stdout_content_gemini(o,           type, role, text, tool_name, status,
         role = o[ Q2_1, "\"role\"" ]
         if ( role != "\"assistant\"" ) return
         text = o[ Q2_1, "\"content\"" ]
-        printf( "%s", juq(text) )
+        stdout_print( juq(text) )
         return
     }
 
@@ -252,7 +268,7 @@ function stdout_content_gemini(o,           type, role, text, tool_name, status,
         role = o[ Q2_1, "\"role\"" ]
         if ( role == "\"assistant\"" ) {
             text = o[ Q2_1, "\"content\"" ]
-            printf( "%s", juq(text) )
+            stdout_print( juq(text) )
         }
     } else if ( type == "\"tool_use\"" ) {
         tool_name = juq(o[ Q2_1, "\"tool_name\"" ])
@@ -276,7 +292,7 @@ function stdout_content_kimi(o,           role, content_type, i, l, text, tool_c
         # Non-debug: content is simple string with --final-message-only
         if ( role != "\"assistant\"" ) return
         text = o[ Q2_1, "\"content\"" ]
-        printf( "%s", juq(text) )
+        stdout_print( juq(text) )
         return
     }
 
@@ -287,7 +303,7 @@ function stdout_content_kimi(o,           role, content_type, i, l, text, tool_c
             content_type = o[ Q2_1, "\"content\"", "\""i"\"", "\"type\"" ]
             if ( content_type == "\"text\"" ) {
                 text = o[ Q2_1, "\"content\"", "\""i"\"", "\"text\"" ]
-                printf( "%s\n", juq(text) )
+                stdout_println( juq(text) )
             } else if ( content_type == "\"thinking\"" ) {
                 text = o[ Q2_1, "\"content\"", "\""i"\"", "\"thinking\"" ]
                 log_debug( "agent", "[kimi:thinking] " log_truncate(juq(text)) )
@@ -319,7 +335,7 @@ function stdout_content_claude(o,           type, i, l, text, content_item_type,
             content_item_type = o[ Q2_1, "\"message\"", "\"content\"", "\""i"\"", "\"type\"" ]
             if ( content_item_type != "\"text\"" ) return
             text = o[ Q2_1, "\"message\"", "\"content\"", "\""i"\"", "\"text\"" ]
-            printf( "%s", juq(text) )
+            stdout_print( juq(text) )
         }
         return
     }
@@ -332,7 +348,7 @@ function stdout_content_claude(o,           type, i, l, text, content_item_type,
 
             if ( content_item_type == "\"text\"" ) {
                 text = o[ Q2_1, "\"message\"", "\"content\"", "\""i"\"", "\"text\"" ]
-                printf( "%s\n", juq(text) )
+                stdout_println( juq(text) )
             } else if ( content_item_type == "\"thinking\"" ) {
                 thinking_text = o[ Q2_1, "\"message\"", "\"content\"", "\""i"\"", "\"thinking\"" ]
                 log_debug( "agent", "[claude:thinking] " log_truncate(juq(thinking_text)) )
@@ -414,7 +430,7 @@ function stdout_content_cursor(o,           type, i, l, text, content_type){
         if ( content_type != "\"text\"" ) return
 
         text = o[ Q2_1, "\"message\"", "\"content\"", "\""i"\"", "\"text\"" ]
-        printf( "%s\n", juq(text) )
+        stdout_println( juq(text) )
     }
 }
 
@@ -426,7 +442,7 @@ function stdout_content_opencode(o,           type, part_type, text, tool_name, 
         part_type = o[ Q2_1, "\"part\"", "\"type\"" ]
         if ( part_type != "\"text\"" ) return
         text = o[ Q2_1, "\"part\"", "\"text\"" ]
-        printf( "%s", juq(text) )
+        stdout_print( juq(text) )
         return
     }
 
@@ -437,7 +453,7 @@ function stdout_content_opencode(o,           type, part_type, text, tool_name, 
         part_type = o[ Q2_1, "\"part\"", "\"type\"" ]
         if ( part_type == "\"text\"" ) {
             text = o[ Q2_1, "\"part\"", "\"text\"" ]
-            printf( "%s\n", juq(text) )
+            stdout_println( juq(text) )
         }
     } else if ( type == "\"reasoning\"" ) {
         text = o[ Q2_1, "\"part\"", "\"text\"" ]

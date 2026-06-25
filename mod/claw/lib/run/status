@@ -43,8 +43,12 @@ ___x_cmd_claw_run_status(){
     local idle_file="$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
     [ ! -f "$idle_file" ] || read -r idle_count < "$idle_file"
 
-    local agent_available="yes"
-    [ ! -f "$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable" ] || agent_available="no"
+    local agent_unavailable_count=0
+    local status_statefile
+    for status_statefile in "$___X_CMD_CLAW_BOT_HEARTBEAT"/agent_unavailable.*; do
+        [ -e "$status_statefile" ] || continue
+        agent_unavailable_count=$(( agent_unavailable_count + 1 ))
+    done
 
     local last_tick="" lastheartbeat_ts=0
     local heartbeat_tsfile="$___X_CMD_CLAW_BOT_HEARTBEAT/lastheartbeat_ts"
@@ -66,7 +70,7 @@ ___x_cmd_claw_run_status(){
     printf "  worker_status: %s\n" "$heartbeat_worker"
     printf "  runner_status: %s\n" "$heartbeat_runner"
     printf "  idle_count: %s\n" "$idle_count"
-    printf "  agent_available: %s\n" "$agent_available"
+    printf "  agent_unavailable_sessions: %s\n" "$agent_unavailable_count"
     [ -n "$last_tick" ] && printf "  last_tick: %s\n" "$last_tick"
 
     printf "workspace: %s\n" "$___X_CMD_CLAW_BOT_WS"

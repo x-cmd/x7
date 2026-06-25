@@ -14,9 +14,10 @@ ___x_cmd_claw_agentrequest(){
 
     local im="$1";      [ -n "$im" ] || N=claw M="Please provide IM platform name (e.g., weixin|telegram)" log:ret:64
     local chatid="$2";  [ -n "$chatid" ] || N=claw M="Please provide chatid" log:ret:64
+    local msg="$3";     [ -n "$msg" ] || N=claw M="Please provide message" log:ret:64
 
     ___x_cmd_claw_run___ensure_im_service "$im" "$chatid" || return $?
-    ___x_cmd_claw_run___agentrequest___handlemsg "$@"
+    ___x_cmd_claw_run___agentrequest___handlemsg "$im" "$chatid" "$msg"
 }
 
 ___x_cmd_claw_run___agentrequest___handlemsg(){
@@ -24,11 +25,18 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
     local chatid="$2";  [ -n "$chatid" ] || N=claw M="Please provide chatid" log:ret:64
     local msg="$3";     [ -n "$msg" ] || N=claw M="Please provide message" log:ret:64
     local without_debug_log="${4:-}"
+    local reset_failure="${5:-}"
 
     if [ -n "$___X_CMD_CLAW_BOT_RECENT_STDOUT_LOG_DIR" ]; then
         local logfp="$___X_CMD_CLAW_BOT_RECENT_STDOUT_LOG_DIR/${im}-${chatid}.log"
         ___x_cmd ensurefp "$logfp"
         exec >>"$logfp" 2>&1
+    fi
+
+    if [ -n "$reset_failure" ]; then
+        ___x_cmd_claw_run___agentrequest___resetunavailable "$im" "$chatid"
+    else
+        ___x_cmd_claw_run___agentrequest___checkunavailable "$im" "$chatid" "msg" || return 0
     fi
 
     local workspace_dir="$___X_CMD_CLAW_BOT_WS/${im}-${chatid}"
@@ -37,6 +45,7 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
 
     local exitcode=0
     log:sub:init -i "$im:$chatid" claw "Sending request to agent request"
+
     local debug_flag="--debug"
     [ -n "$without_debug_log" ] && debug_flag=""
     ___x_cmd agent request  \
@@ -49,13 +58,15 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
     log:sub:fini
     if [ "$exitcode" -eq 0 ]; then
         claw:info "Successfully processed agent request for $im:$chatid"
-        ___x_cmd rmrf "$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable"
+        x_=""
+        ___x_cmd_claw_run___agentrequest___statefile_ "$im" "$chatid" "msg"
+        ___x_cmd rmrf "$x_"
     else
         local agent_request_stderr_file="$workspace_dir/.x-cmd/agent/request/session/metadata/stderr.txt"
-        ___x_cmd_claw_run___agentrequest___notifyerror "$im" "$chatid" "$exitcode" "$agent_request_stderr_file"
+        ___x_cmd_claw_run___agentrequest___notifyerror "$im" "$chatid" "$exitcode" "$agent_request_stderr_file" "msg"
 
-        claw:error "Failed to process agent request for $im:$chatid exitcode=$exitcode workspace=$workspace_dir - marking agent as unavailable"
-        ___x_cmd_claw_run___agentrequest___markunavailable
+        claw:error "Failed to process agent request for $im:$chatid exitcode=$exitcode - marking agent as unavailable"
+        ___x_cmd_claw_run___agentrequest___markunavailable "$im" "$chatid" "msg"
         return "$exitcode"
     fi
 }
@@ -67,7 +78,7 @@ ___x_cmd_claw_run___agentrequest___handleheartbeat(){
         exec >>"$logfp" 2>&1
     fi
 
-    ___x_cmd_claw_run___agentrequest___checkunavailable || return 0
+    ___x_cmd_claw_run___agentrequest___checkunavailable "hb" "global" "hb" || return 0
 
     local imdir="$___X_CMD_CLAW_BOT_CONNECT_DIR"
     [ -d "$imdir" ] || {
@@ -139,12 +150,13 @@ ___x_cmd_claw_run___agentrequest___handleheartbeat(){
     local heartbeat_idle_prompt=""
     local idle_file="$___X_CMD_CLAW_BOT_HEARTBEAT/idle_count"
     [ ! -f "$idle_file" ] || read -r idle_count < "$idle_file"
+    local heartbeat_ok_ttl="${___X_CMD_CLAW_HEARTBEAT_OK_TTL:-4h}"
     if [ "${idle_count:-0}" -ge 30 ]; then
         heartbeat_idle_prompt="
 LONG IDLE DETECTED — HEARTBEAT_OK MECHANISM:
-This heartbeat was triggered after $idle_count minutes of inactivity. If you find there is genuinely nothing that requires the user's attention, you can silence further heartbeat agents by creating the marker file:
+This heartbeat was triggered after $idle_count minutes of inactivity. If you find there is genuinely nothing that requires the user's attention, you can silence the next heartbeat check by creating the marker file:
   \`touch $___X_CMD_CLAW_BOT_WS/HEARTBEAT_OK\`
-This prevents unnecessary heartbeat wake-ups until the next user message arrives. Only do this if you are confident there are no pending tasks, reminders, or proactive insights to share."
+The marker expires automatically after $heartbeat_ok_ttl (default 4 hours), after which heartbeat will resume even if no new message arrives. Only create it if you are confident there are no pending tasks, reminders, or proactive insights to share."
     fi
 
 
@@ -189,6 +201,8 @@ This prevents unnecessary heartbeat wake-ups until the next user message arrives
 </variable>
 <variable name='HEARTBEAT_IDLE_PROMPT'>${heartbeat_idle_prompt}
 </variable>
+<variable name='HEARTBEAT_OK_TTL'>${heartbeat_ok_ttl}
+</variable>
 </variables>"
 
     log:sub:init -i "$im_count platform(s)" claw "[HB] Processing global heartbeat, default reply to $default_reply_im"
@@ -203,10 +217,12 @@ This prevents unnecessary heartbeat wake-ups until the next user message arrives
     if [ "$exitcode" -eq 0 ]; then
         # Heartbeat agent succeeded — clear unavailable status
         claw:debug "[HB] Heartbeat agent completed successfully"
-        ___x_cmd rmrf "$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable"
+        x_=""
+        ___x_cmd_claw_run___agentrequest___statefile_ "hb" "global" "hb"
+        ___x_cmd rmrf "$x_"
     else
         claw:error "[HB] Global heartbeat agent request failed for $im_count platform(s)"
-        ___x_cmd_claw_run___agentrequest___markunavailable
+        ___x_cmd_claw_run___agentrequest___markunavailable "hb" "global" "hb"
         return 1
     fi
 }

@@ -45,11 +45,11 @@ null
 ,
 "cn"
 :
-"示例: 跑命令,缓存输出,显示前 50/后 50 行 + 元数据"
+"示例: 跑命令,缓存输出,显示前 10/后 10 行 + 元数据"
 ,
 "en"
 :
-"Example: run a command, cache output, show first 50/last 50 lines + metadata"
+"Example: run a command, cache output, show first 10/last 10 lines + metadata"
 }
 ,
 {
@@ -78,6 +78,20 @@ null
 "en"
 :
 "Example: run command but skip cache write, only show head/tail sample"
+}
+,
+{
+"cmd"
+:
+"x teeshot --head 20 --tail 10 x mac sysctl"
+,
+"cn"
+:
+"示例: 长输出抽样,head/tail 用 TEESHOT fence + 行号范围包好,直接喂给 LLM"
+,
+"en"
+:
+"Example: sample a long output; head/tail are wrapped in TEESHOT fences with line ranges, ready to feed an LLM"
 }
 ,
 {
@@ -206,6 +220,16 @@ null
 "en"
 :
 "Cache dir lives at ~/.x-cmd.root/cache/teeshot/. To wipe, use `x cleanup cache` (careful: clears all x-cmd caches) or `rm -rf ~/.x-cmd.root/cache/teeshot`.\n"
+}
+,
+{
+"cn"
+:
+"输出对 AI 友好: 默认抽前 10 / 后 10 行,head 与 tail 之间被省略的部分用 `<!-- TEESHOT:OMITTED -->` 标出,各段用 `<!-- TEESHOT:HEAD range=\"1-10\" -->` / `<!-- /TEESHOT:HEAD -->`(以及 FULL/OMITTED/TAIL)fence 包起来,HEAD/TAIL 还带上各自在原文的行号区间,LLM 能把它当结构边界而不是正文。fence 是 inert 的 shell 注释,可直接拼进 prompt;`--head`/`--tail` 可调抽样大小,`--no-cache` 只看不写。\n"
+,
+"en"
+:
+"Output is AI-friendly by construction: by default it samples the first 10 / last 10 lines, the omitted middle is marked with `<!-- TEESHOT:OMITTED -->`, and each section is wrapped in `<!-- TEESHOT:HEAD range=\"1-10\" -->` / `<!-- /TEESHOT:HEAD -->` (and FULL/OMITTED/TAIL) fences — HEAD/TAIL carry their line range in the original so an LLM treats them as structural delimiters rather than content. The fences are inert shell-style comments, safe to splice straight into a prompt; `--head`/`--tail` adjust the sample size and `--no-cache` shows without writing.\n"
 }
 ]
 ,

@@ -11,6 +11,7 @@ ___x_cmd_agent_job_status(){
     local jobdir=""
     local jobid=""
     local format=""
+    local job_arg=""
 
     while [ $# -gt 0 ]; do
         case "$1" in
@@ -21,7 +22,7 @@ ___x_cmd_agent_job_status(){
             --llms)         format="llms" ; shift ;;
             --)             shift; break ;;
             -*)             N=agent M="Unknown option: $1" log:ret:64 ;;
-            *)              [ -z "$jobdir" ] && jobdir="$1"; shift ;;
+            *)              [ -z "$jobdir" ] && { jobdir="$1"; job_arg="$1"; }; shift ;;
         esac
     done
 
@@ -31,15 +32,21 @@ ___x_cmd_agent_job_status(){
     fi
 
     if [ -n "$jobid" ]; then
-        jobdir="$___X_CMD_AGENT_JOB_DIR/$jobid"
-    elif [ -z "$jobdir" ]; then
+        jobdir="$(___x_cmd_agent_job___resolve_dir_ "$jobdir" "$jobid")"
+    elif [ -n "$job_arg" ]; then
+        # Positional argument: support full path, full job_id, or partial match
+        jobdir="$(___x_cmd_agent_job_status___resolve_job "${jobdir:-$___X_CMD_AGENT_JOB_DIR}" "$job_arg")"
+    elif [ -n "$jobdir" ]; then
+        jobdir="$(___x_cmd_agent_job___resolve_dir_ "$jobdir")"
+    elif [ -n "$___X_CMD_AGENT_JOB_RECENT" ]; then
         jobdir="$___X_CMD_AGENT_JOB_RECENT"
-        if [ -z "$jobdir" ]; then
-            N=agent M="No recent job found. Please specify --job-dir or --job-id" log:ret:64
-        fi
     fi
 
-    if [ ! -d "$jobdir" ]; then
+    if [ -z "$jobdir" ]; then
+        N=agent M="No recent job found. Please specify --job-dir or --job-id" log:ret:64
+    fi
+
+    if [ -z "$jobdir" ] || [ ! -d "$jobdir" ]; then
         N=agent M="Not a directory: $jobdir" log:ret:1
     fi
 
@@ -110,10 +117,10 @@ ___x_cmd_agent_job_status___render(){
     fi
 
     # Determine status color code
-    local status_clr="33"    # Yellow (active)
+    local status_clr="33"    # Yellow (active/running/interrupted)
     case "$p_status" in
-        completed|done)     status_clr="32" ;;  # Green
-        error|failed)       status_clr="31" ;;  # Red
+        completed|done|complete)    status_clr="32" ;;  # Green
+        error|failed)               status_clr="31" ;;  # Red
     esac
 
     # Determine progress color code
@@ -197,23 +204,39 @@ ___x_cmd_agent_job_status___render_yml(){
     local job_path="$1"
     local job_id="$2"
 
-    printf 'job: "%s"\n' "$job_id"
-    printf 'jobdir: "%s"\n' "$job_path"
-    printf 'status: "%s"\n' "$p_status"
+    local display_status
+    display_status="$(printf '%s' "$p_status" | ___x_cmd_cmds tr '[:lower:]' '[:upper:]')"
+
+    printf 'job_id: "%s"\n' "$job_id"
+    printf 'job_dir: "%s"\n' "$job_path"
+    printf 'status: "%s"\n' "$display_status"
+    printf 'exit_code: "%s"\n' "${p_exit_code:-}"
+    printf 'done: %s\n' "$p_done"
+    printf 'error_type: "%s"\n' "${p_error_type:-}"
+    printf 'error_summary: "%s"\n' "${p_error_summary:-}"
+    printf 'summary_file: "%s"\n' "${p_summary_file:-}"
+    printf 'done_file: "%s"\n' "${p_done_file:-}"
+    printf 'error_file: "%s"\n' "${p_error_file:-}"
+    printf 'iter: %s\n' "$p_iter"
+    printf 'max_iterations: %s\n' "$p_max_iter"
+    printf 'progress: %s\n' "$p_progress"
+    printf 'started_at: "%s"\n' "${p_started_at:-}"
+    printf 'updated_at: "%s"\n' "${p_updated_at:-}"
+    printf 'completed_at: "%s"\n' "${p_completed_at:-}"
+    printf 'description: "%s"\n' "$p_desc"
+
     if ___x_cmd worker isalive --ns 'x-agent-job' --name "$job_id" >/dev/null 2>&1; then
         printf 'running: true\n'
     else
         printf 'running: false\n'
     fi
 
-    printf 'progress:\n'
-    printf '  percent: %d\n' "$p_progress"
+    printf 'progress_detail:\n'
     if [ "$p_todo_done" != "0" ] || [ "$p_todo_remaining" != "0" ]; then
         local total=$((p_todo_done + p_todo_remaining))
         printf '  todo: "%d/%d done (%d remaining)"\n' "$p_todo_done" "$total" "$p_todo_remaining"
     fi
 
-    printf 'iteration: "%s/%s"\n' "$p_iter" "$p_max_iter"
     printf 'harness: "%s"\n' "$p_harness"
 
     if [ -n "$p_ai_status" ]; then
@@ -233,19 +256,9 @@ ___x_cmd_agent_job_status___render_yml(){
     printf '  tests_status: "%s"\n' "$p_tests_status"
     printf '  response_count: %d\n' "$p_response_count"
 
-    printf 'time:\n'
-    printf '  created: "%s"\n' "$p_time_formatted"
-    if [ -n "$p_updated_at" ]; then
-        local rel_time=""
-        rel_time="$(___x_cmd_agent_job_status___relative_time "$p_updated_at")"
-        printf '  updated: "%s"\n' "$rel_time"
-    fi
-
-    printf 'description: "%s"\n' "$p_desc"
-
     printf 'core_files:\n'
     local has_file=0
-    for f in AGENTS.md DESC.md PLAN.md DONE.md status.yml; do
+    for f in AGENTS.md DESC.md PLAN.md DONE.md SUMMARY.md ERROR.md status.yml; do
         if [ -f "$job_path/$f" ]; then
             printf '  - "%s"\n' "$f"
             has_file=1
@@ -264,6 +277,12 @@ ___x_cmd_agent_job_status___render_yml(){
     done 2>/dev/null
     if [ "$resp_count" -eq 0 ]; then
         printf '  - "(none)"\n'
+    fi
+
+    # Include error content for failed jobs
+    if [ "$p_status" = "failed" ] && [ -f "$job_path/ERROR.md" ]; then
+        printf '\nerror_content:\n'
+        ___x_cmd_cmds sed 's/^/  /' "$job_path/ERROR.md"
     fi
 }
 
@@ -292,9 +311,12 @@ ___x_cmd_agent_job_status___render_llms(){
     printf '\n---\n\n'
 
     # --- YAML Structured Data ---
+    local display_status
+    display_status="$(printf '%s' "$p_status" | ___x_cmd_cmds tr '[:lower:]' '[:upper:]')"
+
     printf 'job: "%s"\n' "$job_id"
     printf 'jobdir: "%s"\n' "$job_path"
-    printf 'status: "%s"\n' "$p_status"
+    printf 'status: "%s"\n' "$display_status"
 
     local running_text="false"
     if ___x_cmd worker isalive --ns 'x-agent-job' --name "$job_id" >/dev/null 2>&1; then
@@ -341,7 +363,7 @@ ___x_cmd_agent_job_status___render_llms(){
 
     printf 'core_files:\n'
     local has_file=0
-    for f in AGENTS.md DESC.md PLAN.md DONE.md status.yml; do
+    for f in AGENTS.md DESC.md PLAN.md DONE.md SUMMARY.md ERROR.md status.yml; do
         if [ -f "$job_path/$f" ]; then
             printf '  - "%s"\n' "$f"
             has_file=1
@@ -369,10 +391,18 @@ ___x_cmd_agent_job_status___render_llms(){
     fi
 
     # --- DONE.md Content (if completed) ---
-    if [ "$p_status" = "completed" ] && [ -f "$job_path/DONE.md" ]; then
+    if { [ "$p_status" = "completed" ] || [ "$p_status" = "complete" ]; } && [ -f "$job_path/DONE.md" ]; then
         printf '\n---\n\n'
         printf '## done_content\n\n'
         ___x_cmd_cmds cat "$job_path/DONE.md"
+        printf '\n'
+    fi
+
+    # --- ERROR.md Content (if failed) ---
+    if [ "$p_status" = "failed" ] && [ -f "$job_path/ERROR.md" ]; then
+        printf '\n---\n\n'
+        printf '## error_content\n\n'
+        ___x_cmd_cmds cat "$job_path/ERROR.md"
         printf '\n'
     fi
 }
@@ -482,6 +512,15 @@ ___x_cmd_agent_job_status___parse_job(){
     p_todo_remaining=0
     p_updated_at=""
     p_time_formatted="-"
+    p_done="false"
+    p_exit_code=""
+    p_error_type=""
+    p_error_summary=""
+    p_summary_file=""
+    p_done_file=""
+    p_error_file=""
+    p_started_at=""
+    p_completed_at=""
 
     # Parse status.yml
     if [ -f "$job_path/status.yml" ]; then
@@ -493,9 +532,28 @@ ___x_cmd_agent_job_status___parse_job(){
         if [ -f "$job_path/DONE.md" ]; then
             p_status="completed"
             p_progress=100
+            p_done="true"
         elif [ -f "$job_path/PLAN.md" ]; then
             p_status="active"
         fi
+    fi
+
+    # Detect failed state from ERROR.md or from a dead worker.
+    # Do not override an explicit interrupted state written by x agent job stop.
+    if [ "$p_status" != "completed" ] && [ "$p_status" != "interrupted" ]; then
+        if [ -f "$job_path/ERROR.md" ]; then
+            p_status="failed"
+            [ -n "$p_error_summary" ] || p_error_summary="$(___x_cmd_cmds awk '/^## Summary$/{getline; print; exit}' "$job_path/ERROR.md" 2>/dev/null)"
+            [ -n "$p_error_type" ] || p_error_type="$(___x_cmd_cmds awk '/^## Error Type$/{getline; print; exit}' "$job_path/ERROR.md" 2>/dev/null)"
+            p_error_file="ERROR.md"
+        elif { [ "$p_status" = "running" ] || [ "$p_status" = "active" ]; } && \
+             ! ___x_cmd worker isalive --ns 'x-agent-job' --name "$job_id" >/dev/null 2>&1; then
+            p_status="failed"
+        fi
+    fi
+
+    if [ "$p_done" = "true" ] && [ -n "$p_updated_at" ]; then
+        p_completed_at="$p_updated_at"
     fi
 
     # Get description from DESC.md
@@ -533,13 +591,6 @@ ___x_cmd_agent_job_status___parse_status_yml(){
             "max_iterations:"*)     p_max_iter="${line#*: }" ;;
             "todo_completed:"*)     p_todo_done="${line#*: }" ;;
             "todo_remaining:"*)     p_todo_remaining="${line#*: }" ;;
-            "done:"*)
-                local done_val="${line#*: }"
-                if [ "$done_val" = "true" ]; then
-                    p_status="completed"
-                    p_progress=100
-                fi
-                ;;
             "harness:"*)            p_harness="${line#*: }" ;;
             "status:"*)             p_ai_status="${line#*: }" ;;
             "work_type:"*)          p_work_type="${line#*: }" ;;
@@ -549,6 +600,22 @@ ___x_cmd_agent_job_status___parse_status_yml(){
             "tests_status:"*)       p_tests_status="${line#*: }" ;;
             "response_count:"*)     p_response_count="${line#*: }" ;;
             "updated_at:"*)         p_updated_at="${line#*: }" ;;
+            "started_at:"*)         p_started_at="${line#*: }" ;;
+            "exit_code:"*)          p_exit_code="${line#*: }" ;;
+            "error_summary:"*)      p_error_summary="${line#*: }" ;;
+            "error_type:"*)         p_error_type="${line#*: }" ;;
+            "summary_file:"*)       p_summary_file="${line#*: }" ;;
+            "done_file:"*)          p_done_file="${line#*: }" ;;
+            "error_file:"*)         p_error_file="${line#*: }" ;;
+            "job_status:"*)         p_status="${line#*: }" ;;
+            "done:")
+                local done_val="${line#*: }"
+                p_done="$done_val"
+                if [ "$done_val" = "true" ]; then
+                    p_status="completed"
+                    p_progress=100
+                fi
+                ;;
         esac
     done < "$status_file" 2>/dev/null
 

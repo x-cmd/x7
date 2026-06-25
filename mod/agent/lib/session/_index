@@ -54,7 +54,7 @@ ___x_cmd_agent_session_init(){
     printf "session_id: %s\nharness: %s\nworkspace: %s\ncreated_at: %s\nstatus: initialized\n" \
         "$session_id" "$harness" "$workspace" "$x_" > "$session_dir/metadata.yml"
 
-    agent:info "Session created: $session_id"
+    agent:info "Session created - $session_id"
     printf "%s\n" "$session_id"
 }
 

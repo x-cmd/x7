@@ -124,6 +124,7 @@ post_install() {
 
         printf "%s\n" "- I|x: Create /usr/bin/x-cmd" >&2
         install -Dm755 "$_pkgdir/mod/x-cmd/lib/bin/x-cmd" "/usr/bin/x-cmd"
+        install -Dm644 "$_pkgdir/LICENSE.txt" "${pkgdir}/usr/share/licenses/x-cmd/LICENSE.txt"
         chmod +x "/usr/bin/x-cmd"
     fi
 }
@@ -135,6 +136,7 @@ post_install() {
 post_remove() {
     [ ! -f /usr/bin/x-cmd ]         || rm -rf /usr/bin/x-cmd
     [ ! -f /usr/bin/x ]             || rm -rf /usr/bin/x
+    [ ! -f ~/.x-cmd.root ]          || rm -rf ~/.x-cmd.root
 }
 
 ' >> "$builddir/x-cmd.install"

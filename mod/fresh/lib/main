@@ -13,3 +13,7 @@ ___x_cmd_fresh___main(){
         *)              ___x_cmd_fresh___runmain "$op"  "$@" ;;
     esac
 }
+
+# setup shell for ...
+# setup linter for ...
+

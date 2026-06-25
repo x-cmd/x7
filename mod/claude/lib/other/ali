@@ -7,6 +7,7 @@ ___x_cmd_claude_ali(){
     local op="$1"
     case "$op" in
         -h|--help)      ___x_cmd help -m claude ali; return 0 ;;
+        --minimal-init) ___x_cmd_claude_ali_minimal_init "$@" ;  return $? ;;
         --cfg)          shift;
                         ___x_cmd_claude_ali_cfg "$@"; return $? ;;
         --)             shift ;;
@@ -78,6 +79,21 @@ ___x_cmd_claude_ali_cfg(){
 ___x_cmd_claude_ali_cur(){
     local X_help_cmd=; X_help_cmd='___x_cmd help -m claude ali --cur' help:arg:parse
     ___x_cmd_claude_ali_cfg --current "$@"
+}
+
+___x_cmd_claude_ali_minimal_init(){
+    local cur_apikey=""
+    if [ -f "$(___x_cmd_claude_ali_cur --get config)" ]; then
+        ___x_cmd_claude_ali_cur cur_apikey:=apikey
+    fi
+
+    claude:info "To get aliyun coding plan API key -> https://bailian.console.aliyun.com/cn-beijing/efm/coding_plan?tab=coding-plan#/efm/detail"
+
+    ___x_cmd_claude_ali_cfg___invoke --init ${cur_apikey:+"--ctrl_exit_strategy"} \
+        apikey      "Set up the aliyun coding plan API key"                               \
+                    "$cur_apikey"   '=~*' "^[A-Za-z0-9-]+$"
+
+    ___x_cmd_claude_ali_has_apikey 2>/dev/null >&2
 }
 
 ___x_cmd_claude_ali_init(){

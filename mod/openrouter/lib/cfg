@@ -10,6 +10,7 @@ ___x_cmd_openrouter_cfg(){
     local op="$1"; shift
     case "$op" in
         -h|--help)      ___x_cmd help -m openrouter --cfg ;;
+        --minimal-init) ___x_cmd_openrouter_minimal_init "$@" ;;
         apikey=*)       ___x_cmd_openrouter_cfg___invoke "$op" "$@"
                         ! ___x_cmd_openrouter_has_apikey 2>/dev/null >&2 || ___x_cmd chat --setalias openrouter or
                         ;;
@@ -30,6 +31,21 @@ ___x_cmd_openrouter_def_(){
 ___x_cmd_openrouter_cur(){
     local X_help_cmd=; X_help_cmd='___x_cmd help -m openrouter --cur' help:arg:parse
     ___x_cmd_openrouter_cfg --current "$@"
+}
+
+___x_cmd_openrouter_minimal_init(){
+    local cur_apikey=""
+    if [ -f "$(___x_cmd_openrouter_cur --get config)" ]; then
+        ___x_cmd_openrouter_cur cur_apikey:=apikey
+    fi
+
+    openrouter:info "To get OpenRouter API key -> https://openrouter.ai/settings/provisioning-keys"
+
+    ___x_cmd_openrouter_cfg___invoke --init ${cur_apikey:+"--ctrl_exit_strategy"} \
+        apikey      "Set up the OpenRouter API key"                               \
+                    "$cur_apikey"   '=~*' "^[A-Za-z0-9-]+$"
+
+    ___x_cmd_openrouter_has_apikey 2>/dev/null >&2
 }
 
 ___x_cmd_openrouter_init(){

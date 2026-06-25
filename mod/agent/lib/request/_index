@@ -16,12 +16,12 @@ ___x_cmd_agent_request(){
     local stderrfile=""
 
     local pipe=""
-    local user_session_id=""
     local workspace=""
     local reference_workspace=""
     local reference_name=""
     local is_no_thinking=""
-    local is_no_workspace_session=""
+    local is_new_workspace_session=""
+    local session_desc=""
     local is_debug=""
     local timeout_secs="3000"
     local skill_dirlist=""
@@ -38,10 +38,10 @@ ___x_cmd_agent_request(){
             --output|-o)    output_file="$2"   ;                arg:2:shift ;;
             --overwrite)    overwrite=1;                        shift ;;
             --json)         output_format=json;                 shift ;;
-            --session)      user_session_id="$2";               arg:2:shift ;;
             --workspace)    workspace="$2";                     arg:2:shift ;;
-            --no-workspace-session)
-                            is_no_workspace_session=1;          shift ;;
+            --new-workspace-session)
+                            is_new_workspace_session=1;         shift ;;
+            --session-desc) session_desc="$2";                  arg:2:shift ;;
             --reference-workspace)
                             reference_workspace="$2";           arg:2:shift ;;
             --stdout-file)  stdoutfile="$2";                    arg:2:shift ; ___x_cmd ensurefp "$stdoutfile";;
@@ -99,22 +99,16 @@ $filelist
 A
 
     local session_output_dir="$___X_CMD_ROOT_TMP/agent/request/session/$harness"
+    local session_metadata_dir=""
     if [ -n "$workspace" ]; then
         [ -d "$workspace" ] || ___x_cmd mkdirp "$workspace" || return $?
         x_=""; ___x_cmd abspath_ "$workspace"
         workspace="${x_:-"$workspace"}"
 
         session_output_dir="$workspace/.x-cmd/agent/request/session"
+        session_metadata_dir="$session_output_dir/metadata/$harness"
         x_=""; ___x_cmd_agent_request___workspace_prompt_ "$workspace" || return $?
         content="${content}${x_}"
-        if [ "$is_no_workspace_session" != "1" ]; then
-            local workspace_user_session_file="$session_output_dir/metadata/user_session_id"
-            if [ ! -f "$workspace_user_session_file" ]; then
-                ___x_cmd ensurefp "$workspace_user_session_file"
-                ___x_cmd uuid > "$workspace_user_session_file"
-            fi
-            read -r user_session_id < "$workspace_user_session_file"
-        fi
     fi
 
     if [ -n "$reference_workspace" ]; then
@@ -142,6 +136,11 @@ ${msg}
 </USERMSG>
 "
     }
+
+    if [ -z "$session_desc" ] && [ -n "$msg" ]; then
+        x_=""; ___x_cmd_agent_request___session_desc_ "$msg"
+        session_desc="$x_"
+    fi
 
     if [ -z "$output_file" ]; then
         ___x_cmd_agent_request___run
@@ -247,7 +246,7 @@ ___x_cmd_agent_request___run_validate(){
 }
 
 ___x_cmd_agent_request___run_attempt(){
-    ___x_cmd_agent_request___run_exec "$harness" "$content" "$output_format" "$user_session_id" "$workspace" "$is_no_thinking" "$stdoutfile" "$stderrfile" "$reference_workspace"
+    ___x_cmd_agent_request___run_exec "$harness" "$content" "$output_format" "$workspace" "$is_no_thinking" "$stdoutfile" "$stderrfile" "$reference_workspace"
     local ret=$?
 
     if [ $ret -eq 0 ]; then
@@ -268,14 +267,14 @@ ___x_cmd_agent_request___run_attempt(){
                     return "$____X_CMD_AGENT_ERR_AUTHFAILURE"
                 }
 
-                ___x_cmd_agent_request___run_exec "$harness" "Say OK" "text" "" "" "1" "/dev/null" "/dev/null" "" || {
+                ___x_cmd_agent_request___run_exec "$harness" "Say OK" "text" "" "1" "/dev/null" "/dev/null" "" || {
                     ret=$?
                     ___X_CMD_RETRY_ABORT=1
                     return $ret
                 }
 
                 agent:info "Auto-login succeeded, retrying original request"
-                ___x_cmd_agent_request___run_exec "$harness" "$content" "$output_format" "$user_session_id" "$workspace" "$is_no_thinking" "$stdoutfile" "$stderrfile" "$reference_workspace"
+                ___x_cmd_agent_request___run_exec "$harness" "$content" "$output_format" "$workspace" "$is_no_thinking" "$stdoutfile" "$stderrfile" "$reference_workspace"
                 ret=$?
                 ;;
             *)
@@ -294,18 +293,6 @@ ___x_cmd_agent_request___run_attempt(){
         return "$____X_CMD_AGENT_ERR_SIGINT"
     fi
 
-    if [ -n "$user_session_id" ]; then
-        session_id_map_file="$session_output_dir/metadata/session_id_map/$user_session_id"
-        [ ! -f "$session_id_map_file" ] || {
-            agent:debug "Cleaning up session map file"
-            local real_session_id="" user_session_cwd=""
-            { read -r real_session_id && read -r user_session_cwd; } < "$session_id_map_file"
-            local x_=""; ___x_cmd date timestamp_
-            printf "timestamp: %s\nuser_session_cwd: %s\nuser_session_id: %s\nreal_session_id: %s\n" "$x_" "$user_session_cwd" "$user_session_id" "$real_session_id" >> "$session_output_dir/metadata/session_id_map/breakage_session"
-            ___x_cmd rmrf "$session_id_map_file"
-        }
-    fi
-
     return $ret
 }
 
@@ -313,18 +300,20 @@ ___x_cmd_agent_request___run_exec(){(
     local harness="$1"
     local content="$2"
     local output_format="$3"
-    local user_session_id="$4"
-    local workspace="$5"
-    local is_no_thinking="$6"
-    local stdoutfile="$7"
-    local stderrfile="$8"
-    local reference_workspace="$9"
+    local workspace="$4"
+    local is_no_thinking="$5"
+    local stdoutfile="$6"
+    local stderrfile="$7"
+    local reference_workspace="$8"
     shift $#
 
-    local session_id_map_file=""
+    local session_dir=""
+    local current_file=""
     local real_session_id=""
     local user_session_cwd=""
     local is_session_first=""
+    local save_session_id_file=""
+    local now=""
     local ret=0
 
     [ -z "$stdoutfile" ] || exec >> "$stdoutfile"
@@ -334,35 +323,82 @@ ___x_cmd_agent_request___run_exec(){(
         ___x_cmd rmrf "$session_output_dir/metadata/status" "$session_output_dir/metadata/stderr.txt"
     fi
 
-    if [ -n "$user_session_id" ]; then
-        session_id_map_file="$session_output_dir/metadata/session_id_map/$user_session_id"
-        [ ! -f "$session_id_map_file" ] || {
-            { read -r real_session_id && read -r user_session_cwd; } < "$session_id_map_file"
-        }
+    if [ -n "$workspace" ]; then
+        current_file="$session_metadata_dir/current"
+        x_=""; ___x_cmd epoch get_
+        now="$x_"
+
+        if [ "$is_new_workspace_session" != "1" ] && [ -f "$current_file" ]; then
+            read -r real_session_id < "$current_file"
+            if [ -n "$real_session_id" ]; then
+                session_dir="$session_metadata_dir/$real_session_id"
+                if [ -d "$session_dir" ] && [ -f "$session_dir/cwd" ]; then
+                    read -r user_session_cwd < "$session_dir/cwd"
+                fi
+            fi
+        fi
+
+        if [ -z "$real_session_id" ] && [ "$is_new_workspace_session" != "1" ]; then
+            ___x_cmd_agent_request___migrate_session_
+            if [ -f "$current_file" ]; then
+                read -r real_session_id < "$current_file"
+                if [ -n "$real_session_id" ]; then
+                    session_dir="$session_metadata_dir/$real_session_id"
+                    if [ -d "$session_dir" ] && [ -f "$session_dir/cwd" ]; then
+                        read -r user_session_cwd < "$session_dir/cwd"
+                    fi
+                fi
+            fi
+        fi
 
         if [ -z "$real_session_id" ] || [ -z "$user_session_cwd" ] || [ ! -d "$user_session_cwd" ]; then
             is_session_first=1
             agent:debug "Session is first time, creating a new session"
-            if [ -n "$workspace" ]; then
-                user_session_cwd="$workspace"
-            else
-                user_session_cwd="$PWD"
-            fi
-            [ ! -f "$session_id_map_file" ] || ___x_cmd rmrf "$session_id_map_file"
-            ___x_cmd ensurefp "$session_id_map_file"
+            user_session_cwd="$workspace"
+        else
+            printf "%s\n" "$user_session_cwd" > "$session_dir/cwd"
+            printf "%s\n" "$now" > "$session_dir/updated_at"
         fi
 
         ___x_cmd_cmds cd "$user_session_cwd" || return $?
         user_session_cwd="$PWD"
+
+        case "$harness" in
+            claude|claude-*|kimi-cli)
+                if [ "$is_session_first" = "1" ]; then
+                    real_session_id="$( ___x_cmd uuid )"
+                    session_dir="$session_metadata_dir/$real_session_id"
+                    ___x_cmd mkdirp "$session_dir"
+                    printf "%s\n" "$user_session_cwd" > "$session_dir/cwd"
+                    printf "%s\n" "$now" > "$session_dir/created_at"
+                    printf "%s\n" "$now" > "$session_dir/updated_at"
+                    printf "%s\n" "$session_desc" > "$session_dir/desc"
+                fi
+                ;;
+            cursor)
+                if [ "$is_session_first" = "1" ]; then
+                    real_session_id="$( ___x_cmd_agent_request___cursor_runcmd create-chat )"
+                    session_dir="$session_metadata_dir/$real_session_id"
+                    ___x_cmd mkdirp "$session_dir"
+                    printf "%s\n" "$user_session_cwd" > "$session_dir/cwd"
+                    printf "%s\n" "$now" > "$session_dir/created_at"
+                    printf "%s\n" "$now" > "$session_dir/updated_at"
+                    printf "%s\n" "$session_desc" > "$session_dir/desc"
+                fi
+                ;;
+            codex|gemini-cli|opencode)
+                if [ "$is_session_first" = "1" ]; then
+                    save_session_id_file="$session_metadata_dir/.extracting_$(___x_cmd uuid)"
+                fi
+                ;;
+        esac
     fi
 
     case "$harness" in
         claude|claude-*)
-            if [ -n "$user_session_id" ]; then
+            if [ -n "$workspace" ]; then
                 if [ "$is_session_first" = "1" ]; then
-                    real_session_id="$( ___x_cmd uuid )"
                     set -- --session-id "$real_session_id"
-                    printf "%s\n" "$real_session_id" "$user_session_cwd" > "$session_id_map_file"
                 else
                     set -- --resume "$real_session_id"
                 fi
@@ -385,17 +421,18 @@ ___x_cmd_agent_request___run_exec(){(
                 ${reference_workspace:+--add-dir "$reference_workspace"} \
                 --print "$content" < /dev/null
                 printf "%s\n" "[EXITCODE] $?"
-            } | ___x_cmd_agent_request___handle_output claude "$output_format" "$is_session_first" "$user_session_cwd" "$session_id_map_file" "$session_output_dir"
+            } | ___x_cmd_agent_request___handle_output claude "$output_format" "$is_session_first" "$user_session_cwd" "$save_session_id_file" "$session_output_dir"
             ret=$?
 
             if [ -n "$real_session_id" ]; then
                 ___x_cmd claude session extract --session "$real_session_id" --output "$session_output_dir"
             fi
+            ___x_cmd_agent_request___finalize_session_
             return $ret
             ;;
         codex)
             set -- exec
-            if [ -n "$user_session_id" ]; then
+            if [ -n "$workspace" ]; then
                 if [ "$is_session_first" != "1" ]; then
                     set -- "$@" resume "$real_session_id"
                 fi
@@ -410,14 +447,14 @@ ___x_cmd_agent_request___run_exec(){(
                 ${reference_workspace:+--add-dir "$reference_workspace"} \
                 "$content" < /dev/null
                 printf "%s\n" "[EXITCODE] $?"
-            } | ___x_cmd_agent_request___handle_output codex "$output_format" "$is_session_first" "$user_session_cwd" "$session_id_map_file" "$session_output_dir"
+            } | ___x_cmd_agent_request___handle_output codex "$output_format" "$is_session_first" "$user_session_cwd" "$save_session_id_file" "$session_output_dir"
+            ret=$?
+            ___x_cmd_agent_request___extract_session_id_
+            ___x_cmd_agent_request___finalize_session_
+            return $ret
             ;;
         cursor)
-            if [ -n "$user_session_id" ]; then
-                if [ "$is_session_first" = "1" ]; then
-                    real_session_id="$( ___x_cmd_agent_request___cursor_runcmd create-chat )"
-                    printf "%s\n" "$real_session_id" "$user_session_cwd" > "$session_id_map_file"
-                fi
+            if [ -n "$workspace" ]; then
                 set -- --resume "$real_session_id"
             fi
 
@@ -426,9 +463,12 @@ ___x_cmd_agent_request___run_exec(){(
             fi
 
             ___x_cmd_agent_request___cursor_runcmd "$@" --trust --yolo --print "$content"
+            ret=$?
+            ___x_cmd_agent_request___finalize_session_
+            return $ret
             ;;
         gemini-cli)
-            if [ -n "$user_session_id" ]; then
+            if [ -n "$workspace" ]; then
                 if [ "$is_session_first" != "1" ]; then
                     set -- --resume "$real_session_id"
                 fi
@@ -441,10 +481,14 @@ ___x_cmd_agent_request___run_exec(){(
                 ${reference_workspace:+--include-directories "$reference_workspace"} \
                 --output-format stream-json --prompt "$content" < /dev/null
                 printf "%s\n" "[EXITCODE] $?"
-            } | ___x_cmd_agent_request___handle_output gemini-cli "$output_format" "$is_session_first" "$user_session_cwd" "$session_id_map_file" "$session_output_dir"
+            } | ___x_cmd_agent_request___handle_output gemini-cli "$output_format" "$is_session_first" "$user_session_cwd" "$save_session_id_file" "$session_output_dir"
+            ret=$?
+            ___x_cmd_agent_request___extract_session_id_
+            ___x_cmd_agent_request___finalize_session_
+            return $ret
             ;;
         opencode)
-            if [ -n "$user_session_id" ]; then
+            if [ -n "$workspace" ]; then
                 if [ "$is_session_first" != "1" ]; then
                     set -- --session "$real_session_id"
                 fi
@@ -457,14 +501,14 @@ ___x_cmd_agent_request___run_exec(){(
             {
                 OPENCODE_PERMISSION='{"*":"allow"}' ___x_cmd timeout "$timeout_secs" x-cmd opencode run "$@" --format json "$content" < /dev/null
                 printf "%s\n" "[EXITCODE] $?"
-            } | ___x_cmd_agent_request___handle_output opencode "$output_format" "$is_session_first" "$user_session_cwd" "$session_id_map_file" "$session_output_dir"
+            } | ___x_cmd_agent_request___handle_output opencode "$output_format" "$is_session_first" "$user_session_cwd" "$save_session_id_file" "$session_output_dir"
+            ret=$?
+            ___x_cmd_agent_request___extract_session_id_
+            ___x_cmd_agent_request___finalize_session_
+            return $ret
             ;;
         kimi-cli)
-            if [ -n "$user_session_id" ]; then
-                if [ "$is_session_first" = "1" ]; then
-                    real_session_id="$( ___x_cmd uuid )"
-                    printf "%s\n" "$real_session_id" "$user_session_cwd" > "$session_id_map_file"
-                fi
+            if [ -n "$workspace" ]; then
                 set -- --session "$real_session_id"
             fi
 
@@ -482,7 +526,10 @@ ___x_cmd_agent_request___run_exec(){(
                 ${reference_workspace:+--add-dir "$reference_workspace"} \
                 --prompt "$content" < /dev/null
                 printf "%s\n" "[EXITCODE] $?"
-            } | ___x_cmd_agent_request___handle_output kimi-cli "$output_format" "$is_session_first" "$user_session_cwd" "$session_id_map_file" "$session_output_dir"
+            } | ___x_cmd_agent_request___handle_output kimi-cli "$output_format" "$is_session_first" "$user_session_cwd" "$save_session_id_file" "$session_output_dir"
+            ret=$?
+            ___x_cmd_agent_request___finalize_session_
+            return $ret
             ;;
     esac
 )}
@@ -525,4 +572,140 @@ ___x_cmd_agent_request___cursor_runcmd(){
     fi
 
     ___x_cmd_agent_request___cursor_runcmd "$@"
+}
+
+___x_cmd_agent_request___session_desc_(){
+    local msg="$1"
+    if [ -z "$msg" ]; then
+        x_=""
+        return 0
+    fi
+    local first_line=""
+    first_line="${msg%%"$NL"*}"
+    x_="$(printf '%.80s' "$first_line")"
+}
+
+___x_cmd_agent_request___extract_session_id_(){
+    [ -n "$save_session_id_file" ] || return 0
+    [ -f "$save_session_id_file" ] || return 0
+    local extracted_id=""
+    read -r extracted_id < "$save_session_id_file"
+    ___x_cmd rmrf "$save_session_id_file"
+    [ -n "$extracted_id" ] || return 0
+    real_session_id="$extracted_id"
+    session_dir="$session_metadata_dir/$real_session_id"
+    ___x_cmd mkdirp "$session_dir"
+    printf "%s\n" "$user_session_cwd" > "$session_dir/cwd"
+    printf "%s\n" "$now" > "$session_dir/created_at"
+    printf "%s\n" "$now" > "$session_dir/updated_at"
+    printf "%s\n" "$session_desc" > "$session_dir/desc"
+}
+
+___x_cmd_agent_request___finalize_session_(){
+    [ -n "$workspace" ] || return 0
+    [ "$ret" -eq 0 ] || return 0
+    [ -n "$real_session_id" ] || return 0
+    [ -n "$session_dir" ] || return 0
+    [ -d "$session_dir" ] || return 0
+
+    local current_file="$session_metadata_dir/current"
+    ___x_cmd_agent_request___update_current_ "$current_file" "$real_session_id"
+    ___x_cmd_agent_request___cleanup_sessions_ "$session_metadata_dir" "$real_session_id"
+}
+
+___x_cmd_agent_request___update_current_(){
+    local current_file="$1"
+    local real_session_id="$2"
+    [ -n "$current_file" ] || return 0
+    [ -n "$real_session_id" ] || return 0
+    local tmpfile="${current_file}.tmp.$$"
+    ___x_cmd ensurefp "$tmpfile"
+    printf "%s\n" "$real_session_id" > "$tmpfile"
+    mv "$tmpfile" "$current_file"
+}
+
+___x_cmd_agent_request___cleanup_sessions_(){
+    local session_metadata_dir="$1"
+    local current_id="$2"
+    [ -d "$session_metadata_dir" ] || return 0
+    [ -n "$current_id" ] || return 0
+
+    local keep=30
+    local count=0
+    local dir=""
+    local id=""
+
+    for dir in "$session_metadata_dir"/*; do
+        [ -d "$dir" ] || continue
+        id="${dir##*/}"
+        case "$id" in
+            .*) continue ;;
+            "$current_id") continue ;;
+        esac
+        count=$((count + 1))
+    done
+
+    local max_other=$((keep - 1))
+    [ "$count" -le "$max_other" ] && return 0
+
+    local to_delete=$((count - max_other))
+    [ "$to_delete" -le 0 ] && return 0
+
+    local tmp_list="$session_metadata_dir/.cleanup_$$"
+    : > "$tmp_list"
+    for dir in "$session_metadata_dir"/*; do
+        [ -d "$dir" ] || continue
+        id="${dir##*/}"
+        case "$id" in
+            .*) continue ;;
+            "$current_id") continue ;;
+        esac
+        local updated_at=0
+        if [ -f "$dir/updated_at" ]; then
+            read -r updated_at < "$dir/updated_at"
+        fi
+        printf "%s %s\n" "$updated_at" "$id" >> "$tmp_list"
+    done
+
+    sort -n "$tmp_list" | head -n "$to_delete" | while read -r updated_at id; do
+        [ "$updated_at" -lt "$now" ] || continue
+        ___x_cmd rmrf "$session_metadata_dir/$id"
+    done
+
+    ___x_cmd rmrf "$tmp_list"
+}
+
+___x_cmd_agent_request___migrate_session_(){
+    local session_output_dir="${session_metadata_dir%/metadata/*}"
+    local old_user_session_file="$session_output_dir/metadata/user_session_id"
+    local old_user_session_id=""
+    local old_map_file=""
+    local old_real_session_id=""
+    local old_cwd=""
+    local migrated_at=""
+
+    [ -f "$old_user_session_file" ] || return 0
+    read -r old_user_session_id < "$old_user_session_file"
+    [ -n "$old_user_session_id" ] || return 0
+
+    old_map_file="$session_output_dir/metadata/session_id_map/$old_user_session_id"
+    [ -f "$old_map_file" ] || return 0
+    { read -r old_real_session_id && read -r old_cwd; } < "$old_map_file"
+    [ -n "$old_real_session_id" ] || return 0
+
+    x_=""; ___x_cmd epoch get_
+    migrated_at="$x_"
+
+    local new_session_dir="$session_metadata_dir/$old_real_session_id"
+    ___x_cmd mkdirp "$new_session_dir"
+    printf "%s\n" "${old_cwd:-$workspace}" > "$new_session_dir/cwd"
+    printf "%s\n" "$migrated_at" > "$new_session_dir/created_at"
+    printf "%s\n" "$migrated_at" > "$new_session_dir/updated_at"
+    printf "%s\n" "migrated session" > "$new_session_dir/desc"
+
+    ___x_cmd_agent_request___update_current_ "$current_file" "$old_real_session_id"
+
+    ___x_cmd rmrf "$session_output_dir/metadata/session_id_map"
+    ___x_cmd rmrf "$old_user_session_file"
+    agent:info "Migrated workspace session from old format"
 }

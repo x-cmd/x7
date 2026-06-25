@@ -10,6 +10,7 @@ ___x_cmd_moonshot_cfg(){
     local op="$1"; shift
     case "$op" in
         -h|--help)      ___x_cmd help -m moonshot --cfg ;;
+        --minimal-init) ___x_cmd_moonshot_minimal_init "$@" ;;
         apikey=*)       ___x_cmd_moonshot_cfg___invoke "$op" "$@"
                         ! ___x_cmd_moonshot_has_apikey 2>/dev/null >&2 || ___x_cmd chat --setalias moonshot kimi
                         ;;
@@ -31,6 +32,21 @@ ___x_cmd_moonshot_def_(){
 ___x_cmd_moonshot_cur(){
     local X_help_cmd=; X_help_cmd='___x_cmd help -m moonshot --cur' help:arg:parse
     ___x_cmd_moonshot_cfg --current "$@"
+}
+
+___x_cmd_moonshot_minimal_init(){
+    local cur_apikey=""
+    if [ -f "$(___x_cmd_moonshot_cur --get config)" ]; then
+        ___x_cmd_moonshot_cur cur_apikey:=apikey
+    fi
+
+    moonshot:info "To get Moonshot's API key -> https://platform.moonshot.cn/console/api-keys"
+
+    ___x_cmd_moonshot_cfg___invoke --init ${cur_apikey:+"--ctrl_exit_strategy"} \
+        apikey      "Set up the API key of Moonshot AI"                         \
+                    "$cur_apikey"   '=~*' "^[A-Za-z0-9-]+$"
+
+    ___x_cmd_moonshot_has_apikey 2>/dev/null >&2
 }
 
 ___x_cmd_moonshot_init(){

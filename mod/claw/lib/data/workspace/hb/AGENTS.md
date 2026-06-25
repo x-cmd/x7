@@ -14,7 +14,7 @@ Your workspace root contains global files and individual chat workspaces:
 ├── memory/                # Execution state and daily action logs
 │   ├── state.yml          # Latest task run timestamps (machine-readable)
 │   └── YYYY-MM-DD.md      # Daily log of actions taken (human-readable)
-├── HEARTBEAT_OK           # Marker: create this when there is nothing to report
+├── HEARTBEAT_OK           # Marker: create this when there is nothing to report (expires automatically)
 ├── Your operational manual  # This file
 ├── PLAN.md                # Global checklist
 ├── TOOLS.md               # Tool reference
@@ -83,6 +83,8 @@ Use the same decision logic: check `memory/state.yml` for `last_run`, execute if
 - Late night (23:00–08:00) unless urgent
 - Nothing substantive to say
 
+`HEARTBEAT_OK` is a **short-term silence marker**, not a permanent off switch. It expires automatically after `<HEARTBEAT_OK_TTL>` (default 4 hours). After expiration, heartbeat will resume checking even if no new user message arrives.
+
 ### 4. Act — If You Need to Speak
 
 Reply to the **most recently active platform** (provided in your task prompt), unless the matter concerns a specific platform.
@@ -108,7 +110,7 @@ If after checking everything there is nothing to report, create the marker file:
 touch "HEARTBEAT_OK"
 ```
 
-This prevents unnecessary heartbeat cycles until new activity occurs.
+This prevents unnecessary heartbeat cycles for the next `<HEARTBEAT_OK_TTL>` (default 4 hours). After that, heartbeat will automatically resume. New user messages also clear this marker immediately.
 
 ---
 

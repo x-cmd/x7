@@ -105,7 +105,10 @@ ___x_cmd_eget___select_(){
     [ "$___X_CMD_EGET_QUIET" = "0" ] && eget:info "Querying $forge release for $owner/$repo ..."
     local release_json
     release_json="$( ___x_cmd_eget_api_release "$forge" "$owner" "$repo" "$tag" "$pre_release" "$source" )" || {
-        N=eget M="Failed to fetch release info for $owner/$repo" log:ret:1; return;
+        if ___x_cmd_eget_api_is_ratelimited "$forge"; then
+            N=eget M="GitHub API rate-limited (HTTP 403): the unauthenticated quota is 60 req/hr per IP and is exhausted${___X_CMD_EGET_RATE_WAIT}. Set GITHUB_TOKEN (or EGET_GITHUB_TOKEN) for 5000/hr, check 'x eget rate', or retry later / via a proxy." log:ret:1; return
+        fi
+        N=eget M="Failed to fetch release info for $owner/$repo" log:ret:1; return
     }
 
     local version

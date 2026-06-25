@@ -44,7 +44,7 @@ ___x_cmd_agent_job_run(){
             --debug)    debug=1;     shift ;;
 
             --auto)                 mode=auto ;     shift ;;
-            -b|--batch)             mode=batch ;    shift ;;
+            -b|--batch)             mode="batch" ;  shift ;;
             --harness)              harness="$2" ;  arg:2:shift ;;
             --max-iterations)       max_iterations="$2" ;       arg:2:int; arg:2:shift ;;
             --inrow)                inrow="$2" ;                arg:2:int; arg:2:shift ;;
@@ -81,6 +81,19 @@ ___x_cmd_agent_job_run(){
 
     [ -n "$content" ] || N=agent M="No content to run. Please provide agent config file or description." log:ret:64
 
+    [ -n "$jobid" ] || jobid="$(___x_cmd date vlid)"
+
+    local resolved_jobdir
+    resolved_jobdir="$(___x_cmd_agent_job___resolve_dir_ "$jobdir" "$jobid")"
+    if [ -n "$resolved_jobdir" ] && [ -d "$resolved_jobdir" ]; then
+        agent:error "job-id '$jobid' already exists at ${resolved_jobdir}"
+        agent:error "Use 'x agent job retry --job-id $jobid' to restart an existing job"
+        return 1
+    fi
+
+    agent:info "Starting agent job id => $jobid"
+    agent:info "To check status - x agent job status --job-id '$jobid'"
+
     set --
     [ "$mode" = "batch" ] && set -- "$@" "--batch"
     [ -n "$jobdir" ] && set -- "$@" "--job-dir" "$jobdir"
@@ -90,12 +103,6 @@ ___x_cmd_agent_job_run(){
     [ -n "$inrow" ] && set -- "$@" "--inrow" "$inrow"
     [ -n "$continuous" ] && set -- "$@" "--continuous"
     set -- "$@" "$content"
-
-
-    [ -n "$jobid" ] || jobid="$(___x_cmd date vlid)"
-
-    agent:info "Starting agent job id => $jobid"
-    agent:info "To check status: x agent job status --job-id '$jobid'"
 
     ___x_cmd worker run --ns  'x-agent-job' --name "$jobid" -- \
         ___x_cmd_agent_job_exec --job-id "$jobid" "$@"

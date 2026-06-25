@@ -7,6 +7,7 @@ ___x_cmd_claude_tencent(){
     local op="$1"
     case "$op" in
         -h|--help)      ___x_cmd help -m claude tencent; return 0 ;;
+        --minimal-init) ___x_cmd_claude_tencent_minimal_init "$@" ;  return $? ;;
         --cfg)          shift;
                         ___x_cmd_claude_tencent_cfg "$@"; return $? ;;
         --)             shift ;;
@@ -78,6 +79,21 @@ ___x_cmd_claude_tencent_cfg(){
 ___x_cmd_claude_tencent_cur(){
     local X_help_cmd=; X_help_cmd='___x_cmd help -m claude tencent --cur' help:arg:parse
     ___x_cmd_claude_tencent_cfg --current "$@"
+}
+
+___x_cmd_claude_tencent_minimal_init(){
+    local cur_apikey=""
+    if [ -f "$(___x_cmd_claude_tencent_cur --get config)" ]; then
+        ___x_cmd_claude_tencent_cur cur_apikey:=apikey
+    fi
+
+    claude:info "To get tencent coding plan API key -> https://hunyuan.cloud.tencent.com/#/app/subscription"
+
+    ___x_cmd_claude_tencent_cfg___invoke --init ${cur_apikey:+"--ctrl_exit_strategy"} \
+        apikey      "Set up the tencent coding plan API key"                               \
+                    "$cur_apikey"   '=~*' "^[A-Za-z0-9-]+$"
+
+    ___x_cmd_claude_tencent_has_apikey 2>/dev/null >&2
 }
 
 ___x_cmd_claude_tencent_init(){
