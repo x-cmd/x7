@@ -11,6 +11,5 @@ minimax                 # MiniMax - API key
 ali                     # Alibaba Cloud Bailian - API key
 baidu                   # Baidu Qianfan - API key
 tencent                 # Tencent Cloud - API key
-router                  # Claude Code Router - API key
 More                    # More configuration options
 Skip for now            # Skip and exit

@@ -10,6 +10,7 @@ ___x_cmd_minimax_cfg(){
     local op="$1"; shift
     case "$op" in
         -h|--help)      ___x_cmd help -m minimax --cfg ;;
+        --minimal-init) ___x_cmd_minimax_minimal_init "$@" ;;
         *)              ___x_cmd_minimax_cfg___invoke "$op" "$@" ;;
     esac
 }
@@ -18,6 +19,31 @@ ___x_cmd_minimax_cfg(){
 ___x_cmd_minimax_cur(){
     local X_help_cmd=; X_help_cmd='___x_cmd help -m minimax --cur' help:arg:parse
     ___x_cmd_minimax_cfg --current "$@"
+}
+
+___x_cmd_minimax_minimal_init(){
+    local cur_apikey=""
+    if [ -f "$(___x_cmd_minimax_cur --get config)" ]; then
+        ___x_cmd_minimax_cur cur_apikey:=apikey
+    fi
+
+    minimax:info "To get MINIMAX API key -> https://platform.minimaxi.com/user-center/basic-information/interface-key"
+
+    ___x_cmd_minimax_cfg___invoke --init ${cur_apikey:+"--ctrl_exit_strategy"} \
+        apikey      "Set up the MINIMAX API key"                               \
+                    "$cur_apikey"   '=~*' "^[A-Za-z0-9-]+$"
+
+    ___x_cmd_minimax_has_apikey 2>/dev/null >&2
+}
+
+___x_cmd_minimax_has_apikey(){
+    local apikey=
+    ___x_cmd_minimax_cur apikey:= 2>/dev/null
+    [ -n "$apikey" ] || {
+        minimax:error "Please setting up your apikey first ==> 'x minimax --cfg apikey=<your apikey>'"
+        minimax:warn "You can get the MINIMAX API Key from ==>  https://platform.minimaxi.com/user-center/basic-information/interface-key"
+        return 1
+    }
 }
 
 ___x_cmd_minimax_init(){

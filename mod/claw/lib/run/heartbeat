@@ -15,7 +15,7 @@ ___x_cmd_claw_run___agentwork___heartbeat(){
     local heartbeat_tsfile="$___X_CMD_CLAW_BOT_HEARTBEAT/lastheartbeat_ts"
     local lastheartbeat_ts=0;
     [ ! -f "$heartbeat_tsfile" ] || read -r lastheartbeat_ts < "$heartbeat_tsfile"
-    [ "$(( current_ts - lastheartbeat_ts ))" -ge 0 ] || return 0
+    [ "$(( current_ts - lastheartbeat_ts ))" -ge 60 ] || return 0
     ___x_cmd ensurefp "$heartbeat_tsfile"
     printf "%s\n" "$current_ts" > "$heartbeat_tsfile"
 
@@ -25,7 +25,7 @@ ___x_cmd_claw_run___agentwork___heartbeat(){
 
     # Skip if previous heartbeat worker is still running
     if ___x_cmd worker isalive --ns x-claw-default-worker --name x-claw-heartbeat; then
-        claw:info "[HB] Global heartbeat worker (x-claw-heartbeat) still running — skipping this cycle"
+        claw:debug "[HB] Global heartbeat worker (x-claw-heartbeat) still running — skipping this cycle"
         return 0
     fi
 

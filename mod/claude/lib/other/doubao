@@ -114,6 +114,15 @@ ___x_cmd_claude_doubao_init(){
                     "${cur_endpoint:-"$___X_CMD_CLAUDE_DOUBAO_DEFAULT_ENDPOINT"}" || return $?
 }
 
+___x_cmd_claude_doubao_has_apikey(){
+    local apikey=
+    ___x_cmd_claude_doubao_cur apikey:= 2>/dev/null
+    [ -n "$apikey" ] || {
+        claude:error "Please setting up your apikey first ==> 'x claude doubao --cfg apikey=<your apikey>'"
+        claude:warn "You can get the Doubao coding plan API Key from ==>  https://console.volcengine.com/ark/region:ark+cn-beijing/apiKey"
+        return 1
+    }
+}
 
 ___X_CMD_CLAUDE_DOUBAO_CFG_VARLIST="apikey,model,endpoint"
 ___x_cmd_claude_doubao_cfg___invoke(){

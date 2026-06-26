@@ -580,11 +580,11 @@ null
 {
 "cn"
 :
-"默认 TSV 输出，适合管道处理；需要结构化数据用 --json 或 --yml"
+"默认 TSV 输出，各列含义为：name（Worker 名称）、pid（进程 ID）、fingerprint（进程指纹）、stime（启动时间戳）、state（ongoing 运行中 / done 已结束）。\n需要结构化数据可用 --json 或 --yml。\n"
 ,
 "en"
 :
-"TSV by default, pipe-friendly; use --json or --yml for structured data"
+"TSV by default. Columns are: name (worker name), pid (process ID), fingerprint (process fingerprint), stime (start epoch), state (ongoing / done).\nUse --json or --yml for structured output.\n"
 }
 ]
 ,

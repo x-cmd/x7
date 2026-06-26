@@ -11,6 +11,33 @@ ___x_cmd_claw___advise_connect_candidate(){
     }
 }
 
+___x_cmd_claw_connect__check_feishu(){
+    local chatid="$1"
+    local feishu_dir="$___X_CMD_CLAW_BOT_CONNECT_DIR/feishu"
+    [ -d "$feishu_dir" ] || return 0
+
+    # Scenario 1: feishu:groups already active, connecting a specific oc_xxx is redundant
+    if [ "${chatid#oc}" != "$chatid" ] && [ -f "$feishu_dir/groups" ]; then
+        claw:warn "feishu:groups is already active, $chatid is already included -- skipping"
+        return 1
+    fi
+
+    # Scenario 2: specific oc_xxx already active, connecting feishu:groups will cover all
+    if [ "$chatid" = "groups" ]; then
+        local chat_file="" has_specific=0
+        for chat_file in "$feishu_dir"/oc_*; do
+            [ -f "$chat_file" ] || continue
+            has_specific=1
+            local con_chatid="${chat_file##*/}"
+            claw:info "Removing specific group connection $con_chatid -- feishu:groups covers all"
+            ___x_cmd_claw_disconnect "feishu:$con_chatid" || continue
+        done
+        if [ "$has_specific" -eq 1 ]; then
+            claw:info "All specific group connections removed, now connecting feishu:groups"
+        fi
+    fi
+}
+
 ___x_cmd_claw_connect(){
     while [ $# -gt 0 ]; do
         case "$1" in
@@ -28,6 +55,11 @@ ___x_cmd_claw_connect(){
             *:*)    im="${item%%:*}"; chatid="${item#*:}" ;;
             *)      im="$item"; chatid="" ;;
         esac
+
+        if [ "$im" = "feishu" ] && [ -n "$chatid" ]; then
+            ___x_cmd_claw_connect__check_feishu "$chatid" || { shift; continue; }
+        fi
+
         ___x_cmd_claw_run___ensure_im_service "$im" "$chatid" || return $?
         ___x_cmd_claw_run___activate_im "$im" "$chatid"
         shift

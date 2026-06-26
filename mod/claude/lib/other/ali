@@ -115,6 +115,16 @@ ___x_cmd_claude_ali_init(){
 }
 
 
+___x_cmd_claude_ali_has_apikey(){
+    local apikey=
+    ___x_cmd_claude_ali_cur apikey:= 2>/dev/null
+    [ -n "$apikey" ] || {
+        claude:error "Please setting up your apikey first ==> 'x claude ali --cfg apikey=<your apikey>'"
+        claude:warn "You can get the Aliyun coding plan API Key from ==>  https://bailian.console.aliyun.com/cn-beijing/efm/coding_plan?tab=coding-plan#/efm/detail"
+        return 1
+    }
+}
+
 ___X_CMD_CLAUDE_ALIYUN_CFG_VARLIST="apikey,model,endpoint"
 ___x_cmd_claude_ali_cfg___invoke(){
     ___x_cmd_cfgy_obj   \

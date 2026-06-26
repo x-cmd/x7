@@ -115,6 +115,16 @@ ___x_cmd_claude_baidu_init(){
 }
 
 
+___x_cmd_claude_baidu_has_apikey(){
+    local apikey=
+    ___x_cmd_claude_baidu_cur apikey:= 2>/dev/null
+    [ -n "$apikey" ] || {
+        claude:error "Please setting up your apikey first ==> 'x claude baidu --cfg apikey=<your apikey>'"
+        claude:warn "You can get the Baidu coding plan API Key from ==>  https://console.bce.baidu.com/qianfan/resource/subscribe"
+        return 1
+    }
+}
+
 ___X_CMD_CLAUDE_BAIDU_CFG_VARLIST="apikey,model,endpoint"
 ___x_cmd_claude_baidu_cfg___invoke(){
     ___x_cmd_cfgy_obj   \

@@ -11,6 +11,5 @@ minimax                 # MiniMax - API key
 ali                     # 阿里云百炼 - API key
 baidu                   # 百度千帆 - API key
 tencent                 # 腾讯云 - API key
-router                  # Claude Code Router - API key
 More                    # 更多配置选项
 Skip for now            # 暂时跳过

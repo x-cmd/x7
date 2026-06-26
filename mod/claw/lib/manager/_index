@@ -17,8 +17,10 @@ ___x_cmd_claw_manager(){
     local workspace_dir="$___X_CMD_CLAW_BOT_WS/${im}-${chatid}"
 
     local first_prompt=""
-    if [ ! -d "$workspace_dir" ]; then
-        first_prompt="$(___x_cmd_claw_manager_first "$msg")" || return $?
+    # Only show the interactive onboarding menu when the user opens the manager
+    # without a message. One-off requests should be handled directly.
+    if [ -z "$msg" ] && [ ! -d "$workspace_dir" ]; then
+        first_prompt="$(___x_cmd_claw_manager_first)" || return $?
     fi
 
     ___x_cmd_claw_run___ensureagent || return $?

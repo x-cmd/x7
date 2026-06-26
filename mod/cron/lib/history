@@ -53,6 +53,9 @@ A
 ___x_cmd_cron_history___latest_ts(){
     local state_dir="$1"
     local x_
+
+    [ -d "$state_dir" ] || return 0
+
     ___x_cmd fsiter --dir_ "$state_dir"
     printf '%s\n' "$x_" | ___x_cmd_cmds sort -r | head -n 1
 }

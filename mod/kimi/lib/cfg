@@ -10,6 +10,7 @@ ___x_cmd_kimi_cfg(){
     local op="$1"; shift
     case "$op" in
         -h|--help)      ___x_cmd help -m kimi --cfg ;;
+        --minimal-init) ___x_cmd_kimi_minimal_init "$@" ;;
         apikey=*)       ___x_cmd_kimi_cfg___invoke "$op" "$@"
                         ;;
         def_)           ___x_cmd_kimi_def_ "$@" ;;
@@ -56,6 +57,21 @@ ___x_cmd_kimi_init(){
                     "${cur_endpoint:-"$___X_CMD_KIMI_DEFAULT_ENDPOINT"}"|| return $?
 
     ! ___x_cmd_kimi_has_apikey 2>/dev/null >&2 || ___x_cmd chat --setalias kimi kimi
+}
+
+___x_cmd_kimi_minimal_init(){
+    local cur_apikey=""
+    if [ -f "$(___x_cmd_kimi_cur --get config)" ]; then
+        ___x_cmd_kimi_cur cur_apikey:=apikey
+    fi
+
+    kimi:info "To get  Kimi Code API key -> https://www.kimi.com/code/console"
+
+    ___x_cmd_kimi_cfg___invoke --init ${cur_apikey:+"--ctrl_exit_strategy"} \
+        apikey      "Set up the  Kimi Code API key"                               \
+                    "$cur_apikey"   '=~*' "^[A-Za-z0-9-]+$"
+
+    ___x_cmd_kimi_has_apikey 2>/dev/null >&2
 }
 
 ___X_CMD_KIMI_CFG_VARLIST="apikey,model,maxtoken,temperature,seed,proxy,endpoint"

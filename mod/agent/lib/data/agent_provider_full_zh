@@ -11,7 +11,6 @@ claude-minimax          # MiniMax - API key
 claude-ali              # 阿里云百炼 - API key
 claude-baidu            # 百度千帆 - API key
 claude-tencent          # 腾讯云 - API key
-claude-router           # Claude Code Router - API key
 codex                   # OpenAI Codex CLI
 cursor                  # Cursor Agent
 gemini-cli              # Google Gemini CLI

@@ -1,6 +1,6 @@
 21f3e7deeee621900106d05cab36cea6b1d779cc abox main NULL
 959e1da6bba04f689ccbbba5f54ac9e8d950e6f1 advise main NULL
-7dcbbb4bfd9d879fe51d5ed71fbda9e9f45b938f agent main NULL
+e2ece7c639ac93e76f849a73200b083030e36884 agent main NULL
 94eb1cb39d13a2ebcddf07a44b8cf63e7ac687cc aider main NULL
 2abe9fc103abe6597b599c5245efc148c44ee948 alias main NULL
 c8dd6182f3d400215d7292cbfe9c65b73722ab7d api main NULL
@@ -40,8 +40,8 @@ a1d3869eeca8fa3902747f93a3b216505d484e00 cd main NULL
 321115ed39478a07e10da51e866e92d07d74ddfb chat main NULL
 7d81d56bc7c05a11c26e169a2ac8521502810560 choco main NULL
 437d6bacd65476c80cbc41b2197d69307b8e5f82 cht main NULL
-1ddebf579518c6fe2bb084b53173b21ae08de398 claude main NULL
-6ef54d923406dc0c44628418ff9ce0d67d991515 claw main NULL
+09423f60cbdde686aa4b111613628ac5122bc962 claude main NULL
+e9ae79c2a9be134107934c25416bd9815c054eff claw main NULL
 366a11b499b444ed4eb504b5917a139ec8a4d296 clawhub main NULL
 6b5f2398015722a5ddebe0097766aef9763fc219 cleanup main NULL
 bbf9eb7a630da0d2f607edaf1589df0ddfc9a8ae clear main NULL
@@ -60,7 +60,7 @@ ba7ae6f5eeac507454fa09b69850a905828c2793 column main NULL
 a6375201180f68c881b0e64644f3654a3fb564a7 cowsay main NULL
 957cc9da79c604a866a947f8136c71d6eef22010 cp main NULL
 06ebf30449006de1b0a205bc481d5ea8f2f86987 cpu main NULL
-f108763cddaf85d3c5b6573cfbeb746695d94252 cron main NULL
+54be1af791df7f407988651e5a5d1502558a57cb cron main NULL
 9510f34fa52cd2f0b12e7edc0ca588477b799029 crush main NULL
 d03d1501f08d9844ef2f9ad072be7fc73657004c csv main NULL
 c60335dd00dfc8e7740a321b9afac2e1be250e2f curl main NULL
@@ -179,7 +179,7 @@ bc198acec41bd8a30e2239fd55651090bd1d9ac0 jruby main NULL
 8369d976519ce732aa4db0cceeef978581dd296b jsr main NULL
 daeb0d26841d2d2e3efc793710d263757fe0f643 kev main NULL
 ac5b6a80abc9de696ba57b18e7d9c57067c443c3 kill main NULL
-9df062f62db898d203a3dcc72ac907cc904d6d39 kimi main NULL
+6a0d8ac43284d3bfd14d0c7d155dc0fa1dfff79b kimi main NULL
 6a4754d4bf28cdc547362b4ec508c7dc125f3265 kotlin main NULL
 cd640e520f09f8c2b14ac3baa2520ff48b41f12a lang main NULL
 1bc4717a25a043dbe63163e9e3aa2f130a6b8b1e last main NULL
@@ -209,7 +209,7 @@ c7f4869c8555b43fcfd5c4a35ce83fab108225e1 mankier main NULL
 aece1a12351f958cbfa63eb9c68160f550e8a826 mawk main NULL
 cd3d9841c5b289852d8fc7da8b00c49f7c6a5b28 md main NULL
 1c6715556e97d8b0fca05074ef4b2454289b4de3 micro main NULL
-3eacf70ec7f2eba6e7b21120788f6d4081698013 minimax main NULL
+4dd6cb93d9a6eb307662dc79864b7e0b1b3862d8 minimax main NULL
 257390993d6bea26ed437d7df72b5fc6496beacb mirror main NULL
 f84d633348a0d10ed9e03efbc6469ed6c5eca7e3 mistral main NULL
 b26ec05af4364b64537fda6a253424a5bbad48d7 mklink main NULL
@@ -218,7 +218,7 @@ e1d28c546f8b9641a991c5bf2cf6d63863e5daf7 moon main NULL
 10ad5979cd4f945c9b27f6ea0c879a28d347d036 moonshot main NULL
 135770064183fc08ad616c46ded28cd852e2303e mosh main NULL
 18f5d6bd40912034ec9d2fa56d9e8c6c80383d97 msys2 main NULL
-87e6502d4ce750cd22bbd2a961b1806ce6dcfa03 mthreads main NULL
+132657b76b345152d25ce8ae4f2149c433254614 mthreads main NULL
 1c22632ecbb85f0c81f60dc64dca95249fdde67d mv main NULL
 36ac4a1d39c5300a046c11f97efcf9294f01f3dc nano main NULL
 1d0f661953f7fc720be5ff6b6d11d4251f0e8cc8 nanorc main NULL
@@ -376,7 +376,7 @@ a3ab7cc41efce9810296df54fcbd7e339f5f09e3 whisper main NULL
 054bcc12ac82c22fd2d748b90c996f2603284198 wifi main NULL
 18a584641913d29be9638bdb3b9736c68423c93d winget main NULL
 30aaa5542c9cce2695d6acb20c800266378ad74c wkp main NULL
-fc9446b9f322013cb31206842ada6046cc9aa30d worker main NULL
+2bd36f2ade25027e8326d448381b84041a2de329 worker main NULL
 9cfdc653fe0af5023b32d9a52888b36dff827613 writer main NULL
 435bc88244607156858217e44ea7f873f5ccd0b3 ws main NULL
 8627a76ba3d87db1dd3b9558949f8a79ecba0717 wsl main NULL

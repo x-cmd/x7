@@ -9,6 +9,7 @@ ___x_cmd_mthreads_cfg(){
     local op="$1"; shift
     case "$op" in
         -h|--help)      ___x_cmd help -m mthreads --cfg ;;
+        --minimal-init) ___x_cmd_mthreads_minimal_init "$@" ;;
         *)              ___x_cmd_mthreads_cfg___invoke "$op" "$@" ;;
     esac
 }
@@ -37,6 +38,31 @@ ___x_cmd_mthreads_init(){
                             "${cur_model:-"$___X_CMD_MTHREADS_DEFAULT_FIRST_MODEL"}" '=' GLM-4.7  --  \
         endpoint            "Set up the endpoint (optional)"                                \
                             "${cur_endpoint:-"$___X_CMD_MTHREADS_DEFAULT_ENDPOINT"}" || return $?
+}
+
+___x_cmd_mthreads_has_apikey(){
+    local apikey=
+    ___x_cmd_mthreads_cur apikey:= 2>/dev/null
+    [ -n "$apikey" ] || {
+        mthreads:error "Please setting up your apikey first ==> 'x mthreads --cfg apikey=<your apikey>'"
+        mthreads:warn "You can get the MOORE THREADS API Key from ==>  https://coding-plan.kuaecloud.net/apikey"
+        return 1
+    }
+}
+
+___x_cmd_mthreads_minimal_init(){
+    local cur_apikey=""
+    if [ -f "$(___x_cmd_mthreads_cur --get config)" ]; then
+        ___x_cmd_mthreads_cur cur_apikey:=apikey
+    fi
+
+    mthreads:info "To get MOORE THREADS API key -> https://coding-plan.kuaecloud.net/apikey"
+
+    ___x_cmd_mthreads_cfg___invoke --init ${cur_apikey:+"--ctrl_exit_strategy"} \
+        apikey      "Set up the MOORE THREADS API key"                               \
+                    "$cur_apikey"   '=~*' "^[A-Za-z0-9-]+$"
+
+    ___x_cmd_mthreads_has_apikey 2>/dev/null >&2
 }
 
 

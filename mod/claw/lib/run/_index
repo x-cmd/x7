@@ -29,7 +29,7 @@ ___x_cmd_claw_runstart(){(
     claw:info "X-Claw agent runtime active — awaiting instructions and ready to act"
     if ! ___x_cmd worker isalive --ns x-claw-default-worker --name heartbeat-runner; then
         claw:info "[HB] Starting heartbeat worker"
-        ___x_cmd worker run --ns x-claw-default-worker --name heartbeat-runner -- ___x_cmd_claw_run_hearbeatgenerator "$___X_CMD_CLAW_BOT_MQ" "$im"
+        ___x_cmd worker run --ns x-claw-default-worker --name heartbeat-runner -- ___x_cmd_claw_run_hearbeatgenerator "$___X_CMD_CLAW_BOT_MQ"
     fi
 
     (
@@ -46,6 +46,21 @@ ___x_cmd_claw_runstart(){(
 
     ___x_cmd_claw_run___teardown
 )}
+
+___x_cmd_claw_run___stop_all_workers(){
+    local worker_name=""
+    local worker_pid=""
+    local worker_fp=""
+    local worker_stime=""
+    local worker_state=""
+
+    claw:debug "[TEARDOWN] Stopping all ongoing workers in namespace: x-claw-default-worker"
+    ___x_cmd worker ls --ns x-claw-default-worker --tsv | while IFS="$___X_CMD_UNSEENCHAR_HT" read -r worker_name worker_pid worker_fp worker_stime worker_state; do
+        [ "$worker_state" = "ongoing" ] || continue
+        claw:debug "[TEARDOWN] Stopping worker: $worker_name (pid=$worker_pid)"
+        ___x_cmd worker stop --ns x-claw-default-worker --name "$worker_name"
+    done
+}
 
 ___x_cmd_claw_run___teardown(){
     claw:info "Shutting down X-Claw runtime — stopping services and cleaning up state"
@@ -64,11 +79,10 @@ ___x_cmd_claw_run___teardown(){
         ___x_cmd rmrf "$teardown_statefile"
     done
 
-    claw:debug "[HB] Stopping heartbeat worker (namespace: x-claw-default-worker, name: heartbeat-runner)"
-    ___x_cmd worker stop --ns x-claw-default-worker --name heartbeat-runner
-
     claw:debug "[HB] Stopping tailer"
     ___x_cmd tailer stop "$___X_CMD_CLAW_BOT_MQ"
+
+    ___x_cmd_claw_run___stop_all_workers
 }
 
 ___x_cmd_claw_run___agentwork(){
