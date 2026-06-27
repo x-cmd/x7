@@ -76,7 +76,7 @@ ___x_cmd_claw_run___agentwork___handlemsg___weixin(){
     fi
 
     ___x_cmd_claw_weixin_has_unread || return 0
-    claw:info "Weixin unread messages detected, launching agent request"
+    claw:info "[MSG] [weixin:$chatid] Unread messages detected, launching agent request"
     ___x_cmd_claw_run___agentrequest___handlemsg "weixin" "$chatid" "$( ___x_cmd_claw_weixin_get_unread )" "" "$reset_failure"
 }
 
@@ -94,7 +94,7 @@ ___x_cmd_claw_run___agentwork___handlemsg___telegram(){
     ___x_cmd_claw_run___activate_im "telegram" "$chatid" || return $?
 
     ___x_cmd_claw_telegram_has_unread "$chatid" || return 0
-    claw:info "Telegram unread messages detected, launching agent request"
+    claw:info "[MSG] [telegram:$chatid] Unread messages detected, launching agent request"
     ___x_cmd_claw_run___agentrequest___handlemsg "telegram" "$chatid" "$( ___x_cmd_claw_telegram_get_unread "$chatid" )" "" "$reset_failure"
 }
 
@@ -112,7 +112,7 @@ ___x_cmd_claw_run___agentwork___handlemsg___feishu(){
     ___x_cmd_claw_run___activate_im "feishu" "$chatid" || return $?
 
     ___x_cmd_claw_feishu_has_unread "$chatid" || return 0
-    claw:info "Feishu unread messages detected, launching agent request"
+    claw:info "[MSG] [feishu:$chatid] Unread messages detected, launching agent request"
     ___x_cmd_claw_run___agentrequest___handlemsg "feishu" "$chatid" "$( ___x_cmd_claw_feishu_get_unread "$chatid" )" "" "$reset_failure"
 }
 
@@ -130,6 +130,6 @@ ___x_cmd_claw_run___agentwork___handlemsg___qywx(){
     ___x_cmd_claw_run___activate_im "qywx" "$chatid" || return $?
 
     ___x_cmd_claw_qywx_has_unread "$chatid" || return 0
-    claw:info "Qywx unread messages detected, launching agent request"
+    claw:info "[MSG] [qywx:$chatid] Unread messages detected, launching agent request"
     ___x_cmd_claw_run___agentrequest___handlemsg "qywx" "$chatid" "$( ___x_cmd_claw_qywx_get_unread "$chatid" )" "" "$reset_failure"
 }

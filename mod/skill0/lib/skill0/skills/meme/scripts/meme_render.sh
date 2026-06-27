@@ -1,13 +1,13 @@
-#!/usr/bin/env bash
+# Not executable — invoke with bash: bash meme_render.sh <args>
 # meme_render.sh — ImageMagick-based meme renderer
-# Usage: ./meme_render.sh <template.yml|meme-id> "TEXT1" "TEXT2" "TEXT3" [--output out.jpg]
+# Usage: bash meme_render.sh <template.yml|meme-id> "TEXT1" "TEXT2" "TEXT3" [--output out.jpg]
 # Examples:
-#   ./meme_render.sh distracted-boyfriend "ZIG" "ME" "RUST"
-#   ./meme_render.sh path/to/spec.yml "TEXT1" "TEXT2" --output out.jpg
+#   bash meme_render.sh distracted-boyfriend "ZIG" "ME" "RUST"
+#   bash meme_render.sh path/to/spec.yml "TEXT1" "TEXT2" --output out.jpg
 
 set -euo pipefail
 
-TEMPLATE="${1:?Usage: meme_render.sh <template.yml|meme-id> TEXT1 TEXT2 TEXT3 [--output path]}"
+TEMPLATE="${1:?Usage: bash meme_render.sh <template.yml|meme-id> TEXT1 TEXT2 TEXT3 [--output path]}"
 shift
 
 TEXTS=()

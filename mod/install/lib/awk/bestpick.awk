@@ -1,10 +1,10 @@
 
 BEGIN {
     if (PRIORITY == "") {
-        PRIORITY = "x,brew,apt,dnf,yum,apk,pacman," \
+        PRIORITY = "x,eget,brew,apt,dnf,yum,apk,pacman," \
                    "winget,choco,scoop," \
                    "uv,pip,bun,npm,go,cargo," \
-                   "curl,wget,eget," \
+                   "curl,wget" \
                    "pixi,pkgx,asdf"
     }
     n = split(PRIORITY, pri, ",")

@@ -159,13 +159,13 @@ ___x_cmd_claw_weixin_update_offset(){
 
     case "$end_line" in
         *[!0-9]*)
-            claw:warn "Invalid line number '$end_line', defaulting to 0"
+            claw:warn "[MSG] Invalid line number '$end_line', defaulting to 0"
             end_line=0
             ;;
     esac
 
     if [ "$end_line" -gt "$total_line" ]; then
-        claw:warn "Line number $end_line exceeds total lines $total_line, setting to $total_line"
+        claw:warn "[MSG] Line number $end_line exceeds total lines $total_line, setting to $total_line"
         end_line="$total_line"
     fi
 

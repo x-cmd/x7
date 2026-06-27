@@ -72,13 +72,13 @@ ___x_cmd_claw_run___agentrequest___checkworkspaceupdate(){
 
     [ "$workspace_dir/$agents_file" -ot "$___X_CMD_ROOT_METADATA/version_sum" ] || return 0
 
-    claw:info "Workspace template may have been updated: $workspace_dir"
+    claw:debug "[AGENT] Workspace template may have been updated: $workspace_dir"
     ___x_cmd_cmds touch "$workspace_dir/$agents_file"
 
     ___x_cmd_claw_run___agentrequest___createrunonce "$workspace_dir" "$source_dir" "$harness"
     ! ___x_cmd_cmds grep -q "RUNONCE.md" "$workspace_dir/$agents_file" 2>/dev/null || return 0
 
-    claw:info "Appending RUNONCE.md rule to $workspace_dir/$agents_file"
+    claw:debug "[AGENT] Appending RUNONCE.md rule to $workspace_dir/$agents_file"
     {
         printf "\n\n"
         printf "## System One-Time Tasks (RUNONCE.md)\n\n"
@@ -118,7 +118,7 @@ ___x_cmd_claw_run___agentrequest___prepareworkspace(){
     local workspace_dir="$___X_CMD_CLAW_BOT_WS/${im}-${chatid}"
 
     local x_=""; ___x_cmd agent default_harness_ || {
-        claw:error "Failed to get default agent harness"
+        claw:error "[AGENT] Failed to get default agent harness"
         return 1
     }
     local harness="$x_"
@@ -149,7 +149,7 @@ ___x_cmd_claw_run___agentrequest___buildprompt_(){
     ___x_cmd_claw_run___agentrequest___prepareworkspace "$im" "$chatid" "$msg" || return $?
 
     x_=""; ___x_cmd agent default_harness_ || {
-        claw:error "Failed to get default agent harness"
+        claw:error "[AGENT] Failed to get default agent harness"
         return 1
     }
     local harness="$x_"
@@ -180,7 +180,7 @@ ___x_cmd_claw_run___agentrequest___buildprompt_(){
     case "$im" in
         manager)
             prompt="$(___x_cmd_cmds cat "$___X_CMD_ROOT_MOD/claw/lib/data/prompt/msg_manager.md" 2>/dev/null)" || {
-                claw:error "Failed to read msg prompt template for manager"
+                claw:error "[AGENT] Failed to read msg prompt template for manager"
                 return 1
             }
             prompt="$prompt
@@ -201,7 +201,7 @@ ___x_cmd_claw_run___agentrequest___buildprompt_(){
             ;;
         weixin)
             prompt="$(___x_cmd_cmds cat "$___X_CMD_ROOT_MOD/claw/lib/data/prompt/msg_weixin.md" 2>/dev/null)" || {
-                claw:error "Failed to read msg prompt template for weixin"
+                claw:error "[AGENT] Failed to read msg prompt template for weixin"
                 return 1
             }
             prompt="$prompt
@@ -222,7 +222,7 @@ ___x_cmd_claw_run___agentrequest___buildprompt_(){
             ;;
         telegram)
             prompt="$(___x_cmd_cmds cat "$___X_CMD_ROOT_MOD/claw/lib/data/prompt/msg_telegram.md" 2>/dev/null)" || {
-                claw:error "Failed to read msg prompt template for telegram"
+                claw:error "[AGENT] Failed to read msg prompt template for telegram"
                 return 1
             }
             prompt="$prompt
@@ -276,7 +276,7 @@ Use this mapping to recognize speakers in the group, but never expose the full m
             esac
 
             prompt="$(___x_cmd_cmds cat "$___X_CMD_ROOT_MOD/claw/lib/data/prompt/msg_feishu.md" 2>/dev/null)" || {
-                claw:error "Failed to read msg prompt template for feishu"
+                claw:error "[AGENT] Failed to read msg prompt template for feishu"
                 return 1
             }
             prompt="$prompt
@@ -301,7 +301,7 @@ Use this mapping to recognize speakers in the group, but never expose the full m
             ;;
         qywx)
             prompt="$(___x_cmd_cmds cat "$___X_CMD_ROOT_MOD/claw/lib/data/prompt/msg_qywx.md" 2>/dev/null)" || {
-                claw:error "Failed to read msg prompt template for qywx"
+                claw:error "[AGENT] Failed to read msg prompt template for qywx"
                 return 1
             }
             prompt="$prompt
@@ -376,7 +376,7 @@ ___x_cmd_claw_run___agentrequest___notifyerror(){
     fingerprint_short="$(printf "%.8s" "$fingerprint")"
 
     if ! ___x_cmd_claw_run___agentrequest___notifyallowed "$im" "$chatid" "$fingerprint" "$source"; then
-        claw:debug "[$source] Error notification suppressed for $im:$chatid (fingerprint=${fingerprint_short}...) — already notified or rate limited"
+        claw:debug "[AGENT] [$source] Error notification suppressed for $im:$chatid (fingerprint=${fingerprint_short}...) — already notified or rate limited"
         return 0
     fi
 
@@ -403,14 +403,14 @@ ___x_cmd_claw_run___agentrequest___notifyerror(){
             fi
             ;;
         *)
-            claw:warn "[$source] Unknown IM '$im' for error notification to $chatid — skipping"
+            claw:warn "[AGENT] [$source] Unknown IM '$im' for error notification to $chatid — skipping"
             ;;
     esac
 
     if [ "$send_ok" -eq 1 ]; then
         ___x_cmd_claw_run___agentrequest___notifyrecord "$im" "$chatid" "$fingerprint" "exitcode=${exitcode}"
     else
-        claw:warn "[$source] Failed to deliver error notification to $im:$chatid (exitcode=${exitcode}) — fingerprint=${fingerprint_short}... not recorded"
+        claw:warn "[AGENT] [$source] Failed to deliver error notification to $im:$chatid (exitcode=${exitcode}) — fingerprint=${fingerprint_short}... not recorded"
     fi
 }
 
@@ -438,11 +438,11 @@ ___x_cmd_claw_run___agentrequest___checkunavailable(){
     local elapsed=$(( x_ - fail_ts ))
     if [ "$elapsed" -lt "$cooldown" ]; then
         remaining=$(( cooldown - elapsed ))
-        claw:debug "[$source] Agent unavailable for $im:$chatid (fail_count=$fail_count), ${remaining}s cooldown remaining — skipping request"
+        claw:debug "[AGENT] [$source] Agent unavailable for $im:$chatid (fail_count=$fail_count), ${remaining}s cooldown remaining — skipping request"
         return 1
     fi
 
-    claw:info "[$source] Agent cooldown expired for $im:$chatid (fail_count=$fail_count, cooldown=${cooldown}s) — availability restored"
+    claw:info "[AGENT] [$source] Agent cooldown expired for $im:$chatid (fail_count=$fail_count, cooldown=${cooldown}s) — availability restored"
     return 0
 }
 
@@ -469,7 +469,7 @@ ___x_cmd_claw_run___agentrequest___markunavailable(){
     x_=""
     ___x_cmd_claw_run___agentrequest___cooldown_ "$fail_count"
     local cooldown="$x_"
-    claw:error "[$source] Agent marked unavailable for $im:$chatid (fail_count=$fail_count, cooldown=${cooldown}s)"
+    claw:error "[AGENT] [$source] Agent marked unavailable for $im:$chatid (fail_count=$fail_count, cooldown=${cooldown}s)"
 }
 
 ___x_cmd_claw_run___agentrequest___current_time(){

@@ -26,7 +26,7 @@ ___x_cmd_claw_runstart(){(
         exec >>"$logfp" 2>&1
     fi
 
-    claw:info "X-Claw agent runtime active — awaiting instructions and ready to act"
+    claw:info "[MAIN] X-Claw agent runtime active — awaiting instructions and ready to act"
     if ! ___x_cmd worker isalive --ns x-claw-default-worker --name heartbeat-runner; then
         claw:info "[HB] Starting heartbeat worker"
         ___x_cmd worker run --ns x-claw-default-worker --name heartbeat-runner -- ___x_cmd_claw_run_hearbeatgenerator "$___X_CMD_CLAW_BOT_MQ"
@@ -39,7 +39,7 @@ ___x_cmd_claw_runstart(){(
         ___x_cmd tailer run "$___X_CMD_CLAW_BOT_MQ"
     ) || {
         local exitcode="$?"
-        claw:warn "Tailer loop exited with code $exitcode — initiating teardown"
+        claw:warn "[MAIN] Tailer loop exited with code $exitcode — initiating teardown"
         ___x_cmd_claw_run___teardown
         return "$exitcode"
     }
@@ -63,7 +63,7 @@ ___x_cmd_claw_run___stop_all_workers(){
 }
 
 ___x_cmd_claw_run___teardown(){
-    claw:info "Shutting down X-Claw runtime — stopping services and cleaning up state"
+    claw:info "[TEARDOWN] Shutting down X-Claw runtime — stopping services and cleaning up state"
 
     # claw:debug "[HB] Removing connect directory: $___X_CMD_CLAW_BOT_CONNECT_DIR"
     # ___x_cmd rmrf "$___X_CMD_CLAW_BOT_CONNECT_DIR"

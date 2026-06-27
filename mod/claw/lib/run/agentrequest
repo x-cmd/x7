@@ -44,7 +44,7 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
     local prompt="$x_"
 
     local exitcode=0
-    log:sub:init -i "$im:$chatid" claw "Sending request to agent request"
+    log:sub:init -i "$im:$chatid" claw "[AGENT] Sending request to agent request"
 
     local debug_flag="--debug"
     [ -n "$without_debug_log" ] && debug_flag=""
@@ -57,7 +57,7 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
 
     log:sub:fini
     if [ "$exitcode" -eq 0 ]; then
-        claw:info "Successfully processed agent request for $im:$chatid"
+        claw:info "[AGENT] Successfully processed agent request for $im:$chatid"
         x_=""
         ___x_cmd_claw_run___agentrequest___statefile_ "$im" "$chatid" "msg"
         ___x_cmd rmrf "$x_"
@@ -65,7 +65,7 @@ ___x_cmd_claw_run___agentrequest___handlemsg(){
         local agent_request_stderr_file="$workspace_dir/.x-cmd/agent/request/session/metadata/stderr.txt"
         ___x_cmd_claw_run___agentrequest___notifyerror "$im" "$chatid" "$exitcode" "$agent_request_stderr_file" "msg"
 
-        claw:error "Failed to process agent request for $im:$chatid exitcode=$exitcode - marking agent as unavailable"
+        claw:error "[AGENT] Failed to process agent request for $im:$chatid exitcode=$exitcode - marking agent as unavailable"
         ___x_cmd_claw_run___agentrequest___markunavailable "$im" "$chatid" "msg"
         return "$exitcode"
     fi
@@ -161,7 +161,7 @@ The marker expires automatically after $heartbeat_ok_ttl (default 4 hours), afte
 
 
     x_=""; ___x_cmd agent default_harness_ || {
-        claw:error "Failed to get default agent harness"
+        claw:error "[AGENT] Failed to get default agent harness"
         return 1
     }
     local harness="$x_"

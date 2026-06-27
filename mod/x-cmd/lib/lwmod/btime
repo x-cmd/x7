@@ -1,4 +1,26 @@
 
+___x_cmd_btime__iswsl_(){
+    [ -z "$WSL_INTEROP" ] || return 0
+
+    local v_
+    if [ -r /proc/version ]; then
+        while read -r v_; do
+            case "$v_" in
+                *[Mm]icrosoft*|*[Ww][Ss][Ll]2*) return 0 ;;
+            esac
+        done </proc/version
+    fi
+
+    if [ -r /proc/sys/kernel/osrelease ]; then
+        read -r v_ </proc/sys/kernel/osrelease
+        case "$v_" in
+            *[Mm]icrosoft*|*[Ww][Ss][Ll]2*) return 0 ;;
+        esac
+    fi
+
+    return 1
+}
+
 ___x_cmd_btime_(){
     [ -z "$___X_CMD_BTIME" ] || {
         x_="$___X_CMD_BTIME"
@@ -23,7 +45,7 @@ ___x_cmd_btime_(){
         case "$x_" in
             btime*)
                 x_="${x_#* }"
-                if [ -z "$WSL_INTEROP" ]; then
+                if ! ___x_cmd_btime__iswsl_; then
                     ___X_CMD_BTIME="$x_"
                 fi
                 return 0

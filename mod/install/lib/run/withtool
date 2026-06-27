@@ -74,6 +74,7 @@ ___x_cmd_install_withtool___direct(){
             pixi)       printf 'x pixi use %s\n' "$*" ;;
             pkgx)       printf 'x pkgx use %s\n' "$*" ;;
             xpkg|x)     printf 'x pkg use %s\n' "$*" ;;
+            eget)       printf 'x eget use %s\n' "$*" ;;
             pip|uv)     printf 'x uv tool install %s\n' "$*" ;;
             npm|bun)    printf 'x bun add --global %s\n' "$*" ;;
             go)         printf 'x go install %s\n' "$*" ;;
@@ -95,6 +96,7 @@ ___x_cmd_install_withtool___direct(){
             pixi)       ___x_cmd pixi use               "$@"    ;;
             pkgx)       ___x_cmd pkgx use               "$@"    ;;
             xpkg|x)     ___x_cmd pkg  use               "$@"    ;;
+            eget)       ___x_cmd eget use               "$@"    ;;
 
             pip|uv)     ___x_cmd uv tool install        "$@"    ;;
             npm|bun)    ___x_cmd bun add --global       "$@"    ;;

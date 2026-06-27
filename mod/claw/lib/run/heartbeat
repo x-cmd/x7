@@ -121,7 +121,7 @@ ___x_cmd_claw_run___heartbeat___probe(){
 
     # Activity: message worker still running
     if ___x_cmd worker isalive --ns x-claw-default-worker --name "${current_im}-${current_chatid}"; then
-        claw:info "[HB] [$current_im:$current_chatid] Message handler still active"
+        claw:debug "[HB] [$current_im:$current_chatid] Message handler still active"
         ___x_cmd rmrf "$heartbeat_ok_file"
         return 0
     fi

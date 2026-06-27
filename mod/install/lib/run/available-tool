@@ -9,6 +9,7 @@
 
 ___X_CMD_INSTALL_TOOL_LIST="
 x
+eget
 winget
 brew
 apt
@@ -26,7 +27,6 @@ cargo
 go
 curl
 wget
-eget
 pixi
 pkgx
 asdf
