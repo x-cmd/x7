@@ -1418,11 +1418,11 @@ null
 {
 "cn"
 :
-"`x eget use <name>` 不会自动检查升级 —— 首次安装后，重复调用永远走 snap cache，0 网络。\n想拿到最新版本必须显式调用 `x eget upgrade`。\n裸 `x eget upgrade`（无参数、无 --all）会报错以避免误触 —— 要么指定名字，要么显式 --all。\n"
+"`x eget use <name>` 不会自动检查升级 —— 首次安装后，重复调用永远走 snap cache，0 网络。\n想拿到最新版本必须显式调用 `x eget upgrade`。\n裸 `x eget upgrade`（无参数、无 --all）会报错以避免误触 —— 要么指定名字，要么显式 --all。\n`update` 是 `upgrade` 的别名（eget 没有 package index，二者语义无区别）。\n"
 ,
 "en"
 :
-"`x eget use <name>` does NOT auto-check for upgrades — after the first install, repeated calls always hit the snap cache with zero network.\nTo get the latest release you must explicitly run `x eget upgrade`.\nBare `x eget upgrade` (no args, no --all) errors out to avoid footguns — pass either a name or --all.\n"
+"`x eget use <name>` does NOT auto-check for upgrades — after the first install, repeated calls always hit the snap cache with zero network.\nTo get the latest release you must explicitly run `x eget upgrade`.\nBare `x eget upgrade` (no args, no --all) errors out to avoid footguns — pass either a name or --all.\n`update` is an alias for `upgrade` (eget has no package index, so the two are synonymous).\n"
 }
 ]
 ,

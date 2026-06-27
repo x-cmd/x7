@@ -486,7 +486,7 @@ ___x_cmd_claw_run___agentrequest___current_time(){
 # source is "msg" for message agents or "hb" for heartbeat agents.
 ___x_cmd_claw_run___agentrequest___statefile_(){
     local im="${1:-}"; local chatid="${2:-}"; local source="${3:-}"
-    x_="$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable.${source}.${im}-${chatid}"
+    x_="$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable/${source}.${im}-${chatid}"
 }
 
 # Set x_ to the cooldown period (seconds) for a given fail_count.
@@ -510,7 +510,7 @@ ___x_cmd_claw_run___agentrequest___cooldown_(){
 # Set x_ to the notification log path for a chat.
 ___x_cmd_claw_run___agentrequest___notifylog_(){
     local im="$1"; local chatid="$2"
-    x_="$___X_CMD_CLAW_BOT_HEARTBEAT/error_notify.${im}-${chatid}"
+    x_="$___X_CMD_CLAW_BOT_HEARTBEAT/error_notify/${im}-${chatid}"
 }
 
 # Compute a fingerprint for an error message and store it in x_.

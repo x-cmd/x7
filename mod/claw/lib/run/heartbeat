@@ -151,7 +151,7 @@ ___x_cmd_claw_run___heartbeat___weixin_session_check(){
     local has_task=""
     has_task="$(___x_cmd cron ls --ns "x-claw-default" --tsv 2>/dev/null | ___x_cmd_cmds head -n 1)"
     [ -n "$has_task" ] || {
-        claw:debug "[HB] No cron tasks, skipping weixin session reminder"
+        # claw:debug "[HB] No cron tasks, skipping weixin session reminder"
         return 0
     }
 

@@ -98,6 +98,11 @@ ___x_cmd_worker_run(){
     local runnerfile_dir="$dir/runner.$name"
     local runnerfile_pid="$runnerfile_dir/_PIDFILE"
 
+    if ___x_cmd_worker_isalive --ns "$ns" --name "$name" 2>/dev/null; then
+        ___x_cmd log :worker warn "Worker already running -> $ns/$name, stopping it first"
+        ___x_cmd_worker_stop --ns "$ns" --name "$name" || return $?
+    fi
+
     ___x_cmd mkdirp "$runnerfile_dir"
 
     local process_id

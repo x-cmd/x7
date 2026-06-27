@@ -32,7 +32,7 @@ ___x_cmd_eget___main(){
         use)                ___x_cmd_eget_use "$@"; return ;;
         unuse)              ___x_cmd_eget_unuse "$@"; return ;;
         usels)              ___x_cmd_eget_usels "$@"; return ;;
-        upgrade)            ___x_cmd_eget_upgrade "$@"; return ;;
+        upgrade|update)     ___x_cmd_eget_upgrade "$@"; return ;;
         cache)              ___x_cmd_eget_cache "$@"; return ;;
         extract)            ___x_cmd_eget_subcmd_extract "$@"; return ;;
         verify)             ___x_cmd_eget_subcmd_verify "$@"; return ;;

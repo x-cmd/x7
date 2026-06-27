@@ -45,10 +45,12 @@ ___x_cmd_claw_run_status(){
 
     local agent_unavailable_count=0
     local status_statefile
-    for status_statefile in "$___X_CMD_CLAW_BOT_HEARTBEAT"/agent_unavailable.*; do
-        [ -e "$status_statefile" ] || continue
-        agent_unavailable_count=$(( agent_unavailable_count + 1 ))
-    done
+    if [ -d "$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable" ]; then
+        for status_statefile in "$___X_CMD_CLAW_BOT_HEARTBEAT"/agent_unavailable/*; do
+            [ -e "$status_statefile" ] || continue
+            agent_unavailable_count=$(( agent_unavailable_count + 1 ))
+        done
+    fi
 
     local last_tick="" lastheartbeat_ts=0
     local heartbeat_tsfile="$___X_CMD_CLAW_BOT_HEARTBEAT/lastheartbeat_ts"

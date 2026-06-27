@@ -58,7 +58,7 @@ ___x_cmd_claw_run___stop_all_workers(){
     ___x_cmd worker ls --ns x-claw-default-worker --tsv | while IFS="$___X_CMD_UNSEENCHAR_HT" read -r worker_name worker_pid worker_fp worker_stime worker_state; do
         [ "$worker_state" = "ongoing" ] || continue
         claw:debug "[TEARDOWN] Stopping worker: $worker_name (pid=$worker_pid)"
-        ___x_cmd worker stop --ns x-claw-default-worker --name "$worker_name"
+        ___x_cmd worker stop --ns x-claw-default-worker --name "$worker_name" 2>/dev/null
     done
 }
 
@@ -68,19 +68,12 @@ ___x_cmd_claw_run___teardown(){
     # claw:debug "[HB] Removing connect directory: $___X_CMD_CLAW_BOT_CONNECT_DIR"
     # ___x_cmd rmrf "$___X_CMD_CLAW_BOT_CONNECT_DIR"
 
-    claw:debug "[HB] Removing agent unavailable state files from $___X_CMD_CLAW_BOT_HEARTBEAT"
-    local teardown_statefile
-    for teardown_statefile in "$___X_CMD_CLAW_BOT_HEARTBEAT"/agent_unavailable.*; do
-        [ -e "$teardown_statefile" ] || continue
-        ___x_cmd rmrf "$teardown_statefile"
-    done
-    for teardown_statefile in "$___X_CMD_CLAW_BOT_HEARTBEAT"/error_notify.*; do
-        [ -e "$teardown_statefile" ] || continue
-        ___x_cmd rmrf "$teardown_statefile"
-    done
+    claw:debug "[HB] Removing agent unavailable state directories from $___X_CMD_CLAW_BOT_HEARTBEAT"
+    ___x_cmd rmrf "$___X_CMD_CLAW_BOT_HEARTBEAT/agent_unavailable"
+    ___x_cmd rmrf "$___X_CMD_CLAW_BOT_HEARTBEAT/error_notify"
 
     claw:debug "[HB] Stopping tailer"
-    ___x_cmd tailer stop "$___X_CMD_CLAW_BOT_MQ"
+    ___x_cmd tailer stop "$___X_CMD_CLAW_BOT_MQ" 2>/dev/null
 
     ___x_cmd_claw_run___stop_all_workers
 }
