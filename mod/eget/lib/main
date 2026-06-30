@@ -16,6 +16,14 @@ ___X_CMD_EGET_TMP="$___X_CMD_ROOT_TMP/eget"
 ___X_CMD_EGET_DATA="$___X_CMD_ROOT_DATA/eget"
 ___x_cmd mkdirp "${___X_CMD_EGET_DATA}" "${___X_CMD_EGET_TMP}"
 
+# Newline constant for list accumulators in detect/extract. $NL is NOT a
+# shell builtin (dash has no such variable); left unset, expressions like
+# ${list:+$NL} join entries with NO separator, so multi-entry candidate
+# lists collapse into one mangled line whose basename is the last file —
+# breaking Tier-1 name matching on multi-binary archives.
+NL='
+'
+
 ___x_cmd_eget___main(){
     [ "$#" -gt 0 ] || set -- --help
 

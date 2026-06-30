@@ -1,5 +1,6 @@
 BEGIN {
     color = ENVIRON["CLAW_LOG_COLOR"]
+    claw_log_debug = ENVIRON["CLAW_LOG_DEBUG"]
     if (color) {
         c_reset = "\033[0m"
         c_ts    = "\033[90m"
@@ -13,6 +14,7 @@ BEGIN {
 
     active = 0
     for (i = 1; i <= n; i++) {
+        last_ts[i] = 0
         if (read_entry(i) > 0) active++
     }
 
@@ -54,35 +56,73 @@ function colorize_line(line,    level, c_level, mstart, mlen) {
     return line
 }
 
-function read_entry(idx,    line, first) {
-    entries[idx] = ""
-    ts[idx] = 0
+function is_log_entry(line) {
+    return match(line, /^[ ]*- ([0-9]+ )?[IEWD][|][^:]*: /)
+}
 
-    if (pending[idx] != "") {
-        first = pending[idx]
-        pending[idx] = ""
-    } else if ((getline first < file[idx]) <= 0) {
-        return 0
-    }
+function is_claw_debug_entry(line,    mstart) {
+    if (claw_log_debug) return 0
+    mstart = is_log_entry(line)
+    if (!mstart) return 0
+    match(substr(line, mstart), /[IEWD]\|[^:]*:/)
+    return substr(line, mstart + RSTART - 1, RLENGTH) == "D|claw:"
+}
 
-    while (match(first, /^(  - |- )[0-9]+ /) == 0) {
-        if ((getline first < file[idx]) <= 0) {
+function entry_has_timestamp(line) {
+    return match(line, /^[ ]+- [0-9]+ /)
+}
+
+function read_entry(idx,    line, first, ts_, msg_) {
+    while (1) {
+        entries[idx] = ""
+        ts[idx] = 0
+
+        if (pending[idx] != "") {
+            first = pending[idx]
+            pending[idx] = ""
+        } else if ((getline first < file[idx]) <= 0) {
             return 0
         }
-    }
 
-    match(first, /[0-9]+/)
-    ts[idx] = substr(first, RSTART, RLENGTH) + 0
-    entries[idx] = colorize_entry(date_timestamp_to_iso(ts[idx]), substr(first, RSTART + RLENGTH + 1))
-
-    while ((getline line < file[idx]) > 0) {
-        if (match(line, /^(  - |- )[0-9]+ /) > 0) {
-            pending[idx] = line
-            break
+        while (is_log_entry(first) == 0) {
+            if ((getline first < file[idx]) <= 0) return 0
         }
-        entries[idx] = entries[idx] colorize_line(line) "\n"
+
+        if (match(first, /[0-9]+/)) {
+            ts_ = substr(first, RSTART, RLENGTH) + 0
+            last_ts[idx] = ts_
+        } else {
+            ts_ = last_ts[idx]
+        }
+
+        if (is_claw_debug_entry(first)) {
+            while ((getline line < file[idx]) > 0) {
+                if (is_log_entry(line) > 0) {
+                    pending[idx] = line
+                    break
+                }
+            }
+            continue
+        }
+
+        if (entry_has_timestamp(first)) {
+            match(first, /[0-9]+/)
+            msg_ = substr(first, RSTART + RLENGTH + 1)
+            entries[idx] = colorize_entry(date_timestamp_to_iso(ts_), msg_)
+        } else {
+            entries[idx] = colorize_line(first) "\n"
+        }
+
+        while ((getline line < file[idx]) > 0) {
+            if (is_log_entry(line) > 0) {
+                pending[idx] = line
+                break
+            }
+            entries[idx] = entries[idx] colorize_line(line) "\n"
+        }
+        ts[idx] = ts_
+        return 1
     }
-    return 1
 }
 
 function find_min(    i, min_idx) {

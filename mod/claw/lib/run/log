@@ -2,10 +2,12 @@
 
 ___x_cmd_claw_log(){
     local ts=""
+    local CLAW_LOG_DEBUG=""
     while [ $# -gt 0 ]; do
         case "$1" in
             --help|-h)  ___x_cmd help -m claw log "$@" ; return 0 ;;
             --ts)       ts="$2" ; arg:2:shift ;;
+            --debug)    CLAW_LOG_DEBUG=1 ; shift ;;
             --get-recent-ts_)
                         ___x_cmd_claw_log___get_recent_ts_; return ;;
             *)          break ;;
@@ -77,7 +79,7 @@ ___x_cmd_claw_log___recent(){
     done <<A
 $x_
 A
-    ___x_cmd_cmds tail -F -q -n 0 "$@" | CLAW_LOG_COLOR="$CLAW_LOG_COLOR" ___x_cmd cawk -i -m date -f "$___X_CMD_ROOT_MOD/claw/lib/awk/log_output_realtime.awk"
+    ___x_cmd_cmds tail -F -q -n 0 "$@" | CLAW_LOG_COLOR="$CLAW_LOG_COLOR" CLAW_LOG_DEBUG="$CLAW_LOG_DEBUG" ___x_cmd cawk -i -m date -f "$___X_CMD_ROOT_MOD/claw/lib/awk/log_output_realtime.awk"
 }
 
 ___x_cmd_claw_log___output_all(){
@@ -95,5 +97,5 @@ ___x_cmd_claw_log___output_all(){
 
     [ -n "$filelist" ] || return 0
 
-    filelist="$filelist" CLAW_LOG_COLOR="$CLAW_LOG_COLOR" ___x_cmd awk0 -m date -f "$___X_CMD_ROOT_MOD/claw/lib/awk/log_merge.awk"
+    filelist="$filelist" CLAW_LOG_COLOR="$CLAW_LOG_COLOR" CLAW_LOG_DEBUG="$CLAW_LOG_DEBUG" ___x_cmd awk0 -m date -f "$___X_CMD_ROOT_MOD/claw/lib/awk/log_merge.awk"
 }

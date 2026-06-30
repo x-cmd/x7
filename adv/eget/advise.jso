@@ -750,11 +750,11 @@ null
 {
 "cn"
 :
-"持续低速多少秒后断开走 mirror（默认 30）"
+"持续低速多少秒后断开走 mirror（默认 5）"
 ,
 "en"
 :
-"Seconds of sustained slow speed before aborting to mirror (default 30)"
+"Seconds of sustained slow speed before aborting to mirror (default 5)"
 }
 ,
 "#1"

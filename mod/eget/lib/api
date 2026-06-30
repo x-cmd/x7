@@ -188,10 +188,12 @@ ___x_cmd_eget_api_download(){
     # Speed-based stall detection: if average speed drops below
     # EGET_SPEED_LIMIT bytes/sec for EGET_SPEED_TIME seconds, curl aborts
     # with exit 28. Caller catches this and retries via eget mirror.
-    # Defaults are tuned to catch genuinely stalled downloads (not slow
-    # but progressing ones).
+    # 5s window: a github.com direct link that can't sustain 50 KB/s for 5s
+    # is effectively stalled — switch to the mirror fast rather than making
+    # the user wait the old 30s. A false positive just routes through the
+    # mirror, which is the reliable path anyway.
     local speed_limit="${EGET_SPEED_LIMIT:-50000}"
-    local speed_time="${EGET_SPEED_TIME:-30}"
+    local speed_time="${EGET_SPEED_TIME:-5}"
 
     local fetch_url="$url"
     ___x_cmd_eget_api___ghproxy_ "$url"

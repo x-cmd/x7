@@ -194,6 +194,15 @@ EOF
 $found
 EOF
         fi
+        local _files
+        _files="$( find "$srcdir" -type f 2>/dev/null )"
+        if [ -n "$_files" ]; then
+            eget:warn "No executable files found in archive. Contents:"
+            printf "%s\n" "$_files" | while IFS= read -r _f; do
+                [ -n "$_f" ] && printf "  - %s\n" "$( basename "$_f" )"
+            done
+            eget:info "Pick a specific file with: x eget <target> --file '<pattern>'"
+        fi
         N=eget M="No executable files found in archive" log:ret:1
         return
     fi
