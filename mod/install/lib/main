@@ -38,8 +38,8 @@ ___x_cmd_install___main(){
         --best|--sys|--withtool)
                             ___x_cmd_install_"${op#--}" "$@" ;;
         --|--run)           ___x_cmd_install_run        "$@" ;;
-        
-        --default)          ___x_cmd_install___auto     "$@" ;;
+
+        --auto)             ___x_cmd_install___auto     "$@" ;;
 
         *)                  ___x_cmd_install_best "$op"  "$@" ;;
     esac

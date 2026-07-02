@@ -54,21 +54,29 @@ function is_claw_debug(line,    mstart) {
 }
 
 function entry_has_timestamp(line) {
-    return match(line, /^[ ]+- [0-9]+ /)
+    return match(line, /^[ ]*- [0-9]+ /)
 }
 
 {
     if (is_log_entry($0)) {
+        # extract the leading timestamp only, not digits inside the message
+        if (match($0, /^[ ]*- [0-9]+ /) > 0) {
+            tmp = substr($0, RSTART, RLENGTH)
+            gsub(/[^0-9]/, "", tmp)
+            ts = tmp
+        }
+
         if (is_claw_debug($0)) {
             skip = 1
         } else {
             skip = 0
-            if (entry_has_timestamp($0)) {
-                match($0, /[0-9]+/)
-                ts = substr($0, RSTART, RLENGTH)
-                printf("%s\n", colorize_entry(date_timestamp_to_iso(ts), substr($0, RSTART + RLENGTH + 1)))
+            if (match($0, /^[ ]*- [0-9]+ /) > 0) {
+                printf("%s\n", colorize_entry(date_timestamp_to_iso(ts), substr($0, RSTART + RLENGTH)))
             } else {
-                printf("%s\n", colorize_line($0))
+                # module line without its own timestamp (2-space older format or
+                # 4-space nested format): promote to a standalone log entry
+                match($0, /^[ ]*- ([0-9]+ )?/)
+                printf("%s\n", colorize_entry(date_timestamp_to_iso(ts), substr($0, RSTART + RLENGTH)))
             }
         }
     } else {
