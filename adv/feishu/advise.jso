@@ -810,6 +810,42 @@ true
 }
 }
 ,
+"--messageid"
+:
+{
+"#synopsis"
+:
+"<message_id>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"目标消息 ID；指定后将以回复该消息的形式发送（走回复接口，此时可省略 --chatid）"
+,
+"en"
+:
+"Target message ID; when set, delivers as a reply to that message (uses the reply API; --chatid can be omitted)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"目标消息 ID"
+,
+"en"
+:
+"Target message ID"
+}
+}
+}
+,
 "--fp"
 :
 {
@@ -841,6 +877,20 @@ true
 "en"
 :
 "Send text message to specified chat"
+}
+,
+{
+"cmd"
+:
+"x feishu abot send --text --messageid <message_id> \"Hello\""
+,
+"cn"
+:
+"指定 --messageid 时改为回复该消息"
+,
+"en"
+:
+"With --messageid, reply to that message instead of sending"
 }
 ,
 {
@@ -910,6 +960,42 @@ true
 "en"
 :
 "Chat ID"
+}
+}
+}
+,
+"--messageid"
+:
+{
+"#synopsis"
+:
+"<message_id>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"目标消息 ID；指定后将以回复该消息的形式发送（走回复接口，此时可省略 --chatid）"
+,
+"en"
+:
+"Target message ID; when set, delivers as a reply to that message (uses the reply API; --chatid can be omitted)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"目标消息 ID"
+,
+"en"
+:
+"Target message ID"
 }
 }
 }
@@ -1018,6 +1104,42 @@ true
 }
 }
 ,
+"--messageid"
+:
+{
+"#synopsis"
+:
+"<message_id>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"目标消息 ID；指定后将以回复该消息的形式发送（走回复接口，此时可省略 --chatid）"
+,
+"en"
+:
+"Target message ID; when set, delivers as a reply to that message (uses the reply API; --chatid can be omitted)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"目标消息 ID"
+,
+"en"
+:
+"Target message ID"
+}
+}
+}
+,
 "--fp"
 :
 {
@@ -1118,6 +1240,42 @@ true
 "en"
 :
 "Chat ID"
+}
+}
+}
+,
+"--messageid"
+:
+{
+"#synopsis"
+:
+"<message_id>"
+,
+"#desc"
+:
+{
+"cn"
+:
+"目标消息 ID；指定后将以回复该消息的形式发送（走回复接口，此时可省略 --chatid）"
+,
+"en"
+:
+"Target message ID; when set, delivers as a reply to that message (uses the reply API; --chatid can be omitted)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"目标消息 ID"
+,
+"en"
+:
+"Target message ID"
 }
 }
 }
