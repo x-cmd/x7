@@ -4,7 +4,7 @@
 # First-version scope:
 #   - Only intercept the FIRST unread message of a chat worker cycle.
 #   - Only handle single chats (DM); group chats are rejected by default.
-#   - Supported commands: /help, /harness <name>, /model (alias of /harness).
+#   - Supported commands: /help, /status, /harness <name>, /model (alias of /harness).
 
 ___x_cmd_claw_run___slash___im_valid(){
     case "$1" in
@@ -117,9 +117,23 @@ ___x_cmd_claw_run___slash___handle_help(){
     local chatid="$2"
     local msg="Available slash commands:
 /help - show this message
+/status - show status of this chat and the agent
 /harness <harness-name> - switch the default agent harness (e.g., claude, codex)
 /model <harness-name> - alias of /harness"
     ___x_cmd_claw_run___slash___send "$im" "$chatid" "$msg"
+}
+
+___x_cmd_claw_run___slash___handle_status(){
+    local im="$1"
+    local chatid="$2"
+
+    local status_text
+    status_text="$(___x_cmd_claw_run_status___chat "$im" "$chatid")" || {
+        ___x_cmd_claw_run___slash___send "$im" "$chatid" "Unable to collect status."
+        return 1
+    }
+
+    ___x_cmd_claw_run___slash___send "$im" "$chatid" "$status_text"
 }
 
 ___x_cmd_claw_run___slash___handle_harness(){
@@ -157,6 +171,8 @@ ___x_cmd_claw_run___slash___dispatch(){
     case "$cmd" in
         help|commands)
             ___x_cmd_claw_run___slash___handle_help "$im" "$chatid" ;;
+        status)
+            ___x_cmd_claw_run___slash___handle_status "$im" "$chatid" ;;
         harness|model)
             ___x_cmd_claw_run___slash___handle_harness "$im" "$chatid" "$args" ;;
         *)
