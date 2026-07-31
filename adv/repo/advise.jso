@@ -67,7 +67,31 @@ null
 }
 ,
 {
+"x repo prepare <id>..."
+:
+null
+}
+,
+{
 "x repo update <id>..."
+:
+null
+}
+,
+{
+"x repo wt <id> <branch>"
+:
+null
+}
+,
+{
+"x repo wt ls <id>"
+:
+null
+}
+,
+{
+"x repo wt rm <id> <branch>"
 :
 null
 }
@@ -231,6 +255,20 @@ null
 {
 "cmd"
 :
+"x repo which x-bash/repo@feat~auth"
+,
+"cn"
+:
+"which 的 wt 模式: @<wtname> 直接解析到对应 worktree 路径（wtname 可以是 branch / tag / SHA / agent 名 / issue id）"
+,
+"en"
+:
+"which in wt mode: @<wtname> resolves directly to the worktree path (wtname can be branch / tag / SHA / agent name / issue id)"
+}
+,
+{
+"cmd"
+:
 "x repo cd x-bash/repo"
 ,
 "cn"
@@ -297,6 +335,62 @@ null
 :
 "Batch: resolve each id and clone-or-update in turn"
 }
+,
+{
+"cmd"
+:
+"x repo prepare x-bash/repo x-bash/wsl"
+,
+"cn"
+:
+"多仓工作面准备: 每个 id clone 或 update 一次，并打印解析路径供 ../<sibling> 引用"
+,
+"en"
+:
+"Multi-repo workspace setup: clone-or-update each id and print resolved paths for ../<sibling> references"
+}
+,
+{
+"cmd"
+:
+"x repo wt create x-bash/repo feat/auth"
+,
+"cn"
+:
+"在 feat/auth 分支上创建 worktree（分支不存在则从 HEAD 新建，存在则 attach）"
+,
+"en"
+:
+"Create a worktree on branch feat/auth (creates new branch from HEAD if absent, attaches otherwise)"
+}
+,
+{
+"cmd"
+:
+"x repo wt ls x-bash/repo"
+,
+"cn"
+:
+"列出该仓库的所有 worktree（裸库 + 默认 + 额外的）"
+,
+"en"
+:
+"List all worktrees of the repo (bare + default + extras)"
+}
+,
+{
+"cmd"
+:
+"x repo wt rm x-bash/repo feat/auth"
+,
+"cn"
+:
+"优雅删除 worktree（走 git worktree remove，bare 的 worktrees/ 登记表同步更新）"
+,
+"en"
+:
+"Graceful remove (git worktree remove; bare's worktrees/ registry stays in sync)"
+}
 ]
 ,
 "#subcmd:common"
@@ -314,7 +408,11 @@ null
 ,
 "tmux"
 ,
+"prepare"
+,
 "update"
+,
+"wt"
 ]
 ,
 "ls"
@@ -697,6 +795,150 @@ null
 "en"
 :
 "Show update help"
+}
+}
+}
+,
+"prepare"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"为多仓协作准备本地工作面；每个 id clone 或 update 一次，并打印解析路径"
+,
+"en"
+:
+"Prepare a multi-repo local workspace; clone-or-update each id and print resolved paths"
+}
+,
+"id..."
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"每个 id 经 update_one 处理；输出每行一个解析后的主路径，供 ../<sibling> 引用"
+,
+"en"
+:
+"Each id goes through update_one; output is one resolved main path per line, ready for ../<sibling> references"
+}
+}
+,
+"-h"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看 prepare 帮助"
+,
+"en"
+:
+"Show prepare help"
+}
+}
+}
+,
+"wt"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"管理 worktree：创建（create）、列出（ls）、删除（rm）；不参与 git 操作本身"
+,
+"en"
+:
+"Manage worktrees: create, list (ls), remove (rm); does not perform git operations itself"
+}
+,
+"create"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"为 id 在 <branch> 上创建 worktree；分支不存在则从 HEAD 新建，存在则 attach"
+,
+"en"
+:
+"Create a worktree for id on <branch>; new branch from HEAD if absent, attach otherwise"
+}
+}
+,
+"ls"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"列出该仓库的所有 worktree（含 bare、默认 wt、额外的 wt）"
+,
+"en"
+:
+"List all worktrees of the repo (bare, default, and extras)"
+}
+}
+,
+"rm"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"优雅删除 worktree（走 git worktree remove，bare 的 worktrees/ 登记表同步更新；不要手动 rm -rf）"
+,
+"en"
+:
+"Graceful remove via git worktree remove (syncs bare's worktrees/ registry; never rm -rf directly)"
+}
+}
+,
+"<id> <branch>"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"默认子命令：等价于 wt create <id> <branch>"
+,
+"en"
+:
+"Default subcommand: equivalent to wt create <id> <branch>"
+}
+}
+,
+"-h"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看 wt 帮助"
+,
+"en"
+:
+"Show wt help"
 }
 }
 }
