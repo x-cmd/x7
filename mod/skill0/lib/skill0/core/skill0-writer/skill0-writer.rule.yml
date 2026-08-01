@@ -227,12 +227,12 @@ sw-1000-no-orphan-docs:
   desc:
   - "Every .md under lib/skill0/{core,data,it,life}/ that is NOT a graph root (SKILL.md / SKILL.cn.md) must be referenced from at least one SKILL.md or SKILL.cn.md."
   - "References count: Markdown link, bare filename, or relative path."
-  - "Bidirectional: each sub-file (CLEANUP, ANALYTICS, TROUBLESHOOTING, references/*) must link back to its parent SKILL.md, AND SKILL.md must link to each sub-file it has."
+  - "Forward link required (no orphans). Back-link to parent SKILL.md is **optional** — a usecase file's parent is implicit by its path, and a 'Parent skill' back-link in every sub-file is decorative noise. The forward link is what makes the file discoverable; the back-link does not."
   - "SKILL.md and SKILL.cn.md are roots of the doc graph — they are exempt from the parent-link requirement but still must reference their sub-files."
   - "Orphans are invisible to agents — they'll never be read."
   tldr:
   - wrong: "references/GUIDELINES.md exists in meme/ but no SKILL.md links to it"
-  - right: "SKILL.md links to references/GUIDELINES.md, and references/GUIDELINES.md links back to ../SKILL.md"
+  - right: "SKILL.md links to references/GUIDELINES.md; GUIDELINES.md does not need a back-link to ../SKILL.md"
 
 sw-1100-no-description-body-duplication:
   name: body leading paragraph must not restate YFM description

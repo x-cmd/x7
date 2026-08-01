@@ -24,9 +24,9 @@ ___x_cmd_repo_ls___raw(){
 }
 
 ___x_cmd_repo_ls___xsv(){
-    ___x_cmd_repo_ls___raw | awk \
-        -v sep="${SEP-$(printf '\t')}" \
-        -f "${___X_CMD_REPO_AWK_LIB:-lib/awk}/ls-fmt.awk"
+    ___x_cmd_repo_ls___raw | ___x_cmd_cmds awk      \
+        -v sep="${SEP:-"$___X_CMD_UNSEENCHAR_HT"}"    \
+        -f "${___X_CMD_ROOT_MOD}/repo/awk/ls-fmt.awk"
 }
 
 ___x_cmd_repo_ls___tsv(){
@@ -34,7 +34,7 @@ ___x_cmd_repo_ls___tsv(){
 }
 
 ___x_cmd_repo_ls___csv(){
-    SEP=","    ___x_cmd_repo_ls___xsv
+    SEP=","     ___x_cmd_repo_ls___xsv
 }
 
 ___x_cmd_repo_ls___app(){

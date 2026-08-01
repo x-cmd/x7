@@ -36,7 +36,3 @@ The collector should keep them as separate sets, not merge into one tag bag.
 
 - Singular keys `category` / `tag` are also recognised and equivalent to the plural forms — scan all four.
 - Top-level custom fields are accessible from templates → remaining fields become ontology properties directly.
-
----
-
-Parent skill: [../SKILL.md](../SKILL.md)

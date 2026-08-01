@@ -37,7 +37,3 @@ The same project may mix: YAML uses `---`, TOML uses `+++`, JSON uses `{}`. Dete
 - `aliases`: `[]string`, redirect paths. **Not alias semantics** (do not confuse with Obsidian's `aliases`).
 - `weight`: int, sort weight.
 - `draft`: bool, draft flag → maps to ontology `status`.
-
----
-
-Parent skill: [../SKILL.md](../SKILL.md)

@@ -1,6 +1,6 @@
 # shellcheck shell=dash disable=2120
 
-xrc:mod:lib date    epochminus
+xrc:mod:lib date    epochminus  tz
 
 ___x_cmd_date___main(){
     [ $# -gt 0 ]    ||      set -- iso
@@ -12,13 +12,29 @@ ___x_cmd_date___main(){
         iso|iso0|\
         timestamp|timestamp_|\
         iso2ts|iso2ts_|\
-        counter|diff|epochminus)
+        counter|diff|epochminus|\
+        tz2z|tz2z_|tz2colonz|tz2colonz_|\
+        fromepoch|fromepoch_)
                             ___x_cmd_date_"$op"     "$@" ;;
         *)                  N=date M="Unknown subcmd -> $op" log:ret:64 ;;
     esac
 }
 
+# iso8601. TODO: zone is xx:yy , not xxyy. But BSD and busybox doesn't support %:z
 ___x_cmd_date_iso(){
+    if [ $# -eq 0 ]; then
+        ___x_cmd_cmds date +"%Y-%m-%dT%H:%M:%S%z"
+    else
+        ___x_cmd_date_util___ts2str "$1" "%Y-%m-%dT%H:%M:%S%z"
+    fi
+}
+
+___x_cmd_date_iso0(){
+    TZ=UTC0 ___x_cmd_date_iso
+}
+
+# rfc-3339 , TODO: zone is xx:yy , not xxyy. But BSD and busybox doesn't support %:z
+___x_cmd_date_rfc(){
     if [ $# -eq 0 ]; then
         ___x_cmd_cmds date +"%Y-%m-%d %H:%M:%S%z"
     else
@@ -26,8 +42,13 @@ ___x_cmd_date_iso(){
     fi
 }
 
-___x_cmd_date_iso0(){
-    TZ=UTC0 ___x_cmd_date_iso
+# RFC 2822 / RFC 5322
+___x_cmd_date_email(){
+    if [ $# -eq 0 ]; then
+        ___x_cmd_cmds date -R
+    else
+        ___x_cmd_date_util___ts2str "$1" "%a, %d %b %Y %H:%M:%S %z"
+    fi
 }
 
 ___x_cmd_date_str(){
@@ -36,6 +57,35 @@ ___x_cmd_date_str(){
     else
         ___x_cmd_date_util___ts2str "$1" "%Y-%m-%d_%H:%M:%S%z"
     fi
+}
+
+___x_cmd_date_localtime_tz_(){
+    [ -z "$___X_CMD_DATE_LOCALTIME_TZ_" ]  ||  {
+        x_="$___X_CMD_DATE_LOCALTIME_TZ_"
+        return 0
+    }
+
+    x_=UTC0
+
+    [ ! -f "$___X_CMD_ROOT_DATA/data/localtime_tz" ] || {
+        if [ -f /etc/localtime ] && [ "$___X_CMD_ROOT_DATA/data/localtime_tz" -nt /etc/localtime ]; then
+            read -r x_<"$___X_CMD_ROOT_DATA/data/localtime_tz"
+            return 0
+        fi
+    }
+
+    if [ -f /etc/localtime ]; then
+        { read -r x_ && read -r x_; }</etc/localtime
+    fi
+
+    ___X_CMD_DATE_LOCALTIME_TZ_="$x_"
+    printf "%s\n" "$x_">"$___X_CMD_DATE_LOCALTIME_TZ_"
+}
+
+___x_cmd_date_localtime_tz(){
+    local x_
+    ___x_cmd_date_localtime_tz_ || return $?
+    printf "%s\n" "$x_"
 }
 
 ___x_cmd_date_varname(){
@@ -178,5 +228,175 @@ ___x_cmd_date_util___ts2str(){
     case "$x_" in
         darwin)  ___x_cmd_cmds date -j -f "%s" "$ts" +"$format" ;;
         *)       ___x_cmd_cmds date +"$format" -d @"$ts" ;;
+    esac
+}
+
+___x_cmd_date_fromepoch(){
+    local x_
+    ___x_cmd_date_fromepoch_ "$@" || return $?
+    printf "%s\n" "$x_"
+}
+
+___x_cmd_date_fromepoch_(){
+    local fmt=iso
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help)  ___x_cmd help -m date epochparser "$@" ; return 0 ;;
+            # --fmt %Y-%m-%d %H:%M:%S.%:z'
+            --rfc)      fmt=rfc ;           shift ;;
+            # --fmt '%Y-%m-%dT%H:%M:%S.%:z'
+            --iso)      fmt=iso ;           shift ;;
+            --email)    fmt='%a, %d %b %Y %H:%M:%S %z' ; shift ;;
+            --fmt)      fmt="$2" ;          shift 2 ;;
+            +*)         fmt="${1#'+'}" ;    shift ;;
+            --)         shift ;;
+            -*)         N=date M="Unknown param -> $1" log:ret:64 ;;
+            *)          break ;;
+        esac
+    done
+
+    local epoch="$1"
+    [ -n "$epoch" ] || {
+        ___x_cmd epoch get_
+        epoch="$x_"
+    }
+
+    local year month day hour minute second
+    local epochday _tod _frac
+    local _z _era _doe _yoe _doy _mp _wd _name
+
+    # Strip sub-second portion (we don't expose ms in iso/rfc defaults).
+    case "$epoch" in
+        *.*)             epoch="${epoch%.*}" ;;
+        ?????????????*)  epoch="${epoch%???}" ;;
+        *)               ;;
+    esac
+
+    ___x_cmd_date_tz2offset_
+    epoch=$((epoch + x_))
+
+    if [ "$epoch" -lt 0 ] && [ "$((epoch % 86400))" -ne 0 ]; then
+        epochday=$((epoch / 86400 - 1))
+    else
+        epochday=$((epoch / 86400))
+    fi
+    _tod=$((epoch - epochday * 86400))
+    second=$((_tod % 60))
+    minute=$((_tod / 60 % 60))
+    hour=$((_tod / 3600))
+
+    _z=$((epochday + 719468))
+    if [ "$_z" -ge 0 ]; then
+        _era=$((_z / 146097))
+    else
+        _era=$(( (_z - 146096) / 146097 ))
+    fi
+    _doe=$((_z - _era * 146097))
+    _yoe=$(( (_doe - _doe/1460 + _doe/36524 - _doe/146096) / 365 ))
+    year=$((_yoe + _era * 400))
+    _doy=$((_doe - (365*_yoe + _yoe/4 - _yoe/100)))
+    _mp=$(( (5*_doy + 2) / 153 ))
+    day=$((_doy - (153*_mp + 2)/5 + 1))
+    if [ "$_mp" -lt 10 ]; then
+        month=$((_mp + 3))
+    else
+        month=$((_mp - 9))
+    fi
+    if [ "$month" -le 2 ]; then
+        year=$((year + 1))
+    fi
+
+    case "$fmt" in
+        rfc)
+            ___x_cmd_date_tz2colonz_
+            # Inline '%04d-%02d-%02d %02d:%02d:%02d%s' to skip the
+            # $(printf ...) subshell that ___x_cmd printf_ would fork.
+            # No ms — matches `x date rfc` (which uses date +%Y-%m-%d %H:%M:%S%z).
+            while [ "${#year}"   -lt 4 ]; do year="0$year"   ; done
+            case "$month"  in ?) month="0$month"  ;; esac
+            case "$day"    in ?) day="0$day"    ;; esac
+            case "$hour"   in ?) hour="0$hour"   ;; esac
+            case "$minute" in ?) minute="0$minute" ;; esac
+            case "$second" in ?) second="0$second" ;; esac
+            x_="${year}-${month}-${day} ${hour}:${minute}:${second}${x_}"
+            ;;
+        iso)
+            ___x_cmd_date_tz2colonz_
+            # No ms — matches `x date iso` (date +%Y-%m-%dT%H:%M:%S%z).
+            while [ "${#year}"   -lt 4 ]; do year="0$year"   ; done
+            case "$month"  in ?) month="0$month"  ;; esac
+            case "$day"    in ?) day="0$day"    ;; esac
+            case "$hour"   in ?) hour="0$hour"   ;; esac
+            case "$minute" in ?) minute="0$minute" ;; esac
+            case "$second" in ?) second="0$second" ;; esac
+            x_="${year}-${month}-${day}T${hour}:${minute}:${second}${x_}"
+            ;;
+
+        *)
+            local ans=""
+            while [ -n "$fmt" ]; do
+                case "$fmt" in
+                    '%Y'*)     while [ "${#year}"   -lt 4 ]; do year="0$year"   ; done
+                               ans="${ans}$year"  ; fmt="${fmt#%Y}"  ;;
+                    '%m'*)     case "$month"  in ?) month="0$month"  ;; esac
+                               ans="${ans}$month" ; fmt="${fmt#%m}"  ;;
+                    '%d'*)     case "$day"    in ?) day="0$day"    ;; esac
+                               ans="${ans}$day"   ; fmt="${fmt#%d}"  ;;
+                    '%H'*)     case "$hour"   in ?) hour="0$hour"   ;; esac
+                               ans="${ans}$hour"  ; fmt="${fmt#%H}"  ;;
+                    '%M'*)     case "$minute" in ?) minute="0$minute" ;; esac
+                               ans="${ans}$minute" ; fmt="${fmt#%M}"  ;;
+                    '%S'*)     case "$second" in ?) second="0$second" ;; esac
+                               ans="${ans}$second" ; fmt="${fmt#%S}"  ;;
+
+                    # Weekday / month names: compute lazily, only on demand.
+                    '%a'*)     _wd=$(( ((epochday + 4) % 7 + 7) % 7 ))
+                               case "$_wd" in
+                                   0) _name="Sun" ;; 1) _name="Mon" ;; 2) _name="Tue" ;;
+                                   3) _name="Wed" ;; 4) _name="Thu" ;; 5) _name="Fri" ;;
+                                   6) _name="Sat" ;;
+                               esac
+                               ans="${ans}$_name" ; fmt="${fmt#%a}"  ;;
+                    '%A'*)     _wd=$(( ((epochday + 4) % 7 + 7) % 7 ))
+                               case "$_wd" in
+                                   0) _name="Sunday"    ;; 1) _name="Monday"    ;;
+                                   2) _name="Tuesday"   ;; 3) _name="Wednesday" ;;
+                                   4) _name="Thursday"  ;; 5) _name="Friday"    ;;
+                                   6) _name="Saturday"  ;;
+                               esac
+                               ans="${ans}$_name" ; fmt="${fmt#%A}"  ;;
+                    '%b'*)     case "$month" in
+                                   1) _name="Jan" ;; 2) _name="Feb" ;; 3) _name="Mar" ;;
+                                   4) _name="Apr" ;; 5) _name="May" ;; 6) _name="Jun" ;;
+                                   7) _name="Jul" ;; 8) _name="Aug" ;; 9) _name="Sep" ;;
+                                   10) _name="Oct" ;; 11) _name="Nov" ;; 12) _name="Dec" ;;
+                               esac
+                               ans="${ans}$_name" ; fmt="${fmt#%b}"  ;;
+                    '%B'*)     case "$month" in
+                                   1) _name="January"   ;; 2) _name="February"  ;;
+                                   3) _name="March"     ;; 4) _name="April"     ;;
+                                   5) _name="May"       ;; 6) _name="June"      ;;
+                                   7) _name="July"      ;; 8) _name="August"    ;;
+                                   9) _name="September" ;; 10) _name="October"   ;;
+                                   11) _name="November"  ;; 12) _name="December"  ;;
+                               esac
+                               ans="${ans}$_name" ; fmt="${fmt#%B}"  ;;
+
+                    '%z'*)     ___x_cmd_date_tz2z_
+                               ans="${ans}$x_" ; fmt="${fmt#%z}"  ;;
+                    '%:z'*)    ___x_cmd_date_tz2colonz_
+                               ans="${ans}$x_" ; fmt="${fmt#%:z}" ;;
+
+                    '%%'*)     ans="${ans}%"      ; fmt="${fmt#%%}"  ;;
+
+                    # Literal text up to the next % (preserve the % for next iter).
+                    *'%'*)     ans="${ans}${fmt%%'%'*}"
+                               fmt="${fmt#"${fmt%%'%'*}"}"
+                               ;;
+                    *)         ans="${ans}$fmt"  ; fmt="" ;;
+                esac
+            done
+            x_="$ans"
+            ;;
     esac
 }

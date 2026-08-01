@@ -80,7 +80,7 @@ Collect two types: **root links** (entry points like `llms.txt`, docs index) and
 ## Soft caveats (judgment calls)
 
 - **Sub-files (CLEANUP.md, references/*)** can be longer than SKILL.md but first 20 lines still carry the load (same pyramid).
-- **MUST** keep SKILL.md ↔ sub-file links symmetric — every sub-file (CLEANUP, ANALYTICS, TROUBLESHOOTING, references/*) must be linked from its parent SKILL.md, and SKILL.md must link to each. Enforced by `sw-1000-no-orphan-docs` in [skill0-writer.rule.yml](skill0-writer.rule.yml).
+- **MUST** link to every sub-file from its parent SKILL.md (forward link required). Back-link to parent SKILL.md from a sub-file is **optional** — usecase files reference the parent implicitly by their path. Enforced by `sw-1000-no-orphan-docs` in [skill0-writer.rule.yml](skill0-writer.rule.yml).
 - **Speculation** — state tested facts, or label "untested".
 - **Emojis** unless the skill topic requires them.
 

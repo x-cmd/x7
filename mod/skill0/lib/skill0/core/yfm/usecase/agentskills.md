@@ -43,7 +43,3 @@ The spec recommends key names be "reasonably unique" to avoid collisions, so gen
 - `name`: 1-64 chars, `[a-z0-9-]`, no leading/trailing hyphens, no consecutive `--`, must equal parent directory name
 - `description`: 1-1024 chars
 - `compatibility`: ≤500 chars
-
----
-
-Parent skill: [../SKILL.md](../SKILL.md)

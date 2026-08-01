@@ -52,7 +52,3 @@ Obsidian does not support nested properties. Agent Skills mandates that extensio
 
 - Property values **do not render markdown** (intentional).
 - A property name has the same type across the entire vault — type is vault-level, not file-level. Infer types vault-wide.
-
----
-
-Parent skill: [../SKILL.md](../SKILL.md)

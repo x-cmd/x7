@@ -8,7 +8,7 @@ ___x_cmd_agent_setup_addprompt(){
     [ -e "${dir}" ]   ||  {
         local dir_tilde="~${dir#$HOME}"
         local fp_tilde="~${fp#"$HOME"}"
-        agent:info "Skip adding prompt into [file=$fp_tilde] because [dir=$dir_tilde] is not existed."
+        agent:info "Skip adding prompt to [file=$fp_tilde] because [dir=$dir_tilde] does not exist."
         return 1
     }
 
@@ -81,9 +81,9 @@ A
         [ -d "$dir" ] || [ -n "$all" ] || {
             local dir_tilde="~${dir#"$HOME"}"
             agent:info \
-                --tip-1 "If you want to mkdir if directory unexisted -> x agent setup --all" \
-                --tip-1 "Create folder manually, then run the command againt -> x mkdirp $dir_tilde && x agent setup" \
-                "Skip skill link for agent directory doesnot exist -> $dir_tilde"
+                --tip-1 "To create missing directories automatically -> x agent setup --all" \
+                --tip-1 "Or create the folder manually, then run again -> x mkdirp $dir_tilde && x agent setup" \
+                "Skip skill link because agent directory does not exist -> $dir_tilde"
             continue
         }
         ___x_cmd_agent_setup___addskill_ln "$dir"
@@ -166,13 +166,13 @@ ___x_cmd_agent_setup___prepare_prompt_(){
     # x_='Use x-cmd to access meta skills like `x skill0`, or install 1000+ packages without sudo via `x install`.'
 
     x_="$x_"'x-cmd is a large POSIX shell library organized by modules; try `x help` or `x <mod> -h` for more options.'
-    x_="$x_"'Invoke `x` as an external command, or load it as a shell function: `___X_CMD_CLAUDECODE_READY=1 . ~/.x-cmd.root/X`.'
+    x_="$x_"' Invoke `x` as an external command, or load it as a shell function: `___X_CMD_CLAUDECODE_READY=1 . ~/.x-cmd.root/X`.'
 
-    x_="$x_"'x-cmd comes with skill0, which contains 20+ subskills focused on meta knowledge and global preferences.'
+    x_="$x_"' x-cmd installs skill0 into your agent skills folder — referred to below as <SKILL0-FOLDER>. The following subskills are HIGHLY recommended.'
 
     # TODO: env control to activate the repos in need.
-    x_="$x_"'Use ./core/repo subskill with `x repo --help` for cross-agent repo sharing (avoids duplicate downloads) — repos at `~/.x-repo/<provider>/<owner>/<repo>`, named worktrees under `~/.x-repo/<provider>/<owner>/<repo>@<wtname>`.'
-    x_="$x_"'Use ./core/rule subskill with `x rule --help` for rule-based compliance checks (find problems, ensure minimum quality) via *.rule.yml files.'
+    x_="$x_"' Use the repo subskill (<SKILL0-FOLDER>/core/repo/SKILL.md) with `x repo --help` for cross-agent repo sharing (avoids duplicate downloads) — repos at `~/.x-repo/<provider>/<owner>/<repo>`, named worktrees under `~/.x-repo/<provider>/<owner>/<repo>@<wtname>`.'
+    x_="$x_"' Use the rule subskill (<SKILL0-FOLDER>/core/rule/SKILL.md) with `x rule --help` for rule-based compliance checks (find problems, ensure minimum quality) via *.rule.yml files.'
 
-    x_="$x_"'Learn more at https://www.x-cmd.com/llms.txt or the ./core/x-cmd subskill.'
+    x_="$x_"' Learn more at https://www.x-cmd.com/llms.txt or in <SKILL0-FOLDER>/core/x-cmd/SKILL.md.'
 }

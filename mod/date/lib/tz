@@ -1,0 +1,122 @@
+
+# shellcheck shell=dash
+# output +0800
+___x_cmd_date_tz2z(){
+    local x_
+    ___x_cmd_date_tz2z_ "$@" || return $?
+    printf "%s\n" "$x_"
+}
+
+___x_cmd_date_tz2z_(){
+    ___x_cmd_date_tz2offset_ "$1"
+    local a=$x_
+
+    if [ "$x_" -gt 0 ]; then
+        a=$x_
+    else
+        a=$(( - x_ ))
+    fi
+
+    local hh=$(( a / 3600 ))
+    [ $hh -gt 9 ]   ||  hh=0$hh
+    local mm=$(( (a % 3600) / 60 ))
+    [ $mm -gt 9 ]   ||  mm=0$mm
+
+    if [ "$x_" -ge 0 ]; then
+        x_=+${hh}${TZ_SEP}${mm}
+    else
+        x_=-${hh}${TZ_SEP}${mm}
+    fi
+}
+
+# output +08:00
+___x_cmd_date_tz2colonz(){
+    local x_
+    ___x_cmd_date_tz2colonz_ "$@" || return $?
+    printf "%s\n" "$x_"
+}
+
+___x_cmd_date_tz2colonz_(){
+    ___x_cmd_date_tz2offset_ "$1"
+    TZ_SEP=: ___x_cmd_date_tz2z_ "$1"
+}
+
+# Convert a TZ label to a UTC offset (seconds). See story file.
+___x_cmd_date_tz2offset_(){
+    x_="$1"
+    [ -n "$x_" ] || ___x_cmd_date_localtime_tz_
+
+    case "$x_" in
+        ""|UTC|UTC0|GMT|UCT|"+0000"|"-0000")
+                                        x_=0; return ;;
+        # East of UTC
+        CST-8|CST-8CDT|HKT-8)            x_=28800; return ;;  # +08
+        JST-9|KST-9)                     x_=32400; return ;;  # +09
+        IST-5:30)                        x_=19800; return ;;  # +05:30
+        CET-1|CET-1CEST)                 x_=3600;  return ;;  # +01
+        EET-2|EET-2EEST)                 x_=7200;  return ;;  # +02
+        # West of UTC
+        NST3:30NDT)                      x_=-12600; return ;;  # -03:30
+        EST5|EST5EDT)                    x_=-18000; return ;;  # -05
+        CST6|CST6CDT)                    x_=-21600; return ;;  # -06
+        MST7|MST7MDT)                    x_=-25200; return ;;  # -07
+        PST8|PST8PDT)                    x_=-28800; return ;;  # -08
+        AKST9AKDT)                       x_=-32400; return ;;  # -09
+        HST10)                           x_=-36000; return ;;  # -10
+    esac
+
+    local _rest _sign=1 _h=0 _m=0 _s=0
+    case "$x_" in
+        +[0-9]*)  _rest="${x_#+}" ;;
+        -[0-9]*)  _sign=-1; _rest="${x_#-}" ;;
+        [a-zA-Z][a-zA-Z][a-zA-Z]*)
+            _rest="${x_#???}"
+            case "$_rest" in
+                -*) _sign=1;  _rest="${_rest#-}" ;;
+                *)  _sign=-1 ;;
+            esac
+            ;;
+        *) x_=0; return ;;
+    esac
+
+    case "$_rest" in
+        [0-9][0-9][0-9][0-9]*)
+            _h="${_rest%"${_rest#??}"}"; _rest="${_rest#??}" ;;
+        [0-9][0-9]*)
+            _h="${_rest%"${_rest#??}"}"; _rest="${_rest#??}" ;;
+        [0-9]*)
+            _h="${_rest%"${_rest#?}"}";  _rest="${_rest#?}"  ;;
+    esac
+    case "$_h" in 0[0-9]) _h="${_h#0}" ;; esac
+    _h=$((_h))
+
+    case "$_rest" in
+        :*)
+            _rest="${_rest#:}"
+            if [ "${#_rest}" -ge 2 ]; then
+                _m="${_rest%"${_rest#??}"}"; _rest="${_rest#??}"
+            fi
+            case "$_rest" in
+                :*)
+                    _rest="${_rest#:}"
+                    if [ "${#_rest}" -ge 2 ]; then
+                        _s="${_rest%"${_rest#??}"}"; _rest="${_rest#??}"
+                    fi
+                    ;;
+            esac
+            ;;
+        [0-9][0-9][0-9][0-9]*)
+            _m="${_rest%"${_rest#??}"}"; _rest="${_rest#??}"
+            _s="${_rest%"${_rest#??}"}"; _rest="${_rest#??}"
+            ;;
+        [0-9][0-9]*)
+            _m="${_rest%"${_rest#??}"}"; _rest="${_rest#??}"
+            ;;
+    esac
+    case "$_m" in 0[0-9]) _m="${_m#0}" ;; esac
+    case "$_s" in 0[0-9]) _s="${_s#0}" ;; esac
+    _m=$((_m)); _s=$((_s))
+
+    x_=$((_sign * (_h * 3600 + _m * 60 + _s)))
+}
+
