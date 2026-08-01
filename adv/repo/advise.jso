@@ -353,15 +353,15 @@ null
 {
 "cmd"
 :
-"x repo wt create x-bash/repo feat/auth"
+"x repo wt x-bash/repo feat/auth"
 ,
 "cn"
 :
-"在 feat/auth 分支上创建 worktree（分支不存在则从 HEAD 新建，存在则 attach）"
+"默认形式: 在 feat/auth 分支上创建或 attach worktree（分支不存在则从 HEAD 新建，存在则 attach）"
 ,
 "en"
 :
-"Create a worktree on branch feat/auth (creates new branch from HEAD if absent, attaches otherwise)"
+"Default form: create-or-attach a worktree on branch feat/auth (new branch from HEAD if absent, attaches otherwise)"
 }
 ,
 {
@@ -371,11 +371,11 @@ null
 ,
 "cn"
 :
-"列出该仓库的所有 worktree（裸库 + 默认 + 额外的）"
+"列出该仓库的所有 worktree（裸库 + 默认 wt + 额外的 wt）"
 ,
 "en"
 :
-"List all worktrees of the repo (bare + default + extras)"
+"List all worktrees of the repo (bare + default wt + extras)"
 }
 ,
 {
@@ -390,6 +390,20 @@ null
 "en"
 :
 "Graceful remove (git worktree remove; bare's worktrees/ registry stays in sync)"
+}
+,
+{
+"cmd"
+:
+"x repo which x-bash/repo@feat~auth"
+,
+"cn"
+:
+"复盘 wt 路径: x repo which <id>@<wtname> 直接解析到对应 worktree"
+,
+"en"
+:
+"Reuse a wt path: x repo which <id>@<wtname> resolves directly to the worktree"
 }
 ]
 ,
@@ -855,12 +869,96 @@ null
 {
 "cn"
 :
-"管理 worktree：创建（create）、列出（ls）、删除（rm）；不参与 git 操作本身"
+"管理 worktree：创建或 attach（默认）、显式 create、列出（ls）、删除（rm）；仅做 worktree 层面的包装，不参与 git fetch/merge"
 ,
 "en"
 :
-"Manage worktrees: create, list (ls), remove (rm); does not perform git operations itself"
+"Manage worktrees: create-or-attach (default), explicit create, list (ls), remove (rm); a thin worktree-only wrapper, does not fetch or merge"
 }
+,
+"#synopsis"
+:
+[
+{
+"x repo wt <id> <branch>"
+:
+null
+}
+,
+{
+"x repo wt create <id> <branch>"
+:
+null
+}
+,
+{
+"x repo wt ls <id>"
+:
+null
+}
+,
+{
+"x repo wt rm <id> <branch>"
+:
+null
+}
+]
+,
+"#subcmd:wt"
+:
+[
+"create"
+,
+"ls"
+,
+"rm"
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x repo wt x-bash/repo feat/auth"
+,
+"cn"
+:
+"默认: 在 feat/auth 上创建或 attach（缺则从 HEAD 新建，存在则 attach）"
+,
+"en"
+:
+"Default: create-or-attach on feat/auth (new branch from HEAD if absent, attaches otherwise)"
+}
+,
+{
+"cmd"
+:
+"x repo wt ls x-bash/repo"
+,
+"cn"
+:
+"列出 worktree: 裸库 + 默认 wt + 额外的 wt"
+,
+"en"
+:
+"List worktrees: bare + default wt + extras"
+}
+,
+{
+"cmd"
+:
+"x repo wt rm x-bash/repo feat/auth"
+,
+"cn"
+:
+"优雅删除: git worktree remove；不要手动 rm -rf"
+,
+"en"
+:
+"Graceful remove via git worktree remove; never rm -rf directly"
+}
+]
 ,
 "create"
 :
@@ -870,44 +968,11 @@ null
 {
 "cn"
 :
-"为 id 在 <branch> 上创建 worktree；分支不存在则从 HEAD 新建，存在则 attach"
+"为 <id> 在 <branch> 上创建 worktree（显式 create）；等价于默认形式 x repo wt <id> <branch>"
 ,
 "en"
 :
-"Create a worktree for id on <branch>; new branch from HEAD if absent, attach otherwise"
-}
-}
-,
-"ls"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"列出该仓库的所有 worktree（含 bare、默认 wt、额外的 wt）"
-,
-"en"
-:
-"List all worktrees of the repo (bare, default, and extras)"
-}
-}
-,
-"rm"
-:
-{
-"#desc"
-:
-{
-"cn"
-:
-"优雅删除 worktree（走 git worktree remove，bare 的 worktrees/ 登记表同步更新；不要手动 rm -rf）"
-,
-"en"
-:
-"Graceful remove via git worktree remove (syncs bare's worktrees/ registry; never rm -rf directly)"
-}
+"Create a worktree for <id> on <branch> (explicit form); equivalent to the default x repo wt <id> <branch>"
 }
 ,
 "<id> <branch>"
@@ -918,11 +983,11 @@ null
 {
 "cn"
 :
-"默认子命令：等价于 wt create <id> <branch>"
+"<id> 可带 / 前缀走 fuzzywhich；<branch> 缺则从 HEAD 新建，存在则 attach"
 ,
 "en"
 :
-"Default subcommand: equivalent to wt create <id> <branch>"
+"<id> accepts /-prefixed fuzzy query; <branch> is created from HEAD if absent, attached otherwise"
 }
 }
 ,
@@ -934,11 +999,108 @@ null
 {
 "cn"
 :
-"查看 wt 帮助"
+"查看 create 帮助"
 ,
 "en"
 :
-"Show wt help"
+"Show create help"
+}
+}
+}
+,
+"ls"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"列出 <id> 仓库的所有 worktree（裸库 + 默认 wt + 额外的 wt；裸库自己不出现在 git worktree list 里）"
+,
+"en"
+:
+"List all worktrees of <id> (bare + default wt + extras; the bare itself is not in git worktree list)"
+}
+,
+"#id"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"<id> 可带 / 前缀走 fuzzywhich"
+,
+"en"
+:
+"<id> accepts /-prefixed fuzzy query"
+}
+}
+,
+"-h"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看 ls 帮助"
+,
+"en"
+:
+"Show ls help"
+}
+}
+}
+,
+"rm"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"优雅删除 <id> 上名为 <branch> 的 worktree；走 git worktree remove，bare 的 worktrees/ 登记表自动同步；不要手动 rm -rf"
+,
+"en"
+:
+"Graceful remove of the worktree for <branch> on <id>; uses git worktree remove and syncs bare's worktrees/ registry; never rm -rf directly"
+}
+,
+"<id> <branch>"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"<id> 可带 / 前缀走 fuzzywhich；<branch> 必须对应已 attach 的 worktree，否则 git 报错"
+,
+"en"
+:
+"<id> accepts /-prefixed fuzzy query; <branch> must match an attached worktree, otherwise git errors"
+}
+}
+,
+"-h"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"查看 rm 帮助"
+,
+"en"
+:
+"Show rm help"
+}
 }
 }
 }

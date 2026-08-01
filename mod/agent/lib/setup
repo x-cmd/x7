@@ -57,7 +57,7 @@ ___x_cmd_agent_setup(){
 
     # local prompt='Use x-cmd skill to access 300+ shell utilities, 1000+ packages—all without sudo, and discover various safe, human-vetted skills. Learn more: https://www.x-cmd.com/llms.txt'
 
-    local x_
+    local x_=""
     ___x_cmd_agent_setup___prepare_prompt_
     local prompt="$x_"
 
