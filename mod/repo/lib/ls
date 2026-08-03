@@ -26,7 +26,7 @@ ___x_cmd_repo_ls___raw(){
 ___x_cmd_repo_ls___xsv(){
     ___x_cmd_repo_ls___raw | ___x_cmd_cmds awk      \
         -v sep="${SEP:-"$___X_CMD_UNSEENCHAR_HT"}"    \
-        -f "${___X_CMD_ROOT_MOD}/repo/awk/ls-fmt.awk"
+        -f "${___X_CMD_ROOT_MOD}/repo/lib/awk/ls-fmt.awk"
 }
 
 ___x_cmd_repo_ls___tsv(){

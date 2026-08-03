@@ -53,9 +53,7 @@ ___x_cmd_date_dump_(){
             --go)       ___x_cmd_date_parsegofmt_ "$2"; fmt="$x_";      arg:2:shift ;;
             --offset)   offset="$2" ;                                   arg:2:shift ;;
 
-            -v)         value="$2" ;                                    arg:2:shift
-                        ___x_cmd_date_value2second_ "$value" ; value="$x_"
-                        ;;
+            -v)         value="$2" ;                                    arg:2:shift ;;
 
             +*)         fmt="${1#'+'}" ;                                shift ;;
             --)         shift ;;
@@ -99,12 +97,13 @@ ___x_cmd_date_dump_(){
 
     # -v delta: add integer-second offset to the (now-integer) epoch.
     # fractional part is unaffected — value is always a whole-second delta.
-    [ -n "$value" ] && epoch=$((epoch + value))
 
-    [ "$fmt" != second ] || {
-        x_=$epoch
-        return 0
-    }
+    if [ -z "$value" ]; then
+        [ "$fmt" != second ] || {
+            x_=$epoch
+            return 0
+        }
+    fi
 
     local year month day hour minute second
     local epochday _tod _frac
@@ -147,6 +146,24 @@ ___x_cmd_date_dump_(){
     fi
     if [ "$month" -le 2 ]; then
         year=$((year + 1))
+    fi
+
+    if [ -n "$value" ]; then
+        local x_year
+        local x_month
+        local x_day
+        local x_hour
+        local x_minute
+        local x_second
+
+        ___x_cmd humantime tovar__ "$value"
+
+        year=$(( year + x_year ))
+        month=$(( month + x_month ))
+        day=$(( day + x_day ))
+        hour=$(( hour + x_hour ))
+        minute=$(( minute + x_minute ))
+        second=$(( second + x_second ))
     fi
 
     case "$fmt" in
