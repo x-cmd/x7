@@ -1,0 +1,150 @@
+# shellcheck shell=dash
+
+# macOS / Darwin-specific keychain backend. All paths use Apple
+# `security` CLI tool.
+
+# macOS `security -w` round-trip limitation: when the stored password
+# contains a newline or other non-printable byte, `-w` does NOT echo the
+# raw bytes back — it prints a hex representation instead. So
+#   printf 'line1\nline2' | x keyring set foo
+#   x keyring get foo            #  → "6c696e65310a6c696e6532" (wrong)
+#
+# Workaround: use `-g` (not `-w`) and parse the leading
+# `password: 0xHEX` token, which the CLI always emits when the stored
+# value is a binary blob (regardless of printability). For pure
+# printable UTF-8 passwords, Apple stores them as a CFString and `-g`
+# emits `password: "string"` (no hex) — handle both shapes.
+#
+# The set path is unchanged (`-w`): Apple decides at storage time
+# whether to keep the password as a CFString or a CFData blob.
+#
+# Trade-off: x keyring entries whose password was printable look the
+# same under raw `security -w` as before; entries with non-printable
+# bytes show as hex. That's a property of the macOS CLI — there's no
+# flag for round-tripping arbitrary bytes without parsing `-g` output.
+# The ctypes-based python keyring backend works around this via
+# `SecItemCopyMatching` directly (with codesign + ctypes overhead).
+# Not worth that cost for shell.
+#
+# NB: `security -g` writes the `password:` line to STDERR. Merge stderr
+# when reading, otherwise `2>/dev/null` silently throws the secret away.
+#
+# NUL bytes are out of scope: `$()` truncates at NUL.
+
+___x_cmd_keyring___keychain_get_(){
+
+    local data
+    data="$({
+        security find-generic-password -s "$1" -a "$2" -g 2>&1 \
+            | awk -f "$___X_CMD_ROOT_MOD/keyring/lib/awk/darwin.decode.awk"
+    })" || return $?
+
+    {
+        local format
+        read -r format
+
+        case "$format" in
+            binary)     x_="$(___x_cmd_cmds xxd -r -p ; printf "|" )"
+                        x_="${x_%|*}"
+                        ;;
+            string)     x_="$( ___x_cmd_cmds cat )"
+                        ;;
+            *)          return 1 ;;
+        esac
+    } <<A
+$data
+A
+}
+
+___x_cmd_keyring___keychain_get(){
+    local x_
+    ___x_cmd_keyring___keychain_get_ "$@" || return $?
+    printf "%s\n" "$x_"
+}
+
+___x_cmd_keyring___keychain_set(){
+    security add-generic-password -U -T /usr/bin/security -s "$1" -a "$2" -w "$3" 2>/dev/null
+}
+
+___x_cmd_keyring___keychain_rm(){
+    security delete-generic-password -s "$1" -a "$2" 2>/dev/null
+}
+
+___x_cmd_keyring___keychain_ls(){
+    local filter="${1:-}"
+    local acct="${2:-}"
+    if [ "$acct" = "*" ]; then
+        acct=""
+    fi
+    security dump-keychain 2>/dev/null | awk -v svc_f="$filter" -v acct_f="$acct" '
+        /^class:[[:space:]]/ {
+            s = $0
+            sub(/^class:[[:space:]]*"/, "", s)
+            sub(/"[^"]*$/, "", s)
+            cur_cls = s
+            cur_svce = ""
+            cur_acct = ""
+            next
+        }
+        /^keychain:[[:space:]]/ {
+            if (cur_cls == "genp" && cur_svce != "" && (svc_f == "" || cur_svce == svc_f) && (acct_f == "" || cur_acct == acct_f))
+                print cur_svce "\t" cur_acct
+            cur_cls = ""; cur_svce = ""; cur_acct = ""
+            next
+        }
+        cur_cls == "genp" {
+            n = split($0, parts, "\"")
+            if (n >= 5) {
+                if (parts[2] == "svce") cur_svce = parts[4]
+                else if (parts[2] == "acct") cur_acct = parts[4]
+            }
+        }
+        END {
+            if (cur_cls == "genp" && cur_svce != "" && (svc_f == "" || cur_svce == svc_f) && (acct_f == "" || cur_acct == acct_f))
+                print cur_svce "\t" cur_acct
+        }
+    '
+}
+
+# macOS keychain lock. Per-shell lock: subsequent `security
+# find-generic-password` in this shell requires unlock. Other shells
+# unaffected.
+___x_cmd_keyring___keychain_lock(){
+    if security lock-keychain 2>/dev/null; then
+        printf 'keychain locked (per-shell; subsequent get in this shell requires unlock)\n' >&2
+        return 0
+    fi
+    printf 'keychain lock failed\n' >&2
+    return 1
+}
+
+# macOS keychain unlock. Tty silent prompt or stdin pipe.
+___x_cmd_keyring___keychain_unlock(){
+    local pw=
+    if [ ! -t 0 ]; then
+        pw="$(cat)"
+        case "$pw" in
+            *"
+")
+                pw="${pw%?}"
+                ;;
+        esac
+    else
+        printf 'Keychain password: ' >&2
+        if stty -echo 2>/dev/null; then
+            trap 'stty echo 2>/dev/null; printf "\n" >&2' INT TERM HUP
+            IFS= read -r pw
+            stty echo 2>/dev/null
+            trap - INT TERM HUP
+            printf '\n' >&2
+        else
+            IFS= read -r pw
+        fi
+    fi
+    [ -n "$pw" ] || N=keyring M="empty keychain password rejected" log:ret:64
+    if printf '%s' "$pw" | security unlock-keychain 2>/dev/null; then
+        printf 'keychain unlocked\n' >&2
+    else
+        N=keyring M="keychain unlock failed (wrong password?)" log:ret:1
+    fi
+}
