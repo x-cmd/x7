@@ -79,7 +79,10 @@ ___x_cmd_keyring___windows_run(){
     "$ps" -NoProfile -EncodedCommand "$encoded"
 }
 
-___x_cmd_keyring___windows_get(){
+# Sentinel-padded return value — set x_ = password + '|' marker. The
+# trailing '|' lets callers strip \${x_%|*} to drop the marker plus
+# any trailing newline that \$() auto-appends.
+___x_cmd_keyring___windows_get_(){
     local target="$1"
     local user="$2"
     local ps
@@ -87,7 +90,7 @@ ___x_cmd_keyring___windows_get(){
         printf 'windows: powershell.exe not found on PATH\n' >&2
         return 1
     }
-    ___x_cmd_keyring___windows_run "$ps" <<EOF
+    x_="$(___x_cmd_keyring___windows_run "$ps" <<EOF
 $___x_cmd_keyring___windows_ps_boilerplate_
 \$credPtr = [IntPtr]::Zero
 \$ok = [CredMan]::CredRead('${target}', [CredMan]::CRED_TYPE_GENERIC, 0, [ref]\$credPtr)
@@ -137,7 +140,17 @@ if (\$ratio -gt 0.3) {
 \$stdout = [System.Console]::OpenStandardOutput()
 \$stdout.Write(\$utf8, 0, \$utf8.Length)
 \$stdout.Flush()
+[Console]::Out.Write('|')
 EOF
+)" || return $?
+    [ -n "$x_" ] || return 1
+    x_="${x_%|*}"
+}
+
+___x_cmd_keyring___windows_get(){
+    local x_
+    ___x_cmd_keyring___windows_get_ "$@" || return $?
+    printf "%s\n" "$x_"
 }
 
 ___x_cmd_keyring___windows_set(){

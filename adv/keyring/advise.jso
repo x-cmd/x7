@@ -22,11 +22,15 @@ null
 ,
 "x keyring get [--ns <name>] <service>"
 ,
+"x keyring get_ [--ns <name>] <service>"
+,
 "x keyring ls [--ns <name>] [-a] [<service>]"
 ,
 "x keyring rm [--ns <name>] <service>"
 ,
 "x keyring cset|cget|cls|crm [--ns <name>] <service> (macOS iCloud Keychain)"
+,
+"x keyring cget_ [--ns <name>] <service> (macOS iCloud Keychain; sentinel-padded)"
 ,
 "x keyring lock"
 ,
@@ -208,6 +212,8 @@ null
 [
 "get"
 ,
+"get_"
+,
 "set"
 ,
 "ls"
@@ -219,6 +225,8 @@ null
 :
 [
 "cget"
+,
+"cget_"
 ,
 "cset"
 ,
@@ -277,6 +285,92 @@ null
 "en"
 :
 "namespace defaults to x-cmd-<UID>; use --ns to read another namespace's entry"
+}
+]
+,
+"--ns|--namespace"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"namespace 名(默认 x-cmd-<UID>)"
+,
+"en"
+:
+"namespace name (default x-cmd-<UID>)"
+}
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"service 名"
+,
+"en"
+:
+"service name"
+}
+}
+}
+,
+"get_"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"get 的脚本变体 — 写到变量,适合在脚本里 round-trip 不丢尾字节"
+,
+"en"
+:
+"script-friendly get — writes to a variable; for byte-exact round-trip inside scripts"
+}
+,
+"#synopsis"
+:
+[
+"x keyring get_ [--ns <name>] <service>"
+]
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"与 `get` 的差异:密码放进 shell 变量,不直接打印 —— 脚本里没有 `$()` 加尾 \\n 的副作用,适合需要原样存回 / 二次处理的场景。"
+,
+"en"
+:
+"Difference from `get`: writes to a shell variable instead of stdout — no trailing-newline side-effect from `$()`, useful when the value must round-trip byte-exact or be reprocessed."
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x keyring get_ github"
+,
+"cn"
+:
+"把密码放进当前 shell 的 $x_,脚本可接着处理"
+,
+"en"
+:
+"Capture password into $x_ in the current shell for further processing"
 }
 ]
 ,
@@ -784,6 +878,74 @@ null
 :
 [
 "x keyring cget [--ns <name>] <service>"
+]
+,
+"--ns|--namespace"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"namespace 名(默认 x-cmd-keyring,跨 Apple 设备共享)"
+,
+"en"
+:
+"namespace name (default x-cmd-keyring, shared across Apple devices)"
+}
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"service 名"
+,
+"en"
+:
+"service name"
+}
+}
+}
+,
+"cget_"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"cget 的脚本变体 — iCloud Keychain 取到变量,适合脚本 round-trip"
+,
+"en"
+:
+"script-friendly cget — iCloud Keychain get into a variable; for byte-exact round-trip inside scripts"
+}
+,
+"#synopsis"
+:
+[
+"x keyring cget_ [--ns <name>] <service>"
+]
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"与 `cget` 的差异:密码放进 shell 变量,不直接打印 —— 脚本里没有 `$()` 加尾 \\n 的副作用。"
+,
+"en"
+:
+"Difference from `cget`: writes to a shell variable instead of stdout — no trailing-newline side-effect from `$()`."
+}
 ]
 ,
 "--ns|--namespace"

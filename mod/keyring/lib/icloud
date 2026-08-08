@@ -1,35 +1,17 @@
 # shellcheck shell=dash
 
-# macOS iCloud Keychain ops. NOT a backend of x keyring — these are
-# explicitly named subcommands (cget / cset / cls) because the
-# "cloud" semantic is louder than the local keychain's "OS-stored".
-# Mixing them under `backend` would imply `x keyring set` could
-# silently push to iCloud depending on pin.
-#
-# Apple ships iCloud Keychain as a separate keychain file
-# (~/Library/Keychains/Keychain-1.icloud-keychain-db when enabled),
-# synced via iCloud end-to-end encryption. We target it via
-# `security -k <iCloud-keychain-path>`.
+# iCloud Keychain subcommands (cget/cset/cls/crm). Distinct from
+# get/set/ls/rm so users opt in explicitly to Apple's cloud sync.
 
-# iCloud Keychain is shared across devices (same Apple ID). Default
-# account is 'x-cmd-keyring' (no UID suffix) so the same entry is shared
-# across the user's Macs/iPhones, regardless of UID on each device.
 ___x_cmd_keyring_default_icloud_user_(){
-    printf '%s\n' "x-cmd-keyring"
+    x_="x-cmd-keyring"
 }
 
-# Resolve iCloud Keychain db path. macOS-only.
-# On modern macOS (Catalina+), iCloud Keychain lives at:
-#   ~/Library/Keychains/<UUID>/keychain-2.db
-# The UUID is the iCloud account identifier (varies per Apple ID).
-# Older path "Keychain-1.icloud-keychain-db" is no longer used.
 ___x_cmd_keyring___icloud_keychain_path_(){
-    local x_="";  ___x_cmd os name_
+    ___x_cmd os name_
     if [ "$x_" != "darwin" ]; then
         return 1
     fi
-    # Modern path: find UUID-style directory under ~/Library/Keychains/
-    # containing keychain-2.db
     local keychain_dir="$HOME/Library/Keychains"
     if [ -d "$keychain_dir" ]; then
         local kcdb
@@ -40,21 +22,15 @@ ___x_cmd_keyring___icloud_keychain_path_(){
             }
         ' | head -1)"
         if [ -n "$kcdb" ] && [ -f "$kcdb" ]; then
-            printf '%s\n' "$kcdb"
+            x_="$kcdb"
             return 0
         fi
     fi
     return 1
 }
 
-# macOS-only: iCloud Keychain get. Sentinel-padded return value —
-# cget_ emits password bytes with a trailing '|' marker; caller
-# strips `${x_%|*}` to drop the marker and any `$()`-appended
-# trailing newline.
 ___x_cmd_keyring_cget_(){
-    x_="$(security find-generic-password -s "$1" -a "$2" -w 2>/dev/null ; printf "|")" || return $?
-    [ -n "$x_" ] || return 1
-    x_="${x_%|*}"
+    ___x_cmd_keyring___darwin_awk_get_ "$1" "$2" "$3"
 }
 
 ___x_cmd_keyring_cget(){
@@ -76,30 +52,24 @@ ___x_cmd_keyring_cget(){
             *)  break ;;
         esac
     done
-    [ -z "$ns" ] && ns="$(___x_cmd_keyring_default_icloud_user_)"
+    if [ -z "$ns" ]; then
+        ___x_cmd_keyring_default_icloud_user_
+        ns="$x_"
+    fi
     local service="${1:?keyring cget: <service> required}"
     shift
     [ "$#" -eq 0 ] || N=keyring M="too many arguments; expected: x keyring cget [--ns <name>] <service>" log:ret:64
 
-    local icloud
-    icloud="$(___x_cmd_keyring___icloud_keychain_path_)" || {
+    ___x_cmd_keyring___icloud_keychain_path_ || {
         N=keyring M="iCloud Keychain not enabled (no ~/Library/Keychains/<UUID>/keychain-2.db found)" log:ret:1
     }
-    # NOTE: iCloud Keychain (keychain-2.db) is NOT directly searchable via
-    # `security find-generic-password -k <path>` — Apple's Security.framework
-    # rejects it as "not a valid keychain file". Entries land there via
-    # add-generic-password but readback via direct path fails.
-    #
-    # Practical fix: use default search list (no -k). macOS auto-adds
-    # iCloud Keychain to the search list when iCloud is enabled, so
-    # entries synced to/from iCloud are visible there.
-    ___x_cmd_keyring_cget_ "$service" "$ns" || {
+    local icloud="$x_"
+    ___x_cmd_keyring_cget_ "$service" "$ns" "$icloud" || {
         N=keyring M="password not found: iCloud service=$service user=$ns" log:ret:1
     }
     printf "%s\n" "$x_"
 }
 
-# macOS-only: iCloud Keychain put.
 ___x_cmd_keyring_cset(){
     case "$1" in
         -h|--help) ___x_cmd help -m keyring cset; return 0 ;;
@@ -119,7 +89,10 @@ ___x_cmd_keyring_cset(){
             *)  break ;;
         esac
     done
-    [ -z "$ns" ] && ns="$(___x_cmd_keyring_default_icloud_user_)"
+    if [ -z "$ns" ]; then
+        ___x_cmd_keyring_default_icloud_user_
+        ns="$x_"
+    fi
 
     local service="${1:?keyring cset: <service> required}"
     shift
@@ -130,10 +103,10 @@ ___x_cmd_keyring_cset(){
     fi
     [ "$#" -eq 0 ] || N=keyring M="too many arguments; expected: x keyring cset [--ns <name>] <service> [<password>]" log:ret:64
 
-    local icloud
-    icloud="$(___x_cmd_keyring___icloud_keychain_path_)" || {
+    ___x_cmd_keyring___icloud_keychain_path_ || {
         N=keyring M="iCloud Keychain not enabled (no ~/Library/Keychains/<UUID>/keychain-2.db found)" log:ret:1
     }
+    local icloud="$x_"
 
     if [ -z "$password" ]; then
         if [ ! -t 0 ]; then
@@ -159,12 +132,9 @@ ___x_cmd_keyring_cset(){
     fi
     [ -n "$password" ] || N=keyring M="empty password rejected (pipe it: printf '%s' \"\$pw\" | x keyring cset <service>)" log:ret:64
 
-    # NOTE: iCloud Keychain (keychain-2.db) has a quirk: `add-generic-password -U`
-    # does NOT update existing entries — it returns "item already exists" error.
-    # The entry IS there (verifiable via default search), but the Security.framework
-    # refuses to overwrite it. We try without -U first, then verify via default
-    # search if both fail.
-    if security add-generic-password -U -s "$service" -a "$ns" -w "$password" "$icloud" >/dev/null 2>&1; then
+    # iCloud -U does NOT update existing entries; reuse keychain_set for
+    # the standard path, fall back without -U on iCloud reject.
+    if ___x_cmd_keyring___keychain_set "$service" "$ns" "$password" "$icloud"; then
         printf 'iCloud keychain updated: service=%s user=%s\n' "$service" "$ns" >&2
         return 0
     fi
@@ -172,7 +142,6 @@ ___x_cmd_keyring_cset(){
         printf 'iCloud keychain created: service=%s user=%s\n' "$service" "$ns" >&2
         return 0
     fi
-    # Last resort: maybe the entry was written but the call failed. Verify.
     if security find-generic-password -s "$service" -a "$ns" -w 2>/dev/null >/dev/null; then
         printf 'iCloud keychain entry verified: service=%s user=%s\n' "$service" "$ns" >&2
         return 0
@@ -180,7 +149,6 @@ ___x_cmd_keyring_cset(){
     N=keyring M="iCloud keychain put failed: service=$service user=$ns" log:ret:1
 }
 
-# macOS-only: iCloud Keychain list.
 ___x_cmd_keyring_cls(){
     case "$1" in
         -h|--help) ___x_cmd help -m keyring cls; return 0 ;;
@@ -214,46 +182,17 @@ ___x_cmd_keyring_cls(){
     if [ "$all" -eq 1 ]; then
         ns=""
     elif [ -z "$ns" ]; then
-        ns="$(___x_cmd_keyring_default_icloud_user_)"
+        ___x_cmd_keyring_default_icloud_user_
+        ns="$x_"
     fi
 
-    local icloud
-    icloud="$(___x_cmd_keyring___icloud_keychain_path_)" || {
+    ___x_cmd_keyring___icloud_keychain_path_ || {
         N=keyring M="iCloud Keychain not enabled" log:ret:1
     }
-    # Use default dump-keychain (no -k) — same reasoning as cget:
-    # iCloud Keychain is in the default search list when enabled.
-    security dump-keychain 2>/dev/null | awk -v svc_f="$filter" -v acct_f="$ns" '
-        /^class:[[:space:]]/ {
-            s = $0
-            sub(/^class:[[:space:]]*"/, "", s)
-            sub(/"[^"]*$/, "", s)
-            cur_cls = s
-            cur_svce = ""
-            cur_acct = ""
-            next
-        }
-        /^keychain:[[:space:]]/ {
-            if (cur_cls == "genp" && cur_svce != "" && (svc_f == "" || cur_svce == svc_f) && (acct_f == "" || cur_acct == acct_f))
-                print cur_svce "\t" cur_acct
-            cur_cls = ""; cur_svce = ""; cur_acct = ""
-            next
-        }
-        cur_cls == "genp" {
-            n = split($0, parts, "\"")
-            if (n >= 5) {
-                if (parts[2] == "svce") cur_svce = parts[4]
-                else if (parts[2] == "acct") cur_acct = parts[4]
-            }
-        }
-        END {
-            if (cur_cls == "genp" && cur_svce != "" && (svc_f == "" || cur_svce == svc_f) && (acct_f == "" || cur_acct == acct_f))
-                print cur_svce "\t" cur_acct
-        }
-    '
+    local icloud="$x_"
+    ___x_cmd_keyring___keychain_ls "$filter" "$ns" "$icloud"
 }
 
-# macOS-only: iCloud Keychain delete.
 ___x_cmd_keyring_crm(){
     case "$1" in
         -h|--help) ___x_cmd help -m keyring crm; return 0 ;;
@@ -273,22 +212,19 @@ ___x_cmd_keyring_crm(){
             *)  break ;;
         esac
     done
-    [ -z "$ns" ] && ns="$(___x_cmd_keyring_default_icloud_user_)"
+    if [ -z "$ns" ]; then
+        ___x_cmd_keyring_default_icloud_user_
+        ns="$x_"
+    fi
     local service="${1:?keyring crm: <service> required}"
     shift
     [ "$#" -eq 0 ] || N=keyring M="too many arguments; expected: x keyring crm [--ns <name>] <service>" log:ret:64
 
-    local icloud
-    icloud="$(___x_cmd_keyring___icloud_keychain_path_)" || {
+    ___x_cmd_keyring___icloud_keychain_path_ || {
         N=keyring M="iCloud Keychain not enabled (no ~/Library/Keychains/<UUID>/keychain-2.db found)" log:ret:1
     }
-
-    # NOTE: iCloud Keychain (keychain-2.db) has the same Security.framework
-    # reject as find-generic-password: `security delete-generic-password -k
-    # <icloud-keychain-db>` fails with "not a valid keychain file". Use
-    # default search list for delete — iCloud entries are accessible there
-    # when iCloud is enabled.
-    if security delete-generic-password -s "$service" -a "$ns" >/dev/null 2>&1; then
+    local icloud="$x_"
+    if ___x_cmd_keyring___keychain_rm "$service" "$ns" "$icloud"; then
         printf 'iCloud keychain deleted: service=%s user=%s\n' "$service" "$ns" >&2
         return 0
     fi

@@ -19,10 +19,11 @@ ___x_cmd_keyring___main(){
         ls|list)        ___x_cmd_keyring_ls              "$@" ;;
         lock|unlock)    ___x_cmd_keyring_"$op"           "$@" ;;
 
-        get|set|backend)
+        get|set|backend|get_)
                         ___x_cmd_keyring_"$op"           "$@" ;;
 
-        cget|cset|cls)  ___x_cmd_keyring_"$op"           "$@" ;;
+        cget|cset|cls|cget_)
+                        ___x_cmd_keyring_"$op"           "$@" ;;
 
         rm|crm)         ___x_cmd_keyring_"$op"           "$@" ;;
 
@@ -85,9 +86,13 @@ ___x_cmd_keyring_ls(){
     ___x_cmd_keyring___backend_ls_ "$backend" "$filter" "$ns"
 }
 
-___x_cmd_keyring_get(){
+# Sentinel-padded return value — sets x_ = password + '|' marker, so
+# callers can strip \${x_%|*} to drop both the marker and any trailing
+# newline that \$() auto-appends. Lets the backend (darwin/windows/
+# icloud) normalise their output shape before reaching the user.
+___x_cmd_keyring_get_(){
     case "$1" in
-        -h|--help) ___x_cmd help -m keyring get; return 0 ;;
+        -h|--help) ___x_cmd help -m keyring get_; return 0 ;;
     esac
     local ns=
     while [ "$#" -gt 0 ]; do
@@ -107,21 +112,23 @@ ___x_cmd_keyring_get(){
     [ "$#" -eq 0 ] || N=keyring M="too many arguments; expected: x keyring get [--ns <name>] <service>" log:ret:64
 
     local backend;  backend="$(___x_cmd_keyring___active_backend_)"
-    # rc=1 means "not found" (e.g., Windows CredRead returned ERROR_NOT_FOUND=1168,
-    # or the user check failed). rc=2 means "internal error" (Windows CredRead
-    # returned some other Win32 code). Other backends don't use exit 2, so for
-    # them rc will be 0 or 1 and they hit the "not found" branch as before.
-    local password rc=0
-    password="$(___x_cmd_keyring___backend_get_ "$backend" "$service" "$ns")" || rc=$?
+    # rc=1 means "not found" (Windows CredRead ERROR_NOT_FOUND=1168, user
+    # mismatch, etc.); rc=2 means "internal error" (other Win32 codes).
+    x_="$(___x_cmd_keyring___backend_get_ "$backend" "$service" "$ns")" || rc=$?
+}
 
-    if [ -z "$password" ]; then
+___x_cmd_keyring_get(){
+    local x_ rc=0
+    ___x_cmd_keyring_get_ "$@" || rc=$?
+
+    if [ -z "$x_" ]; then
         if [ "$rc" -eq 2 ]; then
-            N=keyring M="internal error reading credential: backend=$backend service=$service user=$ns" log:ret:1
+            N=keyring M="internal error reading credential: backend=..." log:ret:1
         else
-            N=keyring M="password not found: backend=$backend service=$service user=$ns" log:ret:1
+            N=keyring M="password not found" log:ret:1
         fi
     fi
-    printf '%s\n' "$password"
+    printf '%s\n' "$x_"
 }
 
 ___x_cmd_keyring_set(){

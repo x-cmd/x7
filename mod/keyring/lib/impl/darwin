@@ -31,18 +31,29 @@
 #
 # NUL bytes are out of scope: `$()` truncates at NUL.
 
-___x_cmd_keyring___keychain_get_(){
-
+# Shared body for keychain_get_ AND iCloud cget_ — both invoke this
+# helper rather than calling each other. Reuses the awk without
+# delegating between the wrappers (each function retains its own
+# identity + dispatcher routing).
+#
+# $3 (optional): explicit keychain db path (-k). iCloud cget passes the
+# iCloud db so we don't accidentally hit a same-named entry in the
+# login keychain. Empty = default search list (login keychain).
+___x_cmd_keyring___darwin_awk_get_(){
+    if [ -n "${3:-}" ]; then
+        set -- -s "$1" -a "$2" -g "$3"
+    else
+        set -- -s "$1" -a "$2" -g
+    fi
     local data
     data="$({
-        security find-generic-password -s "$1" -a "$2" -g 2>&1 \
+        security find-generic-password "$@" 2>&1 \
             | awk -f "$___X_CMD_ROOT_MOD/keyring/lib/awk/darwin.decode.awk"
     })" || return $?
 
     {
         local format
         read -r format
-
         case "$format" in
             binary)     x_="$(___x_cmd_cmds xxd -r -p ; printf "|" )"
                         x_="${x_%|*}"
@@ -56,54 +67,62 @@ $data
 A
 }
 
+___x_cmd_keyring___keychain_get_(){
+    ___x_cmd_keyring___darwin_awk_get_ "$@"
+}
+
 ___x_cmd_keyring___keychain_get(){
     local x_
     ___x_cmd_keyring___keychain_get_ "$@" || return $?
     printf "%s\n" "$x_"
 }
 
+# $4 (optional): explicit keychain db path. Empty = default search list
+# (login keychain + auto-added iCloud when enabled); non-empty = write to
+# that specific keychain file (used by cset to target iCloud's db, since
+# -k <icloud-db> is the only way to write to iCloud).
 ___x_cmd_keyring___keychain_set(){
-    security add-generic-password -U -T /usr/bin/security -s "$1" -a "$2" -w "$3" 2>/dev/null
+    if [ -n "${4:-}" ]; then
+        security add-generic-password -U -T /usr/bin/security -s "$1" -a "$2" -w "$3" "$4" 2>/dev/null
+    else
+        security add-generic-password -U -T /usr/bin/security -s "$1" -a "$2" -w "$3" 2>/dev/null
+    fi
 }
 
+# $3 (optional): explicit keychain db path. crm passes iCloud db to
+# avoid hitting a same-named entry in the login keychain.
 ___x_cmd_keyring___keychain_rm(){
-    security delete-generic-password -s "$1" -a "$2" 2>/dev/null
+    if [ -n "${3:-}" ]; then
+        set -- -s "$1" -a "$2" "$3"
+    else
+        set -- -s "$1" -a "$2"
+    fi
+    security delete-generic-password "$@" 2>/dev/null
 }
+# Note: `security delete-generic-password` takes keychain as a
+# positional arg, NOT `-k <path>` (no such flag for delete).
 
+# $3 (optional): explicit keychain db path. cls passes iCloud db to
+# scope the listing to that keychain (no mixing with login entries).
+# Note: `security dump-keychain` takes the keychain as a positional
+# arg, not `-k <path>` (no such flag — unlike find/delete which also
+# take positional paths).
 ___x_cmd_keyring___keychain_ls(){
     local filter="${1:-}"
     local acct="${2:-}"
+    local kc_path="${3:-}"
     if [ "$acct" = "*" ]; then
         acct=""
     fi
-    security dump-keychain 2>/dev/null | awk -v svc_f="$filter" -v acct_f="$acct" '
-        /^class:[[:space:]]/ {
-            s = $0
-            sub(/^class:[[:space:]]*"/, "", s)
-            sub(/"[^"]*$/, "", s)
-            cur_cls = s
-            cur_svce = ""
-            cur_acct = ""
-            next
-        }
-        /^keychain:[[:space:]]/ {
-            if (cur_cls == "genp" && cur_svce != "" && (svc_f == "" || cur_svce == svc_f) && (acct_f == "" || cur_acct == acct_f))
-                print cur_svce "\t" cur_acct
-            cur_cls = ""; cur_svce = ""; cur_acct = ""
-            next
-        }
-        cur_cls == "genp" {
-            n = split($0, parts, "\"")
-            if (n >= 5) {
-                if (parts[2] == "svce") cur_svce = parts[4]
-                else if (parts[2] == "acct") cur_acct = parts[4]
-            }
-        }
-        END {
-            if (cur_cls == "genp" && cur_svce != "" && (svc_f == "" || cur_svce == svc_f) && (acct_f == "" || cur_acct == acct_f))
-                print cur_svce "\t" cur_acct
-        }
-    '
+    if [ -n "$kc_path" ]; then
+        security dump-keychain "$kc_path" 2>/dev/null \
+            | awk -v svc_f="$filter" -v acct_f="$acct" \
+                  -f "$___X_CMD_ROOT_MOD/keyring/lib/awk/darwin.ls.awk"
+    else
+        security dump-keychain 2>/dev/null \
+            | awk -v svc_f="$filter" -v acct_f="$acct" \
+                  -f "$___X_CMD_ROOT_MOD/keyring/lib/awk/darwin.ls.awk"
+    fi
 }
 
 # macOS keychain lock. Per-shell lock: subsequent `security
