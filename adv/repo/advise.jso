@@ -43,6 +43,18 @@ null
 }
 ,
 {
+"x repo which cb/owner/name"
+:
+null
+}
+,
+{
+"x repo which gl/owner/name"
+:
+null
+}
+,
+{
 "x repo cd owner/name"
 :
 null
@@ -79,7 +91,7 @@ null
 }
 ,
 {
-"x repo card <id>"
+"x repo card [options] <id>"
 :
 null
 }
@@ -555,11 +567,11 @@ null
 {
 "cn"
 :
-"将 owner/name 解析为本地克隆路径（前缀 / 走 fuzzywhich 模糊匹配）"
+"将 owner/name 或 provider/owner/name 解析为本地克隆路径（前缀 / 走 fuzzywhich 模糊匹配）"
 ,
 "en"
 :
-"Resolve owner/name to a local clone path (a leading / uses fuzzywhich for fuzzy matching)"
+"Resolve owner/name or provider/owner/name to a local clone path (a leading / uses fuzzywhich for fuzzy matching)"
 }
 ,
 "owner/name"
@@ -570,11 +582,11 @@ null
 {
 "cn"
 :
-"owner 与 name 可分别给出子串；任一为空视为通配。例如 which sh/re 命中 x-bash/re"
+"owner 与 name 可分别给出子串；任一为空视为通配。例如 which sh/re 命中 x-bash/re。支持 github.com/gh/codeberg.org/cb/gitlab.com/gl/gitee.com/gt/bitbucket.org/bb 前缀。"
 ,
 "en"
 :
-"owner and name are independent substrings; an empty part is a wildcard. e.g. which sh/re matches x-bash/re"
+"owner and name are independent substrings; an empty part is a wildcard. e.g. which sh/re matches x-bash/re. Supports github.com/gh/codeberg.org/cb/gitlab.com/gl/gitee.com/gt/bitbucket.org/bb prefixes."
 }
 }
 ,
@@ -810,11 +822,11 @@ null
 {
 "cn"
 :
-"可一次给多个 id（如 update x-bash/repo x-bash/brew），逐个处理"
+"可一次给多个 id（如 update x-bash/repo x-bash/brew），逐个处理。支持 github.com/gh/codeberg.org/cb/gitlab.com/gl/gitee.com/gt/bitbucket.org/bb 前缀。"
 ,
 "en"
 :
-"Pass multiple ids at once (e.g. update x-bash/repo x-bash/brew) to process them in order"
+"Pass multiple ids at once (e.g. update x-bash/repo x-bash/brew) to process them in order. Supports github.com/gh/codeberg.org/cb/gitlab.com/gl/gitee.com/gt/bitbucket.org/bb prefixes."
 }
 }
 ,
@@ -891,11 +903,11 @@ null
 {
 "cn"
 :
-"为仓库生成 YAML 评分卡：1 次 GraphQL（合并 16 个 search 计数）+ 1 次 REST /stats/commit_activity，全程 API，不碰本地 clone"
+"为仓库生成评分卡：1 次 GraphQL（合并 16 个 search 计数）+ 1 次 REST /stats/commit_activity，默认 --auto（TTY 表格 / 管道 YAML），全程 API，不碰本地 clone"
 ,
 "en"
 :
-"Emit a YAML scorecard for a repo: 1 GraphQL (carrying 16 aliased search counts) + 1 REST /stats/commit_activity, API-only, no local clone touched"
+"Emit a repo scorecard: 1 GraphQL (carrying 16 aliased search counts) + 1 REST /stats/commit_activity, default --auto (TTY table / pipe YAML), API-only, no local clone touched"
 }
 ,
 "id"
@@ -911,6 +923,86 @@ null
 "en"
 :
 "Repo id (e.g. x-cmd/install); accepts owner/repo, gh/owner/repo, github.com/owner/repo; trailing @wtname is stripped"
+}
+}
+,
+"--days"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"自定义第二个统计窗口在输出中的标签天数（默认 90，即显示为 last90d；仅改标签名，不改实际统计截止日）"
+,
+"en"
+:
+"Customize the day label of the second stats window (default 90, shown as last90d; only changes the label, not the actual cutoff date)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"要显示的天数，例如 90、180"
+,
+"en"
+:
+"Day count to display, e.g. 90 or 180"
+}
+}
+}
+,
+"--tty"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"强制以彩色表格形式输出"
+,
+"en"
+:
+"Force colored table output"
+}
+}
+,
+"--yml"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"强制输出裸 YAML"
+,
+"en"
+:
+"Force raw YAML output"
+}
+}
+,
+"--auto"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"自动选择输出格式（默认；TTY 走 --tty，管道/重定向走 --yml）"
+,
+"en"
+:
+"Auto-select output format (default; TTY -> --tty, pipe/redirect -> --yml)"
 }
 }
 ,
@@ -930,21 +1022,11 @@ null
 {
 "cn"
 :
-"默认 `--auto`：stdout 是 TTY 就走 `--tty`（带颜色的卡片表格），管道或重定向就走 `--yml`（裸 YAML）。需要锁定行为时显式给 `--tty` 或 `--yml`。\n"
+"管道/重定向输出为 YAML；YAML 1.2 是 JSON 的超集（对这些标量字段而言），下游按字段抽取可以走 `yq`：例如 `x repo card x-cmd/install | yq '.popularity'`。\n"
 ,
 "en"
 :
-"Default mode is `--auto`: TTY stdout renders a colored table (`--tty`), pipe or redirect emits raw YAML (`--yml`). Pass `--tty` or `--yml` explicitly to lock the behavior.\n"
-}
-,
-{
-"cn"
-:
-"输出是 YAML，YAML 1.2 是 JSON 的超集（对这些标量字段而言），下游按字段抽取可以走 `yq`：例如 `x repo card x-cmd/install | yq '.popularity'`。\n"
-,
-"en"
-:
-"Output is YAML; YAML 1.2 is a JSON superset for these scalar fields, so downstream extraction via `yq` works: e.g. `x repo card x-cmd/install | yq '.popularity'`.\n"
+"Pipe/redirect output is raw YAML; YAML 1.2 is a JSON superset for these scalar fields, so downstream extraction via `yq` works: e.g. `x repo card x-cmd/install | yq '.popularity'`.\n"
 }
 ,
 {
@@ -978,11 +1060,11 @@ null
 ,
 "cn"
 :
-"基本用法: 输出 YAML 评分卡（默认最近 90 天窗口）"
+"基本用法: 默认 --auto，TTY 输出彩色表格，管道/重定向输出 YAML（4 个固定窗口）"
 ,
 "en"
 :
-"Basic: emit a YAML scorecard (4 fixed windows: 30d / 90d / 180d / 360d)"
+"Basic: default --auto renders a colored table on TTY, YAML on pipe/redirect (4 fixed windows)"
 }
 ,
 {

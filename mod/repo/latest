@@ -3,6 +3,8 @@
 
 # license:      AGPLv3
 
+___x_cmd log init repo
+
 xrc:mod:lib     repo   main
 
 ___x_cmd_repo(){

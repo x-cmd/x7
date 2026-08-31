@@ -71,14 +71,32 @@ def card_search_counts:
 # /stats/commit_activity returns 52 weeks × 7 days = up to 364 daily
 # counts (no zero-padding for weeks with no activity). Sum the tail of
 # the flattened array for 30/90/180/360-day windows.
+#
+# Tolerate non-array responses: GitHub returns `{}` while the stats job
+# is still computing, and `{"message":"Not Found",...}` (HTTP 404) for
+# archived / fork / blocked repos. Either shape used to crash here with
+# "Cannot index string with string 'days'" because `[.[].days]` blindly
+# tried `.days` on each value of the response object. Coerce non-arrays
+# to `[]`, and filter out entries whose `.days` isn't an array of ints.
+#
+# `(add // [])` must stay parenthesized: jq 1.7 binds `X // Y as $v | body`
+# differently from jq 1.8, and the unparenthesized form silently emitted the
+# flattened day array instead of the four sums — which then reached the
+# caller's `--argjson` as invalid JSON. GitHub runners ship jq 1.7.x, so this
+# is the version that matters in CI.
 def card_commit_counts:
-    [.[].days] | add as $total
+    (if type == "array" then . else [] end) as $arr
+    | [ $arr[]
+        | select(type == "object" and (.days | type == "array"))
+        | .days
+      ] as $per_week
+    | (($per_week | add) // []) as $total
     | ($total | length) as $len
     | [
-        ($total[$len -  30 :] | add // 0),
-        ($total[$len -  90 :] | add // 0),
-        ($total[$len - 180 :] | add // 0),
-        ($total[$len - 360 :] | add // 0)
+        ($total[$len -  30 :] // [] | add // 0),
+        ($total[$len -  90 :] // [] | add // 0),
+        ($total[$len - 180 :] // [] | add // 0),
+        ($total[$len - 360 :] // [] | add // 0)
       ] | .[] | tostring;
 
 # ---- card_yaml -----------------------------------------------------------
@@ -88,7 +106,8 @@ def card_commit_counts:
 #   timeline:   created / lastCommit / lastRelease / latestVersion
 #   popularity: star / watcher / fork / release / contributor /
 #               pullRequest / issue
-#   language:   sorted by size desc; totalLine appended
+#   language:   sorted by size desc; totalBytes appended (sum of language
+#               bytes — matches GitHub's LanguageEdge.size unit)
 #   detail:     head
 #   recent:     last{30,90,180,360}d × {since, release, mergedPR,
 #               openPR, closedIssue, openIssue, commit}
@@ -100,6 +119,29 @@ def card_yaml($merged30;  $merged90;  $merged180;  $merged360;
               $commit30;  $commit90;  $commit180;  $commit360;
               $date30;    $date90;    $date180;    $date360;
               $days90;    $collected_at):
+
+    # YAML output policy:
+    # - description is emitted as a literal block scalar (`|`). jq strings
+    #   can contain `\n`, `:`, `"`, `?` — any of those breaks a bare scalar
+    #   AND requires ugly backslash escaping in a double-quoted form. A
+    #   literal block preserves the newlines exactly and never interprets
+    #   a single character, so no escaping is needed.
+    # - Other short string fields (license, homepage, head, dates, version,
+    #   collectedAt) are bare scalars — they don't contain `:` or `?` in
+    #   practice (spdxId, dates, hex SHAs).
+    # - Missing values render as empty after the colon (which the parser
+    #   reads as null, distinct from "?" or `"?"`).
+    # - Numeric fields stay unquoted so downstream can compare / sum.
+    #
+    # literal: stream a YAML literal block (`|`) for the current string.
+    # Comma-separated outputs (`header_line, content_lines...`) so each
+    # emits as a separate document line. Empty / null -> just the header
+    # with one indented space; the parser reads that as an empty string.
+    def literal:
+        if . == null or . == "" then "  |", "    "
+        else "  |", (. | split("\n") | .[] | "    " + .)
+        end;
+
     .data.a as $r
     | (.data.b.defaultBranchRef // {}) as $branch
     | ($branch.target // {}) as $head
@@ -108,17 +150,18 @@ def card_yaml($merged30;  $merged90;  $merged180;  $merged360;
     | ($r.releases.nodes // [] | map(select(.publishedAt[:10] >= $date180)) | length) as $release180
     | ($r.releases.nodes // [] | map(select(.publishedAt[:10] >= $date360)) | length) as $release360
     | "about:",
-      "  description: \($r.description // "")",
+      "  description:",
+      ($r.description // "" | . | literal),
       "  license: \($r.licenseInfo.spdxId // "NOASSERTION")",
       "  homepage: \($r.homepageUrl // "")",
-      "  head: \($head.oid[:7] // "?")",
+      "  head: \($head.oid[:7] // "")",
       "  archived: \($r.isArchived // false)",
       "  latestVersion: \($r.releases.nodes[0].tagName // $r.releases.nodes[0].name // "")",
       "  collectedAt: \($collected_at)",
       "timeline:",
-      "  created: \($r.createdAt[:10] // "?")",
-      "  lastCommit: \($head.committedDate[:10] // "?")",
-      "  lastRelease: \($r.releases.nodes[0].publishedAt[:10] // "?")",
+      "  created: \($r.createdAt[:10] // "")",
+      "  lastCommit: \($head.committedDate[:10] // "")",
+      "  lastRelease: \($r.releases.nodes[0].publishedAt[:10] // "")",
       "popularity:",
       "  star: \($r.stargazerCount // 0)",
       "  watcher: \($r.watchers.totalCount // 0)",
@@ -130,7 +173,7 @@ def card_yaml($merged30;  $merged90;  $merged180;  $merged360;
       (if ($r.languages.edges // [] | length) > 0
        then "language:",
             ($r.languages.edges // [] | sort_by(-.size)[] | "  \(.node.name): \(.size)"),
-            ($r.languages.edges // [] | map(.size) | add | "totalLine: \(.)")
+            ($r.languages.edges // [] | map(.size) | add | "totalBytes: \(.)")
        else empty end),
       "recent:",
       "  last30d:",

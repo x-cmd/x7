@@ -208,9 +208,33 @@ A
     # public (no admin scope required). GitHub caches it for ~1h.
     # One call gets all 4 windows (30/90/180/360 days) via a single
     # jq filter that sums the tail of the flattened days array.
-    local commit_raw commit_data
-    commit_raw=$(curl -sS -H "Authorization: bearer $gh_token" \
-        "https://api.github.com/repos/${owner_repo}/stats/commit_activity" 2>/dev/null)
+    #
+    # GitHub computes this asynchronously: on a cold cache it answers 202
+    # with an empty body or {}, and card_commit_counts then honestly reports
+    # 0 for every window. Without a retry that silently turns "stats not
+    # ready" into "no commits" — and the ccmd 3h result cache above pins the
+    # bogus zeros for the next three hours. So retry until the body is an
+    # array, but only for the not-ready shape: a `message` field means a real
+    # 404/403 (archived, fork, blocked, or empty repo) that will never become
+    # an array, and retrying it just burns 6s per repo.
+    local commit_raw commit_data attempt
+    commit_raw=""
+    attempt=0
+    while [ "$attempt" -lt 3 ]; do
+        attempt=$((attempt + 1))
+        commit_raw=$(curl -sS -H "Authorization: bearer $gh_token" \
+            "https://api.github.com/repos/${owner_repo}/stats/commit_activity" 2>/dev/null)
+        case "$(printf '%s' "$commit_raw" | ___x_cmd jq -r 'if type == "array" then "ok" elif type == "object" and has("message") then "dead" else "wait" end' 2>/dev/null)" in
+            ok)   break ;;
+            dead) commit_raw=""; break ;;
+        esac
+        commit_raw=""
+        [ "$attempt" -lt 3 ] && sleep 3
+    done
+    if [ -z "$commit_raw" ]; then
+        repo:warn "no commit_activity for $owner_repo; recording commit: 0"
+        commit_raw='[]'
+    fi
     commit_data=$(printf '%s' "$commit_raw" | ___x_cmd jq -r -L "$card_jq_dir" 'include "card"; card_commit_counts')
     local commit30 commit90 commit180 commit360
     {

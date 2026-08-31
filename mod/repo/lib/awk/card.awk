@@ -72,11 +72,37 @@ BEGIN {
 /^  - /          { next }
 
 section == "about" {
-    # description, license, homepage, head, archived
+    # description: literal block scalar `|` from card_yaml. The header
+    # line is `  description:` followed by `  |` on the next line, then
+    # each continuation line indented 4 spaces. Collect continuation
+    # lines until we hit a line at the parent (2-space) indent — that
+    # terminates the block and the line is the next key.
+    if ($0 == "  description:") {
+        in_desc = 1
+        desc_lines = ""
+        next
+    }
+    if (in_desc) {
+        if (match($0, /^    /)) {
+            line = substr($0, 5)   # strip 4-space indent
+            desc_lines = (desc_lines == "" ? line : desc_lines "\n" line)
+            next
+        } else {
+            # Out of block. Trim YAML's trailing newline and store.
+            sub(/\n$/, "", desc_lines)
+            g_sub["description"] = desc_lines
+            in_desc = 0
+            # Fall through to handle this line as a normal key.
+        }
+    }
+    # license, homepage, head, archived, latestVersion, collectedAt
     if (match($0, /^  [a-zA-Z][a-zA-Z0-9]*: /)) {
         key = substr($0, 3, RLENGTH - 4)
         val = substr($0, RSTART + RLENGTH)
-        if (key in g_sub) g_sub[key] = val
+        if (key in g_sub) {
+            gsub(/^"|"$/, "", val)
+            g_sub[key] = val
+        }
     }
     next
 }
@@ -86,27 +112,48 @@ section == "timeline" {
     if (match($0, /^  [a-zA-Z][a-zA-Z0-9]*: /)) {
         key = substr($0, 3, RLENGTH - 4)
         val = substr($0, RSTART + RLENGTH)
-        if (key in g_sub) g_sub[key] = val
+        if (key in g_sub) {
+            gsub(/^"|"$/, "", val)
+            g_sub[key] = val
+        }
     }
     next
 }
 
 section == "popularity" {
     # star, watcher, fork, release, contributor, pullRequest, issue
+    # archived comes through here too; it's `true` / `false` unquoted in YAML.
     if (match($0, /^  [a-zA-Z][a-zA-Z0-9]*: /)) {
         key = substr($0, 3, RLENGTH - 4)
         val = substr($0, RSTART + RLENGTH)
-        if (key in g_sub) g_sub[key] = val
+        if (key in g_sub) {
+            gsub(/^"|"$/, "", val)
+            g_sub[key] = val
+        }
     }
     next
 }
 
 section == "language" {
-    if (match($0, /^  [A-Za-z0-9+._-]+: /)) {
-        lang_name[lang_count] = substr($0, 3, RLENGTH - 4)
-        lang_bytes[lang_count] = substr($0, RSTART + RLENGTH) + 0
+    # Accept both `"Name": N` (quoted, the card_yaml form) and bare `Name: N`
+    # so a future change in card_yaml quoting style doesn't silently drop
+    # the whole LANGUAGES section. The leading 1-space prefix between `"`
+    # and `:` skips past the quote so substr(3, RLENGTH-4) still isolates
+    # the bare language name.
+    if (match($0, /^  "?[A-Za-z0-9+._ -]+"?: /)) {
+        # Position of `:` in the match: if the line has a quoted key
+        # (`"Name": N`), the match ends one char past `:` so val is " N",
+        # and the trim has to account for that. For bare keys the trim is
+        # the same — the difference is the key string itself, which we
+        # extract from position 3 (after the two leading spaces).
+        lang_name[lang_count] = $0
+        sub(/^  "?/, "", lang_name[lang_count])
+        sub(/"?[ \t]*:.*$/, "", lang_name[lang_count])
+        lang_bytes[lang_count] = $0
+        sub(/.*: */, "", lang_bytes[lang_count])
+        lang_bytes[lang_count] = lang_bytes[lang_count] + 0
         lang_count++
-    } else if (match($0, /^totalLine: /)) {
+    } else if (match($0, /^totalBytes: /)) {
         total_line = substr($0, RSTART + RLENGTH) + 0
     }
     next
@@ -176,7 +223,7 @@ END {
         }
         for (i = 0; i < lang_count; i++) {
             pct = (total_line > 0) ? (lang_bytes[i] * 100.0 / total_line) : 0
-            printf "      %-" maxlen "s  " BG "%10d" RST "  " BD "%5.1f%%" RST "\n", lang_name[i], lang_bytes[i], pct
+            printf "      %-" maxlen "s  " BG "%10d bytes" RST "  " BD "%5.1f%%" RST "\n", lang_name[i], lang_bytes[i], pct
         }
         print ""
     }
