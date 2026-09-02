@@ -93,7 +93,7 @@ ___x_cmd_agent_init___minimal_(){
 
     provider="${provider%% *}"
     case "$provider" in
-        More)       ___x_cmd_agent_init___full_ || return $? ;;
+        More*)      ___x_cmd_agent_init___full_ || return $? ;;
         Skip)       agent:info "Agent initialization skipped"; return 0 ;;
         claude)     ___x_cmd_agent_init___minimal_claude_ || return $? ;;
         *)          ___x_cmd_agent_init___minimal_thirdparty_ "claude-$provider" || return $? ;;
