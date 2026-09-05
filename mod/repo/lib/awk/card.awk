@@ -224,8 +224,8 @@ END {
     print "      Forks:        " BG fmt(g_sub["fork"])        RST
     print "      Releases:     " BG fmt(g_sub["release"])     RST
     print "      Contributors: " BG fmt(g_sub["contributor"]) RST
-    print "      Pull reqs:    " BG fmt(g_sub["pullRequest"]) RST
-    print "      Issues:       " BG fmt(g_sub["issue"])       RST
+    print "      Pull reqs:    " BG fmt(g_sub["pullRequest"]) RST (g_sub["pullRequest"] == "0" ? "" : BD " (Merged " fmt(win_metric["total", "mergedPR"]) " + Open " fmt(win_metric["total", "openPR"]) " + Reject " fmt(g_sub["pullRequest"] + 0 - win_metric["total", "mergedPR"] - win_metric["total", "openPR"]) ")" RST)
+    print "      Issues:       " BG fmt(g_sub["issue"])       RST (g_sub["issue"] == "0" ? "" : BD " (Open " fmt(win_metric["total", "openIssue"]) " + Closed " fmt(win_metric["total", "closedIssue"]) ")" RST)
     if (g_sub["archived"] == "true") {
         print "      " BC "ARCHIVED" RST
     }

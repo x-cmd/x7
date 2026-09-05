@@ -6,6 +6,7 @@ xrc:mod:lib     repo   card
 xrc:mod:lib     repo   init
 xrc:mod:lib     repo   ls
 xrc:mod:lib     repo   loc
+xrc:mod:lib     repo   cardrender
 xrc:mod:lib     repo   prepare
 xrc:mod:lib     repo   update
 xrc:mod:lib     repo   util
@@ -32,6 +33,7 @@ ___x_cmd_repo___main(){
         init)            ___x_cmd_repo_init           "$@" ;;
         card)            ___x_cmd_repo_card           "$@" ;;
         loc)             ___x_cmd_repo_loc            "$@" ;;
+        cardrender)       ___x_cmd_repo_cardrender      "$@" ;;
         wt-path)         ___x_cmd_repo_wt_path       "$@" ;;
         prepare)         ___x_cmd_repo_prepare       "$@" ;;
         wt)              ___x_cmd_repo_wt            "$@" ;;
