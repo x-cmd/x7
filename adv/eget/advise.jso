@@ -179,6 +179,12 @@ null
 :
 [
 "extract"
+,
+"detect-test"
+,
+"detect-scoring2"
+,
+"detect-orig"
 ]
 ,
 "#subcmd:cache"
@@ -2811,6 +2817,372 @@ null
 "Scrape a specific tag"
 }
 ]
+,
+"-t|--tag"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定 release 版本标签"
+,
+"en"
+:
+"Specify release version tag"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"版本标签"
+,
+"en"
+:
+"Version tag"
+}
+}
+}
+}
+,
+"detect-test"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"用 scoring 算法跑 detect（verbose 输出每个 asset 分数），不下载"
+,
+"en"
+:
+"Run scoring algorithm with verbose output, no download"
+}
+,
+"#synopsis"
+:
+[
+{
+"x eget detect-test <owner>/<repo> [-s system] [-t tag]"
+:
+null
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget detect-test burntsushi/ripgrep"
+,
+"cn"
+:
+"看 ripgrep 在当前系统的 detect 评分"
+,
+"en"
+:
+"See scoring output for ripgrep on current system"
+}
+,
+{
+"cmd"
+:
+"x eget detect-test -s linux/amd64 cli/cli"
+,
+"cn"
+:
+"看 linux/amd64 下 cli/cli 的评分"
+,
+"en"
+:
+"See scoring for cli/cli on linux/amd64"
+}
+]
+,
+"-s|--system"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"目标平台（默认当前系统）"
+,
+"en"
+:
+"Target platform (default current system)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"平台标识"
+,
+"en"
+:
+"Platform identifier"
+}
+}
+}
+,
+"-t|--tag"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定 release 版本标签"
+,
+"en"
+:
+"Specify release version tag"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"版本标签"
+,
+"en"
+:
+"Version tag"
+}
+}
+}
+}
+,
+"detect-scoring2"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"用 BISCORING（双向跨平台评分）算法跑 detect，不下载；只选为当前平台设计的 asset"
+,
+"en"
+:
+"Run BISCORING (bidirectional cross-platform scoring) — only counts assets designed for the target platform, rejects hard-conflict fallbacks"
+}
+,
+"#synopsis"
+:
+[
+{
+"x eget detect-scoring2 <owner>/<repo> [-s system] [-t tag]"
+:
+null
+}
+]
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"与 `detect-test` 同形状但用 BISCORING 算法：每个 asset 在 6 平台同时算分，目标平台的候选只在「该 asset 跨平台最高分正好落在本平台」时才算真匹配。\n对 darwin/amd64 跑 h5i 这种上游没给 Intel Mac 发 binary 的 case，scoring 会选个 Windows zip（5 分勉强过 threshold），scoring2 正确 fail 让你知道上游有 gap。\n下游 `x eget download` / `resolve` 等的默认算法仍是 scoring；显式设 `___X_CMD_EGET_DETECT_MODE=scoring2` 才能切到 scoring2。\n"
+,
+"en"
+:
+"Same shape as `detect-test` but uses BISCORING: each asset is scored against all 6 platforms; a target-platform candidate only counts if its score on the platform equals its cross-platform max (the asset was DESIGNED for that platform).\nFor cases where the upstream didn't ship a binary (e.g. h5i on darwin/amd64), single-platform scoring surfaces a 5-score hard-conflict fallback; scoring2 correctly fails, surfacing the upstream gap.\nThe default algorithm for `x eget download` / `resolve` is still scoring; set `___X_CMD_EGET_DETECT_MODE=scoring2` to switch.\n"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget detect-scoring2 h5i-dev/h5i"
+,
+"cn"
+:
+"看 h5i 在当前系统的 BISCORING 结果（Intel Mac 上应 fail）"
+,
+"en"
+:
+"See BISCORING result for h5i (should fail on Intel Mac)"
+}
+,
+{
+"cmd"
+:
+"x eget detect-scoring2 -s darwin/arm64 h5i-dev/h5i"
+,
+"cn"
+:
+"在 darwin/arm64 上看 BISCORING（应选 aarch64-apple-darwin）"
+,
+"en"
+:
+"BISCORING on darwin/arm64 (should pick aarch64-apple-darwin)"
+}
+]
+,
+"-s|--system"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"目标平台（默认当前系统）"
+,
+"en"
+:
+"Target platform (default current system)"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"平台标识"
+,
+"en"
+:
+"Platform identifier"
+}
+}
+}
+,
+"-t|--tag"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定 release 版本标签"
+,
+"en"
+:
+"Specify release version tag"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"版本标签"
+,
+"en"
+:
+"Version tag"
+}
+}
+}
+}
+,
+"detect-orig"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"用 original 算法（zyedidia/eget 风格 tier matching）跑 detect，不下载"
+,
+"en"
+:
+"Run original tier-matching algorithm (zyedidia/eget style), no download"
+}
+,
+"#synopsis"
+:
+[
+{
+"x eget detect-orig <owner>/<repo> [-s system] [-t tag]"
+:
+null
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget detect-orig burntsushi/ripgrep"
+,
+"cn"
+:
+"用 original tier 算法跑 ripgrep"
+,
+"en"
+:
+"Run original tier algorithm on ripgrep"
+}
+]
+,
+"-s|--system"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"目标平台"
+,
+"en"
+:
+"Target platform"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"平台标识"
+,
+"en"
+:
+"Platform identifier"
+}
+}
+}
 ,
 "-t|--tag"
 :
