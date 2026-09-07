@@ -166,6 +166,10 @@ null
 [
 "ls"
 ,
+"lsasset"
+,
+"lsassetmap"
+,
 "resolve"
 ,
 "rate"
@@ -248,6 +252,18 @@ null
 ,
 {
 "x eget ls [OPTIONS] <repo> [<release>]"
+:
+null
+}
+,
+{
+"x eget lsasset [OPTIONS] <repo>"
+:
+null
+}
+,
+{
+"x eget lsassetmap [OPTIONS] <repo>"
 :
 null
 }
@@ -1851,6 +1867,140 @@ null
 }
 }
 ,
+"lsasset"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"打印 release 的 asset 列表为统一 JSON（不经选 asset 流程）"
+,
+"en"
+:
+"Print a release's assets as unified JSON (no asset-selection pipeline)"
+}
+,
+"#synopsis"
+:
+[
+{
+"x eget lsasset [OPTIONS] <repo>"
+:
+null
+}
+]
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"与 `x eget download` 走同一条数据获取路径（API 失败自动 HTML fallback），但跳过 manifest 匹配和打分选 asset，直接吐出原始 release JSON。\n适合：管道给 `jq` / `x-cmd` 工具链处理、调试 eget 实际看到哪些 asset、给上层脚本做自定义筛选。\n与 `x eget html` 的区别：`html` 跳过 API 仅走 HTML 抓取（诊断用），`lsasset` 先试 API、失败再降级 —— 日常首选。\n输出 shape 固定为 `{tag_name, assets:[{name, browser_download_url, size, digest}]}`，不因数据源（API vs HTML）变化。\n"
+,
+"en"
+:
+"Shares the data-fetch path with `x eget download` (HTML fallback on API failure), but skips manifest matching and asset scoring — raw release JSON straight out.\nUse it for piping into `jq` / `x-cmd` tooling, debugging what eget actually sees, or letting a higher-level script do custom filtering.\nDiffers from `x eget html`: `html` skips the API and only scrapes HTML (diagnostic), `lsasset` tries API first and falls back — preferred for day-to-day.\nOutput shape is fixed at `{tag_name, assets:[{name, browser_download_url, size, digest}]}` regardless of source (API vs HTML).\n"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget lsasset BurntSushi/ripgrep"
+,
+"cn"
+:
+"列出最新 release 的所有 asset"
+,
+"en"
+:
+"List all assets of the latest release"
+}
+,
+{
+"cmd"
+:
+"x eget lsasset --tag 14.1.1 BurntSushi/ripgrep"
+,
+"cn"
+:
+"列出指定 tag 的 asset"
+,
+"en"
+:
+"List assets for a specific tag"
+}
+,
+{
+"cmd"
+:
+"x eget lsasset BurntSushi/ripgrep | jq '.assets[].name'"
+,
+"cn"
+:
+"管道给 jq 提取文件名"
+,
+"en"
+:
+"Pipe to jq to extract filenames"
+}
+]
+,
+"-t|--tag"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定 release 版本标签"
+,
+"en"
+:
+"Specify release version tag"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"版本标签"
+,
+"en"
+:
+"Version tag"
+}
+}
+}
+,
+"--pre-release"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"允许预发布版本（无 --tag 时生效）"
+,
+"en"
+:
+"Allow pre-release versions (only when --tag is not given)"
+}
+}
+}
+,
 "resolve"
 :
 {
@@ -1897,6 +2047,140 @@ null
 "Preview match for a specific platform"
 }
 ]
+}
+,
+"lsassetmap"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"输出 6 平台各自的最佳 candidate（独立诊断工具，不影响实际下载选择）"
+,
+"en"
+:
+"Print each platform's best candidate as TSV (independent diagnostic — does not change download selection)"
+}
+,
+"#synopsis"
+:
+[
+{
+"x eget lsassetmap [OPTIONS] <repo>"
+:
+null
+}
+]
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"跟 `x eget lsasset` 同一次 release JSON，但只输出 6 行（darwin/linux/win × arm64/amd64），每行对应一个平台的\"如果用这个平台会选哪个 asset\"。空槽表示该平台无 candidate 达到 threshold。\n与 `lsasset` 的差异：lsasset 列所有原始 asset；lsassetmap 列每平台的最优 1 个。`resolve` / `download` / `use` / `snap` 等所有 subcmd 的 asset 选择不受 lsassetmap 影响 —— 它是只读诊断工具。\n用例：当前平台 best 分数异常低（勉强过 5）时，看其它平台是不是都高分 → 提示 `--system` 选错了或者上游没给本平台 asset。\n"
+,
+"en"
+:
+"Same release JSON as `x eget lsasset`, but outputs only 6 rows (darwin/linux/win × arm64/amd64), one per platform's \"what eget would pick on this platform\". Empty slots mean no asset on that platform cleared the score threshold.\nDiffers from `lsasset`: lsasset lists every raw asset; lsassetmap lists one best per platform. Asset selection in `resolve` / `download` / `use` / `snap` is unaffected — it's a read-only diagnostic.\nUse case: when the current platform's best score is suspiciously low (barely clears 5), check whether the others score much higher — signals a wrong `--system` or an upstream gap.\n"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget lsassetmap BurntSushi/ripgrep"
+,
+"cn"
+:
+"看 ripgrep 在 6 平台的最佳 asset"
+,
+"en"
+:
+"See ripgrep's best asset across 6 platforms"
+}
+,
+{
+"cmd"
+:
+"x eget lsassetmap h5i-dev/h5i"
+,
+"cn"
+:
+"看 h5i 缺哪个平台的 asset"
+,
+"en"
+:
+"Spot which platforms h5i has no asset for"
+}
+,
+{
+"cmd"
+:
+"x eget lsassetmap --tag v0.4.1 h5i-dev/h5i"
+,
+"cn"
+:
+"看指定 tag 的 6 平台分布"
+,
+"en"
+:
+"6-platform map for a specific tag"
+}
+]
+,
+"-t|--tag"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定 release 版本标签"
+,
+"en"
+:
+"Specify release version tag"
+}
+,
+"#1"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"版本标签"
+,
+"en"
+:
+"Version tag"
+}
+}
+}
+,
+"--pre-release"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"允许预发布版本（无 --tag 时生效）"
+,
+"en"
+:
+"Allow pre-release versions (only when --tag is not given)"
+}
+}
 }
 ,
 "extract"
