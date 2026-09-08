@@ -1873,6 +1873,286 @@ null
 }
 }
 ,
+"fit"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"按 platform/runtime slot 输出每个槽的最佳 asset（per-slot 路由）"
+,
+"en"
+:
+"Per-slot best asset routing (platform/* + runtime/*)"
+}
+,
+"#synopsis"
+:
+[
+{
+"x eget fit [OPTIONS] <repo>"
+:
+null
+}
+]
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"每行一个 slot：`platform/<os>/<arch>`（6 个：darwin/linux/win × arm64/x64）\n加 `runtime/<type>`（cross-platform：pex whl jar pyz js sh py crate wasm）\n加 `runtime/<type>/<x64|arm64>`（OS-bound：rpm deb dmg msi apk appimage flatpak snap pkg.tar.zst .node）。\n空槽不输出（项目没发对应平台 asset 时该行不出现）。每个 runtime slot 选 smallest asset（self-contained / noarch 通常最小）。\n评分：platform/* 走 BISCORING（0-100+，threshold=5），runtime/* 固定 0（runtime 不参与跨平台评分）。\n是 `x eget assetfit` 的\"反向\" —— assetfit 是 per-asset 视角（每个 asset 一个 label），fit 是 per-slot 视角（每个 slot 一个 asset）。\n独立诊断，不影响 `download` / `use` / `snap` / `resolve` 实际选 asset。\n"
+,
+"en"
+:
+"One row per slot: `platform/<os>/<arch>` (6 slots: darwin/linux/win × arm64/x64),\nplus `runtime/<type>` (cross-platform: pex whl jar pyz js sh py crate wasm),\nplus `runtime/<type>/<x64|arm64>` (OS-bound: rpm deb dmg msi apk appimage flatpak snap pkg.tar.zst .node).\nEmpty slots are dropped (no row for a slot the project doesn't ship). Each runtime slot picks the smallest asset.\nScoring: platform/* uses BISCORING (0-100+, threshold=5); runtime/* is fixed at 0.\nThe inverse of `x eget assetfit`: assetfit is per-asset (one label per asset), fit is per-slot (one asset per slot).\nRead-only diagnostic — does not affect `download` / `use` / `snap` / `resolve`.\n"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget fit BurntSushi/ripgrep"
+,
+"cn"
+:
+"ripgrep 在 6 平台 + runtime slot 的最佳 asset"
+,
+"en"
+:
+"ripgrep's best asset across 6 platforms + runtime slots"
+}
+,
+{
+"cmd"
+:
+"x eget fit h5i-dev/h5i"
+,
+"cn"
+:
+"h5i 缺哪些平台 (empty slot 是不输出)"
+,
+"en"
+:
+"h5i's missing platforms (empty slots are dropped)"
+}
+,
+{
+"cmd"
+:
+"x eget fit --yml BurntSushi/ripgrep"
+,
+"cn"
+:
+"yml 输出（含 collectedAt 包装，给 stat 工具聚合用）"
+,
+"en"
+:
+"yml output (wrapped under eget/collectedAt, for stat tools)"
+}
+]
+,
+"-t|--tag"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定 release 版本标签"
+,
+"en"
+:
+"Specify release version tag"
+}
+}
+,
+"--pre-release"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"允许预发布版本（无 --tag 时生效）"
+,
+"en"
+:
+"Allow pre-release versions (only when --tag is not given)"
+}
+}
+}
+,
+"assetfit"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"per-asset 视角 —— 每个 asset 打一个 fit 标签（platform slot 或 runtime slot）"
+,
+"en"
+:
+"Per-asset view — tag every asset with its fit label"
+}
+,
+"#synopsis"
+:
+[
+{
+"x eget assetfit [OPTIONS] <repo>"
+:
+null
+}
+]
+,
+"#tip"
+:
+[
+{
+"cn"
+:
+"每个 asset 一行，fit 列是单一 label（不是 `+` 连接的多 label）。\n三种 label 形式：\n  - `platform/<os>/<arch>` —— 单一平台（如 `platform/darwin/arm64`）\n  - `platform/<os>/universal` —— 真正跨 arch 的 fat/universal binary（文件名含 `universal` 关键字或同时含两个 arch token）\n  - `runtime/<type>` 或 `runtime/<type>/<arch>` —— 包/解释器格式（rpm/deb/dmg/whl/jar/pex/wasm 等）\n与 `x eget fit` 关系：fit 是 per-slot 视角（每 slot 一 asset），assetfit 是 per-asset 视角（每 asset 一 label）。同一个 release 在两边能看到不同切片。\nyml 默认是 flat array（每 asset 一行），跟 tsv 字段一致；`--verbose` 走 envelope `eget/collectedAt/assets[]`。\n给 stat 工具的\"asset-level coverage\"统计用：哪些项目发哪些 runtime、哪些项目有 universal binary、等等。\n"
+,
+"en"
+:
+"One row per asset, with a single fit label (not `+`-joined multi-labels).\nThree label forms:\n  - `platform/<os>/<arch>` — single platform (e.g. `platform/darwin/arm64`)\n  - `platform/<os>/universal` — genuine fat/universal binary (name has `universal` token or both arch tokens)\n  - `runtime/<type>` or `runtime/<type>/<arch>` — package/interpreter format (rpm/deb/dmg/whl/jar/pex/wasm)\nRelation to `x eget fit`: fit is per-slot (one asset per slot), assetfit is per-asset (one label per asset). Same release, different slices.\nDefault yml is a flat array (same fields as tsv). `--verbose` wraps under `eget/collectedAt/assets[]`.\nFor stat tools: per-asset coverage — which projects ship which runtimes, which have universal binaries, etc.\n"
+}
+]
+,
+"#tldr"
+:
+[
+{
+"cmd"
+:
+"x eget assetfit BurntSushi/ripgrep"
+,
+"cn"
+:
+"ripgrep 每个 asset 标 fit (platform slot)"
+,
+"en"
+:
+"Tag every ripgrep asset with its fit (platform slot)"
+}
+,
+{
+"cmd"
+:
+"x eget assetfit ip7z/7zip"
+,
+"cn"
+:
+"7zip 含 .msi / .tar.xz，每 asset 标 platform 或 runtime"
+,
+"en"
+:
+"7zip ships .msi and .tar.xz, each tagged platform or runtime"
+}
+,
+{
+"cmd"
+:
+"x eget assetfit quickjs-ng/quickjs"
+,
+"cn"
+:
+"quickjs-ng 含 .wasm (标 runtime/wasm)"
+,
+"en"
+:
+"quickjs-ng ships .wasm (tagged runtime/wasm)"
+}
+,
+{
+"cmd"
+:
+"x eget assetfit --yml quickjs-ng/quickjs"
+,
+"cn"
+:
+"flat array yml（跟 tsv 字段一致）"
+,
+"en"
+:
+"flat yml array (same fields as tsv)"
+}
+,
+{
+"cmd"
+:
+"x eget assetfit --yml --verbose quickjs-ng/quickjs"
+,
+"cn"
+:
+"envelope yml（eget/collectedAt + assets[]）"
+,
+"en"
+:
+"enveloped yml (eget/collectedAt + assets[])"
+}
+]
+,
+"-t|--tag"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"指定 release 版本标签"
+,
+"en"
+:
+"Specify release version tag"
+}
+}
+,
+"--pre-release"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"允许预发布版本（无 --tag 时生效）"
+,
+"en"
+:
+"Allow pre-release versions (only when --tag is not given)"
+}
+}
+,
+"--verbose"
+:
+{
+"#desc"
+:
+{
+"cn"
+:
+"yml 走 envelope (eget/collectedAt + assets[]) 而非 flat array"
+,
+"en"
+:
+"yml uses envelope (eget/collectedAt + assets[]) instead of flat array"
+}
+}
+}
+,
 "lsasset"
 :
 {
