@@ -27,7 +27,9 @@ ___x_cmd_eget___main(){
         ls|list)            ___x_cmd_eget_ls "$@"; return ;;
         asset)              ___x_cmd_eget_subcmd_asset "$@"; return ;;
         assetfit)           ___x_cmd_eget_subcmd_assetfit "$@"; return ;;
+        classify)           ___x_cmd_eget_subcmd_classify "$@"; return ;;
         fit)                ___x_cmd_eget_subcmd_fit "$@"; return ;;
+        parse)               ___x_cmd_eget_subcmd_parse "$@"; return ;;
         resolve)            ___x_cmd_eget_resolve "$@"; return ;;
         detect-scoring2)   ___x_cmd_eget_subcmd_detect_scoring2 "$@"; return ;;
         detect-test)        ___x_cmd_eget_subcmd_detect_test "$@"; return ;;
@@ -430,6 +432,173 @@ ___x_cmd_eget_subcmd_fit___tsv(){
 #
 # This is the inverse mapping of fit — useful for picking
 # an asset manually (read off the labels, then run
+# `x eget download owner/repo --asset <name>`).
+
+# parse — release-data formatter. Reads raw release JSON from
+# stdin (any source: curl, `x eget asset --json`, file
+# redirect `< file.json`, etc.) and emits:
+#   --tsv    asset rows: name \t url \t size \t digest
+#   --json   the raw release object (passthrough; unwraps a
+#            release-report envelope if caller piped one in)
+#   --yml    release-report envelope wrapping --json
+# No API fetch, no -f flag — this is the data-shape operator.
+___x_cmd_eget_subcmd_parse(){
+    case "${1:-}" in -h|--help) ___x_cmd help -m eget parse; return 0 ;; esac
+
+    local fmt=auto
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --json|--tsv|--yml|--tty|--auto)
+                              fmt="${1#--}"  ;;
+            -*)               N=eget M="parse: unknown option: $1" log:ret:64; return ;;
+            *)                N=eget M="parse: unexpected argument: $1 (parse is stdin-only)" log:ret:64; return ;;
+        esac
+        shift
+    done
+
+    if [ "$fmt" = "auto" ]; then
+        [ -t 1 ] && fmt=tty || fmt=tsv
+    fi
+
+    # Read the entire stdin. We cache it once because both the
+    # --tsv and --json paths below consume stdin independently and
+    # we don't want to fail on a missing pipe.
+    local _release
+    _release="$( cat )" || return 1
+
+    case "$fmt" in
+        tsv)
+            printf '%s' "$_release" | ___x_cmd jq -r '
+                ["name","url","size","digest"],
+                ((.assets // [])[] | [.name, .browser_download_url, .size, (.digest // "")])
+                | @tsv
+            '
+            ;;
+        json)
+            # Pass the raw release through; callers pipe it
+            # forward unchanged. Unwrap a release-report envelope
+            # so callers always see the release object itself.
+            printf '%s' "$_release" | ___x_cmd jq -c '
+                if type == "object" and has("release-report")
+                then .["release-report"].release
+                else .
+                end
+            '
+            ;;
+        yml)
+            local x_
+            x date dump_
+            local _collected_at="$x_"
+            local _release_obj
+            _release_obj="$( printf '%s' "$_release" | ___x_cmd jq -c '
+                if type == "object" and has("release-report")
+                then .["release-report"].release
+                else .
+                end
+            ' )"
+            printf '{"release-report":{"collectedAt":"%s","release":%s}}' \
+                "$_collected_at" "$_release_obj" \
+                | yq -P -I 0 .
+            ;;
+        tty)
+            printf '%s' "$_release" | ___x_cmd column --tsv --header \
+                <<< "$( printf '%s\n' "$_release" \
+                    | ___x_cmd jq -r '
+                        (.assets // [])[]
+                        | [.name, .browser_download_url, .size, (.digest // "")]
+                        | @tsv
+                    ' )"
+            ;;
+        *) N=eget M="parse: invalid format: $fmt" log:ret:64; return ;;
+    esac
+}
+
+# classify — per-asset fit label classifier. Reads raw release
+# JSON from stdin (same sources as parse) and emits:
+#   --tsv    name \t url \t size \t fit
+#   --json   [{name, url, size, fit, sha256?, sig?}, ...]
+#   --yml    flat array of the same shape
+# Same upstream pipe as parse (stdin only); both ops compose.
+___x_cmd_eget_subcmd_classify(){
+    case "${1:-}" in -h|--help) ___x_cmd help -m eget classify; return 0 ;; esac
+
+    local fmt=auto
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --json|--tsv|--yml|--tty|--auto)
+                              fmt="${1#--}"  ;;
+            -*)               N=eget M="classify: unknown option: $1" log:ret:64; return ;;
+            *)                N=eget M="classify: unexpected argument: $1 (classify is stdin-only)" log:ret:64; return ;;
+        esac
+        shift
+    done
+
+    if [ "$fmt" = "auto" ]; then
+        [ -t 1 ] && fmt=tty || fmt=tsv
+    fi
+
+    local _release
+    _release="$( cat )" || return 1
+
+    local _tsv
+    _tsv="$( printf '%s' "$_release" | ___x_cmd jq -r '
+        (.assets // [])[]
+        | [.name, .browser_download_url, .size, (.digest // "")]
+        | @tsv
+    ' )"
+
+    case "$fmt" in
+        tsv)
+            printf '%s' "$_tsv" | ___x_cmd_eget_subcmd_classify___emit_tsv
+            ;;
+        json)
+            ___x_cmd_eget_subcmd_classify___emit_json "$_release" "$_tsv"
+            ;;
+        yml)
+            ___x_cmd_eget_subcmd_classify___emit_json "$_release" "$_tsv" \
+                | yq -P -I 0 .
+            ;;
+        tty)
+            printf '%s' "$_tsv" | ___x_cmd_eget_subcmd_classify___emit_tsv \
+                | ___x_cmd column --tsv
+            ;;
+        *) N=eget M="classify: invalid format: $fmt" log:ret:64; return ;;
+    esac
+}
+
+# Run the awk classifier on a 4-column TSV stream (name \t url
+# \t size \t digest) and emit a 5-column TSV with the per-asset
+# fit label appended.
+___x_cmd_eget_subcmd_classify___emit_tsv(){
+    # The caller pipes the TSV stream into our stdin via the
+    # command substitution that calls us. Read stdin directly —
+    # any inner `cat -` would close stdin before awk reads it.
+    awk -f "$___X_CMD_ROOT_MOD/eget/lib/awk/share.awk" \
+        -f "$___X_CMD_ROOT_MOD/eget/lib/awk/assetfit.awk"
+}
+
+# Like the above but also pulls pair fields (sha256 / sig) from
+# the original release JSON keyed by asset name. The pair
+# suffix is appended to the asset name (e.g.
+# `foo-1.0.tar.gz` + `.sha256`).
+___x_cmd_eget_subcmd_classify___emit_json(){
+    local _release="$1" _tsv="$2"
+    ___x_cmd_eget_subcmd_classify___emit_tsv "$_tsv" \
+        | awk 'BEGIN{FS=OFS="\t"; print "name\turl\tsize\tfit"} {print}' \
+        | ___x_cmd jq -Rrs \
+            --argjson release "$_release" '
+            ([$release.assets[]?] | map({(.name): .browser_download_url}) | add // {}) as $by_name
+            | split("\n") | .[1:] | map(select(length > 0)) | map(split("\t"))
+            | map(. as $row | {
+                name: $row[0], url: $row[1], size: (($row[2] | tonumber) // null), fit: $row[3]
+            } | . + {
+                sha256: ($by_name[.name + ".sha256"] // null),
+                sig:    ($by_name[.name + ".sig"] // $by_name[.name + ".asc"]
+                      // $by_name[.name + ".minisig"] // null)
+            } | with_entries(select(.value != null)))
+        '
+}
+
 # `x eget download owner/repo --asset <name>`).
 ___x_cmd_eget_subcmd_assetfit(){
     case "${1:-}" in -h|--help) ___x_cmd help -m eget assetfit; return 0 ;; esac
