@@ -391,7 +391,7 @@ cee0cd4ab9e1359b9c0cfde6c386c7bf48b6df69 ws main NULL
 443e1ad616a54336201658961d9f7c4412c40ec8 x-cmd main NULL
 995828bdefaace2720e93c096f1f7e2b589e9cd8 xgo main NULL
 9e4a40a9a59a5d379bd724c60c06965c5787509c xq main NULL
-507d85bc7cf237f914a61bddcaaedfd63eee200a xrc main NULL
+a54a6fa8ad9ef6ab81b2131bc1264aeb614d42f2 xrc main NULL
 fdb1101d8ec39bdec8dc94af35bd2ba226d52e7e xx main NULL
 29c99efa51369c187c1adaa17eb385a5dd071723 yay main NULL
 e840fd957bca92ac5600f893195f24e275f82a6f yml main NULL
