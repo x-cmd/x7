@@ -1,4 +1,4 @@
-#!/usr/bin/awk -f
+
 # eget scoring2 — BISCORING (bidirectional cross-platform scoring).
 #
 # Run as: awk -f share.awk -f scoring2.awk [<system>]

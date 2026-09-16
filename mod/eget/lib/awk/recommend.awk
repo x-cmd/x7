@@ -1,4 +1,4 @@
-#!/usr/bin/awk -f
+
 # eget recommend — diagnostic fallback when strict scoring2 has no
 # designed-for asset for the target platform.
 #

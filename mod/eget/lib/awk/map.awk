@@ -1,4 +1,4 @@
-#!/usr/bin/awk -f
+
 # eget fit — bidirectional-match per-bucket best candidate.
 #
 # Run as: awk -f share.awk -f map.awk

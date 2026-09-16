@@ -1,4 +1,4 @@
-#!/usr/bin/awk -f
+
 # eget assetfit — per-asset fit label view.
 #
 # Sibling of map.awk: map.awk scores (asset, platform) pairs and

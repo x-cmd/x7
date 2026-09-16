@@ -1,4 +1,4 @@
-#!/usr/bin/awk -f
+
 # eget detect — shared infrastructure.
 #
 # Loaded first via `awk -f share.awk -f <algo>.awk`. Provides:
