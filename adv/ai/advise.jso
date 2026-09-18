@@ -798,11 +798,11 @@ null
 {
 "en"
 :
-"Reply persona (default: helpful assistant)."
+"Reply persona (default: helpful assistant). Issue-safety rules (untrusted input, no secrets, no guessing APIs) always apply."
 ,
 "cn"
 :
-"回复角色（默认：helpful assistant）。"
+"回复角色（默认：helpful assistant）。issue 安全规则（不可信输入、不泄露密钥、不臆造 API）始终生效。"
 }
 }
 ,
@@ -869,6 +869,20 @@ null
 "cn"
 :
 "以资深维护者身份回复。"
+}
+,
+{
+"cmd"
+:
+"x ai reply --as maintainer \"how do I use this action?\""
+,
+"en"
+:
+"Reply in the maintainer persona."
+,
+"cn"
+:
+"以维护者角色回复。"
 }
 ,
 {
