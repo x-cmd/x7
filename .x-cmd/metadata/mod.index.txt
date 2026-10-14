@@ -160,7 +160,7 @@ abe8ca4b0ef15b39862801d33589580bc413fccf htag main NULL
 7727459033c76326967d33fe637a9621c774a8d3 http main NULL
 7d66ff6dba9352bf0513f00ace31a29a830fd4a3 httpget main NULL
 5187b474cb299678f37917e591ea9ab49e015dfb hua main NULL
-cfaaae7c0d47c571b5b4f306533bca8dcd6155e9 hub main NULL
+82fe60ba3467f620cd91089f316ed39dfcbdbac3 hub main NULL
 effd6b9f519d377c9004e91067700548516dcbcd huggingface main NULL
 63c4be1bd7def10f38b141822c5f7106b5fcad66 humantime main NULL
 eb12dc8119fe76ba2abfd039e69c45f8e4f9f5e3 hw main NULL
@@ -371,7 +371,7 @@ d7ebe877da055a53e26b78c5ee111b9406857d0a usb main NULL
 26d75aa618208e234dd448ca9d337f9f30404e40 user main NULL
 3be97f4eb4318dcc060e8efd710d46886a36759d uuid main NULL
 94d047450144a51f4e23e1d5d4543b8cde397401 val main NULL
-4cc827caa05277ca448171810116234a5afbf4b8 version main NULL
+4840273f5a3dacf08ceda30c44db12fffcf2aff6 version main NULL
 1d6f764a68a0f3ab2e8fee22d585937be98a9d99 vim main NULL
 d27b3bde906457abb37e830b6f6436810db7db2c wchar main NULL
 ca5f122a53dc89a53dd122ecc8ea6544791b1879 web main NULL
