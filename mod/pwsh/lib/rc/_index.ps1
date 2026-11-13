@@ -370,11 +370,33 @@ if (-not $IsInteractive) {
         }
     }
 
-    if (Test-Path "$HOME\.x-cmd.root\local\cache\advise\addon\complete.ps1" -PathType Leaf) {
-        try {
-            . "$HOME\.x-cmd.root\local\cache\advise\addon\complete.ps1"
-        } catch {
-            Write-Host "- E|x: Failed to load the complete code"
+    if ($env:___X_CMD_ADVISE_ACTIVATION_ON_NON_POSIX_SHELL -ne "0") {
+        $___x_cmd_advise_bootcode_fp = "$HOME\.x-cmd.root\local\cache\advise\bootcode\v0.0.0.ps1"
+        $___x_cmd_advise_bootcode_loaded = $false
+        if (Test-Path $___x_cmd_advise_bootcode_fp -PathType Leaf) {
+            try {
+                . $___x_cmd_advise_bootcode_fp
+                $___x_cmd_advise_bootcode_loaded = $true
+            } catch {
+                Write-Host "- E|x: Failed to load the cached advise completion code, regenerating ..."
+            }
+        }
+
+        if (-not $___x_cmd_advise_bootcode_loaded) {
+            try {
+                x advise complete pwsh code | Out-File -Encoding utf8 $___x_cmd_advise_bootcode_fp
+                . $___x_cmd_advise_bootcode_fp
+            } catch {
+                Write-Host "- E|x: Failed to generate or load the advise completion code"
+            }
+        }
+
+        if (Test-Path "$HOME\.x-cmd.root\local\cache\advise\addon\complete.ps1" -PathType Leaf) {
+            try {
+                . "$HOME\.x-cmd.root\local\cache\advise\addon\complete.ps1"
+            } catch {
+                Write-Host "- E|x: Failed to load the complete code"
+            }
         }
     }
 }
