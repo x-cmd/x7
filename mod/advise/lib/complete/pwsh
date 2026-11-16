@@ -56,7 +56,7 @@ Function ___x_cmd_advise_run_pwsh___inner {
           $t = $t.Substring(0, $_.Extent.Text.get_Length() - ($_.Extent.EndOffset - $cursorPosition))
       }
 
-      if ($t.Substring(0,1) -eq "'"){
+      if ($t.StartsWith("'")){
         $t = $t.Substring(1)
       }
       if ($t.get_Length() -gt 0 -and $t.Substring($t.get_Length()-1) -eq "'"){
@@ -83,7 +83,7 @@ Function ___x_cmd_advise_run_pwsh___inner {
     )
 
     if ($completions.count -eq 0) {
-      return "" # prevent default file completion
+      return
     }
 
     $completions
