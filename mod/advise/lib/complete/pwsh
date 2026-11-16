@@ -68,19 +68,24 @@ Function ___x_cmd_advise_run_pwsh___inner {
       $elems += $t
     }
 
+    $bashExe = $Global:___X_CMD_RCPWSH_MSYSBASH
+    if ([string]::IsNullOrEmpty($bashExe)) { $bashExe = 'bash' }
     $output = $(
       if (!$wordToComplete) {
-        bash "$HOME/.x-cmd.root/bin/___x_cmdexe" advise complete pwsh $func $($elems| ForEach-Object {$_}) '' 2>$null
+        & $bashExe "$HOME/.x-cmd.root/bin/___x_cmdexe" advise complete pwsh $func $($elems| ForEach-Object {$_}) '' 2>$null
       } else {
-        bash "$HOME/.x-cmd.root/bin/___x_cmdexe" advise complete pwsh $func $($elems| ForEach-Object {$_}) 2>$null
+        & $bashExe "$HOME/.x-cmd.root/bin/___x_cmdexe" advise complete pwsh $func $($elems| ForEach-Object {$_}) 2>$null
       }
     )
 
-    $completions = @(
-      if ($output) {
-        $output | ConvertFrom-Json | ForEach-Object { [CompletionResult]::new($_.CompletionText, $_.ListItemText, [CompletionResultType]::ParameterValue, $_.ToolTip) }
+    $completions = @()
+    if ($output) {
+      $json = ConvertFrom-Json -InputObject $output
+      $items = if ($json -is [System.Array]) { $json } else { @($json) }
+      foreach ($item in $items) {
+        $completions += [CompletionResult]::new($item.CompletionText, $item.ListItemText, [CompletionResultType]::ParameterValue, $item.ToolTip)
       }
-    )
+    }
 
     if ($completions.count -eq 0) {
       return

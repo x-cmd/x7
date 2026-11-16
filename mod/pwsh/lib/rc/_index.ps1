@@ -207,6 +207,7 @@ ___x_cmd___rcpwsh_addpython
 
 try {
     $___x_cmd_pwsh_bash_fp = ___x_cmd____rcpwsh_get_msysbash -ProbeOnly
+    $Global:___X_CMD_RCPWSH_MSYSBASH = $___x_cmd_pwsh_bash_fp
     if (-not [string]::IsNullOrEmpty($___x_cmd_pwsh_bash_fp) -and (Test-Path $___x_cmd_pwsh_bash_fp -PathType Leaf)) {
         ___x_cmd___rcpwsh_addp_append (Split-Path -Parent $___x_cmd_pwsh_bash_fp)
     }
