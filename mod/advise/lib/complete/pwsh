@@ -12,7 +12,8 @@ ___x_cmd_advise_complete_pwsh(){
 
 
 ___x_cmd_advise_complete_pwsh___normal(){
-    local cur="${*: -1}"
+    local cur=""
+    [ "$#" -gt 1 ] && cur="${*: -1}"
     local COMP_WORDS=("$@");    local COMP_LINE="$*"
     local COMP_CWORD="$#";      COMP_CWORD=$((COMP_CWORD-1))
 
@@ -24,7 +25,8 @@ ___x_cmd_advise_complete_pwsh___normal(){
 }
 
 ___x_cmd_advise_complete_pwsh___x_cmd(){
-    local cur="${*: -1}"
+    local cur=""
+    [ "$#" -gt 1 ] && cur="${*: -1}"
     local COMP_WORDS=("$@");    local COMP_LINE="$*"
     local COMP_CWORD="$#";      COMP_CWORD=$((COMP_CWORD-1))
 
